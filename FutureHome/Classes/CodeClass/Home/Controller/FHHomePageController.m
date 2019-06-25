@@ -17,6 +17,8 @@
 @property (nonatomic, strong) UILabel *locationLabel;
 /** 搜索按钮 */
 @property (nonatomic, strong) UIButton *searchBtn;
+/** 收藏按钮 */
+@property (nonatomic, strong) UIButton *collectBtn;
 
 
 @end
@@ -41,6 +43,8 @@
     self.searchBtn.frame = CGRectMake(0, (MainNavgationBarHeight - 16) / 2, 100, 16);
     self.searchBtn.centerX = self.navView.width / 2;
     [self.navView addSubview:self.searchBtn];
+    self.collectBtn.frame = CGRectMake(self.navView.width - 55, (MainNavgationBarHeight - 16) / 2, 50, 16);
+    [self.navView addSubview:self.collectBtn];
     
 }
 
@@ -49,6 +53,10 @@
 - (void)searchBtnClick {
     /** 搜索事件 */
 
+}
+
+- (void)collectBtnClick {
+    /** 收藏事件 */
 }
 
 
@@ -80,6 +88,15 @@
         [_searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _searchBtn;
+}
+
+- (UIButton *)collectBtn {
+    if (!_collectBtn) {
+        _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_collectBtn setTitle:@"+收藏" forState:UIControlStateNormal];
+        [_collectBtn addTarget:self action:@selector(collectBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _collectBtn;
 }
 
 @end
