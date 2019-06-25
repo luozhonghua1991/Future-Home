@@ -42,11 +42,10 @@
     [super viewDidLoad];
     [self setNav];
     [self.view addSubview:self.homeTable];
+    [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
 }
 
 - (void)setNav {
-    CGFloat H = SCREEN_HEIGHT;
-    NSLog(@"%f",H);
     self.navView = [[UIView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     self.navView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.navView];
@@ -57,7 +56,6 @@
     [self.navView addSubview:self.searchBtn];
     self.collectBtn.frame = CGRectMake(self.navView.width - 55, (MainNavgationBarHeight - 16) / 2, 50, 16);
     [self.navView addSubview:self.collectBtn];
-    
 }
 
 
@@ -134,14 +132,9 @@
         return cell;
     } else if (indexPath.row == 2) {
         /** 菜单列表数据 */
-        /** 轮播图 */
-        static NSString *ID = @"cell3";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        }
+        FHMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMenuListCell class])];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = [UIColor blueColor];
+        return cell;
         return cell;
     } else {
         /** 广告轮播图 */

@@ -135,6 +135,7 @@
 		4A8D8C6222C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5E22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m */; };
 		4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */; };
 		4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6522C210D90083E00C /* FHMenuListCell.m */; };
+		4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -420,6 +421,8 @@
 		4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewCell.m; sourceTree = "<group>"; };
 		4A8D8C6422C210D90083E00C /* FHMenuListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCell.h; sourceTree = "<group>"; };
 		4A8D8C6522C210D90083E00C /* FHMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCell.m; sourceTree = "<group>"; };
+		4A8D8C6722C21B900083E00C /* FHMenuListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCollectionCell.h; sourceTree = "<group>"; };
+		4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -668,6 +671,8 @@
 			children = (
 				4A8D8C6422C210D90083E00C /* FHMenuListCell.h */,
 				4A8D8C6522C210D90083E00C /* FHMenuListCell.m */,
+				4A8D8C6722C21B900083E00C /* FHMenuListCollectionCell.h */,
+				4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1381,6 +1386,7 @@
 				4A8D8C6222C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m in Sources */,
 				4A6DAB4E22C0ADAF00F29455 /* SDWebImagePrefetcher.m in Sources */,
 				4A6DAA7122C0AD4C00F29455 /* IQBarButtonItem.m in Sources */,
+				4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */,
 				4A6DAB8522C0ADBC00F29455 /* ZHProgressHUD.m in Sources */,
 				4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */,
 				4A6DAB7422C0ADAF00F29455 /* MJRefreshBackFooter.m in Sources */,
