@@ -134,6 +134,7 @@
 		4A8D8C6122C1FD5B0083E00C /* FXPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5822C1FD5B0083E00C /* FXPageControl.m */; };
 		4A8D8C6222C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5E22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m */; };
 		4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */; };
+		4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6522C210D90083E00C /* FHMenuListCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -417,6 +418,8 @@
 		4A8D8C5D22C1FD5B0083E00C /* BHInfiniteScrollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHInfiniteScrollViewCell.h; sourceTree = "<group>"; };
 		4A8D8C5E22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewTitleView.m; sourceTree = "<group>"; };
 		4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewCell.m; sourceTree = "<group>"; };
+		4A8D8C6422C210D90083E00C /* FHMenuListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCell.h; sourceTree = "<group>"; };
+		4A8D8C6522C210D90083E00C /* FHMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -663,6 +666,8 @@
 		4A6DAA0222C0702700F29455 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A8D8C6422C210D90083E00C /* FHMenuListCell.h */,
+				4A8D8C6522C210D90083E00C /* FHMenuListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1363,6 +1368,7 @@
 				4A6DAA9A22C0AD7C00F29455 /* LCTabBarController.m in Sources */,
 				4A6DAA4122C0AD3100F29455 /* AFURLSessionManager.m in Sources */,
 				4A6DAB6822C0ADAF00F29455 /* UIView+MJExtension.m in Sources */,
+				4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */,
 				4A6DAB5B22C0ADAF00F29455 /* MJProperty.m in Sources */,
 				4A6DAB7022C0ADAF00F29455 /* MJRefreshStateHeader.m in Sources */,
 				4A6DAA8822C0AD6100F29455 /* GDPerformanceMonitor.m in Sources */,
