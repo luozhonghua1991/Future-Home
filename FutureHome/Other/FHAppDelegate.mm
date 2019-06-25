@@ -37,27 +37,27 @@ static FHAppDelegate* pSelf = nil;
 - (void)setTabBarController{
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];
     vc1.title = @"首页";
-//    vc1.tabBarItem.image = [UIImage imageNamed:@"tarbar_home_normal"];
+    vc1.tabBarItem.image = [UIImage imageNamed:@"tarbar_home_normal"];
 //    vc1.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_home_select"];
     
     FHGroupController *vc2 = [[FHGroupController alloc] init];
     vc2.title = @"社群";
-//    vc2.tabBarItem.image = [UIImage imageNamed:@"tabbar_invite_normal"];
+    vc2.tabBarItem.image = [UIImage imageNamed:@"tabbar_invite_normal"];
 //    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"tarbar_invite_select"];
     
     FHShopingController *vc3 = [[FHShopingController alloc] init];
     vc3.title = @"生鲜商城";
-//    vc3.tabBarItem.image = [UIImage imageNamed:@"tabbar_inviteFriend_normal"];
+    vc3.tabBarItem.image = [UIImage imageNamed:@"tabbar_inviteFriend_normal"];
 //    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_inviteFriend_select"];
     
     FHShopingCartController *vc4 = [[FHShopingCartController alloc] init];
     vc4.title = @"购物车";
-//    vc4.tabBarItem.image = [UIImage imageNamed:@"tabbar_myAccount_normal"];
+    vc4.tabBarItem.image = [UIImage imageNamed:@"tabbar_myAccount_normal"];
 //    vc4.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_myAccount_select"];
     
     FHMeCenterController *vc5 = [[FHMeCenterController alloc] init];
     vc5.title = @"个人中心";
-//    vc5.tabBarItem.image = [UIImage imageNamed:@"tabbar_myAccount_normal"];
+    vc5.tabBarItem.image = [UIImage imageNamed:@"tabbar_myAccount"];
 //    vc5.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_myAccount_select"];
     
     UINavigationController *navC1 = [[UINavigationController alloc] initWithRootViewController:vc1];
