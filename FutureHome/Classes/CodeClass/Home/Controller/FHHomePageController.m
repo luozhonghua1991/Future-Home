@@ -44,6 +44,8 @@
 }
 
 - (void)setNav {
+    CGFloat H = MainStatusBarHeight;
+    NSLog(@"%f",H);
     self.navView = [[UIView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     self.navView.backgroundColor = [UIColor redColor];
     [self.view addSubview:self.navView];
@@ -73,11 +75,11 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        return ZH_SCALE_SCREEN_Height(60);
+        return 50;
     } else if (indexPath.row == 2) {
-        return ZH_SCALE_SCREEN_Height(150);
+        return 180;
     }
-    return ZH_SCALE_SCREEN_Height(200);
+    return 250;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -94,17 +96,17 @@
                 [view removeFromSuperview];
             }
         }
-        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 60)];
+        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 50)];
         locationView.tag = 2017;
         
-        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH - 65, 20)];
+        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( 50 - 16 ) / 2, SCREEN_WIDTH - 55, 16)];
         self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
         self.realSstateSNameLabel.textColor = [UIColor blackColor];
-        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:20];
+        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:16];
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
         [locationView addSubview:self.realSstateSNameLabel];
         
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 65, 0, 60, 60)];
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 55, 0, 50, 50)];
         self.codeImgView.backgroundColor = [UIColor yellowColor];
         [locationView addSubview:self.codeImgView];
         
@@ -125,7 +127,7 @@
             }
         }
         NSArray *urlsArray = [[NSArray alloc] init];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200) scrollViewTag:2018];
+        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
         return cell;
@@ -155,7 +157,7 @@
             }
         }
         NSArray *urlsArray = [[NSArray alloc] init];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, 200) scrollViewTag:2019];
+        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250) scrollViewTag:2019];
         
         [cell addSubview:self.topScrollView];
         return cell;
