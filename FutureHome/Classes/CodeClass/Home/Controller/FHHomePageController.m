@@ -14,8 +14,19 @@
 
 @implementation FHHomePageController
 
+
+#pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setNav];
+}
+
+- (void)setNav {
+    CGFloat H = MainNavgationBarHeight;
+    NSLog(@"%f",H);
+    UIView *navView = [[UIView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    navView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:navView];
     
 }
 
