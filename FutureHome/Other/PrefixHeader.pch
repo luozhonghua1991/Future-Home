@@ -1,0 +1,61 @@
+//
+//  PrefixHeader.pch
+//  FutureHome
+//
+//  Created by 同熙传媒 on 2019/6/24.
+//  Copyright © 2019 同熙传媒. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#ifdef DEBUG        //调试状态,打开LOG功能
+#define ZHLog(...) NSLog(__VA_ARGS__)
+#define ZHFunc GJLog(@"%s",__func__);           //输出当前类的方法名称
+#else       //发布状态,关闭LOG功能
+#define ZHLog(...)
+#define ZHFunc
+#endif
+
+//pch
+#import "ColorHeader.h"
+#import "InterfaceHeader.h"
+/** 常用工具 */
+#import "MBProgressHUD.h"
+#import "UIImageView+WebCache.h"
+#import "UIView+Extend.h"
+#import "UIlabelTool.h"
+
+
+//获取当前屏幕的宽高
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+//获取状态栏高度
+#define MainStatusBarHeight ([[UIApplication sharedApplication]statusBarFrame].size.height)
+//获取导航栏高度
+#define MainNavgationBarHeight ([UINavigationController new].navigationBar.height)
+/**导航栏高度 + 状态栏的总高度*/
+#define MainSizeHeight ([[UIApplication sharedApplication]statusBarFrame].size.height + [UINavigationController new].navigationBar.height)
+//16进制转RGB 颜色
+#define COLOR_16F(hexValue,alphaValue) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alphaValue]
+//判断数组是否为空
+#define IS_NULL_ARRAY(array) ([array isKindOfClass:[NSNull class]] || array == nil || array.count == 0)
+//判断字符串是否为空
+#define IsStringEmpty(string)           (!string || [@"" isEqualToString:string])
+//判断字典是否为空
+#define IS_NULL_DIC(dic) ([dic isEqual:[NSNull null]] || dic == nil || dic.count == 0)
+
+/**
+ *  计算等比长宽
+ */
+#define ZH_SCALE_SCREEN_Width(winthNumber)  winthNumber
+#define ZH_SCALE_SCREEN_Height(winthNumber)  winthNumber
+//颜色RGB值
+#define ZH_COLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
+//系统版本号
+#define SYSTEM_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+//weak self
+#define WEAK_SELF(weakSelf)  __weak __typeof(&*self)weakSelf = self;
+#define WEAK_SELF_OBJC(weakSelf,objc)  __weak __typeof(&*objc)weakSelf = objc;
+
+#endif /* PrefixHeader_pch */
