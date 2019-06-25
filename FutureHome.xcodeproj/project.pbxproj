@@ -130,6 +130,10 @@
 		4A6DAB8022C0ADB500F29455 /* YPTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6DAB7D22C0ADB500F29455 /* YPTabBar.m */; };
 		4A6DAB8522C0ADBC00F29455 /* ZHProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6DAB8322C0ADBC00F29455 /* ZHProgressHUD.m */; };
 		4A6DAB8622C0ADBC00F29455 /* images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A6DAB8422C0ADBC00F29455 /* images.bundle */; };
+		4A8D8C6022C1FD5B0083E00C /* BHInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5622C1FD5B0083E00C /* BHInfiniteScrollView.m */; };
+		4A8D8C6122C1FD5B0083E00C /* FXPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5822C1FD5B0083E00C /* FXPageControl.m */; };
+		4A8D8C6222C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5E22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m */; };
+		4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -405,6 +409,14 @@
 		4A6DAB8222C0ADBC00F29455 /* ZHProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZHProgressHUD.h; sourceTree = "<group>"; };
 		4A6DAB8322C0ADBC00F29455 /* ZHProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZHProgressHUD.m; sourceTree = "<group>"; };
 		4A6DAB8422C0ADBC00F29455 /* images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = images.bundle; sourceTree = "<group>"; };
+		4A8D8C5622C1FD5B0083E00C /* BHInfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollView.m; sourceTree = "<group>"; };
+		4A8D8C5822C1FD5B0083E00C /* FXPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXPageControl.m; sourceTree = "<group>"; };
+		4A8D8C5922C1FD5B0083E00C /* FXPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXPageControl.h; sourceTree = "<group>"; };
+		4A8D8C5A22C1FD5B0083E00C /* BHInfiniteScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHInfiniteScrollView.h; sourceTree = "<group>"; };
+		4A8D8C5C22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHInfiniteScrollViewTitleView.h; sourceTree = "<group>"; };
+		4A8D8C5D22C1FD5B0083E00C /* BHInfiniteScrollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHInfiniteScrollViewCell.h; sourceTree = "<group>"; };
+		4A8D8C5E22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewTitleView.m; sourceTree = "<group>"; };
+		4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -617,6 +629,7 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4A8D8C5522C1FD5B0083E00C /* BHInfiniteScrollView */,
 				4A59F98322C0D61900867031 /* CreatNav */,
 				4A6DAA0022C0700F00F29455 /* Category */,
 			);
@@ -1181,6 +1194,37 @@
 			path = ZHProgressHUDK;
 			sourceTree = "<group>";
 		};
+		4A8D8C5522C1FD5B0083E00C /* BHInfiniteScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				4A8D8C5A22C1FD5B0083E00C /* BHInfiniteScrollView.h */,
+				4A8D8C5622C1FD5B0083E00C /* BHInfiniteScrollView.m */,
+				4A8D8C5722C1FD5B0083E00C /* FXPageControl */,
+				4A8D8C5B22C1FD5B0083E00C /* Views */,
+			);
+			path = BHInfiniteScrollView;
+			sourceTree = "<group>";
+		};
+		4A8D8C5722C1FD5B0083E00C /* FXPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				4A8D8C5922C1FD5B0083E00C /* FXPageControl.h */,
+				4A8D8C5822C1FD5B0083E00C /* FXPageControl.m */,
+			);
+			path = FXPageControl;
+			sourceTree = "<group>";
+		};
+		4A8D8C5B22C1FD5B0083E00C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A8D8C5C22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.h */,
+				4A8D8C5E22C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m */,
+				4A8D8C5D22C1FD5B0083E00C /* BHInfiniteScrollViewCell.h */,
+				4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1328,6 +1372,7 @@
 				4A6DAA3622C0AD3100F29455 /* UIProgressView+AFNetworking.m in Sources */,
 				4A6DAA6F22C0AD4C00F29455 /* IQToolbar.m in Sources */,
 				4A6DAA7322C0AD4C00F29455 /* IQPreviousNextView.m in Sources */,
+				4A8D8C6222C1FD5B0083E00C /* BHInfiniteScrollViewTitleView.m in Sources */,
 				4A6DAB4E22C0ADAF00F29455 /* SDWebImagePrefetcher.m in Sources */,
 				4A6DAA7122C0AD4C00F29455 /* IQBarButtonItem.m in Sources */,
 				4A6DAB8522C0ADBC00F29455 /* ZHProgressHUD.m in Sources */,
@@ -1372,6 +1417,7 @@
 				4A6DAB5522C0ADAF00F29455 /* UIView+WebCacheOperation.m in Sources */,
 				4A6DAA4222C0AD3100F29455 /* AFURLRequestSerialization.m in Sources */,
 				4A6DAA7022C0AD4C00F29455 /* IQTitleBarButtonItem.m in Sources */,
+				4A8D8C6022C1FD5B0083E00C /* BHInfiniteScrollView.m in Sources */,
 				4A6DAA3F22C0AD3100F29455 /* AFURLResponseSerialization.m in Sources */,
 				4A6DAB5A22C0ADAF00F29455 /* NSObject+MJKeyValue.m in Sources */,
 				4A6DAB5922C0ADAF00F29455 /* MJPropertyType.m in Sources */,
@@ -1421,9 +1467,11 @@
 				4A59F96A22C0B6D100867031 /* UIView+Extend.m in Sources */,
 				4A59F96B22C0B6D100867031 /* UIViewController+popType.m in Sources */,
 				4A6DAB5422C0ADAF00F29455 /* SDImageCacheConfig.m in Sources */,
+				4A8D8C6122C1FD5B0083E00C /* FXPageControl.m in Sources */,
 				4A59F97522C0B94000867031 /* FHShopingController.m in Sources */,
 				4A6DAB5722C0ADAF00F29455 /* UIButton+WebCache.m in Sources */,
 				4A6DAB5022C0ADAF00F29455 /* SDWebImageDownloaderOperation.m in Sources */,
+				4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */,
 				4A6DAB4F22C0ADAF00F29455 /* SDImageCache.m in Sources */,
 				4A6DA9C522C05C6F00F29455 /* FHAppDelegate.mm in Sources */,
 				4A6DAB5E22C0ADAF00F29455 /* NSObject+MJProperty.m in Sources */,

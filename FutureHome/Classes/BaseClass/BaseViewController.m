@@ -94,4 +94,9 @@
     NSLog(@"dealloc -success");
 }
 
+- (CGFloat)getTabbarHeight {
+    CGFloat tabbarHeight;
+    return tabbarHeight = KIsiPhoneX ? 83 : 49;
+}
+
 @end

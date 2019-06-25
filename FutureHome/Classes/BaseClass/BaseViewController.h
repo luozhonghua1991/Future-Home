@@ -20,4 +20,7 @@
 - (void)addHudWithMessage:(NSString*)message;
 - (void)removeHud;
 
+/**获取tabbar的高度*/
+- (CGFloat)getTabbarHeight;
+
 @end
