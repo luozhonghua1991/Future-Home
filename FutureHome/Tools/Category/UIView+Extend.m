@@ -90,8 +90,31 @@
     return xibView;
 }
 
+- (void)setCenterX:(CGFloat)x andY:(CGFloat)y {
+    self.center = CGPointMake(x,y);
+}
 
+-(CGFloat)centerX {
+    
+    return self.frame.origin.x;
+    
+}
 
+-(void)setCenterX:(CGFloat)centerX {
+    self.center = CGPointMake(centerX,self.center.y);
+}
+
+-(CGFloat)centerY {
+    
+    return self.frame.origin.y;
+    
+}
+
+-(void)setCenterY:(CGFloat)centerY {
+    
+    self.center = CGPointMake(self.center.x,centerY);
+    
+}
 
 - (void)setX:(CGFloat)x
 {

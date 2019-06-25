@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UIImageView *locationImgView;
 /** 地点名字label */
 @property (nonatomic, strong) UILabel *locationLabel;
+/** 搜索按钮 */
+@property (nonatomic, strong) UIButton *searchBtn;
 
 
 @end
@@ -36,9 +38,17 @@
     [self.view addSubview:self.navView];
     [self.navView addSubview:self.locationImgView];
     [self.navView addSubview:self.locationLabel];
+    self.searchBtn.frame = CGRectMake(0, (MainNavgationBarHeight - 16) / 2, 100, 16);
+    self.searchBtn.centerX = self.navView.width / 2;
+    [self.navView addSubview:self.searchBtn];
     
-    
-    
+}
+
+
+#pragma mark — event
+- (void)searchBtnClick {
+    /** 搜索事件 */
+
 }
 
 
@@ -61,6 +71,15 @@
         _locationLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _locationLabel;
+}
+
+- (UIButton *)searchBtn {
+    if (!_searchBtn) {
+        _searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_searchBtn setTitle:@"搜索🔍" forState:UIControlStateNormal];
+        [_searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _searchBtn;
 }
 
 @end

@@ -37,10 +37,10 @@ typedef enum{
 @property (nonatomic, assign) CGSize size;
 @property (nonatomic, assign) CGPoint origin;
 @property (nonatomic,assign) CGFloat radius;
+@property(nonatomic,assign) CGFloat centerX;
+@property(nonatomic,assign) CGFloat centerY;
 
-
-
-
+-(void)setCenterX:(CGFloat )x andY:(CGFloat )y;
 /**
  *  添加边框：注给scrollView添加会出错
  *
