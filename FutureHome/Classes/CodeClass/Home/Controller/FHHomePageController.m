@@ -19,6 +19,8 @@
 @property (nonatomic, strong) UIButton *searchBtn;
 /** 收藏按钮 */
 @property (nonatomic, strong) UIButton *collectBtn;
+/** 主页列表数据 */
+@property (nonatomic, strong) UITableView *homeTable;
 
 
 @end
@@ -65,7 +67,7 @@
 - (UIImageView *)locationImgView {
     if (!_locationImgView) {
         _locationImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 25, MainNavgationBarHeight - 10)];
-        _locationImgView.backgroundColor = [UIColor blueColor];
+        _locationImgView.image = [UIImage imageNamed:@"tarbar_home_normal"];
     }
     return _locationImgView;
 }
