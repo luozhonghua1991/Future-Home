@@ -10,7 +10,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol FHMenuListCellDelegate <NSObject>
+
+@optional // 可选实现的方法
+- (void)FHMenuListCellSelectIndex:(NSIndexPath *)indexPath;
+
+@end
+
 @interface FHMenuListCell : UITableViewCell
+
+@property(nonatomic, weak) id<FHMenuListCellDelegate> delegate;
 
 @end
 

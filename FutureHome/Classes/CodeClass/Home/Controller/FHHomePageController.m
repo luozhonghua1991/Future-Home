@@ -10,7 +10,7 @@
 #import "BHInfiniteScrollView.h"
 #import "FHMenuListCell.h"
 
-@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate>
+@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate>
 /** 导航View视图 */
 @property (nonatomic, strong) UIView *navView;
 /** 坐标图片 */
@@ -133,6 +133,7 @@
     } else if (indexPath.row == 2) {
         /** 菜单列表数据 */
         FHMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMenuListCell class])];
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         return cell;
@@ -193,6 +194,29 @@
     }
 }
 
+
+#pragma mark — FHMenuListCellDelegate
+- (void)FHMenuListCellSelectIndex:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        /** 物业服务 */
+
+    } else if (indexPath.row == 1) {
+        /** 业主服务 */
+        
+    } else if (indexPath.row == 2) {
+        /** 健康服务 */
+        
+    } else if (indexPath.row == 3) {
+        /** 生鲜服务 */
+        
+    } else if (indexPath.row == 4) {
+        /** 理财服务 */
+        
+    } else if (indexPath.row == 5) {
+        /** 客服服务 */
+        
+    }
+}
 
 #pragma mark — event
 - (void)searchBtnClick {

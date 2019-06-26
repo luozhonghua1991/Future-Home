@@ -43,6 +43,13 @@
     return cell;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHMenuListCellSelectIndex:)]) {
+        [_delegate FHMenuListCellSelectIndex:indexPath];
+    }
+}
+
+
 #pragma mark — setter && getter
 - (UICollectionView *)menuCollectionView {
     if (_menuCollectionView == nil) {
