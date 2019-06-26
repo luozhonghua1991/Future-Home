@@ -10,6 +10,7 @@
 #import "BHInfiniteScrollView.h"
 #import "FHMenuListCell.h"
 #import "FHCommonNavView.h"
+#import "FHLittleMenuListCell.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate>
 /** 导航View视图 */
@@ -35,6 +36,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
+    [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
 }
 
 
@@ -63,32 +65,35 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         /** 服务平台 */
-        static NSString *ID = @"cell1";
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-        if (!cell) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-        }
+//        static NSString *ID = @"cell1";
+//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+//        if (!cell) {
+//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+//        }
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//        for (UIView *view in cell.subviews) {
+//            if (view.tag == 2017) {
+//                [view removeFromSuperview];
+//            }
+//        }
+//        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
+//        locationView.tag = 2017;
+//
+//        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
+//        self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
+//        self.realSstateSNameLabel.textColor = [UIColor blackColor];
+//        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
+//        self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
+//        [locationView addSubview:self.realSstateSNameLabel];
+//
+//        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 0, SCREEN_WIDTH * 0.116, SCREEN_WIDTH * 0.116)];
+//        self.codeImgView.backgroundColor = [UIColor yellowColor];
+//        [locationView addSubview:self.codeImgView];
+//
+//        [cell addSubview:locationView];
+        FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
+//        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        for (UIView *view in cell.subviews) {
-            if (view.tag == 2017) {
-                [view removeFromSuperview];
-            }
-        }
-        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
-        locationView.tag = 2017;
-        
-        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
-        self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
-        self.realSstateSNameLabel.textColor = [UIColor blackColor];
-        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
-        self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
-        [locationView addSubview:self.realSstateSNameLabel];
-        
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 0, SCREEN_WIDTH * 0.116, SCREEN_WIDTH * 0.116)];
-        self.codeImgView.backgroundColor = [UIColor yellowColor];
-        [locationView addSubview:self.codeImgView];
-        
-        [cell addSubview:locationView];
         return cell;
         
     } else if (indexPath.row == 1) {
@@ -114,7 +119,6 @@
         FHMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMenuListCell class])];
         cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
         return cell;
     } else {
         /** 广告轮播图 */

@@ -137,6 +137,8 @@
 		4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6522C210D90083E00C /* FHMenuListCell.m */; };
 		4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */; };
 		4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */; };
+		4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */; };
+		4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -426,6 +428,10 @@
 		4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCollectionCell.m; sourceTree = "<group>"; };
 		4A8D8C6D22C3663F0083E00C /* FHCommonNavView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonNavView.h; sourceTree = "<group>"; };
 		4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonNavView.m; sourceTree = "<group>"; };
+		4A8D8C7022C37A4C0083E00C /* FHLittleMenuListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLittleMenuListCell.h; sourceTree = "<group>"; };
+		4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleMenuListCell.m; sourceTree = "<group>"; };
+		4A8D8C7322C37C0C0083E00C /* FHLittleMenuListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLittleMenuListCollectionCell.h; sourceTree = "<group>"; };
+		4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleMenuListCollectionCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -673,6 +679,10 @@
 		4A6DAA0222C0702700F29455 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A8D8C7022C37A4C0083E00C /* FHLittleMenuListCell.h */,
+				4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */,
+				4A8D8C7322C37C0C0083E00C /* FHLittleMenuListCollectionCell.h */,
+				4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */,
 				4A8D8C6422C210D90083E00C /* FHMenuListCell.h */,
 				4A8D8C6522C210D90083E00C /* FHMenuListCell.m */,
 				4A8D8C6722C21B900083E00C /* FHMenuListCollectionCell.h */,
@@ -1405,6 +1415,7 @@
 				4A6DAB7422C0ADAF00F29455 /* MJRefreshBackFooter.m in Sources */,
 				4A59F97822C0BA1500867031 /* FHShopingCartController.m in Sources */,
 				4A6DAB7122C0ADAF00F29455 /* MJRefreshGifHeader.m in Sources */,
+				4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */,
 				4A6DAB6322C0ADAF00F29455 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6DAB5622C0ADAF00F29455 /* UIView+WebCache.m in Sources */,
 				4A6DA9C822C05C6F00F29455 /* ViewController.m in Sources */,
@@ -1452,6 +1463,7 @@
 				4A6DAB6022C0ADAF00F29455 /* NSString+MJExtension.m in Sources */,
 				4A6DA9D322C05C7000F29455 /* main.m in Sources */,
 				4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */,
+				4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */,
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
 				4A6DAA4822C0AD3D00F29455 /* FDActionSheet.m in Sources */,
