@@ -9,18 +9,11 @@
 #import "FHHomePageController.h"
 #import "BHInfiniteScrollView.h"
 #import "FHMenuListCell.h"
+#import "FHCommonNavView.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate>
 /** 导航View视图 */
-@property (nonatomic, strong) UIView *navView;
-/** 坐标图片 */
-@property (nonatomic, strong) UIImageView *locationImgView;
-/** 地点名字label */
-@property (nonatomic, strong) UILabel *locationLabel;
-/** 搜索按钮 */
-@property (nonatomic, strong) UIButton *searchBtn;
-/** 收藏按钮 */
-@property (nonatomic, strong) UIButton *collectBtn;
+@property (nonatomic, strong) FHCommonNavView *navView;
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的轮播图 */
@@ -40,22 +33,9 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNav];
+    self.isHaveNav = NO;
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
-}
-
-- (void)setNav {
-    self.navView = [[UIView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    self.navView.backgroundColor = [UIColor redColor];
-    [self.view addSubview:self.navView];
-    [self.navView addSubview:self.locationImgView];
-    [self.navView addSubview:self.locationLabel];
-    self.searchBtn.frame = CGRectMake(0, (MainNavgationBarHeight - 16) / 2, 100, 16);
-    self.searchBtn.centerX = self.navView.width / 2;
-    [self.navView addSubview:self.searchBtn];
-    self.collectBtn.frame = CGRectMake(self.navView.width - 55, (MainNavgationBarHeight - 16) / 2, 50, 16);
-    [self.navView addSubview:self.collectBtn];
 }
 
 
@@ -208,7 +188,7 @@
         
     } else if (indexPath.row == 3) {
         /** 生鲜服务 */
-        
+        self.tabBarController.selectedIndex = 2;
     } else if (indexPath.row == 4) {
         /** 理财服务 */
         
@@ -218,56 +198,8 @@
     }
 }
 
-#pragma mark — event
-- (void)searchBtnClick {
-    /** 搜索事件 */
-
-}
-
-- (void)collectBtnClick {
-    /** 收藏事件 */
-}
-
 
 #pragma mark — setter & getter
-#pragma mark - 懒加载
-- (UIImageView *)locationImgView {
-    if (!_locationImgView) {
-        _locationImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 5, 25, MainNavgationBarHeight - 10)];
-        _locationImgView.image = [UIImage imageNamed:@"tarbar_home_normal"];
-    }
-    return _locationImgView;
-}
-
-- (UILabel *)locationLabel {
-    if (!_locationLabel) {
-        _locationLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(_locationImgView.frame) + 5, (MainNavgationBarHeight - 16) / 2, 100, 16)];
-        _locationLabel.textColor = [UIColor blackColor];
-        _locationLabel.text = @"重庆市";
-        _locationLabel.font = [UIFont systemFontOfSize:16];
-        _locationLabel.textAlignment = NSTextAlignmentLeft;
-    }
-    return _locationLabel;
-}
-
-- (UIButton *)searchBtn {
-    if (!_searchBtn) {
-        _searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_searchBtn setTitle:@"搜索🔍" forState:UIControlStateNormal];
-        [_searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _searchBtn;
-}
-
-- (UIButton *)collectBtn {
-    if (!_collectBtn) {
-        _collectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_collectBtn setTitle:@"+收藏" forState:UIControlStateNormal];
-        [_collectBtn addTarget:self action:@selector(collectBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _collectBtn;
-}
-
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
         CGFloat tabbarH = [self getTabbarHeight];

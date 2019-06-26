@@ -136,6 +136,7 @@
 		4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C5F22C1FD5B0083E00C /* BHInfiniteScrollViewCell.m */; };
 		4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6522C210D90083E00C /* FHMenuListCell.m */; };
 		4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */; };
+		4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -423,6 +424,8 @@
 		4A8D8C6522C210D90083E00C /* FHMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCell.m; sourceTree = "<group>"; };
 		4A8D8C6722C21B900083E00C /* FHMenuListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCollectionCell.h; sourceTree = "<group>"; };
 		4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCollectionCell.m; sourceTree = "<group>"; };
+		4A8D8C6D22C3663F0083E00C /* FHCommonNavView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonNavView.h; sourceTree = "<group>"; };
+		4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonNavView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -635,6 +638,7 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4A8D8C6B22C365C80083E00C /* CommonViews */,
 				4A8D8C5522C1FD5B0083E00C /* BHInfiniteScrollView */,
 				4A59F98322C0D61900867031 /* CreatNav */,
 				4A6DAA0022C0700F00F29455 /* Category */,
@@ -1235,6 +1239,15 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4A8D8C6B22C365C80083E00C /* CommonViews */ = {
+			isa = PBXGroup;
+			children = (
+				4A8D8C6D22C3663F0083E00C /* FHCommonNavView.h */,
+				4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */,
+			);
+			path = CommonViews;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1442,6 +1455,7 @@
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
 				4A6DAA4822C0AD3D00F29455 /* FDActionSheet.m in Sources */,
+				4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */,
 				4A6DAB6622C0ADAF00F29455 /* UIScrollView+MJExtension.m in Sources */,
 				4A6DAB4B22C0ADAF00F29455 /* UIImage+GIF.m in Sources */,
 				4A6DAB6E22C0ADAF00F29455 /* MJRefreshAutoNormalFooter.m in Sources */,

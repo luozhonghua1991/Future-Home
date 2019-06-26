@@ -14,6 +14,9 @@
  不用自定义的手势返回，则系统的手势返回启用
  */
 @property (nonatomic, assign) BOOL enablePanGesture;//是否支持自定义拖动pop手势，默认yes,支持手势
+/** 是否需要导航View */
+@property (nonatomic, assign) BOOL isHaveNav;
+
 
 @property (nonatomic,retain) MBProgressHUD* hud;
 - (void)addHud;
