@@ -33,7 +33,6 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isHaveNav = NO;
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
 }
@@ -159,6 +158,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+
+#pragma mark — event
+/** 搜索事件 */
+- (void)searchClick {
+    
+}
+/** 收藏事件 */
+- (void)collectClick {
     
 }
 

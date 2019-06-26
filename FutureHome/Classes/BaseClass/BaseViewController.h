@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHCommonNavView.h"
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController 
 /**
  用了自定义的手势返回，则系统的手势返回屏蔽
  不用自定义的手势返回，则系统的手势返回启用
@@ -17,7 +18,6 @@
 /** 是否需要导航View */
 @property (nonatomic, assign) BOOL isHaveNav;
 
-
 @property (nonatomic,retain) MBProgressHUD* hud;
 - (void)addHud;
 - (void)addHudWithMessage:(NSString*)message;
@@ -25,5 +25,9 @@
 
 /**获取tabbar的高度*/
 - (CGFloat)getTabbarHeight;
+/** 搜索事件 */
+- (void)searchClick;
+/** 收藏事件 */
+- (void)collectClick;
 
 @end

@@ -45,11 +45,16 @@
 #pragma mark — event
 - (void)searchBtnClick {
     /** 搜索事件 */
-    
+    if (self.searchBlock) {
+        self.searchBlock();
+    }
 }
 
 - (void)collectBtnClick {
     /** 收藏事件 */
+    if (self.collectBlock) {
+        self.collectBlock();
+    }
 }
 
 

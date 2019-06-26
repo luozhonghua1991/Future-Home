@@ -7,9 +7,9 @@
 //
 
 #import "BaseViewController.h"
-#import "FHCommonNavView.h"
 
-@interface BaseViewController ()
+
+@interface BaseViewController () 
 /** 导航View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
 
@@ -65,7 +65,15 @@
     }
     if (self.isHaveNav) {
         self.navView = [[FHCommonNavView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+        self.navView.delegate = self;
         self.navView.backgroundColor = [UIColor redColor];
+        WEAK_SELF(weakSelf);
+        self.navView.searchBlock = ^{
+            [weakSelf searchClick];
+        };
+        self.navView.collectBlock = ^{
+            [weakSelf collectClick];
+        };
         [self.view addSubview:self.navView];
     }
 }
@@ -116,5 +124,16 @@
     CGFloat tabbarHeight;
     return tabbarHeight = KIsiPhoneX ? 83 : 49;
 }
+
+
+//#pragma mark — FHCommonNavViewBlock
+///** 搜索 */
+//- (void)searchClick {
+//    
+//}
+///** 收藏 */
+//- (void)collectClick {
+//    
+//}
 
 @end
