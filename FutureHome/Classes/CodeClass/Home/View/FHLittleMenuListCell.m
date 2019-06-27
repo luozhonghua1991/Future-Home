@@ -43,11 +43,11 @@
     return cell;
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHMenuListCellSelectIndex:)]) {
-//        [_delegate FHMenuListCellSelectIndex:indexPath];
-//    }
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHLittleMenuListCellSelectIndex:)]) {
+        [_delegate FHLittleMenuListCellSelectIndex:indexPath];
+    }
+}
 
 
 #pragma mark — setter && getter

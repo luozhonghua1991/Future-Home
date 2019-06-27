@@ -11,8 +11,9 @@
 #import "FHMenuListCell.h"
 #import "FHCommonNavView.h"
 #import "FHLittleMenuListCell.h"
+#import "FHCommonCollectionViewCell.h"
 
-@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate>
+@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
 /** 导航View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
 /** 主页列表数据 */
@@ -93,7 +94,7 @@
 //        [cell addSubview:locationView];
         /** 菜单列表 */
         FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
-//        cell.delegate = self;
+        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         
@@ -162,11 +163,6 @@
     return mallScrollView;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-}
-
-
 #pragma mark — event
 /** 搜索事件 */
 - (void)searchClick {
@@ -213,6 +209,24 @@
     }
 }
 
+- (void)FHLittleMenuListCellSelectIndex:(NSIndexPath *)selectIndex {
+    if (selectIndex.row == 0) {
+        /** 扫一扫 */
+        
+    } else if (selectIndex.row == 1) {
+        /** 付款 */
+        
+    } else if (selectIndex.row == 2) {
+        /** 收款 */
+        
+    } else if (selectIndex.row == 3) {
+        /** 生活缴费 */
+        
+    } else if (selectIndex.row == 4) {
+        /** 财富园 */
+        
+    }
+}
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {

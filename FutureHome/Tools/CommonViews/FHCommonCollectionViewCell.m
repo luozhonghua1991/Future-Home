@@ -6,27 +6,26 @@
 //  Copyright © 2019 同熙传媒. All rights reserved.
 //  公用collectionView
 
-#import "FHCommonCollectionView.h"
+#import "FHCommonCollectionViewCell.h"
 #import "FHCommonCollectionCell.h"
 
-@interface FHCommonCollectionView () <UICollectionViewDataSource,UICollectionViewDelegate>
-/** <#strong属性注释#> */
+@interface FHCommonCollectionViewCell () <UICollectionViewDataSource,UICollectionViewDelegate>
+/** 菜单collectionView */
 @property (nonatomic, strong) UICollectionView *menuCollectionView;
 
 @end
 
-@implementation FHCommonCollectionView
+@implementation FHCommonCollectionViewCell
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    if (self = [super initWithFrame:frame]) {
-        self.backgroundColor = [UIColor clearColor];
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self fh_setUpUI];
     }
     return self;
 }
 
 - (void)fh_setUpUI {
-    [self addSubview:self.menuCollectionView];
+    [self.contentView addSubview:self.menuCollectionView];
 }
 
 
@@ -42,11 +41,11 @@
     return cell;
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHMenuListCellSelectIndex:)]) {
-//        [_delegate FHMenuListCellSelectIndex:indexPath];
-//    }
-//}
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHCommonCollectionCellDelegateSelectIndex:)]) {
+        [_delegate FHCommonCollectionCellDelegateSelectIndex:indexPath];
+    }
+}
 
 
 #pragma mark — setter && getter
