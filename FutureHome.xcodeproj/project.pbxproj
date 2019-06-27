@@ -139,6 +139,8 @@
 		4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */; };
 		4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */; };
 		4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */; };
+		4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */; };
+		4A9282F322C46BCC006509C3 /* FHCommonCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -432,6 +434,10 @@
 		4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleMenuListCell.m; sourceTree = "<group>"; };
 		4A8D8C7322C37C0C0083E00C /* FHLittleMenuListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLittleMenuListCollectionCell.h; sourceTree = "<group>"; };
 		4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleMenuListCollectionCell.m; sourceTree = "<group>"; };
+		4A9282EE22C46B7B006509C3 /* FHCommonCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonCollectionCell.h; sourceTree = "<group>"; };
+		4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionCell.m; sourceTree = "<group>"; };
+		4A9282F122C46BCC006509C3 /* FHCommonCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonCollectionView.h; sourceTree = "<group>"; };
+		4A9282F222C46BCC006509C3 /* FHCommonCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1254,6 +1260,10 @@
 			children = (
 				4A8D8C6D22C3663F0083E00C /* FHCommonNavView.h */,
 				4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */,
+				4A9282F122C46BCC006509C3 /* FHCommonCollectionView.h */,
+				4A9282F222C46BCC006509C3 /* FHCommonCollectionView.m */,
+				4A9282EE22C46B7B006509C3 /* FHCommonCollectionCell.h */,
+				4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -1495,6 +1505,7 @@
 				4A6DAA8722C0AD6100F29455 /* GDPerformanceView.m in Sources */,
 				4A6DAB7F22C0ADB500F29455 /* YPTabBarController.m in Sources */,
 				4A6DAA7222C0AD4C00F29455 /* IQUIView+IQKeyboardToolbar.m in Sources */,
+				4A9282F322C46BCC006509C3 /* FHCommonCollectionView.m in Sources */,
 				4A6DAA7B22C0AD4C00F29455 /* IQUIViewController+Additions.m in Sources */,
 				4A6DAB5122C0ADAF00F29455 /* NSData+ImageContentType.m in Sources */,
 				4A6DAB7622C0ADAF00F29455 /* MJRefreshComponent.m in Sources */,
@@ -1507,6 +1518,7 @@
 				4A6DAB5422C0ADAF00F29455 /* SDImageCacheConfig.m in Sources */,
 				4A8D8C6122C1FD5B0083E00C /* FXPageControl.m in Sources */,
 				4A59F97522C0B94000867031 /* FHShopingController.m in Sources */,
+				4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */,
 				4A6DAB5722C0ADAF00F29455 /* UIButton+WebCache.m in Sources */,
 				4A6DAB5022C0ADAF00F29455 /* SDWebImageDownloaderOperation.m in Sources */,
 				4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */,

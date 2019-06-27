@@ -91,6 +91,7 @@
 //        [locationView addSubview:self.codeImgView];
 //
 //        [cell addSubview:locationView];
+        /** 菜单列表 */
         FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
 //        cell.delegate = self;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
