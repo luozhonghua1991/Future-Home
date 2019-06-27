@@ -24,7 +24,7 @@
 @property (nonatomic, strong) BHInfiniteScrollView *bottomScrollView;
 /** 物业名字label */
 @property (nonatomic, strong) UILabel *realSstateSNameLabel;
-/** w二维码图 */
+/** 二维码图 */
 @property (nonatomic, strong) UIImageView *codeImgView;
 
 @end
@@ -190,7 +190,7 @@
 - (void)FHMenuListCellSelectIndex:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         /** 物业服务 */
-
+        
     } else if (indexPath.row == 1) {
         /** 业主服务 */
         
