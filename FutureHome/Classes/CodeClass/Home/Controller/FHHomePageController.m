@@ -12,6 +12,10 @@
 #import "FHCommonNavView.h"
 #import "FHLittleMenuListCell.h"
 #import "FHCommonCollectionViewCell.h"
+#import "FHHomeServicesController.h"
+#import "FHOwnerServiceController.h"
+#import "FHHealthServicesController.h"
+#import "FHFinancialServiceController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
 /** 导航View视图 */
@@ -190,23 +194,32 @@
 - (void)FHMenuListCellSelectIndex:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         /** 物业服务 */
-        
+        FHHomeServicesController *home = [[FHHomeServicesController alloc] init];
+        [self pushVCWithName:home];
     } else if (indexPath.row == 1) {
         /** 业主服务 */
-        
+        FHOwnerServiceController *owner = [[FHOwnerServiceController alloc] init];
+        [self pushVCWithName:owner];
     } else if (indexPath.row == 2) {
         /** 健康服务 */
-        
+        FHHealthServicesController *health = [[FHHealthServicesController alloc] init];
+        [self pushVCWithName:health];
     } else if (indexPath.row == 3) {
         /** 生鲜服务 */
         self.tabBarController.selectedIndex = 2;
     } else if (indexPath.row == 4) {
         /** 理财服务 */
-        
+        FHFinancialServiceController *finacial = [[FHFinancialServiceController alloc] init];
+        [self pushVCWithName:finacial];
     } else if (indexPath.row == 5) {
         /** 客服服务 */
         
     }
+}
+
+- (void)pushVCWithName:(BaseViewController *)vcName {
+    vcName.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vcName animated:YES];
 }
 
 - (void)FHLittleMenuListCellSelectIndex:(NSIndexPath *)selectIndex {

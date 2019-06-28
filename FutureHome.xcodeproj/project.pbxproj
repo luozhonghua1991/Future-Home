@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A448CCD22C5AF8B003D0712 /* FHHomeServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */; };
+		4A448CD022C5B3BF003D0712 /* FHOwnerServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */; };
+		4A448CD322C5B576003D0712 /* FHHealthServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CD222C5B576003D0712 /* FHHealthServicesController.m */; };
+		4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CD522C5B797003D0712 /* FHFinancialServiceController.m */; };
+		4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CD822C5B88A003D0712 /* FHCustomerServiceController.m */; };
 		4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F95C22C0B68F00867031 /* BaseViewController.m */; };
 		4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96122C0B6D000867031 /* UIViewController+Swizzling.m */; };
 		4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96222C0B6D000867031 /* UIButton+countDown.m */; };
@@ -161,6 +166,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A448CCB22C5AF8B003D0712 /* FHHomeServicesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHHomeServicesController.h; sourceTree = "<group>"; };
+		4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHHomeServicesController.m; sourceTree = "<group>"; };
+		4A448CCE22C5B3BF003D0712 /* FHOwnerServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOwnerServiceController.h; sourceTree = "<group>"; };
+		4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOwnerServiceController.m; sourceTree = "<group>"; };
+		4A448CD122C5B576003D0712 /* FHHealthServicesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHHealthServicesController.h; sourceTree = "<group>"; };
+		4A448CD222C5B576003D0712 /* FHHealthServicesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHHealthServicesController.m; sourceTree = "<group>"; };
+		4A448CD422C5B797003D0712 /* FHFinancialServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFinancialServiceController.h; sourceTree = "<group>"; };
+		4A448CD522C5B797003D0712 /* FHFinancialServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFinancialServiceController.m; sourceTree = "<group>"; };
+		4A448CD722C5B88A003D0712 /* FHCustomerServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCustomerServiceController.h; sourceTree = "<group>"; };
+		4A448CD822C5B88A003D0712 /* FHCustomerServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCustomerServiceController.m; sourceTree = "<group>"; };
 		4A59F95722C0B31B00867031 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4A59F95922C0B3DF00867031 /* InterfaceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceHeader.h; sourceTree = "<group>"; };
 		4A59F95A22C0B3DF00867031 /* ColorHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHeader.h; sourceTree = "<group>"; };
@@ -702,6 +717,16 @@
 			children = (
 				4A59F96D22C0B7E800867031 /* FHHomePageController.h */,
 				4A59F96E22C0B7E800867031 /* FHHomePageController.m */,
+				4A448CCB22C5AF8B003D0712 /* FHHomeServicesController.h */,
+				4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */,
+				4A448CCE22C5B3BF003D0712 /* FHOwnerServiceController.h */,
+				4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */,
+				4A448CD122C5B576003D0712 /* FHHealthServicesController.h */,
+				4A448CD222C5B576003D0712 /* FHHealthServicesController.m */,
+				4A448CD422C5B797003D0712 /* FHFinancialServiceController.h */,
+				4A448CD522C5B797003D0712 /* FHFinancialServiceController.m */,
+				4A448CD722C5B88A003D0712 /* FHCustomerServiceController.h */,
+				4A448CD822C5B88A003D0712 /* FHCustomerServiceController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1406,7 +1431,9 @@
 				4A6DAA9A22C0AD7C00F29455 /* LCTabBarController.m in Sources */,
 				4A6DAA4122C0AD3100F29455 /* AFURLSessionManager.m in Sources */,
 				4A6DAB6822C0ADAF00F29455 /* UIView+MJExtension.m in Sources */,
+				4A448CD322C5B576003D0712 /* FHHealthServicesController.m in Sources */,
 				4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */,
+				4A448CD022C5B3BF003D0712 /* FHOwnerServiceController.m in Sources */,
 				4A6DAB5B22C0ADAF00F29455 /* MJProperty.m in Sources */,
 				4A6DAB7022C0ADAF00F29455 /* MJRefreshStateHeader.m in Sources */,
 				4A6DAA8822C0AD6100F29455 /* GDPerformanceMonitor.m in Sources */,
@@ -1476,6 +1503,7 @@
 				4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */,
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
+				4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */,
 				4A6DAA4822C0AD3D00F29455 /* FDActionSheet.m in Sources */,
 				4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */,
 				4A6DAB6622C0ADAF00F29455 /* UIScrollView+MJExtension.m in Sources */,
@@ -1483,6 +1511,7 @@
 				4A6DAB6E22C0ADAF00F29455 /* MJRefreshAutoNormalFooter.m in Sources */,
 				4A6DAB6122C0ADAF00F29455 /* MJPropertyKey.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
+				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
 				4A6DAB4922C0ADAF00F29455 /* FLAnimatedImageView.m in Sources */,
 				4A6DAB5822C0ADAF00F29455 /* MBProgressHUD.m in Sources */,
 				4A6DAB4722C0ADAF00F29455 /* FLAnimatedImageView+WebCache.m in Sources */,
@@ -1527,6 +1556,7 @@
 				4A6DAB5E22C0ADAF00F29455 /* NSObject+MJProperty.m in Sources */,
 				4A6DAB5C22C0ADAF00F29455 /* NSObject+MJCoding.m in Sources */,
 				4A6DAA3D22C0AD3100F29455 /* AFAutoPurgingImageCache.m in Sources */,
+				4A448CCD22C5AF8B003D0712 /* FHHomeServicesController.m in Sources */,
 				4A6DAA3E22C0AD3100F29455 /* AFImageDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
