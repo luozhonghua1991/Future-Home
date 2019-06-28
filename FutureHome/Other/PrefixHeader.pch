@@ -25,6 +25,7 @@
 #import "UIImageView+WebCache.h"
 #import "UIView+Extend.h"
 #import "UIlabelTool.h"
+#import "BHInfiniteScrollView.h"
 
 
 //获取当前屏幕的宽高

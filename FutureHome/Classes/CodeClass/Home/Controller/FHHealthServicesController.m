@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/6/28.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  健康服务界面
+//  健康服务
 
 #import "FHHealthServicesController.h"
 

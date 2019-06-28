@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/6/28.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  业主服务界面
+//  业主服务
 
 #import "FHOwnerServiceController.h"
 

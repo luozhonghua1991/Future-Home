@@ -32,9 +32,9 @@
 /** 二维码图 */
 @property (nonatomic, strong) UIImageView *codeImgView;
 /** 上面的logoName */
-@property (nonatomic, copy) NSArray *topLogoName;
+@property (nonatomic, copy) NSArray *topLogoNameArrs;
 /** 下面的logoName */
-@property (nonatomic, copy) NSArray *bottomLogoName;
+@property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 
 @end
 
@@ -44,6 +44,7 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.topLogoNameArrs = @[@"扫一扫",@"付款",@"收款",@"生活缴费",@"财富园"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
@@ -104,6 +105,7 @@
         /** 菜单列表 */
         FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
         cell.delegate = self;
+        cell.topLogoNameArrs = self.topLogoNameArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
         

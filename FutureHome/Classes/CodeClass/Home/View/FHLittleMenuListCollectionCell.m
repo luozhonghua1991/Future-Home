@@ -9,10 +9,6 @@
 #import "FHLittleMenuListCollectionCell.h"
 
 @interface FHLittleMenuListCollectionCell ()
-/** 图标 */
-@property (nonatomic, strong) UIImageView *logoImgView;
-/** 名字 */
-@property (nonatomic, strong) UILabel *listNameLabel;
 
 @end
 
@@ -48,10 +44,11 @@
 - (UILabel *)listNameLabel {
     if (!_listNameLabel) {
         _listNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width, 12)];
-        _listNameLabel.text = @"物业服务";
         _listNameLabel.textAlignment = NSTextAlignmentCenter;
         _listNameLabel.font = [UIFont systemFontOfSize:12];
         _listNameLabel.textColor = [UIColor blackColor];
+#warning message
+        _listNameLabel.text = @"物业服务";
     }
     return _listNameLabel;
 }

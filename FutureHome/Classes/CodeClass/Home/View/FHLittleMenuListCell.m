@@ -39,6 +39,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHLittleMenuListCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHLittleMenuListCollectionCell class]) forIndexPath:indexPath];
+    cell.listNameLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
 
     return cell;
 }
