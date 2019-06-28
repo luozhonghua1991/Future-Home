@@ -16,6 +16,7 @@
 #import "FHOwnerServiceController.h"
 #import "FHHealthServicesController.h"
 #import "FHFinancialServiceController.h"
+#import "FHCustomerServiceController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
 /** 导航View视图 */
@@ -30,6 +31,10 @@
 @property (nonatomic, strong) UILabel *realSstateSNameLabel;
 /** 二维码图 */
 @property (nonatomic, strong) UIImageView *codeImgView;
+/** 上面的logoName */
+@property (nonatomic, copy) NSArray *topLogoName;
+/** 下面的logoName */
+@property (nonatomic, copy) NSArray *bottomLogoName;
 
 @end
 
@@ -213,7 +218,8 @@
         [self pushVCWithName:finacial];
     } else if (indexPath.row == 5) {
         /** 客服服务 */
-        
+        FHCustomerServiceController *custom = [[FHCustomerServiceController alloc] init];
+        [self pushVCWithName:custom];
     }
 }
 
