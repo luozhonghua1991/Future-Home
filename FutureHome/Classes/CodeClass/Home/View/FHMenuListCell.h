@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHMenuListCell : UITableViewCell
 
 @property(nonatomic, weak) id<FHMenuListCellDelegate> delegate;
+/** 下面的logoName */
+@property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 
 @end
 

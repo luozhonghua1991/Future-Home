@@ -44,7 +44,17 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.topLogoNameArrs = @[@"扫一扫",@"付款",@"收款",@"生活缴费",@"财富园"];
+    self.topLogoNameArrs = @[@"扫一扫",
+                             @"付款",
+                             @"收款",
+                             @"生活缴费",
+                             @"财富园"];
+    self.bottomLogoNameArrs = @[@"物业服务",
+                                @"业务服务",
+                                @"健康服务",
+                                @"生鲜服务",
+                                @"理财服务",
+                                @"客服服务"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
@@ -131,6 +141,7 @@
         /** 菜单列表数据 */
         FHMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMenuListCell class])];
         cell.delegate = self;
+        cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
