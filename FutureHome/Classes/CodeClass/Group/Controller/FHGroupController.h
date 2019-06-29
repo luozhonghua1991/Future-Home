@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHGroupController : BaseViewController
+@interface FHGroupController : UIViewController
 
 @end
 
