@@ -1,8 +1,8 @@
 //
-//  FHGroupController.h
+//  FHPublicServiceController.h
 //  FutureHome
 //
-//  Created by 同熙传媒 on 2019/6/24.
+//  Created by 同熙传媒 on 2019/6/29.
 //  Copyright © 2019 同熙传媒. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHGroupController : BaseViewController
+@interface FHPublicServiceController : BaseViewController
 
 @end
 

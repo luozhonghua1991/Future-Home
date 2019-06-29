@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHShopingCartController : BaseViewController
+@interface FHShopingCartController : UIViewController
 
 @end
 
