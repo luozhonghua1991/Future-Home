@@ -1251,11 +1251,11 @@
 			isa = PBXGroup;
 			children = (
 				4A6DAB7822C0ADB500F29455 /* YPTabItem.h */,
-				4A6DAB7922C0ADB500F29455 /* YPTabBar.h */,
-				4A6DAB7A22C0ADB500F29455 /* YPTabBarController.h */,
 				4A6DAB7B22C0ADB500F29455 /* YPTabItem.m */,
-				4A6DAB7C22C0ADB500F29455 /* YPTabBarController.m */,
+				4A6DAB7922C0ADB500F29455 /* YPTabBar.h */,
 				4A6DAB7D22C0ADB500F29455 /* YPTabBar.m */,
+				4A6DAB7A22C0ADB500F29455 /* YPTabBarController.h */,
+				4A6DAB7C22C0ADB500F29455 /* YPTabBarController.m */,
 			);
 			path = YPTabBarController;
 			sourceTree = "<group>";

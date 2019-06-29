@@ -26,6 +26,7 @@
 #import "UIView+Extend.h"
 #import "UIlabelTool.h"
 #import "BHInfiniteScrollView.h"
+#import "YPTabbarController.h"
 
 
 //获取当前屏幕的宽高
@@ -61,8 +62,8 @@
 /**
  *  计算等比长宽
  */
-#define ZH_SCALE_SCREEN_Width(winthNumber)  winthNumber
-#define ZH_SCALE_SCREEN_Height(winthNumber)  winthNumber
+#define ZH_SCALE_SCREEN_Width(winthNumber)  (SCREEN_WIDTH*((winthNumber)/(375.0)))
+#define ZH_SCALE_SCREEN_Height(winthNumber)  (SCREEN_HEIGHT*((winthNumber)/(667.0)))
 //颜色RGB值
 #define ZH_COLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 //系统版本号

@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHMyVideoController : BaseViewController
+@interface FHMyVideoController : YPTabBarController
 
 @end
 
