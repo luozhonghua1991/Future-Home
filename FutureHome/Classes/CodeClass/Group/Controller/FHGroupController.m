@@ -56,17 +56,17 @@
     //我的社群 我的视界 商业服务 公共服务
     CGSize size1 = [UIlabelTool sizeWithString:@"我的社群" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     
-    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(10),10, size1.width, self.selectNavView.frame.size.height)title:@"我的社群" tag:1];
+    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"我的社群" tag:1];
     [myGroupBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     
     CGSize size2 = [UIlabelTool sizeWithString:@"我的视界" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),10, size2.width, self.selectNavView.frame.size.height)title:@"我的视界" tag:2];
+    myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"我的视界" tag:2];
     
     CGSize size3 = [UIlabelTool sizeWithString:@"商业服务" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    businssServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myVideoBtn.frame) + ZH_SCALE_SCREEN_Width(35),10, size3.width, self.selectNavView.frame.size.height)title:@"商业服务" tag:3];
+    businssServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myVideoBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size3.width, self.selectNavView.frame.size.height)title:@"商业服务" tag:3];
     
     CGSize size4 = [UIlabelTool sizeWithString:@"公共服务" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    publickServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(businssServiceBtn.frame) + ZH_SCALE_SCREEN_Width(35),10, size4.width, self.selectNavView.frame.size.height)title:@"公共服务" tag:4];
+    publickServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(businssServiceBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size4.width, self.selectNavView.frame.size.height)title:@"公共服务" tag:4];
 }
 
 - (void)fh_setMainScrollView {
@@ -190,7 +190,7 @@
 - (UIView *)selectNavView {
     if (!_selectNavView) {
         _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 44)];
-        _selectNavView.backgroundColor = [UIColor whiteColor];
+        _selectNavView.backgroundColor = [UIColor redColor];
     }
     return _selectNavView;
 }
