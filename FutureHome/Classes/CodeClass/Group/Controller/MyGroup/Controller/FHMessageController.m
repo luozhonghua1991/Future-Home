@@ -16,6 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    self.isHaveNav = NO;
     // Do any additional setup after loading the view.
 }
 

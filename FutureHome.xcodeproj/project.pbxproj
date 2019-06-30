@@ -151,6 +151,14 @@
 		4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */; };
 		4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */; };
 		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
+		4AC67DF022C849C400842C0D /* FHGroupMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DEF22C849C400842C0D /* FHGroupMessageController.m */; };
+		4AC67DF322C84A0500842C0D /* FHCircleHotPointController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DF222C84A0500842C0D /* FHCircleHotPointController.m */; };
+		4AC67DF622C84A4F00842C0D /* FHFriendLisController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DF522C84A4F00842C0D /* FHFriendLisController.m */; };
+		4AC67DFA22C84CB800842C0D /* FHMyVideosController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DF922C84CB800842C0D /* FHMyVideosController.m */; };
+		4AC67DFD22C84D1A00842C0D /* FHBaseTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DFC22C84D1A00842C0D /* FHBaseTabbarController.m */; };
+		4AC67E0022C84DE200842C0D /* FHMyPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DFF22C84DE200842C0D /* FHMyPhotoController.m */; };
+		4AC67E0322C84E2500842C0D /* FHFollowVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0222C84E2500842C0D /* FHFollowVideoController.m */; };
+		4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0522C84E5A00842C0D /* FHOtherFollowController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -468,6 +476,22 @@
 		4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionViewCell.m; sourceTree = "<group>"; };
 		4AC67DE322C8481200842C0D /* FHMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMessageController.h; sourceTree = "<group>"; };
 		4AC67DE422C8481200842C0D /* FHMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMessageController.m; sourceTree = "<group>"; };
+		4AC67DEE22C849C400842C0D /* FHGroupMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGroupMessageController.h; sourceTree = "<group>"; };
+		4AC67DEF22C849C400842C0D /* FHGroupMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGroupMessageController.m; sourceTree = "<group>"; };
+		4AC67DF122C84A0500842C0D /* FHCircleHotPointController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCircleHotPointController.h; sourceTree = "<group>"; };
+		4AC67DF222C84A0500842C0D /* FHCircleHotPointController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCircleHotPointController.m; sourceTree = "<group>"; };
+		4AC67DF422C84A4F00842C0D /* FHFriendLisController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFriendLisController.h; sourceTree = "<group>"; };
+		4AC67DF522C84A4F00842C0D /* FHFriendLisController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFriendLisController.m; sourceTree = "<group>"; };
+		4AC67DF822C84CB800842C0D /* FHMyVideosController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyVideosController.h; sourceTree = "<group>"; };
+		4AC67DF922C84CB800842C0D /* FHMyVideosController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyVideosController.m; sourceTree = "<group>"; };
+		4AC67DFB22C84D1A00842C0D /* FHBaseTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHBaseTabbarController.h; sourceTree = "<group>"; };
+		4AC67DFC22C84D1A00842C0D /* FHBaseTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHBaseTabbarController.m; sourceTree = "<group>"; };
+		4AC67DFE22C84DE200842C0D /* FHMyPhotoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyPhotoController.h; sourceTree = "<group>"; };
+		4AC67DFF22C84DE200842C0D /* FHMyPhotoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyPhotoController.m; sourceTree = "<group>"; };
+		4AC67E0122C84E2500842C0D /* FHFollowVideoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFollowVideoController.h; sourceTree = "<group>"; };
+		4AC67E0222C84E2500842C0D /* FHFollowVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFollowVideoController.m; sourceTree = "<group>"; };
+		4AC67E0422C84E5A00842C0D /* FHOtherFollowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOtherFollowController.h; sourceTree = "<group>"; };
+		4AC67E0522C84E5A00842C0D /* FHOtherFollowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOtherFollowController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -595,6 +619,7 @@
 		4A6DA9F622C06D0D00F29455 /* Group */ = {
 			isa = PBXGroup;
 			children = (
+				4A6DAA0422C0705D00F29455 /* Controller */,
 				4A6DAA0522C070BF00F29455 /* Model */,
 				4A6DAA0622C070C600F29455 /* View */,
 			);
@@ -750,21 +775,18 @@
 			children = (
 				4A59F97022C0B8B700867031 /* FHGroupController.h */,
 				4A59F97122C0B8B700867031 /* FHGroupController.m */,
-				4AC67DE622C8481E00842C0D /* 我的社群 */,
-				4AC67DEA22C8485200842C0D /* 我的视界 */,
-				4A448CE322C70437003D0712 /* FHBusinessServicesController.h */,
-				4A448CE422C70437003D0712 /* FHBusinessServicesController.m */,
+				4AC67DE622C8481E00842C0D /* MyGroup */,
+				4AC67DEA22C8485200842C0D /* MyVideo */,
+				4AC67DF722C84BC600842C0D /* BusinessService */,
 				4A448CE622C7051B003D0712 /* FHPublicServiceController.h */,
 				4A448CE722C7051B003D0712 /* FHPublicServiceController.m */,
 			);
-			name = Controller;
-			path = ../Controller;
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		4A6DAA0522C070BF00F29455 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4A6DAA0422C0705D00F29455 /* Controller */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -850,6 +872,8 @@
 			children = (
 				4A59F95B22C0B68F00867031 /* BaseViewController.h */,
 				4A59F95C22C0B68F00867031 /* BaseViewController.m */,
+				4AC67DFB22C84D1A00842C0D /* FHBaseTabbarController.h */,
+				4AC67DFC22C84D1A00842C0D /* FHBaseTabbarController.m */,
 			);
 			path = BaseClass;
 			sourceTree = "<group>";
@@ -1315,14 +1339,12 @@
 			path = CommonViews;
 			sourceTree = "<group>";
 		};
-		4AC67DE622C8481E00842C0D /* 我的社群 */ = {
+		4AC67DE622C8481E00842C0D /* MyGroup */ = {
 			isa = PBXGroup;
 			children = (
-				4AC67DE922C8484400842C0D /* View */,
-				4AC67DE822C8483F00842C0D /* Model */,
 				4AC67DE722C8482D00842C0D /* Controller */,
 			);
-			path = "我的社群";
+			path = MyGroup;
 			sourceTree = "<group>";
 		};
 		4AC67DE722C8482D00842C0D /* Controller */ = {
@@ -1332,46 +1354,22 @@
 				4A448CDE22C702E5003D0712 /* FHMyGroupController.m */,
 				4AC67DE322C8481200842C0D /* FHMessageController.h */,
 				4AC67DE422C8481200842C0D /* FHMessageController.m */,
+				4AC67DEE22C849C400842C0D /* FHGroupMessageController.h */,
+				4AC67DEF22C849C400842C0D /* FHGroupMessageController.m */,
+				4AC67DF122C84A0500842C0D /* FHCircleHotPointController.h */,
+				4AC67DF222C84A0500842C0D /* FHCircleHotPointController.m */,
+				4AC67DF422C84A4F00842C0D /* FHFriendLisController.h */,
+				4AC67DF522C84A4F00842C0D /* FHFriendLisController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
 		};
-		4AC67DE822C8483F00842C0D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		4AC67DE922C8484400842C0D /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		4AC67DEA22C8485200842C0D /* 我的视界 */ = {
+		4AC67DEA22C8485200842C0D /* MyVideo */ = {
 			isa = PBXGroup;
 			children = (
 				4AC67DED22C8487200842C0D /* Controller */,
-				4AC67DEC22C8486E00842C0D /* View */,
-				4AC67DEB22C8486800842C0D /* Model */,
 			);
-			path = "我的视界";
-			sourceTree = "<group>";
-		};
-		4AC67DEB22C8486800842C0D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		4AC67DEC22C8486E00842C0D /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
+			path = MyVideo;
 			sourceTree = "<group>";
 		};
 		4AC67DED22C8487200842C0D /* Controller */ = {
@@ -1379,8 +1377,25 @@
 			children = (
 				4A448CE022C70303003D0712 /* FHMyVideoController.h */,
 				4A448CE122C70303003D0712 /* FHMyVideoController.m */,
+				4AC67DF822C84CB800842C0D /* FHMyVideosController.h */,
+				4AC67DF922C84CB800842C0D /* FHMyVideosController.m */,
+				4AC67DFE22C84DE200842C0D /* FHMyPhotoController.h */,
+				4AC67DFF22C84DE200842C0D /* FHMyPhotoController.m */,
+				4AC67E0122C84E2500842C0D /* FHFollowVideoController.h */,
+				4AC67E0222C84E2500842C0D /* FHFollowVideoController.m */,
+				4AC67E0422C84E5A00842C0D /* FHOtherFollowController.h */,
+				4AC67E0522C84E5A00842C0D /* FHOtherFollowController.m */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		4AC67DF722C84BC600842C0D /* BusinessService */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CE322C70437003D0712 /* FHBusinessServicesController.h */,
+				4A448CE422C70437003D0712 /* FHBusinessServicesController.m */,
+			);
+			path = BusinessService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1518,6 +1533,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AC67DFD22C84D1A00842C0D /* FHBaseTabbarController.m in Sources */,
+				4AC67DFA22C84CB800842C0D /* FHMyVideosController.m in Sources */,
 				4A6DAA9A22C0AD7C00F29455 /* LCTabBarController.m in Sources */,
 				4A6DAA4122C0AD3100F29455 /* AFURLSessionManager.m in Sources */,
 				4A6DAB6822C0ADAF00F29455 /* UIView+MJExtension.m in Sources */,
@@ -1559,6 +1576,8 @@
 				4A6DAB4622C0ADAF00F29455 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4A6DAA3822C0AD3100F29455 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4A6DAB7322C0ADAF00F29455 /* MJRefreshHeader.m in Sources */,
+				4AC67DF022C849C400842C0D /* FHGroupMessageController.m in Sources */,
+				4AC67DF622C84A4F00842C0D /* FHFriendLisController.m in Sources */,
 				4A59F96C22C0B6D100867031 /* UIColor+Extend.m in Sources */,
 				4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */,
 				4A59F98622C0D80A00867031 /* UIlabelTool.m in Sources */,
@@ -1589,12 +1608,14 @@
 				4A6DAB5A22C0ADAF00F29455 /* NSObject+MJKeyValue.m in Sources */,
 				4A6DAB5922C0ADAF00F29455 /* MJPropertyType.m in Sources */,
 				4A6DAA7A22C0AD4C00F29455 /* IQUIView+Hierarchy.m in Sources */,
+				4AC67DF322C84A0500842C0D /* FHCircleHotPointController.m in Sources */,
 				4A6DAB4222C0ADAF00F29455 /* UIImage+WebP.m in Sources */,
 				4A6DAA8A22C0AD6100F29455 /* GDWindowViewController.m in Sources */,
 				4A6DAB6022C0ADAF00F29455 /* NSString+MJExtension.m in Sources */,
 				4A6DA9D322C05C7000F29455 /* main.m in Sources */,
 				4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */,
 				4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */,
+				4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */,
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
 				4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */,
@@ -1605,6 +1626,7 @@
 				4A6DAB4B22C0ADAF00F29455 /* UIImage+GIF.m in Sources */,
 				4A6DAB6E22C0ADAF00F29455 /* MJRefreshAutoNormalFooter.m in Sources */,
 				4A6DAB6122C0ADAF00F29455 /* MJPropertyKey.m in Sources */,
+				4AC67E0022C84DE200842C0D /* FHMyPhotoController.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
 				4A6DAB4922C0ADAF00F29455 /* FLAnimatedImageView.m in Sources */,
@@ -1630,6 +1652,7 @@
 				4A6DAB7F22C0ADB500F29455 /* YPTabBarController.m in Sources */,
 				4A6DAA7222C0AD4C00F29455 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */,
+				4AC67E0322C84E2500842C0D /* FHFollowVideoController.m in Sources */,
 				4A6DAA7B22C0AD4C00F29455 /* IQUIViewController+Additions.m in Sources */,
 				4A6DAB5122C0ADAF00F29455 /* NSData+ImageContentType.m in Sources */,
 				4A6DAB7622C0ADAF00F29455 /* MJRefreshComponent.m in Sources */,

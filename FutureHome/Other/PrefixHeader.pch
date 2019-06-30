@@ -27,6 +27,7 @@
 #import "UIlabelTool.h"
 #import "BHInfiniteScrollView.h"
 #import "YPTabbarController.h"
+#import "FHBaseTabbarController.h"
 
 
 //获取当前屏幕的宽高
