@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "YPTabBar.h"
 #import "YPTabItem.h"
+#import "BaseViewController.h"
 
-@interface YPTabBarController : UIViewController <YPTabBarDelegate>
+@interface YPTabBarController : BaseViewController <YPTabBarDelegate>
 
 @property (nonatomic, strong, readonly) YPTabBar *tabBar;
 

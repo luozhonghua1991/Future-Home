@@ -150,6 +150,7 @@
 		4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */; };
 		4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */; };
 		4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */; };
+		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -465,6 +466,8 @@
 		4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionCell.m; sourceTree = "<group>"; };
 		4A9282F122C46BCC006509C3 /* FHCommonCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonCollectionViewCell.h; sourceTree = "<group>"; };
 		4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionViewCell.m; sourceTree = "<group>"; };
+		4AC67DE322C8481200842C0D /* FHMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMessageController.h; sourceTree = "<group>"; };
+		4AC67DE422C8481200842C0D /* FHMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMessageController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -747,10 +750,8 @@
 			children = (
 				4A59F97022C0B8B700867031 /* FHGroupController.h */,
 				4A59F97122C0B8B700867031 /* FHGroupController.m */,
-				4A448CDD22C702E5003D0712 /* FHMyGroupController.h */,
-				4A448CDE22C702E5003D0712 /* FHMyGroupController.m */,
-				4A448CE022C70303003D0712 /* FHMyVideoController.h */,
-				4A448CE122C70303003D0712 /* FHMyVideoController.m */,
+				4AC67DE622C8481E00842C0D /* 我的社群 */,
+				4AC67DEA22C8485200842C0D /* 我的视界 */,
 				4A448CE322C70437003D0712 /* FHBusinessServicesController.h */,
 				4A448CE422C70437003D0712 /* FHBusinessServicesController.m */,
 				4A448CE622C7051B003D0712 /* FHPublicServiceController.h */,
@@ -1314,6 +1315,74 @@
 			path = CommonViews;
 			sourceTree = "<group>";
 		};
+		4AC67DE622C8481E00842C0D /* 我的社群 */ = {
+			isa = PBXGroup;
+			children = (
+				4AC67DE922C8484400842C0D /* View */,
+				4AC67DE822C8483F00842C0D /* Model */,
+				4AC67DE722C8482D00842C0D /* Controller */,
+			);
+			path = "我的社群";
+			sourceTree = "<group>";
+		};
+		4AC67DE722C8482D00842C0D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CDD22C702E5003D0712 /* FHMyGroupController.h */,
+				4A448CDE22C702E5003D0712 /* FHMyGroupController.m */,
+				4AC67DE322C8481200842C0D /* FHMessageController.h */,
+				4AC67DE422C8481200842C0D /* FHMessageController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4AC67DE822C8483F00842C0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AC67DE922C8484400842C0D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AC67DEA22C8485200842C0D /* 我的视界 */ = {
+			isa = PBXGroup;
+			children = (
+				4AC67DED22C8487200842C0D /* Controller */,
+				4AC67DEC22C8486E00842C0D /* View */,
+				4AC67DEB22C8486800842C0D /* Model */,
+			);
+			path = "我的视界";
+			sourceTree = "<group>";
+		};
+		4AC67DEB22C8486800842C0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AC67DEC22C8486E00842C0D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AC67DED22C8487200842C0D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CE022C70303003D0712 /* FHMyVideoController.h */,
+				4A448CE122C70303003D0712 /* FHMyVideoController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1529,6 +1598,7 @@
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
 				4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */,
+				4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */,
 				4A6DAA4822C0AD3D00F29455 /* FDActionSheet.m in Sources */,
 				4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */,
 				4A6DAB6622C0ADAF00F29455 /* UIScrollView+MJExtension.m in Sources */,
