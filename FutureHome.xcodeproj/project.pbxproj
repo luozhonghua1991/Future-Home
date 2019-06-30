@@ -159,6 +159,10 @@
 		4AC67E0022C84DE200842C0D /* FHMyPhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DFF22C84DE200842C0D /* FHMyPhotoController.m */; };
 		4AC67E0322C84E2500842C0D /* FHFollowVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0222C84E2500842C0D /* FHFollowVideoController.m */; };
 		4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0522C84E5A00842C0D /* FHOtherFollowController.m */; };
+		4AC67E0A22C88FB300842C0D /* FHFollowListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0922C88FB300842C0D /* FHFollowListController.m */; };
+		4AC67E0D22C890E700842C0D /* FHSearchBelowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0C22C890E700842C0D /* FHSearchBelowController.m */; };
+		4AC67E1022C8910300842C0D /* FHSearchCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0F22C8910300842C0D /* FHSearchCategoryController.m */; };
+		4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E1222C892A300842C0D /* FHMessageHistoryController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -492,6 +496,14 @@
 		4AC67E0222C84E2500842C0D /* FHFollowVideoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFollowVideoController.m; sourceTree = "<group>"; };
 		4AC67E0422C84E5A00842C0D /* FHOtherFollowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOtherFollowController.h; sourceTree = "<group>"; };
 		4AC67E0522C84E5A00842C0D /* FHOtherFollowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOtherFollowController.m; sourceTree = "<group>"; };
+		4AC67E0822C88FB300842C0D /* FHFollowListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFollowListController.h; sourceTree = "<group>"; };
+		4AC67E0922C88FB300842C0D /* FHFollowListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFollowListController.m; sourceTree = "<group>"; };
+		4AC67E0B22C890E700842C0D /* FHSearchBelowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSearchBelowController.h; sourceTree = "<group>"; };
+		4AC67E0C22C890E700842C0D /* FHSearchBelowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSearchBelowController.m; sourceTree = "<group>"; };
+		4AC67E0E22C8910300842C0D /* FHSearchCategoryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSearchCategoryController.h; sourceTree = "<group>"; };
+		4AC67E0F22C8910300842C0D /* FHSearchCategoryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSearchCategoryController.m; sourceTree = "<group>"; };
+		4AC67E1122C892A300842C0D /* FHMessageHistoryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMessageHistoryController.h; sourceTree = "<group>"; };
+		4AC67E1222C892A300842C0D /* FHMessageHistoryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMessageHistoryController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1377,6 +1389,14 @@
 			children = (
 				4A448CE322C70437003D0712 /* FHBusinessServicesController.h */,
 				4A448CE422C70437003D0712 /* FHBusinessServicesController.m */,
+				4AC67E0822C88FB300842C0D /* FHFollowListController.h */,
+				4AC67E0922C88FB300842C0D /* FHFollowListController.m */,
+				4AC67E0B22C890E700842C0D /* FHSearchBelowController.h */,
+				4AC67E0C22C890E700842C0D /* FHSearchBelowController.m */,
+				4AC67E0E22C8910300842C0D /* FHSearchCategoryController.h */,
+				4AC67E0F22C8910300842C0D /* FHSearchCategoryController.m */,
+				4AC67E1122C892A300842C0D /* FHMessageHistoryController.h */,
+				4AC67E1222C892A300842C0D /* FHMessageHistoryController.m */,
 			);
 			path = BusinessService;
 			sourceTree = "<group>";
@@ -1561,6 +1581,7 @@
 				4A6DAB6F22C0ADAF00F29455 /* MJRefreshNormalHeader.m in Sources */,
 				4A6DAA3C22C0AD3100F29455 /* UIWebView+AFNetworking.m in Sources */,
 				4A6DAB6422C0ADAF00F29455 /* MJRefreshConst.m in Sources */,
+				4AC67E0A22C88FB300842C0D /* FHFollowListController.m in Sources */,
 				4A6DAB4422C0ADAF00F29455 /* SDWebImageManager.m in Sources */,
 				4A59F98222C0D61600867031 /* myButton.m in Sources */,
 				4A6DAB4022C0ADAF00F29455 /* NJKWebViewProgressView.m in Sources */,
@@ -1579,6 +1600,7 @@
 				4A6DAA9622C0AD7C00F29455 /* LCTabBarBadge.m in Sources */,
 				4A6DAB4522C0ADAF00F29455 /* SDWebImageDecoder.m in Sources */,
 				4A6DAB6D22C0ADAF00F29455 /* MJRefreshAutoGifFooter.m in Sources */,
+				4AC67E1022C8910300842C0D /* FHSearchCategoryController.m in Sources */,
 				4A6DAA3722C0AD3100F29455 /* UIRefreshControl+AFNetworking.m in Sources */,
 				4A6DAA4022C0AD3100F29455 /* AFHTTPSessionManager.m in Sources */,
 				4A448CE222C70303003D0712 /* FHMyVideoController.m in Sources */,
@@ -1621,8 +1643,10 @@
 				4AC67E0022C84DE200842C0D /* FHMyPhotoController.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
+				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
 				4A6DAB4922C0ADAF00F29455 /* FLAnimatedImageView.m in Sources */,
 				4A6DAB5822C0ADAF00F29455 /* MBProgressHUD.m in Sources */,
+				4AC67E0D22C890E700842C0D /* FHSearchBelowController.m in Sources */,
 				4A6DAB4722C0ADAF00F29455 /* FLAnimatedImageView+WebCache.m in Sources */,
 				4A6DAA4422C0AD3100F29455 /* AFSecurityPolicy.m in Sources */,
 				4A6DAA9822C0AD7C00F29455 /* LCTabBarItem.m in Sources */,
