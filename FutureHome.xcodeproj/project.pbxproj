@@ -778,8 +778,7 @@
 				4AC67DE622C8481E00842C0D /* MyGroup */,
 				4AC67DEA22C8485200842C0D /* MyVideo */,
 				4AC67DF722C84BC600842C0D /* BusinessService */,
-				4A448CE622C7051B003D0712 /* FHPublicServiceController.h */,
-				4A448CE722C7051B003D0712 /* FHPublicServiceController.m */,
+				4AC67E0722C8513100842C0D /* PublicService */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1342,14 +1341,6 @@
 		4AC67DE622C8481E00842C0D /* MyGroup */ = {
 			isa = PBXGroup;
 			children = (
-				4AC67DE722C8482D00842C0D /* Controller */,
-			);
-			path = MyGroup;
-			sourceTree = "<group>";
-		};
-		4AC67DE722C8482D00842C0D /* Controller */ = {
-			isa = PBXGroup;
-			children = (
 				4A448CDD22C702E5003D0712 /* FHMyGroupController.h */,
 				4A448CDE22C702E5003D0712 /* FHMyGroupController.m */,
 				4AC67DE322C8481200842C0D /* FHMessageController.h */,
@@ -1361,18 +1352,10 @@
 				4AC67DF422C84A4F00842C0D /* FHFriendLisController.h */,
 				4AC67DF522C84A4F00842C0D /* FHFriendLisController.m */,
 			);
-			path = Controller;
+			path = MyGroup;
 			sourceTree = "<group>";
 		};
 		4AC67DEA22C8485200842C0D /* MyVideo */ = {
-			isa = PBXGroup;
-			children = (
-				4AC67DED22C8487200842C0D /* Controller */,
-			);
-			path = MyVideo;
-			sourceTree = "<group>";
-		};
-		4AC67DED22C8487200842C0D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				4A448CE022C70303003D0712 /* FHMyVideoController.h */,
@@ -1386,7 +1369,7 @@
 				4AC67E0422C84E5A00842C0D /* FHOtherFollowController.h */,
 				4AC67E0522C84E5A00842C0D /* FHOtherFollowController.m */,
 			);
-			path = Controller;
+			path = MyVideo;
 			sourceTree = "<group>";
 		};
 		4AC67DF722C84BC600842C0D /* BusinessService */ = {
@@ -1396,6 +1379,15 @@
 				4A448CE422C70437003D0712 /* FHBusinessServicesController.m */,
 			);
 			path = BusinessService;
+			sourceTree = "<group>";
+		};
+		4AC67E0722C8513100842C0D /* PublicService */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CE622C7051B003D0712 /* FHPublicServiceController.h */,
+				4A448CE722C7051B003D0712 /* FHPublicServiceController.m */,
+			);
+			path = PublicService;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
