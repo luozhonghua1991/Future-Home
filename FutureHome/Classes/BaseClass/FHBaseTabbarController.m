@@ -21,7 +21,7 @@
     self.tabBar.backgroundColor = [UIColor greenColor];
     self.tabBar.itemTitleColor = [UIColor blackColor];
     self.tabBar.itemTitleSelectedColor = [UIColor blueColor];
-    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:16];
     self.tabBar.itemTitleSelectedFont = [UIFont fontWithName:@"PingFangSC-Medium" size:16];
     if (KIsiPhoneX) {
         [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(42, 33, 0, 33) tapSwitchAnimated:YES];
