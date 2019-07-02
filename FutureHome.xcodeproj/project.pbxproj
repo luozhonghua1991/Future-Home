@@ -150,6 +150,7 @@
 		4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */; };
 		4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */; };
 		4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */; };
+		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
 		4AC67DF022C849C400842C0D /* FHGroupMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DEF22C849C400842C0D /* FHGroupMessageController.m */; };
 		4AC67DF322C84A0500842C0D /* FHCircleHotPointController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DF222C84A0500842C0D /* FHCircleHotPointController.m */; };
@@ -490,6 +491,8 @@
 		4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionCell.m; sourceTree = "<group>"; };
 		4A9282F122C46BCC006509C3 /* FHCommonCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonCollectionViewCell.h; sourceTree = "<group>"; };
 		4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionViewCell.m; sourceTree = "<group>"; };
+		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
+		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AC67DE322C8481200842C0D /* FHMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMessageController.h; sourceTree = "<group>"; };
 		4AC67DE422C8481200842C0D /* FHMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMessageController.m; sourceTree = "<group>"; };
 		4AC67DEE22C849C400842C0D /* FHGroupMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGroupMessageController.h; sourceTree = "<group>"; };
@@ -900,6 +903,8 @@
 		4A6DAA0E22C07CBA00F29455 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */,
+				4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1767,6 +1772,7 @@
 				4A6DAB6022C0ADAF00F29455 /* NSString+MJExtension.m in Sources */,
 				4A6DA9D322C05C7000F29455 /* main.m in Sources */,
 				4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */,
+				4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */,
 				4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */,
 				4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */,
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
