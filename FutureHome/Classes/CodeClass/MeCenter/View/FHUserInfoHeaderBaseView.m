@@ -18,18 +18,32 @@
 }
 
 - (void)fh_setUpUI {
-    
+    [self addSubview:self.topLogLabel];
+    [self addSubview:self.bottomLogLabel];
 }
+
 
 #pragma mark - 懒加载
 - (UILabel *)topLogLabel {
     if (!_topLogLabel) {
-        _topLogLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 0, 100, 14)];
+        _topLogLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, SCREEN_WIDTH / 4, 14)];
         _topLogLabel.text = @"许大宝~";
         _topLogLabel.textColor = [UIColor blackColor];
         _topLogLabel.textAlignment = NSTextAlignmentCenter;
+        _topLogLabel.font = [UIFont systemFontOfSize:14];
     }
     return _topLogLabel;
+}
+
+- (UILabel *)bottomLogLabel {
+    if (!_bottomLogLabel) {
+        _bottomLogLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 29 + 5, SCREEN_WIDTH / 4, 12)];
+        _bottomLogLabel.text = @"许大宝~";
+        _bottomLogLabel.textColor = [UIColor lightGrayColor];
+        _bottomLogLabel.textAlignment = NSTextAlignmentCenter;
+        _bottomLogLabel.font = [UIFont systemFontOfSize:12];
+    }
+    return _bottomLogLabel;
 }
 
 @end

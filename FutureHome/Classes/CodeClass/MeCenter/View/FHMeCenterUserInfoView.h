@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHUserInfoHeaderBaseView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,6 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *userNameLabel;
 /** 二维码图标 */
 @property (nonatomic, strong) UIImageView *codeImgView;
+/** 好友 */
+@property (nonatomic, strong) FHUserInfoHeaderBaseView *friendView;
+/** 群组 */
+@property (nonatomic, strong) FHUserInfoHeaderBaseView *groupView;
+/** 商家关注 */
+@property (nonatomic, strong) FHUserInfoHeaderBaseView *followView;
+/** 我的动态 */
+@property (nonatomic, strong) FHUserInfoHeaderBaseView *myView;
 
 @end
 

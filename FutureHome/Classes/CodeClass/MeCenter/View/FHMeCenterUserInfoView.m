@@ -9,12 +9,24 @@
 #import "FHMeCenterUserInfoView.h"
 
 @interface FHMeCenterUserInfoView ()
+/** 上面的线 */
+@property (nonatomic, strong) UIView *topLineView;
 /** 上面部分的视图 */
 @property (nonatomic, strong) UIView  *topContentView;
 /** 提示label */
 @property (nonatomic, strong) UILabel *logoLabel;
 /** 下面部分的视图 */
 @property (nonatomic, strong) UIView  *bottomContentView;
+/** 下面的线 */
+@property (nonatomic, strong) UIView *bottomLineView;
+
+/** 左面的线 */
+@property (nonatomic, strong) UIView *leftLineView;
+/** 中间的线 */
+@property (nonatomic, strong) UIView *centerLineView;
+/** 右边的线 */
+@property (nonatomic, strong) UIView *rightLineView;
+
 
 @end
 
@@ -29,6 +41,7 @@
 
 - (void)fh_setUpUI {
     [self addSubview:self.topContentView];
+    [self.topContentView addSubview:self.topLineView];
     [self.topContentView addSubview:self.userHeaderImgView];
     [self.topContentView addSubview:self.userNameLabel];
     self.userNameLabel.centerY = self.topContentView.height / 2;
@@ -36,6 +49,14 @@
     [self.topContentView addSubview:self.logoLabel];
     
     [self addSubview:self.bottomContentView];
+    [self.bottomContentView addSubview:self.leftLineView];
+    [self.bottomContentView addSubview:self.centerLineView];
+    [self.bottomContentView addSubview:self.rightLineView];
+    [self.bottomContentView addSubview:self.friendView];
+    [self.bottomContentView addSubview:self.groupView];
+    [self.bottomContentView addSubview:self.followView];
+    [self.bottomContentView addSubview:self.myView];
+    [self addSubview:self.bottomLineView];
 }
 
 
@@ -43,9 +64,17 @@
 - (UIView *)topContentView {
     if (!_topContentView) {
         _topContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 85)];
-        _topContentView.backgroundColor = [UIColor redColor];
+//        _topContentView.backgroundColor = [UIColor redColor];
     }
     return _topContentView;
+}
+
+- (UIView *)topLineView {
+    if (!_topLineView) {
+        _topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 84.5, SCREEN_WIDTH, 0.5)];
+        _topLineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _topLineView;
 }
 
 - (UIImageView *)userHeaderImgView {
@@ -88,9 +117,69 @@
 - (UIView *)bottomContentView {
     if (!_bottomContentView) {
         _bottomContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 85, SCREEN_WIDTH, 65)];
-        _bottomContentView.backgroundColor = [UIColor greenColor];
+//        _bottomContentView.backgroundColor = [UIColor greenColor];
     }
     return _bottomContentView;
+}
+
+- (UIView *)bottomLineView {
+    if (!_bottomLineView) {
+        _bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 149.5, SCREEN_WIDTH, 0.5)];
+        _bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _bottomLineView;
+}
+
+- (UIView *)leftLineView {
+    if (!_leftLineView) {
+        _leftLineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4, 10, 0.5, 45)];
+        _leftLineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _leftLineView;
+}
+
+- (UIView *)centerLineView {
+    if (!_centerLineView) {
+        _centerLineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4 * 2, 10, 0.5, 45)];
+        _centerLineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _centerLineView;
+}
+
+- (UIView *)rightLineView {
+    if (!_rightLineView) {
+        _rightLineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4 * 3, 10, 0.5, 45)];
+        _rightLineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _rightLineView;
+}
+
+- (FHUserInfoHeaderBaseView *)friendView {
+    if (!_friendView) {
+        _friendView = [[FHUserInfoHeaderBaseView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH / 4, 65)];
+    }
+    return _friendView;
+}
+
+- (FHUserInfoHeaderBaseView *)groupView {
+    if (!_groupView) {
+        _groupView = [[FHUserInfoHeaderBaseView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4, 0, SCREEN_WIDTH / 4, 65)];
+    }
+    return _groupView;
+}
+
+- (FHUserInfoHeaderBaseView *)followView {
+    if (!_followView) {
+        _followView = [[FHUserInfoHeaderBaseView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4 * 2, 0, SCREEN_WIDTH / 4, 65)];
+    }
+    return _followView;
+}
+
+- (FHUserInfoHeaderBaseView *)myView {
+    if (!_myView) {
+        _myView = [[FHUserInfoHeaderBaseView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4 *3, 0, SCREEN_WIDTH / 4, 65)];
+    }
+    return _myView;
 }
 
 @end
