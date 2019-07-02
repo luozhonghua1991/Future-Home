@@ -18,9 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 二维码图标 */
 @property (nonatomic, strong) UIImageView *codeImgView;
 
-
-
-
 @end
 
 NS_ASSUME_NONNULL_END
