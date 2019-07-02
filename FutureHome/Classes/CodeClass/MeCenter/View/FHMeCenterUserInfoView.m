@@ -29,12 +29,7 @@
 
 - (void)fh_setUpUI {
     [self addSubview:self.topContentView];
-    [self.topContentView addSubview:self.userHeaderImgView];
     [self.topContentView addSubview:self.userNameLabel];
-    self.userNameLabel.centerY = self.topContentView.height / 2;
-    [self.topContentView addSubview:self.codeImgView];
-    [self.topContentView addSubview:self.logoLabel];
-    
     [self addSubview:self.bottomContentView];
 }
 
@@ -54,35 +49,6 @@
         _userHeaderImgView.backgroundColor = [UIColor blueColor];
     }
     return _userHeaderImgView;
-}
-
-- (UILabel *)userNameLabel {
-    if (!_userNameLabel) {
-        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 0, 100, 16)];
-        _userNameLabel.text = @"南山一叶";
-        _userNameLabel.textColor = [UIColor blackColor];
-        _userNameLabel.textAlignment = NSTextAlignmentLeft;
-    }
-    return _userNameLabel;
-}
-
-- (UIImageView *)codeImgView {
-    if (!_codeImgView) {
-        _codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75, 5, 65, 65)];
-        _codeImgView.backgroundColor = [UIColor blueColor];
-    }
-    return _codeImgView;
-}
-
-- (UILabel *)logoLabel {
-    if (!_logoLabel) {
-        _logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 115, 72, 100, 10)];
-        _logoLabel.text = @"我的二维码";
-        _logoLabel.font = [UIFont systemFontOfSize:10];
-        _logoLabel.textColor = [UIColor blackColor];
-        _logoLabel.textAlignment = NSTextAlignmentRight;
-    }
-    return _logoLabel;
 }
 
 - (UIView *)bottomContentView {
