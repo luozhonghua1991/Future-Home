@@ -11,6 +11,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHMeCenterUserInfoView : UIView
+/** 用户头像 */
+@property (nonatomic, strong) UIImageView *userHeaderImgView;
+/** 用户名字label */
+@property (nonatomic, strong) UILabel *userNameLabel;
+/** 二维码图标 */
+@property (nonatomic, strong) UIImageView *codeImgView;
+
+
+
 
 @end
 

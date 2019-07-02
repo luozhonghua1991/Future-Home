@@ -7,16 +7,17 @@
 //  个人中心
 
 #import "FHMeCenterController.h"
+#import "FHMeCenterUserInfoView.h"
 
 @interface FHMeCenterController () <UITableViewDelegate,UITableViewDataSource>
 /** 个人中心列表数据 */
 @property (nonatomic, strong) UITableView *meCenterTable;
 /** 个人信息提示数据 */
 @property (nonatomic, copy) NSArray *logoArrs;
+/** 头视图 */
+@property (nonatomic, strong) FHMeCenterUserInfoView *meCenterHeaderView;
 /** 表尾部视图 */
 @property (nonatomic, strong) UIView *meCenterFooterView;
-
-
 
 @end
 
@@ -25,14 +26,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"个人中心";
-    self.logoArrs = @[@"账户信息",@"我的云数据",@"我的收藏",@"实名认证",@"支付设置",@"隐私设置",@"客户服务",@"关于未来家园"];
+    self.logoArrs = @[@"账户信息",
+                      @"我的云数据",
+                      @"我的收藏",
+                      @"实名认证",
+                      @"支付设置",
+                      @"隐私设置",
+                      @"客户服务",
+                      @"账户申请",
+                      @"关于未来家园"];
     [self.view addSubview:self.meCenterTable];
+    self.meCenterTable.tableHeaderView = self.meCenterHeaderView;
+    self.meCenterHeaderView.height = 150;
     self.meCenterTable.tableFooterView = self.meCenterFooterView;
     self.meCenterFooterView.height = 70;
 }
-
-
-
 
 
 #pragma mark  -- tableViewDelagate
@@ -116,6 +124,13 @@
         [_meCenterFooterView addSubview:btn];
     }
     return _meCenterFooterView;
+}
+
+- (FHMeCenterUserInfoView *)meCenterHeaderView {
+    if (!_meCenterHeaderView) {
+        _meCenterHeaderView = [[FHMeCenterUserInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 150)];
+    }
+    return _meCenterHeaderView;
 }
 
 @end
