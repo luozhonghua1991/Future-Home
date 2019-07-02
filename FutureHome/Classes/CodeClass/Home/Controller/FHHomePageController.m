@@ -224,7 +224,7 @@
         [self pushVCWithName:health];
     } else if (indexPath.row == 3) {
         /** 生鲜服务 */
-        self.tabBarController.selectedIndex = 2;
+        
     } else if (indexPath.row == 4) {
         /** 理财服务 */
         FHFinancialServiceController *finacial = [[FHFinancialServiceController alloc] init];

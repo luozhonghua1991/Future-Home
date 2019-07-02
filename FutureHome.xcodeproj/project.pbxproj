@@ -163,6 +163,18 @@
 		4AC67E0D22C890E700842C0D /* FHSearchBelowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0C22C890E700842C0D /* FHSearchBelowController.m */; };
 		4AC67E1022C8910300842C0D /* FHSearchCategoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E0F22C8910300842C0D /* FHSearchCategoryController.m */; };
 		4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E1222C892A300842C0D /* FHMessageHistoryController.m */; };
+		4AC67E1A22C8A09300842C0D /* FHFreshShoppingMallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E1922C8A09300842C0D /* FHFreshShoppingMallController.m */; };
+		4AC67E1D22C8A24300842C0D /* FHBuinessListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E1C22C8A24300842C0D /* FHBuinessListController.m */; };
+		4AC67E2022C8A6FA00842C0D /* FHLittleShopListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E1F22C8A6FA00842C0D /* FHLittleShopListController.m */; };
+		4AC67E2322C8A76500842C0D /* FHViewManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E2222C8A76500842C0D /* FHViewManagementController.m */; };
+		4AC67E2622C8AED100842C0D /* FHWaitOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E2522C8AED100842C0D /* FHWaitOrderController.m */; };
+		4AC67E2922C8AF1300842C0D /* FHWaitGetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E2822C8AF1300842C0D /* FHWaitGetController.m */; };
+		4AC67E2C22C8AF4200842C0D /* FHWaitAppraiseController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E2B22C8AF4200842C0D /* FHWaitAppraiseController.m */; };
+		4AC67E2F22C8AF7300842C0D /* FHAfterSaleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E2E22C8AF7300842C0D /* FHAfterSaleController.m */; };
+		4AC67E3222C8B06A00842C0D /* FHAddressManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3122C8B06A00842C0D /* FHAddressManagerController.m */; };
+		4AC67E3522C8B09600842C0D /* FHNormalManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3422C8B09600842C0D /* FHNormalManagerController.m */; };
+		4AC67E3822C8B0C300842C0D /* FHSpecialManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3722C8B0C300842C0D /* FHSpecialManagerController.m */; };
+		4AC67E3B22C8B0F100842C0D /* FHInvoiceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3A22C8B0F100842C0D /* FHInvoiceListController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -504,6 +516,30 @@
 		4AC67E0F22C8910300842C0D /* FHSearchCategoryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSearchCategoryController.m; sourceTree = "<group>"; };
 		4AC67E1122C892A300842C0D /* FHMessageHistoryController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMessageHistoryController.h; sourceTree = "<group>"; };
 		4AC67E1222C892A300842C0D /* FHMessageHistoryController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMessageHistoryController.m; sourceTree = "<group>"; };
+		4AC67E1822C8A09300842C0D /* FHFreshShoppingMallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFreshShoppingMallController.h; sourceTree = "<group>"; };
+		4AC67E1922C8A09300842C0D /* FHFreshShoppingMallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFreshShoppingMallController.m; sourceTree = "<group>"; };
+		4AC67E1B22C8A24300842C0D /* FHBuinessListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHBuinessListController.h; sourceTree = "<group>"; };
+		4AC67E1C22C8A24300842C0D /* FHBuinessListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHBuinessListController.m; sourceTree = "<group>"; };
+		4AC67E1E22C8A6FA00842C0D /* FHLittleShopListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLittleShopListController.h; sourceTree = "<group>"; };
+		4AC67E1F22C8A6FA00842C0D /* FHLittleShopListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleShopListController.m; sourceTree = "<group>"; };
+		4AC67E2122C8A76500842C0D /* FHViewManagementController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHViewManagementController.h; sourceTree = "<group>"; };
+		4AC67E2222C8A76500842C0D /* FHViewManagementController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHViewManagementController.m; sourceTree = "<group>"; };
+		4AC67E2422C8AED100842C0D /* FHWaitOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHWaitOrderController.h; sourceTree = "<group>"; };
+		4AC67E2522C8AED100842C0D /* FHWaitOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHWaitOrderController.m; sourceTree = "<group>"; };
+		4AC67E2722C8AF1300842C0D /* FHWaitGetController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHWaitGetController.h; sourceTree = "<group>"; };
+		4AC67E2822C8AF1300842C0D /* FHWaitGetController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHWaitGetController.m; sourceTree = "<group>"; };
+		4AC67E2A22C8AF4200842C0D /* FHWaitAppraiseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHWaitAppraiseController.h; sourceTree = "<group>"; };
+		4AC67E2B22C8AF4200842C0D /* FHWaitAppraiseController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHWaitAppraiseController.m; sourceTree = "<group>"; };
+		4AC67E2D22C8AF7300842C0D /* FHAfterSaleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAfterSaleController.h; sourceTree = "<group>"; };
+		4AC67E2E22C8AF7300842C0D /* FHAfterSaleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAfterSaleController.m; sourceTree = "<group>"; };
+		4AC67E3022C8B06A00842C0D /* FHAddressManagerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAddressManagerController.h; sourceTree = "<group>"; };
+		4AC67E3122C8B06A00842C0D /* FHAddressManagerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAddressManagerController.m; sourceTree = "<group>"; };
+		4AC67E3322C8B09600842C0D /* FHNormalManagerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHNormalManagerController.h; sourceTree = "<group>"; };
+		4AC67E3422C8B09600842C0D /* FHNormalManagerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHNormalManagerController.m; sourceTree = "<group>"; };
+		4AC67E3622C8B0C300842C0D /* FHSpecialManagerController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSpecialManagerController.h; sourceTree = "<group>"; };
+		4AC67E3722C8B0C300842C0D /* FHSpecialManagerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSpecialManagerController.m; sourceTree = "<group>"; };
+		4AC67E3922C8B0F100842C0D /* FHInvoiceListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHInvoiceListController.h; sourceTree = "<group>"; };
+		4AC67E3A22C8B0F100842C0D /* FHInvoiceListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHInvoiceListController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -768,16 +804,9 @@
 			children = (
 				4A59F96D22C0B7E800867031 /* FHHomePageController.h */,
 				4A59F96E22C0B7E800867031 /* FHHomePageController.m */,
-				4A448CCB22C5AF8B003D0712 /* FHHomeServicesController.h */,
-				4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */,
-				4A448CCE22C5B3BF003D0712 /* FHOwnerServiceController.h */,
-				4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */,
-				4A448CD122C5B576003D0712 /* FHHealthServicesController.h */,
-				4A448CD222C5B576003D0712 /* FHHealthServicesController.m */,
-				4A448CD422C5B797003D0712 /* FHFinancialServiceController.h */,
-				4A448CD522C5B797003D0712 /* FHFinancialServiceController.m */,
-				4A448CD722C5B88A003D0712 /* FHCustomerServiceController.h */,
-				4A448CD822C5B88A003D0712 /* FHCustomerServiceController.m */,
+				4AC67E3F22C8C04200842C0D /* HomeServices */,
+				4AC67E4022C8C05F00842C0D /* OwnerService */,
+				4AC67E4122C8C11100842C0D /* HealthServices */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -837,6 +866,10 @@
 			children = (
 				4A59F97622C0BA1500867031 /* FHShopingCartController.h */,
 				4A59F97722C0BA1500867031 /* FHShopingCartController.m */,
+				4AC67E1422C89B6200842C0D /* FreshShoppingMall */,
+				4AC67E1522C89B8E00842C0D /* BuinessList */,
+				4AC67E1622C89BA800842C0D /* LittleShopList */,
+				4AC67E1722C89BCF00842C0D /* ViewManagement */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1410,6 +1443,105 @@
 			path = PublicService;
 			sourceTree = "<group>";
 		};
+		4AC67E1422C89B6200842C0D /* FreshShoppingMall */ = {
+			isa = PBXGroup;
+			children = (
+				4AC67E1822C8A09300842C0D /* FHFreshShoppingMallController.h */,
+				4AC67E1922C8A09300842C0D /* FHFreshShoppingMallController.m */,
+				4AC67E2422C8AED100842C0D /* FHWaitOrderController.h */,
+				4AC67E2522C8AED100842C0D /* FHWaitOrderController.m */,
+				4AC67E2722C8AF1300842C0D /* FHWaitGetController.h */,
+				4AC67E2822C8AF1300842C0D /* FHWaitGetController.m */,
+				4AC67E2A22C8AF4200842C0D /* FHWaitAppraiseController.h */,
+				4AC67E2B22C8AF4200842C0D /* FHWaitAppraiseController.m */,
+				4AC67E2D22C8AF7300842C0D /* FHAfterSaleController.h */,
+				4AC67E2E22C8AF7300842C0D /* FHAfterSaleController.m */,
+			);
+			path = FreshShoppingMall;
+			sourceTree = "<group>";
+		};
+		4AC67E1522C89B8E00842C0D /* BuinessList */ = {
+			isa = PBXGroup;
+			children = (
+				4AC67E1B22C8A24300842C0D /* FHBuinessListController.h */,
+				4AC67E1C22C8A24300842C0D /* FHBuinessListController.m */,
+			);
+			path = BuinessList;
+			sourceTree = "<group>";
+		};
+		4AC67E1622C89BA800842C0D /* LittleShopList */ = {
+			isa = PBXGroup;
+			children = (
+				4AC67E1E22C8A6FA00842C0D /* FHLittleShopListController.h */,
+				4AC67E1F22C8A6FA00842C0D /* FHLittleShopListController.m */,
+			);
+			path = LittleShopList;
+			sourceTree = "<group>";
+		};
+		4AC67E1722C89BCF00842C0D /* ViewManagement */ = {
+			isa = PBXGroup;
+			children = (
+				4AC67E2122C8A76500842C0D /* FHViewManagementController.h */,
+				4AC67E2222C8A76500842C0D /* FHViewManagementController.m */,
+				4AC67E3022C8B06A00842C0D /* FHAddressManagerController.h */,
+				4AC67E3122C8B06A00842C0D /* FHAddressManagerController.m */,
+				4AC67E3322C8B09600842C0D /* FHNormalManagerController.h */,
+				4AC67E3422C8B09600842C0D /* FHNormalManagerController.m */,
+				4AC67E3622C8B0C300842C0D /* FHSpecialManagerController.h */,
+				4AC67E3722C8B0C300842C0D /* FHSpecialManagerController.m */,
+				4AC67E3922C8B0F100842C0D /* FHInvoiceListController.h */,
+				4AC67E3A22C8B0F100842C0D /* FHInvoiceListController.m */,
+			);
+			path = ViewManagement;
+			sourceTree = "<group>";
+		};
+		4AC67E3F22C8C04200842C0D /* HomeServices */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CCB22C5AF8B003D0712 /* FHHomeServicesController.h */,
+				4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */,
+			);
+			path = HomeServices;
+			sourceTree = "<group>";
+		};
+		4AC67E4022C8C05F00842C0D /* OwnerService */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CCE22C5B3BF003D0712 /* FHOwnerServiceController.h */,
+				4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */,
+			);
+			path = OwnerService;
+			sourceTree = "<group>";
+		};
+		4AC67E4122C8C11100842C0D /* HealthServices */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CD122C5B576003D0712 /* FHHealthServicesController.h */,
+				4A448CD222C5B576003D0712 /* FHHealthServicesController.m */,
+				4AC67E4222C8C4D900842C0D /* FinancialService */,
+				4AC67E4322C8C4F800842C0D /* CustomerService */,
+			);
+			path = HealthServices;
+			sourceTree = "<group>";
+		};
+		4AC67E4222C8C4D900842C0D /* FinancialService */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CD422C5B797003D0712 /* FHFinancialServiceController.h */,
+				4A448CD522C5B797003D0712 /* FHFinancialServiceController.m */,
+			);
+			path = FinancialService;
+			sourceTree = "<group>";
+		};
+		4AC67E4322C8C4F800842C0D /* CustomerService */ = {
+			isa = PBXGroup;
+			children = (
+				4A448CD722C5B88A003D0712 /* FHCustomerServiceController.h */,
+				4A448CD822C5B88A003D0712 /* FHCustomerServiceController.m */,
+			);
+			path = CustomerService;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1579,11 +1711,14 @@
 				4A6DAB6722C0ADAF00F29455 /* NSBundle+MJRefresh.m in Sources */,
 				4A6DAB4122C0ADAF00F29455 /* UIImage+XYSGif.m in Sources */,
 				4A6DAB6F22C0ADAF00F29455 /* MJRefreshNormalHeader.m in Sources */,
+				4AC67E1A22C8A09300842C0D /* FHFreshShoppingMallController.m in Sources */,
 				4A6DAA3C22C0AD3100F29455 /* UIWebView+AFNetworking.m in Sources */,
 				4A6DAB6422C0ADAF00F29455 /* MJRefreshConst.m in Sources */,
 				4AC67E0A22C88FB300842C0D /* FHFollowListController.m in Sources */,
 				4A6DAB4422C0ADAF00F29455 /* SDWebImageManager.m in Sources */,
 				4A59F98222C0D61600867031 /* myButton.m in Sources */,
+				4AC67E2322C8A76500842C0D /* FHViewManagementController.m in Sources */,
+				4AC67E2C22C8AF4200842C0D /* FHWaitAppraiseController.m in Sources */,
 				4A6DAB4022C0ADAF00F29455 /* NJKWebViewProgressView.m in Sources */,
 				4A6DAB5D22C0ADAF00F29455 /* MJExtensionConst.m in Sources */,
 				4A6DAB4622C0ADAF00F29455 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -1592,9 +1727,11 @@
 				4AC67DF022C849C400842C0D /* FHGroupMessageController.m in Sources */,
 				4AC67DF622C84A4F00842C0D /* FHFriendLisController.m in Sources */,
 				4A59F96C22C0B6D100867031 /* UIColor+Extend.m in Sources */,
+				4AC67E3522C8B09600842C0D /* FHNormalManagerController.m in Sources */,
 				4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */,
 				4A59F98622C0D80A00867031 /* UIlabelTool.m in Sources */,
 				4A6DAB4A22C0ADAF00F29455 /* SDWebImageDownloader.m in Sources */,
+				4AC67E3B22C8B0F100842C0D /* FHInvoiceListController.m in Sources */,
 				4A6DAA9722C0AD7C00F29455 /* LCTabBar.m in Sources */,
 				4A6DAA8922C0AD6100F29455 /* GDMarginLabel.m in Sources */,
 				4A6DAA9622C0AD7C00F29455 /* LCTabBarBadge.m in Sources */,
@@ -1605,6 +1742,7 @@
 				4A6DAA4022C0AD3100F29455 /* AFHTTPSessionManager.m in Sources */,
 				4A448CE222C70303003D0712 /* FHMyVideoController.m in Sources */,
 				4A448CDF22C702E5003D0712 /* FHMyGroupController.m in Sources */,
+				4AC67E1D22C8A24300842C0D /* FHBuinessListController.m in Sources */,
 				4A6DAB5222C0ADAF00F29455 /* UIImageView+WebCache.m in Sources */,
 				4A6DAB7222C0ADAF00F29455 /* MJRefreshFooter.m in Sources */,
 				4A6DAB5F22C0ADAF00F29455 /* NSObject+MJClass.m in Sources */,
@@ -1616,6 +1754,7 @@
 				4A6DAA7C22C0AD4C00F29455 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				4A6DAB5522C0ADAF00F29455 /* UIView+WebCacheOperation.m in Sources */,
 				4A6DAA4222C0AD3100F29455 /* AFURLRequestSerialization.m in Sources */,
+				4AC67E2022C8A6FA00842C0D /* FHLittleShopListController.m in Sources */,
 				4A6DAA7022C0AD4C00F29455 /* IQTitleBarButtonItem.m in Sources */,
 				4A8D8C6022C1FD5B0083E00C /* BHInfiniteScrollView.m in Sources */,
 				4A6DAA3F22C0AD3100F29455 /* AFURLResponseSerialization.m in Sources */,
@@ -1634,6 +1773,7 @@
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
 				4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */,
 				4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */,
+				4AC67E3222C8B06A00842C0D /* FHAddressManagerController.m in Sources */,
 				4A6DAA4822C0AD3D00F29455 /* FDActionSheet.m in Sources */,
 				4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */,
 				4A6DAB6622C0ADAF00F29455 /* UIScrollView+MJExtension.m in Sources */,
@@ -1641,6 +1781,7 @@
 				4A6DAB6E22C0ADAF00F29455 /* MJRefreshAutoNormalFooter.m in Sources */,
 				4A6DAB6122C0ADAF00F29455 /* MJPropertyKey.m in Sources */,
 				4AC67E0022C84DE200842C0D /* FHMyPhotoController.m in Sources */,
+				4AC67E3822C8B0C300842C0D /* FHSpecialManagerController.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
 				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
@@ -1674,14 +1815,17 @@
 				4A6DAB7622C0ADAF00F29455 /* MJRefreshComponent.m in Sources */,
 				4A6DAB5322C0ADAF00F29455 /* NSImage+WebCache.m in Sources */,
 				4A6DAA7722C0AD4C00F29455 /* IQUIWindow+Hierarchy.m in Sources */,
+				4AC67E2922C8AF1300842C0D /* FHWaitGetController.m in Sources */,
 				4A6DAA3A22C0AD3100F29455 /* UIButton+AFNetworking.m in Sources */,
 				4A6DAB6A22C0ADAF00F29455 /* MJRefreshBackStateFooter.m in Sources */,
 				4A59F96A22C0B6D100867031 /* UIView+Extend.m in Sources */,
 				4A59F96B22C0B6D100867031 /* UIViewController+popType.m in Sources */,
 				4A6DAB5422C0ADAF00F29455 /* SDImageCacheConfig.m in Sources */,
+				4AC67E2F22C8AF7300842C0D /* FHAfterSaleController.m in Sources */,
 				4A8D8C6122C1FD5B0083E00C /* FXPageControl.m in Sources */,
 				4A59F97522C0B94000867031 /* FHShopingController.m in Sources */,
 				4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */,
+				4AC67E2622C8AED100842C0D /* FHWaitOrderController.m in Sources */,
 				4A6DAB5722C0ADAF00F29455 /* UIButton+WebCache.m in Sources */,
 				4A6DAB5022C0ADAF00F29455 /* SDWebImageDownloaderOperation.m in Sources */,
 				4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */,

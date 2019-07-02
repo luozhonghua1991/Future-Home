@@ -44,6 +44,9 @@
     [self fh_setSelectNavView];
     [self fh_creatSelectBtn];
     [self fh_setMainScrollView];
+    if (self.tabBarController.selectedIndex == 2) {
+         mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH *2, 0);
+    }
 }
 
 

@@ -45,8 +45,8 @@ static FHAppDelegate* pSelf = nil;
     vc2.tabBarItem.image = [UIImage imageNamed:@"tabbar_invite_normal"];
 //    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"tarbar_invite_select"];
     
-    FHShopingController *vc3 = [[FHShopingController alloc] init];
-    vc3.title = @"生鲜商城";
+    FHGroupController *vc3 = [[FHGroupController alloc] init];
+    vc3.title = @"商业服务";
     vc3.tabBarItem.image = [UIImage imageNamed:@"tabbar_inviteFriend_normal"];
 //    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_inviteFriend_select"];
     

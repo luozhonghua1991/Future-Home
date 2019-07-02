@@ -10,8 +10,11 @@
 
 
 @interface BaseViewController () 
-/** 导航View视图 */
+/** 带搜索的View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
+/** 自定义导航栏视图 */
+@property (nonatomic, strong) UIView *navgationView;
+
 
 @end
 
@@ -45,6 +48,7 @@
     if (self) {
         self.enablePanGesture = YES;
         self.isHaveNav = YES;
+        self.isHaveNavgationView = YES;
     }
     return self;
 }
@@ -63,6 +67,12 @@
     else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
+    if (self.isHaveNavgationView) {
+        self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainNavgationBarHeight)];
+        self.navgationView.backgroundColor = [UIColor blueColor];
+        [self.view addSubview:self.navgationView];
+    }
+    
     if (self.isHaveNav) {
         self.navView = [[FHCommonNavView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
         self.navView.delegate = self;
@@ -83,6 +93,15 @@
     if (!_isHaveNav) {
         if (self.navView) {
             [self.navView removeFromSuperview];
+        }
+    }
+}
+
+- (void)setIsHaveNavgationView:(BOOL)isHaveNavgationView {
+    _isHaveNavgationView = isHaveNavgationView;
+    if (!isHaveNavgationView) {
+        if (self.navgationView) {
+            [self.navgationView removeFromSuperview];
         }
     }
 }

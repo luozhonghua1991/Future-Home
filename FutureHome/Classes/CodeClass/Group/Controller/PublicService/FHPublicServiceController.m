@@ -7,6 +7,8 @@
 //  公共服务
 
 #import "FHPublicServiceController.h"
+#import "FHSearchBelowController.h"
+#import "FHSearchCategoryController.h"
 
 @interface FHPublicServiceController ()
 
@@ -16,8 +18,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor redColor];
+}
+
+- (void)initViewControllers {
+   
+    FHSearchBelowController *photoVC = [[FHSearchBelowController alloc] init];
+    photoVC.yp_tabItemTitle = @"查找附近";
+    
+    FHSearchCategoryController *followVC = [[FHSearchCategoryController alloc] init];
+    followVC.yp_tabItemTitle = @"分类查找";
+    
+    self.viewControllers = [NSMutableArray arrayWithObjects:photoVC,followVC, nil];
+    
 }
 
 @end
