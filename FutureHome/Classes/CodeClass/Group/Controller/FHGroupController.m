@@ -40,7 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isHaveNav = NO;
+    self.isHaveNav = YES;
     [self fh_setSelectNavView];
     [self fh_creatSelectBtn];
     [self fh_setMainScrollView];

@@ -44,6 +44,7 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isHaveNav = YES;
     self.topLogoNameArrs = @[@"扫一扫",
                              @"付款",
                              @"收款",

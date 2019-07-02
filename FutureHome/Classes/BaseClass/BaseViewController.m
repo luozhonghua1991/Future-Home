@@ -47,8 +47,8 @@
     self = [super init];
     if (self) {
         self.enablePanGesture = YES;
-        self.isHaveNav = YES;
-        self.isHaveNavgationView = YES;
+        self.isHaveNav = NO;
+        self.isHaveNavgationView = NO;
     }
     return self;
 }
@@ -67,15 +67,17 @@
     else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    if (self.isHaveNavgationView) {
-        self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainNavgationBarHeight)];
-        self.navgationView.backgroundColor = [UIColor blueColor];
-        [self.view addSubview:self.navgationView];
+}
+
+- (void)setIsHaveNav:(BOOL)isHaveNav {
+    _isHaveNav = isHaveNav;
+    if (!_isHaveNav) {
+        if (self.navView) {
+            [self.navView removeFromSuperview];
+        }
     }
-    
     if (self.isHaveNav) {
         self.navView = [[FHCommonNavView alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-        self.navView.delegate = self;
         self.navView.backgroundColor = [UIColor redColor];
         WEAK_SELF(weakSelf);
         self.navView.searchBlock = ^{
@@ -88,21 +90,17 @@
     }
 }
 
-- (void)setIsHaveNav:(BOOL)isHaveNav {
-    _isHaveNav = isHaveNav;
-    if (!_isHaveNav) {
-        if (self.navView) {
-            [self.navView removeFromSuperview];
-        }
-    }
-}
-
 - (void)setIsHaveNavgationView:(BOOL)isHaveNavgationView {
     _isHaveNavgationView = isHaveNavgationView;
     if (!isHaveNavgationView) {
         if (self.navgationView) {
             [self.navgationView removeFromSuperview];
         }
+    }
+    if (self.isHaveNavgationView) {
+        self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainNavgationBarHeight)];
+        self.navgationView.backgroundColor = [UIColor blueColor];
+        [self.view addSubview:self.navgationView];
     }
 }
 
