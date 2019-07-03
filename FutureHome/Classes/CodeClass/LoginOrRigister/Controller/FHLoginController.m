@@ -10,6 +10,7 @@
 #import "FHLoginTool.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
+#import "LoginView.h"
 
 @interface FHLoginController () <UITextFieldDelegate>
 /** <#Description#> */
@@ -28,6 +29,8 @@
 @property (nonatomic,strong) RWTextField     *passwordTF;
 /**密码右边眼睛按钮*/
 @property (nonatomic,strong) UIButton        *passwordRightBtn;
+/** 登录视图 */
+@property (nonatomic, strong) LoginView      *login;
 
 @end
 
@@ -36,8 +39,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"登录";
+    [self fh_setUpUI];
 }
 
+- (void)fh_setUpUI {
+    
+}
 
 
 @end

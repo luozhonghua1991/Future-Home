@@ -173,6 +173,7 @@
 		4AA7B3B922CC873B00462389 /* RWTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B3B522CC873B00462389 /* RWTextField.m */; };
 		4AA7BDB522CC886D00462389 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */; };
 		4AA7BDB622CC886D00462389 /* UIColor-HSVAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */; };
+		4AA7BDB922CCB3BD00462389 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB822CCB3BD00462389 /* LoginView.m */; };
 		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */; };
 		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
@@ -564,6 +565,8 @@
 		4AA7BDB222CC886D00462389 /* UIColor-HSVAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-HSVAdditions.h"; sourceTree = "<group>"; };
 		4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
 		4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-HSVAdditions.m"; sourceTree = "<group>"; };
+		4AA7BDB722CCB3BD00462389 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
+		4AA7BDB822CCB3BD00462389 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
 		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserInfoHeaderBaseView.h; sourceTree = "<group>"; };
@@ -1555,6 +1558,8 @@
 		4AA7B3BB22CC875800462389 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4AA7BDB722CCB3BD00462389 /* LoginView.h */,
+				4AA7BDB822CCB3BD00462389 /* LoginView.m */,
 				4AA7B3B722CC873B00462389 /* RWPasswordView.h */,
 				4AA7B3B422CC873B00462389 /* RWPasswordView.m */,
 				4AA7B3B622CC873B00462389 /* RWTextField.h */,
@@ -1899,6 +1904,7 @@
 				4A59F97822C0BA1500867031 /* FHShopingCartController.m in Sources */,
 				4A6DAB7122C0ADAF00F29455 /* MJRefreshGifHeader.m in Sources */,
 				4AA7B3AE22CC7D8D00462389 /* MASViewConstraint.m in Sources */,
+				4AA7BDB922CCB3BD00462389 /* LoginView.m in Sources */,
 				4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */,
 				4A6DAB6322C0ADAF00F29455 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6DAB5622C0ADAF00F29455 /* UIView+WebCache.m in Sources */,
