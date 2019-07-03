@@ -169,6 +169,10 @@
 		4AA7B3AD22CC7D8D00462389 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B3A122CC7D8D00462389 /* MASConstraint.m */; };
 		4AA7B3AE22CC7D8D00462389 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B3A322CC7D8D00462389 /* MASViewConstraint.m */; };
 		4AA7B3AF22CC7D8D00462389 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B3A422CC7D8D00462389 /* MASViewAttribute.m */; };
+		4AA7B3B822CC873B00462389 /* RWPasswordView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B3B422CC873B00462389 /* RWPasswordView.m */; };
+		4AA7B3B922CC873B00462389 /* RWTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B3B522CC873B00462389 /* RWTextField.m */; };
+		4AA7BDB522CC886D00462389 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */; };
+		4AA7BDB622CC886D00462389 /* UIColor-HSVAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */; };
 		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */; };
 		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
@@ -552,6 +556,14 @@
 		4AA7B3A222CC7D8D00462389 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		4AA7B3A322CC7D8D00462389 /* MASViewConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewConstraint.m; sourceTree = "<group>"; };
 		4AA7B3A422CC7D8D00462389 /* MASViewAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASViewAttribute.m; sourceTree = "<group>"; };
+		4AA7B3B422CC873B00462389 /* RWPasswordView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWPasswordView.m; sourceTree = "<group>"; };
+		4AA7B3B522CC873B00462389 /* RWTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWTextField.m; sourceTree = "<group>"; };
+		4AA7B3B622CC873B00462389 /* RWTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWTextField.h; sourceTree = "<group>"; };
+		4AA7B3B722CC873B00462389 /* RWPasswordView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWPasswordView.h; sourceTree = "<group>"; };
+		4AA7BDB122CC886C00462389 /* UIColor-Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-Expanded.h"; sourceTree = "<group>"; };
+		4AA7BDB222CC886D00462389 /* UIColor-HSVAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor-HSVAdditions.h"; sourceTree = "<group>"; };
+		4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-Expanded.m"; sourceTree = "<group>"; };
+		4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-HSVAdditions.m"; sourceTree = "<group>"; };
 		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
 		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserInfoHeaderBaseView.h; sourceTree = "<group>"; };
@@ -645,8 +657,9 @@
 		4A59F97C22C0BD3D00867031 /* LoginOrRigister */ = {
 			isa = PBXGroup;
 			children = (
-				4AA7B36F22CC400F00462389 /* FHLoginController.h */,
-				4AA7B37022CC400F00462389 /* FHLoginController.m */,
+				4AA7B3BC22CC875E00462389 /* Model */,
+				4AA7B3BB22CC875800462389 /* View */,
+				4AA7B3BA22CC874900462389 /* Controller */,
 			);
 			path = LoginOrRigister;
 			sourceTree = "<group>";
@@ -834,6 +847,10 @@
 		4A6DAA0022C0700F00F29455 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				4AA7BDB122CC886C00462389 /* UIColor-Expanded.h */,
+				4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */,
+				4AA7BDB222CC886D00462389 /* UIColor-HSVAdditions.h */,
+				4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */,
 				4A59F96522C0B6D000867031 /* UIButton+countDown.h */,
 				4A59F96222C0B6D000867031 /* UIButton+countDown.m */,
 				4A59F96722C0B6D000867031 /* UIColor+Extend.h */,
@@ -1526,6 +1543,33 @@
 			path = Masonry;
 			sourceTree = "<group>";
 		};
+		4AA7B3BA22CC874900462389 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4AA7B36F22CC400F00462389 /* FHLoginController.h */,
+				4AA7B37022CC400F00462389 /* FHLoginController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4AA7B3BB22CC875800462389 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AA7B3B722CC873B00462389 /* RWPasswordView.h */,
+				4AA7B3B422CC873B00462389 /* RWPasswordView.m */,
+				4AA7B3B622CC873B00462389 /* RWTextField.h */,
+				4AA7B3B522CC873B00462389 /* RWTextField.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AA7B3BC22CC875E00462389 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4AC67DE622C8481E00842C0D /* MyGroup */ = {
 			isa = PBXGroup;
 			children = (
@@ -1834,7 +1878,9 @@
 				4A448CD022C5B3BF003D0712 /* FHOwnerServiceController.m in Sources */,
 				4A6DAB5B22C0ADAF00F29455 /* MJProperty.m in Sources */,
 				4A6DAB7022C0ADAF00F29455 /* MJRefreshStateHeader.m in Sources */,
+				4AA7B3B822CC873B00462389 /* RWPasswordView.m in Sources */,
 				4A6DAA8822C0AD6100F29455 /* GDPerformanceMonitor.m in Sources */,
+				4AA7B3B922CC873B00462389 /* RWTextField.m in Sources */,
 				4A59F97F22C0D5E800867031 /* CreatNavViewController.m in Sources */,
 				4A6DAA7922C0AD4C00F29455 /* IQUIScrollView+Additions.m in Sources */,
 				4A6DAA7822C0AD4C00F29455 /* IQUITextFieldView+Additions.m in Sources */,
@@ -1861,6 +1907,7 @@
 				4AA7B38822CC7CD600462389 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				4A6DAB4122C0ADAF00F29455 /* UIImage+XYSGif.m in Sources */,
 				4A6DAB6F22C0ADAF00F29455 /* MJRefreshNormalHeader.m in Sources */,
+				4AA7BDB622CC886D00462389 /* UIColor-HSVAdditions.m in Sources */,
 				4AC67E1A22C8A09300842C0D /* FHFreshShoppingMallController.m in Sources */,
 				4A6DAA3C22C0AD3100F29455 /* UIWebView+AFNetworking.m in Sources */,
 				4A6DAB6422C0ADAF00F29455 /* MJRefreshConst.m in Sources */,
@@ -1873,6 +1920,7 @@
 				4A6DAB5D22C0ADAF00F29455 /* MJExtensionConst.m in Sources */,
 				4AA7B37822CC57DD00462389 /* FHLoginTool.m in Sources */,
 				4A6DAB4622C0ADAF00F29455 /* UIImageView+HighlightedWebCache.m in Sources */,
+				4AA7BDB522CC886D00462389 /* UIColor-Expanded.m in Sources */,
 				4A6DAA3822C0AD3100F29455 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4A6DAB7322C0ADAF00F29455 /* MJRefreshHeader.m in Sources */,
 				4AA7B38522CC7CD600462389 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
@@ -2171,12 +2219,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes/Bugly",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/Future-Home/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes/UMessage_Sdk_1.5.0a",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes/网易七鱼SDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongxichuanmei.FutureHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2189,12 +2247,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes/Bugly",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/Future-Home/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes/UMessage_Sdk_1.5.0a",
+					"$(PROJECT_DIR)/FutureHome/Tools/Category/Classes/网易七鱼SDK",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongxichuanmei.FutureHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";

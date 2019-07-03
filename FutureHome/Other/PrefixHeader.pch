@@ -20,6 +20,8 @@
 //pch
 #import "ColorHeader.h"
 #import "InterfaceHeader.h"
+#import "Masonry.h"
+#import "UIColor-Expanded.h"
 /** 常用工具 */
 #import "MBProgressHUD.h"
 #import "UIImageView+WebCache.h"
@@ -52,6 +54,7 @@
 #define IS_IPHONE_Xs_Max ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(1242, 2688), [[UIScreen mainScreen] currentMode].size)  : NO)
 
 //16进制转RGB 颜色
+#define HEX_COLOR(h)  [UIColor colorWithRGBHex:(h)]
 #define COLOR_16F(hexValue,alphaValue) [UIColor colorWithRed:((float)((hexValue & 0xFF0000) >> 16))/255.0 green:((float)((hexValue & 0xFF00) >> 8))/255.0 blue:((float)(hexValue & 0xFF))/255.0 alpha:alphaValue]
 //判断数组是否为空
 #define IS_NULL_ARRAY(array) ([array isKindOfClass:[NSNull class]] || array == nil || array.count == 0)

@@ -14,7 +14,9 @@
 @property (nonatomic, strong) FHCommonNavView *navView;
 /** 自定义导航栏视图 */
 @property (nonatomic, strong) UIView *navgationView;
-
+/** iOS7 之后布局部分 */
+@property (nonatomic, assign, getter=isFullScreenLayout) BOOL fullScreenLayout;// default is NO;
+@property (nonatomic, assign, getter=isSpecifyFullScreenLayout) BOOL specifyFullScreenLayout;
 
 @end
 
