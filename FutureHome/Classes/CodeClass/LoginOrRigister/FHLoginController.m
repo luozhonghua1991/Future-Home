@@ -18,6 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"登录";
+    self.navigationController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] init];
 }
 
 

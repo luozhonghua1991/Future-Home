@@ -15,6 +15,7 @@
 + (void)fh_makePersonToLoging {
     //压栈方式 登录界面
     FHLoginController *login = [[FHLoginController alloc]init];
+    login.hidesBottomBarWhenPushed = YES;
     [[CurrentViewController topViewController].navigationController pushViewController:login animated:YES];
 }
 
