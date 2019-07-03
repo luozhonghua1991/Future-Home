@@ -8,6 +8,7 @@
 
 #import "FHMeCenterController.h"
 #import "FHMeCenterUserInfoView.h"
+#import "FHLoginTool.h"
 
 @interface FHMeCenterController () <UITableViewDelegate,UITableViewDataSource>
 /** 个人中心列表数据 */
@@ -84,7 +85,7 @@
 #pragma mark — event
 - (void)logOutClick {
     /** 退出登录 */
-
+    [FHLoginTool fh_makePersonToLoging];
 }
 
 

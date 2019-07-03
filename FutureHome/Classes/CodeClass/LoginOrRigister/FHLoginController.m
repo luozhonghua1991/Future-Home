@@ -7,6 +7,7 @@
 //  用户登录
 
 #import "FHLoginController.h"
+#import "FHLoginTool.h"
 
 @interface FHLoginController ()
 

@@ -152,6 +152,7 @@
 		4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */; };
 		4AA7B37122CC400F00462389 /* FHLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37022CC400F00462389 /* FHLoginController.m */; };
 		4AA7B37522CC536700462389 /* CurrentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37422CC536700462389 /* CurrentViewController.m */; };
+		4AA7B37822CC57DD00462389 /* FHLoginTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37722CC57DD00462389 /* FHLoginTool.m */; };
 		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */; };
 		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
@@ -498,6 +499,8 @@
 		4AA7B37022CC400F00462389 /* FHLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLoginController.m; sourceTree = "<group>"; };
 		4AA7B37322CC536700462389 /* CurrentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentViewController.h; sourceTree = "<group>"; };
 		4AA7B37422CC536700462389 /* CurrentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentViewController.m; sourceTree = "<group>"; };
+		4AA7B37622CC57DD00462389 /* FHLoginTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLoginTool.h; sourceTree = "<group>"; };
+		4AA7B37722CC57DD00462389 /* FHLoginTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLoginTool.m; sourceTree = "<group>"; };
 		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
 		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserInfoHeaderBaseView.h; sourceTree = "<group>"; };
@@ -1405,6 +1408,8 @@
 		4AA7B37222CC536700462389 /* CurrentVC */ = {
 			isa = PBXGroup;
 			children = (
+				4AA7B37622CC57DD00462389 /* FHLoginTool.h */,
+				4AA7B37722CC57DD00462389 /* FHLoginTool.m */,
 				4AA7B37322CC536700462389 /* CurrentViewController.h */,
 				4AA7B37422CC536700462389 /* CurrentViewController.m */,
 			);
@@ -1750,6 +1755,7 @@
 				4AC67E2C22C8AF4200842C0D /* FHWaitAppraiseController.m in Sources */,
 				4A6DAB4022C0ADAF00F29455 /* NJKWebViewProgressView.m in Sources */,
 				4A6DAB5D22C0ADAF00F29455 /* MJExtensionConst.m in Sources */,
+				4AA7B37822CC57DD00462389 /* FHLoginTool.m in Sources */,
 				4A6DAB4622C0ADAF00F29455 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4A6DAA3822C0AD3100F29455 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4A6DAB7322C0ADAF00F29455 /* MJRefreshHeader.m in Sources */,
