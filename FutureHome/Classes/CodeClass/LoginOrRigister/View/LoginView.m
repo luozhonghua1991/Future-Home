@@ -76,6 +76,7 @@
     [self touchView:button.currentTitle];
 }
 
+
 #pragma mark - Getters and Setters
 - (UILabel *)leftTitle {
     if (_leftTitle == nil) {
@@ -88,6 +89,7 @@
     }
     return _leftTitle;
 }
+
 - (UILabel *)rightTitle {
     if (_rightTitle == nil) {
         _rightTitle = [[UILabel alloc] init];
@@ -98,6 +100,7 @@
     }
     return _rightTitle;
 }
+
 - (UIButton *)underButton {
     if (_underButton == nil) {
         _underButton = [UIButton buttonWithType:UIButtonTypeCustom];
