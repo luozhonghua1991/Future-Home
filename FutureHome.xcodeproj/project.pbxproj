@@ -16,6 +16,8 @@
 		4A448CE222C70303003D0712 /* FHMyVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CE122C70303003D0712 /* FHMyVideoController.m */; };
 		4A448CE522C70437003D0712 /* FHBusinessServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CE422C70437003D0712 /* FHBusinessServicesController.m */; };
 		4A448CE822C7051B003D0712 /* FHPublicServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CE722C7051B003D0712 /* FHPublicServiceController.m */; };
+		4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */; };
+		4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */; };
 		4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F95C22C0B68F00867031 /* BaseViewController.m */; };
 		4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96122C0B6D000867031 /* UIViewController+Swizzling.m */; };
 		4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96222C0B6D000867031 /* UIButton+countDown.m */; };
@@ -239,6 +241,10 @@
 		4A448CE422C70437003D0712 /* FHBusinessServicesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHBusinessServicesController.m; sourceTree = "<group>"; };
 		4A448CE622C7051B003D0712 /* FHPublicServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPublicServiceController.h; sourceTree = "<group>"; };
 		4A448CE722C7051B003D0712 /* FHPublicServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPublicServiceController.m; sourceTree = "<group>"; };
+		4A4BEF0B22CDF88C00FD00DE /* FHRigisterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHRigisterController.h; sourceTree = "<group>"; };
+		4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHRigisterController.m; sourceTree = "<group>"; };
+		4A4BEF0F22CDFA4900FD00DE /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		4A59F95722C0B31B00867031 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4A59F95922C0B3DF00867031 /* InterfaceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceHeader.h; sourceTree = "<group>"; };
 		4A59F95A22C0B3DF00867031 /* ColorHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHeader.h; sourceTree = "<group>"; };
@@ -648,6 +654,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A4BEF0E22CDFA4900FD00DE /* Toast */ = {
+			isa = PBXGroup;
+			children = (
+				4A4BEF0F22CDFA4900FD00DE /* UIView+Toast.h */,
+				4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */,
+			);
+			path = Toast;
+			sourceTree = "<group>";
+		};
 		4A59F95822C0B3DF00867031 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
@@ -837,6 +852,7 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4A4BEF0E22CDFA4900FD00DE /* Toast */,
 				4AA7B37922CC7CD600462389 /* TPKeyboardAvoiding */,
 				4AA7B37222CC536700462389 /* CurrentVC */,
 				4A8D8C6B22C365C80083E00C /* CommonViews */,
@@ -1551,6 +1567,8 @@
 			children = (
 				4AA7B36F22CC400F00462389 /* FHLoginController.h */,
 				4AA7B37022CC400F00462389 /* FHLoginController.m */,
+				4A4BEF0B22CDF88C00FD00DE /* FHRigisterController.h */,
+				4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1891,6 +1909,7 @@
 				4A6DAA7822C0AD4C00F29455 /* IQUITextFieldView+Additions.m in Sources */,
 				4AA7B3AD22CC7D8D00462389 /* MASConstraint.m in Sources */,
 				4A448CE822C7051B003D0712 /* FHPublicServiceController.m in Sources */,
+				4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */,
 				4A6DAA3622C0AD3100F29455 /* UIProgressView+AFNetworking.m in Sources */,
 				4A6DAA6F22C0AD4C00F29455 /* IQToolbar.m in Sources */,
 				4A6DAA7322C0AD4C00F29455 /* IQPreviousNextView.m in Sources */,
@@ -1908,6 +1927,7 @@
 				4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */,
 				4A6DAB6322C0ADAF00F29455 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6DAB5622C0ADAF00F29455 /* UIView+WebCache.m in Sources */,
+				4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */,
 				4A6DA9C822C05C6F00F29455 /* ViewController.m in Sources */,
 				4A6DAB6722C0ADAF00F29455 /* NSBundle+MJRefresh.m in Sources */,
 				4AA7B38822CC7CD600462389 /* TPKeyboardAvoidingCollectionView.m in Sources */,

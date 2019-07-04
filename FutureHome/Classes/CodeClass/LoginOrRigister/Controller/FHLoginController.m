@@ -134,7 +134,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGPoint point = scrollView.contentOffset;
-    
     // 限制y轴不动
     point.x = 0.f;
     
@@ -203,6 +202,42 @@
 }
 
 
+#pragma mark — delegate
+- (void)loginView:(LoginView *)view withName:(NSString *)name
+{
+    if ([name isEqualToString:@"验证码登录"]) {
+        //验证码登录
+//        [self viewControllerPushOther:@"RWVerificationCodeLoginController" withParam:nil];
+    } else if ([name isEqualToString:@"忘记密码"]) {
+//        [self viewControllerPushOther:@"RWForgetPasswordController" withParam:nil];
+    } else if ([name isEqualToString:@"登录"]) {
+        //登录请求
+        [self.view endEditing:YES];
+        if (0 == self.phoneNumnTF.text.length) {
+//            [self.view makeToast:@"亲，请先输入手机号码"];
+            return;
+        }
+        if (0 == self.passwordTF.text.length) {
+//            [self.view makeToast:@"亲，未填写密码"];
+            return;
+        }
+        
+//        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//        params[@"dialing_code"] = self.dialing_code;
+//        params[@"phone"] = self.phoneNumnTF.text;
+//        params[@"password"] = self.passwordTF.text;
+//        [LoginService loginWithParams:@{@"session":params} success:^(Account *accout) {
+//            [self.view.window makeToast:@"登录成功"];
+//            [self.navigationController popToRootViewControllerAnimated:YES];
+//            [[NSNotificationCenter defaultCenter]postNotificationName:@"PERSONLOGIN" object:nil];
+//        } failure:^(NSString *msg) {
+//            [self.view makeToast:msg];
+//        }];
+    } else {
+//        [self.view makeToast:@"亲，请输入有效的手机号码"];
+    }
+}
+
 #pragma mark - Getters and Setters
 - (TPKeyboardAvoidingScrollView *)scrollView {
     if (_scrollView == nil) {
@@ -222,6 +257,7 @@
 - (LoginView *)login {
     if (_login == nil) {
         _login = [[LoginView alloc] init];
+        _login.delegate = self;
         //        _login.frame = MAKEFRAME(0, self.codeTF.bottom, self.view.width, 135);
     }
     return _login;
