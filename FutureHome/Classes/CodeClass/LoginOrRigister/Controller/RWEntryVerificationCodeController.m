@@ -11,7 +11,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
 //#import "LoginService.h"
-//#import "RWSetPasswordController.h"
+#import "RWSetPasswordController.h"
 //#import "RWResettingPasswordController.h"
 //#import "LoginService.h"
 //#import "LoginViewController.h"
@@ -160,7 +160,7 @@
  确认按钮 校验验证码是否输入正确
  */
 - (void)sureBtnClick {
-     [self.navigationController popToRootViewControllerAnimated:YES];
+    [self quickLogin];
     //首先要校验验证码是否正确
     WS(weakSelf);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -169,7 +169,7 @@
     param[@"code"] = self.verificCode;
 //    [LoginService verifyCodeIsRightWithParams:@{@"sms":param} success:^(NSDictionary *respond) {
 //        //验证码正确
-//        [weakSelf quickLogin];
+//
 //    } failure:^(NSString *msg) {
 //        [weakSelf.view makeToast:msg];
 //    }];
@@ -197,16 +197,17 @@
 //             [weakSelf.view makeToast:msg];
 //         }];
     } else if (self.vcType == REGISTER_VC) {
+        //            //用户注册的时候 需要设置密码
+        RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
+        setPassword.titleString = @"设置密码";
+        [self.navigationController pushViewController:setPassword animated:YES];
 //        //新用户注册 快捷登录
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //        params[@"phone"] = self.phoneNumber;
 //        params[@"code"] = self.verificCode;
 //        WS(weakSelf);
 //        [LoginService loginWithParams:@{@"session":params} success:^(Account *accout) {
-//            //用户注册的时候 需要设置密码
-//            RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
-//            setPassword.titleString = @"设置密码";
-//            [weakSelf.navigationController pushViewController:setPassword animated:YES];
+
 //        } failure:^(NSString *msg) {
 //            [weakSelf.view makeToast:msg];
 //        }];
@@ -249,11 +250,11 @@
      } else if(self.vcType == FORGETPASSWORD_VC) {
 //         //忘记密码 去重置密码
 //         //用户注册的时候 需要设置密码
-//         RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
-//         setPassword.titleString = @"重置密码";
-//         setPassword.phoneNumber = self.phoneNumber;
-//         setPassword.verificCode = self.verificCode;
-//         [self.navigationController pushViewController:setPassword animated:YES];
+         RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
+         setPassword.titleString = @"重置密码";
+         setPassword.phoneNumber = self.phoneNumber;
+         setPassword.verificCode = self.verificCode;
+         [self.navigationController pushViewController:setPassword animated:YES];
      }
 }
 

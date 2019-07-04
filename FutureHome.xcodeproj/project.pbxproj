@@ -22,6 +22,7 @@
 		4A4BEF1722CE00B500FD00DE /* RWForgetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1522CE00B400FD00DE /* RWForgetPasswordController.m */; };
 		4A4BEF1A22CE011000FD00DE /* RWEntryVerificationCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1822CE011000FD00DE /* RWEntryVerificationCodeController.m */; };
 		4A4BEF1D22CE031600FD00DE /* RWVerificationCodeLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1C22CE031600FD00DE /* RWVerificationCodeLoginController.m */; };
+		4A4BEF2022CE078B00FD00DE /* RWSetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1E22CE078B00FD00DE /* RWSetPasswordController.m */; };
 		4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F95C22C0B68F00867031 /* BaseViewController.m */; };
 		4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96122C0B6D000867031 /* UIViewController+Swizzling.m */; };
 		4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96222C0B6D000867031 /* UIButton+countDown.m */; };
@@ -257,6 +258,8 @@
 		4A4BEF1922CE011000FD00DE /* RWEntryVerificationCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWEntryVerificationCodeController.h; sourceTree = "<group>"; };
 		4A4BEF1B22CE031600FD00DE /* RWVerificationCodeLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWVerificationCodeLoginController.h; sourceTree = "<group>"; };
 		4A4BEF1C22CE031600FD00DE /* RWVerificationCodeLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWVerificationCodeLoginController.m; sourceTree = "<group>"; };
+		4A4BEF1E22CE078B00FD00DE /* RWSetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RWSetPasswordController.m; sourceTree = "<group>"; };
+		4A4BEF1F22CE078B00FD00DE /* RWSetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RWSetPasswordController.h; sourceTree = "<group>"; };
 		4A59F95722C0B31B00867031 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4A59F95922C0B3DF00867031 /* InterfaceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceHeader.h; sourceTree = "<group>"; };
 		4A59F95A22C0B3DF00867031 /* ColorHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHeader.h; sourceTree = "<group>"; };
@@ -1589,6 +1592,8 @@
 				4A4BEF1822CE011000FD00DE /* RWEntryVerificationCodeController.m */,
 				4A4BEF1B22CE031600FD00DE /* RWVerificationCodeLoginController.h */,
 				4A4BEF1C22CE031600FD00DE /* RWVerificationCodeLoginController.m */,
+				4A4BEF1F22CE078B00FD00DE /* RWSetPasswordController.h */,
+				4A4BEF1E22CE078B00FD00DE /* RWSetPasswordController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -2011,6 +2016,7 @@
 				4A6DAA3F22C0AD3100F29455 /* AFURLResponseSerialization.m in Sources */,
 				4A6DAB5A22C0ADAF00F29455 /* NSObject+MJKeyValue.m in Sources */,
 				4A6DAB5922C0ADAF00F29455 /* MJPropertyType.m in Sources */,
+				4A4BEF2022CE078B00FD00DE /* RWSetPasswordController.m in Sources */,
 				4A6DAA7A22C0AD4C00F29455 /* IQUIView+Hierarchy.m in Sources */,
 				4AC67DF322C84A0500842C0D /* FHCircleHotPointController.m in Sources */,
 				4AA7B3A622CC7D8D00462389 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
