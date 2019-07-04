@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface RWVerificationCodeLoginController : BaseViewController
+@interface RWVerificationCodeLoginController : UIViewController
 
 @end

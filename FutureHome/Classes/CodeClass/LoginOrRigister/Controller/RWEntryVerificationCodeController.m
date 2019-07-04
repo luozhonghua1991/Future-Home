@@ -160,6 +160,7 @@
  确认按钮 校验验证码是否输入正确
  */
 - (void)sureBtnClick {
+     [self.navigationController popToRootViewControllerAnimated:YES];
     //首先要校验验证码是否正确
     WS(weakSelf);
     NSMutableDictionary *param = [NSMutableDictionary dictionary];
@@ -174,8 +175,8 @@
 //    }];
 }
 
-//- (void)quickLogin {
-//    if (self.vcType == BOUNDPHONE_VC) {
+- (void)quickLogin {
+    if (self.vcType == BOUNDPHONE_VC) {
 //        //绑定手机号
 //        Account *account = [AccountStorage readAccount];
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -195,7 +196,7 @@
 //             LoadingGIFEnd;
 //             [weakSelf.view makeToast:msg];
 //         }];
-//    } else if (self.vcType == REGISTER_VC) {
+    } else if (self.vcType == REGISTER_VC) {
 //        //新用户注册 快捷登录
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //        params[@"phone"] = self.phoneNumber;
@@ -209,7 +210,7 @@
 //        } failure:^(NSString *msg) {
 //            [weakSelf.view makeToast:msg];
 //        }];
-//    } else if (self.vcType == PASSWORD_VC) {
+    } else if (self.vcType == PASSWORD_VC) {
 //        Account *account = [AccountStorage readAccount];
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //        params[@"token"] = account.token;
@@ -232,40 +233,20 @@
 //             LoadingGIFEnd;
 //             [weakSelf.view makeToast:msg];
 //         }];
-//     } else if (self.vcType == THIRDLOGIN_VC){
-//        //第三方登录成功之后 绑定手机号 绑定成功后回到首页
-//         Account *account = [AccountStorage readAccount];
-//         NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//         params[@"token"] = account.token;
-//         params[@"phone"] = @{@"phone":self.phoneNumber,
-//                              @"code":self.verificCode,
-//                              @"dialing_code":self.dialing_code
-//                              };
-//         LoadingBegan;
-//         WS(weakSelf);
-//         [LoginService loginBoundPhoneParams:params success:^(NSDictionary *respond)
-//          {
-//              LoadingGIFEnd;
-//              [AccountStorage saveAccount:account];
-//              [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//          } failure:^(NSString *msg) {
-//
-//              LoadingGIFEnd;
-//              [weakSelf.view makeToast:msg];
-//          }];
-//
-//     } else if(self.vcType == VERIFICATIONLOGIN_VC) {
-//         //验证码登录 登录成功回到首页
+     } else if (self.vcType == THIRDLOGIN_VC){
+     } else if(self.vcType == VERIFICATIONLOGIN_VC) {
+         //验证码登录 登录成功回到首页
+         [self.navigationController popToRootViewControllerAnimated:YES];
 //         NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //         params[@"phone"] = self.phoneNumber;
 //         params[@"code"] = self.verificCode;
 //         WS(weakSelf);
 //         [LoginService loginWithParams:@{@"session":params} success:^(Account *accout) {
-//             [self.navigationController popToRootViewControllerAnimated:YES];
+//
 //         } failure:^(NSString *msg) {
 //             [weakSelf.view makeToast:msg];
 //         }];
-//     } else if(self.vcType == FORGETPASSWORD_VC) {
+     } else if(self.vcType == FORGETPASSWORD_VC) {
 //         //忘记密码 去重置密码
 //         //用户注册的时候 需要设置密码
 //         RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
@@ -273,8 +254,8 @@
 //         setPassword.phoneNumber = self.phoneNumber;
 //         setPassword.verificCode = self.verificCode;
 //         [self.navigationController pushViewController:setPassword animated:YES];
-//     }
-//}
+     }
+}
 
 /**
  密码登录
