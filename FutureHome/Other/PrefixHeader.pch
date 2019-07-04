@@ -34,6 +34,7 @@
 
 
 //获取当前屏幕的宽高
+#define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
 //获取状态栏高度
@@ -81,5 +82,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //weak self
 #define WEAK_SELF(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 #define WEAK_SELF_OBJC(weakSelf,objc)  __weak __typeof(&*objc)weakSelf = objc;
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
 #endif /* PrefixHeader_pch */

@@ -1,45 +1,42 @@
 //
-//  FHRigisterController.m
-//  FutureHome
+//  RWForgetPasswordController.m
+//  RWGame
 //
-//  Created by 同熙传媒 on 2019/7/4.
-//  Copyright © 2019 同熙传媒. All rights reserved.
-//  用户注册
+//  Created by luozhonghua on 2018/7/17.
+//  Copyright © 2018年 chao.liu. All rights reserved.
+//  验证手机号(点击忘记密码跳转) 忘记密码的跳转
 
-#import "FHRigisterController.h"
-#import "RWTextField.h"
+#import "RWForgetPasswordController.h"
 #import "TPKeyboardAvoidingScrollView.h"
+//#import "XWCountryCodeController.h"
+#import "RWTextField.h"
 #import "RWEntryVerificationCodeController.h"
+//#import "LoginService.h"
 
-@interface FHRigisterController () <UITextFieldDelegate>
+@interface RWForgetPasswordController () <UITextFieldDelegate>
 
 /** <#Description#> */
 @property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
 /**标题label*/
 @property (nonatomic,strong) UILabel                       *titleLabel;
+/**下一步按钮*/
+@property (nonatomic,strong) UIButton                      *nextStepBtn;
 /**手机号码View*/
 @property (nonatomic,strong) UIView                        *phoneNumnberView;
 /**国家区号按钮*/
 @property (nonatomic,strong) UIButton                      *countryBtn;
 /**手机号码TF*/
 @property (nonatomic,strong) RWTextField                   *phoneNumnTF;
-/**下一步按钮*/
-@property (nonatomic,strong) UIButton                      *nextStepBtn;
-///**条款label*/
-@property (nonatomic,strong) UILabel                       *clauseLabel;
 /**区号*/
 @property (nonatomic,copy) NSString                        *dialing_code;
-/**服务条款按钮*/
-@property (nonatomic,strong) UIButton                      *leftBtn;
-/**隐私策略按钮*/
-@property (nonatomic,strong) UIButton                      *rightBtn;
 
 @end
 
-@implementation FHRigisterController
+@implementation RWForgetPasswordController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.dialing_code = @"86";
     // Nav buttonItem
@@ -52,8 +49,8 @@
     [self.phoneNumnberView addSubview:self.phoneNumnTF];
     
     [self.scrollView addSubview:self.nextStepBtn];
-    
 }
+
 
 - (void)viewDidLayoutSubviews
 {
@@ -94,8 +91,8 @@
     [self.nextStepBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.phoneNumnberView.mas_bottom).offset(15);
         make.left.mas_equalTo(20.5);
-        //        make.right.mas_equalTo(-20.5);
-        make.width.mas_equalTo(SCREEN_WIDTH - 41);
+//        make.right.mas_equalTo(-20.5);
+        make.width.mas_equalTo(kScreenWidth - 41);
         make.height.mas_equalTo(55);
     }];
     
@@ -103,44 +100,31 @@
     
 }
 
+
 #pragma mark -- events
 - (void)nextStepBtnClick {
     if (0 == self.phoneNumnTF.text.length) {
         [self.view makeToast:@"亲，请先输入手机号码"];
         return;
     }
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"phone"] = self.phoneNumnTF.text;
-    param[@"dialing_code"] = self.dialing_code;
-    [self goToIdentifyingCodeVC];
-    //检测手机号是否被注册
-//    WS(weakSelf);
-//    [LoginService verifyPhoneNumberIsRegisteredWithParams:@{@"sms":param} success:^(NSDictionary *respond) {
-//        //手机号没有注册
-//        [weakSelf goToIdentifyingCodeVC];
-//    } failure:^(NSString *msg) {
-//        [self.view makeToast:msg];
-//    }];
-}
-
-- (void)goToIdentifyingCodeVC {
     //验证码输入界面
     RWEntryVerificationCodeController *vc = [[RWEntryVerificationCodeController alloc]init];
     vc.phoneNumber = self.phoneNumnTF.text;
     vc.dialing_code = self.dialing_code;
-    //新用户注册界面
-    vc.vcType = REGISTER_VC;
+    vc.vcType = FORGETPASSWORD_VC;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGPoint point = scrollView.contentOffset;
+    
     // 限制y轴不动
     point.x = 0.f;
     
     scrollView.contentOffset = point;
 }
+
 
 #pragma mark -- 输入框文字判断
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
@@ -164,6 +148,7 @@
     [self.phoneNumnTF becomeFirstResponder];
 }
 
+
 #pragma mark -- setter getter
 - (TPKeyboardAvoidingScrollView *)scrollView {
     if (_scrollView == nil) {
@@ -176,7 +161,7 @@
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc]init];
         _titleLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:20];
-        _titleLabel.text = @"手机快速注册";
+        _titleLabel.text = @"验证手机号";
         _titleLabel.textColor = UIColorFromRGB(0x333333);
         _titleLabel.textAlignment = NSTextAlignmentCenter;
     }
@@ -238,10 +223,11 @@
         _nextStepBtn.alpha = 0.5;
         [_nextStepBtn setTitleColor:HEX_COLOR(0xFFFFFF) forState:UIControlStateNormal];
         [_nextStepBtn addTarget:self action:@selector(nextStepBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [_nextStepBtn setTitle:@"下一步" forState:UIControlStateNormal];
         _nextStepBtn.userInteractionEnabled = NO;
+        [_nextStepBtn setTitle:@"下一步" forState:UIControlStateNormal];
     }
     return _nextStepBtn;
 }
+
 
 @end
