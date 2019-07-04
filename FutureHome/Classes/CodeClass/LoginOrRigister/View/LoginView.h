@@ -23,6 +23,9 @@
 @property (nonatomic, strong) UILabel *rightTitle;
 /** 登录按钮 */
 @property (nonatomic, strong) UIButton *underButton;
+/** 注册按钮 */
+@property (nonatomic, strong) UIButton *rigisterBtn;
+
 /** 代理 */
 @property (nonatomic, weak) id<LoginViewDelegate> delegate;
 

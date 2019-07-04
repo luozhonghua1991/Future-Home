@@ -23,15 +23,9 @@
 {
     [super layoutSubviews];
     
-    [self.underButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(20.5);
-        make.right.mas_equalTo(-20.5);
-        make.bottom.equalTo(self.leftTitle.mas_top).offset(-14);
-        make.height.equalTo(@55);
-    }];
     //验证码登录
     [self.leftTitle mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self).offset(2.5);
+        make.top.equalTo(self).offset(2.5);
         make.left.mas_equalTo(32.5);
         make.height.equalTo(@30);
     }];
@@ -40,6 +34,21 @@
         make.centerY.equalTo(self.leftTitle);
         make.right.mas_equalTo(-32.5);
         make.height.equalTo(self.leftTitle);
+    }];
+    //登录
+    [self.underButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20.5);
+        make.right.mas_equalTo(-20.5);
+        make.top.equalTo(@40);
+        make.height.equalTo(@55);
+    }];
+    
+    //注册
+    [self.rigisterBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(20.5);
+        make.right.mas_equalTo(-20.5);
+        make.top.equalTo(@100);
+        make.height.equalTo(@55);
     }];
 }
 
@@ -76,6 +85,9 @@
     [self touchView:button.currentTitle];
 }
 
+- (void)onClickRigisterButton:(UIButton *)button {
+     [self touchView:button.currentTitle];
+}
 
 #pragma mark - Getters and Setters
 - (UILabel *)leftTitle {
@@ -101,6 +113,19 @@
     return _rightTitle;
 }
 
+- (UIButton *)rigisterBtn {
+    if (_rigisterBtn == nil) {
+        _rigisterBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _rigisterBtn.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
+        [_rigisterBtn setTitleColor:HEX_COLOR(0xFFFFFF) forState:UIControlStateNormal];
+        [_rigisterBtn addTarget:self action:@selector(onClickRigisterButton:) forControlEvents:UIControlEventTouchUpInside];
+        [_rigisterBtn setBackgroundImage:[UIImage imageNamed:@"rw_login_noUser"] forState:UIControlStateNormal];
+        [_rigisterBtn setTitleEdgeInsets:UIEdgeInsetsMake(-5, 0, 0, 0)];
+        [self addSubview:_rigisterBtn];
+    }
+    return _rigisterBtn;
+}
+
 - (UIButton *)underButton {
     if (_underButton == nil) {
         _underButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -108,8 +133,8 @@
         [_underButton setTitleColor:HEX_COLOR(0xFFFFFF) forState:UIControlStateNormal];
         [_underButton addTarget:self action:@selector(onClickUnderButton:) forControlEvents:UIControlEventTouchUpInside];
         [_underButton setBackgroundImage:[UIImage imageNamed:@"rw_login_noUser"] forState:UIControlStateNormal];
-        _underButton.alpha = 0.5;
         [_underButton setTitleEdgeInsets:UIEdgeInsetsMake(-5, 0, 0, 0)];
+        _underButton.alpha = 0.5;
         [self addSubview:_underButton];
     }
     return _underButton;

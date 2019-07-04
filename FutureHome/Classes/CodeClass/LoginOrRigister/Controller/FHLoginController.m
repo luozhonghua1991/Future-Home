@@ -61,6 +61,7 @@
     self.login.rightTitle.text = @"忘记密码";
     [self.login.underButton setTitle:@"登录" forState:UIControlStateNormal];
     self.login.underButton.userInteractionEnabled = NO;
+    [self.login.rigisterBtn setTitle:@"注册" forState:UIControlStateNormal];
 }
 
 #pragma mark -- layout
@@ -125,7 +126,7 @@
         make.top.equalTo(self.passwordView.mas_bottom);
         make.left.equalTo(@0);
         make.width.equalTo(self.view);
-        make.height.equalTo(@110);
+        make.height.equalTo(@170);
     }];
     
     [self.scrollView contentSizeToFit];
@@ -203,22 +204,21 @@
 
 
 #pragma mark — delegate
-- (void)loginView:(LoginView *)view withName:(NSString *)name
-{
+- (void)loginView:(LoginView *)view withName:(NSString *)name {
     if ([name isEqualToString:@"验证码登录"]) {
         //验证码登录
-//        [self viewControllerPushOther:@"RWVerificationCodeLoginController" withParam:nil];
+        [self viewControllerPushOther:@"RWVerificationCodeLoginController"];
     } else if ([name isEqualToString:@"忘记密码"]) {
-//        [self viewControllerPushOther:@"RWForgetPasswordController" withParam:nil];
+        [self viewControllerPushOther:@"RWForgetPasswordController"];
     } else if ([name isEqualToString:@"登录"]) {
         //登录请求
         [self.view endEditing:YES];
         if (0 == self.phoneNumnTF.text.length) {
-//            [self.view makeToast:@"亲，请先输入手机号码"];
+            [self.view makeToast:@"亲，请先输入手机号码"];
             return;
         }
         if (0 == self.passwordTF.text.length) {
-//            [self.view makeToast:@"亲，未填写密码"];
+            [self.view makeToast:@"亲，未填写密码"];
             return;
         }
         
@@ -233,9 +233,22 @@
 //        } failure:^(NSString *msg) {
 //            [self.view makeToast:msg];
 //        }];
+    } else if ([name isEqualToString:@"注册"]) {
+        [self viewControllerPushOther:@"FHRigisterController"];
     } else {
-//        [self.view makeToast:@"亲，请输入有效的手机号码"];
+        [self.view makeToast:@"亲，请输入有效的手机号码"];
     }
+}
+
+/**
+ *  从 A 控制器跳转到 B 控制器
+ *
+ *  @param nameVC B 控制器名称
+ *  @param param  可选参数
+ */
+- (void)viewControllerPushOther:(nonnull NSString *)nameVC {
+    UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];
+    [self.navigationController pushViewController:vc animated:NO];
 }
 
 #pragma mark - Getters and Setters

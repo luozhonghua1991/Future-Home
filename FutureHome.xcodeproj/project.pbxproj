@@ -18,6 +18,7 @@
 		4A448CE822C7051B003D0712 /* FHPublicServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CE722C7051B003D0712 /* FHPublicServiceController.m */; };
 		4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */; };
 		4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */; };
+		4A4BEF1422CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1322CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m */; };
 		4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F95C22C0B68F00867031 /* BaseViewController.m */; };
 		4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96122C0B6D000867031 /* UIViewController+Swizzling.m */; };
 		4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96222C0B6D000867031 /* UIButton+countDown.m */; };
@@ -245,6 +246,8 @@
 		4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHRigisterController.m; sourceTree = "<group>"; };
 		4A4BEF0F22CDFA4900FD00DE /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
+		4A4BEF1222CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+XZCategory.h"; sourceTree = "<group>"; };
+		4A4BEF1322CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+XZCategory.m"; sourceTree = "<group>"; };
 		4A59F95722C0B31B00867031 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4A59F95922C0B3DF00867031 /* InterfaceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceHeader.h; sourceTree = "<group>"; };
 		4A59F95A22C0B3DF00867031 /* ColorHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHeader.h; sourceTree = "<group>"; };
@@ -866,6 +869,8 @@
 		4A6DAA0022C0700F00F29455 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				4A4BEF1222CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.h */,
+				4A4BEF1322CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m */,
 				4AA7BDB122CC886C00462389 /* UIColor-Expanded.h */,
 				4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */,
 				4AA7BDB222CC886D00462389 /* UIColor-HSVAdditions.h */,
@@ -2063,6 +2068,7 @@
 				4AA7B3A822CC7D8D00462389 /* MASCompositeConstraint.m in Sources */,
 				4A59F97522C0B94000867031 /* FHShopingController.m in Sources */,
 				4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */,
+				4A4BEF1422CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m in Sources */,
 				4AC67E2622C8AED100842C0D /* FHWaitOrderController.m in Sources */,
 				4A6DAB5722C0ADAF00F29455 /* UIButton+WebCache.m in Sources */,
 				4A6DAB5022C0ADAF00F29455 /* SDWebImageDownloaderOperation.m in Sources */,
