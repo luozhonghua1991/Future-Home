@@ -99,8 +99,6 @@
         make.height.mas_equalTo(15);
         make.centerY.mas_equalTo(self.phoneNumnberView);
     }];
-    
-    
     //密码区域的布局
     [self.passwordView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(self.phoneNumnberView.mas_bottom).offset(14);

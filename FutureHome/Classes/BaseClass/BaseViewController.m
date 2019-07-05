@@ -25,12 +25,21 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(backToHomePage) name:@"GoHomePageController" object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GoHomePageController" object:nil];
 }
+
+- (void)backToHomePage {
+    if (self.navigationController) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 -(BOOL)shouldAutorotate{
     return NO;
 }

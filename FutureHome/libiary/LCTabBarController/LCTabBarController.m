@@ -187,8 +187,10 @@
 #pragma mark - XXTabBarDelegate Method
 
 - (void)tabBar:(LCTabBar *)tabBarView didSelectedItemFrom:(NSInteger)from to:(NSInteger)to {
-    
     self.selectedIndex = to;
+    if (self.selectedIndex == 0) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GoHomePageController" object:nil]; 
+    }
 }
 
 @end

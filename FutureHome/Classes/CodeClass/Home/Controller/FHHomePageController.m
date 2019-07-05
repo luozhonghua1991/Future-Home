@@ -238,7 +238,6 @@
 }
 
 - (void)pushVCWithName:(BaseViewController *)vcName {
-    vcName.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vcName animated:YES];
 }
 
