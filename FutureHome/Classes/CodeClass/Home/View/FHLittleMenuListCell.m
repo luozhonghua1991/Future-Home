@@ -62,13 +62,13 @@
         [self pushVCWithName:@"FHPayController"];
     } else if (indexPath.row == 2) {
         /** 收款 */
-        [self pushVCWithName:@"FHPayController"];
+        [self pushVCWithName:@"FHReceivablesController"];
     } else if (indexPath.row == 3) {
         /** 生活缴费 */
-        [self pushVCWithName:@"FHPayController"];
+        [self pushVCWithName:@"FHLivingExpensesController"];
     } else if (indexPath.row == 4) {
         /** 财富园 */
-        [self pushVCWithName:@"FHPayController"];
+        [self pushVCWithName:@"FHWealthGardenController"];
     }
 }
 

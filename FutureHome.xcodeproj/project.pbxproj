@@ -159,6 +159,9 @@
 		4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */; };
 		4AA0D92C22CF45B2003F61D2 /* FHScanCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D92B22CF45B2003F61D2 /* FHScanCodeController.m */; };
 		4AA0D92F22CF4766003F61D2 /* FHPayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D92E22CF4766003F61D2 /* FHPayController.m */; };
+		4AA0D93222CF4878003F61D2 /* FHReceivablesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D93122CF4878003F61D2 /* FHReceivablesController.m */; };
+		4AA0D93522CF48F2003F61D2 /* FHLivingExpensesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D93422CF48F2003F61D2 /* FHLivingExpensesController.m */; };
+		4AA0D93822CF4925003F61D2 /* FHWealthGardenController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D93722CF4925003F61D2 /* FHWealthGardenController.m */; };
 		4AA7B37122CC400F00462389 /* FHLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37022CC400F00462389 /* FHLoginController.m */; };
 		4AA7B37522CC536700462389 /* CurrentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37422CC536700462389 /* CurrentViewController.m */; };
 		4AA7B37822CC57DD00462389 /* FHLoginTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37722CC57DD00462389 /* FHLoginTool.m */; };
@@ -543,6 +546,12 @@
 		4AA0D92B22CF45B2003F61D2 /* FHScanCodeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanCodeController.m; sourceTree = "<group>"; };
 		4AA0D92D22CF4766003F61D2 /* FHPayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPayController.h; sourceTree = "<group>"; };
 		4AA0D92E22CF4766003F61D2 /* FHPayController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPayController.m; sourceTree = "<group>"; };
+		4AA0D93022CF4878003F61D2 /* FHReceivablesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHReceivablesController.h; sourceTree = "<group>"; };
+		4AA0D93122CF4878003F61D2 /* FHReceivablesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHReceivablesController.m; sourceTree = "<group>"; };
+		4AA0D93322CF48F2003F61D2 /* FHLivingExpensesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLivingExpensesController.h; sourceTree = "<group>"; };
+		4AA0D93422CF48F2003F61D2 /* FHLivingExpensesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLivingExpensesController.m; sourceTree = "<group>"; };
+		4AA0D93622CF4925003F61D2 /* FHWealthGardenController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHWealthGardenController.h; sourceTree = "<group>"; };
+		4AA0D93722CF4925003F61D2 /* FHWealthGardenController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHWealthGardenController.m; sourceTree = "<group>"; };
 		4AA7B36F22CC400F00462389 /* FHLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLoginController.h; sourceTree = "<group>"; };
 		4AA7B37022CC400F00462389 /* FHLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLoginController.m; sourceTree = "<group>"; };
 		4AA7B37322CC536700462389 /* CurrentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentViewController.h; sourceTree = "<group>"; };
@@ -938,6 +947,12 @@
 				4AA0D92B22CF45B2003F61D2 /* FHScanCodeController.m */,
 				4AA0D92D22CF4766003F61D2 /* FHPayController.h */,
 				4AA0D92E22CF4766003F61D2 /* FHPayController.m */,
+				4AA0D93022CF4878003F61D2 /* FHReceivablesController.h */,
+				4AA0D93122CF4878003F61D2 /* FHReceivablesController.m */,
+				4AA0D93322CF48F2003F61D2 /* FHLivingExpensesController.h */,
+				4AA0D93422CF48F2003F61D2 /* FHLivingExpensesController.m */,
+				4AA0D93622CF4925003F61D2 /* FHWealthGardenController.h */,
+				4AA0D93722CF4925003F61D2 /* FHWealthGardenController.m */,
 				4AC67E4222C8C4D900842C0D /* FinancialService */,
 				4AC67E3F22C8C04200842C0D /* HomeServices */,
 				4AC67E4022C8C05F00842C0D /* OwnerService */,
@@ -2007,6 +2022,7 @@
 				4A6DAA3722C0AD3100F29455 /* UIRefreshControl+AFNetworking.m in Sources */,
 				4A6DAA4022C0AD3100F29455 /* AFHTTPSessionManager.m in Sources */,
 				4A448CE222C70303003D0712 /* FHMyVideoController.m in Sources */,
+				4AA0D93522CF48F2003F61D2 /* FHLivingExpensesController.m in Sources */,
 				4A448CDF22C702E5003D0712 /* FHMyGroupController.m in Sources */,
 				4AC67E1D22C8A24300842C0D /* FHBuinessListController.m in Sources */,
 				4A6DAB5222C0ADAF00F29455 /* UIImageView+WebCache.m in Sources */,
@@ -2054,6 +2070,7 @@
 				4A6DAB6122C0ADAF00F29455 /* MJPropertyKey.m in Sources */,
 				4AC67E0022C84DE200842C0D /* FHMyPhotoController.m in Sources */,
 				4AC67E3822C8B0C300842C0D /* FHSpecialManagerController.m in Sources */,
+				4AA0D93222CF4878003F61D2 /* FHReceivablesController.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
 				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
@@ -2114,6 +2131,7 @@
 				4A6DAB5E22C0ADAF00F29455 /* NSObject+MJProperty.m in Sources */,
 				4A6DAB5C22C0ADAF00F29455 /* NSObject+MJCoding.m in Sources */,
 				4A6DAA3D22C0AD3100F29455 /* AFAutoPurgingImageCache.m in Sources */,
+				4AA0D93822CF4925003F61D2 /* FHWealthGardenController.m in Sources */,
 				4A448CCD22C5AF8B003D0712 /* FHHomeServicesController.m in Sources */,
 				4A6DAA3E22C0AD3100F29455 /* AFImageDownloader.m in Sources */,
 			);
