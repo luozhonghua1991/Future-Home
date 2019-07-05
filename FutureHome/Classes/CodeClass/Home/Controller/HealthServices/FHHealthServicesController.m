@@ -10,7 +10,7 @@
 #import "FHCommonCollectionViewCell.h"
 #import "FHLittleMenuListCell.h"
 
-@interface FHHealthServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate,FHLittleMenuListCellDelegate>
+@interface FHHealthServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的轮播图 */
@@ -34,11 +34,6 @@
     [super viewDidLoad];
     
     self.isHaveNav = YES;
-    self.topLogoNameArrs = @[@"扫一扫",
-                             @"付款",
-                             @"收款",
-                             @"生活缴费",
-                             @"财富园"];
     self.bottomLogoNameArrs = @[@"疾病类别",
                                 @"药物健康",
                                 @"健康指数",
@@ -81,8 +76,6 @@
     if (indexPath.row == 0) {
         /** 菜单列表 */
         FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
-        cell.delegate = self;
-        cell.topLogoNameArrs = self.topLogoNameArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else if (indexPath.row == 1) {
@@ -187,26 +180,6 @@
         /** 我的业委 */
     }
 }
-
-- (void)FHLittleMenuListCellSelectIndex:(NSIndexPath *)selectIndex {
-    if (selectIndex.row == 0) {
-        /** 扫一扫 */
-        
-    } else if (selectIndex.row == 1) {
-        /** 付款 */
-        
-    } else if (selectIndex.row == 2) {
-        /** 收款 */
-        
-    } else if (selectIndex.row == 3) {
-        /** 生活缴费 */
-        
-    } else if (selectIndex.row == 4) {
-        /** 财富园 */
-        
-    }
-}
-
 
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/

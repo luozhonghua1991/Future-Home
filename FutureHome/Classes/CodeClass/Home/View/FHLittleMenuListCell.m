@@ -21,6 +21,11 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self fh_setUpUI];
+        self.topLogoNameArrs = @[@"扫一扫",
+                                 @"付款",
+                                 @"收款",
+                                 @"生活缴费",
+                                 @"财富园"];
     }
     return self;
 }
@@ -54,16 +59,16 @@
         [self pushVCWithName:@"FHScanCodeController"];
     } else if (indexPath.row == 1) {
         /** 付款 */
-        
+        [self pushVCWithName:@"FHPayController"];
     } else if (indexPath.row == 2) {
         /** 收款 */
-        
+        [self pushVCWithName:@"FHPayController"];
     } else if (indexPath.row == 3) {
         /** 生活缴费 */
-        
+        [self pushVCWithName:@"FHPayController"];
     } else if (indexPath.row == 4) {
         /** 财富园 */
-        
+        [self pushVCWithName:@"FHPayController"];
     }
 }
 
