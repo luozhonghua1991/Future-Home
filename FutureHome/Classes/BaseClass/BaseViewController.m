@@ -153,6 +153,17 @@
     return tabbarHeight = KIsiPhoneX ? 83 : 49;
 }
 
+/**
+ *  从 A 控制器跳转到 B 控制器
+ *
+ *  @param nameVC B 控制器名称
+ *  @param param  可选参数
+ */
+- (void)viewControllerPushOther:(nonnull NSString *)nameVC {
+    UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:NO];
+}
 
 //#pragma mark — FHCommonNavViewBlock
 ///** 搜索 */
