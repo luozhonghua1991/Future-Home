@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHGroupController : BaseViewController
+/** s是否选择商业服务 */
+@property (nonatomic, assign) BOOL isSelectBuiness;
 
 @end
 

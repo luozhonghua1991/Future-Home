@@ -22,6 +22,21 @@
     [super viewDidLoad];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(moveToGroup) name:@"GoGroupController" object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GoGroupController" object:nil];
+    
+}
+
+- (void)moveToGroup {
+    
+}
+
 - (void)initViewControllers {
     FHMessageController *messageVC = [[FHMessageController alloc] init];
     messageVC.yp_tabItemTitle = @"对话";

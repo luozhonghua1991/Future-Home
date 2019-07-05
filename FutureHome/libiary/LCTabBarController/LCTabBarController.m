@@ -185,11 +185,16 @@
 }
 
 #pragma mark - XXTabBarDelegate Method
-
 - (void)tabBar:(LCTabBar *)tabBarView didSelectedItemFrom:(NSInteger)from to:(NSInteger)to {
     self.selectedIndex = to;
     if (self.selectedIndex == 0) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"GoHomePageController" object:nil]; 
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GoHomePageController" object:nil];
+    }
+    if (self.selectedIndex == 1) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GoGroupController" object:nil];
+    }
+    if (self.selectedIndex == 2) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"GoBuinessServiceController" object:nil];
     }
 }
 

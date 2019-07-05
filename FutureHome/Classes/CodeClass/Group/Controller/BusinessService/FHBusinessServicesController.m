@@ -30,13 +30,13 @@
     FHSearchBelowController *photoVC = [[FHSearchBelowController alloc] init];
     photoVC.yp_tabItemTitle = @"查找附近";
     
-    FHSearchCategoryController *followVC = [[FHSearchCategoryController alloc] init];
-    followVC.yp_tabItemTitle = @"分类查找";
+//    FHSearchCategoryController *followVC = [[FHSearchCategoryController alloc] init];
+//    followVC.yp_tabItemTitle = @"分类查找";
+//
+//    FHMessageHistoryController *friendVC = [[FHMessageHistoryController alloc] init];
+//    friendVC.yp_tabItemTitle = @"对话记录";
     
-    FHMessageHistoryController *friendVC = [[FHMessageHistoryController alloc] init];
-    friendVC.yp_tabItemTitle = @"对话记录";
-    
-    self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC,followVC,friendVC, nil];
+    self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC, nil];
     
 }
 

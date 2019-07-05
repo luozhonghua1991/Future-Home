@@ -44,14 +44,34 @@
     [self fh_setSelectNavView];
     [self fh_creatSelectBtn];
     [self fh_setMainScrollView];
+    if (self.isSelectBuiness) {
+        mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * 2, 0);
+    } else {
+        mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * 0, 0);
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if (self.tabBarController.selectedIndex == 0 || self.tabBarController.selectedIndex == 1 || self.tabBarController.selectedIndex == 3 || self.tabBarController.selectedIndex == 4) {
-        mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * 2, 0);
-    }
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(moveToGroup) name:@"GoGroupController" object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(moveToBuiness) name:@"GoBuinessServiceController" object:nil];
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GoGroupController" object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GoBuinessServiceController" object:nil];
+    
+}
+
+- (void)moveToGroup {
+    mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * 0, 0);
+}
+
+- (void)moveToBuiness {
+    mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * 2, 0);
+}
+
 
 #pragma mark — privite
 - (void)fh_setSelectNavView {

@@ -42,11 +42,13 @@ static FHAppDelegate* pSelf = nil;
     
     FHGroupController *vc2 = [[FHGroupController alloc] init];
     vc2.title = @"社群";
+    vc2.isSelectBuiness = NO;
     vc2.tabBarItem.image = [UIImage imageNamed:@"tabbar_invite_normal"];
 //    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"tarbar_invite_select"];
     
     FHGroupController *vc3 = [[FHGroupController alloc] init];
     vc3.title = @"商业服务";
+    vc3.isSelectBuiness = YES;
     vc3.tabBarItem.image = [UIImage imageNamed:@"tabbar_inviteFriend_normal"];
 //    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_inviteFriend_select"];
     

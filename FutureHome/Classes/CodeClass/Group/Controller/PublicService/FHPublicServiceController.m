@@ -23,10 +23,10 @@
 - (void)initViewControllers {
    
     FHSearchBelowController *photoVC = [[FHSearchBelowController alloc] init];
-    photoVC.yp_tabItemTitle = @"查找附近";
+    photoVC.yp_tabItemTitle = @"关注列表";
     
     FHSearchCategoryController *followVC = [[FHSearchCategoryController alloc] init];
-    followVC.yp_tabItemTitle = @"分类查找";
+    followVC.yp_tabItemTitle = @"查找附近";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:photoVC,followVC, nil];
     
