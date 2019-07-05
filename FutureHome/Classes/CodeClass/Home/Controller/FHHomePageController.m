@@ -200,6 +200,7 @@
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
+    
     if (infiniteScrollView.tag == 2018) {
         /** 上面的轮播图 */
 

@@ -928,9 +928,11 @@
 			children = (
 				4A59F96D22C0B7E800867031 /* FHHomePageController.h */,
 				4A59F96E22C0B7E800867031 /* FHHomePageController.m */,
+				4AC67E4222C8C4D900842C0D /* FinancialService */,
 				4AC67E3F22C8C04200842C0D /* HomeServices */,
 				4AC67E4022C8C05F00842C0D /* OwnerService */,
 				4AC67E4122C8C11100842C0D /* HealthServices */,
+				4AC67E4322C8C4F800842C0D /* CustomerService */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1753,8 +1755,6 @@
 			children = (
 				4A448CD122C5B576003D0712 /* FHHealthServicesController.h */,
 				4A448CD222C5B576003D0712 /* FHHealthServicesController.m */,
-				4AC67E4222C8C4D900842C0D /* FinancialService */,
-				4AC67E4322C8C4F800842C0D /* CustomerService */,
 			);
 			path = HealthServices;
 			sourceTree = "<group>";
