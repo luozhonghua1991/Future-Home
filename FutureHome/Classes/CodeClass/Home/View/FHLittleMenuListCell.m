@@ -8,6 +8,7 @@
 
 #import "FHLittleMenuListCell.h"
 #import "FHLittleMenuListCollectionCell.h"
+#import "FHScanCodeController.h"
 
 @interface FHLittleMenuListCell() <UICollectionViewDataSource,UICollectionViewDelegate>
 /** 菜单列表collection */
@@ -45,9 +46,31 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHLittleMenuListCellSelectIndex:)]) {
-        [_delegate FHLittleMenuListCellSelectIndex:indexPath];
+//    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHLittleMenuListCellSelectIndex:)]) {
+//        [_delegate FHLittleMenuListCellSelectIndex:indexPath];
+//    }
+    if (indexPath.row == 0) {
+        /** 扫一扫 */
+        [self pushVCWithName:@"FHScanCodeController"];
+    } else if (indexPath.row == 1) {
+        /** 付款 */
+        
+    } else if (indexPath.row == 2) {
+        /** 收款 */
+        
+    } else if (indexPath.row == 3) {
+        /** 生活缴费 */
+        
+    } else if (indexPath.row == 4) {
+        /** 财富园 */
+        
     }
+}
+
+- (void)pushVCWithName:(NSString *)nameVC {
+    UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
 }
 
 

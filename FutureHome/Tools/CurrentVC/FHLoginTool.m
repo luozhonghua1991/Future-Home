@@ -7,7 +7,6 @@
 //
 
 #import "FHLoginTool.h"
-#import "CurrentViewController.h"
 #import "FHLoginController.h"
 
 @implementation FHLoginTool
