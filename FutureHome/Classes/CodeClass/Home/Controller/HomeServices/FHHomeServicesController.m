@@ -176,6 +176,33 @@
 }
 
 
+#pragma mark — FHCommonCollectionViewDelegate
+- (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
+    if (selectIndex.row == 0) {
+        /** 物业公告 */
+
+    } else if (selectIndex.row == 1) {
+        /** 清洁绿化 */
+    } else if (selectIndex.row == 2) {
+        /** 安保消防 */
+    } else if (selectIndex.row == 3) {
+        /** 水电气 */
+    } else if (selectIndex.row == 4) {
+        /** 车库管理 */
+    } else if (selectIndex.row == 5) {
+        /** 装修维修 */
+    } else if (selectIndex.row == 6) {
+        /** 物业缴费 */
+    } else if (selectIndex.row == 7) {
+        /** 物业租赁 */
+    } else if (selectIndex.row == 8) {
+        /** 投诉建议 */
+    } else if (selectIndex.row == 9) {
+        /** 我的物业 */
+    }
+}
+
+
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
