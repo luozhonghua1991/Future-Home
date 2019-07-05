@@ -31,13 +31,13 @@
 
 #pragma mark — collectionViewDelagate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 10;
+    return self.bottomLogoNameArrs.count;
     
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHCommonCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHCommonCollectionCell class]) forIndexPath:indexPath];
-    
+    cell.listNameLabel.text = [NSString stringWithFormat:@"%@",self.bottomLogoNameArrs[indexPath.row]];
     return cell;
 }
 
@@ -54,9 +54,9 @@
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
         flowLayout.minimumLineSpacing =  0;
         flowLayout.minimumInteritemSpacing = 0;
-        flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH / 5, SCREEN_WIDTH * 0.116);
+        flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH / 5, SCREEN_WIDTH * 0.43 / 2);
         
-        _menuCollectionView =[[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116 * 2) collectionViewLayout:flowLayout];
+        _menuCollectionView =[[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.43) collectionViewLayout:flowLayout];
         _menuCollectionView.backgroundColor = [UIColor clearColor];
         _menuCollectionView.showsHorizontalScrollIndicator = NO;
         _menuCollectionView.showsVerticalScrollIndicator = NO;

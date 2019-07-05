@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHCommonCollectionCell : UICollectionViewCell
+/** 图标 */
+@property (nonatomic, strong) UIImageView *logoImgView;
+/** 名字 */
+@property (nonatomic, strong) UILabel *listNameLabel;
 
 @end
 

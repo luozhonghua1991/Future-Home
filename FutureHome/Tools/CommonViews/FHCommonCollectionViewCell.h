@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface FHCommonCollectionViewCell : UITableViewCell
+/** 上面的logoName */
+@property (nonatomic, copy) NSArray *topLogoNameArrs;
+/** 下面的logoName */
+@property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 
 @property(nonatomic, weak) id<FHCommonCollectionViewDelegate> delegate;
 

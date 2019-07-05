@@ -7,8 +7,9 @@
 //  物业服务
 
 #import "FHHomeServicesController.h"
+#import "FHCommonCollectionViewCell.h"
 
-@interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate>
+@interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的轮播图 */
@@ -39,7 +40,8 @@
                                 @"物业租赁",
                                 @"投诉建议",
                                 @"我的物业"];
-     [self.view addSubview:self.homeTable];
+    [self.view addSubview:self.homeTable];
+    [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
     
 }
 
@@ -66,6 +68,83 @@
     return SCREEN_WIDTH * 0.618;
 }
 
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 0) {
+        /** 服务平台 */
+        static NSString *ID = @"cell1";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        for (UIView *view in cell.subviews) {
+            if (view.tag == 2017) {
+                [view removeFromSuperview];
+            }
+        }
+        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
+        locationView.tag = 2017;
+        
+        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
+        self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
+        self.realSstateSNameLabel.textColor = [UIColor blackColor];
+        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
+        self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
+        [locationView addSubview:self.realSstateSNameLabel];
+        
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 0, SCREEN_WIDTH * 0.116, SCREEN_WIDTH * 0.116)];
+        self.codeImgView.backgroundColor = [UIColor yellowColor];
+        [locationView addSubview:self.codeImgView];
+        
+        [cell addSubview:locationView];
+        return cell;
+    } else if (indexPath.row == 1) {
+        /** 轮播图 */
+        static NSString *ID = @"cell2";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        for (UIView *view in cell.subviews) {
+            if (view.tag == 2018) {
+                [view removeFromSuperview];
+            }
+        }
+        NSArray *urlsArray = [[NSArray alloc] init];
+        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
+        
+        [cell addSubview:self.topScrollView];
+        return cell;
+    } else if (indexPath.row == 2) {
+        /** 菜单列表数据 */
+        FHCommonCollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
+        cell.delegate = self;
+        cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    } else {
+        /** 广告轮播图 */
+        /** 轮播图 */
+        static NSString *ID = @"cell4";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        for (UIView *view in cell.subviews) {
+            if (view.tag == 2019) {
+                [view removeFromSuperview];
+            }
+        }
+        NSArray *urlsArray = [[NSArray alloc] init];
+        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
+        
+        [cell addSubview:self.topScrollView];
+        return cell;
+    }
+}
+
 
 /** 创建轮播图的实例方法 */
 - (BHInfiniteScrollView *)fh_creatBHInfiniterScrollerViewWithImageArrays:(NSArray *)imageArrs
@@ -85,6 +164,7 @@
     return mallScrollView;
 }
 
+
 #pragma mark — event
 /** 搜索事件 */
 - (void)searchClick {
@@ -94,6 +174,19 @@
 - (void)collectClick {
     
 }
+
+
+#pragma mark  -- 点击banner的代理方法
+/** 点击图片*/
+- (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
+    if (infiniteScrollView.tag == 2018) {
+        /** 上面的轮播图 */
+        
+    } else {
+        /** 下面的轮播图 */
+    }
+}
+
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
