@@ -23,7 +23,6 @@
 /** 下面的logoName */
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 
-
 @end
 
 @implementation FHOwnerServiceController
@@ -181,7 +180,6 @@
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
         /** 公告通知 */
-        
     } else if (selectIndex.row == 1) {
         /** 业主大会 */
     } else if (selectIndex.row == 2) {
@@ -233,6 +231,5 @@
     }
     return _homeTable;
 }
-
 
 @end
