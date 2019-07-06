@@ -20,7 +20,7 @@
     [super awakeFromNib];
     // Initialization code
     _selectView = [[UIView alloc]initWithFrame:self.bounds];
-    _selectView.backgroundColor = [UIColor whiteColor];
+    _selectView.backgroundColor = [UIColor redColor];
     self.selectedBackgroundView = _selectView;
     
     UIView *liner = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 4, 13)];

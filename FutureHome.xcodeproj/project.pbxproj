@@ -1921,10 +1921,10 @@
 			children = (
 				4AF51B1722D07DEB00AA04EC /* Cells */,
 				4AF51B1E22D07DEB00AA04EC /* GNRLinkageTableView.h */,
+				4AF51B3422D07DEB00AA04EC /* GNRLinkageTableView.m */,
 				4AF51B1F22D07DEB00AA04EC /* Stepper */,
 				4AF51B2222D07DEB00AA04EC /* Models */,
 				4AF51B2D22D07DEB00AA04EC /* Views */,
-				4AF51B3422D07DEB00AA04EC /* GNRLinkageTableView.m */,
 			);
 			path = GNRLinkageTableView;
 			sourceTree = "<group>";
@@ -1972,10 +1972,10 @@
 			isa = PBXGroup;
 			children = (
 				4AF51B2E22D07DEB00AA04EC /* GNRShopHeader.xib */,
-				4AF51B2F22D07DEB00AA04EC /* GNRSectionHeader.m */,
 				4AF51B3022D07DEB00AA04EC /* GNRShopHeader.h */,
-				4AF51B3122D07DEB00AA04EC /* GNRSectionHeader.xib */,
 				4AF51B3222D07DEB00AA04EC /* GNRShopHeader.m */,
+				4AF51B2F22D07DEB00AA04EC /* GNRSectionHeader.m */,
+				4AF51B3122D07DEB00AA04EC /* GNRSectionHeader.xib */,
 				4AF51B3322D07DEB00AA04EC /* GNRSectionHeader.h */,
 			);
 			path = Views;

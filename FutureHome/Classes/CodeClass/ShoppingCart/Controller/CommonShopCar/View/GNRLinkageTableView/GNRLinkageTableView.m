@@ -40,16 +40,19 @@
 - (GNRShopHeader *)header{
     if (!_header) {
         _header = [GNRShopHeader header];
-        [self addSubview:_header];
+//        [self addSubview:_header];
     }
     return _header;
 }
 
 - (void)initData{
     relate = YES;
-    NavBarHeight = 64.f;
-    headerHeight = 152.f;
-    ChangedHeight = headerHeight - NavBarHeight;
+//    NavBarHeight = 64.f;
+//    headerHeight = 152.f;
+//    ChangedHeight = headerHeight - NavBarHeight;
+    NavBarHeight = 0;
+    headerHeight = 0;
+    ChangedHeight = 0;
     _goodsList = [GNRGoodsListModel new];
     BOUNDS = self.bounds;
     leftWidth = 100;
@@ -58,20 +61,19 @@
 }
 
 - (void)reloadData{
+    topCanChange = NO;
     [_leftTbView reloadData];
     [_rightTbView reloadData];
     [self resetFrame];
 }
 
-- (void)resetFrame{
+- (void)resetFrame {
     if (_rightTbView.contentSize.height-_rightTbView.bounds.size.height>=ChangedHeight) {
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height+ChangedHeight);
         _rightTbView.frame = CGRectMake(leftWidth, headerHeight, rightWidth, BOUNDS.size.height-headerHeight+ChangedHeight);
-        topCanChange = YES;
-    }else{
+    } else{
         self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.bounds.size.width, self.bounds.size.height);
         _rightTbView.frame = CGRectMake(leftWidth, headerHeight, rightWidth, BOUNDS.size.height-headerHeight);
-        topCanChange = NO;
     }
     _leftTbView.frame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
     self.header.frame = CGRectMake(0, 0, BOUNDS.size.width, headerHeight);
@@ -86,6 +88,8 @@
     _leftTbView.dataSource = self;
     _leftTbView.showsVerticalScrollIndicator = NO;
     _leftTbView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
     _rightTbView = [[UITableView alloc]initWithFrame:CGRectMake(leftWidth, headerHeight, rightWidth, BOUNDS.size.height-headerHeight+ChangedHeight) style:UITableViewStylePlain];
     _rightTbView.delegate = self;
     _rightTbView.dataSource = self;
@@ -207,46 +211,46 @@
     relate = YES;
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView == _rightTbView) {
-        if (topCanChange) {
-            CGFloat y= scrollView.contentOffset.y;
-            if ([_delegate respondsToSelector:@selector(scrollViewDidScrollForPositionY:)]) {
-                [_delegate scrollViewDidScrollForPositionY:y];
-            }
-            CGRect toFrame = CGRectZero;
-            CGRect leftToFrame = CGRectZero;
-            if (y<0) {
-                toFrame = CGRectMake(0, 0, BOUNDS.size.width, self.frame.size.height);
-                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
-            }
-            else if (y<=NavBarHeight&&y>=0) {
-                toFrame = CGRectMake(0, -ChangedHeight*y/NavBarHeight, BOUNDS.size.width, self.frame.size.height);
-                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight+ChangedHeight*y/NavBarHeight);
-            }
-            else{
-                toFrame = CGRectMake(0, -ChangedHeight, BOUNDS.size.width, self.frame.size.height);
-                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-NavBarHeight);
-            }
-            leftToFrame = leftToFrame;
-            [UIView animateWithDuration:0.2 animations:^{
-                self.frame = toFrame;
-                _leftTbView.frame = leftToFrame;
-            } completion:^(BOOL finished) {
-                
-            }];
-            if (scrollView.contentOffset.y == 0) {//这里解决点击状态栏回到顶部 左边不滚动的问题
-                relate = YES;
-                [_rightTbView reloadData];
-            }
-        }else{
-            if (self.frame.origin.y!=0) {
-                self.frame = CGRectMake(0, 0, BOUNDS.size.width, BOUNDS.size.height);
-                _leftTbView.frame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
-            }
-        }
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    if (scrollView == _rightTbView) {
+//        if (topCanChange) {
+//            CGFloat y= scrollView.contentOffset.y;
+//            if ([_delegate respondsToSelector:@selector(scrollViewDidScrollForPositionY:)]) {
+//                [_delegate scrollViewDidScrollForPositionY:y];
+//            }
+//            CGRect toFrame = CGRectZero;
+//            CGRect leftToFrame = CGRectZero;
+//            if (y<0) {
+//                toFrame = CGRectMake(0, 0, BOUNDS.size.width, self.frame.size.height);
+//                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
+//            }
+//            else if (y<=NavBarHeight&&y>=0) {
+//                toFrame = CGRectMake(0, -ChangedHeight*y/NavBarHeight, BOUNDS.size.width, self.frame.size.height);
+//                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight+ChangedHeight*y/NavBarHeight);
+//            }
+//            else{
+//                toFrame = CGRectMake(0, -ChangedHeight, BOUNDS.size.width, self.frame.size.height);
+//                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-NavBarHeight);
+//            }
+//            leftToFrame = leftToFrame;
+//            [UIView animateWithDuration:0.2 animations:^{
+//                self.frame = toFrame;
+//                _leftTbView.frame = leftToFrame;
+//            } completion:^(BOOL finished) {
+//
+//            }];
+//            if (scrollView.contentOffset.y == 0) {//这里解决点击状态栏回到顶部 左边不滚动的问题
+//                relate = YES;
+//                [_rightTbView reloadData];
+//            }
+//        }else{
+////            if (self.frame.origin.y!=0) {
+////                self.frame = CGRectMake(0, 0, BOUNDS.size.width, BOUNDS.size.height);
+////                _leftTbView.frame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
+////            }
+//        }
+//    }
+//}
 
 
 @end

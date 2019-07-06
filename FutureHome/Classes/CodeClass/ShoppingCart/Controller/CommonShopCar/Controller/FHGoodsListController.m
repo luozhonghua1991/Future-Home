@@ -27,8 +27,8 @@
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeAll;
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.edgesForExtendedLayout = UIRectEdgeAll;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.goodsListView];
     [self initData];
     [self.view addSubview:self.shoppingBar];
@@ -37,14 +37,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.tintColor = [UIColor blueColor];
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:0]];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-    [self scrollViewDidScrollForPositionY:self.goodsListView.rightTbView.contentOffset.y];
+//    [self scrollViewDidScrollForPositionY:self.goodsListView.rightTbView.contentOffset.y];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -94,6 +94,12 @@
                       @{@"title" : @"主食",
                         @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
                         },
+                      @{@"title" : @"作料",
+                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
+                        },
+                      @{@"title" : @"主食",
+                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
+                        },
                       ];
     
     [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -113,20 +119,20 @@
     self.shoppingBar.goodsList = _goodsListView.goodsList;
 }
 
-- (void)scrollViewDidScrollForPositionY:(CGFloat)y{
-    if (y<=64.f) {
-        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:y/64.f]];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-        
-    }else{
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
-        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-        [self.navigationController.navigationBar setShadowImage:nil];
-    }
-}
+//- (void)scrollViewDidScrollForPositionY:(CGFloat)y{
+//    if (y<=64.f) {
+//        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:y/64.f]];
+//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+//        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//
+//    }else{
+//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
+//        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+//        [self.navigationController.navigationBar setShadowImage:nil];
+//    }
+//}
 
 //clean
 - (void)cleanGoodsCartAction:(id)sender{
@@ -234,7 +240,7 @@
 #pragma mark — setter && getter
 - (GNRLinkageTableView *)goodsListView{
     if (!_goodsListView) {
-        _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height-[GNRShoppingBar defaultHeight])];
+        _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, self.view.bounds.size.width, self.view.bounds.size.height-[GNRShoppingBar defaultHeight] - MainSizeHeight)];
         _goodsListView.target = self;
         _goodsListView.delegate = self;
     }
