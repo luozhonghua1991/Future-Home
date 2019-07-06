@@ -213,6 +213,32 @@
 		4AC67E3522C8B09600842C0D /* FHNormalManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3422C8B09600842C0D /* FHNormalManagerController.m */; };
 		4AC67E3822C8B0C300842C0D /* FHSpecialManagerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3722C8B0C300842C0D /* FHSpecialManagerController.m */; };
 		4AC67E3B22C8B0F100842C0D /* FHInvoiceListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67E3A22C8B0F100842C0D /* FHInvoiceListController.m */; };
+		4AF51B1522D0712500AA04EC /* FHGoodsListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B1422D0712500AA04EC /* FHGoodsListController.m */; };
+		4AF51B3522D07DEB00AA04EC /* GNRGoodsIndexCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B1822D07DEB00AA04EC /* GNRGoodsIndexCell.xib */; };
+		4AF51B3622D07DEB00AA04EC /* GNRGoodsListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B1922D07DEB00AA04EC /* GNRGoodsListCell.m */; };
+		4AF51B3722D07DEB00AA04EC /* GNRGoodsListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B1A22D07DEB00AA04EC /* GNRGoodsListCell.xib */; };
+		4AF51B3822D07DEB00AA04EC /* GNRGoodsIndexCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B1B22D07DEB00AA04EC /* GNRGoodsIndexCell.m */; };
+		4AF51B3922D07DEB00AA04EC /* GNRCountStepper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2122D07DEB00AA04EC /* GNRCountStepper.m */; };
+		4AF51B3A22D07DEB00AA04EC /* GNRGoodsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2322D07DEB00AA04EC /* GNRGoodsListModel.m */; };
+		4AF51B3B22D07DEB00AA04EC /* GNRGoodsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2922D07DEB00AA04EC /* GNRGoodsModel.m */; };
+		4AF51B3C22D07DEB00AA04EC /* GNRShoppingCart.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2A22D07DEB00AA04EC /* GNRShoppingCart.m */; };
+		4AF51B3D22D07DEB00AA04EC /* GNRGoodsGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2B22D07DEB00AA04EC /* GNRGoodsGroup.m */; };
+		4AF51B3E22D07DEB00AA04EC /* GNRShoppingBag.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2C22D07DEB00AA04EC /* GNRShoppingBag.m */; };
+		4AF51B3F22D07DEB00AA04EC /* GNRShopHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B2E22D07DEB00AA04EC /* GNRShopHeader.xib */; };
+		4AF51B4022D07DEB00AA04EC /* GNRSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B2F22D07DEB00AA04EC /* GNRSectionHeader.m */; };
+		4AF51B4122D07DEB00AA04EC /* GNRSectionHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B3122D07DEB00AA04EC /* GNRSectionHeader.xib */; };
+		4AF51B4222D07DEB00AA04EC /* GNRShopHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B3222D07DEB00AA04EC /* GNRShopHeader.m */; };
+		4AF51B4322D07DEB00AA04EC /* GNRLinkageTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B3422D07DEB00AA04EC /* GNRLinkageTableView.m */; };
+		4AF51B5122D07E6A00AA04EC /* GNRShoppingCartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B4622D07E6A00AA04EC /* GNRShoppingCartView.m */; };
+		4AF51B5222D07E6A00AA04EC /* GNRCartGoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B4722D07E6A00AA04EC /* GNRCartGoodsCell.m */; };
+		4AF51B5322D07E6A00AA04EC /* GNRCartFooter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B4B22D07E6A00AA04EC /* GNRCartFooter.xib */; };
+		4AF51B5422D07E6A00AA04EC /* GNRCartHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B4C22D07E6A00AA04EC /* GNRCartHeader.xib */; };
+		4AF51B5522D07E6A00AA04EC /* GNRCartGoodsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B4E22D07E6A00AA04EC /* GNRCartGoodsCell.xib */; };
+		4AF51B5622D07E6A00AA04EC /* GNRCartFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B4F22D07E6A00AA04EC /* GNRCartFooter.m */; };
+		4AF51B5722D07E6A00AA04EC /* GNRCartHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5022D07E6A00AA04EC /* GNRCartHeader.m */; };
+		4AF51B5E22D07ECA00AA04EC /* GNRShoppingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5B22D07ECA00AA04EC /* GNRShoppingBar.m */; };
+		4AF51B5F22D07ECA00AA04EC /* GNRShoppingBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */; };
+		4AF51B6022D07ECA00AA04EC /* GNRShoppingBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -657,6 +683,51 @@
 		4AC67E3722C8B0C300842C0D /* FHSpecialManagerController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSpecialManagerController.m; sourceTree = "<group>"; };
 		4AC67E3922C8B0F100842C0D /* FHInvoiceListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHInvoiceListController.h; sourceTree = "<group>"; };
 		4AC67E3A22C8B0F100842C0D /* FHInvoiceListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHInvoiceListController.m; sourceTree = "<group>"; };
+		4AF51B1322D0712500AA04EC /* FHGoodsListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGoodsListController.h; sourceTree = "<group>"; };
+		4AF51B1422D0712500AA04EC /* FHGoodsListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGoodsListController.m; sourceTree = "<group>"; };
+		4AF51B1822D07DEB00AA04EC /* GNRGoodsIndexCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRGoodsIndexCell.xib; sourceTree = "<group>"; };
+		4AF51B1922D07DEB00AA04EC /* GNRGoodsListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRGoodsListCell.m; sourceTree = "<group>"; };
+		4AF51B1A22D07DEB00AA04EC /* GNRGoodsListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRGoodsListCell.xib; sourceTree = "<group>"; };
+		4AF51B1B22D07DEB00AA04EC /* GNRGoodsIndexCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRGoodsIndexCell.m; sourceTree = "<group>"; };
+		4AF51B1C22D07DEB00AA04EC /* GNRGoodsListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRGoodsListCell.h; sourceTree = "<group>"; };
+		4AF51B1D22D07DEB00AA04EC /* GNRGoodsIndexCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRGoodsIndexCell.h; sourceTree = "<group>"; };
+		4AF51B1E22D07DEB00AA04EC /* GNRLinkageTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRLinkageTableView.h; sourceTree = "<group>"; };
+		4AF51B2022D07DEB00AA04EC /* GNRCountStepper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRCountStepper.h; sourceTree = "<group>"; };
+		4AF51B2122D07DEB00AA04EC /* GNRCountStepper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRCountStepper.m; sourceTree = "<group>"; };
+		4AF51B2322D07DEB00AA04EC /* GNRGoodsListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRGoodsListModel.m; sourceTree = "<group>"; };
+		4AF51B2422D07DEB00AA04EC /* GNRShoppingCart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRShoppingCart.h; sourceTree = "<group>"; };
+		4AF51B2522D07DEB00AA04EC /* GNRGoodsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRGoodsModel.h; sourceTree = "<group>"; };
+		4AF51B2622D07DEB00AA04EC /* GNRShoppingBag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRShoppingBag.h; sourceTree = "<group>"; };
+		4AF51B2722D07DEB00AA04EC /* GNRGoodsGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRGoodsGroup.h; sourceTree = "<group>"; };
+		4AF51B2822D07DEB00AA04EC /* GNRGoodsListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRGoodsListModel.h; sourceTree = "<group>"; };
+		4AF51B2922D07DEB00AA04EC /* GNRGoodsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRGoodsModel.m; sourceTree = "<group>"; };
+		4AF51B2A22D07DEB00AA04EC /* GNRShoppingCart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingCart.m; sourceTree = "<group>"; };
+		4AF51B2B22D07DEB00AA04EC /* GNRGoodsGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRGoodsGroup.m; sourceTree = "<group>"; };
+		4AF51B2C22D07DEB00AA04EC /* GNRShoppingBag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingBag.m; sourceTree = "<group>"; };
+		4AF51B2E22D07DEB00AA04EC /* GNRShopHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRShopHeader.xib; sourceTree = "<group>"; };
+		4AF51B2F22D07DEB00AA04EC /* GNRSectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRSectionHeader.m; sourceTree = "<group>"; };
+		4AF51B3022D07DEB00AA04EC /* GNRShopHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRShopHeader.h; sourceTree = "<group>"; };
+		4AF51B3122D07DEB00AA04EC /* GNRSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRSectionHeader.xib; sourceTree = "<group>"; };
+		4AF51B3222D07DEB00AA04EC /* GNRShopHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShopHeader.m; sourceTree = "<group>"; };
+		4AF51B3322D07DEB00AA04EC /* GNRSectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRSectionHeader.h; sourceTree = "<group>"; };
+		4AF51B3422D07DEB00AA04EC /* GNRLinkageTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRLinkageTableView.m; sourceTree = "<group>"; };
+		4AF51B4422D07E3900AA04EC /* GNRCartDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRCartDefine.h; sourceTree = "<group>"; };
+		4AF51B4622D07E6A00AA04EC /* GNRShoppingCartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingCartView.m; sourceTree = "<group>"; };
+		4AF51B4722D07E6A00AA04EC /* GNRCartGoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRCartGoodsCell.m; sourceTree = "<group>"; };
+		4AF51B4822D07E6A00AA04EC /* GNRCartHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRCartHeader.h; sourceTree = "<group>"; };
+		4AF51B4922D07E6A00AA04EC /* GNRCartFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRCartFooter.h; sourceTree = "<group>"; };
+		4AF51B4A22D07E6A00AA04EC /* GNRShoppingCartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRShoppingCartView.h; sourceTree = "<group>"; };
+		4AF51B4B22D07E6A00AA04EC /* GNRCartFooter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRCartFooter.xib; sourceTree = "<group>"; };
+		4AF51B4C22D07E6A00AA04EC /* GNRCartHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRCartHeader.xib; sourceTree = "<group>"; };
+		4AF51B4D22D07E6A00AA04EC /* GNRCartGoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRCartGoodsCell.h; sourceTree = "<group>"; };
+		4AF51B4E22D07E6A00AA04EC /* GNRCartGoodsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRCartGoodsCell.xib; sourceTree = "<group>"; };
+		4AF51B4F22D07E6A00AA04EC /* GNRCartFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRCartFooter.m; sourceTree = "<group>"; };
+		4AF51B5022D07E6A00AA04EC /* GNRCartHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRCartHeader.m; sourceTree = "<group>"; };
+		4AF51B5922D07ECA00AA04EC /* GNRShoppingBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRShoppingBarView.h; sourceTree = "<group>"; };
+		4AF51B5A22D07ECA00AA04EC /* GNRShoppingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNRShoppingBar.h; sourceTree = "<group>"; };
+		4AF51B5B22D07ECA00AA04EC /* GNRShoppingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingBar.m; sourceTree = "<group>"; };
+		4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingBarView.m; sourceTree = "<group>"; };
+		4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRShoppingBarView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -696,6 +767,7 @@
 		4A59F95822C0B3DF00867031 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
+				4AF51B4422D07E3900AA04EC /* GNRCartDefine.h */,
 				4A59F95922C0B3DF00867031 /* InterfaceHeader.h */,
 				4A59F95A22C0B3DF00867031 /* ColorHeader.h */,
 			);
@@ -1806,8 +1878,132 @@
 		4AF51B0F22D0538900AA04EC /* CommonShopCar */ = {
 			isa = PBXGroup;
 			children = (
+				4AF51B1222D0702C00AA04EC /* Model */,
+				4AF51B1122D0702500AA04EC /* View */,
+				4AF51B1022D0701C00AA04EC /* Controller */,
 			);
 			path = CommonShopCar;
+			sourceTree = "<group>";
+		};
+		4AF51B1022D0701C00AA04EC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B1322D0712500AA04EC /* FHGoodsListController.h */,
+				4AF51B1422D0712500AA04EC /* FHGoodsListController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		4AF51B1122D0702500AA04EC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B5822D07ECA00AA04EC /* Bar */,
+				4AF51B4522D07E6A00AA04EC /* Cart */,
+				4AF51B1622D07DEB00AA04EC /* GNRLinkageTableView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AF51B1222D0702C00AA04EC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AF51B1622D07DEB00AA04EC /* GNRLinkageTableView */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B1722D07DEB00AA04EC /* Cells */,
+				4AF51B1E22D07DEB00AA04EC /* GNRLinkageTableView.h */,
+				4AF51B1F22D07DEB00AA04EC /* Stepper */,
+				4AF51B2222D07DEB00AA04EC /* Models */,
+				4AF51B2D22D07DEB00AA04EC /* Views */,
+				4AF51B3422D07DEB00AA04EC /* GNRLinkageTableView.m */,
+			);
+			path = GNRLinkageTableView;
+			sourceTree = "<group>";
+		};
+		4AF51B1722D07DEB00AA04EC /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B1C22D07DEB00AA04EC /* GNRGoodsListCell.h */,
+				4AF51B1922D07DEB00AA04EC /* GNRGoodsListCell.m */,
+				4AF51B1A22D07DEB00AA04EC /* GNRGoodsListCell.xib */,
+				4AF51B1D22D07DEB00AA04EC /* GNRGoodsIndexCell.h */,
+				4AF51B1B22D07DEB00AA04EC /* GNRGoodsIndexCell.m */,
+				4AF51B1822D07DEB00AA04EC /* GNRGoodsIndexCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4AF51B1F22D07DEB00AA04EC /* Stepper */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B2022D07DEB00AA04EC /* GNRCountStepper.h */,
+				4AF51B2122D07DEB00AA04EC /* GNRCountStepper.m */,
+			);
+			path = Stepper;
+			sourceTree = "<group>";
+		};
+		4AF51B2222D07DEB00AA04EC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B2322D07DEB00AA04EC /* GNRGoodsListModel.m */,
+				4AF51B2422D07DEB00AA04EC /* GNRShoppingCart.h */,
+				4AF51B2522D07DEB00AA04EC /* GNRGoodsModel.h */,
+				4AF51B2622D07DEB00AA04EC /* GNRShoppingBag.h */,
+				4AF51B2722D07DEB00AA04EC /* GNRGoodsGroup.h */,
+				4AF51B2822D07DEB00AA04EC /* GNRGoodsListModel.h */,
+				4AF51B2922D07DEB00AA04EC /* GNRGoodsModel.m */,
+				4AF51B2A22D07DEB00AA04EC /* GNRShoppingCart.m */,
+				4AF51B2B22D07DEB00AA04EC /* GNRGoodsGroup.m */,
+				4AF51B2C22D07DEB00AA04EC /* GNRShoppingBag.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4AF51B2D22D07DEB00AA04EC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B2E22D07DEB00AA04EC /* GNRShopHeader.xib */,
+				4AF51B2F22D07DEB00AA04EC /* GNRSectionHeader.m */,
+				4AF51B3022D07DEB00AA04EC /* GNRShopHeader.h */,
+				4AF51B3122D07DEB00AA04EC /* GNRSectionHeader.xib */,
+				4AF51B3222D07DEB00AA04EC /* GNRShopHeader.m */,
+				4AF51B3322D07DEB00AA04EC /* GNRSectionHeader.h */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4AF51B4522D07E6A00AA04EC /* Cart */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B4A22D07E6A00AA04EC /* GNRShoppingCartView.h */,
+				4AF51B4622D07E6A00AA04EC /* GNRShoppingCartView.m */,
+				4AF51B4822D07E6A00AA04EC /* GNRCartHeader.h */,
+				4AF51B5022D07E6A00AA04EC /* GNRCartHeader.m */,
+				4AF51B4C22D07E6A00AA04EC /* GNRCartHeader.xib */,
+				4AF51B4922D07E6A00AA04EC /* GNRCartFooter.h */,
+				4AF51B4F22D07E6A00AA04EC /* GNRCartFooter.m */,
+				4AF51B4B22D07E6A00AA04EC /* GNRCartFooter.xib */,
+				4AF51B4D22D07E6A00AA04EC /* GNRCartGoodsCell.h */,
+				4AF51B4722D07E6A00AA04EC /* GNRCartGoodsCell.m */,
+				4AF51B4E22D07E6A00AA04EC /* GNRCartGoodsCell.xib */,
+			);
+			path = Cart;
+			sourceTree = "<group>";
+		};
+		4AF51B5822D07ECA00AA04EC /* Bar */ = {
+			isa = PBXGroup;
+			children = (
+				4AF51B5922D07ECA00AA04EC /* GNRShoppingBarView.h */,
+				4AF51B5A22D07ECA00AA04EC /* GNRShoppingBar.h */,
+				4AF51B5B22D07ECA00AA04EC /* GNRShoppingBar.m */,
+				4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */,
+				4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */,
+			);
+			path = Bar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1916,13 +2112,21 @@
 			files = (
 				4A6DA9D022C05C7000F29455 /* LaunchScreen.storyboard in Resources */,
 				4A6DA9CD22C05C7000F29455 /* Assets.xcassets in Resources */,
+				4AF51B5522D07E6A00AA04EC /* GNRCartGoodsCell.xib in Resources */,
 				4A6DAB6522C0ADAF00F29455 /* MJRefresh.bundle in Resources */,
 				4AA7B38A22CC7CD600462389 /* LICENSE.txt in Resources */,
+				4AF51B3F22D07DEB00AA04EC /* GNRShopHeader.xib in Resources */,
 				4A6DAB8622C0ADBC00F29455 /* images.bundle in Resources */,
 				4A6DAA9922C0AD7C00F29455 /* LCTabBarController.bundle in Resources */,
 				4A6DAA7422C0AD4C00F29455 /* IQKeyboardManager.bundle in Resources */,
 				4AA7B38922CC7CD600462389 /* README.md in Resources */,
+				4AF51B3722D07DEB00AA04EC /* GNRGoodsListCell.xib in Resources */,
 				4A6DA9CB22C05C6F00F29455 /* Main.storyboard in Resources */,
+				4AF51B3522D07DEB00AA04EC /* GNRGoodsIndexCell.xib in Resources */,
+				4AF51B6022D07ECA00AA04EC /* GNRShoppingBarView.xib in Resources */,
+				4AF51B5322D07E6A00AA04EC /* GNRCartFooter.xib in Resources */,
+				4AF51B5422D07E6A00AA04EC /* GNRCartHeader.xib in Resources */,
+				4AF51B4122D07DEB00AA04EC /* GNRSectionHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1948,6 +2152,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AC67DFD22C84D1A00842C0D /* FHBaseTabbarController.m in Sources */,
+				4AF51B5222D07E6A00AA04EC /* GNRCartGoodsCell.m in Sources */,
 				4AA7B38622CC7CD600462389 /* TPKeyboardAvoidingTableView.m in Sources */,
 				4AC67DFA22C84CB800842C0D /* FHMyVideosController.m in Sources */,
 				4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */,
@@ -1963,6 +2168,7 @@
 				4A6DAA8822C0AD6100F29455 /* GDPerformanceMonitor.m in Sources */,
 				4AA7B3B922CC873B00462389 /* RWTextField.m in Sources */,
 				4A59F97F22C0D5E800867031 /* CreatNavViewController.m in Sources */,
+				4AF51B3D22D07DEB00AA04EC /* GNRGoodsGroup.m in Sources */,
 				4A6DAA7922C0AD4C00F29455 /* IQUIScrollView+Additions.m in Sources */,
 				4A6DAA7822C0AD4C00F29455 /* IQUITextFieldView+Additions.m in Sources */,
 				4AA7B3AD22CC7D8D00462389 /* MASConstraint.m in Sources */,
@@ -1976,6 +2182,7 @@
 				4A6DAA7122C0AD4C00F29455 /* IQBarButtonItem.m in Sources */,
 				4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */,
 				4A6DAB8522C0ADBC00F29455 /* ZHProgressHUD.m in Sources */,
+				4AF51B3822D07DEB00AA04EC /* GNRGoodsIndexCell.m in Sources */,
 				4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */,
 				4A6DAB7422C0ADAF00F29455 /* MJRefreshBackFooter.m in Sources */,
 				4A59F97822C0BA1500867031 /* FHShopingCartController.m in Sources */,
@@ -1983,6 +2190,7 @@
 				4AA7B3AE22CC7D8D00462389 /* MASViewConstraint.m in Sources */,
 				4AA7BDB922CCB3BD00462389 /* LoginView.m in Sources */,
 				4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */,
+				4AF51B1522D0712500AA04EC /* FHGoodsListController.m in Sources */,
 				4A6DAB6322C0ADAF00F29455 /* UIScrollView+MJRefresh.m in Sources */,
 				4A6DAB5622C0ADAF00F29455 /* UIView+WebCache.m in Sources */,
 				4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */,
@@ -1996,6 +2204,7 @@
 				4A6DAA3C22C0AD3100F29455 /* UIWebView+AFNetworking.m in Sources */,
 				4A6DAB6422C0ADAF00F29455 /* MJRefreshConst.m in Sources */,
 				4A4BEF1D22CE031600FD00DE /* FHVerificationCodeLoginController.m in Sources */,
+				4AF51B5122D07E6A00AA04EC /* GNRShoppingCartView.m in Sources */,
 				4AC67E0A22C88FB300842C0D /* FHFollowListController.m in Sources */,
 				4A6DAB4422C0ADAF00F29455 /* SDWebImageManager.m in Sources */,
 				4A59F98222C0D61600867031 /* myButton.m in Sources */,
@@ -2021,6 +2230,7 @@
 				4A6DAA9722C0AD7C00F29455 /* LCTabBar.m in Sources */,
 				4AA0D92F22CF4766003F61D2 /* FHPayController.m in Sources */,
 				4A6DAA8922C0AD6100F29455 /* GDMarginLabel.m in Sources */,
+				4AF51B5F22D07ECA00AA04EC /* GNRShoppingBarView.m in Sources */,
 				4A6DAA9622C0AD7C00F29455 /* LCTabBarBadge.m in Sources */,
 				4A6DAB4522C0ADAF00F29455 /* SDWebImageDecoder.m in Sources */,
 				4A6DAB6D22C0ADAF00F29455 /* MJRefreshAutoGifFooter.m in Sources */,
@@ -2044,6 +2254,7 @@
 				4A6DAA7C22C0AD4C00F29455 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				4A6DAB5522C0ADAF00F29455 /* UIView+WebCacheOperation.m in Sources */,
 				4AA7B3AC22CC7D8D00462389 /* View+MASAdditions.m in Sources */,
+				4AF51B3C22D07DEB00AA04EC /* GNRShoppingCart.m in Sources */,
 				4A6DAA4222C0AD3100F29455 /* AFURLRequestSerialization.m in Sources */,
 				4AC67E2022C8A6FA00842C0D /* FHLittleShopListController.m in Sources */,
 				4A6DAA7022C0AD4C00F29455 /* IQTitleBarButtonItem.m in Sources */,
@@ -2055,6 +2266,7 @@
 				4A6DAA7A22C0AD4C00F29455 /* IQUIView+Hierarchy.m in Sources */,
 				4AC67DF322C84A0500842C0D /* FHCircleHotPointController.m in Sources */,
 				4AA7B3A622CC7D8D00462389 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				4AF51B3B22D07DEB00AA04EC /* GNRGoodsModel.m in Sources */,
 				4A6DAB4222C0ADAF00F29455 /* UIImage+WebP.m in Sources */,
 				4A6DAA8A22C0AD6100F29455 /* GDWindowViewController.m in Sources */,
 				4A6DAB6022C0ADAF00F29455 /* NSString+MJExtension.m in Sources */,
@@ -2062,6 +2274,7 @@
 				4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */,
 				4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */,
 				4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */,
+				4AF51B3922D07DEB00AA04EC /* GNRCountStepper.m in Sources */,
 				4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */,
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
@@ -2069,6 +2282,7 @@
 				4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */,
 				4AC67E3222C8B06A00842C0D /* FHAddressManagerController.m in Sources */,
 				4A6DAA4822C0AD3D00F29455 /* FDActionSheet.m in Sources */,
+				4AF51B3E22D07DEB00AA04EC /* GNRShoppingBag.m in Sources */,
 				4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */,
 				4AA7B3AF22CC7D8D00462389 /* MASViewAttribute.m in Sources */,
 				4A6DAB6622C0ADAF00F29455 /* UIScrollView+MJExtension.m in Sources */,
@@ -2081,6 +2295,7 @@
 				4AA0D93222CF4878003F61D2 /* FHReceivablesController.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
+				4AF51B4322D07DEB00AA04EC /* GNRLinkageTableView.m in Sources */,
 				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
 				4A6DAB4922C0ADAF00F29455 /* FLAnimatedImageView.m in Sources */,
 				4A6DAB5822C0ADAF00F29455 /* MBProgressHUD.m in Sources */,
@@ -2104,15 +2319,19 @@
 				4A6DAB4D22C0ADAF00F29455 /* SDWebImageCompat.m in Sources */,
 				4A59F97B22C0BA7700867031 /* FHMeCenterController.m in Sources */,
 				4A6DAB7522C0ADAF00F29455 /* MJRefreshAutoFooter.m in Sources */,
+				4AF51B4222D07DEB00AA04EC /* GNRShopHeader.m in Sources */,
 				4A6DAB8022C0ADB500F29455 /* YPTabBar.m in Sources */,
 				4A6DAA8722C0AD6100F29455 /* GDPerformanceView.m in Sources */,
 				4A6DAB7F22C0ADB500F29455 /* YPTabBarController.m in Sources */,
 				4A6DAA7222C0AD4C00F29455 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */,
+				4AF51B3622D07DEB00AA04EC /* GNRGoodsListCell.m in Sources */,
 				4AC67E0322C84E2500842C0D /* FHFollowVideoController.m in Sources */,
 				4A6DAA7B22C0AD4C00F29455 /* IQUIViewController+Additions.m in Sources */,
 				4AA7B37522CC536700462389 /* CurrentViewController.m in Sources */,
 				4A6DAB5122C0ADAF00F29455 /* NSData+ImageContentType.m in Sources */,
+				4AF51B5622D07E6A00AA04EC /* GNRCartFooter.m in Sources */,
+				4AF51B5E22D07ECA00AA04EC /* GNRShoppingBar.m in Sources */,
 				4A6DAB7622C0ADAF00F29455 /* MJRefreshComponent.m in Sources */,
 				4A6DAB5322C0ADAF00F29455 /* NSImage+WebCache.m in Sources */,
 				4A6DAA7722C0AD4C00F29455 /* IQUIWindow+Hierarchy.m in Sources */,
@@ -2123,6 +2342,7 @@
 				4A59F96A22C0B6D100867031 /* UIView+Extend.m in Sources */,
 				4A59F96B22C0B6D100867031 /* UIViewController+popType.m in Sources */,
 				4AA0D92C22CF45B2003F61D2 /* FHScanCodeController.m in Sources */,
+				4AF51B4022D07DEB00AA04EC /* GNRSectionHeader.m in Sources */,
 				4A6DAB5422C0ADAF00F29455 /* SDImageCacheConfig.m in Sources */,
 				4AC67E2F22C8AF7300842C0D /* FHAfterSaleController.m in Sources */,
 				4A8D8C6122C1FD5B0083E00C /* FXPageControl.m in Sources */,
@@ -2132,7 +2352,9 @@
 				4A4BEF1422CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m in Sources */,
 				4AC67E2622C8AED100842C0D /* FHWaitOrderController.m in Sources */,
 				4A6DAB5722C0ADAF00F29455 /* UIButton+WebCache.m in Sources */,
+				4AF51B5722D07E6A00AA04EC /* GNRCartHeader.m in Sources */,
 				4A6DAB5022C0ADAF00F29455 /* SDWebImageDownloaderOperation.m in Sources */,
+				4AF51B3A22D07DEB00AA04EC /* GNRGoodsListModel.m in Sources */,
 				4A8D8C6322C1FD5B0083E00C /* BHInfiniteScrollViewCell.m in Sources */,
 				4A6DAB4F22C0ADAF00F29455 /* SDImageCache.m in Sources */,
 				4A6DA9C522C05C6F00F29455 /* FHAppDelegate.mm in Sources */,
