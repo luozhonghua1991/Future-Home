@@ -17,6 +17,7 @@
 #import "FHHealthServicesController.h"
 #import "FHFinancialServiceController.h"
 #import "FHCustomerServiceController.h"
+#import "FHGoodsListController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
 /** 导航View视图 */
@@ -86,33 +87,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        /** 服务平台 */
-//        static NSString *ID = @"cell1";
-//        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-//        if (!cell) {
-//            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
-//        }
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        for (UIView *view in cell.subviews) {
-//            if (view.tag == 2017) {
-//                [view removeFromSuperview];
-//            }
-//        }
-//        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
-//        locationView.tag = 2017;
-//
-//        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
-//        self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
-//        self.realSstateSNameLabel.textColor = [UIColor blackColor];
-//        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
-//        self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
-//        [locationView addSubview:self.realSstateSNameLabel];
-//
-//        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 0, SCREEN_WIDTH * 0.116, SCREEN_WIDTH * 0.116)];
-//        self.codeImgView.backgroundColor = [UIColor yellowColor];
-//        [locationView addSubview:self.codeImgView];
-//
-//        [cell addSubview:locationView];
         /** 菜单列表 */
         FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
         cell.delegate = self;
@@ -226,7 +200,9 @@
         [self pushVCWithName:health];
     } else if (indexPath.row == 3) {
         /** 生鲜服务 */
-        
+        FHGoodsListController *goodList = [[FHGoodsListController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        [self pushVCWithName:goodList];
     } else if (indexPath.row == 4) {
         /** 理财服务 */
         FHFinancialServiceController *finacial = [[FHFinancialServiceController alloc] init];

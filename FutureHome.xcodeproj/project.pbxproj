@@ -239,6 +239,7 @@
 		4AF51B5E22D07ECA00AA04EC /* GNRShoppingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5B22D07ECA00AA04EC /* GNRShoppingBar.m */; };
 		4AF51B5F22D07ECA00AA04EC /* GNRShoppingBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */; };
 		4AF51B6022D07ECA00AA04EC /* GNRShoppingBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */; };
+		4AF51B6322D0800C00AA04EC /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -728,6 +729,8 @@
 		4AF51B5B22D07ECA00AA04EC /* GNRShoppingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingBar.m; sourceTree = "<group>"; };
 		4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNRShoppingBarView.m; sourceTree = "<group>"; };
 		4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRShoppingBarView.xib; sourceTree = "<group>"; };
+		4AF51B6122D0800C00AA04EC /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
+		4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -968,6 +971,8 @@
 		4A6DAA0022C0700F00F29455 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				4AF51B6122D0800C00AA04EC /* UINavigationBar+Awesome.h */,
+				4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */,
 				4A4BEF1222CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.h */,
 				4A4BEF1322CDFE8D00FD00DE /* NSMutableAttributedString+XZCategory.m */,
 				4AA7BDB122CC886C00462389 /* UIColor-Expanded.h */,
@@ -2304,6 +2309,7 @@
 				4A6DAA4422C0AD3100F29455 /* AFSecurityPolicy.m in Sources */,
 				4A6DAA9822C0AD7C00F29455 /* LCTabBarItem.m in Sources */,
 				4A6DAB7E22C0ADB500F29455 /* YPTabItem.m in Sources */,
+				4AF51B6322D0800C00AA04EC /* UINavigationBar+Awesome.m in Sources */,
 				4AA7B3AA22CC7D8D00462389 /* MASLayoutConstraint.m in Sources */,
 				4A6DAB3F22C0ADAF00F29455 /* NJKWebViewProgress.m in Sources */,
 				4A6DAB6C22C0ADAF00F29455 /* MJRefreshAutoStateFooter.m in Sources */,
