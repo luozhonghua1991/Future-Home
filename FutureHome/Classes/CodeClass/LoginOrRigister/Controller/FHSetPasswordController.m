@@ -1,17 +1,17 @@
 //
-//  RWSetPasswordController.m
+//  FHSetPasswordController.m
 //  RWGame
 //
 //  Created by luozhonghua on 2018/7/18.
 //  Copyright © 2018年 chao.liu. All rights reserved.
 //  设置密码界面
 
-#import "RWSetPasswordController.h"
+#import "FHSetPasswordController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
 //#import "LoginService.h"
 
-@interface RWSetPasswordController () <UITextFieldDelegate>
+@interface FHSetPasswordController () <UITextFieldDelegate>
 /** <#Description#> */
 @property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
 /**标题label*/
@@ -44,7 +44,7 @@
 
 @end
 
-@implementation RWSetPasswordController
+@implementation FHSetPasswordController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

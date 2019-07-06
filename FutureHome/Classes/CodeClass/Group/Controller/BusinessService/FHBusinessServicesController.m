@@ -22,7 +22,6 @@
     [super viewDidLoad];
 }
 
-
 - (void)initViewControllers {
     FHFollowListController *videosVC = [[FHFollowListController alloc] init];
     videosVC.yp_tabItemTitle = @"关注列表";

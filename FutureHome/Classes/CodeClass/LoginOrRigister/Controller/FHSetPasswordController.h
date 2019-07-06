@@ -1,5 +1,5 @@
 //
-//  RWSetPasswordController.h
+//  FHSetPasswordController.h
 //  RWGame
 //
 //  Created by luozhonghua on 2018/7/18.
@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-@interface RWSetPasswordController : UIViewController
+@interface FHSetPasswordController : UIViewController
 /**标题*/
 @property (nonatomic,copy) NSString *titleString;
 /**手机号码*/

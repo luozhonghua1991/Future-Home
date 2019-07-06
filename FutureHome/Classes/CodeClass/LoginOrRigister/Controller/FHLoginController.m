@@ -205,9 +205,9 @@
 - (void)loginView:(LoginView *)view withName:(NSString *)name {
     if ([name isEqualToString:@"验证码登录"]) {
         //验证码登录
-        [self viewControllerPushOther:@"RWVerificationCodeLoginController"];
+        [self viewControllerPushOther:@"FHVerificationCodeLoginController"];
     } else if ([name isEqualToString:@"忘记密码"]) {
-        [self viewControllerPushOther:@"RWForgetPasswordController"];
+        [self viewControllerPushOther:@"FHForgetPasswordController"];
     } else if ([name isEqualToString:@"登录"]) {
         //登录请求
         [self.view endEditing:YES];

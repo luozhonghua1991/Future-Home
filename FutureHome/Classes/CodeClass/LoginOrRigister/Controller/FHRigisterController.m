@@ -9,7 +9,7 @@
 #import "FHRigisterController.h"
 #import "RWTextField.h"
 #import "TPKeyboardAvoidingScrollView.h"
-#import "RWEntryVerificationCodeController.h"
+#import "FHEntryVerificationCodeController.h"
 
 @interface FHRigisterController () <UITextFieldDelegate>
 
@@ -125,7 +125,7 @@
 
 - (void)goToIdentifyingCodeVC {
     //验证码输入界面
-    RWEntryVerificationCodeController *vc = [[RWEntryVerificationCodeController alloc]init];
+    FHEntryVerificationCodeController *vc = [[FHEntryVerificationCodeController alloc]init];
     vc.phoneNumber = self.phoneNumnTF.text;
     vc.dialing_code = self.dialing_code;
     //新用户注册界面

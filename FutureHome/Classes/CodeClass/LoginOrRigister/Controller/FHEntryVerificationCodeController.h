@@ -1,5 +1,5 @@
 //
-//  RWEntryVerificationCodeController.h
+//  FHEntryVerificationCodeController.h
 //  RWGame
 //
 //  Created by luozhonghua on 2018/7/18.
@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 
 
 
-@interface RWEntryVerificationCodeController : UIViewController
+@interface FHEntryVerificationCodeController : UIViewController
 
 @property (nonatomic, assign) type vcType;
 /**区号*/

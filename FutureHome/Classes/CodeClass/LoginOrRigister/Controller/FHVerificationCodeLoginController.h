@@ -1,5 +1,5 @@
 //
-//  RWVerificationCodeLoginController.h
+//  FHVerificationCodeLoginController.h
 //  RWGame
 //
 //  Created by luozhonghua on 2018/7/18.
@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface RWVerificationCodeLoginController : UIViewController
+@interface FHVerificationCodeLoginController : UIViewController
 
 @end

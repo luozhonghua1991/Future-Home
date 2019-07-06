@@ -1,22 +1,22 @@
 //
-//  RWEntryVerificationCodeController.m
+//  FHEntryVerificationCodeController.m
 //  RWGame
 //
 //  Created by luozhonghua on 2018/7/18.
 //  Copyright © 2018年 chao.liu. All rights reserved.
 //  输入验证码界面
 
-#import "RWEntryVerificationCodeController.h"
+#import "FHEntryVerificationCodeController.h"
 #import "RWPasswordView.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
 //#import "LoginService.h"
-#import "RWSetPasswordController.h"
+#import "FHSetPasswordController.h"
 //#import "RWResettingPasswordController.h"
 //#import "LoginService.h"
 //#import "LoginViewController.h"
 
-@interface RWEntryVerificationCodeController ()
+@interface FHEntryVerificationCodeController ()
 
 /** <#Description#> */
 @property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
@@ -39,7 +39,7 @@
 
 @end
 
-@implementation RWEntryVerificationCodeController
+@implementation FHEntryVerificationCodeController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -198,7 +198,7 @@
 //         }];
     } else if (self.vcType == REGISTER_VC) {
         //            //用户注册的时候 需要设置密码
-        RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
+        FHSetPasswordController *setPassword = [[FHSetPasswordController alloc]init];
         setPassword.titleString = @"设置密码";
         [self.navigationController pushViewController:setPassword animated:YES];
 //        //新用户注册 快捷登录
@@ -250,7 +250,7 @@
      } else if(self.vcType == FORGETPASSWORD_VC) {
 //         //忘记密码 去重置密码
 //         //用户注册的时候 需要设置密码
-         RWSetPasswordController *setPassword = [[RWSetPasswordController alloc]init];
+         FHSetPasswordController *setPassword = [[FHSetPasswordController alloc]init];
          setPassword.titleString = @"重置密码";
          setPassword.phoneNumber = self.phoneNumber;
          setPassword.verificCode = self.verificCode;

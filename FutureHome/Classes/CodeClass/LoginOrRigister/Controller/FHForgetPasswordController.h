@@ -1,5 +1,5 @@
 //
-//  RWForgetPasswordController.h
+//  FHForgetPasswordController.h
 //  RWGame
 //
 //  Created by luozhonghua on 2018/7/17.
@@ -8,6 +8,6 @@
 
 #import "BaseViewController.h"
 
-@interface RWForgetPasswordController : UIViewController
+@interface FHForgetPasswordController : UIViewController
 
 @end
