@@ -14,8 +14,17 @@
 @property (weak, nonatomic) id<GNRGoodsNumberChangedDelegate>delegate;
 @property (weak, nonatomic) IBOutlet UIImageView *goodsImageV;
 @property (weak, nonatomic) IBOutlet UILabel *nameL;
-@property (weak, nonatomic) IBOutlet UILabel *priceL;
-@property (weak, nonatomic) IBOutlet UIView *stepperSuperView;
+//产地
+@property (weak, nonatomic) IBOutlet UILabel *LocationLabel;
+//@property (weak, nonatomic) IBOutlet UIView *stepperSuperView;
+@property (strong, nonatomic) UIView *stepperSuperView;
+/** 规格 */
+@property (nonatomic, strong) UILabel *specsLabel;
+/** 价格 */
+@property (nonatomic, strong) UILabel *priceLabel;
+/** 库存 */
+@property (nonatomic, strong) UILabel *stockLabel;
+
 @property (strong, nonatomic)GNRCountStepper * stepper;
 @property (strong, nonatomic)GNRGoodsModel * goods;
 

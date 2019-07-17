@@ -12,8 +12,6 @@
 @interface BaseViewController () 
 /** 带搜索的View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
-/** 自定义导航栏视图 */
-@property (nonatomic, strong) UIView *navgationView;
 /** iOS7 之后布局部分 */
 @property (nonatomic, assign, getter=isFullScreenLayout) BOOL fullScreenLayout;// default is NO;
 @property (nonatomic, assign, getter=isSpecifyFullScreenLayout) BOOL specifyFullScreenLayout;
@@ -109,8 +107,9 @@
         }
     }
     if (self.isHaveNavgationView) {
-        self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainNavgationBarHeight)];
-        self.navgationView.backgroundColor = [UIColor blueColor];
+        self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainSizeHeight)];
+        self.navgationView.backgroundColor = [UIColor whiteColor];
+        self.navgationView.userInteractionEnabled = YES;
         [self.view addSubview:self.navgationView];
     }
 }

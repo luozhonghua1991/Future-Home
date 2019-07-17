@@ -18,7 +18,6 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.badgeLabel.center = CGPointMake(_shoppingCartIcon.frame.origin.x+_shoppingCartIcon.frame.size.width, _shoppingCartIcon.frame.origin.y);
-
     }
     return self;
 }
@@ -49,7 +48,7 @@
     NSString * priceStr =[NSString stringWithFormat:@"商品共%.2f元",price];
     self.priceL.text = value?priceStr:@"购物车为空";
     //btn
-    self.payBtn.backgroundColor = price?[UIColor blackColor]:[UIColor lightGrayColor];
+    self.payBtn.backgroundColor = price?COLOR_16F(0x1C86EE, 1):[UIColor lightGrayColor];
     self.payBtn.enabled = price;
 }
 

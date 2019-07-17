@@ -11,7 +11,7 @@
 #import "GNRShoppingBar.h"
 #import "UINavigationBar+Awesome.h"
 
-@interface FHGoodsListController () <GNRGoodsNumberChangedDelegate,GNRLinkageTableViewDelegate,CAAnimationDelegate>
+@interface FHGoodsListController () <GNRGoodsNumberChangedDelegate,GNRLinkageTableViewDelegate,CAAnimationDelegate,GNRShoppingBarDelegate>
 @property (nonatomic,strong) CALayer *dotLayer;//小圆点
 @property (nonatomic,assign) CGFloat endPointX;
 @property (nonatomic,assign) CGFloat endPointY;
@@ -32,6 +32,7 @@
     [self.view addSubview:self.goodsListView];
     [self initData];
     [self.view addSubview:self.shoppingBar];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -64,16 +65,16 @@
                       @{@"title" : @"精选特卖",
                         @"list" : @[@"甜点组合", @"毛肚", @"菌汤", @"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤"]
                         },
-                      @{@"title" : @"饭后(含有茶点)",
+                      @{@"title" : @"饭后(含有)",
                         @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
                         },
-                      @{@"title" : @"茶点(含有茶点)",
+                      @{@"title" : @"茶点(含有)",
                         @"list" : @[@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤"]
                         },
-                      @{@"title" : @"素材水果拼盘",
+                      @{@"title" : @"素材水果",
                         @"list" : @[@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",]
                         },
-                      @{@"title" : @"水果拼盘生鲜果",
+                      @{@"title" : @"水果拼盘",
                         @"list" : @[@"甜点组合", @"毛肚", @"菌汤",]
                         },
                       @{@"title" : @"拼盘",
@@ -143,14 +144,17 @@
 }
 
 
+
 #pragma mark - stepper delegate
-- (void)stepper:(GNRCountStepper *)stepper valueChangedForCount:(NSInteger)count goods:(GNRGoodsModel *)goods{
+- (void)stepper:(GNRCountStepper *)stepper
+valueChangedForCount:(NSInteger)count
+          goods:(GNRGoodsModel *)goods{
     if (stepper.style == GNRCountStepperStyleGoodsList) {
         //更新购物车中的商品
         [self.goodsListView.goodsList.shoppingCart.bags.firstObject updateGoods:goods];
         //更新badgeValue
         [self.shoppingBar reloadData];
-    }else{//购物车中的
+    } else {//购物车中的
         if (count==0) {
             [self.goodsListView.goodsList.shoppingCart.bags.firstObject updateGoods:goods];
         }
@@ -223,6 +227,12 @@
 }
 
 
+#pragma mark — GNRShoppingBarDelegate
+/** 支付事件 */
+- (void)GNRShoppingBarDelegatePayAction {
+    
+}
+
 #pragma mark - CAAnimationDelegate
 //组合动画结束后 购物车 缩放动画
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
@@ -240,7 +250,7 @@
 #pragma mark — setter && getter
 - (GNRLinkageTableView *)goodsListView{
     if (!_goodsListView) {
-        _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, self.view.bounds.size.width, self.view.bounds.size.height-[GNRShoppingBar defaultHeight] - MainSizeHeight)];
+        _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight + 44 + 35, self.view.bounds.size.width, self.view.bounds.size.height-[GNRShoppingBar defaultHeight] - MainSizeHeight - 44 - 35)] ;
         _goodsListView.target = self;
         _goodsListView.delegate = self;
     }
@@ -251,6 +261,7 @@
     if (!_shoppingBar) {
         _shoppingBar = [GNRShoppingBar barWithStyle:GNRShoppingBarStyleDefault showInView:self.view];
         _shoppingBar.cartView.target = self;
+        _shoppingBar.delegate = self;
         [_shoppingBar.cartView.header.cleanBtn addTarget:self action:@selector(cleanGoodsCartAction:) forControlEvents:UIControlEventTouchUpInside];
         
         CGRect rect = [self.view convertRect:_shoppingBar.shoppingBarView.shoppingCartIcon.frame fromView:_shoppingBar.shoppingBarView];

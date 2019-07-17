@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *userHeaderImgView;
 /** 用户名字label */
 @property (nonatomic, strong) UILabel *userNameLabel;
+/** 未来家园账号label */
+@property (nonatomic, strong) UILabel *futureHomeCodeLabel;
 /** 二维码图标 */
 @property (nonatomic, strong) UIImageView *codeImgView;
 /** 好友 */

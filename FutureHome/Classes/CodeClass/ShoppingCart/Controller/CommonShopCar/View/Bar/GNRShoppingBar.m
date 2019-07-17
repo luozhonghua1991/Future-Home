@@ -111,7 +111,7 @@
     [self.cartView reloadData];
 }
 
-- (void)refreshCartBar{
+- (void)refreshCartBar {
     [self.shoppingBarView updateBadgeValue:_goodsList.shoppingCart.goodsTotalNumber price:_goodsList.shoppingCart.totalPrice];
 }
 
@@ -128,7 +128,9 @@
 }
 
 - (void)payAction:(id)sender {
-    
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(GNRShoppingBarDelegatePayAction)]) {
+        [_delegate GNRShoppingBarDelegatePayAction];
+    }
 }
 
 @end

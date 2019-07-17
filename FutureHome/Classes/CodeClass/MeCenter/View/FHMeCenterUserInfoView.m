@@ -44,26 +44,26 @@
     [self.topContentView addSubview:self.topLineView];
     [self.topContentView addSubview:self.userHeaderImgView];
     [self.topContentView addSubview:self.userNameLabel];
-    self.userNameLabel.centerY = self.topContentView.height / 2;
+    [self.topContentView addSubview:self.futureHomeCodeLabel];
     [self.topContentView addSubview:self.codeImgView];
     [self.topContentView addSubview:self.logoLabel];
     
-    [self addSubview:self.bottomContentView];
-    [self.bottomContentView addSubview:self.leftLineView];
-    [self.bottomContentView addSubview:self.centerLineView];
-    [self.bottomContentView addSubview:self.rightLineView];
-    [self.bottomContentView addSubview:self.friendView];
-    [self.bottomContentView addSubview:self.groupView];
-    [self.bottomContentView addSubview:self.followView];
-    [self.bottomContentView addSubview:self.myView];
-    [self addSubview:self.bottomLineView];
+//    [self addSubview:self.bottomContentView];
+//    [self.bottomContentView addSubview:self.leftLineView];
+//    [self.bottomContentView addSubview:self.centerLineView];
+//    [self.bottomContentView addSubview:self.rightLineView];
+//    [self.bottomContentView addSubview:self.friendView];
+//    [self.bottomContentView addSubview:self.groupView];
+//    [self.bottomContentView addSubview:self.followView];
+//    [self.bottomContentView addSubview:self.myView];
+//    [self addSubview:self.bottomLineView];
 }
 
 
 #pragma mark - 懒加载
 - (UIView *)topContentView {
     if (!_topContentView) {
-        _topContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 85)];
+        _topContentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 85 + 20)];
 //        _topContentView.backgroundColor = [UIColor redColor];
     }
     return _topContentView;
@@ -71,7 +71,7 @@
 
 - (UIView *)topLineView {
     if (!_topLineView) {
-        _topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 84.5, SCREEN_WIDTH, 0.5)];
+        _topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 84.5 + 20, SCREEN_WIDTH, 0.5)];
         _topLineView.backgroundColor = [UIColor lightGrayColor];
     }
     return _topLineView;
@@ -87,12 +87,22 @@
 
 - (UILabel *)userNameLabel {
     if (!_userNameLabel) {
-        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 0, 100, 16)];
+        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 20, 100, 16)];
         _userNameLabel.text = @"许大宝~";
         _userNameLabel.textColor = [UIColor blackColor];
         _userNameLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _userNameLabel;
+}
+
+- (UILabel *)futureHomeCodeLabel {
+    if (!_futureHomeCodeLabel) {
+        _futureHomeCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 50, 200, 16)];
+        _futureHomeCodeLabel.text = @"未来家园号:11111111";
+        _futureHomeCodeLabel.textColor = [UIColor blackColor];
+        _futureHomeCodeLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    return _futureHomeCodeLabel;
 }
 
 - (UIImageView *)codeImgView {

@@ -1,2 +1,2 @@
 # Future-Home
-一款很牛逼的APP
+一款APP

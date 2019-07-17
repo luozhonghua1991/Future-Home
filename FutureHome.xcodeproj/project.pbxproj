@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0C02D822D97A1D00F40229 /* FHChangeNameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0C02D722D97A1D00F40229 /* FHChangeNameController.m */; };
+		4A0C02DE22D985EC00F40229 /* FHMyFollowListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0C02DD22D985EC00F40229 /* FHMyFollowListController.m */; };
+		4A0C02E122D9870100F40229 /* FHFollowListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0C02E022D9870000F40229 /* FHFollowListViewController.m */; };
+		4A0C02E422D9CC6600F40229 /* FHFollowListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A0C02E322D9CC6600F40229 /* FHFollowListViewCell.m */; };
 		4A448CCD22C5AF8B003D0712 /* FHHomeServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */; };
 		4A448CD022C5B3BF003D0712 /* FHOwnerServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */; };
 		4A448CD322C5B576003D0712 /* FHHealthServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CD222C5B576003D0712 /* FHHealthServicesController.m */; };
@@ -23,6 +27,8 @@
 		4A4BEF1A22CE011000FD00DE /* FHEntryVerificationCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1822CE011000FD00DE /* FHEntryVerificationCodeController.m */; };
 		4A4BEF1D22CE031600FD00DE /* FHVerificationCodeLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1C22CE031600FD00DE /* FHVerificationCodeLoginController.m */; };
 		4A4BEF2022CE078B00FD00DE /* FHSetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1E22CE078B00FD00DE /* FHSetPasswordController.m */; };
+		4A4CE93222D87A7C0002D360 /* FHMyAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */; };
+		4A4CE93522D88FF00002D360 /* FHMyAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CE93422D88FF00002D360 /* FHMyAccountCell.m */; };
 		4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F95C22C0B68F00867031 /* BaseViewController.m */; };
 		4A59F96822C0B6D100867031 /* UIViewController+Swizzling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96122C0B6D000867031 /* UIViewController+Swizzling.m */; };
 		4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F96222C0B6D000867031 /* UIButton+countDown.m */; };
@@ -155,8 +161,16 @@
 		4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */; };
 		4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */; };
 		4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */; };
+		4A8E0D5A22DEBD2200F814F7 /* FHCertificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D5922DEBD2200F814F7 /* FHCertificationController.m */; };
+		4A8E0D5D22DEC76200F814F7 /* FHUserAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D5C22DEC76200F814F7 /* FHUserAgreementView.m */; };
+		4A8E0D6022DEFB5500F814F7 /* FHCertificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D5F22DEFB5500F814F7 /* FHCertificationView.m */; };
+		4A8E0D6322DEFF9700F814F7 /* FHCertificationImgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D6222DEFF9700F814F7 /* FHCertificationImgView.m */; };
 		4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */; };
 		4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */; };
+		4A97078522DC117000FD18EC /* FHAccountApplyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A97078422DC117000FD18EC /* FHAccountApplyController.m */; };
+		4A97078822DC14A700FD18EC /* FHAccountApplyListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A97078722DC14A700FD18EC /* FHAccountApplyListController.m */; };
+		4A97078B22DC63F300FD18EC /* FHBuinessAccountApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A97078A22DC63F300FD18EC /* FHBuinessAccountApplicationController.m */; };
+		4A97078E22DC70EA00FD18EC /* FHAccountApplicationTFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A97078D22DC70EA00FD18EC /* FHAccountApplicationTFView.m */; };
 		4AA0D92C22CF45B2003F61D2 /* FHScanCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D92B22CF45B2003F61D2 /* FHScanCodeController.m */; };
 		4AA0D92F22CF4766003F61D2 /* FHPayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D92E22CF4766003F61D2 /* FHPayController.m */; };
 		4AA0D93222CF4878003F61D2 /* FHReceivablesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA0D93122CF4878003F61D2 /* FHReceivablesController.m */; };
@@ -186,6 +200,14 @@
 		4AA7BDB522CC886D00462389 /* UIColor-Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB322CC886D00462389 /* UIColor-Expanded.m */; };
 		4AA7BDB622CC886D00462389 /* UIColor-HSVAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */; };
 		4AA7BDB922CCB3BD00462389 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7BDB822CCB3BD00462389 /* LoginView.m */; };
+		4AAC981922D70F5300E4D0B8 /* PPNumberButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC980A22D70F5300E4D0B8 /* PPNumberButton.m */; };
+		4AAC981A22D70F5300E4D0B8 /* FFDropDownMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC980D22D70F5300E4D0B8 /* FFDropDownMenuCell.m */; };
+		4AAC981B22D70F5300E4D0B8 /* FFDropDownMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC980E22D70F5300E4D0B8 /* FFDropDownMenuView.m */; };
+		4AAC981C22D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981222D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m */; };
+		4AAC981D22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981422D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m */; };
+		4AAC981E22D70F5300E4D0B8 /* FFDropDownMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981622D70F5300E4D0B8 /* FFDropDownMenuModel.m */; };
+		4AAC981F22D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981722D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m */; };
+		4AAC982222D7325F00E4D0B8 /* FHFreshMallFollowListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC982122D7325F00E4D0B8 /* FHFreshMallFollowListController.m */; };
 		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */; };
 		4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC67DE422C8481200842C0D /* FHMessageController.m */; };
@@ -240,6 +262,10 @@
 		4AF51B5F22D07ECA00AA04EC /* GNRShoppingBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */; };
 		4AF51B6022D07ECA00AA04EC /* GNRShoppingBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */; };
 		4AF51B6322D0800C00AA04EC /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */; };
+		4AFC0DC322D426A8004E28CE /* FHFreshMallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DC222D426A8004E28CE /* FHFreshMallController.m */; };
+		4AFC0DC622D4279E004E28CE /* FHInformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DC522D4279E004E28CE /* FHInformationController.m */; };
+		4AFC0DC922D427CC004E28CE /* FHVideosPublishingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DC822D427CC004E28CE /* FHVideosPublishingController.m */; };
+		4AFC0DCC22D42802004E28CE /* FHDialogueRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -260,6 +286,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A0C02D622D97A1D00F40229 /* FHChangeNameController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHChangeNameController.h; sourceTree = "<group>"; };
+		4A0C02D722D97A1D00F40229 /* FHChangeNameController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHChangeNameController.m; sourceTree = "<group>"; };
+		4A0C02DC22D985EC00F40229 /* FHMyFollowListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyFollowListController.h; sourceTree = "<group>"; };
+		4A0C02DD22D985EC00F40229 /* FHMyFollowListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyFollowListController.m; sourceTree = "<group>"; };
+		4A0C02DF22D9870000F40229 /* FHFollowListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFollowListViewController.h; sourceTree = "<group>"; };
+		4A0C02E022D9870000F40229 /* FHFollowListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFollowListViewController.m; sourceTree = "<group>"; };
+		4A0C02E222D9CC6600F40229 /* FHFollowListViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFollowListViewCell.h; sourceTree = "<group>"; };
+		4A0C02E322D9CC6600F40229 /* FHFollowListViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFollowListViewCell.m; sourceTree = "<group>"; };
 		4A448CCB22C5AF8B003D0712 /* FHHomeServicesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHHomeServicesController.h; sourceTree = "<group>"; };
 		4A448CCC22C5AF8B003D0712 /* FHHomeServicesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHHomeServicesController.m; sourceTree = "<group>"; };
 		4A448CCE22C5B3BF003D0712 /* FHOwnerServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOwnerServiceController.h; sourceTree = "<group>"; };
@@ -292,6 +326,10 @@
 		4A4BEF1C22CE031600FD00DE /* FHVerificationCodeLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHVerificationCodeLoginController.m; sourceTree = "<group>"; };
 		4A4BEF1E22CE078B00FD00DE /* FHSetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHSetPasswordController.m; sourceTree = "<group>"; };
 		4A4BEF1F22CE078B00FD00DE /* FHSetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHSetPasswordController.h; sourceTree = "<group>"; };
+		4A4CE93022D87A7C0002D360 /* FHMyAccountController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyAccountController.h; sourceTree = "<group>"; };
+		4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyAccountController.m; sourceTree = "<group>"; };
+		4A4CE93322D88FF00002D360 /* FHMyAccountCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyAccountCell.h; sourceTree = "<group>"; };
+		4A4CE93422D88FF00002D360 /* FHMyAccountCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyAccountCell.m; sourceTree = "<group>"; };
 		4A59F95722C0B31B00867031 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		4A59F95922C0B3DF00867031 /* InterfaceHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceHeader.h; sourceTree = "<group>"; };
 		4A59F95A22C0B3DF00867031 /* ColorHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHeader.h; sourceTree = "<group>"; };
@@ -565,10 +603,26 @@
 		4A8D8C7122C37A4C0083E00C /* FHLittleMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleMenuListCell.m; sourceTree = "<group>"; };
 		4A8D8C7322C37C0C0083E00C /* FHLittleMenuListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLittleMenuListCollectionCell.h; sourceTree = "<group>"; };
 		4A8D8C7422C37C0C0083E00C /* FHLittleMenuListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLittleMenuListCollectionCell.m; sourceTree = "<group>"; };
+		4A8E0D5822DEBD2200F814F7 /* FHCertificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCertificationController.h; sourceTree = "<group>"; };
+		4A8E0D5922DEBD2200F814F7 /* FHCertificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCertificationController.m; sourceTree = "<group>"; };
+		4A8E0D5B22DEC76200F814F7 /* FHUserAgreementView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserAgreementView.h; sourceTree = "<group>"; };
+		4A8E0D5C22DEC76200F814F7 /* FHUserAgreementView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHUserAgreementView.m; sourceTree = "<group>"; };
+		4A8E0D5E22DEFB5500F814F7 /* FHCertificationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCertificationView.h; sourceTree = "<group>"; };
+		4A8E0D5F22DEFB5500F814F7 /* FHCertificationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCertificationView.m; sourceTree = "<group>"; };
+		4A8E0D6122DEFF9700F814F7 /* FHCertificationImgView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCertificationImgView.h; sourceTree = "<group>"; };
+		4A8E0D6222DEFF9700F814F7 /* FHCertificationImgView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCertificationImgView.m; sourceTree = "<group>"; };
 		4A9282EE22C46B7B006509C3 /* FHCommonCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonCollectionCell.h; sourceTree = "<group>"; };
 		4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionCell.m; sourceTree = "<group>"; };
 		4A9282F122C46BCC006509C3 /* FHCommonCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonCollectionViewCell.h; sourceTree = "<group>"; };
 		4A9282F222C46BCC006509C3 /* FHCommonCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonCollectionViewCell.m; sourceTree = "<group>"; };
+		4A97078322DC117000FD18EC /* FHAccountApplyController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAccountApplyController.h; sourceTree = "<group>"; };
+		4A97078422DC117000FD18EC /* FHAccountApplyController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAccountApplyController.m; sourceTree = "<group>"; };
+		4A97078622DC14A700FD18EC /* FHAccountApplyListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAccountApplyListController.h; sourceTree = "<group>"; };
+		4A97078722DC14A700FD18EC /* FHAccountApplyListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAccountApplyListController.m; sourceTree = "<group>"; };
+		4A97078922DC63F300FD18EC /* FHBuinessAccountApplicationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHBuinessAccountApplicationController.h; sourceTree = "<group>"; };
+		4A97078A22DC63F300FD18EC /* FHBuinessAccountApplicationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHBuinessAccountApplicationController.m; sourceTree = "<group>"; };
+		4A97078C22DC70EA00FD18EC /* FHAccountApplicationTFView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAccountApplicationTFView.h; sourceTree = "<group>"; };
+		4A97078D22DC70EA00FD18EC /* FHAccountApplicationTFView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAccountApplicationTFView.m; sourceTree = "<group>"; };
 		4AA0D92A22CF45B2003F61D2 /* FHScanCodeController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHScanCodeController.h; sourceTree = "<group>"; };
 		4AA0D92B22CF45B2003F61D2 /* FHScanCodeController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanCodeController.m; sourceTree = "<group>"; };
 		4AA0D92D22CF4766003F61D2 /* FHPayController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPayController.h; sourceTree = "<group>"; };
@@ -630,6 +684,23 @@
 		4AA7BDB422CC886D00462389 /* UIColor-HSVAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor-HSVAdditions.m"; sourceTree = "<group>"; };
 		4AA7BDB722CCB3BD00462389 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		4AA7BDB822CCB3BD00462389 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
+		4AAC980922D70F5300E4D0B8 /* PPNumberButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNumberButton.h; sourceTree = "<group>"; };
+		4AAC980A22D70F5300E4D0B8 /* PPNumberButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNumberButton.m; sourceTree = "<group>"; };
+		4AAC980C22D70F5300E4D0B8 /* FFDropDownMenuBasedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuBasedCell.h; sourceTree = "<group>"; };
+		4AAC980D22D70F5300E4D0B8 /* FFDropDownMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuCell.m; sourceTree = "<group>"; };
+		4AAC980E22D70F5300E4D0B8 /* FFDropDownMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuView.m; sourceTree = "<group>"; };
+		4AAC980F22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuBasedModel.h; sourceTree = "<group>"; };
+		4AAC981022D70F5300E4D0B8 /* FFDropDownMenuTriangleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuTriangleView.h; sourceTree = "<group>"; };
+		4AAC981122D70F5300E4D0B8 /* FFDropDownMenuModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuModel.h; sourceTree = "<group>"; };
+		4AAC981222D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuBasedCell.m; sourceTree = "<group>"; };
+		4AAC981322D70F5300E4D0B8 /* FFDropDownMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuCell.h; sourceTree = "<group>"; };
+		4AAC981422D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuBasedModel.m; sourceTree = "<group>"; };
+		4AAC981522D70F5300E4D0B8 /* FFDropDownMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuView.h; sourceTree = "<group>"; };
+		4AAC981622D70F5300E4D0B8 /* FFDropDownMenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuModel.m; sourceTree = "<group>"; };
+		4AAC981722D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuTriangleView.m; sourceTree = "<group>"; };
+		4AAC981822D70F5300E4D0B8 /* FFDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenu.h; sourceTree = "<group>"; };
+		4AAC982022D7325F00E4D0B8 /* FHFreshMallFollowListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFreshMallFollowListController.h; sourceTree = "<group>"; };
+		4AAC982122D7325F00E4D0B8 /* FHFreshMallFollowListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFreshMallFollowListController.m; sourceTree = "<group>"; };
 		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
 		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserInfoHeaderBaseView.h; sourceTree = "<group>"; };
@@ -731,6 +802,14 @@
 		4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRShoppingBarView.xib; sourceTree = "<group>"; };
 		4AF51B6122D0800C00AA04EC /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
+		4AFC0DC122D426A8004E28CE /* FHFreshMallController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFreshMallController.h; sourceTree = "<group>"; };
+		4AFC0DC222D426A8004E28CE /* FHFreshMallController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFreshMallController.m; sourceTree = "<group>"; };
+		4AFC0DC422D4279E004E28CE /* FHInformationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHInformationController.h; sourceTree = "<group>"; };
+		4AFC0DC522D4279E004E28CE /* FHInformationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHInformationController.m; sourceTree = "<group>"; };
+		4AFC0DC722D427CC004E28CE /* FHVideosPublishingController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHVideosPublishingController.h; sourceTree = "<group>"; };
+		4AFC0DC822D427CC004E28CE /* FHVideosPublishingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHVideosPublishingController.m; sourceTree = "<group>"; };
+		4AFC0DCA22D42802004E28CE /* FHDialogueRecordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHDialogueRecordController.h; sourceTree = "<group>"; };
+		4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHDialogueRecordController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -937,6 +1016,8 @@
 		4A6DA9FE22C06F5C00F29455 /* libiary */ = {
 			isa = PBXGroup;
 			children = (
+				4AAC980B22D70F5300E4D0B8 /* FFDropDownMenu */,
+				4AAC980822D70F5300E4D0B8 /* PPNumberButton */,
 				4AA7B38B22CC7D8D00462389 /* Masonry */,
 				4A6DAB8122C0ADBC00F29455 /* ZHProgressHUDK */,
 				4A6DAB7722C0ADB500F29455 /* YPTabBarController */,
@@ -1122,6 +1203,22 @@
 			children = (
 				4A59F97922C0BA7700867031 /* FHMeCenterController.h */,
 				4A59F97A22C0BA7700867031 /* FHMeCenterController.m */,
+				4A8E0D5822DEBD2200F814F7 /* FHCertificationController.h */,
+				4A8E0D5922DEBD2200F814F7 /* FHCertificationController.m */,
+				4A4CE93022D87A7C0002D360 /* FHMyAccountController.h */,
+				4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */,
+				4A0C02D622D97A1D00F40229 /* FHChangeNameController.h */,
+				4A0C02D722D97A1D00F40229 /* FHChangeNameController.m */,
+				4A0C02DC22D985EC00F40229 /* FHMyFollowListController.h */,
+				4A0C02DD22D985EC00F40229 /* FHMyFollowListController.m */,
+				4A0C02DF22D9870000F40229 /* FHFollowListViewController.h */,
+				4A0C02E022D9870000F40229 /* FHFollowListViewController.m */,
+				4A97078322DC117000FD18EC /* FHAccountApplyController.h */,
+				4A97078422DC117000FD18EC /* FHAccountApplyController.m */,
+				4A97078622DC14A700FD18EC /* FHAccountApplyListController.h */,
+				4A97078722DC14A700FD18EC /* FHAccountApplyListController.m */,
+				4A97078922DC63F300FD18EC /* FHBuinessAccountApplicationController.h */,
+				4A97078A22DC63F300FD18EC /* FHBuinessAccountApplicationController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1133,6 +1230,18 @@
 				4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */,
 				4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */,
 				4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */,
+				4A4CE93322D88FF00002D360 /* FHMyAccountCell.h */,
+				4A4CE93422D88FF00002D360 /* FHMyAccountCell.m */,
+				4A0C02E222D9CC6600F40229 /* FHFollowListViewCell.h */,
+				4A0C02E322D9CC6600F40229 /* FHFollowListViewCell.m */,
+				4A97078C22DC70EA00FD18EC /* FHAccountApplicationTFView.h */,
+				4A97078D22DC70EA00FD18EC /* FHAccountApplicationTFView.m */,
+				4A8E0D5B22DEC76200F814F7 /* FHUserAgreementView.h */,
+				4A8E0D5C22DEC76200F814F7 /* FHUserAgreementView.m */,
+				4A8E0D5E22DEFB5500F814F7 /* FHCertificationView.h */,
+				4A8E0D5F22DEFB5500F814F7 /* FHCertificationView.m */,
+				4A8E0D6122DEFF9700F814F7 /* FHCertificationImgView.h */,
+				4A8E0D6222DEFF9700F814F7 /* FHCertificationImgView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1641,13 +1750,13 @@
 			isa = PBXGroup;
 			children = (
 				4AA7B37B22CC7CD600462389 /* TPKeyboardAvoidingScrollView.h */,
-				4AA7B37C22CC7CD600462389 /* TPKeyboardAvoidingCollectionView.h */,
-				4AA7B37E22CC7CD600462389 /* TPKeyboardAvoidingTableView.m */,
 				4AA7B37F22CC7CD600462389 /* TPKeyboardAvoidingScrollView.m */,
+				4AA7B38222CC7CD600462389 /* TPKeyboardAvoidingTableView.h */,
+				4AA7B37E22CC7CD600462389 /* TPKeyboardAvoidingTableView.m */,
+				4AA7B37C22CC7CD600462389 /* TPKeyboardAvoidingCollectionView.h */,
+				4AA7B38122CC7CD600462389 /* TPKeyboardAvoidingCollectionView.m */,
 				4AA7B38022CC7CD600462389 /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
 				4AA7B37D22CC7CD600462389 /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
-				4AA7B38122CC7CD600462389 /* TPKeyboardAvoidingCollectionView.m */,
-				4AA7B38222CC7CD600462389 /* TPKeyboardAvoidingTableView.h */,
 			);
 			path = TPKeyboardAvoiding;
 			sourceTree = "<group>";
@@ -1721,6 +1830,35 @@
 			children = (
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4AAC980822D70F5300E4D0B8 /* PPNumberButton */ = {
+			isa = PBXGroup;
+			children = (
+				4AAC980922D70F5300E4D0B8 /* PPNumberButton.h */,
+				4AAC980A22D70F5300E4D0B8 /* PPNumberButton.m */,
+			);
+			path = PPNumberButton;
+			sourceTree = "<group>";
+		};
+		4AAC980B22D70F5300E4D0B8 /* FFDropDownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				4AAC980C22D70F5300E4D0B8 /* FFDropDownMenuBasedCell.h */,
+				4AAC980D22D70F5300E4D0B8 /* FFDropDownMenuCell.m */,
+				4AAC980E22D70F5300E4D0B8 /* FFDropDownMenuView.m */,
+				4AAC980F22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.h */,
+				4AAC981022D70F5300E4D0B8 /* FFDropDownMenuTriangleView.h */,
+				4AAC981122D70F5300E4D0B8 /* FFDropDownMenuModel.h */,
+				4AAC981222D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m */,
+				4AAC981322D70F5300E4D0B8 /* FFDropDownMenuCell.h */,
+				4AAC981422D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m */,
+				4AAC981522D70F5300E4D0B8 /* FFDropDownMenuView.h */,
+				4AAC981622D70F5300E4D0B8 /* FFDropDownMenuModel.m */,
+				4AAC981722D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m */,
+				4AAC981822D70F5300E4D0B8 /* FFDropDownMenu.h */,
+			);
+			path = FFDropDownMenu;
 			sourceTree = "<group>";
 		};
 		4AC67DE622C8481E00842C0D /* MyGroup */ = {
@@ -1893,8 +2031,18 @@
 		4AF51B1022D0701C00AA04EC /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4AFC0DC122D426A8004E28CE /* FHFreshMallController.h */,
+				4AFC0DC222D426A8004E28CE /* FHFreshMallController.m */,
+				4AAC982022D7325F00E4D0B8 /* FHFreshMallFollowListController.h */,
+				4AAC982122D7325F00E4D0B8 /* FHFreshMallFollowListController.m */,
 				4AF51B1322D0712500AA04EC /* FHGoodsListController.h */,
 				4AF51B1422D0712500AA04EC /* FHGoodsListController.m */,
+				4AFC0DC422D4279E004E28CE /* FHInformationController.h */,
+				4AFC0DC522D4279E004E28CE /* FHInformationController.m */,
+				4AFC0DC722D427CC004E28CE /* FHVideosPublishingController.h */,
+				4AFC0DC822D427CC004E28CE /* FHVideosPublishingController.m */,
+				4AFC0DCA22D42802004E28CE /* FHDialogueRecordController.h */,
+				4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1954,16 +2102,16 @@
 		4AF51B2222D07DEB00AA04EC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4AF51B2822D07DEB00AA04EC /* GNRGoodsListModel.h */,
 				4AF51B2322D07DEB00AA04EC /* GNRGoodsListModel.m */,
 				4AF51B2422D07DEB00AA04EC /* GNRShoppingCart.h */,
-				4AF51B2522D07DEB00AA04EC /* GNRGoodsModel.h */,
-				4AF51B2622D07DEB00AA04EC /* GNRShoppingBag.h */,
-				4AF51B2722D07DEB00AA04EC /* GNRGoodsGroup.h */,
-				4AF51B2822D07DEB00AA04EC /* GNRGoodsListModel.h */,
-				4AF51B2922D07DEB00AA04EC /* GNRGoodsModel.m */,
 				4AF51B2A22D07DEB00AA04EC /* GNRShoppingCart.m */,
-				4AF51B2B22D07DEB00AA04EC /* GNRGoodsGroup.m */,
+				4AF51B2622D07DEB00AA04EC /* GNRShoppingBag.h */,
 				4AF51B2C22D07DEB00AA04EC /* GNRShoppingBag.m */,
+				4AF51B2722D07DEB00AA04EC /* GNRGoodsGroup.h */,
+				4AF51B2B22D07DEB00AA04EC /* GNRGoodsGroup.m */,
+				4AF51B2522D07DEB00AA04EC /* GNRGoodsModel.h */,
+				4AF51B2922D07DEB00AA04EC /* GNRGoodsModel.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -2002,9 +2150,9 @@
 		4AF51B5822D07ECA00AA04EC /* Bar */ = {
 			isa = PBXGroup;
 			children = (
-				4AF51B5922D07ECA00AA04EC /* GNRShoppingBarView.h */,
 				4AF51B5A22D07ECA00AA04EC /* GNRShoppingBar.h */,
 				4AF51B5B22D07ECA00AA04EC /* GNRShoppingBar.m */,
+				4AF51B5922D07ECA00AA04EC /* GNRShoppingBarView.h */,
 				4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */,
 				4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */,
 			);
@@ -2160,6 +2308,7 @@
 				4AF51B5222D07E6A00AA04EC /* GNRCartGoodsCell.m in Sources */,
 				4AA7B38622CC7CD600462389 /* TPKeyboardAvoidingTableView.m in Sources */,
 				4AC67DFA22C84CB800842C0D /* FHMyVideosController.m in Sources */,
+				4A97078B22DC63F300FD18EC /* FHBuinessAccountApplicationController.m in Sources */,
 				4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */,
 				4A6DAA9A22C0AD7C00F29455 /* LCTabBarController.m in Sources */,
 				4A6DAA4122C0AD3100F29455 /* AFURLSessionManager.m in Sources */,
@@ -2176,6 +2325,7 @@
 				4AF51B3D22D07DEB00AA04EC /* GNRGoodsGroup.m in Sources */,
 				4A6DAA7922C0AD4C00F29455 /* IQUIScrollView+Additions.m in Sources */,
 				4A6DAA7822C0AD4C00F29455 /* IQUITextFieldView+Additions.m in Sources */,
+				4A97078522DC117000FD18EC /* FHAccountApplyController.m in Sources */,
 				4AA7B3AD22CC7D8D00462389 /* MASConstraint.m in Sources */,
 				4A448CE822C7051B003D0712 /* FHPublicServiceController.m in Sources */,
 				4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */,
@@ -2194,6 +2344,7 @@
 				4A6DAB7122C0ADAF00F29455 /* MJRefreshGifHeader.m in Sources */,
 				4AA7B3AE22CC7D8D00462389 /* MASViewConstraint.m in Sources */,
 				4AA7BDB922CCB3BD00462389 /* LoginView.m in Sources */,
+				4A8E0D5D22DEC76200F814F7 /* FHUserAgreementView.m in Sources */,
 				4A8D8C7222C37A4C0083E00C /* FHLittleMenuListCell.m in Sources */,
 				4AF51B1522D0712500AA04EC /* FHGoodsListController.m in Sources */,
 				4A6DAB6322C0ADAF00F29455 /* UIScrollView+MJRefresh.m in Sources */,
@@ -2207,9 +2358,11 @@
 				4AA7BDB622CC886D00462389 /* UIColor-HSVAdditions.m in Sources */,
 				4AC67E1A22C8A09300842C0D /* FHFreshShoppingMallController.m in Sources */,
 				4A6DAA3C22C0AD3100F29455 /* UIWebView+AFNetworking.m in Sources */,
+				4AAC982222D7325F00E4D0B8 /* FHFreshMallFollowListController.m in Sources */,
 				4A6DAB6422C0ADAF00F29455 /* MJRefreshConst.m in Sources */,
 				4A4BEF1D22CE031600FD00DE /* FHVerificationCodeLoginController.m in Sources */,
 				4AF51B5122D07E6A00AA04EC /* GNRShoppingCartView.m in Sources */,
+				4AFC0DC322D426A8004E28CE /* FHFreshMallController.m in Sources */,
 				4AC67E0A22C88FB300842C0D /* FHFollowListController.m in Sources */,
 				4A6DAB4422C0ADAF00F29455 /* SDWebImageManager.m in Sources */,
 				4A59F98222C0D61600867031 /* myButton.m in Sources */,
@@ -2220,12 +2373,15 @@
 				4AA7B37822CC57DD00462389 /* FHLoginTool.m in Sources */,
 				4A6DAB4622C0ADAF00F29455 /* UIImageView+HighlightedWebCache.m in Sources */,
 				4AA7BDB522CC886D00462389 /* UIColor-Expanded.m in Sources */,
+				4AAC981A22D70F5300E4D0B8 /* FFDropDownMenuCell.m in Sources */,
 				4A6DAA3822C0AD3100F29455 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				4AAC981D22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m in Sources */,
 				4A6DAB7322C0ADAF00F29455 /* MJRefreshHeader.m in Sources */,
 				4AA7B38522CC7CD600462389 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				4AC67DF022C849C400842C0D /* FHGroupMessageController.m in Sources */,
 				4AC67DF622C84A4F00842C0D /* FHFriendLisController.m in Sources */,
 				4A4BEF1A22CE011000FD00DE /* FHEntryVerificationCodeController.m in Sources */,
+				4A4CE93222D87A7C0002D360 /* FHMyAccountController.m in Sources */,
 				4A59F96C22C0B6D100867031 /* UIColor+Extend.m in Sources */,
 				4AC67E3522C8B09600842C0D /* FHNormalManagerController.m in Sources */,
 				4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */,
@@ -2242,7 +2398,9 @@
 				4AA7B38722CC7CD600462389 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				4AA7B3A722CC7D8D00462389 /* ViewController+MASAdditions.m in Sources */,
 				4AC67E1022C8910300842C0D /* FHSearchCategoryController.m in Sources */,
+				4A8E0D6022DEFB5500F814F7 /* FHCertificationView.m in Sources */,
 				4A6DAA3722C0AD3100F29455 /* UIRefreshControl+AFNetworking.m in Sources */,
+				4A0C02DE22D985EC00F40229 /* FHMyFollowListController.m in Sources */,
 				4A6DAA4022C0AD3100F29455 /* AFHTTPSessionManager.m in Sources */,
 				4A448CE222C70303003D0712 /* FHMyVideoController.m in Sources */,
 				4AA0D93522CF48F2003F61D2 /* FHLivingExpensesController.m in Sources */,
@@ -2255,6 +2413,7 @@
 				4A448CE522C70437003D0712 /* FHBusinessServicesController.m in Sources */,
 				4A6DAB6B22C0ADAF00F29455 /* MJRefreshBackNormalFooter.m in Sources */,
 				4A6DAB6922C0ADAF00F29455 /* MJRefreshBackGifFooter.m in Sources */,
+				4A97078822DC14A700FD18EC /* FHAccountApplyListController.m in Sources */,
 				4A6DAA7522C0AD4C00F29455 /* IQKeyboardManager.m in Sources */,
 				4A6DAA7C22C0AD4C00F29455 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				4A6DAB5522C0ADAF00F29455 /* UIView+WebCacheOperation.m in Sources */,
@@ -2264,24 +2423,33 @@
 				4AC67E2022C8A6FA00842C0D /* FHLittleShopListController.m in Sources */,
 				4A6DAA7022C0AD4C00F29455 /* IQTitleBarButtonItem.m in Sources */,
 				4A8D8C6022C1FD5B0083E00C /* BHInfiniteScrollView.m in Sources */,
+				4AAC981F22D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m in Sources */,
+				4AAC981E22D70F5300E4D0B8 /* FFDropDownMenuModel.m in Sources */,
 				4A6DAA3F22C0AD3100F29455 /* AFURLResponseSerialization.m in Sources */,
 				4A6DAB5A22C0ADAF00F29455 /* NSObject+MJKeyValue.m in Sources */,
 				4A6DAB5922C0ADAF00F29455 /* MJPropertyType.m in Sources */,
+				4AFC0DC922D427CC004E28CE /* FHVideosPublishingController.m in Sources */,
 				4A4BEF2022CE078B00FD00DE /* FHSetPasswordController.m in Sources */,
 				4A6DAA7A22C0AD4C00F29455 /* IQUIView+Hierarchy.m in Sources */,
+				4A8E0D5A22DEBD2200F814F7 /* FHCertificationController.m in Sources */,
+				4A4CE93522D88FF00002D360 /* FHMyAccountCell.m in Sources */,
 				4AC67DF322C84A0500842C0D /* FHCircleHotPointController.m in Sources */,
 				4AA7B3A622CC7D8D00462389 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				4AF51B3B22D07DEB00AA04EC /* GNRGoodsModel.m in Sources */,
 				4A6DAB4222C0ADAF00F29455 /* UIImage+WebP.m in Sources */,
 				4A6DAA8A22C0AD6100F29455 /* GDWindowViewController.m in Sources */,
 				4A6DAB6022C0ADAF00F29455 /* NSString+MJExtension.m in Sources */,
+				4A0C02E122D9870100F40229 /* FHFollowListViewController.m in Sources */,
 				4A6DA9D322C05C7000F29455 /* main.m in Sources */,
 				4A59F96922C0B6D100867031 /* UIButton+countDown.m in Sources */,
+				4A97078E22DC70EA00FD18EC /* FHAccountApplicationTFView.m in Sources */,
 				4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */,
+				4AAC981C22D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m in Sources */,
 				4A8D8C7522C37C0C0083E00C /* FHLittleMenuListCollectionCell.m in Sources */,
 				4AF51B3922D07DEB00AA04EC /* GNRCountStepper.m in Sources */,
 				4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */,
 				4A59F97222C0B8B700867031 /* FHGroupController.m in Sources */,
+				4AAC981B22D70F5300E4D0B8 /* FFDropDownMenuView.m in Sources */,
 				4A6DAA7622C0AD4C00F29455 /* IQNSArray+Sort.m in Sources */,
 				4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */,
 				4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */,
@@ -2300,6 +2468,7 @@
 				4AA0D93222CF4878003F61D2 /* FHReceivablesController.m in Sources */,
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
+				4AFC0DCC22D42802004E28CE /* FHDialogueRecordController.m in Sources */,
 				4AF51B4322D07DEB00AA04EC /* GNRLinkageTableView.m in Sources */,
 				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
 				4A6DAB4922C0ADAF00F29455 /* FLAnimatedImageView.m in Sources */,
@@ -2308,6 +2477,7 @@
 				4A6DAB4722C0ADAF00F29455 /* FLAnimatedImageView+WebCache.m in Sources */,
 				4A6DAA4422C0AD3100F29455 /* AFSecurityPolicy.m in Sources */,
 				4A6DAA9822C0AD7C00F29455 /* LCTabBarItem.m in Sources */,
+				4A8E0D6322DEFF9700F814F7 /* FHCertificationImgView.m in Sources */,
 				4A6DAB7E22C0ADB500F29455 /* YPTabItem.m in Sources */,
 				4AF51B6322D0800C00AA04EC /* UINavigationBar+Awesome.m in Sources */,
 				4AA7B3AA22CC7D8D00462389 /* MASLayoutConstraint.m in Sources */,
@@ -2319,6 +2489,8 @@
 				4A6DAA4322C0AD3100F29455 /* AFNetworkReachabilityManager.m in Sources */,
 				4A6DAB4C22C0ADAF00F29455 /* UIImage+MultiFormat.m in Sources */,
 				4A6DAA3B22C0AD3100F29455 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				4AFC0DC622D4279E004E28CE /* FHInformationController.m in Sources */,
+				4AAC981922D70F5300E4D0B8 /* PPNumberButton.m in Sources */,
 				4A59F96F22C0B7E800867031 /* FHHomePageController.m in Sources */,
 				4AA7B3A922CC7D8D00462389 /* MASConstraintMaker.m in Sources */,
 				4A6DAB4822C0ADAF00F29455 /* FLAnimatedImage.m in Sources */,
@@ -2332,6 +2504,8 @@
 				4A6DAA7222C0AD4C00F29455 /* IQUIView+IQKeyboardToolbar.m in Sources */,
 				4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */,
 				4AF51B3622D07DEB00AA04EC /* GNRGoodsListCell.m in Sources */,
+				4A0C02D822D97A1D00F40229 /* FHChangeNameController.m in Sources */,
+				4A0C02E422D9CC6600F40229 /* FHFollowListViewCell.m in Sources */,
 				4AC67E0322C84E2500842C0D /* FHFollowVideoController.m in Sources */,
 				4A6DAA7B22C0AD4C00F29455 /* IQUIViewController+Additions.m in Sources */,
 				4AA7B37522CC536700462389 /* CurrentViewController.m in Sources */,

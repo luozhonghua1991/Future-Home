@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHMeCenterController : UIViewController
+@interface FHMeCenterController : BaseViewController
 
 @end
 

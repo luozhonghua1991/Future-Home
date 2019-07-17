@@ -10,7 +10,7 @@
 
 @implementation ZHProgressHUD
 
-+(instancetype)shareinstance{
++ (instancetype)shareinstance{
     
     static ZHProgressHUD *instance = nil;
     static dispatch_once_t onceToken;

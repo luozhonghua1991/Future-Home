@@ -23,16 +23,21 @@
     CGContextStrokeRect(context, CGRectMake(0, rect.size.height, rect.size.width, 0.4));
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 90, 13.5, 80, 23)];
+    [self.contentView addSubview:self.stepperSuperView];
+}
+
 - (GNRCountStepper *)stepper{
     if (!_stepper) {
-        _stepper = [[GNRCountStepper alloc]initWithFrame:CGRectZero];
-        _stepper.style = GNRCountStepperStyleShoppingCart;
+        _stepper = [[GNRCountStepper alloc]initWithFrame:CGRectZero style:GNRCountStepperStyleShoppingCart];
     }
     return _stepper;
 }
 
 - (void)config:(GNRGoodsModel *)goods{
-     [self.stepperSuperView addSubview:self.stepper];
+    [self.stepperSuperView addSubview:self.stepper];
     [self.stepper countChangedBlock:^(NSInteger count) {
         if (goods) {
             goods.number = @(count);
@@ -53,7 +58,7 @@
 }
 
 - (void)layoutSubviews{
-    self.stepper.center = CGPointMake(_stepperSuperView.bounds.size.width/2.0, _stepperSuperView.bounds.size.height/2.0);
+    self.stepper.frame = self.stepperSuperView.bounds;
 }
 
 @end

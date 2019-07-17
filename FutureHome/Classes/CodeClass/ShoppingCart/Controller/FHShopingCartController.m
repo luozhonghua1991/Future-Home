@@ -40,14 +40,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"购物车";
-    self.navigationController.navigationBar.barTintColor = [UIColor blueColor];
+    self.isHaveNavgationView = YES;
+    [self fh_creatNav];
     [self fh_setSelectNavView];
     [self fh_creatSelectBtn];
     [self fh_setMainScrollView];
 }
 
 #pragma mark — privite
+- (void)fh_creatNav {
+    self.navgationView.userInteractionEnabled = YES;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = @"购物车";
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navgationView addSubview:backBtn];
+}
+
+- (void)backBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)fh_setSelectNavView {
     [self.view addSubview:self.selectNavView];
 }
@@ -59,18 +80,18 @@
     [freshShoppingMallBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     
     CGSize size2 = [UIlabelTool sizeWithString:@"社交商业订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    buinessListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(freshShoppingMallBtn.frame) + ZH_SCALE_SCREEN_Width(30),3, size2.width, self.selectNavView.frame.size.height)title:@"社交商业订单" tag:2];
+    buinessListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(freshShoppingMallBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size2.width, self.selectNavView.frame.size.height)title:@"社交商业订单" tag:2];
     
-    CGSize size3 = [UIlabelTool sizeWithString:@"微商城订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    littleShopListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(buinessListBtn.frame) + ZH_SCALE_SCREEN_Width(30),3, size3.width, self.selectNavView.frame.size.height)title:@"微商城订单" tag:3];
+    CGSize size3 = [UIlabelTool sizeWithString:@"医药商城订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
+    littleShopListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(buinessListBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size3.width, self.selectNavView.frame.size.height)title:@"医药商城订单" tag:3];
     
-    CGSize size4 = [UIlabelTool sizeWithString:@"查看管理" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    viewManagementBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(littleShopListBtn.frame) + ZH_SCALE_SCREEN_Width(30),3, size4.width, self.selectNavView.frame.size.height)title:@"查看管理" tag:4];
+    CGSize size4 = [UIlabelTool sizeWithString:@"地址/发票" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
+    viewManagementBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(littleShopListBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size4.width, self.selectNavView.frame.size.height)title:@"地址/发票" tag:4];
 }
 
 - (void)fh_setMainScrollView {
     CGFloat tabbarHeight = KIsiPhoneX ? 83 : 49;
-    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,MainSizeHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarHeight - 44)];
+    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,MainSizeHeight + 35, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarHeight - 35)];
     mainScrollView.delegate = self;
     mainScrollView.pagingEnabled = YES;
     mainScrollView.showsHorizontalScrollIndicator = NO;
@@ -188,7 +209,7 @@
 #pragma mark — setter && getter#pragma mark - 懒加载
 - (UIView *)selectNavView {
     if (!_selectNavView) {
-        _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 44)];
+        _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 35)];
         _selectNavView.backgroundColor = [UIColor redColor];
     }
     return _selectNavView;

@@ -55,7 +55,7 @@
     ChangedHeight = 0;
     _goodsList = [GNRGoodsListModel new];
     BOUNDS = self.bounds;
-    leftWidth = 100;
+    leftWidth = 90;
     rightWidth = BOUNDS.size.width - leftWidth;
     
 }
@@ -145,7 +145,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (tableView==_leftTbView) {
-        return 64.f;
+        return 44.f;
     }
     return 115.f;
 }

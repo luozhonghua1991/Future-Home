@@ -97,7 +97,7 @@
 
 - (void)fh_setMainScrollView {
     CGFloat tabbarH = [self getTabbarHeight];
-    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,MainSizeHeight + 44, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 44)];
+    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,MainSizeHeight + 35, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 35)];
     mainScrollView.delegate = self;
     mainScrollView.pagingEnabled = YES;
     mainScrollView.showsHorizontalScrollIndicator = NO;
@@ -215,7 +215,7 @@
 #pragma mark — setter && getter#pragma mark - 懒加载
 - (UIView *)selectNavView {
     if (!_selectNavView) {
-        _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 44)];
+        _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 35)];
         _selectNavView.backgroundColor = [UIColor redColor];
     }
     return _selectNavView;

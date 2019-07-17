@@ -17,6 +17,9 @@
 
 @property (nonatomic, assign)NSInteger count;
 @property (nonatomic, assign)GNRCountStepperStyle style;
+- (instancetype)initWithFrame:(CGRect)frame
+                        style:(GNRCountStepperStyle )style;
+
 - (void)countChangedBlock:(void(^)(NSInteger count))block;
 - (void)addActionBlock:(void(^)(UIButton *))block;
 - (void)subActionBlock:(void(^)(UIButton *))block;

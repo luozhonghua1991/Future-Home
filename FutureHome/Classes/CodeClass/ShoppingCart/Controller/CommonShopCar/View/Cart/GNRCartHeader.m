@@ -11,6 +11,7 @@
 @implementation GNRCartHeader
 
 - (void)drawRect:(CGRect)rect{
+    self.cleanBtn.hidden = YES;
     self.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:0.8].CGColor;
     self.layer.borderWidth = 0.4;
 }

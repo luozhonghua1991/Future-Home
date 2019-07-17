@@ -14,7 +14,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *nameL;
 @property (weak, nonatomic) IBOutlet UILabel *priceLabel;
-@property (weak, nonatomic) IBOutlet UIView *stepperSuperView;
+//@property (weak, nonatomic) IBOutlet UIView *stepperSuperView;
+@property (strong, nonatomic) UIView *stepperSuperView;
 @property (nonatomic, strong)GNRCountStepper * stepper;
 
 - (void)config:(GNRGoodsModel *)goods;

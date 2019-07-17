@@ -18,6 +18,7 @@
 #import "FHFinancialServiceController.h"
 #import "FHCustomerServiceController.h"
 #import "FHGoodsListController.h"
+#import "FHFreshMallController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
 /** 导航View视图 */
@@ -200,7 +201,8 @@
         [self pushVCWithName:health];
     } else if (indexPath.row == 3) {
         /** 生鲜服务 */
-        FHGoodsListController *goodList = [[FHGoodsListController alloc] init];
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+//        FHGoodsListController *goodList = [[FHGoodsListController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
         [self pushVCWithName:goodList];
     } else if (indexPath.row == 4) {

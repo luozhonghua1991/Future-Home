@@ -34,7 +34,7 @@ static FHAppDelegate* pSelf = nil;
 
 
 #pragma mark  -- 设置tabbar
-- (void)setTabBarController{
+- (void)setTabBarController {
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];
     vc1.title = @"首页";
     vc1.tabBarItem.image = [UIImage imageNamed:@"tarbar_home_normal"];
@@ -75,8 +75,6 @@ static FHAppDelegate* pSelf = nil;
     [tabBarC addChildViewController:navC4];
     [tabBarC addChildViewController:navC5];
     self.window.rootViewController = tabBarC;
-    
-    
 }
 
 

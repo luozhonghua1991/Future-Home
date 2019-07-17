@@ -32,6 +32,7 @@
 #import "YPTabbarController.h"
 #import "FHBaseTabbarController.h"
 #import "CurrentViewController.h"
+#import "ZHProgressHUD.h"
 
 
 //获取当前屏幕的宽高

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FHCommonNavView.h"
+#import "TPKeyboardAvoidingScrollView.h"
 
 @interface BaseViewController : UIViewController 
 /**
@@ -19,6 +20,8 @@
 @property (nonatomic, assign) BOOL isHaveNavgationView;
 /** 是否需要搜索View */
 @property (nonatomic, assign) BOOL isHaveNav;
+/** 自定义导航栏视图 */
+@property (nonatomic, strong) UIView *navgationView;
 
 @property (nonatomic,retain) MBProgressHUD* hud;
 - (void)addHud;

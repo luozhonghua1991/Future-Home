@@ -11,12 +11,25 @@
 #import "GNRShoppingBarView.h"
 
 @class GNRGoodsListModel;
+
+@protocol GNRShoppingBarDelegate <NSObject>
+
+@optional // 可选实现的方法
+//支付的事件
+- (void)GNRShoppingBarDelegatePayAction;
+
+@end
+
+
+
 @interface GNRShoppingBar : UIView
 
 @property (nonatomic, assign)GNRShoppingBarStyle style;
 @property (nonatomic, strong)GNRGoodsListModel * goodsList;
 @property (nonatomic, strong)GNRShoppingCartView * cartView;
 @property (nonatomic, strong)GNRShoppingBarView * shoppingBarView;
+
+@property(nonatomic, weak) id<GNRShoppingBarDelegate> delegate;
 
 + (CGFloat)defaultHeight;
 

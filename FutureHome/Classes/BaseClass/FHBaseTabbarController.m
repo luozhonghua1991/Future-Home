@@ -16,8 +16,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor= [UIColor whiteColor];
-    [self setTabBarFrame:CGRectMake(0, 0 , SCREEN_WIDTH, 44)
-        contentViewFrame:CGRectMake(0, 0 + 44 , SCREEN_WIDTH, SCREEN_HEIGHT  - 44)];
+    [self setTabBarFrame:CGRectMake(0, 0 , SCREEN_WIDTH, 35)
+        contentViewFrame:CGRectMake(0, 0 + 35 , SCREEN_WIDTH, SCREEN_HEIGHT  - 35)];
     self.tabBar.backgroundColor = [UIColor greenColor];
     self.tabBar.itemTitleColor = [UIColor blackColor];
     self.tabBar.itemTitleSelectedColor = [UIColor blueColor];
