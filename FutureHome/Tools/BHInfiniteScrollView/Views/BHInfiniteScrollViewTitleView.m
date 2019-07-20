@@ -79,7 +79,7 @@
 - (void)setMargin:(CGFloat)margin {
     _margin = margin;
     if (self.titleLabel.textAlignment == NSTextAlignmentLeft) {
-        self.titleLabel.frame = CGRectMake(_margin, _titleLabel.frame.origin.y, CGRectGetWidth(_titleLabel.frame), CGRectGetHeight(_titleLabel.frame));
+        self.titleLabel.frame = CGRectMake(_margin, _titleLabel.frame.origin.y - 10, CGRectGetWidth(_titleLabel.frame), CGRectGetHeight(_titleLabel.frame));
     }else if (self.titleLabel.textAlignment == NSTextAlignmentRight) {
         self.titleLabel.frame = CGRectMake(0, _titleLabel.frame.origin.y, CGRectGetWidth(_titleLabel.frame) - margin, CGRectGetHeight(_titleLabel.frame));
     }

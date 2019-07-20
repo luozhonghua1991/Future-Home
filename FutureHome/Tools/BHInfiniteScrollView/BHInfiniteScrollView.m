@@ -19,18 +19,12 @@
 
 #import "BHInfiniteScrollView.h"
 #import "BHInfiniteScrollViewCell.h"
-#import <math.h>
 
 @interface BHInfiniteScrollView()<UICollectionViewDataSource,UICollectionViewDelegate>
 {
     BOOL _firstShow;
     NSInteger _multiple;
     NSInteger _totalPageCount;
-
-    BOOL _firstCurr;
-
-    CGFloat draggingStartOffsetX;
-    NSIndexPath *showIndexPath;
 }
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, weak) UICollectionViewFlowLayout *flowLayout;
@@ -136,7 +130,7 @@
     }
     
     _selectedDotColor = [UIColor whiteColor];
-    _dotSize = 5;
+    _dotSize = 10;
     _dotColor = [UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:1];
 }
 
@@ -153,8 +147,6 @@
     pageControl.numberOfPages = self.imagesArray.count;
     pageControl.selectedDotColor = _selectedDotColor;
     pageControl.dotSize = _dotSize;
-    //TODO:新增
-    pageControl.dotSpacing = 4;
     pageControl.dotColor = _dotColor;
     pageControl.backgroundColor = [UIColor clearColor];
     pageControl.userInteractionEnabled = NO;
@@ -227,8 +219,7 @@
 #pragma mark - setter
 
 - (void)setImagesArray:(NSArray *)imageUrlsArray {
-    _firstCurr = YES;
-
+    
     if (_timer) {
         [_timer invalidate];
         _timer = nil;
@@ -251,7 +242,6 @@
     
     [self.collectionView reloadData];
     [self scrollToMiddlePosition];
-    [self scrollToNextPage];
     [self updatePageControl];
 }
 
@@ -441,9 +431,6 @@
 #pragma mark - timer func
 
 - (void)setupTimer {
-    if (_timer) {
-        return;
-    }
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.scrollTimeInterval target:self selector:@selector(scrollToNextPage) userInfo:nil repeats:YES];
     _timer = timer;
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
@@ -460,10 +447,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         BOOL hasScrollAnimation = YES;
-        if (_firstCurr) {
-            hasScrollAnimation = NO;
-            _firstCurr = NO;
-        }
     
         if (self.scrollDirection == BHInfiniteScrollViewScrollDirectionHorizontal) {
             CGFloat nextPageX ;
@@ -488,13 +471,7 @@
             }
             
             NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:CGPointMake(nextPageX,_flowLayout.itemSize.height * 0.5)];
-            showIndexPath = indexPath;
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:hasScrollAnimation];
-
-            BHInfiniteScrollViewCell *item = (BHInfiniteScrollViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-            [UIView animateWithDuration:0.1 animations:^{
-                item.transform = CGAffineTransformIdentity;
-            }];
             
         }else {
             CGFloat nextPageY ;
@@ -566,7 +543,7 @@
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        flowLayout.minimumLineSpacing = 10;
+        flowLayout.minimumLineSpacing = 0;
         flowLayout.scrollDirection = self.scrollDirection == BHInfiniteScrollViewScrollDirectionHorizontal ? UICollectionViewScrollDirectionHorizontal : UICollectionViewScrollDirectionVertical;
         flowLayout.itemSize = self.frame.size;
         _flowLayout = flowLayout;
@@ -574,7 +551,6 @@
         _collectionView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:flowLayout];
         _collectionView.pagingEnabled = YES;
         _collectionView.scrollsToTop = NO;
-        _collectionView.bounces = NO;
         _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.showsVerticalScrollIndicator = NO;
         _collectionView.backgroundColor = [UIColor clearColor];
@@ -598,7 +574,7 @@
 
     NSInteger page;
     if (_scrollDirection == BHInfiniteScrollViewScrollDirectionHorizontal) {
-        page = self.collectionView.contentOffset.x / (SCREEN_WIDTH - 40.0);
+        page = self.collectionView.contentOffset.x / _flowLayout.itemSize.width;
     }else {
         page = self.collectionView.contentOffset.y / _flowLayout.itemSize.height;
     }
@@ -610,10 +586,6 @@
 
 #pragma mark - UICollectionViewDataSource
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:( NSIndexPath *)indexPath{
-    return CGSizeMake(SCREEN_WIDTH - 40.0, self.bounds.size.height);
-}
-
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
     return 1;
 }
@@ -623,12 +595,10 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     BHInfiniteScrollViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:BHInfiniteScrollViewCellIdentifier forIndexPath:indexPath];
-    cell.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 0.9);
     cell.contentMode = self.pageViewContentMode;
     if (self.imagesArray.count) {
         NSInteger index = indexPath.row % self.imagesArray.count;
         NSObject* object = [self.imagesArray objectAtIndex:index];
-        cell.itemIndex = index;
         if ([object isKindOfClass:[NSString class]]) {
             if ([(NSString*)object hasPrefix:@"http://"] || [(NSString*)object hasPrefix:@"https://"]) {
                 [cell setupWithUrlString:(NSString*)object placeholderImage:self.placeholderImage];
@@ -645,9 +615,8 @@
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    BHInfiniteScrollViewCell *cell = (BHInfiniteScrollViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     if ([self.delegate respondsToSelector:@selector(infiniteScrollView:didSelectItemAtIndex:)]) {
-        [self.delegate infiniteScrollView:self didSelectItemAtIndex:cell.itemIndex];
+        [self.delegate infiniteScrollView:self didSelectItemAtIndex:self.currentPageIndex];
     }
     
     if (self.scrollViewDidSelectBlock) {
@@ -661,81 +630,27 @@
         [self scrollToMiddlePosition];
         _firstShow = YES;
     }
-
-    cell.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 0.9);
 }
 
 #pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    for (BHInfiniteScrollViewCell *cell in self.collectionView.visibleCells) {
-        if (cell.itemIndex != (showIndexPath.row % self.imagesArray.count)) {
-            [UIView animateWithDuration:0.1 animations:^{
-                cell.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 0.9);
-            }];
-        }else{
-            [UIView animateWithDuration:0.1 animations:^{
-                cell.transform = CGAffineTransformIdentity;
-            }];
-        }
-    }
-}
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    //TODO:暂停定时器
     if (self.autoScrollToNextPage) {
         [self resetTimer];
     }
-
-    draggingStartOffsetX = scrollView.contentOffset.x;
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-
-    //TODO:恢复定时器
     if (self.autoScrollToNextPage) {
         [self setupTimer];
     }
     
-
-    self.collectionView.userInteractionEnabled = NO;
     self.pageControl.currentPage = self.currentPageIndex;
 
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     self.pageControl.currentPage = self.currentPageIndex;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSIndexPath *indexPath = [[NSIndexPath alloc] init];
-        CGFloat margin = fabs(scrollView.contentOffset.x - draggingStartOffsetX);
-        NSLog(@"draggingWidth === %f",margin);
-
-        if (scrollView.contentOffset.x < draggingStartOffsetX) {
-            indexPath = [NSIndexPath indexPathForItem:showIndexPath.item - 1 inSection:showIndexPath.section];
-            showIndexPath = indexPath;
-            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-
-            BHInfiniteScrollViewCell *item = (BHInfiniteScrollViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-            [UIView animateWithDuration:0.1 animations:^{
-                item.transform = CGAffineTransformIdentity;
-            }];
-        }
-        else if(scrollView.contentOffset.x > draggingStartOffsetX){
-            indexPath = [NSIndexPath indexPathForItem:showIndexPath.item + 1 inSection:showIndexPath.section];
-            showIndexPath = indexPath;
-            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-
-            BHInfiniteScrollViewCell *item = (BHInfiniteScrollViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-            [UIView animateWithDuration:0.1 animations:^{
-                item.transform = CGAffineTransformIdentity;
-            }];
-
-//            [self scrollToNextPage];
-        }else{
-            [self.collectionView scrollToItemAtIndexPath:showIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
-        }
-    });
-
-    self.collectionView.userInteractionEnabled = YES;
     
     if (self.currentPageIndex < self.titlesArray.count) {
         self.titleView.titleText = self.titlesArray[self.currentPageIndex];

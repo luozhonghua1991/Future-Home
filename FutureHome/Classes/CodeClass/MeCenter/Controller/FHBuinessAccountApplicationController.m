@@ -8,14 +8,23 @@
 
 #import "FHBuinessAccountApplicationController.h"
 #import "FHAccountApplicationTFView.h"
+#import "FHPersonCodeView.h"
+#import "FHCertificationImgView.h"
+#import "FHUserAgreementView.h"
+#import "FHDetailAddressView.h"
+#import "FHProofOfOwnershipView.h"
 
-@interface FHBuinessAccountApplicationController () <UITextFieldDelegate>
+@interface FHBuinessAccountApplicationController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate>
 /** 大的滚动视图 */
-@property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
+//@property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
+/** 大的滚动视图 */
+@property (nonatomic, strong) UIScrollView *scrollView;
 /** 账户类型View */
 @property (nonatomic, strong) FHAccountApplicationTFView *accountTypeView;
 /** 服务平台View */
 @property (nonatomic, strong) FHAccountApplicationTFView *serviceDeskView;
+/** 服务平台TF */
+@property (nonatomic, strong) UITextField *serviceDeskNameTF;
 /** 申请人姓名View */
 @property (nonatomic, strong) FHAccountApplicationTFView *applicantNameView;
 /** 申请人身份证View */
@@ -27,23 +36,24 @@
 /** 接收邮箱 */
 @property (nonatomic, strong) FHAccountApplicationTFView *mailView;
 /** 详情地址选择View */
-@property (nonatomic, strong) UIView *detailAddressView;
+@property (nonatomic, strong) FHDetailAddressView *detailAddressView;
 /** 地址View */
 @property (nonatomic, strong) FHAccountApplicationTFView *addressView;
+/** 申请人身份证 */
+@property (nonatomic, strong) FHPersonCodeView *personCodeView;
+/** 身份证图标 */
+@property (nonatomic, strong) FHCertificationImgView *certificationView;
+/** 权属说明View */
+@property (nonatomic, strong) FHProofOfOwnershipView *shipView;
+/** 提示label */
+@property (nonatomic, strong) UILabel *logoLabel;
+/** 同意协议 *//** 下面的线 */
+@property (nonatomic, strong) UIView *bottomLineView;
+/** 用户协议 */
+@property (nonatomic, strong) FHUserAgreementView *agreementView;
+/** 确认并提交 */
+@property (nonatomic, strong) UIButton *submitBtn;
 
-/** 省市区 */
-@property (nonatomic, strong) UILabel *leftProvinceLabel;
-/** 省市区 */
-@property (nonatomic, strong) UILabel *centerProvinceLabel;
-/** 省市区 */
-@property (nonatomic, strong) UILabel *rightProvinceLabel;
-
-/** 省市区数据 */
-@property (nonatomic, strong) UILabel *leftProvinceDataLabel;
-/** 省市区数据 */
-@property (nonatomic, strong) UILabel *centerProvinceDataLabel;
-/** 省市区数据 */
-@property (nonatomic, strong) UILabel *rightProvinceDataLabel;
 
 @end
 
@@ -53,6 +63,7 @@
     [super viewDidLoad];
     [self fh_creatNav];
     [self fh_creatUI];
+    [self fh_layoutSubViews];
 }
 
 
@@ -84,11 +95,17 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (void)fh_creatUI {
+    self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
+    self.showInView = self.scrollView;
+    /** 初始化collectionView */
+    [self initPickerView];
+    
     [self.scrollView addSubview:self.accountTypeView];
     [self.scrollView addSubview:self.serviceDeskView];
+    [self.serviceDeskView addSubview:self.serviceDeskNameTF];
+    
     [self.scrollView addSubview:self.applicantNameView];
     [self.scrollView addSubview:self.applicantCardView];
     [self.scrollView addSubview:self.phoneNumberView];
@@ -97,17 +114,40 @@
     [self fh_creatDetailAddressView];
     [self.scrollView addSubview:self.addressView];
     /** 申请人身份证 */
-    
+    self.certificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
+    self.certificationView.delegate = self;
+    [self.personCodeView addSubview:self.certificationView];
+    [self.scrollView addSubview:self.personCodeView];
     /** 建筑物业权属证明 */
-    
+    [self.scrollView addSubview:self.shipView];
+    [self.scrollView addSubview:self.logoLabel];
+    [self.scrollView addSubview:self.bottomLineView];
     /** 确定授权View */
-    
+    [self.scrollView addSubview:self.agreementView];
     /** 确认并提交按钮 */
-    
+    [self.scrollView addSubview:self.submitBtn];
 }
 
 
 #pragma mark -- layout
+- (void)fh_layoutSubViews {
+    self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
+    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+    self.serviceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.accountTypeView.frame), SCREEN_WIDTH, 50);
+    self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
+    self.applicantNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, 50);
+    self.applicantCardView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantNameView.frame), SCREEN_WIDTH, 50);
+    self.phoneNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantCardView.frame), SCREEN_WIDTH, 50);
+    self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneNumberView.frame), SCREEN_WIDTH, 50);
+    self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, 50);
+    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
+    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, 50);
+    self.personCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame), SCREEN_WIDTH, 180);
+    self.shipView.frame = CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame), SCREEN_WIDTH, 60);
+    [self updateViewsFrame];
+}
+
+/*
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
@@ -127,6 +167,13 @@
         make.left.mas_equalTo(0);
         make.width.mas_equalTo(self.view.width);
         make.height.mas_equalTo(50);
+    }];
+    
+    [self.serviceDeskNameTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(20);
+        make.left.mas_equalTo(SCREEN_WIDTH - 270);
+        make.width.mas_equalTo(260);
+        make.height.mas_equalTo(20);
     }];
     
     [self.applicantNameView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -178,8 +225,35 @@
         make.height.mas_equalTo(50);
     }];
     
-    [self.scrollView contentSizeToFit];
+    [self.personCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.addressView.mas_bottom).offset(0);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(self.view.width);
+        make.height.mas_equalTo(180);
+    }];
+    
+    [self.shipView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.personCodeView.mas_bottom).offset(0);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(self.view.width);
+        make.height.mas_equalTo(138);
+    }];
+    
+    [self.agreementView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.shipView.mas_bottom).offset(0);
+        make.left.mas_equalTo(0);
+        make.width.mas_equalTo(self.view.width);
+        make.height.mas_equalTo(15);
+    }];
+    
+    [self.submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.agreementView.mas_bottom).offset(120);
+        make.centerX.mas_equalTo(self.view);
+        make.width.mas_equalTo(160);
+        make.height.mas_equalTo(55);
+    }];
 }
+ */
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint point = scrollView.contentOffset;
@@ -195,8 +269,7 @@
 
 - (void)fh_creatDetailAddressView {
     if (!self.detailAddressView) {
-        self.detailAddressView = [[UIView alloc] init];
-        self.detailAddressView.backgroundColor = [UIColor redColor];
+        self.detailAddressView = [[FHDetailAddressView alloc] init];
         self.view.userInteractionEnabled = YES;
         self.scrollView.userInteractionEnabled = YES;
         self.detailAddressView.userInteractionEnabled = YES;
@@ -213,11 +286,34 @@
     
 }
 
+- (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
+    
+}
+
+- (void)submitBtnClick {
+    /** 确认并提交 */
+
+}
+
+- (void)pickerViewFrameChanged {
+    [self updateViewsFrame];
+}
+
+- (void)updateViewsFrame {
+    [self updatePickerViewFrameY:CGRectGetMaxY(self.shipView.frame)];
+    self.logoLabel.frame = CGRectMake(15, (CGRectGetMaxY(self.shipView.frame) + [self getPickerViewFrame].size.height), SCREEN_WIDTH, 12);
+    self.bottomLineView.frame = CGRectMake(0, CGRectGetMaxY(self.logoLabel.frame) + 2.5, SCREEN_WIDTH, 0.5);
+    self.agreementView.frame = CGRectMake(0, (CGRectGetMaxY(self.shipView.frame) + [self getPickerViewFrame].size.height) + 100, SCREEN_WIDTH, 15);
+    self.submitBtn.frame = CGRectMake(0, CGRectGetMaxY(self.agreementView.frame) + 100, 160, 55);
+    self.submitBtn.centerX = self.view.width / 2;
+    self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.submitBtn.frame) + MainSizeHeight + 20);
+}
+    
 
 #pragma mark - Getters and Setters
-- (TPKeyboardAvoidingScrollView *)scrollView {
+- (UIScrollView *)scrollView {
     if (_scrollView == nil) {
-        _scrollView = [[TPKeyboardAvoidingScrollView alloc] init];
+        _scrollView = [[UIScrollView alloc] init];
     }
     return _scrollView;
 }
@@ -235,11 +331,21 @@
 - (FHAccountApplicationTFView *)serviceDeskView {
     if (!_serviceDeskView) {
         _serviceDeskView = [[FHAccountApplicationTFView alloc] init];
-        _serviceDeskView.titleLabel.text = @"物业服务平台名称(限12字)";
-        _serviceDeskView.contentTF.text = @"龙湖U城B馆物业服务平台";
-        _serviceDeskView.contentTF.enabled = NO;
+        _serviceDeskView.titleLabel.text = @"物业服务平台名称";
+        [_serviceDeskView.contentTF removeFromSuperview];
     }
     return _serviceDeskView;
+}
+
+- (UITextField *)serviceDeskNameTF{
+    if (!_serviceDeskNameTF) {
+        _serviceDeskNameTF = [[UITextField alloc] init];
+        _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
+        _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
+        _serviceDeskNameTF.text = @"龙湖U城B馆物业服务平台";
+        _serviceDeskNameTF.placeholder = @"(限12字)";
+    }
+    return _serviceDeskNameTF;
 }
 
 - (FHAccountApplicationTFView *)applicantNameView {
@@ -272,8 +378,9 @@
 - (FHAccountApplicationTFView *)phoneView {
     if (!_phoneView) {
         _phoneView = [[FHAccountApplicationTFView alloc] init];
-        _phoneView.titleLabel.text = @"联系电话(座机选填)";
+        _phoneView.titleLabel.text = @"联系电话";
         _phoneView.contentTF.delegate = self;
+        _phoneView.contentTF.placeholder = @"(座机选填)";
     }
     return _phoneView;
 }
@@ -292,8 +399,63 @@
         _addressView = [[FHAccountApplicationTFView alloc] init];
         _addressView.titleLabel.text = @"街道地址";
         _addressView.contentTF.delegate = self;
+        _addressView.contentTF.placeholder = @"(准确到门牌号)";
     }
     return _addressView;
+}
+
+- (FHPersonCodeView *)personCodeView {
+    if (!_personCodeView) {
+        _personCodeView = [[FHPersonCodeView alloc] init];
+        _personCodeView.titleLabel.text = @"申请人身份证";
+    }
+    return _personCodeView;
+}
+
+- (FHProofOfOwnershipView *)shipView {
+    if (!_shipView) {
+        _shipView = [[FHProofOfOwnershipView alloc] init];
+    }
+    return _shipView;
+}
+
+- (UILabel *)logoLabel {
+    if (!_logoLabel) {
+        _logoLabel = [[UILabel alloc] init];
+        _logoLabel.textColor = [UIColor lightGrayColor];
+        _logoLabel.textAlignment = NSTextAlignmentLeft;
+        _logoLabel.font = [UIFont systemFontOfSize:12];
+        _logoLabel.text = @"权属证件信息可上传9张";
+    }
+    return _logoLabel;
+}
+
+- (UIView *)bottomLineView {
+    if (!_bottomLineView) {
+        _bottomLineView = [[UIView alloc] init];
+        _bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    }
+    return _bottomLineView;
+}
+
+- (FHUserAgreementView *)agreementView {
+    if (!_agreementView) {
+        _agreementView = [[FHUserAgreementView alloc] init];
+        _agreementView.delegate = self;
+    }
+    return _agreementView;
+}
+
+
+- (UIButton *)submitBtn {
+    if (!_submitBtn) {
+        _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
+        [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _submitBtn;
 }
 
 @end

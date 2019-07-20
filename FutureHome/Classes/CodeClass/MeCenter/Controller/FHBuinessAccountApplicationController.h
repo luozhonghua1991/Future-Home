@@ -7,10 +7,11 @@
 //
 
 #import "BaseViewController.h"
+#import "HWPublishBaseController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHBuinessAccountApplicationController : BaseViewController
+@interface FHBuinessAccountApplicationController : HWPublishBaseController
 /** 账号类型 */
 @property (nonatomic, copy) NSString *accountType;
 

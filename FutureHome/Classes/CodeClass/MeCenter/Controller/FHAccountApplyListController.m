@@ -14,7 +14,8 @@
 @property (nonatomic, strong) UIButton *accountApplyBtn;
 /** 标题 */
 @property (nonatomic, copy) NSString *titleStr;
-
+/** 提示语label */
+@property (nonatomic, strong) UILabel *logoLabel;
 
 @end
 
@@ -22,35 +23,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if ([self.yp_tabItemTitle isEqualToString:@"商业物业申请"]) {
+    if ([self.yp_tabItemTitle isEqualToString:@"商业物业"]) {
         self.titleStr = @"进入申请商业物业服务平台账号";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号"]) {
         self.titleStr = @"进入联合申请业委服务/物业服务平台账号";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号"]) {
         self.titleStr = @"进入申请生鲜服务平台账号";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {
         self.titleStr = @"进入申请商业服务平台账号";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号"]) {
         self.titleStr = @"进入申请医药药品服务平台账号";
     }
     self.accountApplyBtn.frame = CGRectMake(0, 200, 350, 50);
     self.accountApplyBtn.centerX = self.view.width / 2;
     [self.view addSubview:self.accountApplyBtn];
+    [self.view addSubview:self.logoLabel];
 }
 
 
 #pragma mark — event
 - (void)accountApplyBtnClick {
-    if ([self.yp_tabItemTitle isEqualToString:@"商业物业申请"]) {
-        FHBuinessAccountApplicationController *account = [[FHBuinessAccountApplicationController alloc] init];
-        [self.navigationController pushViewController:account animated:YES];
-    } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号申请"]) {
+    if ([self.yp_tabItemTitle isEqualToString:@"商业物业"]) {
+        [self viewControllerPushOther:@"FHBuinessAccountApplicationController"];
+    } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号"]) {
 //        account.accountType = @"";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号"]) {
 //        account.accountType = @"";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {
 //       account.accountType = @"";
-    } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号申请"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号"]) {
 //        account.accountType = @"";
     }
     
@@ -68,4 +69,16 @@
     }
     return _accountApplyBtn;
 }
+
+- (UILabel *)logoLabel {
+    if (!_logoLabel) {
+        _logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 225, SCREEN_WIDTH, 13)];
+        _logoLabel.textAlignment = NSTextAlignmentCenter;
+        _logoLabel.font = [UIFont systemFontOfSize:13];
+        _logoLabel.text = @"账号管理平台PC端登录网址：http://182.61.48.137/";
+        _logoLabel.textColor = [UIColor lightGrayColor];
+    }
+    return _logoLabel;
+}
+
 @end

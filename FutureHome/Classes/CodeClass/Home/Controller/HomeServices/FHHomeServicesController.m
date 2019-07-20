@@ -111,7 +111,9 @@
                 [view removeFromSuperview];
             }
         }
-        NSArray *urlsArray = [[NSArray alloc] init];
+//        NSArray *urlsArray = [[NSArray alloc] init];
+        NSArray *urlsArray = @[@"http://192.168.3.57:8080/uploads/admin/img/20190609/1530a0df58fe1870bed63eaa275dead3.png",
+                               @"http://192.168.3.57:8080/uploads/admin/img/20190609/61b5da068844877e75e114005b75bf2e.png"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -137,7 +139,9 @@
                 [view removeFromSuperview];
             }
         }
-        NSArray *urlsArray = [[NSArray alloc] init];
+//        NSArray *urlsArray = [[NSArray alloc] init];
+        NSArray *urlsArray = @[@"http://192.168.3.57:8080/uploads/admin/img/20190609/1530a0df58fe1870bed63eaa275dead3.png",
+                               @"http://192.168.3.57:8080/uploads/admin/img/20190609/61b5da068844877e75e114005b75bf2e.png"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
         
         [cell addSubview:self.topScrollView];
@@ -154,11 +158,9 @@
                                             infiniteScrollViewWithFrame:scrollViewFrame Delegate:self ImagesArray:imageArrs];
     
     mallScrollView.titleView.hidden = YES;
-    mallScrollView.backgroundColor = [UIColor redColor];
     mallScrollView.scrollTimeInterval = 3;
     mallScrollView.autoScrollToNextPage = YES;
     mallScrollView.delegate = self;
-    mallScrollView.pageControlHidden = YES;
     mallScrollView.contentMode = UIViewContentModeScaleAspectFill;
     mallScrollView.tag = scrollViewTag;
     return mallScrollView;

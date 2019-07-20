@@ -70,7 +70,6 @@
     if (!_imageView) {
         _imageView = [[UIImageView alloc]initWithFrame:self.bounds];
         _imageView.layer.masksToBounds = YES;
-        _imageView.layer.cornerRadius = 8.0;
     }
     return _imageView;
 }

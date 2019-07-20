@@ -72,7 +72,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
     self.contentMode = UIViewContentModeRedraw;
     
 	//set defaults
-	_dotSpacing = 10.0f;
+	_dotSpacing = 4.0f;
 	_dotSize = 6.0f;
     _dotShadowOffset = CGSizeMake(0, 1);
     _selectedDotShadowOffset = CGSizeMake(0, 1);
@@ -355,6 +355,7 @@ const CGPathRef FXPageControlDotShapeTriangle = (const CGPathRef)3;
 
 - (void)setDotSpacing:(CGFloat)dotSpacing
 {
+    
     if (ABS(_dotSpacing - dotSpacing) > 0.001)
 	{
 		_dotSpacing = dotSpacing;

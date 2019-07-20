@@ -140,6 +140,7 @@
     if (!_agreementView) {
         _agreementView = [[FHUserAgreementView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imgView.frame) + 150 , SCREEN_WIDTH, 15)];
         _agreementView.delegate = self;
+        _agreementView.backgroundColor = [UIColor redColor];
     }
     return _agreementView;
 }

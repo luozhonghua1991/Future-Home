@@ -28,6 +28,5 @@
 
 
 @property (nonatomic, assign) UIViewContentMode contentMode;
-@property (nonatomic, assign) NSInteger itemIndex;
 
 @end

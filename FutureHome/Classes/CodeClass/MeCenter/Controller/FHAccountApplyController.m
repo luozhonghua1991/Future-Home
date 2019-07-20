@@ -56,8 +56,8 @@
     self.tabBar.backgroundColor = [UIColor greenColor];
     self.tabBar.itemTitleColor = [UIColor blackColor];
     self.tabBar.itemTitleSelectedColor = [UIColor blueColor];
-    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:11];
-    self.tabBar.itemTitleSelectedFont = [UIFont fontWithName:@"PingFangSC-Medium" size:11];
+    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.tabBar.itemTitleSelectedFont = [UIFont fontWithName:@"PingFangSC-Medium" size:14];
     if (KIsiPhoneX) {
         [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(42, 33, 0, 33) tapSwitchAnimated:YES];
     } else {
@@ -71,19 +71,19 @@
 
 - (void)initViewControllers {
     FHAccountApplyListController *messageVC = [[FHAccountApplyListController alloc] init];
-    messageVC.yp_tabItemTitle = @"商业物业申请";
+    messageVC.yp_tabItemTitle = @"商业物业";
     
     FHAccountApplyListController *groupVC = [[FHAccountApplyListController alloc] init];
-    groupVC.yp_tabItemTitle = @"业主账号申请";
+    groupVC.yp_tabItemTitle = @"业主账号";
     
     FHAccountApplyListController *hotVC = [[FHAccountApplyListController alloc] init];
-    hotVC.yp_tabItemTitle = @"生鲜账号申请";
+    hotVC.yp_tabItemTitle = @"生鲜账号";
     
     FHAccountApplyListController *friendVC = [[FHAccountApplyListController alloc] init];
-    friendVC.yp_tabItemTitle = @"商业账号申请";
+    friendVC.yp_tabItemTitle = @"商业账号";
     
     FHAccountApplyListController *followVC = [[FHAccountApplyListController alloc] init];
-    followVC.yp_tabItemTitle = @"医药账号申请";
+    followVC.yp_tabItemTitle = @"医药账号";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC,followVC, nil];
 }
