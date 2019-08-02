@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "FHCommonNavView.h"
 #import "TPKeyboardAvoidingScrollView.h"
+#import "NSMutableAttributedString+XZCategory.h"
+#import "AFNetWorkTool.h"
 
 @interface BaseViewController : UIViewController 
 /**
@@ -42,5 +44,9 @@
  *  @param param  可选参数
  */
 - (void)viewControllerPushOther:(NSString *)nameVC;
+
+//- (NSMutableArray *)getTopBannersImgArrysWithType:(NSInteger )type;
+
+//- (NSMutableArray *)getBottomBannersImgArrysWithType:(NSInteger )type;
 
 @end

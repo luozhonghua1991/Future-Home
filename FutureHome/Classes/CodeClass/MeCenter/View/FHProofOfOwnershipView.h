@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHProofOfOwnershipView : UIView
+/** 标题label */
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 

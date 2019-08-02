@@ -38,6 +38,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHCommonCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHCommonCollectionCell class]) forIndexPath:indexPath];
     cell.listNameLabel.text = [NSString stringWithFormat:@"%@",self.bottomLogoNameArrs[indexPath.row]];
+    cell.logoImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",self.bottomImageArrs[indexPath.row]]];
     return cell;
 }
 

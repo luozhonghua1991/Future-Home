@@ -63,12 +63,12 @@
 
 #pragma mark — privite
 - (void)fh_creatNav {
-//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-//    titleLabel.text = @"购物车";
-//    titleLabel.font = [UIFont boldSystemFontOfSize:17];
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    titleLabel.userInteractionEnabled = YES;
-//    [self.navgationView addSubview:titleLabel];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = @"生鲜服务";
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
@@ -76,17 +76,17 @@
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:backBtn];
     
-    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(0, MainStatusBarHeight, 100, MainNavgationBarHeight);
-    searchBtn.centerX = self.navgationView.width / 2;
-    [searchBtn setImage:[UIImage imageNamed:@"search_search"] forState:UIControlStateNormal];
-    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
-    [searchBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    searchBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-    searchBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
-    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    searchBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [self.navgationView addSubview:searchBtn];
+//    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    searchBtn.frame = CGRectMake(0, MainStatusBarHeight, 100, MainNavgationBarHeight);
+//    searchBtn.centerX = self.navgationView.width / 2;
+//    [searchBtn setImage:[UIImage imageNamed:@"search_search"] forState:UIControlStateNormal];
+//    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
+//    [searchBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    searchBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
+//    searchBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
+//    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    searchBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+//    [self.navgationView addSubview:searchBtn];
     
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);

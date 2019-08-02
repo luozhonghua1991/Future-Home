@@ -25,6 +25,8 @@
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 /** 上面的logoName */
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImageArrs;
 
 @end
 
@@ -44,6 +46,16 @@
                                 @"健康文化",
                                 @"健康保险",
                                 @"医药商城"];
+    self.bottomImageArrs = @[@"4-1疾病分类",
+                             @"4-2药物健康",
+                             @"4-3健康指数",
+                             @"4-4心理健康",
+                             @"4-5医疗档案",
+                             @"4-6饮食健康",
+                             @"4-7睡眠健康",
+                             @"4-8健康文化",
+                             @"4-9健康保险",
+                             @"4-10医药资讯"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
@@ -101,6 +113,7 @@
         FHCommonCollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
         cell.delegate = self;
         cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.bottomImageArrs = self.bottomImageArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {

@@ -147,7 +147,7 @@
     if (tableView==_leftTbView) {
         return 44.f;
     }
-    return 115.f;
+    return 105.f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

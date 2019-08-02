@@ -93,7 +93,7 @@
 
 - (UIColor *)selectedItemTitleColor {
     if (!selectedItemTitleColor) {
-        selectedItemTitleColor = [UIColor redColor];
+        selectedItemTitleColor = [UIColor blueColor];
     }
     return selectedItemTitleColor;
 }

@@ -15,7 +15,10 @@
 @property(copy,nonatomic)   NSString *placeholder;
 
 @property(strong,nonatomic) NSIndexPath * indexPath;
-
+/**
+ *   显示 Placeholder
+ */
+@property(strong,nonatomic,readonly)  UILabel *PlaceholderLabel;
 //最大长度设置
 @property(assign,nonatomic) NSInteger maxTextLength;
 

@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
 /** 下面的logoName */
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImageArrs;
 
 @property(nonatomic, weak) id<FHCommonCollectionViewDelegate> delegate;
 

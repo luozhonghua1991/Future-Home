@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak) id<FHMenuListCellDelegate> delegate;
 /** 下面的logoName */
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImgArrs;
 
 @end
 

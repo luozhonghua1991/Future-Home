@@ -12,6 +12,11 @@
 @interface FHFollowListViewController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** tableHeaderView */
+@property (nonatomic, strong) UIView *tableHeaderView;
+/** 个数label */
+@property (nonatomic, strong) UILabel *countLabel;
+
 
 @end
 
@@ -21,6 +26,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.homeTable];
+    self.homeTable.tableHeaderView = self.tableHeaderView;
+    self.countLabel.text = [NSString stringWithFormat:@"%@数量: 520",self.yp_tabItemTitle];
+    [self.tableHeaderView addSubview:self.countLabel];
     [self.homeTable registerClass:[FHFollowListViewCell class] forCellReuseIdentifier:NSStringFromClass([FHFollowListViewCell class])];
 }
 
@@ -81,7 +89,6 @@
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
-//        CGFloat tabbarH = [self getTabbarHeight];
         _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
         _homeTable.dataSource = self;
         _homeTable.delegate = self;
@@ -95,6 +102,25 @@
         }
     }
     return _homeTable;
+}
+
+- (UIView *)tableHeaderView {
+    if (!_tableHeaderView) {
+        _tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+        _tableHeaderView.backgroundColor = [UIColor whiteColor];
+    }
+    return _tableHeaderView;
+}
+
+- (UILabel *)countLabel {
+    if (!_countLabel) {
+        _countLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH, 40)];
+        _countLabel.textColor = [UIColor blackColor];
+        _countLabel.font = [UIFont systemFontOfSize:12];
+        _countLabel.textAlignment = NSTextAlignmentLeft;
+        _countLabel.text = @"物业收藏数量: 12";
+    }
+    return _countLabel;
 }
 
 @end

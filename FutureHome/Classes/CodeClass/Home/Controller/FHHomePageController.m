@@ -21,8 +21,13 @@
 #import "FHFreshMallController.h"
 #import <JhtMarquee/JhtHorizontalMarquee.h>
 #import <JhtMarquee/JhtVerticalMarquee.h>
+#import "FHWebViewController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
+{
+    NSMutableArray *topBannerArrays;
+    NSMutableArray *bottomBannerArrays;
+}
 /** 导航View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
 /** 主页列表数据 */
@@ -39,6 +44,8 @@
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
 /** 下面的logoName */
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImgArrs;
 // 纵向 跑马灯
 @property (nonatomic,strong) JhtVerticalMarquee      *verticalMarquee;
 /**消息图标*/
@@ -64,9 +71,17 @@
                                 @"生鲜服务",
                                 @"理财服务",
                                 @"客服服务"];
+    self.bottomImgArrs = @[@"1-2物业服务",
+                           @"1-3业主服务",
+                           @"1-4健康服务",
+                           @"1-5生鲜服务",
+                           @"1-6理财",
+                           @"1-7客服服务"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -106,12 +121,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        /** 菜单列表 */
-//        FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
-//        cell.delegate = self;
-//        cell.topLogoNameArrs = self.topLogoNameArrs;
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        return cell;
         /** 服务平台 */
         static NSString *ID = @"cell1";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
@@ -165,9 +174,7 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [[NSArray alloc] init];
-        NSArray *urlsArray = @[@"http://192.168.3.57:8080/uploads/admin/img/20190609/1530a0df58fe1870bed63eaa275dead3.png",
-                               @"http://192.168.3.57:8080/uploads/admin/img/20190609/61b5da068844877e75e114005b75bf2e.png"];
+        NSArray *urlsArray = [topBannerArrays copy];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -177,6 +184,7 @@
         FHMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMenuListCell class])];
         cell.delegate = self;
         cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.bottomImgArrs = self.bottomImgArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
@@ -193,12 +201,10 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [[NSArray alloc] init];
-          NSArray *urlsArray = @[@"http://192.168.3.57:8080/uploads/admin/img/20190609/1530a0df58fe1870bed63eaa275dead3.png",
-                                 @"http://192.168.3.57:8080/uploads/admin/img/20190609/61b5da068844877e75e114005b75bf2e.png"];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
+        NSArray *urlsArray = [bottomBannerArrays copy];
+        self.bottomScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
 
-        [cell addSubview:self.topScrollView];
+        [cell addSubview:self.bottomScrollView];
         return cell;
     }
 }
@@ -238,18 +244,67 @@
 }
 
 
+#pragma mark — request
+- (void)fh_refreshBannerData {
+    [self fh_getTopBanner];
+    [self fh_bottomTopBanner];
+}
+
+- (void)fh_getTopBanner {
+    WS(weakSelf);
+    topBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"uplist"];
+        [self->topBannerArrays addObject:upDic[@"path1"]];
+        [self->topBannerArrays addObject:upDic[@"path2"]];
+        [self->topBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)fh_bottomTopBanner {
+    WS(weakSelf);
+    bottomBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"downlist"];
+        [self->bottomBannerArrays addObject:upDic[@"path1"]];
+        [self->bottomBannerArrays addObject:upDic[@"path2"]];
+        [self->bottomBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
-    
     if (infiniteScrollView.tag == 2018) {
         /** 上面的轮播图 */
-
+        [self pushToWebControllerWithUrl:@"http://192.168.3.57:8080/advent/index/mobileAdvent/pid/1/id/1"];
     } else {
        /** 下面的轮播图 */
+        [self pushToWebControllerWithUrl:@"https://www.kancloud.cn/gogery/tp5/358921"];
     }
 }
 
+- (void)pushToWebControllerWithUrl:(NSString *)url {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = url;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
 
 #pragma mark — FHMenuListCellDelegate
 - (void)FHMenuListCellSelectIndex:(NSIndexPath *)indexPath {
@@ -268,7 +323,6 @@
     } else if (indexPath.row == 3) {
         /** 生鲜服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
-//        FHGoodsListController *goodList = [[FHGoodsListController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
         [self pushVCWithName:goodList];
     } else if (indexPath.row == 4) {

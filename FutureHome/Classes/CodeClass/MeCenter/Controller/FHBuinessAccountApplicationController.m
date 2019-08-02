@@ -74,7 +74,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"账户申请";
+    titleLabel.text = @"商业物业账户申请";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
@@ -415,6 +415,10 @@
 - (FHProofOfOwnershipView *)shipView {
     if (!_shipView) {
         _shipView = [[FHProofOfOwnershipView alloc] init];
+        NSString *titleString = @"建筑物业权属证明(能够证明建筑物业的合同房产证等⽂文件拍照上传)";
+        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
+        [attributedTitle changeColor:[UIColor lightGrayColor] rang:[attributedTitle changeSystemFontFloat:13 from:8 legth:24]];
+        _shipView.titleLabel.attributedText = attributedTitle;
     }
     return _shipView;
 }

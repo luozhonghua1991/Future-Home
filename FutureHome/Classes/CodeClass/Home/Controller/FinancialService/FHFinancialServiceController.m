@@ -9,6 +9,7 @@
 #import "FHFinancialServiceController.h"
 #import "FHCommonCollectionViewCell.h"
 #import "FHLittleMenuListCell.h"
+#import "FHBaseAnnouncementListController.h"
 
 @interface FHFinancialServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 /** 主页列表数据 */
@@ -25,6 +26,8 @@
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 /** 上面的logoName */
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImageArrs;
 
 @end
 
@@ -43,6 +46,16 @@
                                 @"股票期货",
                                 @"黄金白银",
                                 @"全球外汇"];
+    self.bottomImageArrs = @[@"5-1生鲜行情",
+                             @"5-2房产资讯",
+                             @"5-3经济头条",
+                             @"5-4民生资讯",
+                             @"5-5国际资讯",
+                             @"5-6投资观察",
+                             @"5-7基金保险",
+                             @"5-8股票期货",
+                             @"5-9黄金白银",
+                             @"5-10全球外汇"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
@@ -99,6 +112,7 @@
         FHCommonCollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
         cell.delegate = self;
         cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.bottomImageArrs = self.bottomImageArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
@@ -179,6 +193,12 @@
     }
 }
 
+- (void)pushAnnouncementControllerWithTitle:(NSString *)title {
+    FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
+    an.titleString = title;
+    an.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:an animated:YES];
+}
 
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/

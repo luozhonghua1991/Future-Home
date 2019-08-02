@@ -12,10 +12,7 @@
 @interface BRPlaceholderTextView()<UITextViewDelegate>
 @property(strong,nonatomic) UIColor *placeholder_color;
 @property(strong,nonatomic) UIFont * placeholder_font;
-/**
- *   显示 Placeholder
- */
-@property(strong,nonatomic,readonly)  UILabel *PlaceholderLabel;
+
 
 @property(assign,nonatomic) float placeholdeWidth;
 
@@ -54,7 +51,8 @@
     
     _PlaceholderLabel=[[UILabel alloc] initWithFrame:CGRectMake(left, top
                                                                 , _placeholdeWidth, hegiht)];
-   
+    
+    
     _PlaceholderLabel.numberOfLines=0;
     _PlaceholderLabel.lineBreakMode=NSLineBreakByCharWrapping|NSLineBreakByWordWrapping;
     [self addSubview:_PlaceholderLabel];

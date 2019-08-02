@@ -12,8 +12,10 @@
 
 //测试环境
 //链接前缀
-#define BASE_URL @"http://testm.hongyajinrong.com/allApi"
-#define BASE_DD_URL @"https://m.hongyajinrong.com"
+//#define BASE_URL @"http://testm.hongyajinrong.com/allApi"
+//#define BASE_DD_URL @"https://m.hongyajinrong.com"
+
+#define BASE_URL @"http://192.168.3.57/v1"
 
 //#define BASE_URL @"http://192.168.10.36:8081"         //测试宏亚 大鸟
 //#define PROTOCOL_URL @"http://192.168.10.36"          //协议总地址

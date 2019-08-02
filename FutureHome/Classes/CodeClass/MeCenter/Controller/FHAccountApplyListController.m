@@ -46,16 +46,14 @@
     if ([self.yp_tabItemTitle isEqualToString:@"商业物业"]) {
         [self viewControllerPushOther:@"FHBuinessAccountApplicationController"];
     } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号"]) {
-//        account.accountType = @"";
+        [self viewControllerPushOther:@"FHProprietaryAccountController"];
     } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号"]) {
-//        account.accountType = @"";
+        [self viewControllerPushOther:@"FHFreshServiceAccountController"];
     } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {
-//       account.accountType = @"";
+        [self viewControllerPushOther:@"FHNormalBuinsesAccountController"];
     } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号"]) {
-//        account.accountType = @"";
+        [self viewControllerPushOther:@"FHMedicinalServiceController"];
     }
-    
-    
 }
 
 

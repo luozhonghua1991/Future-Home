@@ -9,12 +9,17 @@
 #import "BaseViewController.h"
 
 
-@interface BaseViewController () 
+@interface BaseViewController ()
 /** 带搜索的View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
 /** iOS7 之后布局部分 */
 @property (nonatomic, assign, getter=isFullScreenLayout) BOOL fullScreenLayout;// default is NO;
 @property (nonatomic, assign, getter=isSpecifyFullScreenLayout) BOOL specifyFullScreenLayout;
+
+/** 上面的轮播图 */
+@property (nonatomic, strong) NSMutableArray *topBannerArrays;
+/** 上面的轮播图 */
+@property (nonatomic, strong) NSMutableArray *bottomBannerArrays;
 
 @end
 
@@ -173,5 +178,35 @@
 //- (void)collectClick {
 //    
 //}
+
+- (NSMutableArray *)getBottomBannersImgArrysWithType:(NSInteger )type {
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(type),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
+    return self.bottomBannerArrays;
+}
+
+
+
+
+#pragma mark — setter && getter
+- (NSMutableArray *)topBannerArrays {
+    if (!_topBannerArrays) {
+        _topBannerArrays = [[NSMutableArray alloc] init];
+    }
+    return _topBannerArrays;
+}
+
+- (NSMutableArray *)bottomBannerArrays {
+    if (!_bottomBannerArrays) {
+        _bottomBannerArrays = [[NSMutableArray alloc] init];
+    }
+    return _bottomBannerArrays;
+}
 
 @end

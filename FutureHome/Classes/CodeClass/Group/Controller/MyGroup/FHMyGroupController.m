@@ -47,11 +47,13 @@
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
     hotVC.yp_tabItemTitle = @"圈内热点";
 
-    FHFriendLisController *friendVC = [[FHFriendLisController alloc] init];
-    friendVC.yp_tabItemTitle = @"好友列表";
+    FHFriendLisController *followVC = [[FHFriendLisController alloc] init];
+    followVC.yp_tabItemTitle = @"关注";
     
-    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC, nil];
+    FHFriendLisController *fansVC = [[FHFriendLisController alloc] init];
+    fansVC.yp_tabItemTitle = @"粉丝";
     
+    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,followVC,fansVC, nil];
 }
 
 

@@ -8,6 +8,7 @@
 
 #import "FHHomeServicesController.h"
 #import "FHCommonCollectionViewCell.h"
+#import "FHBaseAnnouncementListController.h"
 
 @interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 /** 主页列表数据 */
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) UIImageView *codeImgView;
 /** 下面的logoName */
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImageArrs;
 
 @end
 
@@ -30,16 +33,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isHaveNav = YES;
-    self.bottomLogoNameArrs = @[@"物业公告",
+    self.bottomLogoNameArrs = @[@"社区公告",
                                 @"清洁绿化",
                                 @"安保消防",
                                 @"水电气",
                                 @"车库管理",
                                 @"装修维修",
-                                @"物业缴费",
+                                @"物业费用",
                                 @"物业租赁",
                                 @"投诉建议",
                                 @"我的物业"];
+    self.bottomImageArrs = @[@"2-1社区公告",
+                             @"2-2 清洁绿化",
+                             @"2-3 治安消防",
+                             @"2-4水电管理系统",
+                             @"2-5车库管理",
+                             @"2-6物业费用",
+                             @"2-7房屋租售",
+                             @"2-8装修维修",
+                             @"2-9投诉建议",
+                             @"2-10我的物业"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
     
@@ -123,6 +136,7 @@
         FHCommonCollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
         cell.delegate = self;
         cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.bottomImageArrs = self.bottomImageArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
@@ -182,19 +196,25 @@
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
         /** 物业公告 */
-
+        [self pushAnnouncementControllerWithTitle:@"社区公告"];
     } else if (selectIndex.row == 1) {
         /** 清洁绿化 */
+        [self pushAnnouncementControllerWithTitle:@"清洁绿化"];
     } else if (selectIndex.row == 2) {
         /** 安保消防 */
+        [self pushAnnouncementControllerWithTitle:@"安保消防"];
     } else if (selectIndex.row == 3) {
         /** 水电气 */
+        [self pushAnnouncementControllerWithTitle:@"水电气"];
     } else if (selectIndex.row == 4) {
         /** 车库管理 */
+         [self pushAnnouncementControllerWithTitle:@"车库管理"];
     } else if (selectIndex.row == 5) {
         /** 装修维修 */
+        [self pushAnnouncementControllerWithTitle:@"装修维修"];
     } else if (selectIndex.row == 6) {
         /** 物业缴费 */
+        [self pushAnnouncementControllerWithTitle:@"物业缴费"];
     } else if (selectIndex.row == 7) {
         /** 物业租赁 */
     } else if (selectIndex.row == 8) {
@@ -202,6 +222,13 @@
     } else if (selectIndex.row == 9) {
         /** 我的物业 */
     }
+}
+
+- (void)pushAnnouncementControllerWithTitle:(NSString *)title {
+    FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
+    an.titleString = title;
+    an.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:an animated:YES];
 }
 
 

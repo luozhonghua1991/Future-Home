@@ -33,6 +33,7 @@
 #import "FHBaseTabbarController.h"
 #import "CurrentViewController.h"
 #import "ZHProgressHUD.h"
+#import "AFNetWorkTool.h"
 
 
 //获取当前屏幕的宽高
@@ -75,6 +76,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 /**
  *  计算等比长宽
  */
+#define MinX(v) CGRectGetMinX((v).frame)
+#define MinY(v) CGRectGetMinY((v).frame)
+#define MidX(v) CGRectGetMidX((v).frame)
+#define MidY(v) CGRectGetMidY((v).frame)
+#define MaxX(v) CGRectGetMaxX((v).frame)
+#define MaxY(v) CGRectGetMaxY((v).frame)
+
 #define ZH_SCALE_SCREEN_Width(winthNumber)  (SCREEN_WIDTH*((winthNumber)/(375.0)))
 #define ZH_SCALE_SCREEN_Height(winthNumber)  (SCREEN_HEIGHT*((winthNumber)/(667.0)))
 //颜色RGB值

@@ -144,10 +144,13 @@
             [self viewControllerPushOther:@"FHCertificationController"];
         } else if (indexPath.row == 3) {
             /** 隐私设置 */
-            
+            [self viewControllerPushOther:@"FHPrivacySettingsController"];
         } else if (indexPath.row == 4) {
             /** 账户申请 */
             [self viewControllerPushOther:@"FHAccountApplyController"];
+        } else if (indexPath.row == 5) {
+            /** 关于未来家园 */
+            [self viewControllerPushOther:@"FHAboutFutureHomeController"];
         }
     }
                                                                                     

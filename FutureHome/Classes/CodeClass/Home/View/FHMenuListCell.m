@@ -40,6 +40,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHMenuListCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHMenuListCollectionCell class]) forIndexPath:indexPath];
     cell.listNameLabel.text = [NSString stringWithFormat:@"%@",self.bottomLogoNameArrs[indexPath.row]];
+    cell.logoImgView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",self.bottomImgArrs[indexPath.row]]];
     return cell;
 }
 

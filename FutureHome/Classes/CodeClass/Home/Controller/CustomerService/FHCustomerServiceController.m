@@ -25,6 +25,8 @@
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 /** 上面的logoName */
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImageArrs;
 
 @end
 
@@ -33,16 +35,26 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.isHaveNav = YES;
-    self.bottomLogoNameArrs = @[@"物业客服",
-                                @"业委客服",
+    self.bottomLogoNameArrs = @[@"狗狗客服",
+                                @"熊猫客服",
                                 @"健康客服",
-                                @"生鲜客服",
-                                @"理财客服",
-                                @"商业客服",
-                                @"公共客服",
-                                @"综合客服",
+                                @"兔兔客服",
+                                @"牛牛客服",
+                                @"长颈鹿客服",
+                                @"羊羊客服",
+                                @"猴子客服",
                                 @"平台建议",
                                 @"商业合作"];
+    self.bottomImageArrs = @[@"6-1狗狗物业客服",
+                             @"6-2熊猫业主客服",
+                             @"6-3健康客服",
+                             @"6-4生鲜兔兔客服",
+                             @"6-5牛牛理财客服",
+                             @"6-6商业长颈鹿客服",
+                             @"6-7 羊羊公共客服-2",
+                             @"6-8综合猴猴客服",
+                             @"6-9平台建议",
+                             @"6-10商业合作"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
@@ -100,6 +112,7 @@
         FHCommonCollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
         cell.delegate = self;
         cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.bottomImageArrs = self.bottomImageArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
@@ -118,7 +131,6 @@
         }
         NSArray *urlsArray = [[NSArray alloc] init];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
-        
         [cell addSubview:self.topScrollView];
         return cell;
     }

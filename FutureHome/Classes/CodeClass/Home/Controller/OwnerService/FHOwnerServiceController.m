@@ -8,6 +8,7 @@
 
 #import "FHOwnerServiceController.h"
 #import "FHCommonCollectionViewCell.h"
+#import "FHBaseAnnouncementListController.h"
 
 @interface FHOwnerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 /** 主页列表数据 */
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) UIImageView *codeImgView;
 /** 下面的logoName */
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
+/** 下面的image */
+@property (nonatomic, copy) NSArray *bottomImageArrs;
 
 @end
 
@@ -40,6 +43,16 @@
                                 @"活动关爱",
                                 @"投诉建议",
                                 @"我的业委"];
+    self.bottomImageArrs = @[@"3-1业委公告",
+                             @"3-2业主大会",
+                             @"3-3业委选举",
+                             @"3-4业委管理",
+                             @"3-5物业管理",
+                             @"3-6 物业招标",
+                             @"3-7 财务管理",
+                             @"3-8活动关爱",
+                             @"3-9投诉建议",
+                             @"3-10我的业委"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
     
@@ -123,6 +136,7 @@
         FHCommonCollectionViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
         cell.delegate = self;
         cell.bottomLogoNameArrs = self.bottomLogoNameArrs;
+        cell.bottomImageArrs = self.bottomImageArrs;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else {
@@ -202,6 +216,13 @@
     } else if (selectIndex.row == 9) {
         /** 我的业委 */
     }
+}
+
+- (void)pushAnnouncementControllerWithTitle:(NSString *)title {
+    FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
+    an.titleString = title;
+    an.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:an animated:YES];
 }
 
 
