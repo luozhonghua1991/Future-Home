@@ -11,6 +11,15 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "NSMutableAttributedString+XZCategory.h"
 #import "AFNetWorkTool.h"
+#import "FDActionSheet.h"
+#import "SingleManager.h"
+#import "MJExtension.h"
+#import "UIColor+Extend.h"
+#import "CreatNavViewController.h"
+#import "ZJPickerView.h"
+
+//#define TableViewRegisterClassCell(Instance,ClassName) \
+//[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]
 
 @interface BaseViewController : UIViewController 
 /**

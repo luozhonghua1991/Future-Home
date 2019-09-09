@@ -199,10 +199,16 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     if (tableView==_leftTbView) {
         relate = NO;
         [_leftTbView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];//左边滚动到中间
         [_rightTbView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.row] atScrollPosition:UITableViewScrollPositionTop animated:YES];//右边相应section滚动到顶部
+    } else {
+        
+        if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_selectIndex:)]) {
+            [_delegate fh_selectIndex:indexPath];
+        }
     }
 }
 

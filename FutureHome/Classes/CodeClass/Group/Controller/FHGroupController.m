@@ -11,6 +11,7 @@
 #import "FHMyVideoController.h"
 #import "FHBusinessServicesController.h"
 #import "FHPublicServiceController.h"
+#import "FHCreatRrendsController.h"
 
 @interface FHGroupController () <UIScrollViewDelegate>
 {
@@ -20,6 +21,8 @@
     UIButton *businssServiceBtn;
     UIButton *publickServiceBtn;
 }
+/** 创建动态 */
+@property (nonatomic, strong) UIButton *creatRrendsBtn;
 /** 我的社群 */
 @property (nonatomic, strong) FHMyGroupController *myGroup;
 /** 我的视界 */
@@ -40,7 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isHaveNav = YES;
+    [self fh_creatNav];
     [self fh_setSelectNavView];
     [self fh_creatSelectBtn];
     [self fh_setMainScrollView];
@@ -49,6 +52,70 @@
     } else {
         mainScrollView.contentOffset = CGPointMake(SCREEN_WIDTH * 0, 0);
     }
+}
+
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    if (self.isSelectBuiness) {
+        titleLabel.text = @"商家服务";
+    } else {
+//        titleLabel.text = @"社群";
+    }
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(60, MainStatusBarHeight, SCREEN_WIDTH - 130, 30)];
+    searchView.backgroundColor = [UIColor whiteColor];
+    searchView.layer.cornerRadius = 15;
+    searchView.clipsToBounds = YES;
+    searchView.layer.masksToBounds = YES;
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(0, 0, 50, 15);
+    searchBtn.centerX = searchView.width / 2;
+    searchBtn.centerY = searchView.height / 2;
+    [searchBtn setTitle:@" 搜索" forState:UIControlStateNormal];
+    [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [searchBtn setImage:[UIImage imageNamed:@"xingtaiduICON_sousuo--"] forState:UIControlStateNormal];
+//    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [searchView addSubview:searchBtn];
+    [self.navgationView addSubview:searchView];
+    
+//    self.creatRrendsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    self.creatRrendsBtn.frame = CGRectMake(SCREEN_WIDTH - MainNavgationBarHeight - 15 , MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+//    [self.creatRrendsBtn setTitle:@"+" forState:UIControlStateNormal];
+//    [self.creatRrendsBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    self.creatRrendsBtn.titleLabel.font = [UIFont systemFontOfSize:30];
+//    [self.creatRrendsBtn addTarget:self action:@selector(creatRrendsBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//     [self.navgationView addSubview:self.creatRrendsBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.navgationView addSubview:bottomLineView];
+}
+
+- (void)backBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+/** 发布动态 */
+- (void)creatRrendsBtnClick {
+    FHCreatRrendsController *creat = [[FHCreatRrendsController alloc] init];
+    creat.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:creat animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -83,13 +150,13 @@
     CGSize size1 = [UIlabelTool sizeWithString:@"我的社群" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     
     myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"我的社群" tag:1];
-    [myGroupBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [myGroupBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     
     CGSize size2 = [UIlabelTool sizeWithString:@"我的视界" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"我的视界" tag:2];
     
-    CGSize size3 = [UIlabelTool sizeWithString:@"商业服务" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    businssServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myVideoBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size3.width, self.selectNavView.frame.size.height)title:@"商业服务" tag:3];
+    CGSize size3 = [UIlabelTool sizeWithString:@"商家服务" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
+    businssServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myVideoBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size3.width, self.selectNavView.frame.size.height)title:@"商家服务" tag:3];
     
     CGSize size4 = [UIlabelTool sizeWithString:@"公共服务" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     publickServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(businssServiceBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size4.width, self.selectNavView.frame.size.height)title:@"公共服务" tag:4];
@@ -207,7 +274,7 @@
         [self->myVideoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->businssServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->publickServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [sender setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     }];
     
 }
@@ -216,7 +283,10 @@
 - (UIView *)selectNavView {
     if (!_selectNavView) {
         _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 35)];
-        _selectNavView.backgroundColor = [UIColor redColor];
+        
+        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, SCREEN_WIDTH, 0.5)];
+        bottomLine.backgroundColor = [UIColor lightGrayColor];
+        [_selectNavView addSubview:bottomLine];
     }
     return _selectNavView;
 }

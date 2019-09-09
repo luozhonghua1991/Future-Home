@@ -24,15 +24,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     if ([self.yp_tabItemTitle isEqualToString:@"商业物业"]) {
-        self.titleStr = @"进入申请商业物业服务平台账号";
+        self.titleStr = @"开通商业物业服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号"]) {
-        self.titleStr = @"进入联合申请业委服务/物业服务平台账号";
+        self.titleStr = @"联合开通业主服务/物业服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号"]) {
-        self.titleStr = @"进入申请生鲜服务平台账号";
+        self.titleStr = @"开通生鲜服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {
-        self.titleStr = @"进入申请商业服务平台账号";
+        self.titleStr = @"开通商业服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号"]) {
-        self.titleStr = @"进入申请医药药品服务平台账号";
+        self.titleStr = @"开通医药药品服务平台账户";
     }
     self.accountApplyBtn.frame = CGRectMake(0, 200, 350, 50);
     self.accountApplyBtn.centerX = self.view.width / 2;
@@ -63,7 +63,10 @@
         _accountApplyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_accountApplyBtn setTitle:self.titleStr forState:UIControlStateNormal];
         [_accountApplyBtn addTarget:self action:@selector(accountApplyBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _accountApplyBtn.backgroundColor = [UIColor redColor];
+        _accountApplyBtn.backgroundColor = HEX_COLOR(0x1296db);
+        _accountApplyBtn.layer.cornerRadius = 5;
+        _accountApplyBtn.layer.masksToBounds = YES;
+        _accountApplyBtn.clipsToBounds = YES;
     }
     return _accountApplyBtn;
 }

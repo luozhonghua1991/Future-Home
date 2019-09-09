@@ -53,15 +53,6 @@
     //左边返回按钮
 //    [self navLeftButtonItemIcon:@"rw_login_back" highIcon:@"rw_login_back"];
     if ([self.titleString isEqualToString:@"设置密码"]) {
-//        //右边跳过按钮
-//        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//        button.size = MAKESIZE(30, 15);
-//        button.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
-//        [button setTitle:@"跳过" forState:UIControlStateNormal];
-//        [button setTitleColor:HEX_COLOR(0x4393D9) forState:UIControlStateNormal];
-//        [button addTarget:self action:@selector(onNavRightItemClick) forControlEvents:UIControlEventTouchUpInside];
-//        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:button];
-//        self.navigationItem.rightBarButtonItem = item;
     }
     [self.view addSubview:self.scrollView];
     
@@ -331,37 +322,42 @@
     }
     if([self.titleString isEqualToString:@"设置密码"]) {
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        params[@"password"] = self.passwordTF.text;
-        params[@"password_confirmation"] = self.surePasswordTF.text;
-        params[@"invite_code"] = self.inviteCodeTF.text;
-        [self.view makeToast:@"注册成功！"];
-        [self.navigationController popToRootViewControllerAnimated:YES];
-//        [LoginService newSetPasswordWithParams:@{@"user":params} success:^(NSDictionary *respond) {
-//            [self.view makeToast:@"注册成功！"];
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//             [RWManager shareManager].isRegister = YES;
-//            //恭喜注册成功的通知
-//            [[NSNotificationCenter defaultCenter]postNotificationName:@"REGISTERSUCCESS" object:nil];
-//        } failure:^(NSString *msg) {
-//            [self.view makeToast:msg];
-//        }];
+        params[@"password"] = self.surePasswordTF.text;
+        params[@"mobile"] = self.phoneNumber;
+        params[@"verify_code"] = self.verificCode;
+        [AFNetWorkTool post:@"login/register" params:params success:^(id responseObj) {
+            NSString *msg = responseObj[@"msg"];
+            [self.view makeToast:msg];
+            /** 用户注册完成后 自动登录 */
+            [self personFastLogin];
+        } failure:^(NSError *error) {
+            
+        }];
     } else if ([self.titleString isEqualToString:@"重置密码"]) {
         //用户忘记密码
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        params[@"password"] = self.passwordTF.text;
-        params[@"password_confirmation"] = self.surePasswordTF.text;
-        params[@"phone"] = self.phoneNumber;
-        params[@"code"]  = self.verificCode;
-//        [LoginService loginForgetPwdParams:@{@"password":params} success:^(NSDictionary *respond) {
-//            [self.view makeToast:@"修改成功"];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [self.navigationController popToRootViewControllerAnimated:YES];
-//            });
-//
-//        } failure:^(NSString *msg) {
-//            [self.view makeToast:msg];
-//        }];
+        params[@"mobile"] = self.phoneNumber;
+        params[@"password"] = self.surePasswordTF.text;
+        params[@"verify_code"] = self.verificCode;
+        [AFNetWorkTool post:@"login/updatePassword" params:params success:^(id responseObj) {
+            [self.view makeToast:@"修改成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            });
+        } failure:^(NSError *error) {
+        }];
     }
+}
+
+- (void)personFastLogin {
+    /** 用户快速登录 */
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"username"] = self.phoneNumber;
+    params[@"password"] = self.passwordTF.text;
+    [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    } failure:^(NSError *error) {
+    }];
 }
 
 

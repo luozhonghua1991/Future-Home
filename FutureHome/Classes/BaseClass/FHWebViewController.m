@@ -38,8 +38,7 @@ NJKWebViewProgressDelegate
     [self fetchNetworkData];
 }
 
-- (void)initSubViews
-{
+- (void)initSubViews {
     [self.view addSubview:self.webView];
 }
 
@@ -115,8 +114,7 @@ NJKWebViewProgressDelegate
     [self.webView stringByEvaluatingJavaScriptFromString:jsStr];
 }
 
-- (void)createNavigation
-{
+- (void)createNavigation {
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainSizeHeight)];
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
@@ -158,6 +156,7 @@ NJKWebViewProgressDelegate
     }
     return _webViewProgress;
 }
+
 - (UIWebView *)webView {
     if (_webView == nil) {
         _webView = [[UIWebView alloc] init];

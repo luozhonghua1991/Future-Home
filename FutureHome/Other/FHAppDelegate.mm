@@ -37,30 +37,30 @@ static FHAppDelegate* pSelf = nil;
 - (void)setTabBarController {
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];
     vc1.title = @"首页";
-    vc1.tabBarItem.image = [UIImage imageNamed:@"tarbar_home_normal"];
-//    vc1.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_home_select"];
+    vc1.tabBarItem.image = [UIImage imageNamed:@"zhuye-2"];
+    vc1.tabBarItem.selectedImage = [UIImage imageNamed:@"zhuye"];
     
     FHGroupController *vc2 = [[FHGroupController alloc] init];
     vc2.title = @"社云";
     vc2.isSelectBuiness = NO;
-    vc2.tabBarItem.image = [UIImage imageNamed:@"tabbar_invite_normal"];
-//    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"tarbar_invite_select"];
+    vc2.tabBarItem.image = [UIImage imageNamed:@"jiayuanshejiao-2"];
+    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"jiayuanshejiao"];
     
     FHGroupController *vc3 = [[FHGroupController alloc] init];
-    vc3.title = @"商业服务";
+    vc3.title = @"商家服务";
     vc3.isSelectBuiness = YES;
-    vc3.tabBarItem.image = [UIImage imageNamed:@"tabbar_inviteFriend_normal"];
-//    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_inviteFriend_select"];
+    vc3.tabBarItem.image = [UIImage imageNamed:@"jiaoyi-3"];
+    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"jiaoyi"];
     
     FHShopingCartController *vc4 = [[FHShopingCartController alloc] init];
     vc4.title = @"购物车";
-    vc4.tabBarItem.image = [UIImage imageNamed:@"tabbar_myAccount_normal"];
-//    vc4.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_myAccount_select"];
+    vc4.tabBarItem.image = [UIImage imageNamed:@"gouwuche-2"];
+    vc4.tabBarItem.selectedImage = [UIImage imageNamed:@"gouwuche"];
     
     FHMeCenterController *vc5 = [[FHMeCenterController alloc] init];
     vc5.title = @"个人中心";
-    vc5.tabBarItem.image = [UIImage imageNamed:@"tabbar_myAccount"];
-//    vc5.tabBarItem.selectedImage = [UIImage imageNamed:@"tabbar_myAccount_select"];
+    vc5.tabBarItem.image = [UIImage imageNamed:@"gerenzhongxinxuanzhong1-2"];
+    vc5.tabBarItem.selectedImage = [UIImage imageNamed:@"gerenzhongxinxuanzhong1"];
     
     UINavigationController *navC1 = [[UINavigationController alloc] initWithRootViewController:vc1];
     UINavigationController *navC2 = [[UINavigationController alloc] initWithRootViewController:vc2];
@@ -79,8 +79,7 @@ static FHAppDelegate* pSelf = nil;
 
 
 #pragma mark  -- 返回AppDelegate本身
-+ (FHAppDelegate *)getAppDelegate
-{
++ (FHAppDelegate *)getAppDelegate {
     return pSelf;
 }
 

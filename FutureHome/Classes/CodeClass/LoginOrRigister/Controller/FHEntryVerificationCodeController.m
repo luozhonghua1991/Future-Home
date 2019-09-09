@@ -44,8 +44,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    // Nav buttonItem
-//    [self navLeftButtonItemIcon:@"rw_login_back" highIcon:@"rw_login_back"];
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.titleLabel];
     [self.scrollView addSubview:self.logLabel];
@@ -53,17 +51,19 @@
     [self.scrollView addSubview:self.passwordView];
     [self.scrollView addSubview:self.sureBtn];
     [self.scrollView addSubview:self.verCodeButton];
+    
     if (self.vcType == VERIFICATIONLOGIN_VC) {
         //验证码登录的情况下才有 密码登录按钮
         [self.scrollView addSubview:self.passwordLoginBtn];
     }
-    self.phoneNumLabel.text = [NSString stringWithFormat:@"+%@ %@",self.dialing_code,self.phoneNumber];
+    
+    self.phoneNumLabel.text = [NSString stringWithFormat:@"+86 %@",self.phoneNumber];
     //发送验证码
     [self sendVerCodeEvent];
     WS(weakSelf);
     self.passwordView.passwordBlock = ^(NSString *password) {
         weakSelf.verificCode = password;
-        if (password.length == 6) {
+        if (password.length == 4) {
             weakSelf.sureBtn.userInteractionEnabled = YES;
             weakSelf.sureBtn.alpha = 1;
             [weakSelf.sureBtn setBackgroundImage:[UIImage imageNamed:@"rw_login_user"] forState:UIControlStateNormal];
@@ -161,18 +161,6 @@
  */
 - (void)sureBtnClick {
     [self quickLogin];
-    //首先要校验验证码是否正确
-    WS(weakSelf);
-    NSMutableDictionary *param = [NSMutableDictionary dictionary];
-    param[@"phone"] = self.phoneNumber;
-    param[@"dialing_code"] = self.dialing_code;
-    param[@"code"] = self.verificCode;
-//    [LoginService verifyCodeIsRightWithParams:@{@"sms":param} success:^(NSDictionary *respond) {
-//        //验证码正确
-//
-//    } failure:^(NSString *msg) {
-//        [weakSelf.view makeToast:msg];
-//    }];
 }
 
 - (void)quickLogin {
@@ -196,10 +184,12 @@
 //             LoadingGIFEnd;
 //             [weakSelf.view makeToast:msg];
 //         }];
-    } else if (self.vcType == REGISTER_VC) {
-        //            //用户注册的时候 需要设置密码
+    } else if (self.vcType == REGISTER_VC && self.type == 1) {
+        //用户注册的时候 需要设置密码
         FHSetPasswordController *setPassword = [[FHSetPasswordController alloc]init];
         setPassword.titleString = @"设置密码";
+        setPassword.phoneNumber = self.phoneNumber;
+        setPassword.verificCode = self.verificCode;
         [self.navigationController pushViewController:setPassword animated:YES];
 //        //新用户注册 快捷登录
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -235,18 +225,18 @@
 //             [weakSelf.view makeToast:msg];
 //         }];
      } else if (self.vcType == THIRDLOGIN_VC){
-     } else if(self.vcType == VERIFICATIONLOGIN_VC) {
+     } else if(self.vcType == VERIFICATIONLOGIN_VC && self.type == 2) {
          //验证码登录 登录成功回到首页
-         [self.navigationController popToRootViewControllerAnimated:YES];
-//         NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//         params[@"phone"] = self.phoneNumber;
-//         params[@"code"] = self.verificCode;
-//         WS(weakSelf);
-//         [LoginService loginWithParams:@{@"session":params} success:^(Account *accout) {
-//
-//         } failure:^(NSString *msg) {
-//             [weakSelf.view makeToast:msg];
-//         }];
+         NSMutableDictionary *params = [NSMutableDictionary dictionary];
+         params[@"mobile"] = self.phoneNumber;
+         params[@"verify_code"] = self.verificCode;
+         WS(weakSelf);
+         [AFNetWorkTool post:@"login/codeLogin" params:params success:^(id responseObj) {
+              [weakSelf.view makeToast:@"登录成功"];
+              [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+         } failure:^(NSError *error) {
+             
+         }];
      } else if(self.vcType == FORGETPASSWORD_VC) {
 //         //忘记密码 去重置密码
 //         //用户注册的时候 需要设置密码
@@ -285,14 +275,16 @@
  发送验证码
  */
 - (void)sendVerCodeEvent {
-//    [LoginService loginSMSWithParams:@{@"phone":self.phoneNumber} success:^(NSDictionary *respond) {
-//        [self.view makeToast:@"发送成功"];
-//        //倒计时
-//        [self steupCountdown];
-//    } failure:^(NSString *msg) {
-//        [self.view makeToast:msg];
-//        [self.navigationController popViewControllerAnimated:YES];
-//    }];
+    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+    params[@"mobile"] = self.phoneNumber;
+    params[@"type"] = @(self.type);
+    [AFNetWorkTool post:@"login/sendCode" params:params success:^(id responseObj) {
+        [self.view makeToast:@"发送成功"];
+        //倒计时
+        [self steupCountdown];
+    } failure:^(NSError *error) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
 }
 
 - (void)steupCountdown {
@@ -354,7 +346,7 @@
     if (!_logLabel) {
         _logLabel = [[UILabel alloc]init];
         _logLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
-        _logLabel.text = @"已发送6位数验证码至";
+        _logLabel.text = @"已发送4位数验证码至";
         _logLabel.textColor = UIColorFromRGB(0x999999);
         _logLabel.textAlignment = NSTextAlignmentCenter;
     }
@@ -374,8 +366,8 @@
 - (RWPasswordView *)passwordView {
     if (!_passwordView) {
         _passwordView = [[RWPasswordView alloc]init];
-        _passwordView.elementCount = 6;
-        _passwordView.elementMargin = 28;
+        _passwordView.elementCount = 4;
+        _passwordView.elementMargin = 78;
         _passwordView.elementColor = HEX_COLOR(0xd8d8d8);
     }
     return _passwordView;

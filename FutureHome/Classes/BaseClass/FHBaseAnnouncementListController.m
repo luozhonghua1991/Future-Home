@@ -8,13 +8,13 @@
 
 #import "FHBaseAnnouncementListController.h"
 #import "FHAnnouncementListCell.h"
+#import "FHElectionListController.h"
 
 @interface FHBaseAnnouncementListController () <UITableViewDelegate,UITableViewDataSource>
 /** 列表数据 */
 @property (nonatomic, strong) UITableView *listTable;
 /** 表头 */
-@property (nonatomic, strong) UIView *headerView;
-
+@property (nonatomic, strong) UIImageView *headerView;
 
 @end
 
@@ -22,11 +22,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self fh_creatNav];
+    if (!self.isHaveSelectView) {
+        [self fh_creatNav];
+    };
     [self.view addSubview:self.listTable];
     [self.listTable registerClass:[FHAnnouncementListCell class] forCellReuseIdentifier:NSStringFromClass([FHAnnouncementListCell class])];
-    self.listTable.tableHeaderView = self.headerView;
-    self.listTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
+    if (!self.isNoHaveHeaderView) {
+        self.listTable.tableHeaderView = self.headerView;
+        self.listTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
+    }
 }
 
 
@@ -38,6 +42,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = self.titleString;
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -68,11 +73,37 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (self.isHaveSectionView) {
+        return 80.0;
+    }
     return 0.01f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return  80;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (self.isHaveSectionView) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+        view.backgroundColor = [UIColor whiteColor];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        button.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, 60);
+        [button setTitle:@"妹妹家小区--第一届通道\n(点击报名)" forState:UIControlStateNormal];
+        [button setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+        button.layer.borderWidth = 1;
+        button.titleLabel.font = [UIFont systemFontOfSize:13];
+        button.titleLabel.textAlignment = NSTextAlignmentCenter;
+        button.titleLabel.numberOfLines = 2;
+        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [view addSubview:button];
+        
+        return view;
+    }
+    UIView *view = [UIView new];
+    return view;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -81,11 +112,34 @@
     return cell;
 }
 
+- (void)buttonClick {
+    if ([self.yp_tabItemTitle isEqualToString:@"申请通道"]) {
+        [self viewControllerPushOther:@"FHApplicationElectionIndustryCommitteController"];
+        return;
+    }
+    if ([self.titleString isEqualToString:@"物业招标"]) {
+        [self viewControllerPushOther:@"FHApplicationBiddingController"];
+        return;
+    }
+    
+    FHElectionListController *vc = [[FHElectionListController alloc] init];
+    if ([self.yp_tabItemTitle isEqualToString:@"业委海选"]) {
+        vc.titleString = @"业委海选";
+    } else if ([self.yp_tabItemTitle isEqualToString:@"岗位选举"]) {
+        vc.titleString = @"岗位选举";
+    }
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark — setter & getter
 - (UITableView *)listTable {
     if (_listTable == nil) {
-        _listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) style:UITableViewStylePlain];
+        if (self.isHaveSelectView) {
+            _listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - 35) style:UITableViewStylePlain];
+        } else {
+            _listTable = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) style:UITableViewStylePlain];
+        }
         _listTable.dataSource = self;
         _listTable.delegate = self;
         _listTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -99,10 +153,10 @@
     return _listTable;
 }
 
-- (UIView *)headerView {
+- (UIImageView *)headerView {
     if (!_headerView) {
-        _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
-        _headerView.backgroundColor = [UIColor redColor];
+        _headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
+        _headerView.image = [UIImage imageNamed:@"头像"];
     }
     return _headerView;
 }

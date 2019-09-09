@@ -22,14 +22,20 @@
 #import <JhtMarquee/JhtHorizontalMarquee.h>
 #import <JhtMarquee/JhtVerticalMarquee.h>
 #import "FHWebViewController.h"
+#import "FHScanTool.h"
+#import "PYSearchViewController.h"
+#import "FHVideoPlayerController.h"
 
-@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate>
+@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate,PYSearchViewControllerDelegate>
 {
     NSMutableArray *topBannerArrays;
     NSMutableArray *bottomBannerArrays;
+    NSMutableArray *hotSeaches;
 }
 /** 导航View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
+/** 城市定位 */
+@property (nonatomic, strong) UIButton *locationBtn;
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的轮播图 */
@@ -59,7 +65,6 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isHaveNav = YES;
     self.topLogoNameArrs = @[@"扫一扫",
                              @"付款",
                              @"收款",
@@ -77,6 +82,7 @@
                            @"1-5生鲜服务",
                            @"1-6理财",
                            @"1-7客服服务"];
+    [self fh_creatNavUI];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
@@ -94,6 +100,144 @@
     [super viewWillDisappear:animated];
     // 关闭跑马灯
     [self.verticalMarquee marqueeOfSettingWithState:MarqueeShutDown_V];
+}
+
+- (void)fh_creatNavUI {
+    self.isHaveNavgationView = YES;
+    //定位 重庆
+    [self fh_creatLocationView];
+    //搜索栏
+    [self fh_creatSerchView];
+    //扫描二维码
+    [self fh_creatCodeView];
+}
+
+- (void)fh_creatLocationView {
+    self.locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.locationBtn.frame = CGRectMake(15, MainStatusBarHeight + 5, 50, 25);
+    [self.locationBtn setTitle:@"重庆" forState:UIControlStateNormal];
+    [self.locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    self.locationBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.locationBtn setImage:[UIImage imageNamed:@"chengshidingweiicon"] forState:UIControlStateNormal];
+//    [self.locationBtn addTarget:self action:@selector(<#metodName#>) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:self.locationBtn];
+}
+
+- (void)fh_creatSerchView {
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(MaxX(self.locationBtn) + 10, MainStatusBarHeight, SCREEN_WIDTH - 130, 30)];
+    searchView.backgroundColor = [UIColor whiteColor];
+    searchView.layer.cornerRadius = 15;
+    searchView.clipsToBounds = YES;
+    searchView.layer.masksToBounds = YES;
+    
+    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    searchBtn.frame = CGRectMake(0, 0, 50, 15);
+    searchBtn.centerX = searchView.width / 2;
+    searchBtn.centerY = searchView.height / 2;
+    [searchBtn setTitle:@" 搜索" forState:UIControlStateNormal];
+    [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+    searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    [searchBtn setImage:[UIImage imageNamed:@"xingtaiduICON_sousuo--"] forState:UIControlStateNormal];
+    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [searchView addSubview:searchBtn];
+    [self.navgationView addSubview:searchView];
+}
+
+- (void)fh_creatCodeView {
+    self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, MainStatusBarHeight + 5, 25, 25)];
+    self.codeImgView.image = [UIImage imageNamed:@"saoyisao-2"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+    self.codeImgView.userInteractionEnabled = YES;
+    [self.codeImgView addGestureRecognizer:tap];
+    [self.navgationView addSubview:self.codeImgView];
+}
+
+/** 二维码扫描事件 */
+- (void)tapClick {
+    [FHScanTool fh_makeScanClick];
+}
+
+/** 搜索事件 */
+- (void)searchBtnClick {
+    // 1.创建热门搜索
+    // 2. 创建控制器
+    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
+        // 开始搜索执行以下代码
+        // 如：跳转到指定控制器
+//        SearchResultsViewController *result = [[SearchResultsViewController alloc]init];
+//        result.searchText = searchBar.text;
+//        [searchViewController.navigationController pushViewController:result animated:NO];
+    }];
+    // 3. 设置风格
+    // 选择热门搜索
+    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag; // 热门搜索风格根据选择
+    searchViewController.searchHistoryStyle = PYHotSearchStyleDefault; // 搜索历史风格为default
+    searchViewController.searchBarBackgroundColor = COLOR_6;
+    searchViewController.cancelButton.tintColor = COLOR_3;
+    
+    // 4. 设置代理
+    searchViewController.delegate = self;
+    // 5. 跳转到搜索控制器
+    //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
+    //    [self presentViewController:nav  animated:NO completion:nil];
+    searchViewController.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:searchViewController animated:NO];
+}
+
+/** 点击取消时调用 */
+- (void)didClickCancel:(PYSearchViewController *)searchViewController{
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
+
+#pragma mark Get Method
+/** 点击 滚动跑马灯 触发方法 */
+- (void)marqueeTapGes:(UITapGestureRecognizer *)ges {
+    [self.verticalMarquee marqueeOfSettingWithState:MarqueePause_V];
+//    [self.navigationController pushViewController:[[testVC alloc] init] animated:YES];
+}
+
+
+#pragma mark — request
+- (void)fh_refreshBannerData {
+    [self fh_getTopBanner];
+    [self fh_bottomTopBanner];
+}
+
+- (void)fh_getTopBanner {
+    WS(weakSelf);
+    topBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"uplist"];
+        [self->topBannerArrays addObject:upDic[@"path1"]];
+        [self->topBannerArrays addObject:upDic[@"path2"]];
+        [self->topBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)fh_bottomTopBanner {
+    WS(weakSelf);
+    bottomBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"downlist"];
+        [self->bottomBannerArrays addObject:upDic[@"path1"]];
+        [self->bottomBannerArrays addObject:upDic[@"path2"]];
+        [self->bottomBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
 }
 
 
@@ -155,10 +299,6 @@
         // 开始滚动
         [self.verticalMarquee marqueeOfSettingWithState:MarqueeStart_V];
         
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 0, SCREEN_WIDTH * 0.116, SCREEN_WIDTH * 0.116)];
-        self.codeImgView.backgroundColor = [UIColor yellowColor];
-        [locationView addSubview:self.codeImgView];
-        
         [cell addSubview:locationView];
         return cell;
     } else if (indexPath.row == 1) {
@@ -174,7 +314,8 @@
                 [view removeFromSuperview];
             }
         }
-        NSArray *urlsArray = [topBannerArrays copy];
+//        NSArray *urlsArray = [topBannerArrays copy];
+        NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -201,9 +342,10 @@
                 [view removeFromSuperview];
             }
         }
-        NSArray *urlsArray = [bottomBannerArrays copy];
+//        NSArray *urlsArray = [bottomBannerArrays copy];
+        NSArray *urlsArray = @[@"长安汽车 2",@"长安汽车 3",@"长安汽车 4"];
         self.bottomScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
-
+        
         [cell addSubview:self.bottomScrollView];
         return cell;
     }
@@ -225,71 +367,18 @@
     return mallScrollView;
 }
 
-#pragma mark — event
-/** 搜索事件 */
-- (void)searchClick {
-    
-}
-/** 收藏事件 */
-- (void)collectClick {
-    
-}
-
-
-#pragma mark Get Method
-/** 点击 滚动跑马灯 触发方法 */
-- (void)marqueeTapGes:(UITapGestureRecognizer *)ges {
-    [self.verticalMarquee marqueeOfSettingWithState:MarqueePause_V];
-//    [self.navigationController pushViewController:[[testVC alloc] init] animated:YES];
-}
-
-
-#pragma mark — request
-- (void)fh_refreshBannerData {
-    [self fh_getTopBanner];
-    [self fh_bottomTopBanner];
-}
-
-- (void)fh_getTopBanner {
-    WS(weakSelf);
-    topBannerArrays = [[NSMutableArray alloc] init];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(1),@"user_id",
-                               @(1),@"type", nil];
-    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
-        NSDictionary *Dic = responseObj[@"data"];
-        NSDictionary *upDic = Dic[@"uplist"];
-        [self->topBannerArrays addObject:upDic[@"path1"]];
-        [self->topBannerArrays addObject:upDic[@"path2"]];
-        [self->topBannerArrays addObject:upDic[@"path3"]];
-        [weakSelf.homeTable reloadData];
-    } failure:^(NSError *error) {
-        [weakSelf.homeTable reloadData];
-    }];
-}
-
-- (void)fh_bottomTopBanner {
-    WS(weakSelf);
-    bottomBannerArrays = [[NSMutableArray alloc] init];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(1),@"user_id",
-                               @(1),@"type", nil];
-    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
-        NSDictionary *Dic = responseObj[@"data"];
-        NSDictionary *upDic = Dic[@"downlist"];
-        [self->bottomBannerArrays addObject:upDic[@"path1"]];
-        [self->bottomBannerArrays addObject:upDic[@"path2"]];
-        [self->bottomBannerArrays addObject:upDic[@"path3"]];
-        [weakSelf.homeTable reloadData];
-    } failure:^(NSError *error) {
-        [weakSelf.homeTable reloadData];
-    }];
-}
-
 
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
+    
+    FHVideoPlayerController *xys =[[FHVideoPlayerController alloc]init];
+    xys.URLString = @"http://192.168.3.57:8080/uploads/advent/video/20190613/5450dcafd3f28ed0ae4adab0f4b51001.mp4";
+    xys.titleStr = @"视频";
+    xys.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:xys animated:YES];
+    return;
+    
     if (infiniteScrollView.tag == 2018) {
         /** 上面的轮播图 */
         [self pushToWebControllerWithUrl:@"http://192.168.3.57:8080/advent/index/mobileAdvent/pid/1/id/1"];

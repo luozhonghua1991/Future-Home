@@ -23,6 +23,7 @@
 #import "Masonry.h"
 #import "UIColor-Expanded.h"
 #import "UIView+Toast.h"
+#import "UIColor+Extend.h"
 /** 常用工具 */
 #import "MBProgressHUD.h"
 #import "UIImageView+WebCache.h"
@@ -34,12 +35,16 @@
 #import "CurrentViewController.h"
 #import "ZHProgressHUD.h"
 #import "AFNetWorkTool.h"
-
+#import "Header.h"
+#import "AccountStorage.h"
+#import "Account.h"
 
 //获取当前屏幕的宽高
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+#define kScreenHeight [UIScreen mainScreen].bounds.size.height
+#define TABBAR_HEIGHT KIsiPhoneX ? 83 : 49;
 //获取状态栏高度
 #define MainStatusBarHeight ([[UIApplication sharedApplication]statusBarFrame].size.height)
 //获取导航栏高度
@@ -73,6 +78,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //判断字典是否为空
 #define IS_NULL_DIC(dic) ([dic isEqual:[NSNull null]] || dic == nil || dic.count == 0)
 
+#define DEFULT_TITLE_COLOR    [UIColor whiteColor]
+
 /**
  *  计算等比长宽
  */
@@ -85,6 +92,8 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #define ZH_SCALE_SCREEN_Width(winthNumber)  (SCREEN_WIDTH*((winthNumber)/(375.0)))
 #define ZH_SCALE_SCREEN_Height(winthNumber)  (SCREEN_HEIGHT*((winthNumber)/(667.0)))
+#define WCX_SCALE_SCREEN_Width(winthNumber)  (SCREEN_WIDTH*((winthNumber)/(375.0)))
+#define WCX_SCALE_SCREEN_Height(winthNumber)  (SCREEN_HEIGHT*((winthNumber)/(667.0)))
 //颜色RGB值
 #define ZH_COLOR(r,g,b) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:1]
 //系统版本号

@@ -40,6 +40,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"账户信息";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -102,7 +103,8 @@
     } else if (indexPath.row == 1) {
         /** 修改昵称 */
         FHChangeNameController *change = [[FHChangeNameController alloc] init];
-        change.strNikeName = @"南山一叶";
+        Account *account = [AccountStorage readAccount];
+        change.strNikeName = account.nickname;
         [self.navigationController pushViewController:change animated:YES];
     }
 }

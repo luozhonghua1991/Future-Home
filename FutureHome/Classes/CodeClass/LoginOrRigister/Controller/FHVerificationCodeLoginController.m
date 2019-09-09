@@ -30,8 +30,6 @@
 @property (nonatomic,strong) RWTextField                   *phoneNumnTF;
 /**发送验证码按钮*/
 @property (nonatomic,strong) UIButton                      *nextStepBtn;
-/** 第三方登录 */
-//@property (nonatomic, strong) OtherLoginView               *otherLogin;
 /**区号*/
 @property (nonatomic,copy) NSString                        *dialing_code;
 
@@ -119,9 +117,9 @@
     //验证码输入界面
     FHEntryVerificationCodeController *vc = [[FHEntryVerificationCodeController alloc]init];
     vc.phoneNumber = self.phoneNumnTF.text;
-    vc.dialing_code = self.dialing_code;
     //验证码登录界面
     vc.vcType = VERIFICATIONLOGIN_VC;
+    vc.type = 2;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

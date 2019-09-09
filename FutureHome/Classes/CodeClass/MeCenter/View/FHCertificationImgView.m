@@ -99,7 +99,7 @@
 - (UIImageView *)leftImgView {
     if (!_leftImgView) {
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-        _leftImgView.backgroundColor = [UIColor blueColor];
+        _leftImgView.backgroundColor = HEX_COLOR(0x1296db);
         _leftImgView.userInteractionEnabled = YES;
     }
     return _leftImgView;
@@ -108,7 +108,7 @@
 - (UIImageView *)centerImgView {
     if (!_centerImgView) {
         _centerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-        _centerImgView.backgroundColor = [UIColor blueColor];
+        _centerImgView.backgroundColor = HEX_COLOR(0x1296db);
         _centerImgView.userInteractionEnabled = YES;
     }
     return _centerImgView;
@@ -117,7 +117,7 @@
 - (UIImageView *)rightImgView {
     if (!_rightImgView) {
         _rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-        _rightImgView.backgroundColor = [UIColor blueColor];
+        _rightImgView.backgroundColor = HEX_COLOR(0x1296db);
         _rightImgView.userInteractionEnabled = YES;
     }
     return _rightImgView;

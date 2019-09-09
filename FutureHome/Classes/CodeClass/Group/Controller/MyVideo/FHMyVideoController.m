@@ -12,6 +12,8 @@
 #import "FHMyPhotoController.h"
 #import "FHFollowVideoController.h"
 #import "FHOtherFollowController.h"
+#import "FHCircleHotPointController.h"
+#import "FHMyVideosController.h"
 
 @interface FHMyVideoController ()
 
@@ -24,17 +26,19 @@
 }
 
 - (void)initViewControllers {
-    FHMyVideosController *videosVC = [[FHMyVideosController alloc] init];
-    videosVC.yp_tabItemTitle = @"我的视频";
+    FHCircleHotPointController *videosVC = [[FHCircleHotPointController alloc] init];
+    videosVC.yp_tabItemTitle = @"动态";
+    videosVC.isHaveHeaderView = YES;
+    videosVC.isHaveTabbar = YES;
     
-    FHMyPhotoController *photoVC = [[FHMyPhotoController alloc] init];
-    photoVC.yp_tabItemTitle = @"我的相册";
+    FHMyVideosController *photoVC = [[FHMyVideosController alloc] init];
+    photoVC.yp_tabItemTitle = @"视频";
     
-    FHFollowVideoController *followVC = [[FHFollowVideoController alloc] init];
-    followVC.yp_tabItemTitle = @"收藏视频";
+    FHMyPhotoController *followVC = [[FHMyPhotoController alloc] init];
+    followVC.yp_tabItemTitle = @"相册";
     
     FHOtherFollowController *friendVC = [[FHOtherFollowController alloc] init];
-    friendVC.yp_tabItemTitle = @"其他收藏";
+    friendVC.yp_tabItemTitle = @"收藏";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC,followVC,friendVC, nil];
     

@@ -133,31 +133,31 @@
          self.userInteractionEnabled = YES ;
         
             //变换完动画 从网络开始加载图
-            [self.mainImageView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:self.mainImageView.image       options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                
-                NSLog(@"%ld  :  %ld",(long)receivedSize,(long)expectedSize);
-                
-                //加载进度条
-                if (expectedSize > 0) {
-                    
-                    CGFloat progress = (float)receivedSize / expectedSize;
-                    
-                    [self performSelectorOnMainThread:@selector(changeProgressWithProgress:) withObject:[NSNumber numberWithFloat:progress] waitUntilDone:NO];
-                }
-                
-            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                
-                
-                if (error == nil) { //下载成功
-                    [self addGestureRecognizer:self.twoTap];
-                    self.mainImageView.image = image;
-                    [self setFrameAndZoom:self.mainImageView];//设置最新的网络下载后的图的frame大小
-                    
-                }else{ //下载失败
-                    
-                }
-                
-            }];
+//            [self.mainImageView sd_setImageWithURL:[NSURL URLWithString:urlStr] placeholderImage:self.mainImageView.image       options:SDWebImageRetryFailed|SDWebImageLowPriority progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+//
+//                NSLog(@"%ld  :  %ld",(long)receivedSize,(long)expectedSize);
+//
+//                //加载进度条
+//                if (expectedSize > 0) {
+//
+//                    CGFloat progress = (float)receivedSize / expectedSize;
+//
+//                    [self performSelectorOnMainThread:@selector(changeProgressWithProgress:) withObject:[NSNumber numberWithFloat:progress] waitUntilDone:NO];
+//                }
+//
+//            } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+//
+//
+//                if (error == nil) { //下载成功
+//                    [self addGestureRecognizer:self.twoTap];
+//                    self.mainImageView.image = image;
+//                    [self setFrameAndZoom:self.mainImageView];//设置最新的网络下载后的图的frame大小
+//
+//                }else{ //下载失败
+//
+//                }
+//
+//            }];
     }];
 }
 

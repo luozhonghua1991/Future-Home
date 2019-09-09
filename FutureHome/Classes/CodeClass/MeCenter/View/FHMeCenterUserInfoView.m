@@ -80,7 +80,7 @@
 - (UIImageView *)userHeaderImgView {
     if (!_userHeaderImgView) {
         _userHeaderImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 65, 65)];
-        _userHeaderImgView.backgroundColor = [UIColor blueColor];
+        _userHeaderImgView.image = [UIImage imageNamed:@"头像"];
     }
     return _userHeaderImgView;
 }
@@ -108,7 +108,7 @@
 - (UIImageView *)codeImgView {
     if (!_codeImgView) {
         _codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75, 5, 65, 65)];
-        _codeImgView.backgroundColor = [UIColor blueColor];
+        _codeImgView.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _codeImgView;
 }

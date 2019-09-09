@@ -11,6 +11,7 @@
 #import "FHBuinessListController.h"
 #import "FHLittleShopListController.h"
 #import "FHViewManagementController.h"
+#import "FHSureOrderController.h"
 
 @interface FHShopingCartController () <UIScrollViewDelegate>
 {
@@ -54,6 +55,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"购物车";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -62,7 +64,6 @@
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
     [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navgationView addSubview:backBtn];
 }
 
 - (void)backBtnClick {
@@ -77,7 +78,7 @@
     //生鲜商城订单 社交商业订单 微商城订单 查看管理
     CGSize size1 = [UIlabelTool sizeWithString:@"生鲜商城订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
     freshShoppingMallBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(5),3, size1.width, self.selectNavView.frame.size.height)title:@"生鲜商城订单" tag:1];
-    [freshShoppingMallBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [freshShoppingMallBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     
     CGSize size2 = [UIlabelTool sizeWithString:@"社交商业订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
     buinessListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(freshShoppingMallBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size2.width, self.selectNavView.frame.size.height)title:@"社交商业订单" tag:2];
@@ -201,7 +202,7 @@
         [self->buinessListBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->littleShopListBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->viewManagementBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [sender setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     }];
     
 }
@@ -210,7 +211,10 @@
 - (UIView *)selectNavView {
     if (!_selectNavView) {
         _selectNavView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 35)];
-        _selectNavView.backgroundColor = [UIColor redColor];
+        
+        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, SCREEN_WIDTH, 0.5)];
+        bottomLine.backgroundColor = [UIColor lightGrayColor];
+        [_selectNavView addSubview:bottomLine];
     }
     return _selectNavView;
 }

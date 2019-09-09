@@ -130,6 +130,7 @@
     vc.dialing_code = self.dialing_code;
     //新用户注册界面
     vc.vcType = REGISTER_VC;
+    vc.type = 1;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

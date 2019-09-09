@@ -219,23 +219,27 @@
             [self.view makeToast:@"亲，未填写密码"];
             return;
         }
-        
-//        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-//        params[@"dialing_code"] = self.dialing_code;
-//        params[@"phone"] = self.phoneNumnTF.text;
-//        params[@"password"] = self.passwordTF.text;
-//        [LoginService loginWithParams:@{@"session":params} success:^(Account *accout) {
-//            [self.view.window makeToast:@"登录成功"];
-//            [self.navigationController popToRootViewControllerAnimated:YES];
-//            [[NSNotificationCenter defaultCenter]postNotificationName:@"PERSONLOGIN" object:nil];
-//        } failure:^(NSString *msg) {
-//            [self.view makeToast:msg];
-//        }];
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        params[@"username"] = self.phoneNumnTF.text;
+        params[@"password"] = self.passwordTF.text;
+        [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
+            /** 保存用户信息 */
+            Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
+            [AccountStorage saveAccount:account];
+            NSString *msg = responseObj[@"msg"];
+            [self.view makeToast:msg];
+            [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
+        } failure:^(NSError *error) {
+        }];
     } else if ([name isEqualToString:@"注册"]) {
         [self viewControllerPushOther:@"FHRigisterController"];
     } else {
         [self.view makeToast:@"亲，请输入有效的手机号码"];
     }
+}
+
+- (void)popVC {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /**

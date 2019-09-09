@@ -68,7 +68,7 @@
     if (!_selectBtn) {
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _selectBtn.frame = CGRectMake(0, 0, 15, 15);
-        _selectBtn.backgroundColor = [UIColor blueColor];
+        _selectBtn.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _selectBtn;
 }

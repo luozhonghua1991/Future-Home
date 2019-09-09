@@ -9,8 +9,7 @@
 #import "FHAccountApplicationTFView.h"
 
 @interface FHAccountApplicationTFView ()
-/** 下面的线 */
-@property (nonatomic, strong) UIView *bottomLineView;
+
 
 @end
 
@@ -53,7 +52,7 @@
         _contentTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20)];
         _contentTF.textAlignment = NSTextAlignmentRight;
         _contentTF.font = [UIFont systemFontOfSize:15];
-//        _contentTF.backgroundColor = [UIColor blueColor];
+//        _contentTF.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _contentTF;
 }

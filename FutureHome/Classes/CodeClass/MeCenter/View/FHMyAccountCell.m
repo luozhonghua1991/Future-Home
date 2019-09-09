@@ -11,6 +11,9 @@
 @interface FHMyAccountCell ()
 /** 最下面的线 */
 @property (nonatomic, strong) UIView *bottomLineView;
+/** 用户信息 */
+@property (nonatomic, strong) Account *account;
+
 
 @end
 
@@ -19,6 +22,7 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self fh_setUpUI];
+        self.account = [AccountStorage readAccount];
     }
     return self;
 }
@@ -45,8 +49,9 @@
 - (UIImageView *)headerImg {
     if (!_headerImg) {
         _headerImg = [[UIImageView alloc] init];
-        _headerImg.image = [UIImage imageNamed:@""];
-        _headerImg.backgroundColor = [UIColor blueColor];
+        [_headerImg sd_setImageWithURL:[NSURL URLWithString:self.account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+//        _headerImg.image = [UIImage imageNamed:@""];
+//        _headerImg.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _headerImg;
 }
@@ -55,7 +60,7 @@
     if (!_rightArrowImg) {
         _rightArrowImg = [[UIImageView alloc] init];
         _rightArrowImg.image = [UIImage imageNamed:@""];
-        _rightArrowImg.backgroundColor = [UIColor blueColor];
+        _rightArrowImg.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _rightArrowImg;
 }
@@ -67,7 +72,7 @@
         _logoLabel.font = [UIFont systemFontOfSize:14];
         _logoLabel.textColor = [UIColor blackColor];
 #warning message
-        _logoLabel.text = @"物业服务";
+        _logoLabel.text = self.account.nickname;
     }
     return _logoLabel;
 }
@@ -79,7 +84,7 @@
         _contentLabel.font = [UIFont systemFontOfSize:14];
         _contentLabel.textColor = [UIColor blackColor];
 #warning message
-        _contentLabel.text = @"南山一叶";
+        _contentLabel.text = self.account.username;
     }
     return _contentLabel;
 }

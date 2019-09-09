@@ -7,7 +7,7 @@
 //  商业服务
 
 #import "FHBusinessServicesController.h"
-#import "FHFollowListController.h"
+#import "FHCollectListViewController.h"
 #import "FHSearchBelowController.h"
 #import "FHSearchCategoryController.h"
 #import "FHMessageHistoryController.h"
@@ -23,19 +23,20 @@
 }
 
 - (void)initViewControllers {
-    FHFollowListController *videosVC = [[FHFollowListController alloc] init];
-    videosVC.yp_tabItemTitle = @"关注列表";
+    FHCollectListViewController *videosVC = [[FHCollectListViewController alloc] init];
+    videosVC.yp_tabItemTitle = @"生鲜收藏";
     
-    FHSearchBelowController *photoVC = [[FHSearchBelowController alloc] init];
+    FHCollectListViewController *videos1VC = [[FHCollectListViewController alloc] init];
+    videos1VC.yp_tabItemTitle = @"商业收藏";
+    
+    FHCollectListViewController *videos2VC = [[FHCollectListViewController alloc] init];
+    videos2VC.yp_tabItemTitle = @"医药收藏";
+    
+//  FHSearchBelowController *photoVC = [[FHSearchBelowController alloc] init];
+    FHCollectListViewController *photoVC = [[FHCollectListViewController alloc] init];
     photoVC.yp_tabItemTitle = @"查找附近";
     
-//    FHSearchCategoryController *followVC = [[FHSearchCategoryController alloc] init];
-//    followVC.yp_tabItemTitle = @"分类查找";
-//
-//    FHMessageHistoryController *friendVC = [[FHMessageHistoryController alloc] init];
-//    friendVC.yp_tabItemTitle = @"对话记录";
-    
-    self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC, nil];
+    self.viewControllers = [NSMutableArray arrayWithObjects:videosVC,videos1VC,videos2VC,photoVC, nil];
     
 }
 

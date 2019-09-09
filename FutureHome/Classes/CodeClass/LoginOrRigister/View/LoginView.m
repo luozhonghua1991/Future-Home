@@ -119,7 +119,7 @@
         _rigisterBtn.titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
         [_rigisterBtn setTitleColor:HEX_COLOR(0xFFFFFF) forState:UIControlStateNormal];
         [_rigisterBtn addTarget:self action:@selector(onClickRigisterButton:) forControlEvents:UIControlEventTouchUpInside];
-        [_rigisterBtn setBackgroundImage:[UIImage imageNamed:@"rw_login_noUser"] forState:UIControlStateNormal];
+        [_rigisterBtn setBackgroundImage:[UIImage imageNamed:@"rw_login_user"] forState:UIControlStateNormal];
         [_rigisterBtn setTitleEdgeInsets:UIEdgeInsetsMake(-5, 0, 0, 0)];
         [self addSubview:_rigisterBtn];
     }

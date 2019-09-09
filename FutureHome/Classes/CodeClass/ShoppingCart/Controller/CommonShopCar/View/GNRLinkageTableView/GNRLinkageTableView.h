@@ -13,6 +13,8 @@
 
 - (void)scrollViewDidScrollForPositionY:(CGFloat)y;
 
+- (void)fh_selectIndex:(NSIndexPath *)index;
+
 @end
 
 @interface GNRLinkageTableView : UIView

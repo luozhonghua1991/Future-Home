@@ -10,7 +10,7 @@
 #import "FHMeCenterUserInfoView.h"
 #import "FHLoginTool.h"
 
-@interface FHMeCenterController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHMeCenterController () <UITableViewDelegate,UITableViewDataSource,FDActionSheetDelegate>
 /** 个人中心列表数据 */
 @property (nonatomic, strong) UITableView *meCenterTable;
 /** 个人信息提示数据 */
@@ -32,7 +32,7 @@
                       @"我的收藏",
                       @"实名认证",
                       @"隐私设置",
-                      @"账户申请",
+                      @"开通账户",
                       @"关于未来家园"];
     [self.view addSubview:self.meCenterTable];
     self.meCenterTable.tableHeaderView = self.meCenterHeaderView;
@@ -50,6 +50,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"个人中心";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -58,7 +59,6 @@
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
     [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navgationView addSubview:backBtn];
     
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
@@ -146,7 +146,7 @@
             /** 隐私设置 */
             [self viewControllerPushOther:@"FHPrivacySettingsController"];
         } else if (indexPath.row == 4) {
-            /** 账户申请 */
+            /** 开通账户 */
             [self viewControllerPushOther:@"FHAccountApplyController"];
         } else if (indexPath.row == 5) {
             /** 关于未来家园 */
@@ -164,9 +164,18 @@
 
 #pragma mark — event
 - (void)logOutClick {
-    /** 退出登录 */
-    [FHLoginTool fh_makePersonToLoging];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"要注销登录吗?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *logout = [UIAlertAction actionWithTitle:@"退出账号" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        /** 删除用户信息 */
+        [AccountStorage removeAccount];
+        [FHLoginTool fh_makePersonToLoging];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:logout];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
 }
+
 
 - (void)exchangeBtnClick {
     /** 切换用户 */
@@ -193,26 +202,20 @@
 
 - (UIView *)meCenterFooterView {
     if (!_meCenterFooterView) {
-        _meCenterFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 140)];
-        _meCenterFooterView.backgroundColor = [UIColor whiteColor];
+        _meCenterFooterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
+        _meCenterFooterView.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1];
         _meCenterFooterView.userInteractionEnabled = YES;
         
         UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 10, 0.5)];
         lineView.backgroundColor = [UIColor lightGrayColor];
         [_meCenterFooterView addSubview:lineView];
         
-        UIButton *exchangeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        exchangeBtn.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, 55);
-        [exchangeBtn addTarget:self action:@selector(exchangeBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        [exchangeBtn setTitle:@"切换用户" forState:0];
-        [exchangeBtn setBackgroundColor:[UIColor redColor]];
-        [_meCenterFooterView addSubview:exchangeBtn];
-        
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(10, 75, SCREEN_WIDTH - 20, 55);
+        btn.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, 55);
         [btn addTarget:self action:@selector(logOutClick) forControlEvents:UIControlEventTouchUpInside];
         [btn setTitle:@"退出登录" forState:0];
-        [btn setBackgroundColor:[UIColor lightGrayColor]];
+        [btn setTitleColor:[UIColor redColor] forState:0];
+        [btn setBackgroundColor:[UIColor whiteColor]];
         [_meCenterFooterView addSubview:btn];
         
     }

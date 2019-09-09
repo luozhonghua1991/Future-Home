@@ -4,7 +4,7 @@
 //
 //  Created by 性用社 on 16/11/16.
 //  Copyright © 2016年 xys. All rights reserved.
-//
+//  123333
 
 #import "FHVideoPlayerController.h"
 #import "WMPlayer.h"
@@ -61,8 +61,8 @@
     _wmPlayer =[[WMPlayer alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     _wmPlayer.center = self.view.center;
     _wmPlayer.delegate =self;
-//    [self.wmPlayer setURLString:self.URLString];
-    [self.wmPlayer setURLString:@"http://xys-app-file.oss-cn-hangzhou.aliyuncs.com/video/2017/6/9/149694206055269.mp4"];
+    [self.wmPlayer setURLString:self.URLString];
+//    [self.wmPlayer setURLString:@"http://xys-app-file.oss-cn-hangzhou.aliyuncs.com/video/2017/6/9/149694206055269.mp4"];
     [self.wmPlayer setTitleStr:self.titleStr];
     self.wmPlayer.closeBtn.hidden = NO;
 //    self.wmPlayer.player.automaticallyWaitsToMinimizeStalling = NO;

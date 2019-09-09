@@ -281,7 +281,7 @@
                 NSMutableArray *mutArr = [NSMutableArray array];
                 for (NSInteger i = 0; i < buttonTitleArray.count; i ++)
                 {
-                    [mutArr addObject:[UIColor blueColor]];
+                    [mutArr addObject:HEX_COLOR(0x1296db)];
                 }
                 buttonTitleColorArray = [mutArr mutableCopy];
             }

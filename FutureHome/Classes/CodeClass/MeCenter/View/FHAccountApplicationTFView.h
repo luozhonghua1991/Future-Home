@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHAccountApplicationTFView : UIView
+/** 下面的线 */
+@property (nonatomic, strong) UIView *bottomLineView;
 /** titleLabel */
 @property (nonatomic, strong) UILabel *titleLabel;
 /** 内容文本框 */

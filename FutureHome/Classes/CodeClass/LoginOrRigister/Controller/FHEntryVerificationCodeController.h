@@ -26,5 +26,8 @@ typedef enum : NSUInteger {
 @property (nonatomic,copy) NSString *dialing_code;
 /**手机号码*/
 @property (nonatomic,copy) NSString *phoneNumber;
+/** 验证码类型 */
+@property (nonatomic, assign) NSInteger type;
+
 
 @end

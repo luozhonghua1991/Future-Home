@@ -48,6 +48,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"隐私设置";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -157,7 +158,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
             if (self.topLastIndexPath == indexPath) {
-                cell.selectBtn.backgroundColor = [UIColor blueColor];
+                cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
             } else {
                 cell.selectBtn.backgroundColor = [UIColor redColor];
             }
@@ -167,7 +168,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.bottomLogoNameArrs[indexPath.row]];
             if (self.bottomLastIndexPath == indexPath) {
-                cell.selectBtn.backgroundColor = [UIColor blueColor];
+                cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
             } else {
                 cell.selectBtn.backgroundColor = [UIColor redColor];
             }
@@ -186,13 +187,13 @@
             oldCell.selectBtn.backgroundColor = [UIColor redColor];
             self.topLastIndexPath = indexPath;
             FHPrivacySettingsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            cell.selectBtn.backgroundColor = [UIColor blueColor];
+            cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
         } else {
             FHPrivacySettingsCell *oldCell = [tableView cellForRowAtIndexPath:self.bottomLastIndexPath];
             oldCell.selectBtn.backgroundColor = [UIColor redColor];
             self.bottomLastIndexPath = indexPath;
             FHPrivacySettingsCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            cell.selectBtn.backgroundColor = [UIColor blueColor];
+            cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
         }
     }
 }

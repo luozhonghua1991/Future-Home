@@ -72,28 +72,31 @@
 
 - (UIFont *)itemTitleFont {
     if (!itemTitleFont) {
-        itemTitleFont = [UIFont systemFontOfSize:10.0f];
+        itemTitleFont = [UIFont systemFontOfSize:13.0f];
     }
     return itemTitleFont;
 }
 
 - (UIFont *)badgeTitleFont {
     if (!badgeTitleFont) {
-        badgeTitleFont = [UIFont systemFontOfSize:11.0f];
+        badgeTitleFont = [UIFont systemFontOfSize:14.0f];
     }
     return badgeTitleFont;
 }
 
 - (UIColor *)itemTitleColor {
     if (!itemTitleColor) {
-        itemTitleColor = LCColorForTabBar(117, 117, 117);
+//        itemTitleColor = LCColorForTabBar(117, 117, 117);
+//        itemTitleColor = HEX_COLOR(0x8a8a8a);
+        itemTitleColor = [UIColor blackColor];
     }
     return itemTitleColor;
 }
 
 - (UIColor *)selectedItemTitleColor {
     if (!selectedItemTitleColor) {
-        selectedItemTitleColor = [UIColor blueColor];
+        selectedItemTitleColor = HEX_COLOR(0x1296db);
+//        selectedItemTitleColor = HEX_COLOR(0x0000FF);
     }
     return selectedItemTitleColor;
 }

@@ -50,4 +50,5 @@ typedef void(^ShareResultBlock)(ShareType type,BOOL isSuccess);
                                           Result:(ShareResultBlock)resultBlock;
 
 - (void)dismissShareView;
+
 @end

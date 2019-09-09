@@ -10,8 +10,15 @@
 #import "FHCommonCollectionViewCell.h"
 #import "FHLittleMenuListCell.h"
 #import "FHBaseAnnouncementListController.h"
+#import "FHWebViewController.h"
+#import <JhtMarquee/JhtHorizontalMarquee.h>
+#import <JhtMarquee/JhtVerticalMarquee.h>
 
 @interface FHFinancialServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
+{
+    NSMutableArray *topBannerArrays;
+    NSMutableArray *bottomBannerArrays;
+}
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的轮播图 */
@@ -28,6 +35,10 @@
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
 /** 下面的image */
 @property (nonatomic, copy) NSArray *bottomImageArrs;
+// 纵向 跑马灯
+@property (nonatomic,strong) JhtVerticalMarquee      *verticalMarquee;
+/**消息图标*/
+@property (nonatomic,strong) UIImageView             *messageImgView;
 
 @end
 
@@ -35,7 +46,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isHaveNav = YES;
+    [self fh_creatNav];
     self.bottomLogoNameArrs = @[@"生鲜行情",
                                 @"房产大观",
                                 @"经济头条",
@@ -59,7 +70,95 @@
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    // 开启跑马灯
+    [self.verticalMarquee marqueeOfSettingWithState:MarqueeStart_V];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 关闭跑马灯
+    [self.verticalMarquee marqueeOfSettingWithState:MarqueeShutDown_V];
+}
+
+
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = @"理财服务";
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:backBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.navgationView addSubview:bottomLineView];
+}
+
+- (void)backBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark — request
+- (void)fh_refreshBannerData {
+    [self fh_getTopBanner];
+    [self fh_bottomTopBanner];
+}
+
+- (void)fh_getTopBanner {
+    WS(weakSelf);
+    topBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"uplist"];
+        [self->topBannerArrays addObject:upDic[@"path1"]];
+        [self->topBannerArrays addObject:upDic[@"path2"]];
+        [self->topBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)fh_bottomTopBanner {
+    WS(weakSelf);
+    bottomBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"downlist"];
+        [self->bottomBannerArrays addObject:upDic[@"path1"]];
+        [self->bottomBannerArrays addObject:upDic[@"path2"]];
+        [self->bottomBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -85,9 +184,40 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
-        /** 菜单列表 */
-        FHLittleMenuListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
+        static NSString *ID = @"cell1";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        for (UIView *view in cell.subviews) {
+            if (view.tag == 2017) {
+                [view removeFromSuperview];
+            }
+        }
+        UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
+        locationView.tag = 2017;
+        
+        [locationView addSubview:self.messageImgView];
+        
+        self.verticalMarquee = [[JhtVerticalMarquee alloc] initWithFrame:CGRectMake(40,( SCREEN_WIDTH * 0.116 - 25 ) / 2, SCREEN_WIDTH - 55 - SCREEN_WIDTH * 0.116, 25)];
+        self.verticalMarquee.verticalTextColor = [UIColor blackColor];
+        self.verticalMarquee.verticalTextFont = [UIFont systemFontOfSize:15];
+        self.verticalMarquee.verticalTextAlignment = NSTextAlignmentLeft;
+        // 添加点击手势
+        //        UITapGestureRecognizer *vtap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marqueeTapGes:)];
+        //        [self.verticalMarquee addGestureRecognizer:vtap];
+        [locationView addSubview:self.verticalMarquee];
+        NSArray *soureArray = @[@"1. 谁曾从谁的青春里走过，留下了笑靥",
+                                @"2. 谁曾在谁的花季里停留，温暖了想念",
+                                @"3. 谁又从谁的雨季里消失，泛滥了眼泪"
+                                ];
+        
+        self.verticalMarquee.sourceArray = soureArray;
+        // 开始滚动
+        [self.verticalMarquee marqueeOfSettingWithState:MarqueeStart_V];
+        
+        [cell addSubview:locationView];
         return cell;
     } else if (indexPath.row == 1) {
         /** 轮播图 */
@@ -102,7 +232,8 @@
                 [view removeFromSuperview];
             }
         }
-        NSArray *urlsArray = [[NSArray alloc] init];
+//        NSArray *urlsArray = [topBannerArrays copy];
+        NSArray *urlsArray = @[@"七匹狼 5",@"七匹狼 6",@"七匹狼 8"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -129,7 +260,8 @@
                 [view removeFromSuperview];
             }
         }
-        NSArray *urlsArray = [[NSArray alloc] init];
+//        NSArray *urlsArray = [bottomBannerArrays copy];
+        NSArray *urlsArray = @[@"P30 3",@"P30 4",@"P30 5",@"P30 6"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
         
         [cell addSubview:self.topScrollView];
@@ -146,11 +278,9 @@
                                             infiniteScrollViewWithFrame:scrollViewFrame Delegate:self ImagesArray:imageArrs];
     
     mallScrollView.titleView.hidden = YES;
-    mallScrollView.backgroundColor = [UIColor redColor];
     mallScrollView.scrollTimeInterval = 3;
     mallScrollView.autoScrollToNextPage = YES;
     mallScrollView.delegate = self;
-    mallScrollView.pageControlHidden = YES;
     mallScrollView.contentMode = UIViewContentModeScaleAspectFill;
     mallScrollView.tag = scrollViewTag;
     return mallScrollView;
@@ -171,25 +301,34 @@
 #pragma mark — FHCommonCollectionViewDelegate
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
-        /** 公告通知 */
+        /** 生鲜行情 */
     } else if (selectIndex.row == 1) {
-        /** 业主大会 */
+        /** 房产大观 */
+        [self pushAnnouncementControllerWithTitle:@"房产大观"];
     } else if (selectIndex.row == 2) {
-        /** 业委选举 */
+        /** 经济头条 */
+        [self pushAnnouncementControllerWithTitle:@"经济头条"];
     } else if (selectIndex.row == 3) {
-        /** 业委管理 */
+        /** 民生资讯 */
+        [self pushAnnouncementControllerWithTitle:@"民生资讯"];
     } else if (selectIndex.row == 4) {
-        /** 财务公开 */
+        /** 国际资讯 */
+        [self pushAnnouncementControllerWithTitle:@"国际资讯"];
     } else if (selectIndex.row == 5) {
-        /** 物业管理 */
+        /** 投资观察 */
+        [self pushAnnouncementControllerWithTitle:@"投资观察"];
     } else if (selectIndex.row == 6) {
-        /** 物业招标 */
+        /** 基金保险 */
+        [self pushAnnouncementControllerWithTitle:@"基金保险"];
     } else if (selectIndex.row == 7) {
-        /** 活动关爱 */
+        /** 股票期货 */
+         [self pushAnnouncementControllerWithTitle:@"股票期货"];
     } else if (selectIndex.row == 8) {
-        /** 投诉建议 */
+        /** 黄金白银 */
+        [self pushAnnouncementControllerWithTitle:@"黄金白银"];
     } else if (selectIndex.row == 9) {
-        /** 我的业委 */
+        /** 全球外汇 */
+        [self pushAnnouncementControllerWithTitle:@"全球外汇"];
     }
 }
 
@@ -205,11 +344,20 @@
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
     if (infiniteScrollView.tag == 2018) {
         /** 上面的轮播图 */
-        
+        [self pushToWebControllerWithUrl:@"http://192.168.3.57:8080/advent/index/mobileAdvent/pid/1/id/1"];
     } else {
         /** 下面的轮播图 */
+        [self pushToWebControllerWithUrl:@"https://www.kancloud.cn/gogery/tp5/358921"];
     }
 }
+
+- (void)pushToWebControllerWithUrl:(NSString *)url {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = url;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
 
 
 #pragma mark — setter & getter
@@ -230,5 +378,13 @@
     return _homeTable;
 }
 
+- (UIImageView *)messageImgView {
+    if (!_messageImgView) {
+        _messageImgView = [[UIImageView alloc]init];
+        _messageImgView.image =[UIImage imageNamed:@"message_laba_icon"];
+        _messageImgView.frame = CGRectMake(10, 14, 22, 22);
+    }
+    return _messageImgView;
+}
 
 @end

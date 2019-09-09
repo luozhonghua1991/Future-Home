@@ -148,6 +148,7 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
         [self addNewImg];
     }
     else{
+        return;
         //点击放大查看
         HWCollectionViewCell *cell = (HWCollectionViewCell*)[_pickerCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
         if (!cell.BigImageView || !cell.BigImageView.image) {

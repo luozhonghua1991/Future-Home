@@ -10,6 +10,8 @@
 #import "GNRLinkageTableView.h"
 #import "GNRShoppingBar.h"
 #import "UINavigationBar+Awesome.h"
+#import "FHSureOrderController.h"
+#import "FHGoodsDetailController.h"
 
 @interface FHGoodsListController () <GNRGoodsNumberChangedDelegate,GNRLinkageTableViewDelegate,CAAnimationDelegate,GNRShoppingBarDelegate>
 @property (nonatomic,strong) CALayer *dotLayer;//小圆点
@@ -38,7 +40,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    self.navigationController.navigationBar.tintColor = [UIColor blueColor];
+    self.navigationController.navigationBar.tintColor = HEX_COLOR(0x1296db);
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:0]];
 }
 
@@ -230,7 +232,9 @@ valueChangedForCount:(NSInteger)count
 #pragma mark — GNRShoppingBarDelegate
 /** 支付事件 */
 - (void)GNRShoppingBarDelegatePayAction {
-    
+    FHSureOrderController *vc = [[FHSureOrderController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - CAAnimationDelegate
@@ -246,6 +250,12 @@ valueChangedForCount:(NSInteger)count
     }
 }
 
+- (void)fh_selectIndex:(NSIndexPath *)index {
+    /** 去商品详情界面 */
+    FHGoodsDetailController *vc = [[FHGoodsDetailController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark — setter && getter
 - (GNRLinkageTableView *)goodsListView{

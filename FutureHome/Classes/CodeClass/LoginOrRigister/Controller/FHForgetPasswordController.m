@@ -112,6 +112,7 @@
     vc.phoneNumber = self.phoneNumnTF.text;
     vc.dialing_code = self.dialing_code;
     vc.vcType = FORGETPASSWORD_VC;
+    vc.type = 3;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

@@ -11,6 +11,7 @@
 #import "FHNormalManagerController.h"
 #import "FHSpecialManagerController.h"
 #import "FHInvoiceListController.h"
+#import "HYJFAddressAdministrationController.h"
 
 @interface FHViewManagementController ()
 
@@ -24,19 +25,19 @@
 }
 
 - (void)initViewControllers {
-    FHAddressManagerController *messageVC = [[FHAddressManagerController alloc] init];
+    HYJFAddressAdministrationController *messageVC = [[HYJFAddressAdministrationController alloc] init];
     messageVC.yp_tabItemTitle = @"地址管理";
     
-    FHNormalManagerController *groupVC = [[FHNormalManagerController alloc] init];
-    groupVC.yp_tabItemTitle = @"普票管理";
-    
-    FHSpecialManagerController *hotVC = [[FHSpecialManagerController alloc] init];
-    hotVC.yp_tabItemTitle = @"专票管理";
+//    FHNormalManagerController *groupVC = [[FHNormalManagerController alloc] init];
+//    groupVC.yp_tabItemTitle = @"普票管理";
+//
+//    FHSpecialManagerController *hotVC = [[FHSpecialManagerController alloc] init];
+//    hotVC.yp_tabItemTitle = @"专票管理";
     
     FHInvoiceListController *friendVC = [[FHInvoiceListController alloc] init];
-    friendVC.yp_tabItemTitle = @"发票列表";
+    friendVC.yp_tabItemTitle = @"发票管理";
     
-    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC, nil];
+    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC,friendVC, nil];
     
 }
 

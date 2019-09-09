@@ -118,6 +118,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"业主账户申请";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -302,7 +303,7 @@
         _normalBlueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_normalBlueBtn setTitle:@"服务平台基本信息" forState:UIControlStateNormal];
         _normalBlueBtn.userInteractionEnabled = NO;
-        _normalBlueBtn.backgroundColor = [UIColor blueColor];
+        _normalBlueBtn.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _normalBlueBtn;
 }

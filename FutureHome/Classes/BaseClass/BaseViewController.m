@@ -113,7 +113,7 @@
     }
     if (self.isHaveNavgationView) {
         self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainSizeHeight)];
-        self.navgationView.backgroundColor = [UIColor whiteColor];
+        self.navgationView.backgroundColor = HEX_COLOR(0x1296db);
         self.navgationView.userInteractionEnabled = YES;
         [self.view addSubview:self.navgationView];
     }

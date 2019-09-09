@@ -10,6 +10,7 @@
 #import "YPTabBar.h"
 #import "YPTabItem.h"
 #import "BaseViewController.h"
+#import "FHBaseAnnouncementListController.h"
 
 @interface YPTabBarController : BaseViewController <YPTabBarDelegate>
 

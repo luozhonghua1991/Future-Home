@@ -9,8 +9,17 @@
 #import "FHOwnerServiceController.h"
 #import "FHCommonCollectionViewCell.h"
 #import "FHBaseAnnouncementListController.h"
+#import "FHWebViewController.h"
+#import "FHFreshMallFollowListController.h"
+#import "FHBaseAnnouncementListController.h"
+#import "FHSuggestionController.h"
+#import "FHElectionofIndustryCommitteeMainController.h"
 
 @interface FHOwnerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
+{
+    NSMutableArray *topBannerArrays;
+    NSMutableArray *bottomBannerArrays;
+}
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的轮播图 */
@@ -32,12 +41,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.isHaveNav = YES;
+    [self fh_creatNav];
     self.bottomLogoNameArrs = @[@"公告通知",
                                 @"业主大会",
-                                @"业委选举",
                                 @"业委管理",
-                                @"财务公开",
+                                @"财务管理",
+                                @"业委选举",
                                 @"物业管理",
                                 @"物业招标",
                                 @"活动关爱",
@@ -45,16 +54,135 @@
                                 @"我的业委"];
     self.bottomImageArrs = @[@"3-1业委公告",
                              @"3-2业主大会",
-                             @"3-3业委选举",
                              @"3-4业委管理",
+                             @"3-7 财务管理",
+                             @"3-3业委选举",
                              @"3-5物业管理",
                              @"3-6 物业招标",
-                             @"3-7 财务管理",
                              @"3-8活动关爱",
                              @"3-9投诉建议",
                              @"3-10我的业委"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
+}
+
+
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = @"业主服务";
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:backBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.navgationView addSubview:bottomLineView];
+    
+    [self fh_creatNavBtn];
+}
+
+- (void)fh_creatNavBtn {
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
+    [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:shareBtn];
+    
+    UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
+    [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:followBtn];
+    
+    UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 35 - 5, MainStatusBarHeight, 35, 35);
+    [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
+    [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:menuBtn];
+}
+
+- (void)backBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark — request
+- (void)fh_refreshBannerData {
+    [self fh_getTopBanner];
+    [self fh_bottomTopBanner];
+}
+
+- (void)fh_getTopBanner {
+    WS(weakSelf);
+    topBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"uplist"];
+        [self->topBannerArrays addObject:upDic[@"path1"]];
+        [self->topBannerArrays addObject:upDic[@"path2"]];
+        [self->topBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)fh_bottomTopBanner {
+    WS(weakSelf);
+    bottomBannerArrays = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(1),@"user_id",
+                               @(1),@"type", nil];
+    [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        NSDictionary *upDic = Dic[@"downlist"];
+        [self->bottomBannerArrays addObject:upDic[@"path1"]];
+        [self->bottomBannerArrays addObject:upDic[@"path2"]];
+        [self->bottomBannerArrays addObject:upDic[@"path3"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+
+#pragma mark — event
+/** 收藏按钮 */
+- (void)followBtnClick {
+    //    [self.followDownMenu showMenu];
+    [self.view makeToast:@"添加收藏成功"];
+}
+
+/** 搜索事件 */
+- (void)searchBtnClick {
+    
+}
+
+/** 菜单按钮 */
+- (void)menuBtnClick {
+    //显示收藏列表菜单
+    //    [self.followDownMenu showMenu];
+    /** 去到收藏列表 */
+    FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
+    [self.navigationController pushViewController:listVC animated:YES];
     
 }
 
@@ -124,9 +252,8 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [[NSArray alloc] init];
-        NSArray *urlsArray = @[@"http://192.168.3.57:8080/uploads/admin/img/20190609/1530a0df58fe1870bed63eaa275dead3.png",
-                               @"http://192.168.3.57:8080/uploads/admin/img/20190609/61b5da068844877e75e114005b75bf2e.png"];
+//        NSArray *urlsArray = [topBannerArrays copy];
+        NSArray *urlsArray = @[@"农业公司 1",@"农业公司 2",@"农业公司 3"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -154,8 +281,8 @@
             }
         }
 //        NSArray *urlsArray = [[NSArray alloc] init];
-        NSArray *urlsArray = @[@"http://192.168.3.57:8080/uploads/admin/img/20190609/1530a0df58fe1870bed63eaa275dead3.png",
-                               @"http://192.168.3.57:8080/uploads/admin/img/20190609/61b5da068844877e75e114005b75bf2e.png"];
+//        NSArray *urlsArray = [bottomBannerArrays copy];
+        NSArray *urlsArray = @[@"金典牛奶 1",@"金典牛奶 2",@"金典牛奶 3"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
         
         [cell addSubview:self.topScrollView];
@@ -172,7 +299,6 @@
                                             infiniteScrollViewWithFrame:scrollViewFrame Delegate:self ImagesArray:imageArrs];
     
     mallScrollView.titleView.hidden = YES;
-    mallScrollView.backgroundColor = [UIColor redColor];
     mallScrollView.scrollTimeInterval = 3;
     mallScrollView.autoScrollToNextPage = YES;
     mallScrollView.delegate = self;
@@ -197,24 +323,46 @@
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
         /** 公告通知 */
+        [self pushAnnouncementControllerWithTitle:@"公告通知"];
     } else if (selectIndex.row == 1) {
         /** 业主大会 */
+        [self pushAnnouncementControllerWithTitle:@"业主大会"];
     } else if (selectIndex.row == 2) {
-        /** 业委选举 */
-    } else if (selectIndex.row == 3) {
         /** 业委管理 */
+        [self pushAnnouncementControllerWithTitle:@"业委管理"];
+    } else if (selectIndex.row == 3) {
+        /** 财务管理 */
+        [self pushAnnouncementControllerWithTitle:@"财务管理"];
     } else if (selectIndex.row == 4) {
-        /** 财务公开 */
+        /** 业委选举 */
+        FHElectionofIndustryCommitteeMainController *vc = [[FHElectionofIndustryCommitteeMainController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.titleString = @"业委选举";
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 5) {
         /** 物业管理 */
+        [self pushAnnouncementControllerWithTitle:@"物业管理"];
     } else if (selectIndex.row == 6) {
         /** 物业招标 */
+//        [self pushAnnouncementControllerWithTitle:@"物业招标"];
+        FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
+        an.titleString = @"物业招标";
+        an.hidesBottomBarWhenPushed = YES;
+        an.isHaveSectionView = YES;
+        [self.navigationController pushViewController:an animated:YES];
     } else if (selectIndex.row == 7) {
         /** 活动关爱 */
+        [self pushAnnouncementControllerWithTitle:@"活动关爱"];
     } else if (selectIndex.row == 8) {
         /** 投诉建议 */
+        FHSuggestionController *vc = [[FHSuggestionController alloc] init];
+        vc.titleString = @"投诉建议";
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 9) {
         /** 我的业委 */
+//        [self pushAnnouncementControllerWithTitle:@"我的业委"];
+        [self viewControllerPushOther:@"FHMyIndustryCommitteeController"];
     }
 }
 
@@ -231,10 +379,18 @@
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
     if (infiniteScrollView.tag == 2018) {
         /** 上面的轮播图 */
-        
+        [self pushToWebControllerWithUrl:@"http://192.168.3.57:8080/advent/index/mobileAdvent/pid/1/id/1"];
     } else {
         /** 下面的轮播图 */
+        [self pushToWebControllerWithUrl:@"https://www.kancloud.cn/gogery/tp5/358921"];
     }
+}
+
+- (void)pushToWebControllerWithUrl:(NSString *)url {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = url;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 

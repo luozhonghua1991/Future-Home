@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHVideosPublishingController : UIViewController
+@interface FHVideosPublishingController : BaseViewController
 
 @end
 

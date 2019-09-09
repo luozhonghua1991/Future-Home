@@ -13,8 +13,9 @@
 #import "FHDialogueRecordController.h"
 #import "FFDropDownMenuView.h"
 #import "FHFreshMallFollowListController.h"
+#import "JSShareView.h"
 
-@interface FHFreshMallController () <UIScrollViewDelegate>
+@interface FHFreshMallController () <UIScrollViewDelegate,JSShareViewDelegate>
 {
     UIScrollView *mainScrollView;
     UIButton *myGroupBtn;
@@ -66,6 +67,7 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"生鲜服务";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
     [self.navgationView addSubview:titleLabel];
@@ -76,36 +78,21 @@
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:backBtn];
     
-//    UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    searchBtn.frame = CGRectMake(0, MainStatusBarHeight, 100, MainNavgationBarHeight);
-//    searchBtn.centerX = self.navgationView.width / 2;
-//    [searchBtn setImage:[UIImage imageNamed:@"search_search"] forState:UIControlStateNormal];
-//    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
-//    [searchBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    searchBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -30);
-//    searchBtn.imageEdgeInsets = UIEdgeInsetsMake(0, -40, 0, 0);
-//    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    searchBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [self.navgationView addSubview:searchBtn];
-    
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
-    //    [menuBtn setImage:[UIImage imageNamed:@"search_search"] forState:UIControlStateNormal];
-    shareBtn.backgroundColor = [UIColor redColor];
+    [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
-    //    [menuBtn setImage:[UIImage imageNamed:@"search_search"] forState:UIControlStateNormal];
-    followBtn.backgroundColor = [UIColor redColor];
+    [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     menuBtn.frame = CGRectMake(SCREEN_WIDTH - 35 - 5, MainStatusBarHeight, 35, 35);
-//    [menuBtn setImage:[UIImage imageNamed:@"search_search"] forState:UIControlStateNormal];
-    menuBtn.backgroundColor = [UIColor yellowColor];
+    [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
     [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:menuBtn];
 }
@@ -118,7 +105,7 @@
     
     if (!self.codeImgView) {
         self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 35, 35)];
-        self.codeImgView.backgroundColor = [UIColor blueColor];
+        self.codeImgView.backgroundColor = [UIColor redColor];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(codeImgViewClick)];
         self.codeImgView.userInteractionEnabled = YES;
         [self.codeImgView addGestureRecognizer:tap];
@@ -146,7 +133,7 @@
     CGSize size1 = [UIlabelTool sizeWithString:@"生鲜商城" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     
     myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"生鲜商城" tag:1];
-    [myGroupBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [myGroupBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     
     CGSize size2 = [UIlabelTool sizeWithString:@"信息发布" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"信息发布" tag:2];
@@ -234,7 +221,47 @@
 
 /** 分享按钮 */
 - (void)shareBtnClick {
-    
+    return;
+    JSShareView *shareView =[JSShareView showShareViewWithPublishContent:@{@"text"  :@"",
+                                                                           @"image" :@"",
+                                                                           @"tittle":@"",
+                                                                           @"url"   :@""
+                                                                           }
+                                                               DataArray:@[@{@(0):@[@{@"朋友圈":@"community_share_friend"}
+                                                                                    ,@{@"微信":@"community_share_wechat"}
+                                                                                    ,@{@"QQ":@"community_share_qq"}
+                                                                                    ,@{@"QQ空间":@"community_share_space"}
+                                                                                    ,@{@"新浪微博":@"community_share_weibo"}]}
+                                                                           
+                                                                           ,@{@(1):@[@{@"举报":@"community_share_report"}]}]
+                                                              TypeArray1:@[]
+                                                              TypeArray2:@[]
+                                                            IsShowReport:YES
+                                                            isLocalImage:NO
+                                                             addViewType:@""
+                                                                  Result:^(ShareType type, BOOL isSuccess) {
+                                                                      if (isSuccess) {
+                                                                          MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+                                                                          [self.view addSubview:hud];
+                                                                          hud.mode = MBProgressHUDModeText;
+                                                                          hud.labelText = @"分享成功";
+                                                                          hud.userInteractionEnabled = NO;
+                                                                          hud.removeFromSuperViewOnHide = YES;
+                                                                          [hud show:YES];
+                                                                          [hud hide:YES afterDelay:2];
+                                                                      } else{
+                                                                          MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
+                                                                          [self.view addSubview:hud];
+                                                                          hud.mode = MBProgressHUDModeText;
+                                                                          hud.labelText = @"分享失败";
+                                                                          hud.userInteractionEnabled = NO;
+                                                                          hud.removeFromSuperViewOnHide = YES;
+                                                                          [hud show:YES];
+                                                                          [hud hide:YES afterDelay:2];
+                                                                      }
+                                                                  }];
+    shareView.delegate = self;
+    [self.view addSubview:shareView];
 }
 
 /** 收藏按钮 */
@@ -336,7 +363,7 @@
         [self->myVideoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->businssServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->publickServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [sender setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     }];
     
 }

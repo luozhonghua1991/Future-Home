@@ -641,7 +641,7 @@ static void *PlayViewStatusObservationContext = &PlayViewStatusObservationContex
         self.contentView.layer.contents = (id) image.CGImage;
     }
     //左上角的返回按钮的样式
-    if (self.closeBtnStyle==CloseBtnStylePop) {
+    if (self.closeBtnStyle == CloseBtnStylePop) {
         [_closeBtn setImage:[UIImage imageNamed:@"famous_return"]forState:UIControlStateNormal];
         [_closeBtn setImage:[UIImage imageNamed:@"famous_return"] forState:UIControlStateSelected];
         

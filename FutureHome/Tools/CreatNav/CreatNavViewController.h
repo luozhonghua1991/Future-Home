@@ -56,4 +56,5 @@ typedef void(^rightButtonBlock) ();
                                      color:(UIColor *)color;
 //获取导航栏标题label
 + (UILabel *)getNavLabel;
+
 @end

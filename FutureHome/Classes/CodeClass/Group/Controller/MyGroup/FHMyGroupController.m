@@ -8,7 +8,7 @@
 
 #import "FHMyGroupController.h"
 #import "FHMessageController.h"
-#import "FHGroupMessageController.h"
+#import "FHGroupMessageListController.h"
 #import "FHCircleHotPointController.h"
 #import "FHFriendLisController.h"
 
@@ -41,11 +41,13 @@
     FHMessageController *messageVC = [[FHMessageController alloc] init];
     messageVC.yp_tabItemTitle = @"对话";
 
-    FHGroupMessageController *groupVC = [[FHGroupMessageController alloc] init];
+    FHGroupMessageListController *groupVC = [[FHGroupMessageListController alloc] init];
     groupVC.yp_tabItemTitle = @"群聊";
 
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
-    hotVC.yp_tabItemTitle = @"圈内热点";
+    hotVC.yp_tabItemTitle = @"圈热点";
+    hotVC.isHaveTabbar = YES;
+    hotVC.isHaveHeaderView = YES;
 
     FHFriendLisController *followVC = [[FHFriendLisController alloc] init];
     followVC.yp_tabItemTitle = @"关注";
