@@ -7,6 +7,7 @@
 //
 
 #import "FHOwnerCertificationController.h"
+#import "FHOwnerCertificationViewController.h"
 
 @interface FHOwnerCertificationController ()
 
@@ -30,7 +31,12 @@
 
 - (void)goOwnerCertification {
     /** 去业主认证 */
-    [self viewControllerPushOther:@"FHOwnerCertificationViewController"];
+//    [self viewControllerPushOther:@"FHOwnerCertificationViewController"];
+    FHOwnerCertificationViewController *vc = [[FHOwnerCertificationViewController alloc] init];
+    vc.property_id = self.property_id;
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.path = @"property";
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

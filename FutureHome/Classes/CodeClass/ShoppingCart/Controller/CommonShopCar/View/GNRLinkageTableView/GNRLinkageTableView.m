@@ -128,13 +128,14 @@
         }
         return cell;
     }
+    /** 右边的物品列表 */
     GNRGoodsListCell * cell = [tableView dequeueReusableCellWithIdentifier:@"GNRGoodsListCell"];
     if (cell==nil) {
         cell = [[[NSBundle mainBundle]loadNibNamed:@"GNRGoodsListCell" owner:self options:nil] firstObject];
     }
-    if (indexPath.section<self.goodsList.goodsGroups.count) {
+    if (indexPath.section < self.goodsList.goodsGroups.count) {
         GNRGoodsGroup * goodsGroup = self.goodsList.goodsGroups[indexPath.section];
-        if (indexPath.row<goodsGroup.goodsList.count) {
+        if (indexPath.row < goodsGroup.goodsList.count) {
             GNRGoodsModel * goods = goodsGroup.goodsList[indexPath.row];
             cell.goods = goods;
             cell.delegate = _target;
@@ -199,15 +200,20 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
     if (tableView==_leftTbView) {
         relate = NO;
         [_leftTbView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionMiddle];//左边滚动到中间
         [_rightTbView scrollToRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:indexPath.row] atScrollPosition:UITableViewScrollPositionTop animated:YES];//右边相应section滚动到顶部
     } else {
-        
-        if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_selectIndex:)]) {
-            [_delegate fh_selectIndex:indexPath];
+        if (indexPath.section < self.goodsList.goodsGroups.count) {
+            GNRGoodsGroup * goodsGroup = self.goodsList.goodsGroups[indexPath.section];
+            if (indexPath.row < goodsGroup.goodsList.count) {
+                GNRGoodsModel * goods = goodsGroup.goodsList[indexPath.row];
+                GNRGoodsListCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+                if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_selectIndexModel:cell:)]) {
+                    [_delegate fh_selectIndexModel:goods cell:cell];
+                }
+            }
         }
     }
 }
@@ -216,47 +222,5 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     relate = YES;
 }
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    if (scrollView == _rightTbView) {
-//        if (topCanChange) {
-//            CGFloat y= scrollView.contentOffset.y;
-//            if ([_delegate respondsToSelector:@selector(scrollViewDidScrollForPositionY:)]) {
-//                [_delegate scrollViewDidScrollForPositionY:y];
-//            }
-//            CGRect toFrame = CGRectZero;
-//            CGRect leftToFrame = CGRectZero;
-//            if (y<0) {
-//                toFrame = CGRectMake(0, 0, BOUNDS.size.width, self.frame.size.height);
-//                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
-//            }
-//            else if (y<=NavBarHeight&&y>=0) {
-//                toFrame = CGRectMake(0, -ChangedHeight*y/NavBarHeight, BOUNDS.size.width, self.frame.size.height);
-//                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight+ChangedHeight*y/NavBarHeight);
-//            }
-//            else{
-//                toFrame = CGRectMake(0, -ChangedHeight, BOUNDS.size.width, self.frame.size.height);
-//                leftToFrame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-NavBarHeight);
-//            }
-//            leftToFrame = leftToFrame;
-//            [UIView animateWithDuration:0.2 animations:^{
-//                self.frame = toFrame;
-//                _leftTbView.frame = leftToFrame;
-//            } completion:^(BOOL finished) {
-//
-//            }];
-//            if (scrollView.contentOffset.y == 0) {//这里解决点击状态栏回到顶部 左边不滚动的问题
-//                relate = YES;
-//                [_rightTbView reloadData];
-//            }
-//        }else{
-////            if (self.frame.origin.y!=0) {
-////                self.frame = CGRectMake(0, 0, BOUNDS.size.width, BOUNDS.size.height);
-////                _leftTbView.frame = CGRectMake(0, headerHeight, leftWidth, BOUNDS.size.height-headerHeight);
-////            }
-//        }
-//    }
-//}
-
 
 @end

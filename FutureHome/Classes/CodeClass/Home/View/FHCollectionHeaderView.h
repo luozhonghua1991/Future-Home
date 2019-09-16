@@ -12,9 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FHCollectionHeaderView : UIView
 /** <#strong属性注释#> */
-@property (nonatomic, strong) NSArray *leftNameArrs;
+@property (nonatomic, strong) NSMutableArray *leftNameArrs;
 /** <#strong属性注释#> */
-@property (nonatomic, strong) NSArray *rightNameArrs;
+@property (nonatomic, strong) NSMutableArray *rightNameArrs;
 
 - (instancetype)initWithFrame:(CGRect)frame numberCount:(NSInteger )numberCount;
 

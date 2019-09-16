@@ -9,12 +9,16 @@
 #import "FHBaseAnnouncementListController.h"
 #import "FHAnnouncementListCell.h"
 #import "FHElectionListController.h"
+#import "FHNoticeListModel.h"
+#import "FHWebViewController.h"
 
 @interface FHBaseAnnouncementListController () <UITableViewDelegate,UITableViewDataSource>
 /** 列表数据 */
 @property (nonatomic, strong) UITableView *listTable;
 /** 表头 */
 @property (nonatomic, strong) UIImageView *headerView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *noticeListArrs;
 
 @end
 
@@ -31,6 +35,7 @@
         self.listTable.tableHeaderView = self.headerView;
         self.listTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
     }
+    [self fh_getRequest];
 }
 
 
@@ -62,10 +67,38 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)fh_getRequest {
+    WS(weakSelf);
+    self.noticeListArrs = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"property_id",
+                               @(self.ID),@"id",
+                               @(self.type),@"type", nil];
+    
+    [AFNetWorkTool get:@"public/noticeList" params:paramsDic success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        self.noticeListArrs = [FHNoticeListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
+        [weakSelf.listTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.listTable reloadData];
+    }];
+    
+    /** 上面的headerView */
+    [AFNetWorkTool get:@"public/noticeImg" params:paramsDic success:^(id responseObj) {
+        NSString *imgUrl = responseObj[@"data"];
+        [self.headerView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"头像"]];
+        [weakSelf.listTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.listTable reloadData];
+    }];
+}
+
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.noticeListArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -109,7 +142,22 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHAnnouncementListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHAnnouncementListCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (!IS_NULL_ARRAY(self.noticeListArrs)) {
+        FHNoticeListModel *model = self.noticeListArrs[indexPath.row];
+        cell.noticeModel = model;
+    }
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FHNoticeListModel *model = self.noticeListArrs[indexPath.row];
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = model.url;
+    web.titleString = model.title;
+    web.hidesBottomBarWhenPushed = YES;
+    web.isHaveProgress = YES;
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 - (void)buttonClick {
@@ -156,7 +204,6 @@
 - (UIImageView *)headerView {
     if (!_headerView) {
         _headerView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
-        _headerView.image = [UIImage imageNamed:@"头像"];
     }
     return _headerView;
 }

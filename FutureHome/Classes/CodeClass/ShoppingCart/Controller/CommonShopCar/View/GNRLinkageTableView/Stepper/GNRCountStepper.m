@@ -16,9 +16,6 @@
     CGFloat Width_Btn;
     CGFloat Width_Lab;
     CGRect BOUNDS_SIZE;
-    void(^_block)(NSInteger count);
-    void(^_addActionBlock)(UIButton * btn);
-    void(^_subActionBlock)(UIButton * btn);
 }
 
 
@@ -107,43 +104,45 @@
         _subBtn.hidden = NO;
         _numberL.text = @(count).stringValue;
     }
+    [SingleManager shareManager].numberButton.currentNumber = _count;
 }
 
 - (void)countChangedBlock:(void(^)(NSInteger count))block{
-    _block = nil;
-    _block = [block copy];
+    self.block = nil;
+    self.block = [block copy];
 }
 
 - (void)addActionBlock:(void (^)(UIButton *))block{
-    _addActionBlock = nil;
-    _addActionBlock = [block copy];
+    self.addActionBlock = nil;
+    self.addActionBlock = [block copy];
 }
 
 - (void)subActionBlock:(void(^)(UIButton *))block{
-    _subActionBlock = nil;
-    _subActionBlock = [block copy];
+    self.subActionBlock = nil;
+    self.subActionBlock = [block copy];
 }
 
 - (void)subBtnAction:(id)sender{
     if (_count>0) {
         self.count--;
     }
-    if (_block) {
-        _block(_count);
+    if (self.block) {
+        self.block(_count);
     }
-
-    if (_subActionBlock) {
-        _subActionBlock(sender);
+    
+    if (self.subActionBlock) {
+        self.subActionBlock(sender);
     }
 }
 
 - (void)addBtnAction:(id)sender{
     self.count++;
-    if (_block) {
-        _block(_count);
+    
+    if (self.block) {
+        self.block(_count);
     }
-    if (_addActionBlock) {
-        _addActionBlock(sender);
+    if (self.addActionBlock) {
+        self.addActionBlock(sender);
     }
 }
 

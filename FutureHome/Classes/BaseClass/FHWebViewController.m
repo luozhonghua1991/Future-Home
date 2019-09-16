@@ -53,7 +53,7 @@ NJKWebViewProgressDelegate
     if (self.isHaveProgress) {
          [self.navigationController.navigationBar addSubview:self.webViewProgressView];
     }
-    [self createNavigation];
+    [self fh_creatNav];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -68,7 +68,7 @@ NJKWebViewProgressDelegate
 {
     [super viewDidLayoutSubviews];
     [self.webView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsZero);
+        make.edges.mas_equalTo(UIEdgeInsetsMake(MainSizeHeight, 0, 0, 0));
     }];
 }
 
@@ -114,16 +114,34 @@ NJKWebViewProgressDelegate
     [self.webView stringByEvaluatingJavaScriptFromString:jsStr];
 }
 
-- (void)createNavigation {
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainSizeHeight)];
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = self.titleString;
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
     [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(onNavLeftItemClick) forControlEvents:UIControlEventTouchUpInside];
-    [backView addSubview:backBtn];
-    [self.view addSubview:backView];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:backBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.navgationView addSubview:bottomLineView];
 }
 
+- (void)backBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 
 #pragma mark - Event Response

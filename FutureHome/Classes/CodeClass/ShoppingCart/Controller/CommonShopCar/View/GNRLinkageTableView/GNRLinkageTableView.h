@@ -13,7 +13,8 @@
 
 - (void)scrollViewDidScrollForPositionY:(CGFloat)y;
 
-- (void)fh_selectIndex:(NSIndexPath *)index;
+- (void)fh_selectIndexModel:(GNRGoodsModel *)goods
+                       cell:(GNRGoodsListCell *)cell;
 
 @end
 

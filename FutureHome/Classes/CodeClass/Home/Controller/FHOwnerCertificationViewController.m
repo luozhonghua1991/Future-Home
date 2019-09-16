@@ -10,8 +10,9 @@
 #import "FHAccountApplicationTFView.h"
 #import "FHCertificationImgView.h"
 #import "FHPersonCodeView.h"
+#import "NSArray+JSON.h"
 
-@interface FHOwnerCertificationViewController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate>
+@interface FHOwnerCertificationViewController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 账户名字View */
@@ -36,6 +37,16 @@
 @property (nonatomic, strong) FHPersonCodeView *personCodeView;
 /** 身份证图标 */
 @property (nonatomic, strong) FHCertificationImgView *certificationView;
+/** 省的ID */
+@property (nonatomic, assign) NSInteger province_id;
+/** 市的ID */
+@property (nonatomic, assign) NSInteger city_id;
+/** 区的ID */
+@property (nonatomic, assign) NSInteger area_id;
+/** 选择的是第几个 */
+@property (nonatomic, assign) NSInteger selectIndex;
+/** 选择的图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectImgArrs;
 
 @end
 
@@ -43,6 +54,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -83,7 +95,7 @@
     bottomBtn.backgroundColor = HEX_COLOR(0x1296db);
     [bottomBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
     [bottomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [completedBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [bottomBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bottomBtn];
 }
 
@@ -135,6 +147,136 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
+}
+
+- (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
+    /** 选取图片 */
+    self.selectIndex = index;
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [self addCamera];
+            break;
+        }
+        case 1:
+        {
+            [self addPhotoClick];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+//调用系统相机
+- (void)addCamera {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
+        cameraPicker.delegate = self;
+        cameraPicker.allowsEditing = YES;  //是否可编辑
+        //摄像头
+        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+    }
+}
+
+/**
+ *  跳转相册页面
+ */
+- (void)addPhotoClick {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = YES;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - <相册处理区域>
+/**
+ *  拍摄完成后要执行的方法
+ */
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (self.selectIndex == 1) {
+        self.certificationView.leftImgView.image = image;
+    } else if (self.selectIndex == 2) {
+        self.certificationView.centerImgView.image = image;
+    } else {
+        self.certificationView.rightImgView.image = image;
+    }
+    Account *account = [AccountStorage readAccount];
+    NSArray *arr = @[@"111"];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.path,@"path",
+                               arr,@"file[]",
+                               nil];
+    
+    NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+    [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+        NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
+        [self.selectImgArrs addObject:imgID];
+    } failure:^(NSError *error) {
+        
+    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark — event
+- (void)sureBtnClick {
+    /** 先上传多张图片 然后上传信息*/
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *imgArrsString = [self.selectImgArrs componentsJoinedByString:@","];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(weakSelf.property_id),@"property_id",
+                               self.ownerNameView.contentTF.text,@"name",
+                               self.phoneNumberView.contentTF.text,@"mobile",
+                               self.ownerCodeView.contentTF.text,@"id_num",
+                               @(self.province_id),@"province_id",
+                               @(self.city_id),@"city_id",
+                               @(self.area_id),@"area_id",
+//                               @(110000),@"province_id",
+//                               @(110100),@"city_id",
+//                               @(110101),@"area_id",
+                               self.addressView.contentTF.text,@"street_name",
+                               self.areaNameView.contentTF.text,@"cell_name",
+                               self.houseNumberView.contentTF.text,@"room_num",
+                               self.houseAreaView.contentTF.text,@"area",
+                               self.louNumberView.contentTF.text,@"build_num",
+                               imgArrsString,@"img_ids",
+                               nil];
+    
+    [AFNetWorkTool post:@"property/houseAuth" params:paramsDic success:^(id responseObj) {
+        NSInteger code = [responseObj[@"code"] integerValue];
+        if (code == 1) {
+            [weakSelf.view makeToast:@"认证资料已经提交成功"];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self.view makeToast:@"所填信息有误"];
+        }
+    } failure:^(NSError *error) {
+        [self.view makeToast:@"所填信息有误"];
+    }];
 }
 
 

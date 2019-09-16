@@ -7,10 +7,11 @@
 //
 
 #import "FHBaseTabbarController.h"
+#import "YPTabBarController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHFreshMallController : BaseViewController
+@interface FHFreshMallController : YPTabBarController
 
 @end
 

@@ -33,15 +33,11 @@
     [self.contentView addSubview:self.readCountLabel];
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+- (void)setNoticeModel:(FHNoticeListModel *)noticeModel {
+    _noticeModel = noticeModel;
+    self.titleLabel.text = _noticeModel.title;
+    self.timeLabel.text = _noticeModel.create_time;
+    self.readCountLabel.text = [NSString stringWithFormat:@"阅读数%ld",(long)_noticeModel.view_num];
 }
 
 

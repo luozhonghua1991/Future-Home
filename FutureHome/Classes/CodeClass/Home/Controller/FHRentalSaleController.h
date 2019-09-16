@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHRentalSaleController : BaseViewController
+/**  */
+@property (nonatomic, assign) NSInteger property_id;
 
 @end
 

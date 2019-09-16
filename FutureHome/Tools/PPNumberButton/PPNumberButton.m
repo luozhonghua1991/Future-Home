@@ -102,6 +102,7 @@
     _textField.textAlignment = NSTextAlignmentCenter;
     _textField.keyboardType = UIKeyboardTypeDecimalPad;
     _textField.font = [UIFont systemFontOfSize:_inputFieldFont];
+    _textField.enabled = NO;
     if (self.decimalNum) {
         _textField.text = [NSString stringWithFormat:@"%.1f",_minValue];
     }else{
@@ -159,9 +160,9 @@
     [_textField resignFirstResponder];
     
     if (sender == _increaseBtn) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:_longPressSpaceTime target:self selector:@selector(increase) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:CGFLOAT_MAX target:self selector:@selector(increase) userInfo:nil repeats:YES];
     } else {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:_longPressSpaceTime target:self selector:@selector(decrease) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:CGFLOAT_MAX target:self selector:@selector(decrease) userInfo:nil repeats:YES];
     }
     [_timer fire];
 }
@@ -181,10 +182,10 @@
         if (_decreaseHide && number==_minValue) {
             [self rotationAnimationMethod];
             [UIView animateWithDuration:0.3f animations:^{
-                _decreaseBtn.alpha = 1;
-                _decreaseBtn.frame = CGRectMake(0, 0, _height, _height);
+                self->_decreaseBtn.alpha = 1;
+                self->_decreaseBtn.frame = CGRectMake(0, 0, self->_height, _height);
             } completion:^(BOOL finished) {
-                _textField.hidden = NO;
+                self->_textField.hidden = NO;
             }];
         }
         
@@ -391,26 +392,8 @@
 - (void)setInputFieldFont:(CGFloat)inputFieldFont
 {
     _inputFieldFont = inputFieldFont;
-    _textField.font = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-    _textField.backgroundColor = HEX_COLOR(0xFAFBFC);
-    _textField.layer.borderColor = HEX_COLOR(0xEBEBEB).CGColor;
-    _textField.textColor = HEX_COLOR(0x333333);
-    _textField.inputAccessoryView = [self addToolbar];
-    
+    _textField.font = [UIFont systemFontOfSize:inputFieldFont];
 }
-
-- (void)textFieldDone {
-    [_textField resignFirstResponder];
-}
-
-- (UIToolbar *)addToolbar {
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, kScreenWidth, 35)];
-    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *bar = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:UIBarButtonItemStylePlain target:self action:@selector(textFieldDone)];
-    toolbar.items = @[space, bar];
-    return toolbar;
-}
-
 #pragma mark - 核心动画
 /// 抖动动画
 - (void)shakeAnimationMethod

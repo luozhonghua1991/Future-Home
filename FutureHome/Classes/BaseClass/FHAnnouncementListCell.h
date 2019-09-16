@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHNoticeListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHAnnouncementListCell : UITableViewCell
+/** 公告模型 */
+@property (nonatomic, strong) FHNoticeListModel *noticeModel;
 
 @end
 

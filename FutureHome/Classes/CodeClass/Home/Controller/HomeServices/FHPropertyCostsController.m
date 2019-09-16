@@ -9,12 +9,16 @@
 #import "FHPropertyCostsController.h"
 #import "FHAnnouncementListCell.h"
 #import "FHCollectionHeaderView.h"
+#import "FHNoticeListModel.h"
+#import "FHWebViewController.h"
 
 @interface FHPropertyCostsController () <UITableViewDelegate,UITableViewDataSource>
 /** 列表数据 */
 @property (nonatomic, strong) UITableView *listTable;
 /** 表头 */
 @property (nonatomic, strong) FHCollectionHeaderView *headerView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *noticeListArrs;
 
 @end
 
@@ -25,9 +29,50 @@
     [self fh_creatNav];
     [self.view addSubview:self.listTable];
     [self.listTable registerClass:[FHAnnouncementListCell class] forCellReuseIdentifier:NSStringFromClass([FHAnnouncementListCell class])];
-    self.listTable.tableHeaderView = self.headerView;
-    self.listTable.tableHeaderView.height = self.headerView.height;
+    
+    [self fh_facthRequest];
 }
+
+- (void)fh_facthRequest {
+    WS(weakSelf);
+    self.noticeListArrs = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"property_id",
+                               @(self.ID),@"id",
+                               @(self.type),@"type", nil];
+    
+    [AFNetWorkTool get:@"public/noticeList" params:paramsDic success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        self.noticeListArrs = [FHNoticeListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
+        [weakSelf.listTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.listTable reloadData];
+    }];
+    
+    NSDictionary *paramsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"property_id",nil];
+    /**物业费用 */
+    [AFNetWorkTool get:@"property/payment" params:paramsDictionary success:^(id responseObj) {
+        self.headerView.leftNameArrs = [[NSMutableArray alloc] init];
+        self.headerView.rightNameArrs = [[NSMutableArray alloc] init];
+        NSArray *arr = responseObj[@"data"];
+        for (NSDictionary * dic in arr) {
+            [self.headerView.leftNameArrs addObject:dic[@"key1"]];
+            [self.headerView.leftNameArrs addObject:dic[@"key2"]];
+            [self.headerView.rightNameArrs addObject:dic[@"val1"]];
+            [self.headerView.rightNameArrs addObject:dic[@"val2"]];
+        }
+        self.listTable.tableHeaderView = self.headerView;
+        self.listTable.tableHeaderView.height = self.headerView.height;
+        [weakSelf.listTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.listTable reloadData];
+    }];
+}
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -60,7 +105,7 @@
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
+    return self.noticeListArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -78,6 +123,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHAnnouncementListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHAnnouncementListCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (!IS_NULL_ARRAY(self.noticeListArrs)) {
+        FHNoticeListModel *model = self.noticeListArrs[indexPath.row];
+        cell.noticeModel = model;
+    }
     return cell;
 }
 
@@ -102,8 +151,6 @@
 - (FHCollectionHeaderView *)headerView {
     if (!_headerView) {
         _headerView = [[FHCollectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 120) numberCount:4];
-        _headerView.leftNameArrs = @[@"房屋物业费",@"车位管理费",@"商铺物业费",@"其他费用"];
-        _headerView.rightNameArrs = @[@"110",@"119",@"120",@"118"];
     }
     return _headerView;
 }

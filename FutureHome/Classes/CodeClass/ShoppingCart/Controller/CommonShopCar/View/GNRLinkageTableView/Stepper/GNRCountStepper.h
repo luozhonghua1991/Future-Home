@@ -23,4 +23,11 @@
 - (void)countChangedBlock:(void(^)(NSInteger count))block;
 - (void)addActionBlock:(void(^)(UIButton *))block;
 - (void)subActionBlock:(void(^)(UIButton *))block;
+// block
+@property (nonatomic, copy) void(^block)(NSInteger count);
+// 加
+@property (nonatomic, copy) void(^addActionBlock)(UIButton * btn);
+//减
+@property (nonatomic, copy) void(^subActionBlock)(UIButton * btn);
+
 @end

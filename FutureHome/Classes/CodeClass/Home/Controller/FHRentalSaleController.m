@@ -62,21 +62,29 @@
         FHHousingRentOrSaleController *vc = [[FHHousingRentOrSaleController alloc] init];
         vc.titleString = @"发布房屋出售信息";
         vc.hidesBottomBarWhenPushed = YES;
+        vc.type = 1;
+        vc.property_id = self.property_id;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (sender.tag == 2) {
         FHHousingRentOrSaleController *vc = [[FHHousingRentOrSaleController alloc] init];
         vc.titleString = @"发布房屋出租信息";
         vc.hidesBottomBarWhenPushed = YES;
+        vc.type = 2;
+        vc.property_id = self.property_id;
         [self.navigationController pushViewController:vc animated:YES];
     }  else if (sender.tag == 3) {
         FHCarRentOrSaleController *vc = [[FHCarRentOrSaleController alloc] init];
         vc.titleString = @"发布车位出售信息";
         vc.hidesBottomBarWhenPushed = YES;
+        vc.type = 1;
+        vc.property_id = self.property_id;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (sender.tag == 4) {
         FHCarRentOrSaleController *vc = [[FHCarRentOrSaleController alloc] init];
         vc.titleString = @"发布车位出租信息";
         vc.hidesBottomBarWhenPushed = YES;
+        vc.type = 2;
+        vc.property_id = self.property_id;
         [self.navigationController pushViewController:vc animated:YES];
     }
 }

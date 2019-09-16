@@ -7,6 +7,7 @@
 //  我的业委界面
 
 #import "FHMyIndustryCommitteeController.h"
+#import "FHOwnerCertificationViewController.h"
 
 @interface FHMyIndustryCommitteeController ()
 /** 提示label */
@@ -81,7 +82,12 @@
 - (void)bottonClick:(UIButton *)sender {
     if (sender.tag == 0) {
         /** 业主资料认证 */
-        [self viewControllerPushOther:@"FHOwnerCertificationViewController"];
+//        [self viewControllerPushOther:@"FHOwnerCertificationViewController"];
+        FHOwnerCertificationViewController *vc = [[FHOwnerCertificationViewController alloc] init];
+        vc.property_id = self.property_id;
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.path = @"owner";
+        [self.navigationController pushViewController:vc animated:YES];
     } else {
          [self viewControllerPushOther:@"FHAccountApplyController"];
     }

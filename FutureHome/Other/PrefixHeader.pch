@@ -39,6 +39,7 @@
 #import "AccountStorage.h"
 #import "Account.h"
 
+
 //获取当前屏幕的宽高
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width

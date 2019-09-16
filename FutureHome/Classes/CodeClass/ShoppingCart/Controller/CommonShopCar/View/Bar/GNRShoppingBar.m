@@ -34,7 +34,8 @@
 - (GNRShoppingCartView *)cartView{
     if (!_cartView) {
         _cartView = [[GNRShoppingCartView alloc]initWithFrame:CGRectMake(0, 0, self.bounds.size.width, SCREEN_BOUNDS.size.height-self.bounds.size.height)];
-        [self.parentView insertSubview:_cartView belowSubview:self];
+//        [self.parentView insertSubview:_cartView belowSubview:self];
+        [[UIApplication sharedApplication].delegate.window insertSubview:_cartView belowSubview:self];
     }
     return _cartView;
 }

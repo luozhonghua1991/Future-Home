@@ -14,11 +14,19 @@
 #import "FHDecorationAndMaintenanceController.h"
 #import "FHSuggestionController.h"
 #import "FHRentalAndSaleController.h"
+#import "FHGreenController.h"
+#import "FHSafeController.h"
+#import "FHMenagerController.h"
+#import "FHPropertyCostsController.h"
+#import "FHGarageManagementController.h"
 
 @interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
     NSMutableArray *topBannerArrays;
     NSMutableArray *bottomBannerArrays;
+    NSMutableArray *topUrlArrays;
+    NSMutableArray *bottomUrlArrays;
+    NSInteger property_id;
 }
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
@@ -64,8 +72,21 @@
                              @"2-10我的物业"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
-    /** 获取banner数据 */
-    [self fh_refreshBannerData];
+    
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(2),@"type", nil];
+    [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
+        NSArray *arr = responseObj[@"data"];
+        NSDictionary *dic = arr[0];
+        self->property_id = [dic[@"property_id"] integerValue];
+        /** 获取banner数据 */
+        [self fh_refreshBannerData];
+    } failure:^(NSError *error) {
+        /** 获取banner数据 */
+        [self fh_refreshBannerData];
+    }];
 }
 
 
@@ -92,6 +113,28 @@
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.navgationView addSubview:bottomLineView];
+    
+    [self fh_creatNavBtn];
+}
+
+- (void)fh_creatNavBtn {
+    UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
+    [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
+    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:shareBtn];
+    
+    UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
+    [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:followBtn];
+    
+    UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 35 - 5, MainStatusBarHeight, 35, 35);
+    [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
+    [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:menuBtn];
 }
 
 - (void)backBtnClick {
@@ -107,16 +150,20 @@
 
 - (void)fh_getTopBanner {
     WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
     topBannerArrays = [[NSMutableArray alloc] init];
+    topUrlArrays = [[NSMutableArray alloc] init];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(1),@"user_id",
-                               @(1),@"type", nil];
+                               @(account.user_id),@"user_id",
+                               @(property_id),@"pid",
+                               @(2),@"type", nil];
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
-        NSDictionary *upDic = Dic[@"uplist"];
-        [self->topBannerArrays addObject:upDic[@"path1"]];
-        [self->topBannerArrays addObject:upDic[@"path2"]];
-        [self->topBannerArrays addObject:upDic[@"path3"]];
+        NSArray *upDicArr = Dic[@"uplist"];
+        for (NSDictionary *dic in upDicArr) {
+            [self->topBannerArrays addObject:dic[@"path"]];
+            [self->topUrlArrays addObject:dic[@"url"]];
+        }
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -125,16 +172,20 @@
 
 - (void)fh_bottomTopBanner {
     WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
     bottomBannerArrays = [[NSMutableArray alloc] init];
+    bottomUrlArrays = [[NSMutableArray alloc] init];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(1),@"user_id",
-                               @(1),@"type", nil];
+                               @(account.user_id),@"user_id",
+                               @(property_id),@"pid",
+                               @(2),@"type", nil];
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
-        NSDictionary *upDic = Dic[@"downlist"];
-        [self->bottomBannerArrays addObject:upDic[@"path1"]];
-        [self->bottomBannerArrays addObject:upDic[@"path2"]];
-        [self->bottomBannerArrays addObject:upDic[@"path3"]];
+        NSArray *upDicArr = Dic[@"downlist"];
+        for (NSDictionary *dic in upDicArr) {
+            [self->bottomBannerArrays addObject:dic[@"path"]];
+            [self->bottomUrlArrays addObject:dic[@"url"]];
+        }
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -207,8 +258,8 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [topBannerArrays copy];
-        NSArray *urlsArray = @[@"房产1",@"房产2",@"房产3"];
+        NSArray *urlsArray = [topBannerArrays copy];
+//        NSArray *urlsArray = @[@"房产1",@"房产2",@"房产3"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -235,8 +286,8 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [bottomBannerArrays copy];
-        NSArray *urlsArray = @[@"海飞丝 1",@"海飞丝 2",@"海飞丝 4"];
+        NSArray *urlsArray = [bottomBannerArrays copy];
+//        NSArray *urlsArray = @[@"海飞丝 1",@"海飞丝 2",@"海飞丝 4"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
         
         [cell addSubview:self.topScrollView];
@@ -277,33 +328,57 @@
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
         /** 物业公告 */
-        [self pushAnnouncementControllerWithTitle:@"物业公告"];
+        [self pushAnnouncementControllerWithTitle:@"物业公告" ID:1];
     } else if (selectIndex.row == 1) {
         /** 清洁绿化 */
-//        [self pushAnnouncementControllerWithTitle:@"清洁绿化"];
-        [self viewControllerPushOther:@"FHGreenController"];
+//        [self viewControllerPushOther:@"FHGreenController"];
+        FHGreenController *vc = [[FHGreenController alloc] init];
+        vc.property_id = property_id;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 2) {
         /** 安保消防 */
 //        [self pushAnnouncementControllerWithTitle:@"安保消防"];
-        [self viewControllerPushOther:@"FHSafeController"];
+//        [self viewControllerPushOther:@"FHSafeController"];
+        FHSafeController *vc = [[FHSafeController alloc] init];
+        vc.property_id = property_id;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 3) {
         /** 水电气 */
 //        [self pushAnnouncementControllerWithTitle:@"水电气"];
-        [self viewControllerPushOther:@"FHMenagerController"];
+//        [self viewControllerPushOther:@"FHMenagerController"];
+        FHMenagerController *vc = [[FHMenagerController alloc] init];
+        vc.property_id = property_id;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 4) {
         /** 装修维修 */
         FHDecorationAndMaintenanceController *vc = [[FHDecorationAndMaintenanceController alloc] init];
         vc.titleString = @"装修维修";
+        vc.property_id = property_id;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 5) {
         /** 物业费用 */
 //        [self pushAnnouncementControllerWithTitle:@"物业费用"];
-        [self viewControllerPushOther:@"FHPropertyCostsController"];
+//        [self viewControllerPushOther:@"FHPropertyCostsController"];
+        FHPropertyCostsController *vc = [[FHPropertyCostsController alloc] init];
+        vc.type = 1;
+        vc.ID = 16;
+        vc.property_id = property_id;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 6) {
         /** 车库管理 */
 //        [self pushAnnouncementControllerWithTitle:@"车库管理"];
-        [self viewControllerPushOther:@"FHGarageManagementController"];
+//        [self viewControllerPushOther:@"FHGarageManagementController"];
+        FHGarageManagementController *vc = [[FHGarageManagementController alloc] init];
+        vc.type = 1;
+        vc.ID = 17;
+        vc.property_id = property_id;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 7) {
         /** 房屋租售 */
 //        [self pushAnnouncementControllerWithTitle:@"房屋租售"];
@@ -322,13 +397,18 @@
         FHAboutMyPropertyController *about = [[FHAboutMyPropertyController alloc] init];
         about.titleString = @"我的物业";
         about.hidesBottomBarWhenPushed = YES;
+        about.property_id = property_id;
         [self.navigationController pushViewController:about animated:YES];
     }
 }
 
-- (void)pushAnnouncementControllerWithTitle:(NSString *)title {
+- (void)pushAnnouncementControllerWithTitle:(NSString *)title
+                                         ID:(NSInteger )ID {
     FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
     an.titleString = title;
+    an.type = 1;
+    an.ID = ID;
+    an.property_id = property_id;
     an.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:an animated:YES];
 }
@@ -338,11 +418,13 @@
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
     if (infiniteScrollView.tag == 2018) {
+        NSString *urlString = topUrlArrays[index];
         /** 上面的轮播图 */
-        [self pushToWebControllerWithUrl:@"http://192.168.3.57:8080/advent/index/mobileAdvent/pid/1/id/1"];
+        [self pushToWebControllerWithUrl:urlString];
     } else {
         /** 下面的轮播图 */
-        [self pushToWebControllerWithUrl:@"https://www.kancloud.cn/gogery/tp5/358921"];
+        NSString *urlString = bottomUrlArrays[index];
+        [self pushToWebControllerWithUrl:urlString];
     }
 }
 

@@ -11,6 +11,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHPropertyCostsController : BaseViewController
+/** 获取VC ID */
+@property (nonatomic, assign) NSInteger ID;
+/** 获取类型 */
+@property (nonatomic, assign) NSInteger type;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger property_id;
 
 @end
 

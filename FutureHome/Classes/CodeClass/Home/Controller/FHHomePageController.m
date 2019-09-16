@@ -30,6 +30,8 @@
 {
     NSMutableArray *topBannerArrays;
     NSMutableArray *bottomBannerArrays;
+    NSMutableArray *topUrlArrays;
+    NSMutableArray *bottomUrlArrays;
     NSMutableArray *hotSeaches;
 }
 /** 导航View视图 */
@@ -100,6 +102,13 @@
     [super viewWillDisappear:animated];
     // 关闭跑马灯
     [self.verticalMarquee marqueeOfSettingWithState:MarqueeShutDown_V];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if ([SingleManager shareManager].shoppingBar) {
+        [[SingleManager shareManager].shoppingBar removeFromSuperview];
+    }
 }
 
 - (void)fh_creatNavUI {
@@ -206,16 +215,20 @@
 
 - (void)fh_getTopBanner {
     WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
     topBannerArrays = [[NSMutableArray alloc] init];
+    topUrlArrays = [[NSMutableArray alloc] init];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(1),@"user_id",
+                               @(account.user_id),@"user_id",
                                @(1),@"type", nil];
+    
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
-        NSDictionary *upDic = Dic[@"uplist"];
-        [self->topBannerArrays addObject:upDic[@"path1"]];
-        [self->topBannerArrays addObject:upDic[@"path2"]];
-        [self->topBannerArrays addObject:upDic[@"path3"]];
+        NSArray *upDicArr = Dic[@"uplist"];
+        for (NSDictionary *dic in upDicArr) {
+            [self->topBannerArrays addObject:dic[@"path"]];
+            [self->topUrlArrays addObject:dic[@"url"]];
+        }
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -224,16 +237,19 @@
 
 - (void)fh_bottomTopBanner {
     WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
     bottomBannerArrays = [[NSMutableArray alloc] init];
+    bottomUrlArrays = [[NSMutableArray alloc] init];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(1),@"user_id",
+                               @(account.user_id),@"user_id",
                                @(1),@"type", nil];
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
-        NSDictionary *upDic = Dic[@"downlist"];
-        [self->bottomBannerArrays addObject:upDic[@"path1"]];
-        [self->bottomBannerArrays addObject:upDic[@"path2"]];
-        [self->bottomBannerArrays addObject:upDic[@"path3"]];
+        NSArray *upDicArr = Dic[@"downlist"];
+        for (NSDictionary *dic in upDicArr) {
+            [self->bottomBannerArrays addObject:dic[@"path"]];
+            [self->bottomUrlArrays addObject:dic[@"url"]];
+        }
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -314,8 +330,8 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [topBannerArrays copy];
-        NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
+        NSArray *urlsArray = [topBannerArrays copy];
+//        NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
         self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         
         [cell addSubview:self.topScrollView];
@@ -342,8 +358,8 @@
                 [view removeFromSuperview];
             }
         }
-//        NSArray *urlsArray = [bottomBannerArrays copy];
-        NSArray *urlsArray = @[@"长安汽车 2",@"长安汽车 3",@"长安汽车 4"];
+        NSArray *urlsArray = [bottomBannerArrays copy];
+//        NSArray *urlsArray = @[@"长安汽车 2",@"长安汽车 3",@"长安汽车 4"];
         self.bottomScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2019];
         
         [cell addSubview:self.bottomScrollView];
@@ -371,20 +387,14 @@
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
-    
-    FHVideoPlayerController *xys =[[FHVideoPlayerController alloc]init];
-    xys.URLString = @"http://192.168.3.57:8080/uploads/advent/video/20190613/5450dcafd3f28ed0ae4adab0f4b51001.mp4";
-    xys.titleStr = @"视频";
-    xys.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:xys animated:YES];
-    return;
-    
     if (infiniteScrollView.tag == 2018) {
+        NSString *urlString = topUrlArrays[index];
         /** 上面的轮播图 */
-        [self pushToWebControllerWithUrl:@"http://192.168.3.57:8080/advent/index/mobileAdvent/pid/1/id/1"];
+        [self pushToWebControllerWithUrl:urlString];
     } else {
        /** 下面的轮播图 */
-        [self pushToWebControllerWithUrl:@"https://www.kancloud.cn/gogery/tp5/358921"];
+        NSString *urlString = bottomUrlArrays[index];
+        [self pushToWebControllerWithUrl:urlString];
     }
 }
 

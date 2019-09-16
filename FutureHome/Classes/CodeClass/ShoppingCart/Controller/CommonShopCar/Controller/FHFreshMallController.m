@@ -55,9 +55,32 @@
     self.isHaveNavgationView = YES;
     [self fh_creatNav];
     [self fh_creatTitleView];
-    [self fh_setSelectNavView];
-    [self fh_creatSelectBtn];
-    [self fh_setMainScrollView];
+    
+//    [self fh_setSelectNavView];
+//    [self fh_creatSelectBtn];
+//    [self fh_setMainScrollView];
+    
+    self.view.backgroundColor= [UIColor whiteColor];
+    [self setTabBarFrame:CGRectMake(0, MainSizeHeight + 35 , SCREEN_WIDTH, 35)
+        contentViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    self.tabBar.itemTitleColor = [UIColor blackColor];
+    self.tabBar.itemTitleSelectedColor = HEX_COLOR(0x1296db);
+    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
+    self.tabBar.itemTitleSelectedFont = [UIFont fontWithName:@"PingFangSC-Medium" size:14];
+    self.tabBar.itemSelectedBgColor = HEX_COLOR(0x1296db);
+    if (KIsiPhoneX) {
+        [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(33, 33, 0, 33) tapSwitchAnimated:YES];
+    } else {
+        [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(33, 31, 0, 31) tapSwitchAnimated:YES];
+    }
+    self.tabBar.itemSelectedBgScrollFollowContent = YES;
+    self.tabBar.itemColorChangeFollowContentScroll = NO;
+    [self setContentScrollEnabledAndTapSwitchAnimated:YES];
+    UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, SCREEN_WIDTH, 0.5)];
+    bottomLine.backgroundColor = [UIColor lightGrayColor];
+    [self.tabBar addSubview:bottomLine];
+    [self initViewControllers];
+    
     [self fh_setupFollowDropDownMenu];
 }
 
@@ -164,23 +187,23 @@
     mainScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * (self.viewControllers.count), 0);
 }
 
-- (void)setViewControllers:(NSArray *)viewControllers {
-    
-    for (UIViewController *controller in self.viewControllers) {
-        [controller removeFromParentViewController];
-        [controller.view removeFromSuperview];
-    }
-    
-    _viewControllers = [viewControllers copy];
-    [_viewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [self addChildViewController:obj];
-    }];
-    
-    // 更新scrollView的content size
-    if (mainScrollView) {
-        mainScrollView.contentSize =  CGSizeMake(SCREEN_WIDTH * (self.viewControllers.count), 0);
-    }
-}
+//- (void)setViewControllers:(NSArray *)viewControllers {
+//
+//    for (UIViewController *controller in self.viewControllers) {
+//        [controller removeFromParentViewController];
+//        [controller.view removeFromSuperview];
+//    }
+//
+//    _viewControllers = [viewControllers copy];
+//    [_viewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        [self addChildViewController:obj];
+//    }];
+//
+//    // 更新scrollView的content size
+//    if (mainScrollView) {
+//        mainScrollView.contentSize =  CGSizeMake(SCREEN_WIDTH * (self.viewControllers.count), 0);
+//    }
+//}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     double index_ = scrollView.contentOffset.x / SCREEN_WIDTH;
@@ -366,6 +389,22 @@
         [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     }];
     
+}
+
+- (void)initViewControllers {
+    FHGoodsListController *messageVC = [[FHGoodsListController alloc] init];
+    messageVC.yp_tabItemTitle = @"生鲜商城";
+    
+    FHInformationController *groupVC = [[FHInformationController alloc] init];
+    groupVC.yp_tabItemTitle = @"信息发布";
+    
+    FHVideosPublishingController *hotVC = [[FHVideosPublishingController alloc] init];
+    hotVC.yp_tabItemTitle = @"视频发布";
+    
+    FHDialogueRecordController *friendVC = [[FHDialogueRecordController alloc] init];
+    friendVC.yp_tabItemTitle = @"对话记录";
+    
+    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC, nil];
 }
 
 #pragma mark — setter && getter#pragma mark - 懒加载

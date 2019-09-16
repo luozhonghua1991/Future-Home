@@ -49,7 +49,7 @@
 
 - (void)createTableView {
     
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.35, 0, self.view.frame.size.width * 0.65, self.view.frame.size.height)];
+    self.view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.45, 0, self.view.frame.size.width * 0.55, self.view.frame.size.height)];
     
     self.productsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width, self.view.frame.size.height - MainSizeHeight)];
     self.productsTableView.delegate = self;
@@ -68,7 +68,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 64;
+    return 44;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

@@ -26,7 +26,6 @@
 }
 
 
-
 #pragma mark  -- tableViewDelagate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;

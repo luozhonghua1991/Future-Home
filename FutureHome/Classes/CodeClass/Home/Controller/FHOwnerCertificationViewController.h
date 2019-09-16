@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHOwnerCertificationViewController : BaseViewController
+/**  */
+@property (nonatomic, assign) NSInteger property_id;
+/** 图片路径 */
+@property (nonatomic, copy) NSString *path;
 
 @end
 

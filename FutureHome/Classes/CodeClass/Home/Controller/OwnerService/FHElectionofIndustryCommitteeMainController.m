@@ -26,11 +26,19 @@
 //    messageVC.isNoHaveHeaderView = YES;
     messageVC.isHaveSelectView = YES;
     
+    messageVC.property_id = self.property_id;
+    messageVC.type = 2;
+    messageVC.ID = 5;
+    
     FHBaseAnnouncementListController *groupVC = [[FHBaseAnnouncementListController alloc] init];
     groupVC.yp_tabItemTitle = @"申请通道";
 //    groupVC.isNoHaveHeaderView = YES;
     groupVC.isHaveSelectView = YES;
     groupVC.isHaveSectionView = YES;
+    
+    groupVC.property_id = self.property_id;
+    groupVC.type = 2;
+    groupVC.ID = 6;
     
     FHBaseAnnouncementListController *hotVC = [[FHBaseAnnouncementListController alloc] init];
     hotVC.yp_tabItemTitle = @"业委海选";
@@ -38,11 +46,19 @@
     hotVC.isHaveSelectView = YES;
     hotVC.isHaveSectionView = YES;
     
+    hotVC.property_id = self.property_id;
+    hotVC.type = 2;
+    hotVC.ID = 7;
+    
     FHBaseAnnouncementListController *hoVC = [[FHBaseAnnouncementListController alloc] init];
     hoVC.yp_tabItemTitle = @"岗位选举";
 //    hoVC.isNoHaveHeaderView = YES;
     hoVC.isHaveSelectView = YES;
     hoVC.isHaveSectionView = YES;
+    
+    hoVC.property_id = self.property_id;
+    hoVC.type = 2;
+    hoVC.ID = 8;
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,hoVC, nil];
 }

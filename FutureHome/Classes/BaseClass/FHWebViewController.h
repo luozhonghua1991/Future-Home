@@ -13,5 +13,8 @@
 @property (nonatomic, assign) BOOL isHaveProgress;
 /**url链接*/
 @property (nonatomic,copy) NSString *urlString;
+/** 标题 */
+@property (nonatomic, copy) NSString *titleString;
+
 
 @end

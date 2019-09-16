@@ -76,18 +76,30 @@
     FHBaseAnnouncementListController *messageVC = [[FHBaseAnnouncementListController alloc] init];
     messageVC.yp_tabItemTitle = @"机电系统";
     messageVC.isHaveSelectView = YES;
+    messageVC.type = 1;
+    messageVC.ID = 9;
+    messageVC.property_id = self.property_id;
     
     FHBaseAnnouncementListController *groupVC = [[FHBaseAnnouncementListController alloc] init];
     groupVC.yp_tabItemTitle = @"电梯系统";
     groupVC.isHaveSelectView = YES;
+    groupVC.type = 1;
+    groupVC.ID = 10;
+    groupVC.property_id = self.property_id;
     
     FHBaseAnnouncementListController *hotVC = [[FHBaseAnnouncementListController alloc] init];
     hotVC.yp_tabItemTitle = @"供水排水";
     hotVC.isHaveSelectView = YES;
+    hotVC.type = 1;
+    hotVC.ID = 11;
+    hotVC.property_id = self.property_id;
     
     FHBaseAnnouncementListController *safeVC = [[FHBaseAnnouncementListController alloc] init];
     safeVC.yp_tabItemTitle = @"供气供暖";
     safeVC.isHaveSelectView = YES;
+    safeVC.type = 1;
+    safeVC.ID = 12;
+    safeVC.property_id = self.property_id;
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,safeVC, nil];
 }

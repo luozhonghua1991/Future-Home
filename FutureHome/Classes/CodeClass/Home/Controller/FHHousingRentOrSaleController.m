@@ -43,6 +43,10 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *otherInfoView;
 /** 投诉建议textView */
 @property (nonatomic, strong) BRPlaceholderTextView *suggestionsTextView;
+/** 图片选择数组 */
+@property (nonatomic, strong) NSMutableArray *imgSelectArrs;
+/** 服务器返回的图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectImgArrays;
 
 @end
 
@@ -166,10 +170,75 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
-    /** 确定 */
-    [self.navigationController popViewControllerAnimated:YES];
+    /** 提交发布信息 */
+    self.imgSelectArrs = [[NSMutableArray alloc] init];
+    [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    self.selectImgArrays = [[NSMutableArray alloc] init];
+    /** 先上传多张图片*/
+    Account *account = [AccountStorage readAccount];
+    NSArray *arr = @[@"111"];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"property",@"path",
+                               arr,@"file[]",
+                               nil];
+    for (int i = 0; i< self.imgSelectArrs.count; i++) {
+        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],0.5);
+        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+            NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
+            [self.selectImgArrays addObject:imgID];
+            if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                /** 图片获取完毕 */
+                [self commitInfo];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
+/** 提交信息 */
+- (void)commitInfo {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(weakSelf.property_id),@"property_id",
+                               self.titleView.contentTF.text,@"community",
+                               self.areaView.contentTF.text,@"area",
+                               self.houseTypeView.contentTF.text,@"hall",
+                               self.houseDirectionView.contentTF.text,@"toward",
+                               self.houseNumberView.contentTF.text,@"l_floor",
+                               @(1),@"park_space",
+                               @(2),@"elevator",
+                               self.type,@"type",
+                               self.salePriceView.contentTF.text,@"rent",
+                               self.suggestionsTextView.text,@"describe",
+                               self.fixturesView.contentTF.text,@"decoration",
+//                               @(2.45),@"fee",
+                               self.priceSugmentView.contentTF.text,@"require",
+                               self.yearView.contentTF.text,@"years",
+                               self.buildTimeView.contentTF.text,@"times",
+                               self.phoneNumberView.contentTF.text,@"mobile",
+                               self.callPhoneNumberView.contentTF.text,@"time_slot",
+                               imgArrsString,@"img_ids",
+                               self.houseingTypeView.contentTF.text,@"house_type",
+                               nil];
+    
+    [AFNetWorkTool post:@"property/releaseRentSale" params:paramsDic success:^(id responseObj) {
+        NSInteger code = [responseObj[@"code"] integerValue];
+        if (code == 1) {
+            [weakSelf.view makeToast:@"资料已经提交成功"];
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self.view makeToast:@"所填信息有误"];
+        }
+    } failure:^(NSError *error) {
+        [self.view makeToast:@"所填信息有误"];
+    }];
+    
+}
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {

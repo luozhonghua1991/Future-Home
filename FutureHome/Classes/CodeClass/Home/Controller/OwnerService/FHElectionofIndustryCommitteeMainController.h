@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHElectionofIndustryCommitteeMainController : FHBaseHaveNavTabberController
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger property_id;
 
 @end
 

@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHAboutMyPropertyController : FHBaseHaveNavTabberController
+/**  */
+@property (nonatomic, assign) NSInteger property_id;
 
 @end
 

@@ -73,7 +73,7 @@
 
 - (void)createTableView {
     
-    self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width * 0.35, self.view.frame.size.height - MainSizeHeight) style:UITableViewStylePlain];
+    self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width * 0.45, self.view.frame.size.height - MainSizeHeight) style:UITableViewStylePlain];
     self.categoryTableView.delegate = self;
     self.categoryTableView.dataSource = self;
     self.categoryTableView.showsVerticalScrollIndicator = NO;

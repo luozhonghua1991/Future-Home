@@ -70,12 +70,8 @@
 + (void)get:(NSString *)url
      params:(NSDictionary *)params
     success:(void (^)(id))success
-    failure:(void (^)(NSError *))failure
-{
-    if ([[self new] getProxyStatus]){
-        failure(NULL);
-        return;
-    }
+    failure:(void (^)(NSError *))failure {
+    Account *account = [AccountStorage readAccount];
     //获得请求管理者
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
     //  申明请求的数据是json类型
@@ -85,7 +81,7 @@
     serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
     [session setResponseSerializer:serializer];
 
-    [session.requestSerializer setValue: [[NSUserDefaults standardUserDefaults] objectForKey:@"myCookie"]forHTTPHeaderField:@"Cookie"];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     //发送get请求
@@ -93,18 +89,6 @@
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
 
         if (success) {
-
-            NSString *fields= [((NSURLResponse *)task.response) valueForKey:@"allHeaderFields"][@"Set-Cookie"];
-            if (fields.length) {
-                [[NSUserDefaults standardUserDefaults] setObject:fields forKey:@"myCookie"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
-
-            int code = [[responseObject objectForKey:@"code"] intValue];
-            if (code == 3303) {
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"PERSONLOGIN"];
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"PERSONPHONE"];
-            }
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -119,12 +103,8 @@
 + (void)post:(NSString *)url
       params:(NSDictionary *)params
      success:(void (^)(id))success
-     failure:(void (^)(NSError *))failure
-{
-    if ([[self new] getProxyStatus]){
-        failure(NULL);
-        return;
-    }
+     failure:(void (^)(NSError *))failure {
+    Account *account = [AccountStorage readAccount];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
 
@@ -136,7 +116,7 @@
     }
     session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
 
-    [session.requestSerializer setValue: [[NSUserDefaults standardUserDefaults] objectForKey:@"myCookie"]forHTTPHeaderField:@"Cookie"];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
     [session POST:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -157,38 +137,16 @@
 + (void)put:(NSString *)url
      params:(NSDictionary *)params
     success:(successBlock)success
-    failure:(failureBlock)failure
-{
-    if ([[self new] getProxyStatus]){
-        failure(NULL);
-        return;
-    }
-//    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-//    //  申明请求的数据是json类型
-//    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
-//    [serializer setRemovesKeysWithNullValues:YES];
-//    //如果接受类型不一致请替换一致text/html或别的
-//    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
-//    [session setResponseSerializer:serializer];
+    failure:(failureBlock)failure {
+    Account *account = [AccountStorage readAccount];
     [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
     session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
-    [session.requestSerializer setValue: [[NSUserDefaults standardUserDefaults] objectForKey:@"myCookie"]forHTTPHeaderField:@"Cookie"];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     [session PUT:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         if (success) {
-            NSString *fields= [((NSURLResponse *)task.response) valueForKey:@"allHeaderFields"][@"Set-Cookie"];
-            if (fields.length) {
-                [[NSUserDefaults standardUserDefaults] setObject:fields forKey:@"myCookie"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-            }
-
-            int code = [[responseObject objectForKey:@"code"] intValue];
-            if (code == 3303) {
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"PERSONLOGIN"];
-                [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"PERSONPHONE"];
-            }
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -203,12 +161,8 @@
 + (void)deleteRequest:(NSString *)url
                params:(NSDictionary *)params
               success:(successBlock)success
-              failure:(failureBlock)failure
-{
-    if ([[self new] getProxyStatus]){
-        failure(NULL);
-        return;
-    }
+              failure:(failureBlock)failure {
+    Account *account = [AccountStorage readAccount];
     [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
@@ -218,22 +172,11 @@
     //如果接受类型不一致请替换一致text/html或别的
     serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
     [session setResponseSerializer:serializer];
-    [session.requestSerializer setValue: [[NSUserDefaults standardUserDefaults] objectForKey:@"myCookie"]forHTTPHeaderField:@"Cookie"];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     [session DELETE:urlStr parameters:params success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         if (success) {
             if (success) {
-                NSString *fields= [((NSURLResponse *)task.response) valueForKey:@"allHeaderFields"][@"Set-Cookie"];
-                if (fields.length) {
-                    [[NSUserDefaults standardUserDefaults] setObject:fields forKey:@"myCookie"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
-                }
-
-                int code = [[responseObject objectForKey:@"code"] intValue];
-                if (code == 3303) {
-                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"PERSONLOGIN"];
-                    [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"PERSONPHONE"];
-                }
                 success(responseObject);
             }
         }
@@ -245,41 +188,37 @@
     }];
 }
 
-
--(BOOL)getProxyStatus {
-    NSDictionary *proxySettings = (__bridge NSDictionary *)(CFNetworkCopySystemProxySettings());
-    NSArray *proxies = (__bridge NSArray *)(CFNetworkCopyProxiesForURL((__bridge CFURLRef _Nonnull)([NSURL URLWithString:@"https://www.baidu.com"]), (__bridge CFDictionaryRef _Nonnull)(proxySettings)));
-    NSDictionary *settings = proxies[0];
-    if (![[settings objectForKey:(NSString *)kCFProxyTypeKey] isEqualToString:@"kCFProxyTypeNone"]){
-        return YES;
-    }else{
-        return NO;
-    }
+#pragma mark 上传图片
++ (void)updateImageWithUrl:(NSString *)url
+                 parameter:(NSDictionary *)parameter
+                 imageData:(NSData *)imageData
+                   success:(successBlock)success
+                   failure:(failureBlock)failure {
+    Account *account = [AccountStorage readAccount];
+    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    //  申明请求的数据是json类型
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    [serializer setRemovesKeysWithNullValues:YES];
+    //如果接受类型不一致请替换一致text/html或别的
+    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [session setResponseSerializer:serializer];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    
+    [session POST:urlStr parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
+        [formData appendPartWithFileData:imageData name:@"file[]" fileName:@"futureHome.png" mimeType:@"image/jpeg"];
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
 }
-
-//#pragma mark 上传图片
-//+ (void)updateImageWithUrl:(NSString *)url parameter:(NSDictionary *)parameter imageData:(NSData *)imageData success:(successBlock)success failure:(failureBlock)failure
-//{
-//    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-//    //  申明请求的数据是json类型
-//    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
-//    [serializer setRemovesKeysWithNullValues:YES];
-//    //如果接受类型不一致请替换一致text/html或别的
-//    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//    [session setResponseSerializer:serializer];
-//
-//    [session POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//        [formData appendPartWithFileData:imageData name:@"file" fileName:@"xys_image" mimeType:@"image/jpeg"];
-//    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        if (success) {
-//            success(responseObject);
-//        }
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        if (failure) {
-//            failure(error);
-//        }
-//    }];
-//}
 //
 //#pragma mark 上传声音
 //+ (void)updateImageWithUrl:(NSString *)url parameter:(NSDictionary *)parameter voiceData:(NSData *)imageData voiceName:(NSString *)voiceName voiceType:(NSString *)voiceType success:(successBlock)success failure:(failureBlock)failure

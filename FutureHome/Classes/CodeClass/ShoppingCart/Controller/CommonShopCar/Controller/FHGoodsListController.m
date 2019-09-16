@@ -21,6 +21,9 @@
 
 @property (nonatomic, strong)GNRLinkageTableView * goodsListView;
 @property (nonatomic, strong)GNRShoppingBar * shoppingBar;
+/** 如果是push到下一页就添加到上面 */
+@property (nonatomic, assign) BOOL isPush;
+
 
 @end
 
@@ -33,12 +36,15 @@
 //    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.goodsListView];
     [self initData];
-    [self.view addSubview:self.shoppingBar];
+//    [self.view addSubview:self.shoppingBar];
+    [SingleManager shareManager].shoppingBar = self.shoppingBar;
+    [[UIApplication sharedApplication].delegate.window addSubview:[SingleManager shareManager].shoppingBar];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication].delegate.window addSubview:[SingleManager shareManager].shoppingBar];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     self.navigationController.navigationBar.tintColor = HEX_COLOR(0x1296db);
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:0]];
@@ -47,7 +53,6 @@
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//    [self scrollViewDidScrollForPositionY:self.goodsListView.rightTbView.contentOffset.y];
 }
 
 - (void)viewDidDisappear:(BOOL)animated{
@@ -122,20 +127,6 @@
     self.shoppingBar.goodsList = _goodsListView.goodsList;
 }
 
-//- (void)scrollViewDidScrollForPositionY:(CGFloat)y{
-//    if (y<=64.f) {
-//        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:y/64.f]];
-//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-//        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-//        [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//
-//    }else{
-//        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-//        [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
-//        self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-//        [self.navigationController.navigationBar setShadowImage:nil];
-//    }
-//}
 
 //clean
 - (void)cleanGoodsCartAction:(id)sender{
@@ -170,14 +161,17 @@ valueChangedForCount:(NSInteger)count
     }
 }
 
-- (void)stepper:(GNRCountStepper *)stepper addSender:(UIButton *)sender cell:(UITableViewCell *)cell{
+- (void)stepper:(GNRCountStepper *)stepper
+      addSender:(UIButton *)sender
+           cell:(UITableViewCell *)cell{
     CGRect parentRect = [stepper convertRect:stepper.addBtn.frame toView:self.view];
     [self jumpToCartAnimationWithAddBtnRect:parentRect];
 }
 
 
 #pragma mark - 跳入购物车动画
--(void)jumpToCartAnimationWithAddBtnRect:(CGRect)rect{
+-(void)jumpToCartAnimationWithAddBtnRect:(CGRect)rect {
+    
     CGFloat startX = rect.origin.x;
     CGFloat startY = rect.origin.y;
     
@@ -232,6 +226,7 @@ valueChangedForCount:(NSInteger)count
 #pragma mark — GNRShoppingBarDelegate
 /** 支付事件 */
 - (void)GNRShoppingBarDelegatePayAction {
+    [[SingleManager shareManager].shoppingBar removeFromSuperview];
     FHSureOrderController *vc = [[FHSureOrderController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -250,10 +245,13 @@ valueChangedForCount:(NSInteger)count
     }
 }
 
-- (void)fh_selectIndex:(NSIndexPath *)index {
+- (void)fh_selectIndexModel:(GNRGoodsModel *)goods
+                       cell:(GNRGoodsListCell *)cell {
     /** 去商品详情界面 */
     FHGoodsDetailController *vc = [[FHGoodsDetailController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.currentNumber = [goods.number floatValue];
+    vc.stepper = cell.stepper;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

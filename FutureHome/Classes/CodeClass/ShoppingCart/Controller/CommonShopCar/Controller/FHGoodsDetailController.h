@@ -7,10 +7,15 @@
 //
 
 #import "BaseViewController.h"
+#import "GNRCountStepper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHGoodsDetailController : BaseViewController
+
+@property (nonatomic, assign ) CGFloat currentNumber;
+
+@property (strong, nonatomic)GNRCountStepper * stepper;
 
 @end
 

@@ -41,9 +41,9 @@
     [self.stepper countChangedBlock:^(NSInteger count) {
         if (goods) {
             goods.number = @(count);
-            _priceLabel.text = [NSString stringWithFormat:@"￥%.2f",goods.shouldPayMoney];
-            if ([_delegate respondsToSelector:@selector(stepper:valueChangedForCount:goods:)]) {
-                [_delegate stepper:_stepper valueChangedForCount:count goods:goods];
+            self->_priceLabel.text = [NSString stringWithFormat:@"￥%.2f",goods.shouldPayMoney];
+            if ([self->_delegate respondsToSelector:@selector(stepper:valueChangedForCount:goods:)]) {
+                [self->_delegate stepper:_stepper valueChangedForCount:count goods:goods];
             }
         }
     }];

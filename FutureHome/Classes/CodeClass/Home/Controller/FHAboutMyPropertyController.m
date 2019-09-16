@@ -24,9 +24,11 @@
 - (void)initViewControllers {
     FHOwnerCertificationController *messageVC = [[FHOwnerCertificationController alloc] init];
     messageVC.yp_tabItemTitle = @"业主认证";
+    messageVC.property_id = self.property_id;
     
     FHRentalSaleController *groupVC = [[FHRentalSaleController alloc] init];
     groupVC.yp_tabItemTitle = @"出租出售";
+    groupVC.property_id = self.property_id;
     
     FHReleaseManagementController *hotVC = [[FHReleaseManagementController alloc] init];
     hotVC.yp_tabItemTitle = @"发布管理";

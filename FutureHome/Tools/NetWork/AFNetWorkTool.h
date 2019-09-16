@@ -80,8 +80,18 @@ typedef void (^failureBlock)(NSError *error);
  *  @param success      请求成功后回调
  *  @param failure      请求失败后回调
  */
-+ (void)updateImageWithUrl:(NSString *)url parameter:(NSDictionary *)parameter imageData:(NSData *)imageData success:(successBlock)success failure:(failureBlock)failure;
++ (void)updateImageWithUrl:(NSString *)url
+                 parameter:(NSDictionary *)parameter
+                 imageData:(NSData *)imageData
+                   success:(successBlock)success
+                   failure:(failureBlock)failure;
 
-+ (void)updateImageWithUrl:(NSString *)url parameter:(NSDictionary *)parameter voiceData:(NSData *)imageData voiceName:(NSString *)voiceName voiceType:(NSString *)voiceType success:(successBlock)success failure:(failureBlock)failure;
+//+ (void)updateImageWithUrl:(NSString *)url
+//                 parameter:(NSDictionary *)parameter
+//                 voiceData:(NSData *)imageData
+//                 voiceName:(NSString *)voiceName
+//                 voiceType:(NSString *)voiceType
+//                   success:(successBlock)success
+//                   failure:(failureBlock)failure;
 
 @end

@@ -35,11 +35,12 @@
     [super viewDidLoad];
     self.title = @"照片";
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-    self.tableView.transform = CGAffineTransformMakeTranslation(0, 100);
+//    self.tableView.transform = CGAffineTransformMakeTranslation(0, 100);
+    self.tableView.transform = CGAffineTransformMakeTranslation(0, 80);
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.rowHeight = 50;
+    self.tableView.rowHeight = 80;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:MGroupCellClassName bundle:nil] forCellReuseIdentifier:MGroupCellClassName];

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <UIKit/UIKit.h>
+#import "GNRShoppingBar.h"
+#import "PPNumberButton.h"
 
 @interface SingleManager : NSObject
 @property (nonatomic,copy) NSString *uid; /* 用户id*/
@@ -64,6 +66,11 @@
 
 /** 是否选择用户头像 */
 @property (nonatomic, assign) BOOL isSelectPerson;
+
+@property (nonatomic, strong)GNRShoppingBar * shoppingBar;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) PPNumberButton *numberButton;
+
 
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串
