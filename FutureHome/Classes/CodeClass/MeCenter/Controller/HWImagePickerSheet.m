@@ -111,10 +111,13 @@
     NSMutableArray *thumbnailImgArr = [NSMutableArray array];
     
     for (ALAsset *set in _arrSelected) {
-        CGImageRef cgImg = [set thumbnail];
+//        CGImageRef cgImg = [set thumbnail];
+        CGImageRef cgImg = [set aspectRatioThumbnail];
         UIImage* image = [UIImage imageWithCGImage: cgImg];
         [thumbnailImgArr addObject:image];
     }
+    
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(getSelectImageWithALAssetArray:thumbnailImageArray:)]) {
         [self.delegate getSelectImageWithALAssetArray:_arrSelected thumbnailImageArray:thumbnailImgArr];
     }

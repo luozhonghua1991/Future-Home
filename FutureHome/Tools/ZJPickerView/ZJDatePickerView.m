@@ -213,7 +213,7 @@ typedef enum : NSUInteger {
                              minDate:minDate
                              maxDate:maxDate
                         isAutoSelect:isAutoSelect
-                       isShowChinese:false
+                       isShowChinese:YES
                            lineColor:lineColor
                            rowHeight:rowHeight
                    leftBtnTitleColor:leftBtnTitleColor

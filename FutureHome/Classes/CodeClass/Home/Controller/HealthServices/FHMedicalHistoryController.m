@@ -9,12 +9,16 @@
 #import "FHMedicalHistoryController.h"
 #import "FHMedicalHistoryCell.h"
 #import "FHAddMedicalHistoryController.h"
+#import "BAAlertController.h"
+#import "FHHealthHistoryModel.h"
 
 @interface FHMedicalHistoryController () <UITableViewDelegate,UITableViewDataSource>
 /** 所有价格Btn */
 @property (nonatomic, strong) UIButton *allPriceBtn;
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *medicalHistoryArrs;
 
 @end
 
@@ -27,6 +31,36 @@
     [self creatBottomBtn];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMedicalHistoryCell class] forCellReuseIdentifier:NSStringFromClass([FHMedicalHistoryCell class])];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fh_getRequest];
+}
+
+- (void)fh_getRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    self.medicalHistoryArrs = [[NSMutableArray alloc] init];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.ID,@"pid",
+                               @(1),@"page",
+                               nil];
+    
+    [AFNetWorkTool get:@"health/recordList" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.medicalHistoryArrs = [FHHealthHistoryModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
+//            NSInteger 
+            [weakSelf.homeTable reloadData];
+            
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 #pragma mark — 通用导航栏
@@ -72,7 +106,6 @@
     self.allPriceBtn.backgroundColor = HEX_COLOR(0x1296db);
     [self.allPriceBtn setTitle:@"合计支出:2666元" forState:UIControlStateNormal];
     [self.allPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.allPriceBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.allPriceBtn];
 }
 
@@ -86,7 +119,7 @@
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 15;
+    return self.medicalHistoryArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -104,14 +137,76 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHMedicalHistoryCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMedicalHistoryCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    FHHealthHistoryModel *model = self.medicalHistoryArrs[indexPath.row];
+    cell.model = model;
+    //添加长按手势
+    UILongPressGestureRecognizer * longPressGesture =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+    
+    longPressGesture.minimumPressDuration = 1.5f;//设置长按 时间
+    [cell addGestureRecognizer:longPressGesture];
     return cell;
 }
 
+
+#pragma mark  实现成为第一响应者方法
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+
+
+- (void) cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {
+    if (longRecognizer.state==UIGestureRecognizerStateBegan) {
+        //成为第一响应者，需重写该方法
+        [self becomeFirstResponder];
+        
+        CGPoint location = [longRecognizer locationInView:self.homeTable];
+        NSIndexPath * indexPath = [self.homeTable indexPathForRowAtPoint:location];
+        //可以得到此时你点击的哪一行
+        
+        //在此添加你想要完成的功能
+        WS(weakSelf);
+        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定要删除该条记录吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                /** 确定删除 */
+                [weakSelf fh_deleteHealthHistoryInfoWithIndex:indexPath];
+            }
+        }];
+    }
+}
+
+- (void)fh_deleteHealthHistoryInfoWithIndex:(NSIndexPath *)index {
+    FHHealthHistoryModel *model = self.medicalHistoryArrs[index.row];
+    /** 删除医疗记录接口 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               model.id,@"id",
+                               nil];
+    [AFNetWorkTool post:@"health/deleteRecord" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"操作成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                /** 确定 */
+                [weakSelf fh_getRequest];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FHHealthHistoryModel *model = self.medicalHistoryArrs[indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FHAddMedicalHistoryController *vc = [[FHAddMedicalHistoryController alloc] init];
     vc.titleString = @"医疗记录";
     vc.hidesBottomBarWhenPushed = YES;
+    vc.pid = self.ID;
+    vc.model = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

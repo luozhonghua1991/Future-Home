@@ -11,6 +11,7 @@
 #import "FHElectionListController.h"
 #import "FHNoticeListModel.h"
 #import "FHWebViewController.h"
+#import "FHApplicationBiddingController.h"
 
 @interface FHBaseAnnouncementListController () <UITableViewDelegate,UITableViewDataSource>
 /** 列表数据 */
@@ -88,7 +89,10 @@
     /** 上面的headerView */
     [AFNetWorkTool get:@"public/noticeImg" params:paramsDic success:^(id responseObj) {
         NSString *imgUrl = responseObj[@"data"];
-        [self.headerView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@"头像"]];
+        [self.headerView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@""]];
+        if (IsStringEmpty(imgUrl)) {
+            self.headerView.image = [UIImage imageNamed:@"头像"];
+        }
         [weakSelf.listTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.listTable reloadData];
@@ -166,7 +170,11 @@
         return;
     }
     if ([self.titleString isEqualToString:@"物业招标"]) {
-        [self viewControllerPushOther:@"FHApplicationBiddingController"];
+        [self viewControllerPushOther:@""];
+        FHApplicationBiddingController *vc = [[FHApplicationBiddingController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.property_id = self.property_id;
+        [self.navigationController pushViewController:vc  animated:YES];
         return;
     }
     

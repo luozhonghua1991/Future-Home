@@ -82,7 +82,7 @@
     [session setResponseSerializer:serializer];
 
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
-    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
+    [UIView showLoadingHud:@""inView:[UIApplication sharedApplication].keyWindow];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     //发送get请求
     [session GET:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

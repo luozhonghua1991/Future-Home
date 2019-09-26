@@ -53,11 +53,19 @@
     button.titleLabel.font = [UIFont systemFontOfSize:13];
     button.backgroundColor = HEX_COLOR(0x1296db);
     button.tag = tag;
+    if (!(self.authModel.is_auth == 2)) {
+        button.enabled = NO;
+    }
     return button;
 }
 
 
 - (void)buttonClick:(UIButton *)sender {
+    /** 判断用户是否登录过 没登录去登录 */
+    if (![AccountStorage isExistsToKen]) {
+        [FHLoginTool fh_makePersonToLoging];
+        return;
+    }
     if (sender.tag == 1) {
         FHHousingRentOrSaleController *vc = [[FHHousingRentOrSaleController alloc] init];
         vc.titleString = @"发布房屋出售信息";

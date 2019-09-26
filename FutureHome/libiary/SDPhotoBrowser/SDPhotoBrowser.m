@@ -9,8 +9,6 @@
 #import "SDPhotoBrowser.h"
 #import "UIImageView+WebCache.h"
 #import "SDBrowserImageView.h"
-#import "FDActionSheet.h"
-//#import "TranspondViewController.h"
 
  
 //  ============在这里方便配置样式相关设置===========
@@ -22,17 +20,15 @@
 //                      \/
 
 #import "SDPhotoBrowserConfig.h"
-#import "CurrentViewController.h"
+
 //  =============================================
-@interface SDPhotoBrowser ()<FDActionSheetDelegate>
-@end
-@implementation SDPhotoBrowser
+
+@implementation SDPhotoBrowser 
 {
     UIScrollView *_scrollView;
     BOOL _hasShowedFistView;
     UILabel *_indexLabel;
     UIButton *_saveButton;
-    UIView *bottomView;
     UIActivityIndicatorView *_indicatorView;
     BOOL _willDisappear;
 }
@@ -71,82 +67,28 @@
     indexLabel.layer.cornerRadius = indexLabel.bounds.size.height * 0.5;
     indexLabel.clipsToBounds = YES;
     if (self.imageCount > 1) {
-        indexLabel.hidden =NO;
         indexLabel.text = [NSString stringWithFormat:@"1/%ld", (long)self.imageCount];
-    }else{
-         indexLabel.hidden =YES;
-//        indexLabel.text = [NSString stringWithFormat:@"1/%ld", (long)self.imageCount];
     }
     _indexLabel = indexLabel;
     [self addSubview:indexLabel];
     
-    // 灰色背景view
-    UIView *bgView = [[UIView alloc]init];
-    bgView.backgroundColor = COLOR_18;
-    bgView.backgroundColor = [UIColor colorWithWhite:0.f alpha:0.5];
-    bottomView = bgView;
-    [self addSubview:bgView];
-    
-//    // 2.保存按钮
-//    UIButton *saveButton = [[UIButton alloc] init];
-//    [saveButton setImage:[UIImage imageNamed:@"personal_my_photo_forward"] forState:UIControlStateNormal];
-//    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    saveButton.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.90f];
-//    saveButton.layer.cornerRadius = 5;
-//    saveButton.clipsToBounds = YES;
-//    [saveButton addTarget:self action:@selector(ShowActionSheet) forControlEvents:UIControlEventTouchUpInside];
-//    _saveButton = saveButton;
-//    [bottomView addSubview:saveButton];
-    
-}
--(void)ShowActionSheet {
-    if (self.pageType == GeneralView) {
-        FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取 消" otherButtonTitles:@"转发", nil];
-        [actionSheet setTitleColor:COLOR_3 fontSize:SCREEN_HEIGHT/667 *12];
-        //    [actionSheet setButtonTitleColor:COLOR_3 bgColor:nil fontSize:SCREEN_HEIGHT/667 *12 atIndex:0];
-        [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
-        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
-        [actionSheet addAnimation];
-        [actionSheet show];
-    }else{
-        FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取 消" otherButtonTitles:@"转发",@"保存到手机", nil];
-        [actionSheet setTitleColor:COLOR_3 fontSize:SCREEN_HEIGHT/667 *12];
-        //    [actionSheet setButtonTitleColor:COLOR_3 bgColor:nil fontSize:SCREEN_HEIGHT/667 *12 atIndex:0];
-        [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
-        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
-        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
-        [actionSheet addAnimation];
-        [actionSheet show];
-    }
-}
-- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
-    if (self.pageType == GeneralView) {
-        if (buttonIndex==0) {
-            [self photoClick:nil];
-            int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
-            UIImageView *currentImageView = _scrollView.subviews[index];
-//            TranspondViewController *transpond = [[TranspondViewController alloc]init];
-//            transpond.image = currentImageView.image;
-//            [[CurrentViewController topViewController].navigationController pushViewController:transpond animated:YES];
-        }
-    }else{
-        if (buttonIndex==0) {
-            [self photoClick:nil];
-            int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
-            UIImageView *currentImageView = _scrollView.subviews[index];
-//            TranspondViewController *transpond = [[TranspondViewController alloc]init];
-//            transpond.image = currentImageView.image;
-//            [[CurrentViewController topViewController].navigationController pushViewController:transpond animated:YES];
-        } else if(buttonIndex==1){
-            [self saveImage];
-        }
-    }
+    // 2.保存按钮
+    UIButton *saveButton = [[UIButton alloc] init];
+    [saveButton setTitle:@"保存" forState:UIControlStateNormal];
+    [saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    saveButton.backgroundColor = [UIColor colorWithRed:0.1f green:0.1f blue:0.1f alpha:0.90f];
+    saveButton.layer.cornerRadius = 5;
+    saveButton.clipsToBounds = YES;
+    [saveButton addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
+    _saveButton = saveButton;
+    [self addSubview:saveButton];
 }
 
 - (void)saveImage
 {
     int index = _scrollView.contentOffset.x / _scrollView.bounds.size.width;
     UIImageView *currentImageView = _scrollView.subviews[index];
+    
     UIImageWriteToSavedPhotosAlbum(currentImageView.image, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
     
     UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] init];
@@ -218,25 +160,32 @@
     self.currentImageIndex = index;
     if (imageView.hasLoadedImage) return;
     if ([self highQualityImageURLForIndex:index]) {
-        [imageView sd_setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
+        [imageView setImageWithURL:[self highQualityImageURLForIndex:index] placeholderImage:[self placeholderImageForIndex:index]];
     } else {
         imageView.image = [self placeholderImageForIndex:index];
     }
     imageView.hasLoadedImage = YES;
 }
 
-- (void)photoClick:(UITapGestureRecognizer *)recognizer {
-    
-    [UIApplication sharedApplication].statusBarHidden =NO;
-    
+- (void)photoClick:(UITapGestureRecognizer *)recognizer
+{
     _scrollView.hidden = YES;
     _willDisappear = YES;
     
     SDBrowserImageView *currentImageView = (SDBrowserImageView *)recognizer.view;
     NSInteger currentIndex = currentImageView.tag;
     
+    UIView *sourceView = nil;
+    if ([self.sourceImagesContainerView isKindOfClass:UICollectionView.class]) {
+        UICollectionView *view = (UICollectionView *)self.sourceImagesContainerView;
+        NSIndexPath *path = [NSIndexPath indexPathForItem:currentIndex inSection:0];
+        sourceView = [view cellForItemAtIndexPath:path];
+    }else {
+        sourceView = self.sourceImagesContainerView.subviews[currentIndex];
+    }
     
-    UIView *sourceView = self.sourceImagesContainerView.subviews[currentIndex];
+    
+    
     CGRect targetTemp = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
     
     UIImageView *tempView = [[UIImageView alloc] init];
@@ -253,9 +202,9 @@
     tempView.center = self.center;
     
     [self addSubview:tempView];
-    
+
     _saveButton.hidden = YES;
-    bottomView.hidden = YES;
+    
     [UIView animateWithDuration:SDPhotoBrowserHideImageAnimationDuration animations:^{
         tempView.frame = targetTemp;
         self.backgroundColor = [UIColor clearColor];
@@ -263,7 +212,6 @@
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
     }];
-    
 }
 
 - (void)imageViewDoubleTaped:(UITapGestureRecognizer *)recognizer
@@ -311,8 +259,7 @@
     }
     
     _indexLabel.center = CGPointMake(self.bounds.size.width * 0.5, 35);
-    _saveButton.frame = CGRectMake(SCREEN_WIDTH/375  *652/2, SCREEN_HEIGHT/667 *9, SCREEN_WIDTH/375 *24, SCREEN_HEIGHT/667 *22);
-    bottomView.frame = CGRectMake(0, SCREEN_HEIGHT/667 *1246/2, SCREEN_WIDTH, SCREEN_HEIGHT/667 *44);
+    _saveButton.frame = CGRectMake(30, self.bounds.size.height - 70, 50, 25);
 }
 
 - (void)show
@@ -336,14 +283,15 @@
 
 - (void)showFirstImage
 {
-    //--------自己修改-----------
-    UIView *sourceView;
-    if (self.pageType == ChatView) {
-        sourceView = self.sourceImagesContainerView.subviews[0];
-    }else{
+    UIView *sourceView = nil;
+    
+    if ([self.sourceImagesContainerView isKindOfClass:UICollectionView.class]) {
+        UICollectionView *view = (UICollectionView *)self.sourceImagesContainerView;
+        NSIndexPath *path = [NSIndexPath indexPathForItem:self.currentImageIndex inSection:0];
+        sourceView = [view cellForItemAtIndexPath:path];
+    }else {
         sourceView = self.sourceImagesContainerView.subviews[self.currentImageIndex];
     }
-    //--end--UIView *sourceView = self.sourceImagesContainerView.subviews[self.currentImageIndex];
     CGRect rect = [self.sourceImagesContainerView convertRect:sourceView.frame toView:self];
     
     UIImageView *tempView = [[UIImageView alloc] init];

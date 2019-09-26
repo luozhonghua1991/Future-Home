@@ -35,6 +35,10 @@
 @property (nonatomic, strong) UILabel *logoLabel;
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
+/** 图片选择数组 */
+@property (nonatomic, strong) NSMutableArray *imgSelectArrs;
+/** 服务器返回的图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectImgArrays;
 
 @end
 
@@ -137,6 +141,101 @@
 {
     [self.view endEditing:YES];
 }
+
+
+#pragma mark — event
+- (void)sureBtnClick {
+    /** 提交发布信息 */
+    self.imgSelectArrs = [[NSMutableArray alloc] init];
+    [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    self.selectImgArrays = [[NSMutableArray alloc] init];
+    /** 先上传多张图片*/
+    Account *account = [AccountStorage readAccount];
+    NSString *string = [self getCurrentTimes];
+    NSArray *arr = @[string];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"property",@"path",
+                               arr,@"file[]",
+                               nil];
+    for (int i = 0; i < self.imgSelectArrs.count; i++) {
+        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
+        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+            NSArray *arr = responseObj[@"data"];
+            if (!IS_NULL_ARRAY(arr)) {
+                NSString *imgID = [arr objectAtIndex:0];
+                [self.selectImgArrays addObject:imgID];
+                if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                    /** 图片获取完毕 */
+                    [self commitInfo];
+                }
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
+//获取当前的时间
+
+- (NSString*)getCurrentTimes{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+    //现在时间,你可以输出来看下是什么格式
+    
+    NSDate *datenow = [NSDate date];
+    
+    //----------将nsdate按formatter格式转成nsstring
+    
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    NSLog(@"currentTimeString =  %@",currentTimeString);
+    
+    return currentTimeString;
+    
+}
+
+
+- (void)commitInfo {
+    /** 先传图片 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"owner_id",
+                               self.nameView.contentTF.text,@"name",
+                               self.typeView.contentTF.text,@"position",
+                               self.levealView.contentTF.text,@"mobile",
+                               self.companyNameView.contentTF.text,@"com_name",
+                               self.phoneView.contentTF.text,@"grade",
+                               self.xinCodeView.contentTF.text,@"credit_code",
+                               self.companyAddressView.contentTF.text,@"address",
+                               self.emailView.contentTF.text,@"e_mail",
+                               self.businessDescriptionTextView.text,@"describe",
+                               imgArrsString,@"img_ids",
+                               nil];
+    [AFNetWorkTool post:@"owner/applyTender" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 申请资料已经提交 */
+            [weakSelf.view makeToast:@"申请资料已经提交"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
@@ -248,7 +347,7 @@
         _submitBtn.backgroundColor = [UIColor lightGrayColor];
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
         [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [_submitBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
 }

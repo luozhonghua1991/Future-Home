@@ -7,12 +7,15 @@
 //
 
 #import "BaseViewController.h"
+#import "FHAuthModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHRentalSaleController : BaseViewController
 /**  */
 @property (nonatomic, assign) NSInteger property_id;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHAuthModel *authModel;
 
 @end
 

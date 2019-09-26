@@ -13,10 +13,11 @@
  *  本库会不断更新工具类，以及添加一些模块案例，请各位大神们多多指教，支持一下。😆
  */
 #import "ZJCommit.h"
+#import "NSArray+JSON.h"
 
 @implementation ZJCommit
 
--(NSArray *)pic_urls{
+-(NSArray *)pic_urls {
     if (self.img_data.length > 5) {
         NSData *jsonData = [self.img_data dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -37,25 +38,44 @@
     
 }
 
--(id)initWithDict:(NSDictionary *)dict{
+-(id)initWithDict:(NSDictionary *)dict {
     if (self == [super init]) {
         self.avatar  = dict[@"avatar"];
         self.nickname = dict[@"nickname"];
         self.content = dict[@"content"];
-        self.img_data = dict[@"img_data"];
-        self.like_id = dict[@"like_id"];
-        self.like_count = dict[@"like_count"];
-        self.unlike_count = dict[@"unlike_count"];
-        self.add_time = dict[@"add_time"];
-        self.rating = dict[@"rating"];
-        
+        self.img_data = [dict[@"img_ids"] toReadableJSONString];
+        self.ID = dict[@"id"];
+//        self.like_count = dict[@"like_count"];
+//        self.unlike_count = dict[@"unlike_count"];
+        self.add_time = dict[@"create_time"];
+//        self.rating = dict[@"rating"];
+        self.view_num = [dict[@"view_num"] integerValue];
+        self.comment_num = [dict[@"comment_num"] integerValue];
+        self.user_id = dict[@"user_id"];
         _identifier = [self uniqueIdentifier];
     }
     return self;
 }
 
+//-(id)initWithDict:(NSDictionary *)dict{
+//    if (self == [super init]) {
+//        self.avatar  = dict[@"avatar"];
+//        self.nickname = dict[@"nickname"];
+//        self.content = dict[@"content"];
+//        self.img_data = dict[@"img_data"];
+//        self.like_id = dict[@"like_id"];
+//        self.like_count = dict[@"like_count"];
+//        self.unlike_count = dict[@"unlike_count"];
+//        self.add_time = dict[@"add_time"];
+//        self.rating = dict[@"rating"];
+//        
+//        _identifier = [self uniqueIdentifier];
+//    }
+//    return self;
+//}
+
 +(instancetype)commitWithDict:(NSDictionary *)dict{
-    return [[self alloc]initWithDict:dict];
+    return [[self alloc] initWithDict:dict];
 }
 
 - (NSString *)uniqueIdentifier

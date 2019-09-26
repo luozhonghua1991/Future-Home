@@ -57,8 +57,8 @@
 - (CGRect)getPickerViewFrame;
 
 //获取选中的所有图片信息
-- (NSArray*)getSmallImageArray;
 - (NSArray*)getBigImageArray;
+- (NSArray*)getSmallImageArray;
 - (NSArray*)getALAssetArray;
 
 - (void)pickerViewFrameChanged;

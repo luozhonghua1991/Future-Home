@@ -176,25 +176,53 @@
     self.selectImgArrays = [[NSMutableArray alloc] init];
     /** 先上传多张图片*/
     Account *account = [AccountStorage readAccount];
-    NSArray *arr = @[@"111"];
+    NSString *string = [self getCurrentTimes];
+    NSArray *arr = @[string];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @"property",@"path",
                                arr,@"file[]",
                                nil];
     for (int i = 0; i< self.imgSelectArrs.count; i++) {
-        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],0.5);
+        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
         [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-            NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
-            [self.selectImgArrays addObject:imgID];
-            if (self.selectImgArrays.count == self.imgSelectArrs.count) {
-                /** 图片获取完毕 */
-                [self commitInfo];
+            NSArray *arr = responseObj[@"data"];
+            if (!IS_NULL_ARRAY(arr)) {
+                NSString *imgID = [arr objectAtIndex:0];
+                [self.selectImgArrays addObject:imgID];
+                if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                    /** 图片获取完毕 */
+                    [self commitInfo];
+                }
             }
         } failure:^(NSError *error) {
             
         }];
     }
+}
+
+//获取当前的时间
+
+- (NSString*)getCurrentTimes{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+    //现在时间,你可以输出来看下是什么格式
+    
+    NSDate *datenow = [NSDate date];
+    
+    //----------将nsdate按formatter格式转成nsstring
+    
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    NSLog(@"currentTimeString =  %@",currentTimeString);
+    
+    return currentTimeString;
+    
 }
 
 /** 提交信息 */
@@ -212,7 +240,7 @@
                                self.houseNumberView.contentTF.text,@"l_floor",
                                @(1),@"park_space",
                                @(2),@"elevator",
-                               self.type,@"type",
+                               @(self.type),@"type",
                                self.salePriceView.contentTF.text,@"rent",
                                self.suggestionsTextView.text,@"describe",
                                self.fixturesView.contentTF.text,@"decoration",

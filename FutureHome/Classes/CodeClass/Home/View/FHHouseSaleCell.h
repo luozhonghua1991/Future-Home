@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHHouseListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHHouseSaleCell : UITableViewCell
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHHouseListModel *houseListModel;
 
 @end
 

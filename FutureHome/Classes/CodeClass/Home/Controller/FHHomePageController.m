@@ -109,6 +109,8 @@
     if ([SingleManager shareManager].shoppingBar) {
         [[SingleManager shareManager].shoppingBar removeFromSuperview];
     }
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
 }
 
 - (void)fh_creatNavUI {

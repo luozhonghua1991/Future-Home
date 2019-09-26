@@ -19,11 +19,16 @@
 
 @property(nonatomic, weak) id<ProductsDelegate> delegate;/**< delegate */
 
+/** 多少个区 */
+@property (nonatomic, assign) NSInteger sectionCount;
+
 /**
  *  当CategoryTableView滚动时,ProductsTableView跟随滚动至指定section
  *
  *  @param section
  */
 - (void)scrollToSelectedIndexPath:(NSIndexPath *)indexPath;
+
+- (void)resreshDataWithPid:(NSString *)pid;
 
 @end

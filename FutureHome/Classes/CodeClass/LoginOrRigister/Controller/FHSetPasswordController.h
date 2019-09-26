@@ -14,5 +14,7 @@
 @property (nonatomic,copy) NSString *phoneNumber;
 /**验证码*/
 @property (nonatomic,copy) NSString *verificCode;
+/** 验证码回来的 校验ID */
+@property (nonatomic, copy) NSString *BizId;
 
 @end

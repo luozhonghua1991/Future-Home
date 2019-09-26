@@ -12,6 +12,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHComplaintsSuggestionsController : HWPublishBaseController
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger property_id;
+/** 1 物业  2 业委 */
+@property (nonatomic, assign) NSInteger type;
 
 @end
 

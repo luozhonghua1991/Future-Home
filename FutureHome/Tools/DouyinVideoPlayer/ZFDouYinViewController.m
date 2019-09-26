@@ -97,6 +97,7 @@ static NSString *kIdentifier = @"kIdentifier";
     });
 }
 
+#pragma mark — request
 - (void)requestData {
     NSString *path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:path];
@@ -124,7 +125,7 @@ static NSString *kIdentifier = @"kIdentifier";
         [self playTheVideoAtIndexPath:indexPath scrollToTop:NO];
     }];
     /// 如果是最后一行，去请求新数据
-    if (index == self.dataSource.count-1) {
+    if (index == self.dataSource.count - 1) {
         /// 加载下一页数据
         [self requestData];
         self.player.assetURLs = self.urls;

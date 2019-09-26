@@ -33,8 +33,7 @@
 }
 
 
--(void)setUpAllViewFrame{
-    
+-(void)setUpAllViewFrame {
     CGFloat iconX = 15;
     CGFloat iconWH = HeightRealValue(100);
     CGFloat iconY = 10;
@@ -51,11 +50,11 @@
     CGFloat nameH = 16;
     self.nameFrame = CGRectMake(nameX, nameY, nameW, nameH);
     
-    CGFloat starX = nameX;
-    CGFloat starY = CGRectGetMaxY(_nameFrame)+10;
-    CGFloat starW = ScreenWidth - starX - 15;
-    CGFloat starH = 22;
-    self.starFrame = CGRectMake(starX, starY, starW, starH);
+//    CGFloat starX = nameX;
+//    CGFloat starY = CGRectGetMaxY(_nameFrame)+10;
+//    CGFloat starW = ScreenWidth - starX - 15;
+//    CGFloat starH = 22;
+//    self.starFrame = CGRectMake(starX, starY, starW, starH);
     
     
     CGFloat contentX = nameX;

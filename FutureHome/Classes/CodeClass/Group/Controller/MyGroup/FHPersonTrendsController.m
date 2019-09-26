@@ -82,6 +82,7 @@
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
     hotVC.yp_tabItemTitle = @"圈热点";
     hotVC.isHaveHeaderView = YES;
+    hotVC.personType = self.personType;
     
     FHMyVideosController *photoVC = [[FHMyVideosController alloc] init];
     photoVC.yp_tabItemTitle = @"视频";

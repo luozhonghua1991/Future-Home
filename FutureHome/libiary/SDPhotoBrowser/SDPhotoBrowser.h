@@ -8,11 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum : NSUInteger {
-    GeneralView,
-    CommentView,
-    ChatView,
-} PageType;
 
 @class SDButton, SDPhotoBrowser;
 
@@ -34,7 +29,6 @@ typedef enum : NSUInteger {
 @property (nonatomic, weak) UIView *sourceImagesContainerView;
 @property (nonatomic, assign) NSInteger currentImageIndex;
 @property (nonatomic, assign) NSInteger imageCount;
-@property (nonatomic, assign) PageType pageType;
 
 @property (nonatomic, weak) id<SDPhotoBrowserDelegate> delegate;
 

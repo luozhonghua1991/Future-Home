@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>FutureHome.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>00CC24FADF65FB23890A1E036BDE3B92BFB3C266</string>
+				<key>dateExpires</key>
+				<string>2020/8/20</string>
+				<key>type</key>
+				<string>iOS Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>ARPAFCZ2S6.com.tongxichuanmei.FutureHome</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>ARPAFCZ2S6</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>ARPAFCZ2S6.com.tongxichuanmei.FutureHome</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>FutureHome.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>e96f4354-cef8-4a2e-a030-3d47bb876cb5</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: com.tongxichuanmei.FutureHome</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>ARPAFCZ2S6</string>
+				<key>name</key>
+				<string>kaifu li</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

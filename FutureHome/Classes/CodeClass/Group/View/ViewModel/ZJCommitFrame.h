@@ -23,10 +23,10 @@
 // 评论内容Frame
 @property(nonatomic, assign) CGRect contentFrame;
 
-// 喜欢按钮Frame
+//// 喜欢按钮Frame
 @property(nonatomic, assign) CGRect likeFrame;
-
-// 不喜欢按钮Frame
+//
+//// 不喜欢按钮Frame
 @property(nonatomic, assign) CGRect disLikeFrame;
 
 // 时间Frame

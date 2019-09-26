@@ -12,5 +12,8 @@
 @interface LGJCategoryVC : BaseViewController
 /** 标题 */
 @property (nonatomic, copy) NSString *titleString;
+/** 文章分类 */
+@property (nonatomic, copy) NSString *type;
+
 
 @end

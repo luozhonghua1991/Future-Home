@@ -59,6 +59,15 @@
     // Configure the view for the selected state
 }
 
+- (void)setHouseListModel:(FHHouseListModel *)houseListModel {
+    _houseListModel = houseListModel;
+    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_houseListModel.img_ids] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.houseNameLabel.text = _houseListModel.community;
+    self.houseTypeLabel.text = _houseListModel.hall;
+    self.priceSugmentLabel.text = _houseListModel.require;
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%ld",(long)_houseListModel.rent];
+}
+
 #pragma mark — setter && getter
 - (UIImageView *)leftImgView {
     if (!_leftImgView) {

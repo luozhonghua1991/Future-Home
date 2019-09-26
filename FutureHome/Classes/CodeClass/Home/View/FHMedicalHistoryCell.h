@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHHealthHistoryModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *hospitalLabel;
 /** 描述症状 */
 @property (nonatomic, strong) UILabel *infoLabel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHHealthHistoryModel *model;
+
 
 @end
 

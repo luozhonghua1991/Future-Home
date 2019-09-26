@@ -77,6 +77,15 @@
     [self.scrollView addSubview:self.phoneNumberView];
 }
 
+- (void)setModel:(FHHealthMemberModel *)model {
+    _model = model;
+    self.ownerNameView.contentTF.text = model.name;
+    self.ownerCodeView.contentTF.text = model.id_number;
+    self.sexView.contentTF.text = model.getSex;
+    self.birthView.contentTF.text = model.datebirth;
+    self.healthCodeView.contentTF.text = model.social_number;
+    self.phoneNumberView.contentTF.text = model.mobile;
+}
 
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
@@ -104,8 +113,38 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
-    /** 确定 */
-    [self.navigationController popViewControllerAnimated:YES];
+    /** 添加成员接口 */
+    NSString *sexID;
+    if ([self.sexView.contentTF.text isEqualToString:@"男"]) {
+        sexID = @"1";
+    } else if ([self.sexView.contentTF.text isEqualToString:@"女"]) {
+        sexID = @"2";
+    }
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.ownerNameView.contentTF.text,@"name",
+                               self.ownerCodeView.contentTF.text,@"id_number",
+                               sexID,@"sex",
+                               self.birthView.contentTF.text,@"datebirth",
+                               self.healthCodeView.contentTF.text,@"social_number",
+                               self.phoneNumberView.contentTF.text,@"mobile",
+                               self.ID,@"id",
+                               nil];
+    [AFNetWorkTool post:@"health/addmember" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"操作成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                /** 确定 */
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -120,6 +159,20 @@
     [self.view endEditing:YES];
 }
 
+- (void)sexClick {
+    [ZJNormalPickerView zj_showStringPickerWithTitle:@"性别" dataSource:@[@"男",@"女"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+        NSLog(@"index---%ld",index);
+        self.sexView.contentTF.text = selectValue;
+    } cancelBlock:^{
+        
+    }];
+}
+
+- (void)birthClick {
+    [ZJDatePickerView zj_showDatePickerWithTitle:@"出生日期" dateType:ZJDatePickerModeYMD defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+        self.birthView.contentTF.text = selectValue;
+    } ];
+}
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
@@ -152,6 +205,12 @@
         _sexView = [[FHAccountApplicationTFView alloc] init];
         _sexView.titleLabel.text = @"性别";
         _sexView.contentTF.placeholder = @"请选择性别";
+        
+        _sexView.contentTF.enabled = NO;
+        _sexView.contentTF.userInteractionEnabled = YES;
+        _sexView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(sexClick)];
+        [_sexView addGestureRecognizer:tap];
     }
     return _sexView;
 }
@@ -161,6 +220,12 @@
         _birthView = [[FHAccountApplicationTFView alloc] init];
         _birthView.titleLabel.text = @"出生年月";
         _birthView.contentTF.placeholder = @"请选择出生年月";
+        
+        _birthView.contentTF.enabled = NO;
+        _birthView.contentTF.userInteractionEnabled = YES;
+        _birthView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(birthClick)];
+        [_birthView addGestureRecognizer:tap];
     }
     return _birthView;
 }

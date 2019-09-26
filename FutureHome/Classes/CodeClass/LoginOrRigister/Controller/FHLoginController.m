@@ -222,6 +222,7 @@
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"username"] = self.phoneNumnTF.text;
         params[@"password"] = self.passwordTF.text;
+        
         [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
             /** 保存用户信息 */
             Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
@@ -230,6 +231,7 @@
             [self.view makeToast:msg];
             [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
         } failure:^(NSError *error) {
+            
         }];
     } else if ([name isEqualToString:@"注册"]) {
         [self viewControllerPushOther:@"FHRigisterController"];

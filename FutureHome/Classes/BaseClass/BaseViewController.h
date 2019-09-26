@@ -17,6 +17,7 @@
 #import "UIColor+Extend.h"
 #import "CreatNavViewController.h"
 #import "ZJPickerView.h"
+#import "FHLoginTool.h"
 
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]

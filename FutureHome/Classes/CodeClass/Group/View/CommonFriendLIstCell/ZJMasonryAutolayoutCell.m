@@ -47,8 +47,18 @@
 @property(nonatomic ,strong) UILabel        *contentLab;
 // 图片
 @property(nonatomic ,strong) ZJCommitPhotoView *photosView;
-// 分割线
+/** 底部View */
+@property (nonatomic, strong) UIView         *bottomView;
+// 最上面的分割线
+@property(nonatomic ,strong) UIView         *topLine;
+// 最下面的分割线
 @property(nonatomic ,strong) UIView         *line;
+/** 浏览次数 */
+@property (nonatomic, strong) UIButton *eyeBtn;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIButton *commitBtn;
+
+
 // 评论列表
 //@property (nonatomic, strong) UITableView  *commentTable;
 @end
@@ -64,82 +74,99 @@
 }
 
 
--(void)setModel:(ZJCommit *)model{
+-(void)setModel:(ZJCommit *)model {
     _model = model;
     
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:model.avatar]];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
 
-    self.nameLab.text = model.nickname;
-    NSInteger time = [model.add_time integerValue];
-    self.timeLab.text = [NSDate dateWithTimeInterval:time format:@"MM月dd日"];
-    self.contentLab.text = model.content;
+    self.nameLab.text = _model.nickname;
+    self.timeLab.text = _model.add_time;
+    self.contentLab.text = _model.content;
     
-    NSInteger count = model.pic_urls.count;
-   
+    [self.eyeBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.view_num] forState:UIControlStateNormal];
+    [self.commitBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.comment_num] forState:UIControlStateNormal];
+    
+    NSInteger count = _model.pic_urls.count;
+
     if (count > 0 ) {
-        _photosView.pic_urls = model.pic_urls;
+        _photosView.pic_urls = _model.pic_urls;
         _photosView.selfVc = _weakSelf;
         // 有图片重新更新约束
-        CGFloat oneheight = (kScreenWidth - _nameLab.zj_originX - 15 -20)/3;
+        CGFloat oneheight = (kScreenWidth - _nameLab.zj_originX - 15 -20 ) / 3;
         // 三目运算符 小于或等于3张 显示一行的高度 ,大于3张小于或等于6行，显示2行的高度 ，大于6行，显示3行的高度
         CGFloat photoHeight = count<=3 ? oneheight : (count<=6 ? 2*oneheight+10 : oneheight *3+20);
 
         [_photosView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self->_contentLab.mas_bottom).offset(10);
-            make.left.equalTo(_nameLab.mas_left);
-            make.right.mas_equalTo(-15);
+            make.left.equalTo(self->_nameLab.mas_left);
+            make.right.mas_equalTo(- 15);
             make.height.mas_equalTo(photoHeight);
-            make.bottom.mas_equalTo(-15);
+            make.bottom.mas_equalTo(- 45);
         }];
-        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(15);
+        
+        [_bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(0);
             make.right.mas_equalTo(0);
-            make.height.mas_equalTo(0.5);
+            make.height.mas_equalTo(35);
             make.bottom.mas_equalTo(0); // 这句很重要！！！
         }];
         _photosView.hidden = NO;
-    }else{
+        
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
+    } else {
         [_photosView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_contentLab.mas_bottom).offset(10);
-            make.left.equalTo(_nameLab.mas_left);
+            make.top.equalTo(self->_contentLab.mas_bottom).offset(10);
+            make.left.equalTo(self->_nameLab.mas_left);
             make.right.mas_equalTo(-15);
             make.height.mas_equalTo(0.001);
         }];
-        [_line mas_remakeConstraints:^(MASConstraintMaker *make) {
+        [_bottomView mas_remakeConstraints:^(MASConstraintMaker *make) {
 //            make.top.equalTo(_photosView.mas_bottom).offset(0);
-            make.left.mas_equalTo(15);
+            make.left.mas_equalTo(0);
             make.right.mas_equalTo(0);
-            make.height.mas_equalTo(0.5);
+            make.height.mas_equalTo(35);
             make.bottom.mas_equalTo(0); // 这句很重要！！！
         }];
-    
+        
         _photosView.hidden = YES;
+        
+        [self setNeedsLayout];
+        [self layoutIfNeeded];
     }
-    
+}
+
+- (void)avatarClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJMasonryAutolayoutCellDelegateWithModel:)]) {
+        [_delegate fh_ZJMasonryAutolayoutCellDelegateWithModel:self.model];
+    }
 }
 
 // 添加所子控件
--(void)setUpAllView{
+-(void)setUpAllView {
     // 头像
-    self.avatar = [UIImageView zj_imageViewWithImage:@"" SuperView:self.contentView contentMode:UIViewContentModeScaleAspectFill isClip:YES constraints:^(MASConstraintMaker *make) {
+    self.avatar = [UIImageView zj_imageViewWithImage:[UIImage imageNamed:@"头像"] SuperView:self.contentView contentMode:UIViewContentModeScaleAspectFill isClip:YES constraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(15);
         make.top.mas_equalTo(15);
         make.width.height.mas_equalTo(40);
     }];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarClick)];
+    self.avatar.userInteractionEnabled = YES;
+    [self.avatar addGestureRecognizer:tap];
     
     // 昵称
-    self.nameLab = [UILabel zj_labelWithFontSize:15 textColor:kBlackColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_avatar.mas_centerY);
-        make.left.equalTo(_avatar.mas_right).offset(15);
-        make.right.mas_equalTo(-100);
+    self.nameLab = [UILabel zj_labelWithFontSize:15 textColor:kBlueColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
+        make.centerY.mas_equalTo(self->_avatar.mas_centerY);
+        make.left.mas_equalTo(self->_avatar.mas_right).offset(15);
+        make.right.mas_equalTo(- 100);
         make.height.mas_equalTo(20);
     }];
     
     // 时间
     self.timeLab = [UILabel zj_labelWithFontSize:12 textColor:kLightGrayColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_avatar.mas_centerY);
+        make.centerY.mas_equalTo(self->_avatar.mas_centerY);
         make.right.mas_equalTo(-15);
-        make.width.mas_equalTo(80);
+        make.width.mas_equalTo(200);
         make.height.mas_equalTo(20);
         
     }];
@@ -147,8 +174,8 @@
     
     // 内容
     self.contentLab = [UILabel zj_labelWithFontSize:14 lines:0 text:nil textColor:kBlackColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_avatar.mas_bottom).offset(10);
-        make.left.equalTo(_nameLab.mas_left);
+        make.top.mas_equalTo(self->_avatar.mas_bottom).offset(10);
+        make.left.mas_equalTo(self->_nameLab.mas_left);
         make.right.mas_equalTo(-15);
         make.height.mas_lessThanOrEqualTo(16);
     }];
@@ -157,82 +184,64 @@
     self.photosView = [[ZJCommitPhotoView alloc]init];
     [self.contentView addSubview:self.photosView];
     [_photosView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_contentLab.mas_bottom).offset(10);
-        make.left.equalTo(_nameLab.mas_left);
-        make.right.mas_equalTo(-15);
+        make.top.mas_equalTo(self->_contentLab.mas_bottom).offset(10);
+        make.left.mas_equalTo(self->_nameLab.mas_left);
+        make.right.mas_equalTo(- 15);
         make.height.mas_equalTo(0.001);
     }];
     
-//    [self.contentView addSubview:self.commentTable];
-//    [self.commentTable mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.left.equalTo(_contentLab.mas_left);
-//        make.right.equalTo(_contentLab.mas_right);
-//        make.top.equalTo(_contentLab.mas_bottom).offset(10);
-//    }];
 #warning 注意  不管你的布局是怎样的 ，一定要有一个(最好是最底部的控件)相对 contentView.bottom的约束，否则计算cell的高度的时候会不正确！
-    self.line = [UIView zj_viewWithBackColor:kLightGrayColor supView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_photosView.mas_bottom).offset(15);
-        make.left.mas_equalTo(15);
+    self.bottomView = [UIView zj_viewWithBackColor:kWhiteColor supView:self.contentView constraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self->_photosView.mas_bottom).offset(10);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.height.mas_equalTo(35);
+        make.bottom.mas_equalTo(0); // 这句很重要！！！
+    }];
+    
+    //最上面的d分割线
+    self.topLine = [UIView zj_viewWithBackColor:kLightGrayColor supView:self.bottomView constraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(self->_nameLab.mas_left);
         make.right.mas_equalTo(0);
         make.height.mas_equalTo(0.5);
-        make.bottom.mas_equalTo(0); // 这句很重要！！！
-        
     }];
     
+    //最下面的d分割线
+    self.line = [UIView zj_viewWithBackColor:kLightGrayColor supView:self.bottomView constraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(34.5);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        make.height.mas_equalTo(0.5);
+    }];
     
-}
-
-/*
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 10;
-}
-
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    self.eyeBtn = [self creatBtnWithTitle:@"11" image:[UIImage imageNamed:@"头像"]];
+    [self.bottomView addSubview:self.eyeBtn];
+    [_eyeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self->_nameLab.mas_left);
+        make.centerY.mas_equalTo(self.bottomView.centerY);
+        make.width.mas_equalTo(100);
+        make.height.mas_equalTo(20);
+    }];
     
-    ZJReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:ReplyCellKey];
-    
-    
-    return cell;
-
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    // 计算缓存cell的高度
-    return [self.commentTable fd_heightForCellWithIdentifier:ReplyCellKey cacheByIndexPath:indexPath configuration:^(ZJReplyCell *cell) {
-        [cell configData];
+    self.commitBtn = [self creatBtnWithTitle:@"22" image:[UIImage imageNamed:@"头像"]];
+    [self.bottomView addSubview:self.commitBtn];
+    [_commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.mas_equalTo(-15);
+        make.centerY.mas_equalTo(self.bottomView.centerY);
+        make.width.mas_equalTo(100);
+        make.height.mas_equalTo(20);
     }];
 }
 
-
--(UITableView *)commentTable{
-    if (!_commentTable) {
-        _commentTable = [[UITableView alloc]init];
-        _commentTable.scrollEnabled = NO;
-        _commentTable.userInteractionEnabled = YES;
-        _commentTable.backgroundView.userInteractionEnabled = YES;
-        _commentTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _commentTable.delegate =self;
-        _commentTable.dataSource = self;
-        [_commentTable registerClass:[ZJReplyCell class] forCellReuseIdentifier:ReplyCellKey];
-    }
-    return _commentTable;
+- (UIButton *)creatBtnWithTitle:(NSString *)title image:(UIImage *)imgage{
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn setTitleColor:kLightGrayColor forState:UIControlStateNormal];
+    [btn setImage:imgage forState:UIControlStateNormal];
+    btn.enabled = NO;
+    return btn;
 }
- 
- */
-
-// 如果你是自动布局子控件，就不需要实现此方法，如果是计算子控件frame的话就需要实现此方法
-//- (CGSize)sizeThatFits:(CGSize)size {
-//
-//    CGFloat cellHeight = 0;
-//
-//    cellHeight += [self.avatar sizeThatFits:size].height;
-//    cellHeight += [self.contentLab sizeThatFits:size].height;
-//    cellHeight += [self.photosView sizeThatFits:size].height;
-//    cellHeight += [self.line sizeThatFits:size].height;
-//    cellHeight += 40;
-//
-//    return CGSizeMake(size.width, cellHeight);
-//}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

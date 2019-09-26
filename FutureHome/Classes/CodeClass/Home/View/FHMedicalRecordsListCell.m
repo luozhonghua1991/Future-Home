@@ -24,6 +24,14 @@
     [self.contentView addSubview:self.codeLabel];
 }
 
+- (void)setModel:(FHHealthMemberModel *)model {
+    _model = model;
+    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",_model.name,_model.getSex];
+    self.phoneNumberLabel.text = _model.mobile;
+    self.personCodeLabel.text = [NSString stringWithFormat:@"身份证号: %@",_model.id_number];
+    self.codeLabel.text = [NSString stringWithFormat:@"社保卡号: %@",_model.social_number];
+}
+
 #pragma mark — setter && getter
 - (UILabel *)nameLabel {
     if (!_nameLabel) {

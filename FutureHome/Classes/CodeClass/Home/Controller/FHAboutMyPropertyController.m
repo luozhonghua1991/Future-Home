@@ -10,8 +10,11 @@
 #import "FHOwnerCertificationController.h"
 #import "FHRentalSaleController.h"
 #import "FHReleaseManagementController.h"
+#import "FHAuthModel.h"
 
 @interface FHAboutMyPropertyController ()
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHAuthModel *authModel;
 
 @end
 
@@ -19,11 +22,27 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(weakSelf.property_id),@"property_id",
+                               nil];
+    [AFNetWorkTool get:@"property/isAuth" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            self.authModel = [FHAuthModel mj_objectWithKeyValues:responseObj[@"data"]];
+        }
+        
+        [self initSetViewControllers];
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
-- (void)initViewControllers {
+- (void)initSetViewControllers {
     FHOwnerCertificationController *messageVC = [[FHOwnerCertificationController alloc] init];
     messageVC.yp_tabItemTitle = @"业主认证";
+    messageVC.authModel = self.authModel;
     messageVC.property_id = self.property_id;
     
     FHRentalSaleController *groupVC = [[FHRentalSaleController alloc] init];

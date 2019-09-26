@@ -20,8 +20,14 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *allPriceView;
 /** 主治医师 */
 @property (nonatomic, strong) FHAccountApplicationTFView *mainDoctorView;
+/** 症状描述 */
+@property (nonatomic, strong) FHAccountApplicationTFView *symptomView;
 /** 治疗方案 */
 @property (nonatomic, strong) FHAccountApplicationTFView *therapeuticRegimenView;
+/** 图片选择数组 */
+@property (nonatomic, strong) NSMutableArray *imgSelectArrs;
+/** 服务器返回的图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectImgArrays;
 
 @end
 
@@ -33,6 +39,7 @@
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
+    [self creatBottomBtn];
 }
 
 #pragma mark — 通用导航栏
@@ -76,7 +83,129 @@
     [self.scrollView addSubview:self.hospitalView];
     [self.scrollView addSubview:self.allPriceView];
     [self.scrollView addSubview:self.mainDoctorView];
+    [self.scrollView addSubview:self.symptomView];
     [self.scrollView addSubview:self.therapeuticRegimenView];
+}
+
+- (void)creatBottomBtn{
+    UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    sureBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
+    sureBtn.backgroundColor = HEX_COLOR(0x1296db);
+    [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
+    [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [sureBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:sureBtn];
+}
+
+
+#pragma mark — event
+- (void)sureBtnClick {
+    [self commitInfo];
+    return;
+    
+    /** 添加医疗记录接口  先上传图片*/
+    self.imgSelectArrs = [[NSMutableArray alloc] init];
+    [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    self.selectImgArrays = [[NSMutableArray alloc] init];
+    /** 先上传多张图片*/
+    Account *account = [AccountStorage readAccount];
+    NSString *string = [self getCurrentTimes];
+    NSArray *arr = @[string];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"property",@"path",
+                               arr,@"file[]",
+                               nil];
+    for (int i = 0; i < self.imgSelectArrs.count; i++) {
+        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
+        WS(weakSelf);
+        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+            NSArray *arr = responseObj[@"data"];
+            if (!IS_NULL_ARRAY(arr)) {
+                NSString *imgID = [arr objectAtIndex:0];
+                [weakSelf.selectImgArrays addObject:imgID];
+                if (weakSelf.selectImgArrays.count == weakSelf.imgSelectArrs.count) {
+                    /** 图片获取完毕 */
+                    [weakSelf commitInfo];
+                }
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+    
+}
+
+- (void)setModel:(FHHealthHistoryModel *)model {
+    _model = model;
+    self.dateView.contentTF.text = model.treat_time;
+    self.hospitalView.contentTF.text = model.hospital;
+    self.symptomView.contentTF.text = model.symptom;
+    self.allPriceView.contentTF.text = model.total_pay;
+    self.mainDoctorView.contentTF.text = model.doctor;
+    self.therapeuticRegimenView.contentTF.text = model.programme;
+}
+
+- (void)commitInfo {
+//    Account *account = [AccountStorage readAccount];
+//    NSString *string = [self getCurrentTimes];
+//    NSArray *arr = @[string];
+//    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                               @(account.user_id),@"user_id",
+//                               @"property",@"path",
+//                               arr,@"file[]",
+//                               nil];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
+    NSDictionary *paramsDictory = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.pid,@"pid",
+                               self.dateView.contentTF.text,@"treat_time",
+                               self.hospitalView.contentTF.text,@"hospital",
+                
+                                   self.symptomView.contentTF.text,@"symptom",
+                               self.allPriceView.contentTF.text,@"total_consum",
+                               self.mainDoctorView.contentTF.text,@"doctor",
+                               self.therapeuticRegimenView.contentTF.text,@"programme",
+                               imgArrsString,@"img_ids",
+                               nil];
+    [AFNetWorkTool post:@"health/addRecord" params:paramsDictory success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"添加医疗记录成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                /** 确定 */
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+//获取当前的时间
+- (NSString*)getCurrentTimes{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+    //现在时间,你可以输出来看下是什么格式
+    
+    NSDate *datenow = [NSDate date];
+    
+    //----------将nsdate按formatter格式转成nsstring
+    
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    NSLog(@"currentTimeString =  %@",currentTimeString);
+    
+    return currentTimeString;
+    
 }
 
 
@@ -88,7 +217,8 @@
     self.hospitalView.frame = CGRectMake(0, MaxY(self.dateView), SCREEN_WIDTH, commonCellHeight);
     self.allPriceView.frame = CGRectMake(0, MaxY(self.hospitalView), SCREEN_WIDTH, commonCellHeight);
     self.mainDoctorView.frame = CGRectMake(0, MaxY(self.allPriceView), SCREEN_WIDTH, commonCellHeight);
-    self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, commonCellHeight);
+    self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, commonCellHeight);
+    self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, commonCellHeight);
     [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
     self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
 }
@@ -105,6 +235,13 @@
     [self.view endEditing:YES];
 }
 
+
+- (void)birthClick {
+    [ZJDatePickerView zj_showDatePickerWithTitle:@"就诊时间" dateType:ZJDatePickerModeYMD defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+        self.dateView.contentTF.text = selectValue;
+    } ];
+}
+
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
     if (_scrollView == nil) {
@@ -118,6 +255,12 @@
         _dateView = [[FHAccountApplicationTFView alloc] init];
         _dateView.titleLabel.text = @"就诊时间";
         _dateView.contentTF.placeholder = @"请输入就诊时间";
+        
+        _dateView.contentTF.enabled = NO;
+        _dateView.contentTF.userInteractionEnabled = YES;
+        _dateView.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(birthClick)];
+        [_dateView addGestureRecognizer:tap];
     }
     return _dateView;
 }
@@ -147,6 +290,15 @@
         _mainDoctorView.contentTF.placeholder = @"请输入主治医师";
     }
     return _mainDoctorView;
+}
+
+- (FHAccountApplicationTFView *)symptomView {
+    if (!_symptomView) {
+        _symptomView = [[FHAccountApplicationTFView alloc] init];
+        _symptomView.titleLabel.text = @"症状描述";
+        _symptomView.contentTF.placeholder = @"请输入症状描述";
+    }
+    return _symptomView;
 }
 
 - (FHAccountApplicationTFView *)therapeuticRegimenView {

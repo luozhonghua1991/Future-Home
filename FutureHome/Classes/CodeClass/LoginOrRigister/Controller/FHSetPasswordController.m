@@ -69,8 +69,8 @@
     [self.scrollView addSubview:self.logLabel];
     
     //新用户注册设置密码
-    [self.scrollView addSubview:self.inviteCodeView];
-    [self.inviteCodeView addSubview:self.inviteCodeTF];
+//    [self.scrollView addSubview:self.inviteCodeView];
+//    [self.inviteCodeView addSubview:self.inviteCodeTF];
     
     [self.scrollView addSubview:self.sureBtn];
 }
@@ -140,20 +140,21 @@
             make.width.mas_equalTo(300);
         }];
         
-        //邀请码区域
-        [self.inviteCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.logLabel.mas_bottom).offset(19);
-            make.left.mas_equalTo(27.5);
-            make.width.mas_equalTo(kScreenWidth - 55);
-            make.height.mas_equalTo(47);
-        }];
+//        //邀请码区域
+//        [self.inviteCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.mas_equalTo(self.logLabel.mas_bottom).offset(19);
+//            make.left.mas_equalTo(27.5);
+//            make.width.mas_equalTo(kScreenWidth - 55);
+//            make.height.mas_equalTo(47);
+//        }];
+//
+//        [self.inviteCodeTF mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(20);
+//            make.width.mas_equalTo(self.inviteCodeView.width - 40);
+//            make.height.mas_equalTo(15);
+//            make.centerY.mas_equalTo(self.inviteCodeView);
+//        }];
         
-        [self.inviteCodeTF mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(20);
-            make.width.mas_equalTo(self.inviteCodeView.width - 40);
-            make.height.mas_equalTo(15);
-            make.centerY.mas_equalTo(self.inviteCodeView);
-        }];
         //确认按钮
         [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.surePasswordView.mas_bottom).offset(107);
@@ -223,20 +224,20 @@
             make.width.mas_equalTo(300);
         }];
         
-        //邀请码区域
-        [self.inviteCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(self.logLabel.mas_bottom).offset(19);
-            make.left.mas_equalTo(27.5);
-            make.width.mas_equalTo(kScreenWidth - 55);
-            make.height.mas_equalTo(0);
-        }];
-        
-        [self.inviteCodeTF mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(20);
-            make.width.mas_equalTo(self.inviteCodeView.width - 40);
-            make.height.mas_equalTo(0);
-            make.centerY.mas_equalTo(self.inviteCodeView);
-        }];
+//        //邀请码区域
+//        [self.inviteCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.mas_equalTo(self.logLabel.mas_bottom).offset(19);
+//            make.left.mas_equalTo(27.5);
+//            make.width.mas_equalTo(kScreenWidth - 55);
+//            make.height.mas_equalTo(0);
+//        }];
+//
+//        [self.inviteCodeTF mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.left.mas_equalTo(20);
+//            make.width.mas_equalTo(self.inviteCodeView.width - 40);
+//            make.height.mas_equalTo(0);
+//            make.centerY.mas_equalTo(self.inviteCodeView);
+//        }];
         
         
         //确认按钮
@@ -325,11 +326,16 @@
         params[@"password"] = self.surePasswordTF.text;
         params[@"mobile"] = self.phoneNumber;
         params[@"verify_code"] = self.verificCode;
+        params[@"BizId"] = self.BizId;
         [AFNetWorkTool post:@"login/register" params:params success:^(id responseObj) {
-            NSString *msg = responseObj[@"msg"];
-            [self.view makeToast:msg];
-            /** 用户注册完成后 自动登录 */
-            [self personFastLogin];
+            if ([responseObj[@"code"] integerValue] == 0) {
+                /** 发送失败 */
+                [self.view makeToast:responseObj[@"msg"]];
+            } else {
+                [self.view makeToast:responseObj[@"msg"]];
+                /** 用户注册完成后 自动登录 */
+                [self personFastLogin];
+            }
         } failure:^(NSError *error) {
             
         }];
@@ -339,11 +345,20 @@
         params[@"mobile"] = self.phoneNumber;
         params[@"password"] = self.surePasswordTF.text;
         params[@"verify_code"] = self.verificCode;
+        params[@"BizId"] = self.BizId;
         [AFNetWorkTool post:@"login/updatePassword" params:params success:^(id responseObj) {
-            [self.view makeToast:@"修改成功"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.navigationController popToRootViewControllerAnimated:YES];
-            });
+            if ([responseObj[@"code"] integerValue] == 0) {
+                /** 发送失败 */
+                [self.view makeToast:responseObj[@"msg"]];
+            } else {
+                /** 保存用户信息 */
+                Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
+                [AccountStorage saveAccount:account];
+                [self.view makeToast:@"修改成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                });
+            }
         } failure:^(NSError *error) {
         }];
     }
@@ -355,7 +370,15 @@
     params[@"username"] = self.phoneNumber;
     params[@"password"] = self.passwordTF.text;
     [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
-        [self.navigationController popToRootViewControllerAnimated:YES];
+        if ([responseObj[@"code"] integerValue] == 0) {
+            /** 发送失败 */
+            [self.view makeToast:responseObj[@"msg"]];
+        } else {
+            /** 保存用户信息 */
+            Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
+            [AccountStorage saveAccount:account];
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
     } failure:^(NSError *error) {
     }];
 }

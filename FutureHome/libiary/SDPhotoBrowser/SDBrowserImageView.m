@@ -10,13 +10,6 @@
 #import "UIImageView+WebCache.h"
 #import "SDPhotoBrowserConfig.h"
 
-@interface SDBrowserImageView()
-/** 捏合手势 */
-@property (nonatomic,weak)UIPinchGestureRecognizer *pinch;
-
-@end
-
-
 @implementation SDBrowserImageView
 {
     __weak SDWaitingView *_waitingView;
@@ -41,7 +34,6 @@
         UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(zoomImage:)];
         pinch.delegate = self;
         [self addGestureRecognizer:pinch];
-        self.pinch = pinch;
         
 
     
@@ -56,7 +48,6 @@
 
 - (void)layoutSubviews
 {
-    
     [super layoutSubviews];
     _waitingView.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.5);
     
@@ -110,9 +101,11 @@
     
     
     __weak SDBrowserImageView *imageViewWeak = self;
-    [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+
+    [self sd_setImageWithURL:url placeholderImage:placeholder options:SDWebImageRetryFailed progress:^(NSInteger receivedSize, NSInteger expectedSize,NSURL * _Nullable targetURL) {
         imageViewWeak.progress = (CGFloat)receivedSize / expectedSize;
-    } completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        
+    } completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         [imageViewWeak removeWaitingView];
         
         
@@ -129,9 +122,10 @@
             label.textAlignment = NSTextAlignmentCenter;
             [imageViewWeak addSubview:label];
         } else {
-            _scrollImageView.image = image;
-            [_scrollImageView setNeedsDisplay];
+            self->_scrollImageView.image = image;
+            [self->_scrollImageView setNeedsDisplay];
         }
+   
     }];
 }
 
@@ -174,22 +168,9 @@
         _zoomingScroolView.contentSize = _zoomingScroolView.frame.size;
         _zoomingScroolView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
         _zoomingImageView.center = _zoomingScroolView.center;
-        
-        if (self.pinch.state == UIGestureRecognizerStateEnded|| self.pinch.state == UIGestureRecognizerStateFailed|| self.pinch.state == UIGestureRecognizerStateCancelled){
-            [self performSelector:@selector(changeFrme) withObject:self afterDelay:0];
-        }
-
     }
 }
--(void)changeFrme{
-    // 复位
-    [UIView animateWithDuration:0.25  delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        _totalScale =1;
-        _zoomingImageView.transform = CGAffineTransformScale(self.transform, _totalScale, _totalScale);
-    } completion:^(BOOL finished) {
-        
-    }];
-}
+
 - (void)doubleTapToZommWithScale:(CGFloat)scale
 {
     [self prepareForImageViewScaling];
@@ -201,7 +182,7 @@
         }
     }];
 }
-#pragma mark  -- 双击
+
 - (void)prepareForImageViewScaling
 {
     if (!_zoomingScroolView) {
@@ -220,7 +201,7 @@
         _zoomingImageView = zoomingImageView;
         [_zoomingScroolView addSubview:zoomingImageView];
         [self addSubview:_zoomingScroolView];
-            }
+    }
 }
 
 - (void)scaleImage:(CGFloat)scale

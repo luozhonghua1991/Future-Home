@@ -7,8 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+//#import "ZJCommitFrame.h"
 
 @interface ZJCommit : NSObject
+/** 评论id */
+@property (nonatomic, copy) NSString *ID;
+/** 用户id */
+@property (nonatomic, copy) NSString *user_id;
 
 @property(nonatomic, copy) NSString     *comments_id;
 @property(nonatomic, copy) NSString     *supper_parent_id;
@@ -26,12 +31,20 @@
 @property(nonatomic, copy) NSString     *is_show;
 @property(nonatomic, copy) NSString     *img_data;
 @property(nonatomic, copy) NSString     *like_type;
+/** 查看次数 */
+@property (nonatomic, assign) NSInteger view_num;
+/** 评论个数 */
+@property (nonatomic, assign) NSInteger comment_num;
+
 
 @property(nonatomic, strong) NSArray    *pic_urls;
 
 @property(nonatomic ,copy) NSString     *identifier;
+/** <#strong属性注释#> */
+//@property (nonatomic, strong) ZJCommitFrame *commitFrame;
 
 -(instancetype)initWithDict:(NSDictionary *)dict;
+
 +(instancetype)commitWithDict:(NSDictionary *)dict;
 
 
@@ -59,4 +72,6 @@
  like_id    int(11)    ID
  like_type    tinyint(1)    LIKE类型: 0.默认; 1.点赞; 2.反对; 3.收藏;
  */
+
+
 @end

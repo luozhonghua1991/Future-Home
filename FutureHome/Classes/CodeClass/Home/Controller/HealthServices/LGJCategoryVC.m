@@ -8,11 +8,12 @@
 
 #import "LGJCategoryVC.h"
 #import "LGJProductsVC.h"
+#import "FHHealthCategoryModel.h"
 
 @interface LGJCategoryVC ()<UITableViewDelegate, UITableViewDataSource, ProductsDelegate>
 
 @property (nonatomic, strong) UITableView *categoryTableView;
-@property (nonatomic, strong) NSArray *categoryArr;
+@property (nonatomic, strong) NSMutableArray *categoryArr;
 @property (nonatomic, strong)  LGJProductsVC *productsVC;
 
 @end
@@ -24,7 +25,6 @@
     [self fh_creatNav];
     [self configData];
     [self createTableView];
-    [self createProductsVC];
     
 }
 
@@ -58,32 +58,51 @@
 }
 
 - (void)configData {
-    
-    if (!_categoryArr) {
-        
-        NSArray *numArr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十"];
-        NSMutableArray *tmpArr = [NSMutableArray array];
-        for (int i = 0; i < 20; i++) {
-            NSString *tmpStr = [NSString stringWithFormat:@"第%@类", numArr[i]];
-            [tmpArr addObject:tmpStr];
+    WS(weakSelf);
+    self.categoryArr = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.type,@"type", nil];
+    [AFNetWorkTool get:@"health/cateMenu" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 获取成功 */
+            weakSelf.categoryArr = [FHHealthCategoryModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"]];
+            [self.categoryTableView reloadData];
+            [weakSelf createProductsVC];
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
         }
-        _categoryArr = tmpArr;
-    }
+    } failure:^(NSError *error) {
+
+    }];
+    
+//    if (!_categoryArr) {
+//
+//        NSArray *numArr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十"];
+//        NSMutableArray *tmpArr = [NSMutableArray array];
+//        for (int i = 0; i < 20; i++) {
+//            NSString *tmpStr = [NSString stringWithFormat:@"第%@类", numArr[i]];
+//            [tmpArr addObject:tmpStr];
+//        }
+//        _categoryArr = tmpArr;
+//    }
 }
 
 - (void)createTableView {
-    
-    self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width * 0.45, self.view.frame.size.height - MainSizeHeight) style:UITableViewStylePlain];
+    self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width * 0.25, self.view.frame.size.height - MainSizeHeight) style:UITableViewStylePlain];
     self.categoryTableView.delegate = self;
     self.categoryTableView.dataSource = self;
     self.categoryTableView.showsVerticalScrollIndicator = NO;
+    self.categoryTableView.backgroundColor = HEX_COLOR(0xCCCCCC);
     [self.view addSubview:self.categoryTableView];
 }
 
 - (void)createProductsVC {
-    
     _productsVC = [[LGJProductsVC alloc] init];
     _productsVC.delegate = self;
+    _productsVC.sectionCount = self.categoryArr.count;
     [self addChildViewController:_productsVC];
     [self.view addSubview:_productsVC.view];
 }
@@ -91,7 +110,7 @@
 //MARK:-tableView的代理方法
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return _categoryArr.count;
+    return self.categoryArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -106,29 +125,30 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ident];
     }
-    cell.backgroundColor = [UIColor lightGrayColor];
-    cell.textLabel.text = [_categoryArr objectAtIndex:indexPath.row];
-    cell.textLabel.font = [UIFont systemFontOfSize:13];
+    FHHealthCategoryModel *model = [self.categoryArr objectAtIndex:indexPath.row];
+    cell.textLabel.text = model.name;
+    cell.textLabel.font = [UIFont systemFontOfSize:14];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    FHHealthCategoryModel *model = self.categoryArr[indexPath.row];
     if (_productsVC) {
-        [_productsVC scrollToSelectedIndexPath:indexPath];
+//        [_productsVC scrollToSelectedIndexPath:indexPath];
+        [_productsVC resreshDataWithPid:model.category_id];
     }
 }
 
-#pragma mark - ProductsDelegate
-- (void)willDisplayHeaderView:(NSInteger)section {
-    
-    [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-}
-
-- (void)didEndDisplayingHeaderView:(NSInteger)section {
-    
-    [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section + 1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-}
+//#pragma mark - ProductsDelegate
+//- (void)willDisplayHeaderView:(NSInteger)section {
+//
+//    [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+//}
+//
+//- (void)didEndDisplayingHeaderView:(NSInteger)section {
+//
+//    [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section + 1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

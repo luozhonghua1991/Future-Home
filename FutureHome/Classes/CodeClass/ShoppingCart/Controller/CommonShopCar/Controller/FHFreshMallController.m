@@ -239,6 +239,9 @@
 
 #pragma mark — event
 - (void)backBtnClick {
+    if ([SingleManager shareManager].shoppingBar) {
+        [[SingleManager shareManager].shoppingBar removeFromSuperview];
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
 

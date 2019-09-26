@@ -36,6 +36,8 @@
 @property (nonatomic,strong) UIButton                      *passwordLoginBtn;
 /**验证码*/
 @property (nonatomic,copy)   NSString                      *verificCode;
+/** 验证码回来的 校验ID */
+@property (nonatomic, copy) NSString *BizId;
 
 @end
 
@@ -63,7 +65,7 @@
     WS(weakSelf);
     self.passwordView.passwordBlock = ^(NSString *password) {
         weakSelf.verificCode = password;
-        if (password.length == 4) {
+        if (password.length == 6) {
             weakSelf.sureBtn.userInteractionEnabled = YES;
             weakSelf.sureBtn.alpha = 1;
             [weakSelf.sureBtn setBackgroundImage:[UIImage imageNamed:@"rw_login_user"] forState:UIControlStateNormal];
@@ -190,6 +192,7 @@
         setPassword.titleString = @"设置密码";
         setPassword.phoneNumber = self.phoneNumber;
         setPassword.verificCode = self.verificCode;
+        setPassword.BizId = self.BizId;
         [self.navigationController pushViewController:setPassword animated:YES];
 //        //新用户注册 快捷登录
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
@@ -230,10 +233,20 @@
          NSMutableDictionary *params = [NSMutableDictionary dictionary];
          params[@"mobile"] = self.phoneNumber;
          params[@"verify_code"] = self.verificCode;
+         params[@"BizId"] = self.BizId;
          WS(weakSelf);
          [AFNetWorkTool post:@"login/codeLogin" params:params success:^(id responseObj) {
-              [weakSelf.view makeToast:@"登录成功"];
-              [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+             if ([responseObj[@"code"] integerValue] == 0) {
+                 /**  */
+                 [self.view makeToast:responseObj[@"msg"]];
+                 [self.navigationController popViewControllerAnimated:YES];
+             } else {
+                 /** 保存用户信息 */
+                 Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
+                 [AccountStorage saveAccount:account];
+                 [weakSelf.view makeToast:@"登录成功"];
+                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+             }
          } failure:^(NSError *error) {
              
          }];
@@ -244,6 +257,7 @@
          setPassword.titleString = @"重置密码";
          setPassword.phoneNumber = self.phoneNumber;
          setPassword.verificCode = self.verificCode;
+         setPassword.BizId = self.BizId;
          [self.navigationController pushViewController:setPassword animated:YES];
      }
 }
@@ -279,9 +293,16 @@
     params[@"mobile"] = self.phoneNumber;
     params[@"type"] = @(self.type);
     [AFNetWorkTool post:@"login/sendCode" params:params success:^(id responseObj) {
-        [self.view makeToast:@"发送成功"];
-        //倒计时
-        [self steupCountdown];
+        if ([responseObj[@"code"] integerValue] == 0) {
+            /** 发送失败 */
+             [self.view makeToast:responseObj[@"msg"]];
+             [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            self.BizId = responseObj[@"data"];
+            [self.view makeToast:@"发送成功"];
+            //倒计时
+            [self steupCountdown];
+        }
     } failure:^(NSError *error) {
         [self.navigationController popViewControllerAnimated:YES];
     }];
@@ -346,7 +367,7 @@
     if (!_logLabel) {
         _logLabel = [[UILabel alloc]init];
         _logLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:13];
-        _logLabel.text = @"已发送4位数验证码至";
+        _logLabel.text = @"已发送6位数验证码至";
         _logLabel.textColor = UIColorFromRGB(0x999999);
         _logLabel.textAlignment = NSTextAlignmentCenter;
     }
@@ -366,8 +387,8 @@
 - (RWPasswordView *)passwordView {
     if (!_passwordView) {
         _passwordView = [[RWPasswordView alloc]init];
-        _passwordView.elementCount = 4;
-        _passwordView.elementMargin = 78;
+        _passwordView.elementCount = 6;
+        _passwordView.elementMargin = 28;
         _passwordView.elementColor = HEX_COLOR(0xd8d8d8);
     }
     return _passwordView;

@@ -68,6 +68,7 @@
                              @"3-10我的业委"];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
+    
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -385,6 +386,8 @@
         /** 投诉建议 */
         FHSuggestionController *vc = [[FHSuggestionController alloc] init];
         vc.titleString = @"投诉建议";
+        vc.property_id = property_id;
+        vc.type = 2;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 9) {

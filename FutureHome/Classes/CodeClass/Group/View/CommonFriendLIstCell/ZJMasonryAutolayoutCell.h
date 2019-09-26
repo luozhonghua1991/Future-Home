@@ -9,13 +9,21 @@
 #import <UIKit/UIKit.h>
 
 @class ZJCommit;
+@protocol ZJMasonryAutolayoutCellDelegate <NSObject>
+
+@required // 必须实现的方法 默认
+
+@optional // 可选实现的方法
+- (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model;
+
+@end
 
 @interface ZJMasonryAutolayoutCell : UITableViewCell
 
 @property(nonatomic ,strong) ZJCommit           *model;
 
-
-
 @property(nonatomic ,weak) UIViewController      *weakSelf;
+
+@property(nonatomic, weak) id<ZJMasonryAutolayoutCellDelegate> delegate;
 
 @end

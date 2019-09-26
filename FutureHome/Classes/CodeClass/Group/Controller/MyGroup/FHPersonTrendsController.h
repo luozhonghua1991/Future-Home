@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHPersonTrendsController : YPTabBarController
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *titleString;
+/** 1是自己 0是看的别人 */
+@property (nonatomic, assign) NSInteger personType;
+/** 用户id */
+@property (nonatomic, copy) NSString *user_id;
 
 @end
 

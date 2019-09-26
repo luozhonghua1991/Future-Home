@@ -8,12 +8,17 @@
 
 #import "BaseViewController.h"
 #import "HWPublishBaseController.h"
+#import "FHHealthHistoryModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHAddMedicalHistoryController : HWPublishBaseController
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *titleString;
+/** 用户PID */
+@property (nonatomic, copy) NSString *pid;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHHealthHistoryModel *model;
 
 @end
 

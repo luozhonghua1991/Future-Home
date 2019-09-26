@@ -10,10 +10,12 @@
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "ZJMasonryAutolayoutCell.h"
 #import "ZJCommit.h"
+#import "FHPersonTrendsController.h"
+#import "FHCommitDetailController.h"
 
 #define kMasonryCell @"kMasonryCell"
 
-@interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,ZJMasonryAutolayoutCellDelegate>
 
 @property(nonatomic ,strong) UITableView *mainTable;
 
@@ -36,6 +38,8 @@
 @property (nonatomic, strong) UIImageView *personHeaderImgView;
 /** 姓名label */
 @property (nonatomic, strong) UILabel *nameLabel;
+/** 数据 */
+@property (nonatomic, strong) NSArray *commitsListArrs;
 
 @end
 
@@ -47,44 +51,69 @@
     [self getCommitsData];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getCommitsData];
+}
+
 #pragma mark - 获取数据
 - (void)getCommitsData {
-    // 从CommitsData 文件加载数据
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"MasonryCellData" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSDictionary *rootDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic;
+    if (self.isSelf) {
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @(self.property_id),@"property_id",
+                                   @(self.type),@"type",
+                                   @(1),@"self",
+                                   nil];
+    } else {
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @(self.property_id),@"property_id",
+                                   @(self.type),@"type",
+                                   nil];
+    }
+    [AFNetWorkTool get:@"public/complaintList" params:paramsDic success:^(id responseObj) {
+        NSDictionary *Dic = responseObj[@"data"];
+        [weakSelf requestWithDic:Dic];
+    } failure:^(NSError *error) {
+    }];
     
-    NSArray *commitsList = [rootDict objectForKey:@"comments_list"];
+}
+
+- (void)requestWithDic:(NSDictionary *)dic {
+    NSArray *commitsList = [dic objectForKey:@"list"];
+    self.commitsListArrs = commitsList;
     NSMutableArray *arrM = [NSMutableArray array];
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSDictionary *dictDict in commitsList) {
             ZJCommit *commit = [ZJCommit commitWithDict:dictDict];
             [arrM addObject:commit];
         }
         self.dataArray = arrM;
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.mainTable reloadData];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.mainTable reloadData];
+            });
         });
     });
-    
 }
 
--(void)setUpAllView {
+- (void)setUpAllView {
     if (self.isHaveTabbar) {
          self.mainTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - MainSizeHeight - 70 - [self getTabbarHeight]) style:UITableViewStylePlain];
     } else {
         self.mainTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - MainSizeHeight - 35) style:UITableViewStylePlain];
     }
-    _mainTable.delegate = self;
-    _mainTable.dataSource = self;
-    _mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _mainTable.tableFooterView = [[UIView alloc]init];
-    _mainTable.estimatedRowHeight = 100;
+    self.mainTable.delegate = self;
+    self.mainTable.dataSource = self;
+    self.mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mainTable.tableFooterView = [[UIView alloc] init];
+    self.mainTable.estimatedRowHeight = 100;
     // 必须先注册cell，否则会报错
-    [_mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kMasonryCell];
+    [self.mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kMasonryCell];
     [self.view addSubview:self.mainTable];
     if (self.isHaveHeaderView) {
         self.mainTable.tableHeaderView = self.headerView;
@@ -102,30 +131,52 @@
     ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kMasonryCell];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.weakSelf = self;
+    cell.delegate = self;
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     // 计算缓存cell的高度
     return [self.mainTable fd_heightForCellWithIdentifier:kMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
         [self configureCell:cell atIndexPath:indexPath];
     }];
-    
-    
 }
 
 #pragma mark - 给cell赋值
 - (void)configureCell:(ZJMasonryAutolayoutCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     // 采用计算frame模式还是自动布局模式，默认为NO，自动布局模式
-    //    cell.fd_enforceFrameLayout = NO;
+//        cell.fd_enforceFrameLayout = NO;
     cell.model = self.dataArray[indexPath.row];
 }
 
+- (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model {
+    /** 去用户的动态 */
+    FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+    vc.titleString = @"许大宝~";
+    [SingleManager shareManager].isSelectPerson = YES;
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.user_id = model.user_id;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    ZJCommit *model = self.dataArray[indexPath.row];
+    FHCommitDetailController *vc = [[FHCommitDetailController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.ID = model.ID;
+    vc.type = self.type;
+    vc.property_id = self.property_id;
+    vc.isCanCommit = self.isSelf;
+    vc.dataDic = self.commitsListArrs[indexPath.row];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 - (void)updateBtnClcik {
-    
+    [self viewControllerPushOther:@"FHComplaintsSuggestionsController"];
 }
 
 

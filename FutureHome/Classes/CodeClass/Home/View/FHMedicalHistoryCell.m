@@ -25,6 +25,16 @@
     [self.contentView addSubview:self.infoLabel];
 }
 
+- (void)setModel:(FHHealthHistoryModel *)model {
+    _model = model;
+    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",_model.name,_model.getSex];
+    self.dateLabel.text = _model.treat_time;
+    self.hospitalLabel.text = [NSString stringWithFormat:@"医院名称: %@",_model.hospital];
+    self.priceLabel.text = [NSString stringWithFormat:@"%@",_model.total_pay];
+    self.infoLabel.text = [NSString stringWithFormat:@"症状描述 %@",_model.symptom];
+}
+
+
 #pragma mark — setter && getter
 - (UILabel *)nameLabel {
     if (!_nameLabel) {

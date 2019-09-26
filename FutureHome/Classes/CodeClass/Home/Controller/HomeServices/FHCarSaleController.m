@@ -10,6 +10,7 @@
 #import "FHCarSaleCell.h"
 #import "BHInfiniteScrollView.h"
 #import "SDPhotoBrowser.h"
+#import "FHListDetailModel.h"
 
 @interface FHCarSaleController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,SDPhotoBrowserDelegate>
 /** 上面的轮播图 */
@@ -18,6 +19,11 @@
 @property (nonatomic, strong) UITableView *homeTable;
 /** 头视图 */
 @property (nonatomic, strong) UIView *headerView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHListDetailModel *detailModel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *imgArrs;
+
 
 @end
 
@@ -28,8 +34,37 @@
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCarSaleCell class] forCellReuseIdentifier:NSStringFromClass([FHCarSaleCell class])];
-    self.homeTable.tableHeaderView = self.headerView;
+    [self fh_getRqquest];
 }
+
+- (void)fh_getRqquest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"property_id",
+                               @(self.id),@"id", nil];
+    NSString *urlString;
+    if (self.type == 0 || self.type == 1) {
+        urlString = @"property/houseDetail";
+    } else {
+        urlString = @"property/parkDetail";
+    }
+    /** 租房详情  车位详情*/
+    self.imgArrs = [[NSMutableArray alloc] init];
+    [AFNetWorkTool get:urlString params:paramsDic success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        self.detailModel = [FHListDetailModel mj_objectWithKeyValues:dic];
+        for (NSString *imgString in dic[@"img_ids"]) {
+            [self.imgArrs addObject:imgString];
+        }
+        self.homeTable.tableHeaderView = self.headerView;
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -92,10 +127,12 @@
     if (self.type == 0 ||self.type ==1) {
         FHCarSaleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCarSaleCell class])];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.detailModel = self.detailModel;
         return cell;
     } else {
         FHCarSaleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCarSaleCell class])];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.detailModel = self.detailModel;
         return cell;
     }
 }
@@ -120,23 +157,22 @@
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
-    browser.sourceImagesContainerView = self.view;
-    NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
-    browser.imageCount = urlsArray.count;
+    browser.sourceImagesContainerView = infiniteScrollView;
+    browser.imageCount = self.imgArrs.count;
     browser.currentImageIndex = index;
     browser.delegate = self;
     [browser show]; // 展示图片浏览器
 }
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
-    NSURL *url = [NSURL URLWithString:@""];
+    NSString *imgString = self.imgArrs[index];
+    NSURL *url = [NSURL URLWithString:imgString];
     return url;
 }
 
 - (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
-    NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
 //    UIImage *imageView = [UIImage imageNamed:@"%@",[urlsArray objectAtIndex:index]];
-    UIImage *imageView = [UIImage imageNamed:@"奔驰1"];
+    UIImage *imageView = [UIImage imageNamed:@""];
     return imageView;
 }
 
@@ -161,8 +197,7 @@
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
         _headerView.backgroundColor = [UIColor redColor];
-        NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
+        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.imgArrs scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         [_headerView addSubview:self.topScrollView];
     }
     return _headerView;

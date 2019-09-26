@@ -76,7 +76,7 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @(2),@"type", nil];
+                               @(1),@"type", nil];
     [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
         NSArray *arr = responseObj[@"data"];
         NSDictionary *dic = arr[0];
@@ -385,12 +385,15 @@
         FHRentalAndSaleController *vc = [[FHRentalAndSaleController alloc] init];
         vc.titleString = @"房屋租售";
         vc.hidesBottomBarWhenPushed = YES;
+        vc.property_id = property_id;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 8) {
         /** 投诉建议 */
         FHSuggestionController *vc = [[FHSuggestionController alloc] init];
         vc.titleString = @"投诉建议";
         vc.hidesBottomBarWhenPushed = YES;
+        vc.property_id = property_id;
+        vc.type = 1;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 9) {
         /** 我的物业 */

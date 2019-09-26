@@ -314,18 +314,19 @@
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
         /** 疾病分类 */
-        [self pushCategoryVCWithTitle:@"疾病分类"];
+        [self pushCategoryVCWithTitle:@"疾病分类" type:@"1"];
     } else if (selectIndex.row == 1) {
         /** 药物健康 */
-        [self pushCategoryVCWithTitle:@"药物健康"];
+        [self pushCategoryVCWithTitle:@"药物健康" type:@"2"];
     } else if (selectIndex.row == 2) {
         /** 健康指数 */
-        [self pushCategoryVCWithTitle:@"健康指数"];
+        [self pushCategoryVCWithTitle:@"健康指数" type:@"3"];
     } else if (selectIndex.row == 3) {
         /** 心里健康 */
         FHMentalHealthController *health = [[FHMentalHealthController alloc] init];
         health.titleString = @"心里健康";
         health.hidesBottomBarWhenPushed = YES;
+        health.type = 4;
         [self.navigationController pushViewController:health animated:YES];
     } else if (selectIndex.row == 4) {
         /** 医疗档案 */
@@ -335,33 +336,36 @@
         [self.navigationController pushViewController:health animated:YES];
     } else if (selectIndex.row == 5) {
         /** 饮食健康 */
-        [self pushAnnouncementControllerWithTitle:@"饮食健康"];
+        [self pushAnnouncementControllerWithTitle:@"饮食健康" ID:selectIndex.row - 1];
     } else if (selectIndex.row == 6) {
         /** 睡眠健康 */
-         [self pushAnnouncementControllerWithTitle:@"睡眠健康"];
+         [self pushAnnouncementControllerWithTitle:@"睡眠健康" ID:selectIndex.row - 1];
     } else if (selectIndex.row == 7) {
         /** 健康文化 */
-        [self pushAnnouncementControllerWithTitle:@"健康文化"];
+        [self pushAnnouncementControllerWithTitle:@"健康文化" ID:selectIndex.row - 1];
     } else if (selectIndex.row == 8) {
         /** 健康保险 */
-        [self pushAnnouncementControllerWithTitle:@"健康保险"];
+        [self pushAnnouncementControllerWithTitle:@"健康保险"ID:selectIndex.row - 1];
     } else if (selectIndex.row == 9) {
         /** 医疗资讯 */
-        [self pushAnnouncementControllerWithTitle:@"医疗资讯"];
+        [self pushAnnouncementControllerWithTitle:@"医疗资讯" ID:8];
+        
     }
 }
 
-- (void)pushCategoryVCWithTitle:(NSString *)title {
+- (void)pushCategoryVCWithTitle:(NSString *)title type:(NSString *)type{
     LGJCategoryVC *an = [[LGJCategoryVC alloc] init];
     an.titleString = title;
     an.hidesBottomBarWhenPushed = YES;
+    an.type = type;
     [self.navigationController pushViewController:an animated:YES];
 }
 
-- (void)pushAnnouncementControllerWithTitle:(NSString *)title {
+- (void)pushAnnouncementControllerWithTitle:(NSString *)title ID:(NSInteger )ID{
     FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
     an.titleString = title;
     an.type = 4;
+    an.ID = ID;
     an.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:an animated:YES];
 }

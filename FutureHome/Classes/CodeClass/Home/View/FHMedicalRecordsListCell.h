@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHHealthMemberModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *personCodeLabel;
 /** 社保 */
 @property (nonatomic, strong) UILabel *codeLabel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHHealthMemberModel *model;
 
 @end
 

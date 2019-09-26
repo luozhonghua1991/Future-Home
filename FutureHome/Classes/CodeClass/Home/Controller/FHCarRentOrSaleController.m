@@ -23,6 +23,8 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *carNumberView;
 /** 产权年限 */
 @property (nonatomic, strong) FHAccountApplicationTFView *yearView;
+/** 车位面积 */
+@property (nonatomic, strong) FHAccountApplicationTFView *carAreaView;
 /** 建筑时间 */
 @property (nonatomic, strong) FHAccountApplicationTFView *buildTimeView;
 /** 付款要求 */
@@ -93,6 +95,7 @@
     [self.scrollView addSubview:self.salePriceView];
     [self.scrollView addSubview:self.carNumberView];
     [self.scrollView addSubview:self.yearView];
+    [self.scrollView addSubview:self.carAreaView];
     [self.scrollView addSubview:self.buildTimeView];
     [self.scrollView addSubview:self.priceSugmentView];
     [self.scrollView addSubview:self.phoneNumberView];
@@ -112,7 +115,8 @@
     self.salePriceView.frame = CGRectMake(0, MaxY(self.carHouseNumberView), SCREEN_WIDTH, commonCellHeight);
     self.carNumberView.frame = CGRectMake(0, MaxY(self.salePriceView), SCREEN_WIDTH, commonCellHeight);
     self.yearView.frame = CGRectMake(0, MaxY(self.carNumberView), SCREEN_WIDTH, commonCellHeight);
-    self.buildTimeView.frame = CGRectMake(0, MaxY(self.yearView), SCREEN_WIDTH, commonCellHeight);
+    self.carAreaView.frame = CGRectMake(0, MaxY(self.yearView), SCREEN_WIDTH, commonCellHeight);
+    self.buildTimeView.frame = CGRectMake(0, MaxY(self.carAreaView), SCREEN_WIDTH, commonCellHeight);
     self.priceSugmentView.frame = CGRectMake(0, MaxY(self.buildTimeView), SCREEN_WIDTH, commonCellHeight);
     self.phoneNumberView.frame = CGRectMake(0, MaxY(self.priceSugmentView), SCREEN_WIDTH, commonCellHeight);
     self.callPhoneNumberView.frame = CGRectMake(0, MaxY(self.phoneNumberView), SCREEN_WIDTH, commonCellHeight);
@@ -160,25 +164,53 @@
     self.selectImgArrays = [[NSMutableArray alloc] init];
     /** 先上传多张图片*/
     Account *account = [AccountStorage readAccount];
-    NSArray *arr = @[@"111"];
+    NSString *string = [self getCurrentTimes];
+    NSArray *arr = @[string];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @"property",@"path",
                                arr,@"file[]",
                                nil];
-    for (int i = 0; i< self.imgSelectArrs.count; i++) {
-        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],0.5);
+    for (int i = 0; i < self.imgSelectArrs.count; i++) {
+        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
         [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-            NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
-            [self.selectImgArrays addObject:imgID];
-            if (self.selectImgArrays.count == self.imgSelectArrs.count) {
-                /** 图片获取完毕 */
-                [self commitInfo];
+            NSArray *arr = responseObj[@"data"];
+            if (!IS_NULL_ARRAY(arr)) {
+                NSString *imgID = [arr objectAtIndex:0];
+                [self.selectImgArrays addObject:imgID];
+                if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                    /** 图片获取完毕 */
+                    [self commitInfo];
+                }
             }
         } failure:^(NSError *error) {
             
         }];
     }
+}
+
+
+//获取当前的时间
+- (NSString*)getCurrentTimes{
+    
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    
+    // ----------设置你想要的格式,hh与HH的区别:分别表示12小时制,24小时制
+    
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    
+    //现在时间,你可以输出来看下是什么格式
+    
+    NSDate *datenow = [NSDate date];
+    
+    //----------将nsdate按formatter格式转成nsstring
+    
+    NSString *currentTimeString = [formatter stringFromDate:datenow];
+    
+    NSLog(@"currentTimeString =  %@",currentTimeString);
+    
+    return currentTimeString;
+    
 }
 
 /** 提交信息 */
@@ -189,7 +221,7 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(weakSelf.property_id),@"property_id",
-                               self.type,@"type",
+                               @(self.type),@"type",
                                self.titleView.contentTF.text,@"title",
                                self.carHouseNumberView.contentTF.text,@"layer_number",
                                self.carNumberView.contentTF.text,@"park_number",
@@ -200,6 +232,7 @@
                                self.buildTimeView.contentTF.text,@"times",
                                self.phoneNumberView.contentTF.text,@"mobile",
                                self.callPhoneNumberView.contentTF.text,@"time_slot",
+                               self.carAreaView.contentTF.text,@"area",
                                imgArrsString,@"img_ids",
                                nil];
     
@@ -207,7 +240,9 @@
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
             [weakSelf.view makeToast:@"提交成功"];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
         } else {
             [self.view makeToast:@"所填信息有误"];
         }
@@ -270,6 +305,15 @@
         _yearView.contentTF.placeholder = @"请输入产权年限";
     }
     return _yearView;
+}
+
+- (FHAccountApplicationTFView *)carAreaView {
+    if (!_carAreaView) {
+        _carAreaView = [[FHAccountApplicationTFView alloc] init];
+        _carAreaView.titleLabel.text = @"车位面积";
+        _carAreaView.contentTF.placeholder = @"请输入车位面积";
+    }
+    return _carAreaView;
 }
 
 - (FHAccountApplicationTFView *)buildTimeView {

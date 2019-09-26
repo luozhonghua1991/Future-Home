@@ -15,6 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isHaveTabbar;
 /** 是否有headerView  默认没得 */
 @property (nonatomic, assign) BOOL isHaveHeaderView;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger property_id;
+/** 1 物业  2 业委 */
+@property (nonatomic, assign) NSInteger type;
+/** 是否是自己的回复 */
+@property (nonatomic, assign) BOOL isSelf;
+/** 1是自己 0是看的别人 */
+@property (nonatomic, assign) NSInteger personType;
 
 @end
 

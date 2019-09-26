@@ -10,10 +10,17 @@
 #import "FHHouseSaleCell.h"
 #import "FHCarSaleController.h"
 #import "FHCarSaleController.h"
+#import "FHHouseListModel.h"
 
 @interface FHHouseSaleController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** 1 出售 2出租 */
+@property (nonatomic, copy) NSString *getType;
+/** 房屋数据 */
+@property (nonatomic, strong) NSMutableArray *houseDataArrs;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHHouseListModel *houseListModel;
 
 @end
 
@@ -23,12 +30,63 @@
     [super viewDidLoad];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHHouseSaleCell class] forCellReuseIdentifier:NSStringFromClass([FHHouseSaleCell class])];
+    if (self.type == 0 || self.type == 1) {
+        [self fh_getHouseRequest];
+    } else {
+        [self fh_geCarRequest];
+    }
 }
 
 
+- (void)fh_getHouseRequest {
+    WS(weakSelf);
+    self.houseDataArrs = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    if (self.type == 0) {
+        self.getType = @"1";
+    } else if (self.type == 1) {
+        self.getType = @"2";
+    }
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"property_id",
+                               self.getType,@"type", nil];
+    
+    [AFNetWorkTool get:@"property/houseList" params:paramsDic success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        self.houseDataArrs = [FHHouseListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)fh_geCarRequest {
+    WS(weakSelf);
+    self.houseDataArrs = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    if (self.type == 2) {
+        self.getType = @"1";
+    } else if (self.type == 3) {
+        self.getType = @"2";
+    }
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"property_id",
+                               self.getType,@"type", nil];
+    
+    [AFNetWorkTool get:@"property/parkList" params:paramsDic success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        self.houseDataArrs = [FHHouseListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
+        [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return self.houseDataArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -46,13 +104,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHHouseSaleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHHouseSaleCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.houseListModel = self.houseDataArrs[indexPath.row];
+    cell.houseListModel = self.houseListModel;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    FHHouseListModel *houseListModel = self.houseDataArrs[indexPath.row];
     FHCarSaleController *vc = [[FHCarSaleController alloc] init];
     vc.type = self.type;
     vc.hidesBottomBarWhenPushed = YES;
+    vc.property_id = self.property_id;
+    vc.id = houseListModel.id;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

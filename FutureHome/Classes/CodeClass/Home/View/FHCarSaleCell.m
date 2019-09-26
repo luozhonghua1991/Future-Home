@@ -107,6 +107,22 @@
 }
 
 
+- (void)setDetailModel:(FHListDetailModel *)detailModel {
+    _detailModel = detailModel;
+    self.titleNameLabel.text = _detailModel.community;
+    self.priceLabe.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.rent];
+    self.carNumberLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.shelves];
+    self.areaLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.area];
+    self.carNumerLouLabel.text = [NSString stringWithFormat:@"车库楼层: 富%ld楼",(long)_detailModel.shelves];
+    self.buildTimeLabel.text = [NSString stringWithFormat:@"建筑时间: %@",_detailModel.create_time];
+    self.payTypeLabel.text = [NSString stringWithFormat:@"付款要求: %@",_detailModel.require];
+    self.otherInfoLabel.text = [NSString stringWithFormat:@"补充信息: \n%@",_detailModel.describe];
+    self.yearLabel.text = [NSString stringWithFormat:@"产权年限: %ld年",(long)_detailModel.years];
+    self.phoneLabel.text = [NSString stringWithFormat:@"联系电话: %@",_detailModel.mobile];
+    self.callPhoneLabel.text = [NSString stringWithFormat:@"接听时段: %@",_detailModel.time_slot];
+}
+
+
 #pragma mark — setter && getter
 - (UILabel *)titleNameLabel {
     if (!_titleNameLabel) {

@@ -15,22 +15,11 @@
 //#define BASE_URL @"http://testm.hongyajinrong.com/allApi"
 //#define BASE_DD_URL @"https://m.hongyajinrong.com"
 
+
+//测试环境
 #define BASE_URL @"http://192.168.3.57/v1"
-
-//#define BASE_URL @"http://192.168.10.36:8081"         //测试宏亚 大鸟
-//#define PROTOCOL_URL @"http://192.168.10.36"          //协议总地址
-
-//#define BASE_URL @"http://192.168.10.49:8088"         //测试宏亚 飞机
-//#define PROTOCOL_URL @"http://192.10.49"          //协议总地址
-
-//#define BASE_URL @"http://192.168.10.76:8080"        //测试宏亚 海丰
-//#define PROTOCOL_URL @"http://192.168.10.76.218"          //协议总地址
-
-//#define BASE_URL @"http://192.168.10.47:8888"         //内网测试服务器
-//#define PROTOCOL_URL @"http://118.178.246.218"          //协议总地址   //公司内部测试专用
-
-//#define BASE_URL @"http://218.75.74.58:8888"         // 外网测试服务器
-//#define PROTOCOL_URL @"http://218.75.74.58"          //协议总地址
+//正式环境
+//#define BASE_URL @"http://sheyunlife.com/v1"
 
 // 正式
 //#define BASE_URL @"https://m.hongyajinrong.com" // 正式
