@@ -12,6 +12,7 @@
 #import "FHNoticeListModel.h"
 #import "FHWebViewController.h"
 #import "FHApplicationBiddingController.h"
+#import "FHApplicationElectionIndustryCommitteController.h"
 
 @interface FHBaseAnnouncementListController () <UITableViewDelegate,UITableViewDataSource>
 /** 列表数据 */
@@ -20,6 +21,11 @@
 @property (nonatomic, strong) UIImageView *headerView;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *noticeListArrs;
+/** 点击报名按钮 */
+@property (nonatomic, strong) UIButton *clickButton;
+/** 第几节选举大会 */
+@property (nonatomic, copy) NSString *pid;
+
 
 @end
 
@@ -36,6 +42,15 @@
         self.listTable.tableHeaderView = self.headerView;
         self.listTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
     }
+    self.clickButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.clickButton.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, 60);
+    [self.clickButton addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+    self.clickButton.layer.borderWidth = 1;
+    self.clickButton.titleLabel.font = [UIFont systemFontOfSize:13];
+    self.clickButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.clickButton.titleLabel.numberOfLines = 2;
+    self.clickButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    
     [self fh_getRequest];
 }
 
@@ -97,6 +112,58 @@
     } failure:^(NSError *error) {
         [weakSelf.listTable reloadData];
     }];
+    
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"owner_id",
+                               nil];
+    /** 判断业委投票通道是否关闭 */
+    [AFNetWorkTool get:@"owner/voteIsClosed" params:params success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        NSInteger status = [dic[@"status"] integerValue];
+        self.pid = dic[@"id"];
+        if (self.ID == 6) {
+            NSString *title = dic[@"apply_title"];
+            /** 申请通道 */
+            if (status == 1) {
+                [self.clickButton setTitle:title forState:UIControlStateNormal];
+                [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                self.clickButton.enabled = YES;
+            } else {
+                [self.clickButton setTitle:title forState:UIControlStateNormal];
+                [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                self.clickButton.enabled = NO;
+            }
+        } else if (self.ID == 7) {
+            /** 业委海选 */
+            NSString *title = dic[@"candidate_title"];
+            if (status == 3) {
+                [self.clickButton setTitle:title forState:UIControlStateNormal];
+                [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                self.clickButton.enabled = YES;
+            } else {
+                [self.clickButton setTitle:title forState:UIControlStateNormal];
+                [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                self.clickButton.enabled = NO;
+            }
+        } else if (self.ID == 8) {
+            /** 岗位选举 */
+            NSString *title = dic[@"candidate_title"];
+            if (status == 5) {
+                [self.clickButton setTitle:title forState:UIControlStateNormal];
+                [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                self.clickButton.enabled = YES;
+            } else {
+                [self.clickButton setTitle:title forState:UIControlStateNormal];
+                [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                self.clickButton.enabled = NO;
+            }
+        }
+        [weakSelf.listTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.listTable reloadData];
+    }];
 }
 
 
@@ -125,17 +192,7 @@
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 80)];
         view.backgroundColor = [UIColor whiteColor];
         
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, 60);
-        [button setTitle:@"妹妹家小区--第一届通道\n(点击报名)" forState:UIControlStateNormal];
-        [button setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
-        button.layer.borderWidth = 1;
-        button.titleLabel.font = [UIFont systemFontOfSize:13];
-        button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        button.titleLabel.numberOfLines = 2;
-        button.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        [view addSubview:button];
+        [view addSubview:self.clickButton];
         
         return view;
     }
@@ -166,7 +223,13 @@
 
 - (void)buttonClick {
     if ([self.yp_tabItemTitle isEqualToString:@"申请通道"]) {
-        [self viewControllerPushOther:@"FHApplicationElectionIndustryCommitteController"];
+//        [self viewControllerPushOther:@"FHApplicationElectionIndustryCommitteController"];
+        FHApplicationElectionIndustryCommitteController *vc = [[FHApplicationElectionIndustryCommitteController alloc] init];
+        vc.titleString = @"业委选举申请";
+        vc.property_id = self.property_id;
+        vc.pid = self.pid;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
         return;
     }
     if ([self.titleString isEqualToString:@"物业招标"]) {
@@ -184,6 +247,8 @@
     } else if ([self.yp_tabItemTitle isEqualToString:@"岗位选举"]) {
         vc.titleString = @"岗位选举";
     }
+    vc.owner_id = [NSString stringWithFormat:@"%ld",(long)self.property_id];
+    vc.pid = self.pid;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

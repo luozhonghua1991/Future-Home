@@ -13,6 +13,8 @@
 #import "FHShopingController.h"
 #import "FHShopingCartController.h"
 #import "FHMeCenterController.h"
+#import <AVFoundation/AVCaptureDevice.h>
+#import <AVFoundation/AVMediaFormat.h>
 
 static FHAppDelegate* pSelf = nil;
 
@@ -29,6 +31,14 @@ static FHAppDelegate* pSelf = nil;
     [self.window makeKeyAndVisible];
     pSelf = self;
     [self setTabBarController];
+
+    
+    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+    if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {
+        // 无权限
+        // do something...
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+    }
     return YES;
 }
 
@@ -75,6 +85,12 @@ static FHAppDelegate* pSelf = nil;
     [tabBarC addChildViewController:navC4];
     [tabBarC addChildViewController:navC5];
     self.window.rootViewController = tabBarC;
+    
+    /** 判断用户是否登录过 没登录去登录 */
+    if (![AccountStorage isExistsToKen]) {
+        [FHLoginTool fh_makePersonToLoging];
+        return;
+    }
 }
 
 

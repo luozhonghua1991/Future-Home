@@ -390,6 +390,7 @@
 		4AA9AF6C2302625200D28638 /* City.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA9AF652302625200D28638 /* City.m */; };
 		4AA9AF6D2302625200D28638 /* Province.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA9AF692302625200D28638 /* Province.m */; };
 		4AA9AF6E2302625200D28638 /* AddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA9AF6A2302625200D28638 /* AddressPickerView.m */; };
+		4AAB745523483F7700AA8B61 /* FHCandidateListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAB745423483F7700AA8B61 /* FHCandidateListModel.m */; };
 		4AAC981A22D70F5300E4D0B8 /* FFDropDownMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC980D22D70F5300E4D0B8 /* FFDropDownMenuCell.m */; };
 		4AAC981B22D70F5300E4D0B8 /* FFDropDownMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC980E22D70F5300E4D0B8 /* FFDropDownMenuView.m */; };
 		4AAC981C22D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981222D70F5300E4D0B8 /* FFDropDownMenuBasedCell.m */; };
@@ -1598,6 +1599,8 @@
 		4AA9AF682302625200D28638 /* City.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = City.h; sourceTree = "<group>"; };
 		4AA9AF692302625200D28638 /* Province.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Province.m; sourceTree = "<group>"; };
 		4AA9AF6A2302625200D28638 /* AddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressPickerView.m; sourceTree = "<group>"; };
+		4AAB745323483F7700AA8B61 /* FHCandidateListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCandidateListModel.h; sourceTree = "<group>"; };
+		4AAB745423483F7700AA8B61 /* FHCandidateListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCandidateListModel.m; sourceTree = "<group>"; };
 		4AAC980C22D70F5300E4D0B8 /* FFDropDownMenuBasedCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenuBasedCell.h; sourceTree = "<group>"; };
 		4AAC980D22D70F5300E4D0B8 /* FFDropDownMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuCell.m; sourceTree = "<group>"; };
 		4AAC980E22D70F5300E4D0B8 /* FFDropDownMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuView.m; sourceTree = "<group>"; };
@@ -5357,6 +5360,8 @@
 				4AA99DD62336173B00CBF41E /* FHHealthCategoryModel.m */,
 				4AA99DD8233624E200CBF41E /* FHHealthProductModel.h */,
 				4AA99DD9233624E200CBF41E /* FHHealthProductModel.m */,
+				4AAB745323483F7700AA8B61 /* FHCandidateListModel.h */,
+				4AAB745423483F7700AA8B61 /* FHCandidateListModel.m */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -6116,6 +6121,7 @@
 				4A4BEF2022CE078B00FD00DE /* FHSetPasswordController.m in Sources */,
 				4AB203AD22F2DD7300111AC4 /* ZXQRCodeDecoder.m in Sources */,
 				4AB203D622F2DD7300111AC4 /* ZXPDF417BarcodeMatrix.m in Sources */,
+				4AAB745523483F7700AA8B61 /* FHCandidateListModel.m in Sources */,
 				4A6DAA7A22C0AD4C00F29455 /* IQUIView+Hierarchy.m in Sources */,
 				4AB203BE22F2DD7300111AC4 /* ZXGridSampler.m in Sources */,
 				4A9E84EA2323561D0070CE4A /* NSImage+WebCache.m in Sources */,

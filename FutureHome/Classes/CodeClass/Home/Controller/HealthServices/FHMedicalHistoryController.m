@@ -19,6 +19,9 @@
 @property (nonatomic, strong) UITableView *homeTable;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *medicalHistoryArrs;
+/** 总得消费 */
+@property (nonatomic, copy) NSString *total_pay;
+
 
 @end
 
@@ -46,13 +49,16 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                self.ID,@"pid",
-                               @(1),@"page",
+//                               @(1),@"page",
                                nil];
     
     [AFNetWorkTool get:@"health/recordList" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            NSArray *arr = responseObj[@"data"][@"list"];
+            NSDictionary *dic = arr[0];
+            weakSelf.total_pay = dic[@"total_pay"];
+            [weakSelf.allPriceBtn setTitle:[NSString stringWithFormat:@"合计支出:%@元",self.total_pay] forState:UIControlStateNormal];
             weakSelf.medicalHistoryArrs = [FHHealthHistoryModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
-//            NSInteger 
             [weakSelf.homeTable reloadData];
             
         } else {
@@ -60,6 +66,7 @@
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
+        
     }];
 }
 

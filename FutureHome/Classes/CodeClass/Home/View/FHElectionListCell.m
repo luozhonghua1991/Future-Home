@@ -77,6 +77,38 @@
 }
 
 
+
+- (void)setCandidateListModel:(FHCandidateListModel *)candidateListModel {
+    _candidateListModel = candidateListModel;
+    self.bottomLabel.text = _candidateListModel.intro;
+    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_candidateListModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.numberLabel.text = [NSString stringWithFormat:@"%@号",candidateListModel.number];
+    if ([_candidateListModel.status isEqualToString:@"1"]) {
+        self.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)candidateListModel.sea_num];
+    } else if ([_candidateListModel.status isEqualToString:@"2"]){
+        self.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)candidateListModel.post_num];
+    }
+    self.ageLabel.text = [NSString stringWithFormat:@"年龄: %ld岁",(long)_candidateListModel.age];
+    self.nameLabel.text = [NSString stringWithFormat:@"姓名: %@",_candidateListModel.name];
+    self.sexLabel.text = [NSString stringWithFormat:@"性别: %@",_candidateListModel.getSex];
+    self.xueLiLabel.text = [NSString stringWithFormat:@"学历: %@",_candidateListModel.education];
+    self.faceLabel.text = [NSString stringWithFormat:@"政治面貌: %@",_candidateListModel.polity];
+    self.typeLabel.text = [NSString stringWithFormat:@"全职/兼职: %@",_candidateListModel.getFull];
+    if (_candidateListModel.select == 0) {
+        self.selectLabel.text = @"○选他";
+    } else if (_candidateListModel.select == 1) {
+        self.selectLabel.text = @"⊙选他";
+    }
+}
+
+
+-  (void)tapClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHElectionListCellDelegateSelectModel:)]) {
+        [_delegate fh_FHElectionListCellDelegateSelectModel:self.candidateListModel];
+    }
+}
+
+
 #pragma mark — setter && getter
 - (UIView *)contentBgView {
     if (!_contentBgView) {
@@ -103,6 +135,10 @@
     if (!_leftImgView) {
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 130, 130)];
         _leftImgView.image = [UIImage imageNamed:@"头像"];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        _leftImgView.userInteractionEnabled = YES;
+        [_leftImgView addGestureRecognizer:tap];
     }
     return _leftImgView;
 }

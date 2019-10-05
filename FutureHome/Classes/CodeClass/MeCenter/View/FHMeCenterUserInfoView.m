@@ -27,6 +27,9 @@
 /** 右边的线 */
 @property (nonatomic, strong) UIView *rightLineView;
 
+/** <#strong属性注释#> */
+@property (nonatomic, strong) Account *account;
+
 
 @end
 
@@ -34,6 +37,7 @@
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
+        self.account = [AccountStorage readAccount];
         [self fh_setUpUI];
     }
     return self;
@@ -47,16 +51,6 @@
     [self.topContentView addSubview:self.futureHomeCodeLabel];
     [self.topContentView addSubview:self.codeImgView];
     [self.topContentView addSubview:self.logoLabel];
-    
-//    [self addSubview:self.bottomContentView];
-//    [self.bottomContentView addSubview:self.leftLineView];
-//    [self.bottomContentView addSubview:self.centerLineView];
-//    [self.bottomContentView addSubview:self.rightLineView];
-//    [self.bottomContentView addSubview:self.friendView];
-//    [self.bottomContentView addSubview:self.groupView];
-//    [self.bottomContentView addSubview:self.followView];
-//    [self.bottomContentView addSubview:self.myView];
-//    [self addSubview:self.bottomLineView];
 }
 
 
@@ -80,7 +74,8 @@
 - (UIImageView *)userHeaderImgView {
     if (!_userHeaderImgView) {
         _userHeaderImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 65, 65)];
-        _userHeaderImgView.image = [UIImage imageNamed:@"头像"];
+//        _userHeaderImgView.image = ;
+        [_userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     }
     return _userHeaderImgView;
 }
@@ -88,7 +83,10 @@
 - (UILabel *)userNameLabel {
     if (!_userNameLabel) {
         _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 20, 100, 16)];
-        _userNameLabel.text = @"许大宝~";
+//        _userNameLabel.text = @"许大宝~";
+        if (!IsStringEmpty(self.account.name)) {
+            _userNameLabel.text = [NSString stringWithFormat:@"%@",self.account.name];
+        }
         _userNameLabel.textColor = [UIColor blackColor];
         _userNameLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -98,7 +96,8 @@
 - (UILabel *)futureHomeCodeLabel {
     if (!_futureHomeCodeLabel) {
         _futureHomeCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 50, 200, 16)];
-        _futureHomeCodeLabel.text = @"未来家园号:11111111";
+//        _futureHomeCodeLabel.text = @"未来家园号:11111111";
+        _futureHomeCodeLabel.text = [NSString stringWithFormat:@"未来家园号: %@",self.account.username];
         _futureHomeCodeLabel.textColor = [UIColor blackColor];
         _futureHomeCodeLabel.textAlignment = NSTextAlignmentLeft;
     }

@@ -13,6 +13,11 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHElectionListController : BaseViewController
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *titleString;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *owner_id;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *pid;
+
 
 @end
 

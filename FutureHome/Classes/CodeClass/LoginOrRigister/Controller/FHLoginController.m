@@ -39,8 +39,36 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.title = @"登录";
+    [self fh_creatNav];
     [self fh_setUpUI];
+    
+}
+
+
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
+    self.navgationView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = @"登录";
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor blackColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navgationView addSubview:backBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+//    [self.navgationView addSubview:bottomLineView];
 }
 
 - (void)fh_setUpUI {
@@ -224,12 +252,14 @@
         params[@"password"] = self.passwordTF.text;
         
         [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
-            /** 保存用户信息 */
-            Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
-            [AccountStorage saveAccount:account];
-            NSString *msg = responseObj[@"msg"];
-            [self.view makeToast:msg];
-            [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
+            if ([responseObj[@"code"] integerValue] == 1) {
+                /** 保存用户信息 */
+                Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
+                [AccountStorage saveAccount:account];
+                NSString *msg = responseObj[@"msg"];
+                [self.view makeToast:msg];
+                [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
+            }
         } failure:^(NSError *error) {
             
         }];

@@ -18,6 +18,7 @@
 #import "CreatNavViewController.h"
 #import "ZJPickerView.h"
 #import "FHLoginTool.h"
+#import "BAAlertController.h"
 
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]

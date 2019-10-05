@@ -28,7 +28,7 @@
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMyAccountCell class] forCellReuseIdentifier:NSStringFromClass([FHMyAccountCell class])];
-    self.logoArrs = @[@"头像",@"昵称",@"未来家园号",@"未来家园号"];
+    self.logoArrs = @[@"头像",@"昵称",@"未来家园号",@"未来家园号",@"个性签名"];
     
 }
 
@@ -63,7 +63,7 @@
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return self.logoArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -99,13 +99,15 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         /** 头像修改 */
-
+        
     } else if (indexPath.row == 1) {
         /** 修改昵称 */
         FHChangeNameController *change = [[FHChangeNameController alloc] init];
         Account *account = [AccountStorage readAccount];
-        change.strNikeName = account.nickname;
+        change.strNikeName = account.name;
         [self.navigationController pushViewController:change animated:YES];
+    } else if (indexPath.row == 4) {
+        
     }
 }
 

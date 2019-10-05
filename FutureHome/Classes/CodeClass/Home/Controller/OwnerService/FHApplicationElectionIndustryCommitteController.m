@@ -10,7 +10,7 @@
 #import "FHElectRepeatTFView.h"
 #import "BRPlaceholderTextView.h"
 
-@interface FHApplicationElectionIndustryCommitteController () <UITextFieldDelegate,UIScrollViewDelegate>
+@interface FHApplicationElectionIndustryCommitteController () <UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 姓名View */
@@ -46,6 +46,10 @@
 @property (nonatomic, strong) UILabel *normalLabel;
 /** 营业说明textView */
 @property (nonatomic, strong) BRPlaceholderTextView *businessDescriptionTextView;
+/** 选择的图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectImgArrs;
+/** imgID */
+@property (nonatomic, copy) NSString *imgID;
 
 @end
 
@@ -53,12 +57,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
-    [self creatBottomBtn];
+    if (![self.titleString isEqualToString:@"选举人资料"]) {
+        [self creatBottomBtn];
+        [self getRequestData];
+    } else {
+        [self setDataWithModel:self.personModel];
+    }
 }
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -67,7 +76,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"业委选举申请";
+    titleLabel.text = self.titleString;
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -150,6 +159,183 @@
     [self.view endEditing:YES];
 }
 
+/** 获取以前的数据 */
+- (void)getRequestData {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"owner_id",
+                               self.pid,@"pid",
+                               nil];
+    [AFNetWorkTool get:@"owner/electorDetail" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.personModel = [FHCandidateListModel mj_objectWithKeyValues:responseObj[@"data"]];
+            [weakSelf setDataWithModel:weakSelf.personModel];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+- (void)setDataWithModel:(FHCandidateListModel *)personModel {
+    /** 数据赋值 */
+    self.nameView.contentTF.text = personModel.name;
+    self.ageView.contentTF.text = [NSString stringWithFormat:@"%ld",(long)personModel.age];
+    self.sexView.contentTF.text = personModel.getSex;
+    self.xueliView.contentTF.text = personModel.education;
+    self.phoneView.contentTF.text = personModel.mobile;
+    self.faceView.contentTF.text = personModel.polity;
+    self.addressView.contentTF.text = personModel.home_num;
+    self.typeView.contentTF.text = personModel.getFull;
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:personModel.avatar]];
+    self.numberLabel.text = [NSString stringWithFormat:@"参选号: %@",personModel.number];
+    self.contentTF.text = [NSString stringWithFormat:@"   %@",personModel.intro];
+    self.businessDescriptionTextView.text = personModel.describe;
+    if ([self.titleString isEqualToString:@"选举人资料"]) {
+        self.scrollView.userInteractionEnabled = NO;
+    }
+}
+
+- (void)sureBtnClick {
+    /** 选举申请 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSInteger sexType;
+    if ([self.sexView.contentTF.text isEqualToString:@"男"]) {
+        sexType = 1;
+    } else if ([self.sexView.contentTF.text isEqualToString:@"女"]) {
+        sexType = 2;
+    } else {
+        [self.view makeToast:@"请正确填写性别"];
+        return;
+    }
+    NSInteger fullType;
+    if ([self.typeView.contentTF.text isEqualToString:@"全职"]) {
+        fullType = 1;
+    } else if ([self.typeView.contentTF.text isEqualToString:@"兼职"]) {
+        fullType = 2;
+    } else {
+        [self.view makeToast:@"请正确填写职位类型"];
+        return;
+    }
+    
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.property_id),@"owner_id",
+                               self.nameView.contentTF.text,@"name",
+                               self.ageView.contentTF.text,@"age",
+                               @(sexType),@"sex",
+                               self.xueliView.contentTF.text,@"education",
+                               self.phoneView.contentTF.text,@"mobile",
+                               self.faceView.contentTF.text,@"polity",
+                               self.addressView.contentTF.text,@"home_num",
+                               @(fullType),@"is_full",
+                               self.contentTF.text,@"intro",
+                               self.businessDescriptionTextView.text,@"describe",
+                               self.pid,@"pid",
+                               self.imgID,@"img_ids",
+                               nil];
+    
+    [AFNetWorkTool post:@"owner/submitInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"申请信息已经提交"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                /** 确定 */
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+
+- (void)imgViewClick {
+    /** 选取图片 */
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [self addCamera];
+            break;
+        }
+        case 1:
+        {
+            [self addPhotoClick];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+//调用系统相机
+- (void)addCamera {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
+        cameraPicker.delegate = self;
+        cameraPicker.allowsEditing = YES;  //是否可编辑
+        //摄像头
+        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+    }
+}
+
+/**
+ *  跳转相册页面
+ */
+- (void)addPhotoClick {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = YES;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - <相册处理区域>
+/**
+ *  拍摄完成后要执行的方法
+ */
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.headerImageView.image = image;
+//    self.selectImgArrs = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    NSArray *arr = @[@"111"];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"owner",@"path",
+                               arr,@"file[]",
+                               nil];
+    
+    NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+    [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+        self.imgID = [responseObj[@"data"] objectAtIndex:0];
+    } failure:^(NSError *error) {
+        
+    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
@@ -240,6 +426,10 @@
     if (!_headerImageView) {
         _headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 118 - 10, 10, 118, 118)];
         _headerImageView.image = [UIImage imageNamed:@"头像"];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imgViewClick)];
+        _headerImageView.userInteractionEnabled = YES;
+        [_headerImageView addGestureRecognizer:tap];
     }
     return _headerImageView;
 }
@@ -248,6 +438,11 @@
     if (!_lineView) {
         _lineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 10 - 117, MaxY(self.headerImageView),0.5, 30)];
         _lineView.backgroundColor = [UIColor lightGrayColor];
+        if ([self.titleString isEqualToString:@"业委选举申请"]) {
+            _lineView.hidden = YES;
+        } else {
+            _lineView.hidden = NO;
+        }
     }
     return _lineView;
 }
@@ -258,7 +453,7 @@
         _numberLabel.textColor = [UIColor redColor];
         _numberLabel.textAlignment = NSTextAlignmentCenter;
         _numberLabel.font = [UIFont systemFontOfSize:13];
-        _numberLabel.text = @"参选号: 12号";
+//        _numberLabel.text = @"参选号: 12号";
     }
     return _numberLabel;
 }

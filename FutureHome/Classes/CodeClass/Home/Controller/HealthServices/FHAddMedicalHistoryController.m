@@ -163,8 +163,7 @@
                                self.pid,@"pid",
                                self.dateView.contentTF.text,@"treat_time",
                                self.hospitalView.contentTF.text,@"hospital",
-                
-                                   self.symptomView.contentTF.text,@"symptom",
+                               self.symptomView.contentTF.text,@"symptom",
                                self.allPriceView.contentTF.text,@"total_consum",
                                self.mainDoctorView.contentTF.text,@"doctor",
                                self.therapeuticRegimenView.contentTF.text,@"programme",
