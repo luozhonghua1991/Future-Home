@@ -67,64 +67,80 @@
     [self.navigationController.navigationBar lt_reset];
 }
 
-- (void)initData{
-    NSArray * arr = @[
-                      @{@"title" : @"精选特卖",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤", @"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"饭后(含有)",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"茶点(含有)",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"素材水果",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",]
-                        },
-                      @{@"title" : @"水果拼盘",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤",]
-                        },
-                      @{@"title" : @"拼盘",
-                        @"list" : @[@"甜点组合"]
-                        },
-                      @{@"title" : @"烤鱼盘",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"饮料",
-                        @"list": @[@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤",@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title": @"小吃",
-                        @"list": @[@"甜点组合", @"毛肚"]
-                        },
-                      @{@"title" : @"作料",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"主食",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"作料",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      @{@"title" : @"主食",
-                        @"list" : @[@"甜点组合", @"毛肚", @"菌汤"]
-                        },
-                      ];
+- (void)initData {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.shopID,@"shopid", nil];
     
-    [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        GNRGoodsGroup * goodsGroup = [GNRGoodsGroup new];
-        goodsGroup.classesName = [obj objectForKey:@"title"];
-        NSArray * list = [obj objectForKey:@"list"];
-        [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            GNRGoodsModel * goods = [GNRGoodsModel new];
-            goods.goodsName = obj;
-            goods.goodsPrice = [NSString stringWithFormat:@"%.2f",(float)arc4random_uniform(100)+50.f];
-            [goodsGroup.goodsList addObject:goods];
+    /** 购物车的数据 */
+    [AFNetWorkTool get:@"shop/getAppledataByShopid" params:paramsDic success:^(id responseObj) {
+        NSArray *arr = responseObj[@"data"];
+        if (IS_NULL_ARRAY(arr)) {
+            return ;
+        }
+        [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            GNRGoodsGroup * goodsGroup = [GNRGoodsGroup new];
+            goodsGroup.classesName = [obj objectForKey:@"title"];
+            NSArray * list = [obj objectForKey:@"list"];
+            [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                GNRGoodsModel * goods = [GNRGoodsModel new];
+                goods.goodsName = [obj objectForKey:@"title"];
+                goods.goodsPrice = [obj objectForKey:@"sell_price"];
+                goods.goodsImage = [obj objectForKey:@"cover"];
+                goods.goodsPlace = [obj objectForKey:@"Place"];
+                goods.goodsUnitAtr = [obj objectForKey:@"UnitAtr"];
+                goods.goodsID = [obj objectForKey:@"id"];
+                goods.goodsSafetStock = [obj objectForKey:@"SafetStock"];
+                [goodsGroup.goodsList addObject:goods];
+            }];
+            [weakSelf.goodsListView.goodsList.goodsGroups addObject:goodsGroup];
         }];
-        [self->_goodsListView.goodsList.goodsGroups addObject:goodsGroup];
+        
+        /** 暂时注释掉 */
+//        [weakSelf.goodsListView reloadData];
+        
+        weakSelf.shoppingBar.goodsList = weakSelf.goodsListView.goodsList;
+
+    } failure:^(NSError *error) {
+
     }];
-    [_goodsListView reloadData];
     
-    self.shoppingBar.goodsList = _goodsListView.goodsList;
+    
+    [AFNetWorkTool get:@"shop/getVariety" params:paramsDic success:^(id responseObj) {
+        NSArray *arr = responseObj[@"data"];
+        if (IS_NULL_ARRAY(arr)) {
+            return ;
+        }
+        [arr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            GNRGoodsGroup * goodsGroup = [GNRGoodsGroup new];
+            goodsGroup.classesName = [obj objectForKey:@"name"];
+            goodsGroup.classID = [obj objectForKey:@"id"];
+            
+//            NSArray * list = [obj objectForKey:@"list"];
+//            [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//                GNRGoodsModel * goods = [GNRGoodsModel new];
+//                goods.goodsName = [obj objectForKey:@"title"];
+//                goods.goodsPrice = [obj objectForKey:@"sell_price"];
+//                goods.goodsImage = [obj objectForKey:@"cover"];
+//                goods.goodsPlace = [obj objectForKey:@"Place"];
+//                goods.goodsUnitAtr = [obj objectForKey:@"UnitAtr"];
+//                goods.goodsID = [obj objectForKey:@"id"];
+//                goods.goodsSafetStock = [obj objectForKey:@"SafetStock"];
+//                [goodsGroup.goodsList addObject:goods];
+//            }];
+            
+            [weakSelf.goodsListView.goodsList.goodsGroups addObject:goodsGroup];
+        }];
+        
+        [weakSelf.goodsListView.leftTbView reloadData];
+//        weakSelf.shoppingBar.goodsList = weakSelf.goodsListView.goodsList;
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
 }
 
 
@@ -148,7 +164,7 @@ valueChangedForCount:(NSInteger)count
         //更新badgeValue
         [self.shoppingBar reloadData];
     } else {//购物车中的
-        if (count==0) {
+        if (count == 0) {
             [self.goodsListView.goodsList.shoppingCart.bags.firstObject updateGoods:goods];
         }
         [self.goodsListView.rightTbView reloadData];
@@ -252,8 +268,10 @@ valueChangedForCount:(NSInteger)count
     vc.hidesBottomBarWhenPushed = YES;
     vc.currentNumber = [goods.number floatValue];
     vc.stepper = cell.stepper;
+    vc.goodsModel = goods;
     [self.navigationController pushViewController:vc animated:YES];
 }
+
 
 #pragma mark — setter && getter
 - (GNRLinkageTableView *)goodsListView{
@@ -261,6 +279,7 @@ valueChangedForCount:(NSInteger)count
         _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight + 44 + 35, self.view.bounds.size.width, self.view.bounds.size.height-[GNRShoppingBar defaultHeight] - MainSizeHeight - 44 - 35)] ;
         _goodsListView.target = self;
         _goodsListView.delegate = self;
+        _goodsListView.shopID = self.shopID;
     }
     return _goodsListView;
 }

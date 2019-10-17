@@ -57,15 +57,32 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.topLineView.frame = CGRectMake(0, 5, ScreenWidth, 0.5);
-    self.titleNameLabel.frame = CGRectMake(10, MaxY(self.topLineView) + 10, SCREEN_WIDTH - 200, 15);
+    self.titleNameLabel.frame = CGRectMake(10, MaxY(self.topLineView) + 10, SCREEN_WIDTH - 200, 16);
     self.bottomLineView.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 10, SCREEN_WIDTH, 0.5);
-    self.producingAreaLabel.frame = CGRectMake(10, MaxY(self.bottomLineView) + 20, SCREEN_WIDTH - 200, 13);
-    self.oldPriceLabel.frame = CGRectMake(10, MaxY(self.producingAreaLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.dayCountLabel.frame = CGRectMake(10, MaxY(self.oldPriceLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.goodsInfoLabel.frame = CGRectMake(10, MaxY(self.dayCountLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.typeLabel.frame = CGRectMake(SCREEN_WIDTH / 2, MaxY(self.bottomLineView) + 20, SCREEN_WIDTH / 2, 13);
-    self.priceLabel.frame = CGRectMake(SCREEN_WIDTH / 2, MaxY(self.typeLabel) + 15, SCREEN_WIDTH / 2, 13);
-    self.allCountLabel.frame = CGRectMake(SCREEN_WIDTH / 2, MaxY(self.priceLabel) + 15, SCREEN_WIDTH / 2, 13);
+    
+    self.producingAreaLabel.frame = CGRectMake(10, MaxY(self.bottomLineView) + 20, SCREEN_WIDTH - 200, 14);
+    self.oldPriceLabel.frame = CGRectMake(10, MaxY(self.producingAreaLabel) + 20, SCREEN_WIDTH - 200, 14);
+    self.dayCountLabel.frame = CGRectMake(10, MaxY(self.oldPriceLabel) + 20, SCREEN_WIDTH - 200, 14);
+    self.typeLabel.frame = CGRectMake(SCREEN_WIDTH / 2, MaxY(self.bottomLineView) + 20, SCREEN_WIDTH / 2, 14);
+    self.priceLabel.frame = CGRectMake(SCREEN_WIDTH / 2, MaxY(self.typeLabel) + 20, SCREEN_WIDTH / 2, 14);
+    self.allCountLabel.frame = CGRectMake(SCREEN_WIDTH / 2, MaxY(self.priceLabel) + 20, SCREEN_WIDTH / 2, 14);
+}
+
+
+- (void)setGoodsDetailModel:(FHGoodsDetailModel *)goodsDetailModel {
+    _goodsDetailModel = goodsDetailModel;
+    self.titleNameLabel.text = _goodsDetailModel.title;
+    self.producingAreaLabel.text = [NSString stringWithFormat:@"产地: %@",_goodsDetailModel.Place];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"商品原价: %@元",_goodsDetailModel.origin_price];
+    self.dayCountLabel.text = [NSString stringWithFormat:@"每日限购: %@",_goodsDetailModel.limit_num];
+    self.typeLabel.text = [NSString stringWithFormat:@"规格: %@",_goodsDetailModel.UnitAtr];
+    self.priceLabel.text = [NSString stringWithFormat:@"售价: %@元",_goodsDetailModel.sell_price];
+    self.allCountLabel.text = [NSString stringWithFormat:@"库存: %@",_goodsDetailModel.SafetStock];
+    self.goodsInfoLabel.text = [NSString stringWithFormat:@"商品描述:\n\n       %@",_goodsDetailModel.desc];
+    CGSize size = [UIlabelTool sizeWithString:self.goodsInfoLabel.text font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
+    self.goodsInfoLabel.frame = CGRectMake(10, MaxY(self.dayCountLabel) + 20, SCREEN_WIDTH - 15, size.height);
+    [self layoutIfNeeded];
+    [self setNeedsLayout];
 }
 
 #pragma mark — setter && getter
@@ -80,7 +97,7 @@
 - (UILabel *)titleNameLabel {
     if (!_titleNameLabel) {
         _titleNameLabel = [[UILabel alloc] init];
-        _titleNameLabel.font = [UIFont boldSystemFontOfSize:15];
+        _titleNameLabel.font = [UIFont boldSystemFontOfSize:16];
         _titleNameLabel.text = @"车位大甩卖";
         _titleNameLabel.textColor = [UIColor blackColor];
         _titleNameLabel.textAlignment = NSTextAlignmentLeft;
@@ -99,7 +116,7 @@
 - (UILabel *)producingAreaLabel {
     if (!_producingAreaLabel) {
         _producingAreaLabel = [[UILabel alloc] init];
-        _producingAreaLabel.font = [UIFont systemFontOfSize:13];
+        _producingAreaLabel.font = [UIFont systemFontOfSize:14];
         _producingAreaLabel.text = @"产地: 越南河内";
         _producingAreaLabel.textColor = [UIColor blackColor];
         _producingAreaLabel.textAlignment = NSTextAlignmentLeft;
@@ -110,7 +127,7 @@
 - (UILabel *)oldPriceLabel {
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
-        _oldPriceLabel.font = [UIFont systemFontOfSize:13];
+        _oldPriceLabel.font = [UIFont systemFontOfSize:14];
         _oldPriceLabel.text = @"商品原价: 2015.9元";
         _oldPriceLabel.textColor = [UIColor blackColor];
         _oldPriceLabel.textAlignment = NSTextAlignmentLeft;
@@ -121,7 +138,7 @@
 - (UILabel *)dayCountLabel {
     if (!_dayCountLabel) {
         _dayCountLabel = [[UILabel alloc] init];
-        _dayCountLabel.font = [UIFont systemFontOfSize:13];
+        _dayCountLabel.font = [UIFont systemFontOfSize:14];
         _dayCountLabel.text = @"每日限购: 2份";
         _dayCountLabel.textColor = [UIColor blackColor];
         _dayCountLabel.textAlignment = NSTextAlignmentLeft;
@@ -132,9 +149,10 @@
 - (UILabel *)goodsInfoLabel {
     if (!_goodsInfoLabel) {
         _goodsInfoLabel = [[UILabel alloc] init];
-        _goodsInfoLabel.font = [UIFont systemFontOfSize:13];
-        _goodsInfoLabel.text = @"商品描述:好的很，霸气侧漏";
+        _goodsInfoLabel.font = [UIFont systemFontOfSize:14];
+        _goodsInfoLabel.text = @"商品描述:\n\n       好的很，霸气侧漏好的很，霸气侧漏好的很，霸气侧漏好的很";
         _goodsInfoLabel.textColor = [UIColor blackColor];
+        _goodsInfoLabel.numberOfLines = 0;
         _goodsInfoLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _goodsInfoLabel;
@@ -143,7 +161,7 @@
 - (UILabel *)typeLabel {
     if (!_typeLabel) {
         _typeLabel = [[UILabel alloc] init];
-        _typeLabel.font = [UIFont systemFontOfSize:13];
+        _typeLabel.font = [UIFont systemFontOfSize:14];
         _typeLabel.text = @"规格: 700-800/份";
         _typeLabel.textColor = [UIColor blackColor];
         _typeLabel.textAlignment = NSTextAlignmentLeft;
@@ -154,7 +172,7 @@
 - (UILabel *)priceLabel {
     if (!_priceLabel) {
         _priceLabel = [[UILabel alloc] init];
-        _priceLabel.font = [UIFont systemFontOfSize:13];
+        _priceLabel.font = [UIFont systemFontOfSize:14];
         _priceLabel.text = @"售价: 12.8元";
         _priceLabel.textColor = [UIColor blackColor];
         _priceLabel.textAlignment = NSTextAlignmentLeft;
@@ -165,7 +183,7 @@
 - (UILabel *)allCountLabel {
     if (!_allCountLabel) {
         _allCountLabel = [[UILabel alloc] init];
-        _allCountLabel.font = [UIFont systemFontOfSize:13];
+        _allCountLabel.font = [UIFont systemFontOfSize:14];
         _allCountLabel.text = @"库存: 200份";
         _allCountLabel.textColor = [UIColor blackColor];
         _allCountLabel.textAlignment = NSTextAlignmentLeft;

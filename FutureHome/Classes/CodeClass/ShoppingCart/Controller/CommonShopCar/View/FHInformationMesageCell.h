@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FHInformationModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHInformationMesageCell : UITableViewCell
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHInformationModel *infoModel;
 
 @end
 

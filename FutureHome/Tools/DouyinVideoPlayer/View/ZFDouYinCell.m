@@ -18,8 +18,14 @@
 @property (nonatomic, strong) UIImageView *coverImageView;
 
 @property (nonatomic, strong) UIButton *likeBtn;
+/** 点赞数 */
+@property (nonatomic, strong) UILabel *likeCountLabel;
+
 
 @property (nonatomic, strong) UIButton *commentBtn;
+/** 评论数 */
+@property (nonatomic, strong) UILabel *commentCountLabel;
+
 
 @property (nonatomic, strong) UIButton *shareBtn;
 
@@ -30,6 +36,9 @@
 @property (nonatomic, strong) UIImageView *bgImgView;
 
 @property (nonatomic, strong) UIView *effectView;
+/** 头像logo */
+@property (nonatomic, strong) UIImageView *headerImgView;
+
 
 @end
 
@@ -43,8 +52,12 @@
         [self.bgImgView addSubview:self.effectView];
         [self.contentView addSubview:self.coverImageView];
         [self.contentView addSubview:self.titleLabel];
+        
+        [self.contentView addSubview:self.headerImgView];
         [self.contentView addSubview:self.likeBtn];
+        [self.contentView addSubview:self.likeCountLabel];
         [self.contentView addSubview:self.commentBtn];
+        [self.contentView addSubview:self.commentCountLabel];
         [self.contentView addSubview:self.shareBtn];
     }
     return self;
@@ -87,6 +100,33 @@
     min_y = min_view_h - min_h - 50;
     min_w = self.likeBtn.zf_left - margin;
     self.titleLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
+    
+    self.headerImgView.frame = CGRectMake(SCREEN_WIDTH - 70, self.likeBtn.frame.origin.y - 100, 50, 50);
+    self.likeCountLabel.frame = CGRectMake(MinX(self.likeBtn), MaxY(self.likeBtn) + 8, self.likeBtn.frame.size.width, 15);
+    self.commentCountLabel.frame = CGRectMake(MinX(self.commentBtn), MaxY(self.commentBtn) + 8, self.commentBtn.frame.size.width, 15);
+    
+}
+
+
+/** 评论 */
+- (void)commentBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZFDouYinCellDelegateSelectCommontent:)]) {
+        [_delegate fh_ZFDouYinCellDelegateSelectCommontent:self.data];
+    }
+}
+
+/** 点赞 */
+- (void)likeBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZFDouYinCellDelegateSelectLikeClicck:)]) {
+        [_delegate fh_ZFDouYinCellDelegateSelectLikeClicck:self.data];
+    }
+}
+
+/** 视频收藏 */
+- (void)shareBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZFDouYinCellDelegateSelectFollowClick:)]) {
+        [_delegate fh_ZFDouYinCellDelegateSelectFollowClick:self.data];
+    }
 }
 
 - (UILabel *)titleLabel {
@@ -98,27 +138,64 @@
     return _titleLabel;
 }
 
+- (UIImageView *)headerImgView{
+    if (!_headerImgView) {
+        _headerImgView = [[UIImageView alloc] init];
+        _headerImgView.layer.cornerRadius = 25;
+        _headerImgView.layer.borderWidth = 3;
+        _headerImgView.layer.borderColor = [UIColor whiteColor].CGColor;
+        _headerImgView.layer.masksToBounds = YES;
+        _headerImgView.clipsToBounds = YES;
+    }
+    return _headerImgView;
+}
+
 - (UIButton *)likeBtn {
     if (!_likeBtn) {
         _likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_likeBtn setImage:[UIImage imageNamed:@"like"] forState:UIControlStateNormal];
+        [_likeBtn addTarget:self action:@selector(likeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        
     }
     return _likeBtn;
 }
 
+- (UILabel *)likeCountLabel {
+    if (!_likeCountLabel) {
+        _likeCountLabel = [[UILabel alloc] init];
+        _likeCountLabel.font = [UIFont boldSystemFontOfSize:15];
+        _likeCountLabel.text = @"1";
+        _likeCountLabel.textColor = [UIColor whiteColor];
+        _likeCountLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _likeCountLabel;
+}
 
 - (UIButton *)commentBtn {
     if (!_commentBtn) {
         _commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_commentBtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
+        [_commentBtn addTarget:self action:@selector(commentBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _commentBtn;
+}
+
+- (UILabel *)commentCountLabel {
+    if (!_commentCountLabel) {
+        _commentCountLabel = [[UILabel alloc] init];
+        _commentCountLabel.font = [UIFont boldSystemFontOfSize:15];
+        _commentCountLabel.text = @"1";
+        _commentCountLabel.textColor = [UIColor whiteColor];
+        _commentCountLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _commentCountLabel;
 }
 
 - (UIButton *)shareBtn {
     if (!_shareBtn) {
         _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_shareBtn setImage:[UIImage imageNamed:@"share"] forState:UIControlStateNormal];
+        [_shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shareBtn;
 }
@@ -132,16 +209,22 @@
 
 - (void)setData:(ZFTableData *)data {
     _data = data;
-    if (data.thumbnail_width >= data.thumbnail_height) {
-        self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
-        self.coverImageView.clipsToBounds = NO;
-    } else {
-        self.coverImageView.contentMode = UIViewContentModeScaleAspectFill;
-        self.coverImageView.clipsToBounds = YES;
-    }
-    [self.coverImageView setImageWithURLString:data.thumbnail_url placeholder:[UIImage imageNamed:@"loading_bgView"]];
-    [self.bgImgView setImageWithURLString:data.thumbnail_url placeholder:[UIImage imageNamed:@"loading_bgView"]];
+//    if (data.thumbnail_width >= data.thumbnail_height) {
+//        self.coverImageView.contentMode = UIViewContentModeScaleAspectFit;
+//        self.coverImageView.clipsToBounds = NO;
+//    } else {
+//        self.coverImageView.contentMode = UIViewContentModeScaleAspectFill;
+//        self.coverImageView.clipsToBounds = YES;
+//    }
+    
+//    [self.coverImageView setImageWithURLString:data.thumbnail_url placeholder:[UIImage imageNamed:@"loading_bgView"]];
+//    [self.bgImgView setImageWithURLString:data.thumbnail_url placeholder:[UIImage imageNamed:@"loading_bgView"]];
+    
+    self.likeCountLabel.text = [NSString stringWithFormat:@"%@",_data.like];
+    self.commentCountLabel.text = [NSString stringWithFormat:@"%@",_data.comment];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_data.thumbnail_url]];
     self.titleLabel.text = data.title;
+    
 }
 
 - (UIImageView *)coverImageView {

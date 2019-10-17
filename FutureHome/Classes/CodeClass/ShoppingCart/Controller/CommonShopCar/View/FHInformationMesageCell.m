@@ -43,11 +43,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.contentLabel.frame = CGRectMake(0, 5, SCREEN_WIDTH - 118, 50);
-    self.headerImgView.frame  = CGRectMake(SCREEN_WIDTH - 113, 10, 108, 80);
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"头像"]];
-    self.grayView.frame = CGRectMake(0, self.contentView.height - 35, SCREEN_WIDTH - 115, 25);
-    self.timeLabel.frame = CGRectMake(0, 0, SCREEN_WIDTH, 25);
+    self.contentLabel.frame = CGRectMake(10, 5, SCREEN_WIDTH - 135, 50);
+    self.headerImgView.frame  = CGRectMake(SCREEN_WIDTH - 118 + 28, 10, 80, 80);
+    self.grayView.frame = CGRectMake(10, self.contentView.height - 35, SCREEN_WIDTH - 135, 25);
+    self.timeLabel.frame = CGRectMake(0, 0, self.grayView.width, 25);
     self.readCountLabel.frame = CGRectMake(0, 0, self.grayView.width, 25);
 }
 
@@ -63,12 +62,20 @@
 }
 
 
+- (void)setInfoModel:(FHInformationModel *)infoModel {
+    _infoModel = infoModel;
+    self.contentLabel.text = _infoModel.title;
+    self.timeLabel.text = [NSString stringWithFormat:@"更新时间: %@",_infoModel.updatetime];
+    self.readCountLabel.text = [NSString stringWithFormat:@"阅读量: %@",_infoModel.show];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_infoModel.coverthumb]];
+}
+
 #pragma mark — setter && getter
 - (UILabel *)contentLabel {
     if (!_contentLabel) {
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textAlignment = NSTextAlignmentLeft;
-        _contentLabel.font = [UIFont systemFontOfSize:15];
+        _contentLabel.font = [UIFont systemFontOfSize:14];
         _contentLabel.textColor = [UIColor blackColor];
         _contentLabel.numberOfLines = 0;
 #warning message
@@ -87,7 +94,7 @@
 - (UIView *)grayView {
     if (!_grayView) {
         _grayView = [[UIView alloc] init];
-        _grayView.backgroundColor = [UIColor lightGrayColor];
+        _grayView.backgroundColor = [UIColor whiteColor];
     }
     return _grayView;
 }
@@ -110,7 +117,7 @@
         _readCountLabel = [[UILabel alloc] init];
         _readCountLabel.textAlignment = NSTextAlignmentRight;
         _readCountLabel.font = [UIFont systemFontOfSize:13];
-        _readCountLabel.textColor = [UIColor lightGrayColor];
+        _readCountLabel.textColor = [UIColor blackColor];
 #warning message
         _readCountLabel.text = @"阅读量  10086";
     }

@@ -41,6 +41,11 @@
     self.meCenterFooterView.height = self.meCenterFooterView.height;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    Account *account = [AccountStorage readAccount];
+    [self.meCenterHeaderView.userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite

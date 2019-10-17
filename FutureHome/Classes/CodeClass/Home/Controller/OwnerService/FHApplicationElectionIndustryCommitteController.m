@@ -294,7 +294,7 @@
     {
         UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
         cameraPicker.delegate = self;
-        cameraPicker.allowsEditing = YES;  //是否可编辑
+        cameraPicker.allowsEditing = NO;  //是否可编辑
         //摄像头
         cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:cameraPicker animated:YES completion:nil];
@@ -307,7 +307,7 @@
 - (void)addPhotoClick {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = YES;
+    imagePickerController.allowsEditing = NO;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }

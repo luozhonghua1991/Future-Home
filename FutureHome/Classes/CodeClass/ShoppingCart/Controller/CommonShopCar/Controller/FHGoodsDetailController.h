@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "GNRCountStepper.h"
+#import "GNRGoodsModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign ) CGFloat currentNumber;
 
 @property (strong, nonatomic)GNRCountStepper * stepper;
+/** 商品模型 */
+@property (nonatomic, strong) GNRGoodsModel *goodsModel
+;
+
 
 @end
 

@@ -42,11 +42,11 @@
 }
 
 
-- (UIView *)creatViewWithName:(NSString *)name
+- (UIImageView *)creatViewWithName:(NSString *)name
                         frame:(CGRect )frame
                           tag:(NSInteger )tag {
-    UIView *view = [[UIView alloc] initWithFrame:frame];
-    view.backgroundColor = [UIColor redColor];
+    UIImageView *view = [[UIImageView alloc] initWithFrame:frame];
+    view.image = [UIImage imageNamed:@"头像"];
     view.tag = tag;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 100, 20)];
@@ -99,7 +99,8 @@
 - (UIImageView *)leftImgView {
     if (!_leftImgView) {
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-        _leftImgView.backgroundColor = HEX_COLOR(0x1296db);
+//        _leftImgView.backgroundColor = HEX_COLOR(0x1296db);
+        _leftImgView.backgroundColor = [UIColor clearColor];
         _leftImgView.userInteractionEnabled = YES;
     }
     return _leftImgView;
@@ -108,7 +109,8 @@
 - (UIImageView *)centerImgView {
     if (!_centerImgView) {
         _centerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-        _centerImgView.backgroundColor = HEX_COLOR(0x1296db);
+//        _centerImgView.backgroundColor = HEX_COLOR(0x1296db);
+        _centerImgView.backgroundColor = [UIColor clearColor];
         _centerImgView.userInteractionEnabled = YES;
     }
     return _centerImgView;
@@ -117,7 +119,8 @@
 - (UIImageView *)rightImgView {
     if (!_rightImgView) {
         _rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-        _rightImgView.backgroundColor = HEX_COLOR(0x1296db);
+//        _rightImgView.backgroundColor = HEX_COLOR(0x1296db);
+        _rightImgView.backgroundColor = [UIColor clearColor];
         _rightImgView.userInteractionEnabled = YES;
     }
     return _rightImgView;

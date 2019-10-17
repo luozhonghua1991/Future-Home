@@ -29,7 +29,7 @@
     [self.contentView addSubview:self.stepperSuperView];
 }
 
-- (GNRCountStepper *)stepper{
+- (GNRCountStepper *)stepper {
     if (!_stepper) {
         _stepper = [[GNRCountStepper alloc]initWithFrame:CGRectZero style:GNRCountStepperStyleShoppingCart];
     }
@@ -43,10 +43,11 @@
             goods.number = @(count);
             self->_priceLabel.text = [NSString stringWithFormat:@"￥%.2f",goods.shouldPayMoney];
             if ([self->_delegate respondsToSelector:@selector(stepper:valueChangedForCount:goods:)]) {
-                [self->_delegate stepper:_stepper valueChangedForCount:count goods:goods];
+                [self->_delegate stepper:self->_stepper valueChangedForCount:count goods:goods];
             }
         }
     }];
+    
     self.stepper.count = goods.number.integerValue;
     self.nameL.text = goods.goodsName;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%.2f",goods.shouldPayMoney];

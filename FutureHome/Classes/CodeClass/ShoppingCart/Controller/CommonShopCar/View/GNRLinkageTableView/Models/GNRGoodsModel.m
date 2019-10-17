@@ -9,6 +9,7 @@
 #import "GNRGoodsModel.h"
 
 @implementation GNRGoodsModel
+
 - (float)shouldPayMoney{
     return self.goodsPrice.floatValue * self.number.integerValue;
 }

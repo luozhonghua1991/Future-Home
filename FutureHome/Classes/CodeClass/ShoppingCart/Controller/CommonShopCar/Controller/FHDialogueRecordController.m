@@ -9,6 +9,8 @@
 #import "FHDialogueRecordController.h"
 
 @interface FHDialogueRecordController ()
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *phone;
 
 @end
 
@@ -16,7 +18,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.phone = @"13849132460";
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, MainSizeHeight + 80, SCREEN_WIDTH, 15);
+    [button setTitle:[NSString stringWithFormat:@"商家电话: %@",self.phone] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    button.titleLabel.font = [UIFont systemFontOfSize:15];
+    [button addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -26,14 +35,14 @@
     }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)buttonClick {
+    /** 拨打电话 */
+    NSMutableString * string = [[NSMutableString alloc] initWithFormat:@"tel:%@",self.phone];
+    UIWebView * callWebview = [[UIWebView alloc] init];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:string]]];
+    [self.view addSubview:callWebview];
 }
-*/
+
 
 @end

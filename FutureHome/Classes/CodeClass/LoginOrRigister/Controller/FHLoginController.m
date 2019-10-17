@@ -271,6 +271,7 @@
 }
 
 - (void)popVC {
+    self.tabBarController.selectedIndex = 0;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

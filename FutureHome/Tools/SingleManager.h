@@ -70,6 +70,9 @@
 @property (nonatomic, strong)GNRShoppingBar * shoppingBar;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) PPNumberButton *numberButton;
+/** 是评论评论的状态 */
+@property (nonatomic, assign) BOOL isCommentComment;
+
 
 
 /**

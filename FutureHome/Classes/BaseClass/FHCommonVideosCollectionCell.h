@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface FHCommonVideosCollectionCell : UITableViewCell
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *videoListArrs;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger rowCount;
 
 @property(nonatomic, weak) id<FHCommonVideosCollectionCellDelegate> delegate;
 /** <#assign属性注释#> */

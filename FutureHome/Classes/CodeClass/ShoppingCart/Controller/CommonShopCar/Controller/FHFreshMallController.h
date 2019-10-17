@@ -12,6 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHFreshMallController : YPTabBarController
+/** 商铺ID */
+@property (nonatomic, copy) NSString *shopID;
 
 @end
 

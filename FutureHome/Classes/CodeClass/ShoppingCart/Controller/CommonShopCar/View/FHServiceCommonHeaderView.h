@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *shopNameLabel;
 /** 编号label */
 @property (nonatomic, strong) UILabel *codeLabel;
+/** 粉丝label */
+@property (nonatomic, strong) UILabel *fansLabel;
 /** 数量label */
 @property (nonatomic, strong) UILabel *countLabel;
 /** 点赞数量 */

@@ -19,6 +19,9 @@
 @end
 
 @interface GNRLinkageTableView : UIView
+/** 商店ID */
+@property (nonatomic, copy) NSString *shopID;
+
 @property (nonatomic, weak) id target;
 @property (nonatomic, weak) id <GNRLinkageTableViewDelegate>delegate;
 @property (nonatomic, strong)UITableView * leftTbView;

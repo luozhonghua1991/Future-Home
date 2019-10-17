@@ -45,6 +45,9 @@
 @property (nonatomic, strong) FFDropDownMenuView     *followDownMenu;
 /** 下拉菜单 收藏列表数据 */
 @property (nonatomic, strong) FFDropDownMenuView     *followListMenu;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *videosListArrs;
+
 
 @end
 
@@ -52,21 +55,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self fh_creatUI];
+}
+
+- (void)getRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    self.videosListArrs = [[NSMutableArray alloc] init];
+    /** 获取视频列表 */
+    NSDictionary *paramsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      @(account.user_id),@"user_id",
+                                      self.shopID,@"shop_id",
+                                      @"1",@"page",
+                                      @"100000",@"limit",
+                                      nil];
+    
+    [AFNetWorkTool get:@"shop/getUserVideo" params:paramsDictionary success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.videosListArrs = responseObj[@"data"][@"list"];
+            
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+- (void)fh_creatUI {
     self.isHaveNavgationView = YES;
     [self fh_creatNav];
     [self fh_creatTitleView];
-    
-//    [self fh_setSelectNavView];
-//    [self fh_creatSelectBtn];
-//    [self fh_setMainScrollView];
-    
     self.view.backgroundColor= [UIColor whiteColor];
-    [self setTabBarFrame:CGRectMake(0, MainSizeHeight + 35 , SCREEN_WIDTH, 35)
+    [self setTabBarFrame:CGRectMake(0, MainSizeHeight + 42 , SCREEN_WIDTH, 35)
         contentViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
     self.tabBar.itemTitleColor = [UIColor blackColor];
     self.tabBar.itemTitleSelectedColor = HEX_COLOR(0x1296db);
-    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:14];
-    self.tabBar.itemTitleSelectedFont = [UIFont fontWithName:@"PingFangSC-Medium" size:14];
+    self.tabBar.itemTitleFont = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
+    self.tabBar.itemTitleSelectedFont = [UIFont fontWithName:@"PingFangSC-Medium" size:15];
     self.tabBar.itemSelectedBgColor = HEX_COLOR(0x1296db);
     if (KIsiPhoneX) {
         [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(33, 33, 0, 33) tapSwitchAnimated:YES];
@@ -79,11 +104,10 @@
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, SCREEN_WIDTH, 0.5)];
     bottomLine.backgroundColor = [UIColor lightGrayColor];
     [self.tabBar addSubview:bottomLine];
-    [self initViewControllers];
     
     [self fh_setupFollowDropDownMenu];
+    [self initViewControllers];
 }
-
 
 #pragma mark — privite
 - (void)fh_creatNav {
@@ -122,23 +146,39 @@
 
 /** 标题View */
 - (void)fh_creatTitleView {
-    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 35)];
-    titleView.backgroundColor = [UIColor greenColor];
+    UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 42)];
     titleView.userInteractionEnabled = YES;
     
     if (!self.codeImgView) {
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 35, 35)];
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 42, 42)];
         self.codeImgView.backgroundColor = [UIColor redColor];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(codeImgViewClick)];
         self.codeImgView.userInteractionEnabled = YES;
         [self.codeImgView addGestureRecognizer:tap];
         [titleView addSubview:self.codeImgView];
     }
-    self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 12);
+    self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);
+    self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
+    /** 获取商家详情 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.shopID,@"shop_id", nil];
+    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            weakSelf.locationLabel.text = dic[@"shopname"];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
     [titleView addSubview:self.locationLabel];
     
     self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 65, 12, 50, 12);
+    self.navigationLabel.centerY = titleView.height / 2;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(navigationLabelClick)];
     self.navigationLabel.userInteractionEnabled = YES;
     [self.navigationLabel addGestureRecognizer:tap];
@@ -306,6 +346,9 @@
     //显示收藏列表菜单
 //    [self.followDownMenu showMenu];
     /** 去到收藏列表 */
+    if ([SingleManager shareManager].shoppingBar) {
+        [[SingleManager shareManager].shoppingBar removeFromSuperview];
+    }
     FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
     [self.navigationController pushViewController:listVC animated:YES];
 
@@ -397,12 +440,16 @@
 - (void)initViewControllers {
     FHGoodsListController *messageVC = [[FHGoodsListController alloc] init];
     messageVC.yp_tabItemTitle = @"生鲜商城";
+    messageVC.shopID = self.shopID;
     
     FHInformationController *groupVC = [[FHInformationController alloc] init];
     groupVC.yp_tabItemTitle = @"信息发布";
+    groupVC.shopID = self.shopID;
     
     FHVideosPublishingController *hotVC = [[FHVideosPublishingController alloc] init];
     hotVC.yp_tabItemTitle = @"视频发布";
+    hotVC.shopID = self.shopID;
+    hotVC.videoListDataArrs = self.videosListArrs;
     
     FHDialogueRecordController *friendVC = [[FHDialogueRecordController alloc] init];
     friendVC.yp_tabItemTitle = @"对话记录";
@@ -450,9 +497,9 @@
 - (UILabel  *)locationLabel{
     if (!_locationLabel) {
         _locationLabel =  [[UILabel alloc] init];
-        _locationLabel.text = @"未来生鲜-龙湖U城店 CQ20180916001";
+        _locationLabel.text = @"未来生鲜龙湖U城店未来式未来式未来式";
         _locationLabel.textColor = [UIColor purpleColor];
-        _locationLabel.font = [UIFont systemFontOfSize:12];
+        _locationLabel.font = [UIFont systemFontOfSize:15];
         _locationLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _locationLabel;
@@ -462,7 +509,7 @@
     if (!_navigationLabel) {
         _navigationLabel =  [[UILabel alloc] init];
         _navigationLabel.text = @"一键导航";
-        _navigationLabel.textColor = [UIColor purpleColor];
+        _navigationLabel.textColor = [UIColor blueColor];
         _navigationLabel.font = [UIFont systemFontOfSize:12];
         _navigationLabel.textAlignment = NSTextAlignmentCenter;
     }

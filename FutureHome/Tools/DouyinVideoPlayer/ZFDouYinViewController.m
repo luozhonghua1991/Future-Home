@@ -18,16 +18,24 @@
 #import "ZFDouYinControlView.h"
 #import "UINavigationController+FDFullscreenPopGesture.h"
 #import "MJRefresh.h"
+#import "ZMCusCommentView.h"
+#import "FHAppDelegate.h"
+#import "FHCommentListModel.h"
 
 static NSString *kIdentifier = @"kIdentifier";
 
-@interface ZFDouYinViewController ()  <UITableViewDelegate,UITableViewDataSource>
+@interface ZFDouYinViewController ()  <UITableViewDelegate,UITableViewDataSource,ZFDouYinCellDelegate>
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) ZFPlayerController *player;
 @property (nonatomic, strong) ZFDouYinControlView *controlView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic, strong) NSMutableArray *urls;
 @property (nonatomic, strong) UIButton *backBtn;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) ZMCusCommentView *commentView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *commentListArrs;
+
 
 @end
 
@@ -97,21 +105,30 @@ static NSString *kIdentifier = @"kIdentifier";
     });
 }
 
+- (void)setVideoListDataArrs:(NSArray *)videoListDataArrs {
+    _videoListDataArrs = videoListDataArrs;
+}
+
 #pragma mark — request
 - (void)requestData {
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:path];
-    NSDictionary *rootDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    
-    NSArray *videoList = [rootDict objectForKey:@"list"];
-    for (NSDictionary *dataDic in videoList) {
+    /** 获取视频列表 */
+    for (NSDictionary *dataDic in self.videoListDataArrs) {
         ZFTableData *data = [[ZFTableData alloc] init];
-        [data setValuesForKeysWithDictionary:dataDic];
+        data.dataID = [dataDic objectForKey:@"id"];
+        data.video_url = [dataDic objectForKey:@"path"];
+        data.title = [dataDic objectForKey:@"videoname"];
+        data.thumbnail_url = [dataDic objectForKey:@"logo"];
+        data.video_width = [[dataDic objectForKey:@"videoWidth"] floatValue];
+        data.video_height = [[dataDic objectForKey:@"videoHeight"] floatValue];
+        data.islike = [dataDic objectForKey:@"islike"];
+        data.comment = [dataDic objectForKey:@"comment"];
+        data.like = [dataDic objectForKey:@"like"];
         [self.dataSource addObject:data];
         NSString *URLString = [data.video_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURL *url = [NSURL URLWithString:URLString];
         [self.urls addObject:url];
     }
+    
     [self.tableView.mj_header endRefreshing];
 }
 
@@ -181,6 +198,7 @@ static NSString *kIdentifier = @"kIdentifier";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZFDouYinCell *cell = [tableView dequeueReusableCellWithIdentifier:kIdentifier];
     cell.data = self.dataSource[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
 
@@ -194,8 +212,45 @@ static NSString *kIdentifier = @"kIdentifier";
     [self playTheVideoAtIndexPath:indexPath scrollToTop:NO];
 }
 
-#pragma mark - private method
 
+#pragma mark - ZFDouYinCellDelegate
+/** 点赞 */
+- (void)fh_ZFDouYinCellDelegateSelectLikeClicck:(ZFTableData *)data {
+    
+}
+
+/** 收藏 */
+- (void)fh_ZFDouYinCellDelegateSelectFollowClick:(ZFTableData *)data {
+    
+}
+
+/** 评论 */
+- (void)fh_ZFDouYinCellDelegateSelectCommontent:(ZFTableData *)data {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               data.dataID,@"id",
+                               @(1),@"page",
+                               @(2),@"type", nil];
+    
+    [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.commentListArrs = [[NSMutableArray alloc] init];
+            NSArray *arr = responseObj[@"data"][@"list"];
+            weakSelf.commentListArrs = [FHCommentListModel mj_objectArrayWithKeyValuesArray:arr];
+            /** 展示评论列表 */
+            [[ZMCusCommentManager shareManager] showCommentWithSourceId:@"" dataArrs:self.commentListArrs tableData:data];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+
+#pragma mark - private method
 - (void)backClick:(UIButton *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -211,7 +266,8 @@ static NSString *kIdentifier = @"kIdentifier";
     } else {
         imageMode = UIViewContentModeScaleAspectFill;
     }
-    [self.controlView showCoverViewWithUrl:data.thumbnail_url withImageMode:imageMode];
+//    [self.controlView showCoverViewWithUrl:data.thumbnail_url withImageMode:imageMode];
+    
 }
 
 #pragma mark - getter
@@ -285,5 +341,14 @@ static NSString *kIdentifier = @"kIdentifier";
     }
     return _backBtn;
 }
+
+//- (ZMCusCommentView *)commentView{
+//    if (!_commentView) {
+//        _commentView = [[ZMCusCommentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//        FHAppDelegate *delegate = (FHAppDelegate*)[UIApplication sharedApplication].delegate;
+//        [delegate.window addSubview:_commentView];
+//    }
+//    return _commentView;
+//}
 
 @end

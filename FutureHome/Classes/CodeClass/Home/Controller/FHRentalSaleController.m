@@ -38,6 +38,9 @@
     [self.view addSubview:btn4];
 }
 
+- (void)setAuthModel:(FHAuthModel *)authModel {
+    _authModel = authModel;
+}
 
 - (UIButton *)creatButtonWithFrame:(CGRect )frame
                               name:(NSString *)title
@@ -51,11 +54,15 @@
     button.layer.masksToBounds = YES;
     button.clipsToBounds = YES;
     button.titleLabel.font = [UIFont systemFontOfSize:13];
-    button.backgroundColor = HEX_COLOR(0x1296db);
     button.tag = tag;
     if (!(self.authModel.is_auth == 2)) {
         button.enabled = NO;
+        button.backgroundColor = [UIColor lightGrayColor];
+    } else {
+        button.enabled = YES;
+        button.backgroundColor = HEX_COLOR(0x1296db);
     }
+    
     return button;
 }
 

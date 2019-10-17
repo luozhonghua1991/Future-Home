@@ -7,10 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GNRGoodsModel.h"
+#import "FHGoodsDetailModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHGoodsDetailCell : UITableViewCell
+
+@property (nonatomic, strong) FHGoodsDetailModel *goodsDetailModel;
 
 @end
 

@@ -23,11 +23,11 @@
     [super awakeFromNib];
     // Initialization code
     self.nameL.numberOfLines = 1;
-    self.rightLineView.frame = CGRectMake(89, 0, 1, self.height);
+    self.rightLineView.frame = CGRectMake(89, 0, 1, 52.5);
     [self addSubview:self.rightLineView];
     
     _selectView = [[UIView alloc]initWithFrame:self.bounds];
-    _selectView.backgroundColor = [UIColor redColor];
+    _selectView.backgroundColor = HEX_COLOR(0x1296db);
     self.selectedBackgroundView = _selectView;
     
 //    UIView *liner = [[UIView alloc] initWithFrame: CGRectMake(0, 0, 4, 13)];
@@ -38,7 +38,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-    self.nameL.font = selected?[UIFont boldSystemFontOfSize:13]:[UIFont systemFontOfSize:13];
+    self.nameL.font = selected?[UIFont boldSystemFontOfSize:14]:[UIFont systemFontOfSize:14];
 }
 
 - (void)setGoodsGroup:(GNRGoodsGroup *)goodsGroup{

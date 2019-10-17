@@ -12,6 +12,7 @@
 #import "FHCarSaleCell.h"
 #import "FHGoodsDetailCell.h"
 #import "PPNumberButton.h"
+#import "FHGoodsDetailModel.h"
 
 @interface FHGoodsDetailController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,SDPhotoBrowserDelegate>
 /** 上面的轮播图 */
@@ -24,6 +25,11 @@
 @property (nonatomic, strong)GNRShoppingBar * shoppingBar;
 
 @property (nonatomic, strong) PPNumberButton *numberButton;
+/** <#strong属性注释#> */
+@property (nonatomic, copy) NSArray *urlArrays;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHGoodsDetailModel *goodsDetailModel;
+
 
 @end
 
@@ -34,9 +40,10 @@
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHGoodsDetailCell class] forCellReuseIdentifier:NSStringFromClass([FHGoodsDetailCell class])];
-    self.homeTable.tableHeaderView = self.headerView;
     [self.view addSubview:self.shoppingBar];
+    [self getGoodsDetailRequest];
 }
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -68,6 +75,28 @@
 }
 
 
+- (void)getGoodsDetailRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.goodsModel.goodsID,@"good_id", nil];
+    [AFNetWorkTool get:@"shop/getSinggoodInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            weakSelf.urlArrays = dic[@"img_ids"];
+            weakSelf.homeTable.tableHeaderView = self.headerView;
+            self.goodsDetailModel = [FHGoodsDetailModel mj_objectWithKeyValues:dic];
+            [weakSelf.homeTable reloadData];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 1;
@@ -89,6 +118,8 @@
     
     FHGoodsDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHGoodsDetailCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.goodsDetailModel = self.goodsDetailModel;
+    
     self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(SCREEN_WIDTH - 120, 11, 100, 20)];
     // 初始化时隐藏减按钮
     self.numberButton.decreaseHide = YES;
@@ -123,6 +154,7 @@
     };
     [SingleManager shareManager].numberButton = self.numberButton;
     [cell.contentView addSubview:self.numberButton];
+    
     return cell;
     
 }
@@ -146,24 +178,27 @@
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
+    return;
+    
     SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
     browser.sourceImagesContainerView = self.view;
-    NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
-    browser.imageCount = urlsArray.count;
+    NSArray *urlsArray = @[self.goodsModel.goodsImage];
+    browser.imageCount = self.urlArrays.count;
     browser.currentImageIndex = index;
     browser.delegate = self;
     [browser show]; // 展示图片浏览器
 }
 
 - (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
-    NSURL *url = [NSURL URLWithString:@""];
+    NSString *urlString = self.urlArrays[index];
+    NSURL *url = [NSURL URLWithString:urlString];
     return url;
 }
 
 - (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
-    NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
+//    NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
     //    UIImage *imageView = [UIImage imageNamed:@"%@",[urlsArray objectAtIndex:index]];
-    UIImage *imageView = [UIImage imageNamed:@"奔驰1"];
+    UIImage *imageView = [UIImage imageNamed:@""];
     return imageView;
 }
 
@@ -189,8 +224,7 @@
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
         _headerView.backgroundColor = [UIColor redColor];
-        NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:urlsArray scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
+        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.urlArrays scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
         [_headerView addSubview:self.topScrollView];
     }
     return _headerView;

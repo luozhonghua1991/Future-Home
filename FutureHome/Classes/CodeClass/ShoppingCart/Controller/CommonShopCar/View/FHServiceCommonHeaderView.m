@@ -22,6 +22,7 @@
     [self addSubview:self.headerImgView];
     [self addSubview:self.shopNameLabel];
     [self addSubview:self.codeLabel];
+    [self addSubview:self.fansLabel];
     [self addSubview:self.countLabel];
     [self addSubview:self.upCountLabel];
     [self addSubview:self.personCountBtn];
@@ -32,13 +33,14 @@
     [super layoutSubviews];
     self.headerImgView.frame = CGRectMake(10, 0, 100, 100);
     self.headerImgView.centerY = self.height / 2;
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:@""]];
     self.shopNameLabel.frame = CGRectMake(MaxX(self.headerImgView) + 15, 25, SCREEN_WIDTH, 25);
     self.codeLabel.frame = CGRectMake(MaxX(self.headerImgView) + 15, MaxY(self.shopNameLabel) + 10, SCREEN_WIDTH - 150, 35);
     self.countLabel.frame = CGRectMake(MaxX(self.headerImgView) + 15, MaxY(self.codeLabel) + 10, 80, 13);
     self.upCountLabel.frame = CGRectMake(MaxX(self.countLabel) + 15, MaxY(self.codeLabel) + 10, 80, 13);
     self.personCountBtn.frame = CGRectMake(MaxX(self.upCountLabel) + 15, MaxY(self.codeLabel) + 10, 80, 13);
     self.bottomLineView.frame = CGRectMake(0, 139.5, SCREEN_WIDTH, 0.5);
+    self.fansLabel.frame = CGRectMake(0, MaxY(self.shopNameLabel) + 20, SCREEN_WIDTH - 30, 13);
 }
 
 
@@ -57,10 +59,10 @@
     if (!_shopNameLabel) {
         _shopNameLabel = [[UILabel alloc] init];
         _shopNameLabel.textAlignment = NSTextAlignmentLeft;
-        _shopNameLabel.font = [UIFont systemFontOfSize:25];
+        _shopNameLabel.font = [UIFont systemFontOfSize:16];
         _shopNameLabel.textColor = HEX_COLOR(0x1296db);
 #warning message
-        _shopNameLabel.text = @"未来生鲜龙湖U城店";
+//        _shopNameLabel.text = @"未来生鲜龙湖U城店未来式未来式未来式";
     }
     return _shopNameLabel;
 }
@@ -72,9 +74,21 @@
         _codeLabel.font = [UIFont systemFontOfSize:15];
         _codeLabel.textColor = [UIColor lightGrayColor];
 #warning message
-        _codeLabel.text = @"未来生鲜龙湖U城自营店未来家园官方号:CQ20192890";
+//        _codeLabel.text = @"未来生鲜龙湖U城自营店未来家园官方号:CQ20192890";
     }
     return _codeLabel;
+}
+
+- (UILabel *)fansLabel {
+    if (!_fansLabel) {
+        _fansLabel = [[UILabel alloc] init];
+        _fansLabel.textAlignment = NSTextAlignmentRight;
+        _fansLabel.font = [UIFont systemFontOfSize:13];
+        _fansLabel.textColor = [UIColor lightGrayColor];
+#warning message
+//        _fansLabel.text = @"粉丝数量";
+    }
+    return _fansLabel;
 }
 
 - (UILabel *)countLabel {
@@ -84,7 +98,7 @@
         _countLabel.font = [UIFont systemFontOfSize:13];
         _countLabel.textColor = [UIColor lightGrayColor];
 #warning message
-        _countLabel.text = @"创作数量:100";
+//        _countLabel.text = @"创作数量:100";
     }
     return _countLabel;
     
@@ -107,7 +121,7 @@
         _personCountBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_personCountBtn setTitle:@"用户评论" forState:UIControlStateNormal];
         _personCountBtn.titleLabel.font = [UIFont systemFontOfSize:13];
-        [_personCountBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [_personCountBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     }
     return _personCountBtn;
 }

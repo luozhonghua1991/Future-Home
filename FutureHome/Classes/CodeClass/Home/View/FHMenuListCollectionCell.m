@@ -42,9 +42,9 @@
 
 - (UILabel *)listNameLabel {
     if (!_listNameLabel) {
-        _listNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width, 14)];
+        _listNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.contentView.width, 16)];
         _listNameLabel.textAlignment = NSTextAlignmentCenter;
-        _listNameLabel.font = [UIFont systemFontOfSize:14];
+        _listNameLabel.font = [UIFont systemFontOfSize:15];
         _listNameLabel.textColor = [UIColor blackColor];
 #warning message
         _listNameLabel.text = @"物业服务";

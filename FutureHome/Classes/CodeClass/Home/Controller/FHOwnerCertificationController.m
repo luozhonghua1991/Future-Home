@@ -98,6 +98,10 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)setAuthModel:(FHAuthModel *)authModel {
+    _authModel = authModel;
+}
+
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {

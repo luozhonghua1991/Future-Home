@@ -34,13 +34,15 @@
     self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(250), (self.contentView.height - 88) / 2, 30, 88)];
     [self.contentView addSubview:self.stepperSuperView];
     
-    self.specsLabel.frame = CGRectMake(self.nameL.x, self.nameL.y + self.nameL.size.height + 13, ZH_SCALE_SCREEN_Width(80), 12);
+    self.nameL.font = [UIFont boldSystemFontOfSize:14];
+    
+    self.specsLabel.frame = CGRectMake(self.nameL.x, self.nameL.y + self.nameL.size.height + 13, ZH_SCALE_SCREEN_Width(100), 12);
     [self.contentView addSubview:self.specsLabel];
     
     self.priceLabel.frame = CGRectMake(0, self.nameL.y + self.nameL.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
     [self.contentView addSubview:self.priceLabel];
     
-    self.stockLabel.frame = CGRectMake(0, self.priceLabel.y + self.priceLabel.size.height + 17, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
+    self.stockLabel.frame = CGRectMake(0, self.priceLabel.y + self.priceLabel.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
     [self.contentView addSubview:self.stockLabel];
     
     [self.stepperSuperView addSubview:self.stepper];
@@ -77,7 +79,6 @@
 }
 
 - (void)layoutSubviews{
-//    self.stepper.center = CGPointMake(_stepperSuperView.bounds.size.width/2.0, _stepperSuperView.bounds.size.height/2.0);
     self.stepper.frame = self.stepperSuperView.bounds;
 }
 
@@ -86,7 +87,11 @@
         return;
     }
     _nameL.text = _goods.goodsName;
-    self.LocationLabel.text = @"产地：越南";
+    [self.goodsImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_goods.goodsImage]]];
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",_goods.goodsPrice];
+    self.LocationLabel.text = [NSString stringWithFormat:@"产地: %@",_goods.goodsPlace];
+    self.specsLabel.text = [NSString stringWithFormat:@"%@",_goods.goodsUnitAtr];
+    self.stockLabel.text = [NSString stringWithFormat:@"库存: %@",_goods.goodsSafetStock];
     /** 价格 */
 //    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",_goods.goodsPrice];
     _stepper.count = _goods.number.integerValue;

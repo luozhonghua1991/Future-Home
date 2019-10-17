@@ -74,7 +74,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     // 在第一次调用viewWillAppear方法时，初始化选中的item
     if (!_didViewAppeared) {
         self.tabBar.selectedItemIndex = 0;

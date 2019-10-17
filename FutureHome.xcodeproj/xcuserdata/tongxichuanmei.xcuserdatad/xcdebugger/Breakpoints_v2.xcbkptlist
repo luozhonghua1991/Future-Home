@@ -84,12 +84,92 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
-            timestampString = "591961145.584568"
+            timestampString = "592833455.187085"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "132"
             endingLineNumber = "132"
             landmarkName = "+post:params:success:failure:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+            timestampString = "592917449.2116801"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "-sureBtnClick"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[FHOwnerCertificationViewController sureBtnClick]"
+                  moduleName = "FutureHome"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+                  timestampString = "592917449.430153"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "306"
+                  endingLineNumber = "306"
+                  offsetFromSymbolStart = "2781">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__50-[FHOwnerCertificationViewController sureBtnClick]_block_invoke"
+                  moduleName = "FutureHome"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+                  timestampString = "592917449.433506"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "307"
+                  endingLineNumber = "307"
+                  offsetFromSymbolStart = "54">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+            timestampString = "592917570.5187221"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "310"
+            endingLineNumber = "310"
+            landmarkName = "-sureBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+            timestampString = "592917571.515244"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "312"
+            endingLineNumber = "312"
+            landmarkName = "-sureBtnClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

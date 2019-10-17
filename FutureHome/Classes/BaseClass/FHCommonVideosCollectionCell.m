@@ -9,6 +9,7 @@
 #import "FHCommonVideosCollectionCell.h"
 #import "FHVideoListViewCell.h"
 
+
 @interface FHCommonVideosCollectionCell () <UICollectionViewDataSource,UICollectionViewDelegate>
 /** 视频列表collection */
 @property (nonatomic, strong) UICollectionView *videoCollectionView;
@@ -30,15 +31,25 @@
     [self addSubview:self.videoCollectionView];
 }
 
+- (void)setRowCount:(NSInteger)rowCount {
+    _rowCount = rowCount;
+    [self.videoCollectionView reloadData];
+}
+
+- (void)setVideoListArrs:(NSMutableArray *)videoListArrs {
+    _videoListArrs = videoListArrs;
+    [self.videoCollectionView reloadData];
+}
 
 #pragma mark — collectionViewDelagate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 25;
+    return self.rowCount;
     
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHVideoListViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHVideoListViewCell class]) forIndexPath:indexPath];
+    cell.videoListModel = self.videoListArrs[indexPath.item];
     return cell;
 }
 

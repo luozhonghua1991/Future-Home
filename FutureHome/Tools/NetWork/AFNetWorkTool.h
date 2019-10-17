@@ -94,4 +94,11 @@ typedef void (^failureBlock)(NSError *error);
 //                   success:(successBlock)success
 //                   failure:(failureBlock)failure;
 
+#pragma mark 上传用户头像
++ (void)updateHeaderImageWithUrl:(NSString *)url
+                       parameter:(NSDictionary *)parameter
+                       imageData:(NSData *)imageData
+                         success:(successBlock)success
+                         failure:(failureBlock)failure;
+
 @end

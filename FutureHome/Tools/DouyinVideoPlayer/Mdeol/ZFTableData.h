@@ -10,18 +10,31 @@
 #import <UIKit/UIKit.h> 
 
 @interface ZFTableData : NSObject
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *dataID;
+
 @property (nonatomic, copy) NSString *nick_name;
-@property (nonatomic, copy) NSString *head;
-@property (nonatomic, assign) NSInteger agree_num;
-@property (nonatomic, assign) NSInteger share_num;
-@property (nonatomic, assign) NSInteger post_num;
+//@property (nonatomic, copy) NSString *head;
+//@property (nonatomic, assign) NSInteger agree_num;
+//@property (nonatomic, assign) NSInteger share_num;
+//@property (nonatomic, assign) NSInteger post_num;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, assign) CGFloat thumbnail_width;
 @property (nonatomic, assign) CGFloat thumbnail_height;
-@property (nonatomic, assign) CGFloat video_duration;
+//@property (nonatomic, assign) CGFloat video_duration;
+/** 视频宽度 */
 @property (nonatomic, assign) CGFloat video_width;
+/** 视频高度 */
 @property (nonatomic, assign) CGFloat video_height;
+
 @property (nonatomic, copy) NSString *thumbnail_url;
+/** 视频链接 */
 @property (nonatomic, copy) NSString *video_url;
+/** 0不喜欢 1喜欢 */
+@property (nonatomic, copy) NSString *islike;
+/** 点赞数量 */
+@property (nonatomic, copy) NSString *like;
+/** 评论数 */
+@property (nonatomic, copy) NSString *comment;
 
 @end

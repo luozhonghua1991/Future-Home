@@ -11,6 +11,7 @@
 #import "FHCertificationImgView.h"
 #import "FHPersonCodeView.h"
 #import "NSArray+JSON.h"
+#import "FHAddressPickerView.h"
 
 @interface FHOwnerCertificationViewController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 /** 大的滚动视图 */
@@ -38,15 +39,17 @@
 /** 身份证图标 */
 @property (nonatomic, strong) FHCertificationImgView *certificationView;
 /** 省的ID */
-@property (nonatomic, assign) NSInteger province_id;
+@property (nonatomic, copy) NSString *province_id;
 /** 市的ID */
-@property (nonatomic, assign) NSInteger city_id;
+@property (nonatomic, copy) NSString *city_id;
 /** 区的ID */
-@property (nonatomic, assign) NSInteger area_id;
+@property (nonatomic, copy) NSString *area_id;
 /** 选择的是第几个 */
 @property (nonatomic, assign) NSInteger selectIndex;
 /** 选择的图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectImgArrs;
+
+@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 
 @end
 
@@ -117,6 +120,43 @@
     self.certificationView.delegate = self;
     [self.personCodeView addSubview:self.certificationView];
     [self.scrollView addSubview:self.personCodeView];
+    
+    @weakify(self)
+    //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
+    _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+    //默认为NO
+    //_addressPickerView.showLastSelect = YES;
+    _addressPickerView.cancelBtnBlock = ^() {
+        @strongify(self)
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
+    _addressPickerView.sureBtnBlock = ^(NSString *province,
+                                        NSString *city,
+                                        NSString *district,
+                                        NSString *addressCode,
+                                        NSString *parentCode,
+                                        NSString *provienceCode) {
+        //返回过来的信息在后面的这四个参数中,使用的时候要做非空判断,(province和addressCode为必返回参数,可以不做非空判断)
+        @strongify(self)
+        NSString *showString;
+        if (city != nil) {
+            showString = [NSString stringWithFormat:@"%@",city];
+        }else{
+            showString = province;
+        }
+        
+        if (district != nil) {
+            showString = [NSString stringWithFormat:@"%@%@", showString, district];
+        }
+        
+        self.areaView.contentTF.text = [NSString stringWithFormat:@"%@", showString];
+        self.province_id = provienceCode;
+        self.city_id = parentCode;
+        self.area_id = addressCode;
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
 }
 
 
@@ -191,7 +231,7 @@
     {
         UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
         cameraPicker.delegate = self;
-        cameraPicker.allowsEditing = YES;  //是否可编辑
+        cameraPicker.allowsEditing = NO;  //是否可编辑
         //摄像头
         cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:cameraPicker animated:YES completion:nil];
@@ -204,7 +244,7 @@
 - (void)addPhotoClick {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = YES;
+    imagePickerController.allowsEditing = NO;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }
@@ -252,12 +292,9 @@
                                self.ownerNameView.contentTF.text,@"name",
                                self.phoneNumberView.contentTF.text,@"mobile",
                                self.ownerCodeView.contentTF.text,@"id_num",
-                               @(self.province_id),@"province_id",
-                               @(self.city_id),@"city_id",
-                               @(self.area_id),@"area_id",
-//                               @(110000),@"province_id",
-//                               @(110100),@"city_id",
-//                               @(110101),@"area_id",
+                               self.province_id,@"province_id",
+                               self.city_id,@"city_id",
+                               self.area_id,@"area_id",
                                self.addressView.contentTF.text,@"street_name",
                                self.areaNameView.contentTF.text,@"cell_name",
                                self.houseNumberView.contentTF.text,@"room_num",
@@ -277,6 +314,10 @@
     } failure:^(NSError *error) {
         [self.view makeToast:@"所填信息有误"];
     }];
+}
+
+- (void)addressClock {
+    [self.addressPickerView showInView:self.view];
 }
 
 
@@ -320,6 +361,11 @@
         _areaView = [[FHAccountApplicationTFView alloc] init];
         _areaView.titleLabel.text = @"所在区域";
         _areaView.contentTF.placeholder = @"请选择所在区域 >";
+        _areaView.contentTF.userInteractionEnabled = NO;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressClock)];
+        _areaView.userInteractionEnabled = YES;
+        [_areaView addGestureRecognizer:tap];
     }
     return _areaView;
 }

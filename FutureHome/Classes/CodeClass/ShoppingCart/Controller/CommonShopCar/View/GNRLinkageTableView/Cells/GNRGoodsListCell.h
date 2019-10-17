@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UILabel *stockLabel;
 
 @property (strong, nonatomic)GNRCountStepper * stepper;
+
 @property (strong, nonatomic)GNRGoodsModel * goods;
 
 @end

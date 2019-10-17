@@ -11,6 +11,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHVideosPublishingController : BaseViewController
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *shopID;
+/** <#strong属性注释#> */
+@property (nonatomic, copy) NSArray *videoListDataArrs;
 
 @end
 

@@ -11,5 +11,9 @@
 
 @interface GNRGoodsGroup : NSObject
 @property (nonatomic, strong)NSString * classesName;//分类
+/** 类别ID */
+@property (nonatomic, strong) NSString *classID;
+
 @property (nonatomic, strong)NSMutableArray <GNRGoodsModel *>* goodsList;
+
 @end

@@ -58,6 +58,8 @@
 @property (nonatomic,strong) JhtVerticalMarquee      *verticalMarquee;
 /**消息图标*/
 @property (nonatomic,strong) UIImageView             *messageImgView;
+/** 商店id */
+@property (nonatomic, copy) NSString *shopID;
 
 @end
 
@@ -111,6 +113,27 @@
     }
     /** 获取banner数据 */
     [self fh_refreshBannerData];
+    [self fh_getShopFollowList];
+}
+
+- (void)fh_getShopFollowList {
+    /** 获取用户收藏的商店列表 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               nil];
+    [AFNetWorkTool get:@"shop/getUserCollect" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSArray *arr = responseObj[@"data"];
+            NSDictionary *dic = arr[0];
+            /** 商
+             
+             铺ID */
+            weakSelf.shopID = dic[@"property_id"];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 - (void)fh_creatNavUI {
@@ -425,6 +448,7 @@
         /** 生鲜服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
+        goodList.shopID = self.shopID;
         [self pushVCWithName:goodList];
     } else if (indexPath.row == 4) {
         /** 理财服务 */

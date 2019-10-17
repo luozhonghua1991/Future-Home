@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FHVideosListModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -16,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *logoImgView;
 /** 名字 */
 @property (nonatomic, strong) UILabel *listNameLabel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHVideosListModel *videoListModel;
+
 
 @end
 

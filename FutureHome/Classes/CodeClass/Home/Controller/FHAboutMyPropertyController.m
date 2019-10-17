@@ -32,7 +32,6 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             self.authModel = [FHAuthModel mj_objectWithKeyValues:responseObj[@"data"]];
         }
-        
         [self initSetViewControllers];
     } failure:^(NSError *error) {
         
@@ -48,6 +47,7 @@
     FHRentalSaleController *groupVC = [[FHRentalSaleController alloc] init];
     groupVC.yp_tabItemTitle = @"出租出售";
     groupVC.property_id = self.property_id;
+    groupVC.authModel = self.authModel;
     
     FHReleaseManagementController *hotVC = [[FHReleaseManagementController alloc] init];
     hotVC.yp_tabItemTitle = @"发布管理";

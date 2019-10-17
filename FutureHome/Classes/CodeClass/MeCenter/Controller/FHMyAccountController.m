@@ -9,12 +9,17 @@
 #import "FHMyAccountController.h"
 #import "FHMyAccountCell.h"
 #import "FHChangeNameController.h"
+#import "FHAutographController.h"
 
-@interface FHMyAccountController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHMyAccountController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 /** table */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 名字数组 */
 @property (nonatomic, copy) NSArray *logoArrs;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIImageView *headerImageView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) Account *account;
 
 @end
 
@@ -23,14 +28,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"账户信息";
+    self.account = [AccountStorage readAccount];
     self.isHaveNavgationView = YES;
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHMyAccountCell class] forCellReuseIdentifier:NSStringFromClass([FHMyAccountCell class])];
     self.logoArrs = @[@"头像",@"昵称",@"未来家园号",@"未来家园号",@"个性签名"];
-    
 }
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -58,7 +63,7 @@
 
 - (void)backBtnClick {
     [self.navigationController popViewControllerAnimated:YES];
-}
+}                                                    
 
 
 #pragma mark  -- tableViewDelagate
@@ -82,9 +87,13 @@
     FHMyAccountCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMyAccountCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.logoArrs[indexPath.row]];
+    
     if (indexPath.row == 0||indexPath.row == 3) {
         cell.headerImg.hidden = NO;
-        
+        if (indexPath.row == 0) {
+            self.headerImageView = cell.headerImg;
+            [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:self.account.avatar]];
+        }
         cell.rightArrowImg.hidden = YES;
         cell.contentLabel.hidden = YES;
     } else {
@@ -99,22 +108,105 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         /** 头像修改 */
-        
+        /** 选取图片 */
+        FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+        [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+        [actionSheet addAnimation];
+        [actionSheet show];
     } else if (indexPath.row == 1) {
         /** 修改昵称 */
         FHChangeNameController *change = [[FHChangeNameController alloc] init];
-        Account *account = [AccountStorage readAccount];
-        change.strNikeName = account.name;
+        change.strNikeName = self.account.name;
         [self.navigationController pushViewController:change animated:YES];
     } else if (indexPath.row == 4) {
-        
+        /** 修改个性签名 */
+        FHAutographController *change = [[FHAutographController alloc] init];
+//        change.strAutograph = self.account.name;
+        [self.navigationController pushViewController:change animated:YES];
     }
+}
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [self addCamera];
+            break;
+        }
+        case 1:
+        {
+            [self addPhotoClick];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+//调用系统相机
+- (void)addCamera {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
+        cameraPicker.delegate = self;
+        cameraPicker.allowsEditing = NO;  //是否可编辑
+        //摄像头
+        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+    }
+}
+
+/**
+ *  跳转相册页面
+ */
+- (void)addPhotoClick {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - <相册处理区域>
+/**
+ *  拍摄完成后要执行的方法
+ */
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    self.headerImageView.image = image;
+    Account *account = [AccountStorage readAccount];
+    NSString *arr = @"111";
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               arr,@"avatar",
+                               nil];
+    NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+    [AFNetWorkTool updateHeaderImageWithUrl:@"userCenter/updateAvatar" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSString *url = responseObj[@"data"];
+            self.account.avatar = url;
+            [AccountStorage saveAccount:self.account];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
-//        CGFloat tabbarH = [self getTabbarHeight];
         _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) style:UITableViewStylePlain];
         _homeTable.dataSource = self;
         _homeTable.delegate = self;

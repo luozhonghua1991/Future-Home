@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @interface ZFDouYinViewController : UIViewController
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *shopID;
+/** <#strong属性注释#> */
+@property (nonatomic, copy) NSArray *videoListDataArrs;
 
 - (void)playTheIndex:(NSInteger)index;
 
