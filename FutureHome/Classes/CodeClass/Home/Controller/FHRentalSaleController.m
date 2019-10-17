@@ -55,7 +55,8 @@
     button.clipsToBounds = YES;
     button.titleLabel.font = [UIFont systemFontOfSize:13];
     button.tag = tag;
-    if (!(self.authModel.is_auth == 2)) {
+    
+    if (!(self.authModel.audit_status == 2)) {
         button.enabled = NO;
         button.backgroundColor = [UIColor lightGrayColor];
     } else {

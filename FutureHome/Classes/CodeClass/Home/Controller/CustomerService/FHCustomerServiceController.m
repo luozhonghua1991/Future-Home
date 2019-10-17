@@ -311,7 +311,7 @@
     } else if (selectIndex.row == 1) {
         /** 业主大会 */
     } else if (selectIndex.row == 2) {
-        /** 业委选举 */
+        /** 选举服务 */
     } else if (selectIndex.row == 3) {
         /** 业委管理 */
     } else if (selectIndex.row == 4) {

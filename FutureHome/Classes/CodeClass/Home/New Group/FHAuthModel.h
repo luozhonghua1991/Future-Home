@@ -15,8 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger area;
 /** 地址 */
 @property (nonatomic, copy) NSString *area_id;
-/** 1是认证 0是未认证 */
+/** 0是未认证 1是认证 2审核通过 3是审核失败 */
 @property (nonatomic, assign) NSInteger audit_status;
+/** 1审核中 2审核通过 3是审核失败 */
+//@property (nonatomic, assign) NSInteger audit_status;
 /** 房屋在多少栋 */
 @property (nonatomic, assign) NSInteger build_num;
 /** 小区名称 */
@@ -29,8 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *id_num;
 /** 手机号码 */
 @property (nonatomic, copy) NSString *mobile;
-/** 1审核中 2审核通过 3是审核失败 */
-@property (nonatomic, assign) NSInteger is_auth;
+
 /** 业主姓名 */
 @property (nonatomic, copy) NSString *name;
 /** 省 */

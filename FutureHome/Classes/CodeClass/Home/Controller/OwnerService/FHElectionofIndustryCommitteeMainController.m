@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/8/30.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  业委选举界面
+//  选举服务界面
 
 #import "FHElectionofIndustryCommitteeMainController.h"
 #import "FHBaseAnnouncementListController.h"

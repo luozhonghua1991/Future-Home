@@ -225,7 +225,7 @@
     if ([self.yp_tabItemTitle isEqualToString:@"申请通道"]) {
 //        [self viewControllerPushOther:@"FHApplicationElectionIndustryCommitteController"];
         FHApplicationElectionIndustryCommitteController *vc = [[FHApplicationElectionIndustryCommitteController alloc] init];
-        vc.titleString = @"业委选举申请";
+        vc.titleString = @"选举服务申请";
         vc.property_id = self.property_id;
         vc.pid = self.pid;
         vc.hidesBottomBarWhenPushed = YES;

@@ -26,7 +26,7 @@
     if ([self.yp_tabItemTitle isEqualToString:@"商业物业"]) {
         self.titleStr = @"开通商业物业服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"业主账号"]) {
-        self.titleStr = @"联合开通业主服务/物业服务平台账户";
+        self.titleStr = @"联合开通社区服务/物业服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"生鲜账号"]) {
         self.titleStr = @"开通生鲜服务平台账户";
     } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {

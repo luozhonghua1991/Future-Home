@@ -75,7 +75,7 @@
                              @"生活缴费",
                              @"财富园"];
     self.bottomLogoNameArrs = @[@"物业服务",
-                                @"业主服务",
+                                @"社区服务",
                                 @"健康服务",
                                 @"生鲜服务",
                                 @"理财服务",
@@ -437,7 +437,7 @@
         FHHomeServicesController *home = [[FHHomeServicesController alloc] init];
         [self pushVCWithName:home];
     } else if (indexPath.row == 1) {
-        /** 业主服务 */
+        /** 社区服务 */
         FHOwnerServiceController *owner = [[FHOwnerServiceController alloc] init];
         [self pushVCWithName:owner];
     } else if (indexPath.row == 2) {

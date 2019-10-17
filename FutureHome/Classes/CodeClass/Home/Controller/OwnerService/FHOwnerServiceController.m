@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/6/28.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  业主服务
+//  社区服务
 
 #import "FHOwnerServiceController.h"
 #import "FHCommonCollectionViewCell.h"
@@ -50,7 +50,7 @@
                                 @"业主大会",
                                 @"业委管理",
                                 @"财务管理",
-                                @"业委选举",
+                                @"选举服务",
                                 @"物业管理",
                                 @"物业招标",
                                 @"活动关爱",
@@ -93,7 +93,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"业主服务";
+    titleLabel.text = @"社区服务";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -359,12 +359,33 @@
         /** 财务管理 */
         [self pushAnnouncementControllerWithTitle:@"财务管理" ID:4];
     } else if (selectIndex.row == 4) {
-        /** 业委选举 */
-        FHElectionofIndustryCommitteeMainController *vc = [[FHElectionofIndustryCommitteeMainController alloc] init];
-        vc.hidesBottomBarWhenPushed = YES;
-        vc.titleString = @"业委选举";
-        vc.property_id = property_id;
-        [self.navigationController pushViewController:vc animated:YES];
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @(property_id),@"owner_id",
+                                   nil];
+        
+        [AFNetWorkTool get:@"owner/isAuth" params:paramsDic success:^(id responseObj) {
+            
+            if ([responseObj[@"code"] integerValue] == 1) {
+                if ([responseObj[@"data"][@"audit_status"] integerValue] == 0) {
+                    [self.view makeToast:@"请提交业主认证"];
+                    return ;
+                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 1){
+                    /** 选举服务 */
+                    FHElectionofIndustryCommitteeMainController *vc = [[FHElectionofIndustryCommitteeMainController alloc] init];
+                    vc.hidesBottomBarWhenPushed = YES;
+                    vc.titleString = @"选举服务";
+                    vc.property_id = self->property_id;
+                    [self.navigationController pushViewController:vc animated:YES];
+                }
+            } else {
+                
+            }
+        } failure:^(NSError *error) {
+            [weakSelf.homeTable reloadData];
+        }];
     } else if (selectIndex.row == 5) {
         /** 物业管理 */
         [self pushAnnouncementControllerWithTitle:@"物业管理" ID:9];

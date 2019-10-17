@@ -21,7 +21,7 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *accountTypeView;
 /** 基本信息蓝色btn */
 @property (nonatomic, strong) UIButton *normalBlueBtn;
-/** 业主服务平台View */
+/** 社区服务平台View */
 @property (nonatomic, strong) FHAccountApplicationTFView *personServiceDeskView;
 /** 服务平台View */
 @property (nonatomic, strong) FHAccountApplicationTFView *serviceDeskView;
@@ -311,7 +311,7 @@
 - (FHAccountApplicationTFView *)personServiceDeskView {
     if (!_personServiceDeskView) {
         _personServiceDeskView = [[FHAccountApplicationTFView alloc] init];
-        _personServiceDeskView.titleLabel.text = @"业主服务平台名称";
+        _personServiceDeskView.titleLabel.text = @"社区服务平台名称";
         _personServiceDeskView.contentTF.text = @"恒大未来城物业服务平台";
         _personServiceDeskView.contentTF.placeholder = @"(限12字)";
     }

@@ -38,12 +38,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.authModel.audit_status == 1) {
-        /** 填过认证的资料 */
-        //显示用户所填资料
-        [self fh_creatUI];
-        [self fh_layoutSubViews];
-    } else if (self.authModel.audit_status == 0) {
+    if (self.authModel.audit_status == 0) {
         /** 没有填过认证资料 */
         UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
         _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
@@ -51,10 +46,38 @@
         _button.layer.cornerRadius = 25;
         _button.layer.masksToBounds = YES;
         _button.clipsToBounds = YES;
-        [_button setTitle:@"前往认证业主信息" forState:UIControlStateNormal];
         [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_button addTarget:self action:@selector(goOwnerCertification) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_button];
+        [_button setTitle:@"前往认证业主信息" forState:UIControlStateNormal];
+    } else if (self.authModel.audit_status == 1) {
+        /** 资料审核中 */
+        UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
+        _button.backgroundColor = HEX_COLOR(0x1296db);
+        _button.layer.cornerRadius = 25;
+        _button.layer.masksToBounds = YES;
+        _button.clipsToBounds = YES;
+        [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _button.enabled = NO;
+        [self.view addSubview:_button];
+        [_button setTitle:@"资料审核中" forState:UIControlStateNormal];
+    } else if (self.authModel.audit_status == 2) {
+        //显示用户所填资料
+        [self fh_creatUI];
+        [self fh_layoutSubViews];
+    } else if (self.authModel.audit_status == 3) {
+        /** 审核失败 */
+        UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
+        _button.backgroundColor = HEX_COLOR(0x1296db);
+        _button.layer.cornerRadius = 25;
+        _button.layer.masksToBounds = YES;
+        _button.clipsToBounds = YES;
+        [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [_button addTarget:self action:@selector(goOwnerCertification) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:_button];
+        [_button setTitle:@"审核失败,请重新前往认证业主信息" forState:UIControlStateNormal];
     }
 }
 
@@ -91,6 +114,7 @@
 - (void)goOwnerCertification {
     /** 去业主认证 */
 //    [self viewControllerPushOther:@"FHOwnerCertificationViewController"];
+    
     FHOwnerCertificationViewController *vc = [[FHOwnerCertificationViewController alloc] init];
     vc.property_id = self.property_id;
     vc.hidesBottomBarWhenPushed = YES;

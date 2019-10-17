@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/9/7.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  业委选举申请界面
+//  选举服务申请界面
 
 #import "FHApplicationElectionIndustryCommitteController.h"
 #import "FHElectRepeatTFView.h"
@@ -438,7 +438,7 @@
     if (!_lineView) {
         _lineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 10 - 117, MaxY(self.headerImageView),0.5, 30)];
         _lineView.backgroundColor = [UIColor lightGrayColor];
-        if ([self.titleString isEqualToString:@"业委选举申请"]) {
+        if ([self.titleString isEqualToString:@"选举服务申请"]) {
             _lineView.hidden = YES;
         } else {
             _lineView.hidden = NO;
