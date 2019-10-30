@@ -20,59 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "590755487.391629"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "87"
-            endingLineNumber = "87"
-            landmarkName = "-addInvoiceBtnClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "590755487.391673"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "-addInvoiceBtnClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "590755487.391712"
+            timestampString = "593604816.792443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "90"
             endingLineNumber = "90"
-            landmarkName = "-addInvoiceBtnClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "590755487.39175"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
             landmarkName = "-addInvoiceBtnClick"
             landmarkType = "7">
          </BreakpointContent>
@@ -115,8 +67,8 @@
                   symbolName = "-[FHOwnerCertificationViewController sureBtnClick]"
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-                  timestampString = "592971037.613093"
+                  urlString = "file:///Users/tongxichuanmei/Future-Home/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+                  timestampString = "593604817.602245"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "306"
@@ -130,8 +82,8 @@
                   symbolName = "__50-[FHOwnerCertificationViewController sureBtnClick]_block_invoke"
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-                  timestampString = "592971037.6146899"
+                  urlString = "file:///Users/tongxichuanmei/Future-Home/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
+                  timestampString = "593604817.6054651"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "307"
