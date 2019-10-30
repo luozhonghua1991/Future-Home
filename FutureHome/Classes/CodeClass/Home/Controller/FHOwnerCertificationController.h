@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger property_id;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHAuthModel *authModel;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *type;
+
 
 @end
 

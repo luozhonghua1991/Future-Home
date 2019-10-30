@@ -60,7 +60,6 @@
             [weakSelf.allPriceBtn setTitle:[NSString stringWithFormat:@"合计支出:%@元",self.total_pay] forState:UIControlStateNormal];
             weakSelf.medicalHistoryArrs = [FHHealthHistoryModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
             [weakSelf.homeTable reloadData];
-            
         } else {
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
@@ -120,6 +119,7 @@
     /** 添加医疗记录 */
     FHAddMedicalHistoryController *vc = [[FHAddMedicalHistoryController alloc] init];
     vc.titleString = @"添加医疗记录";
+    vc.pid = self.ID;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }

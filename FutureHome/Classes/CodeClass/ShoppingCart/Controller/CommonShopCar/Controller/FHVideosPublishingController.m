@@ -31,11 +31,11 @@
     self.homeTable.tableHeaderView = self.tableHeaderView;
     self.homeTable.tableHeaderView.height = self.tableHeaderView.height;
     [self.homeTable registerClass:[FHCommonVideosCollectionCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
+    [self getRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getRequest];
     if ([SingleManager shareManager].shoppingBar) {
         [[SingleManager shareManager].shoppingBar removeFromSuperview];
     }
@@ -64,26 +64,6 @@
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
     }];
-    
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               self.shopID,@"shop_id", nil];
-    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
-        if ([responseObj[@"code"] integerValue] == 1) {
-            NSDictionary *dic = responseObj[@"data"];
-            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]]];
-            weakSelf.tableHeaderView.shopNameLabel.text = dic[@"shopname"];
-            weakSelf.tableHeaderView.codeLabel.text = [NSString stringWithFormat:@"社云账号: %@",dic[@"username"]];
-            weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"创作数量: %@",dic[@"document"]];
-            weakSelf.tableHeaderView.upCountLabel.text = [NSString stringWithFormat:@"点赞数: %@",dic[@"like"]];
-            weakSelf.tableHeaderView.fansLabel.text = [NSString stringWithFormat:@"粉丝数: %@",dic[@"fins"]];
-            [weakSelf.homeTable reloadData];
-        } else {
-            [self.view makeToast:responseObj[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        [weakSelf.homeTable reloadData];
-    }];
 }
 
 
@@ -101,17 +81,18 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_HEIGHT - MainSizeHeight - 70 - 140;
+    return SCREEN_HEIGHT - MainSizeHeight - 140;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHCommonVideosCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 70 - 140;
+    cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 70;
     cell.delegate = self;
     cell.rowCount = self.videoListArrs.count;
     cell.videoListArrs = self.videoListArrs;
+    cell.shopID = self.shopID;
     return cell;
 }
 
@@ -145,12 +126,12 @@
     return _homeTable;
 }
 
-- (FHServiceCommonHeaderView *)tableHeaderView {
-    if (!_tableHeaderView) {
-        _tableHeaderView = [[FHServiceCommonHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 140)];
-        [_tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _tableHeaderView;
-}
+//- (FHServiceCommonHeaderView *)tableHeaderView {
+//    if (!_tableHeaderView) {
+//        _tableHeaderView = [[FHServiceCommonHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 140)];
+//        [_tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    }
+//    return _tableHeaderView;
+//}
 
 @end

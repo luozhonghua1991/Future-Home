@@ -80,21 +80,26 @@
 
 - (void)initViewControllers {
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
-    hotVC.yp_tabItemTitle = @"圈热点";
+    hotVC.yp_tabItemTitle = @"云动态";
     hotVC.isHaveHeaderView = YES;
     hotVC.personType = self.personType;
+    hotVC.personID = self.user_id;
     
     FHMyVideosController *photoVC = [[FHMyVideosController alloc] init];
     photoVC.yp_tabItemTitle = @"视频";
+    photoVC.user_id = self.user_id;
     
     FHMyPhotoController *followVC = [[FHMyPhotoController alloc] init];
     followVC.yp_tabItemTitle = @"相册";
+    followVC.user_id = self.user_id;
     
     FHFriendLisController *follow1VC = [[FHFriendLisController alloc] init];
     follow1VC.yp_tabItemTitle = @"关注";
+    follow1VC.user_id = self.user_id;
     
     FHFriendLisController *fansVC = [[FHFriendLisController alloc] init];
     fansVC.yp_tabItemTitle = @"粉丝";
+    fansVC.user_id = self.user_id;
     
     self.viewControllers = [NSMutableArray arrayWithObjects:hotVC, photoVC,followVC,follow1VC,fansVC, nil];
 }

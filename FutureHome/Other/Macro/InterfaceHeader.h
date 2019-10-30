@@ -16,7 +16,7 @@
 //#define BASE_DD_URL @"https://m.hongyajinrong.com"
 
 
-//测试环境
+//测试环境     18368308872
 //#define BASE_URL @"http://192.168.3.57/v1"
 //正式环境
 #define BASE_URL @"http://sheyunlife.com/v1"

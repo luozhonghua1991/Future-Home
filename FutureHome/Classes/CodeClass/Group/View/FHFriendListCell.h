@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FHFollowListModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHFriendListCell : UITableViewCell
@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *nameLabel;
 /** 是否关注的按钮 */
 @property (nonatomic, strong) UIButton *followOrNoBtn;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHFollowListModel *followListModel;
 
 
 @end

@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger personType;
 /** 用户id */
 @property (nonatomic, copy) NSString *user_id;
+/** 关注信息 */
+@property (nonatomic, copy) NSString *follow_msg;
+
+
 
 @end
 

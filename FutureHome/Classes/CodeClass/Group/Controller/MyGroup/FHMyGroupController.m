@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/6/29.
 //  Copyright © 2019 同熙传媒. All rights reserved
-//  我的社群
+//  我的社云
 
 #import "FHMyGroupController.h"
 #import "FHMessageController.h"
@@ -45,10 +45,11 @@
     groupVC.yp_tabItemTitle = @"群聊";
 
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
-    hotVC.yp_tabItemTitle = @"圈热点";
+    hotVC.yp_tabItemTitle = @"云动态";
     hotVC.isHaveTabbar = YES;
     hotVC.isHaveHeaderView = YES;
-
+    hotVC.personType = 2;
+    
     FHFriendLisController *followVC = [[FHFriendLisController alloc] init];
     followVC.yp_tabItemTitle = @"关注";
     

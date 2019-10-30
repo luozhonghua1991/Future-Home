@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/6/29.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  我的视界
+//  我的动态
 
 #import "FHMyVideoController.h"
 #import "BaseViewController.h"
@@ -30,6 +30,7 @@
     videosVC.yp_tabItemTitle = @"动态";
     videosVC.isHaveHeaderView = YES;
     videosVC.isHaveTabbar = YES;
+    videosVC.personType = 1;
     
     FHMyVideosController *photoVC = [[FHMyVideosController alloc] init];
     photoVC.yp_tabItemTitle = @"视频";
@@ -38,9 +39,12 @@
     followVC.yp_tabItemTitle = @"相册";
     
     FHOtherFollowController *friendVC = [[FHOtherFollowController alloc] init];
-    friendVC.yp_tabItemTitle = @"收藏";
+    friendVC.yp_tabItemTitle = @"文档收藏";
     
-    self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC,followVC,friendVC, nil];
+    FHOtherFollowController *friend1VC = [[FHOtherFollowController alloc] init];
+    friend1VC.yp_tabItemTitle = @"视频收藏";
+    
+    self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC,followVC,friendVC,friend1VC, nil];
     
 }
 

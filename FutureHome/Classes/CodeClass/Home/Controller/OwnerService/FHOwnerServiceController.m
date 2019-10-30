@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/6/28.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  社区服务
+//  业主服务
 
 #import "FHOwnerServiceController.h"
 #import "FHCommonCollectionViewCell.h"
@@ -15,6 +15,8 @@
 #import "FHSuggestionController.h"
 #import "FHElectionofIndustryCommitteeMainController.h"
 #import "FHMyIndustryCommitteeController.h"
+#import "FHAuthModel.h"
+#import "FHOwnerCertificationController.h"
 
 @interface FHOwnerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -39,6 +41,9 @@
 /** 下面的image */
 @property (nonatomic, copy) NSArray *bottomImageArrs;
 
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHAuthModel *authModel;
+
 @end
 
 @implementation FHOwnerServiceController
@@ -52,7 +57,7 @@
                                 @"财务管理",
                                 @"选举服务",
                                 @"物业管理",
-                                @"物业招标",
+                                @"招标服务",
                                 @"活动关爱",
                                 @"投诉建议",
                                 @"我的业委"];
@@ -93,7 +98,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"社区服务";
+    titleLabel.text = @"业主服务";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -117,7 +122,7 @@
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -367,18 +372,23 @@
                                    nil];
         
         [AFNetWorkTool get:@"owner/isAuth" params:paramsDic success:^(id responseObj) {
-            
             if ([responseObj[@"code"] integerValue] == 1) {
                 if ([responseObj[@"data"][@"audit_status"] integerValue] == 0) {
                     [self.view makeToast:@"请提交业主认证"];
                     return ;
-                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 1){
+                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 1) {
+                    [self.view makeToast:@"资料认证中"];
+                    return ;
+                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 2) {
                     /** 选举服务 */
                     FHElectionofIndustryCommitteeMainController *vc = [[FHElectionofIndustryCommitteeMainController alloc] init];
                     vc.hidesBottomBarWhenPushed = YES;
                     vc.titleString = @"选举服务";
                     vc.property_id = self->property_id;
                     [self.navigationController pushViewController:vc animated:YES];
+                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 3) {
+                    [self.view makeToast:@"资料审核失败,请重新提交"];
+                    return;
                 }
             } else {
                 
@@ -390,10 +400,10 @@
         /** 物业管理 */
         [self pushAnnouncementControllerWithTitle:@"物业管理" ID:9];
     } else if (selectIndex.row == 6) {
-        /** 物业招标 */
-//        [self pushAnnouncementControllerWithTitle:@"物业招标"];
+        /** 招标服务 */
+//        [self pushAnnouncementControllerWithTitle:@"招标服务"];
         FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
-        an.titleString = @"物业招标";
+        an.titleString = @"招标服务";
         an.hidesBottomBarWhenPushed = YES;
         an.isHaveSectionView = YES;
         an.ID = 10;
@@ -412,13 +422,38 @@
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 9) {
-        /** 我的业委 */
-//        [self pushAnnouncementControllerWithTitle:@"我的业委"];
-//        [self viewControllerPushOther:@"FHMyIndustryCommitteeController"];
-        FHMyIndustryCommitteeController *vc = [[FHMyIndustryCommitteeController alloc] init];
-        vc.property_id = property_id;
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @(property_id),@"owner_id",
+                                   nil];
+        
+        [AFNetWorkTool get:@"owner/isAuth" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                
+                if ([responseObj[@"data"][@"audit_status"] integerValue] == 0 || [responseObj[@"data"][@"audit_status"] integerValue] == 3) {
+                    FHMyIndustryCommitteeController *vc = [[FHMyIndustryCommitteeController alloc] init];
+                    vc.property_id = self->property_id;
+                    vc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:vc animated:YES];
+                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 1) {
+                    [self.view makeToast:@"资料认证中"];
+                    return ;
+                } else if ([responseObj[@"data"][@"audit_status"] integerValue] == 2) {
+                    /** 认证通过 */
+                    FHOwnerCertificationController *messageVC = [[FHOwnerCertificationController alloc] init];
+                    messageVC.authModel = [FHAuthModel mj_objectWithKeyValues:responseObj[@"data"]];
+                    messageVC.hidesBottomBarWhenPushed = YES;
+                    messageVC.type = @"我的业委";
+                    [self.navigationController pushViewController:messageVC animated:YES];
+                }
+            } else {
+                
+            }
+        } failure:^(NSError *error) {
+            [weakSelf.homeTable reloadData];
+        }];
     }
 }
 

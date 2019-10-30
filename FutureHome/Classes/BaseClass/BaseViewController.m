@@ -154,7 +154,11 @@
 
 - (CGFloat)getTabbarHeight {
     CGFloat tabbarHeight;
-    return tabbarHeight = KIsiPhoneX ? 83 : 49;
+    if (KIsiPhoneX || IS_IPHONE_Xr || IS_IPHONE_Xs_Max || IS_IPHONE_Xs) {
+        return tabbarHeight = 83;
+    } else {
+         return tabbarHeight = 49;
+    }
 }
 
 /**

@@ -8,8 +8,9 @@
 
 #import "FHAddMedicalHistoryController.h"
 #import "FHAccountApplicationTFView.h"
+#import "DPPhotoLibrary.h"
 
-@interface FHAddMedicalHistoryController () <UITextFieldDelegate,UIScrollViewDelegate>
+@interface FHAddMedicalHistoryController () <UITextFieldDelegate,UIScrollViewDelegate,DPPhotoListViewDelegate>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 就诊时间View */
@@ -28,6 +29,11 @@
 @property (nonatomic, strong) NSMutableArray *imgSelectArrs;
 /** 服务器返回的图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectImgArrays;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) DPPhotoListView *photoListView;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSArray *imgArrs;
+
 
 @end
 
@@ -37,9 +43,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self fh_creatNav];
-    [self fh_creatUI];
-    [self fh_layoutSubViews];
-    [self creatBottomBtn];
+    if ([self.titleString isEqualToString:@"添加医疗记录"]) {
+        [self fh_creatUI];
+        [self fh_layoutSubViews];
+        [self creatBottomBtn];
+    }
 }
 
 #pragma mark — 通用导航栏
@@ -74,17 +82,37 @@
 
 
 - (void)fh_creatUI {
-    self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
-    self.showInView = self.scrollView;
-    /** 初始化collectionView */
-    [self initPickerView];
     [self.scrollView addSubview:self.dateView];
     [self.scrollView addSubview:self.hospitalView];
     [self.scrollView addSubview:self.allPriceView];
     [self.scrollView addSubview:self.mainDoctorView];
     [self.scrollView addSubview:self.symptomView];
     [self.scrollView addSubview:self.therapeuticRegimenView];
+    if ([self.titleString isEqualToString:@"添加医疗记录"]) {
+        self.scrollView.delegate = self;
+        self.showInView = self.scrollView;
+        /** 初始化collectionView */
+        [self initPickerView];
+    } else {
+        self.photoListView = [[DPPhotoListView alloc] initWithFrame:CGRectMake(0, MaxY(self.therapeuticRegimenView) + 10, self.view.bounds.size.width, SCREEN_HEIGHT) numberOfCellInRow:3 lineSpacing:15 dataSource:[self.imgArrs mutableCopy]];
+        CGFloat height = [self.photoListView getItemSizeHeight];
+        CGFloat photoListHeight = 0.0;
+        if (self.imgArrs.count == 0) {
+            photoListHeight = 0;
+        } else if (self.imgArrs.count <= 3) {
+            photoListHeight = height + 15;
+        } else if (self.imgArrs.count <=6 && self.imgArrs.count > 3) {
+            photoListHeight = 2 * height + 15 * 2;
+        } else if (self.imgArrs.count <=9 && self.imgArrs.count > 6) {
+            photoListHeight = 3 * height + 15 * 3;
+        }
+        self.photoListView.height = photoListHeight;
+        self.photoListView.showAddImagesButton = NO;
+        self.photoListView.allowLongPressEditPhoto = NO;
+        self.photoListView.delegate = self;
+        [self.scrollView addSubview:self.photoListView];
+    }
 }
 
 - (void)creatBottomBtn{
@@ -100,8 +128,8 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
-    [self commitInfo];
-    return;
+//    [self commitInfo];
+//    return;
     
     /** 添加医疗记录接口  先上传图片*/
     self.imgSelectArrs = [[NSMutableArray alloc] init];
@@ -113,7 +141,7 @@
     NSArray *arr = @[string];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @"property",@"path",
+                               @"health",@"path",
                                arr,@"file[]",
                                nil];
     for (int i = 0; i < self.imgSelectArrs.count; i++) {
@@ -138,12 +166,30 @@
 
 - (void)setModel:(FHHealthHistoryModel *)model {
     _model = model;
-    self.dateView.contentTF.text = model.treat_time;
-    self.hospitalView.contentTF.text = model.hospital;
-    self.symptomView.contentTF.text = model.symptom;
-    self.allPriceView.contentTF.text = model.total_pay;
-    self.mainDoctorView.contentTF.text = model.doctor;
-    self.therapeuticRegimenView.contentTF.text = model.programme;
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               _model.id,@"id", nil];
+    
+    [AFNetWorkTool get:@"health/recordDetail" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            weakSelf.dateView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"create_time"]];
+            weakSelf.hospitalView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"hospital"]];
+            weakSelf.symptomView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"symptom"]];
+            weakSelf.allPriceView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"total_consum"]];
+            weakSelf.mainDoctorView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"doctor"]];
+            weakSelf.therapeuticRegimenView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"programme"]];
+            weakSelf.imgArrs = dic[@"img_ids"];
+            [weakSelf fh_creatUI];
+            [weakSelf fh_layoutSubViews];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)commitInfo {
@@ -169,6 +215,7 @@
                                self.therapeuticRegimenView.contentTF.text,@"programme",
                                imgArrsString,@"img_ids",
                                nil];
+    
     [AFNetWorkTool post:@"health/addRecord" params:paramsDictory success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"添加医疗记录成功"];
@@ -207,19 +254,36 @@
     
 }
 
+- (void)fh_selectCellWithIndex:(NSIndexPath *)selectIndex {
+    HZPhotoBrowser *browser = [[HZPhotoBrowser alloc] init];
+    browser.isFullWidthForLandScape = YES;
+    browser.isNeedLandscape = YES;
+    browser.currentImageIndex = (int)selectIndex.row;
+    browser.imageArray = self.imgArrs;
+    [browser show];
+}
 
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
     CGFloat commonCellHeight = 50.0f;
-    self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - ZH_SCALE_SCREEN_Width(50));
+    if ([self.titleString isEqualToString:@"添加医疗记录"]) {
+        self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - ZH_SCALE_SCREEN_Width(50));
+    } else {
+        self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH,SCREEN_HEIGHT);
+    }
     self.dateView.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
     self.hospitalView.frame = CGRectMake(0, MaxY(self.dateView), SCREEN_WIDTH, commonCellHeight);
     self.allPriceView.frame = CGRectMake(0, MaxY(self.hospitalView), SCREEN_WIDTH, commonCellHeight);
     self.mainDoctorView.frame = CGRectMake(0, MaxY(self.allPriceView), SCREEN_WIDTH, commonCellHeight);
     self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, commonCellHeight);
     self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, commonCellHeight);
-    [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
-    self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
+    if ([self.titleString isEqualToString:@"添加医疗记录"]) {
+        [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
+        self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
+    } else {
+       self.photoListView.frame = CGRectMake(0, MaxY(self.therapeuticRegimenView) + 10, SCREEN_WIDTH, self.photoListView.height);
+       self.scrollView.contentSize = CGSizeMake(0, MaxY(self.photoListView) + MainSizeHeight + 20);
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

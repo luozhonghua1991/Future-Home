@@ -8,11 +8,13 @@
 
 #import "FHCommonVideosCollectionCell.h"
 #import "FHVideoListViewCell.h"
-
+#import "FHServiceCommonHeaderView.h"
 
 @interface FHCommonVideosCollectionCell () <UICollectionViewDataSource,UICollectionViewDelegate>
 /** 视频列表collection */
 @property (nonatomic, strong) UICollectionView *videoCollectionView;
+/** 标头数据 */
+@property (nonatomic, strong) FHServiceCommonHeaderView *tableHeaderView;
 
 @end
 
@@ -39,12 +41,37 @@
 - (void)setVideoListArrs:(NSMutableArray *)videoListArrs {
     _videoListArrs = videoListArrs;
     [self.videoCollectionView reloadData];
+    [self.videoCollectionView setContentOffset:CGPointMake(0, -140)];
+}
+
+- (void)setShopID:(NSString *)shopID {
+    _shopID = shopID;
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.shopID,@"shop_id", nil];
+    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            weakSelf.tableHeaderView.shopNameLabel.text = dic[@"shopname"];
+            weakSelf.tableHeaderView.codeLabel.text = [NSString stringWithFormat:@"社云账号: %@",dic[@"username"]];
+            weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"视频: %@",dic[@"document"]];
+            weakSelf.tableHeaderView.upCountLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"like"]];
+            weakSelf.tableHeaderView.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fins"]];
+            weakSelf.videoCollectionView.contentInset = UIEdgeInsetsMake(140, 0, 0, 0);
+            [weakSelf.videoCollectionView addSubview:weakSelf.tableHeaderView];
+        } else {
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.videoCollectionView reloadData];
+    }];
 }
 
 #pragma mark — collectionViewDelagate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.rowCount;
-    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -85,6 +112,14 @@
         _videoCollectionView.scrollsToTop = NO;
     }
     return _videoCollectionView;
+}
+
+- (FHServiceCommonHeaderView *)tableHeaderView {
+    if (!_tableHeaderView) {
+        _tableHeaderView = [[FHServiceCommonHeaderView alloc] initWithFrame:CGRectMake(0, -140, SCREEN_WIDTH, 140)];
+//        [_tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _tableHeaderView;
 }
 
 

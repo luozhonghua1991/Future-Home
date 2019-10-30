@@ -161,7 +161,7 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
         [mg showLocalPhotoViewer:@[cell.BigImageView] selecImageindex:0];
     }
 }
-- (UIImage*)getBigIamgeWithALAsset:(ALAsset*)set{
+- (UIImage*)getBigIamgeWithALAsset:(ALAsset*)set {
     //压缩
     // 需传入方向和缩放比例，否则方向和尺寸都不对
     UIImage *img = [UIImage imageWithCGImage:set.defaultRepresentation.fullResolutionImage
@@ -173,7 +173,19 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
     return [UIImage imageWithData:imageData];
 }
 #pragma mark - 选择图片
-- (void)addNewImg{
+- (void)addNewImg {
+    if ([SingleManager shareManager].isSelectVideo) {
+        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        [[UIApplication sharedApplication].keyWindow addSubview:hud];
+        hud.removeFromSuperViewOnHide = YES;
+        hud.userInteractionEnabled = NO;
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"图片和视频不能同时选择";
+        [hud showAnimated:YES];
+        [hud hideAnimated:YES afterDelay:2];
+        return;
+        
+    }
     if (!_imgPickerActionSheet) {
         _imgPickerActionSheet = [[HWImagePickerSheet alloc] init];
         _imgPickerActionSheet.delegate = self;
@@ -182,6 +194,7 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
         _imgPickerActionSheet.arrSelected = _arrSelected;
     }
     _imgPickerActionSheet.maxCount = _maxCount;
+    
     [_imgPickerActionSheet showImgPickerActionSheetInView:_showActionSheetViewController];
 }
 

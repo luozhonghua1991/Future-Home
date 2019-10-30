@@ -68,7 +68,7 @@
     if (!_listNameLabel) {
         _listNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, self.contentView.width - 10, 44)];
         _listNameLabel.textAlignment = NSTextAlignmentLeft;
-        _listNameLabel.font = [UIFont systemFontOfSize:10];
+        _listNameLabel.font = [UIFont systemFontOfSize:12];
         _listNameLabel.textColor = [UIColor blackColor];
         _listNameLabel.numberOfLines = 2;
 #warning message

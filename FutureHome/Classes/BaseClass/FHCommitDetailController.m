@@ -37,7 +37,7 @@
     [self requestWithDic:self.dataDic];
     /** 评论数据 */
     [self getCommitsData];
-    if (self.isCanCommit) {
+    if (!self.isCanCommit) {
         [self fh_creatBottomInputView];
     }
 }

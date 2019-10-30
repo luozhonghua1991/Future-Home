@@ -82,6 +82,9 @@
     [session setResponseSerializer:serializer];
 
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    //384dd4cc71aaff6b28003ccfa3fe8cffd252386d
+//    [session.requestSerializer setValue:@"384dd4cc71aaff6b28003ccfa3fe8cffd252386d" forHTTPHeaderField:@"token"];
+    
     [UIView showLoadingHud:@""inView:[UIApplication sharedApplication].keyWindow];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     //发送get请求
@@ -117,6 +120,8 @@
     session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
 
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    
+//     [session.requestSerializer setValue:@"384dd4cc71aaff6b28003ccfa3fe8cffd252386d" forHTTPHeaderField:@"token"];
     [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
     [session POST:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -255,29 +260,108 @@
 }
 
 
-//
-//#pragma mark 上传声音
-//+ (void)updateImageWithUrl:(NSString *)url parameter:(NSDictionary *)parameter voiceData:(NSData *)imageData voiceName:(NSString *)voiceName voiceType:(NSString *)voiceType success:(successBlock)success failure:(failureBlock)failure
-//{
-//    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
-//    //  申明请求的数据是json类型
-//    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
-//    [serializer setRemovesKeysWithNullValues:YES];
-//    //如果接受类型不一致请替换一致text/html或别的
-//    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-//    [session setResponseSerializer:serializer];
-//    
-//    [session POST:url parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-//        [formData appendPartWithFileData:imageData name:@"file" fileName:voiceName mimeType:voiceType];
-//    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//        if (success) {
-//            success(responseObject);
-//        }
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        if (failure) {
-//            failure(error);
-//        }
-//    }];
-//}
+#pragma mark 上传用户朋友圈背景图
++ (void)updatePersonPYQBgImageWithUrl:(NSString *)url
+                            parameter:(NSDictionary *)parameter
+                            imageData:(NSData *)imageData
+                              success:(successBlock)success
+                              failure:(failureBlock)failure {
+    Account *account = [AccountStorage readAccount];
+    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    //  申明请求的数据是json类型
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    [serializer setRemovesKeysWithNullValues:YES];
+    //如果接受类型不一致请替换一致text/html或别的
+    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [session setResponseSerializer:serializer];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    
+    [session POST:urlStr parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
+        [formData appendPartWithFileData:imageData name:@"cover" fileName:@"futureHome.png" mimeType:@"image/jpeg"];
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
+
+
+#pragma mark — 多图上传
++ (void)uploadImagesWithUrl:(NSString *)url
+                 parameters:(NSDictionary *)parameters
+                      image:(NSArray *)imageArray
+                    success:(successBlock)success
+                    failure:(failureBlock)failure  {
+    Account *account = [AccountStorage readAccount];
+    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    //  申明请求的数据是json类型
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    [serializer setRemovesKeysWithNullValues:YES];
+    //如果接受类型不一致请替换一致text/html或别的
+    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [session setResponseSerializer:serializer];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    
+    [session POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
+        for (int i = 0; i < imageArray.count; i++){
+            NSData *imageData = UIImageJPEGRepresentation(imageArray[i], 1);
+            [formData appendPartWithFileData:imageData name:@"file[]" fileName:@"futureHome.png" mimeType:@"image/jpeg"];
+        }
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+#pragma mark — 上传视频
++ (void)updateVideoWithUrl:(NSString *)url
+                 parameter:(NSDictionary *)parameter
+                 videoData:(NSData *)videoData
+                   success:(successBlock)success
+                   failure:(failureBlock)failure {
+    Account *account = [AccountStorage readAccount];
+    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    //  申明请求的数据是json类型
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    [serializer setRemovesKeysWithNullValues:YES];
+    //如果接受类型不一致请替换一致text/html或别的
+    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [session setResponseSerializer:serializer];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    
+//    //设置 POST请求文件上传
+//    [session.requestSerializer setValue:@"multipart/form-data; boundary=BOUNDARY" forHTTPHeaderField:@"Content-Type"];
+    
+    [session POST:urlStr parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [formData appendPartWithFileData:videoData name:@"file[]" fileName:@"futureHome.mp4" mimeType:@"     video/mpeg4"];
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+}
 
 @end

@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak) id<FHCommonVideosCollectionCellDelegate> delegate;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) CGFloat collectionViewHeight;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *shopID;
 
 @end
 

@@ -31,14 +31,6 @@ static FHAppDelegate* pSelf = nil;
     [self.window makeKeyAndVisible];
     pSelf = self;
     [self setTabBarController];
-
-    
-    AVAuthorizationStatus status = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
-    if (status == AVAuthorizationStatusRestricted || status == AVAuthorizationStatusDenied) {
-        // 无权限
-        // do something...
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
-    }
     return YES;
 }
 

@@ -22,10 +22,6 @@
 @property (nonatomic,copy) NSString *photo;/**< 用户头像url >*/
 @property (nonatomic,copy) NSString *points;/**< 用户积分 >*/
 /**
- *  视频的URL
- */
-@property (nonatomic,strong)NSURL   *videoURL;
-/**
  *  视频的标题
  */
 @property(nonatomic,strong)NSString *titleName;
@@ -72,6 +68,15 @@
 @property (nonatomic, strong) PPNumberButton *numberButton;
 /** 是评论评论的状态 */
 @property (nonatomic, assign) BOOL isCommentComment;
+
+/** 是否是选择发布动态中的视频状态  如果选择了视频 就不能选择图片 */
+@property (nonatomic, assign) BOOL isSelectVideo;
+/** 是否是投诉建议界面 */
+@property (nonatomic, assign) BOOL isComplaintsSuggestions;
+/**
+ *  视频的path
+ */
+@property (nonatomic,copy)NSString   *videoPath;
 
 
 

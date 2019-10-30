@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *id;
 /** 图片数组 */
 @property (nonatomic, copy) NSString *img_ids;
+/** 图片数组 */
+//@property (nonatomic, copy) NSArray *img_ids;
 /** 总花费 */
 @property (nonatomic, copy) NSString *total_pay;
 /** <#copy属性注释#> */

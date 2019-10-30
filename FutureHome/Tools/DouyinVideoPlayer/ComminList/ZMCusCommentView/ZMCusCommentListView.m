@@ -109,6 +109,8 @@
 #pragma mark -
 #pragma mark UITableViewDataSource, UITableViewDelegate
 
+//使用区尾部的样式去创建 多级评论cell
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }

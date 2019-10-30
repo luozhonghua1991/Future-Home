@@ -156,25 +156,14 @@
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
-    SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
-    browser.sourceImagesContainerView = infiniteScrollView;
-    browser.imageCount = self.imgArrs.count;
-    browser.currentImageIndex = index;
-    browser.delegate = self;
-    [browser show]; // 展示图片浏览器
+    HZPhotoBrowser *browser = [[HZPhotoBrowser alloc] init];
+    browser.isFullWidthForLandScape = YES;
+    browser.isNeedLandscape = YES;
+    browser.currentImageIndex = (int)index;
+    browser.imageArray = self.imgArrs;
+    [browser show];
 }
 
-- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
-    NSString *imgString = self.imgArrs[index];
-    NSURL *url = [NSURL URLWithString:imgString];
-    return url;
-}
-
-- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
-//    UIImage *imageView = [UIImage imageNamed:@"%@",[urlsArray objectAtIndex:index]];
-    UIImage *imageView = [UIImage imageNamed:@""];
-    return imageView;
-}
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {

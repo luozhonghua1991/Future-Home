@@ -288,7 +288,7 @@
     NSString *imgArrsString = [self.selectImgArrs componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @(weakSelf.property_id),@"property_id",
+                               @(weakSelf.property_id),@"owner_id",
                                self.ownerNameView.contentTF.text,@"name",
                                self.phoneNumberView.contentTF.text,@"mobile",
                                self.ownerCodeView.contentTF.text,@"id_num",
@@ -302,12 +302,22 @@
                                self.louNumberView.contentTF.text,@"build_num",
                                imgArrsString,@"img_ids",
                                nil];
+    NSString *url;
+    if ([self.path isEqualToString:@"owner"]) {
+        /** 业委认证 */
+        url = @"owner/authInfo";
+    } else {
+        /** 房产认证 */
+        url = @"property/houseAuth";
+    }
     
-    [AFNetWorkTool post:@"property/houseAuth" params:paramsDic success:^(id responseObj) {
+    [AFNetWorkTool post:url params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
             [weakSelf.view makeToast:@"认证资料已经提交成功"];
-            [weakSelf.navigationController popViewControllerAnimated:YES];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
         } else {
             [self.view makeToast:@"所填信息有误"];
         }

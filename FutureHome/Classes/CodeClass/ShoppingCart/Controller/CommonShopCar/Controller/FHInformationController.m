@@ -53,13 +53,13 @@
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
-            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]]];
+            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:[UIImage imageNamed:@"头像"]];
             weakSelf.tableHeaderView.shopNameLabel.text = dic[@"shopname"];
             weakSelf.shopName = weakSelf.tableHeaderView.shopNameLabel.text;
             weakSelf.tableHeaderView.codeLabel.text = [NSString stringWithFormat:@"社云账号: %@",dic[@"username"]];
-            weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"创作数量: %@",dic[@"document"]];
-            weakSelf.tableHeaderView.upCountLabel.text = [NSString stringWithFormat:@"点赞数: %@",dic[@"like"]];
-             weakSelf.tableHeaderView.fansLabel.text = [NSString stringWithFormat:@"粉丝数: %@",dic[@"fins"]];
+            weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"文档: %@",dic[@"document"]];
+            weakSelf.tableHeaderView.upCountLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"like"]];
+             weakSelf.tableHeaderView.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fins"]];
             [weakSelf.homeTable reloadData];
         } else {
             [self.view makeToast:responseObj[@"msg"]];

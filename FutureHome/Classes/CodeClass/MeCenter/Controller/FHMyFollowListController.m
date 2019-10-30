@@ -75,24 +75,24 @@
 
 - (void)initViewControllers {
     FHFollowListViewController *messageVC = [[FHFollowListViewController alloc] init];
-    messageVC.yp_tabItemTitle = @"物业收藏";
+    messageVC.yp_tabItemTitle = @"物业";
     
     FHFollowListViewController *groupVC = [[FHFollowListViewController alloc] init];
-    groupVC.yp_tabItemTitle = @"业委收藏";
+    groupVC.yp_tabItemTitle = @"业委";
     
     FHFollowListViewController *hotVC = [[FHFollowListViewController alloc] init];
-    hotVC.yp_tabItemTitle = @"生鲜收藏";
+    hotVC.yp_tabItemTitle = @"生鲜";
     
     FHFollowListViewController *friendVC = [[FHFollowListViewController alloc] init];
-    friendVC.yp_tabItemTitle = @"商家收藏";
+    friendVC.yp_tabItemTitle = @"商家";
     
     FHFollowListViewController *followVC = [[FHFollowListViewController alloc] init];
-    followVC.yp_tabItemTitle = @"药店收藏";
+    followVC.yp_tabItemTitle = @"药店";
     
-    FHFollowListViewController *fowVC = [[FHFollowListViewController alloc] init];
-    fowVC.yp_tabItemTitle = @"文档收藏";
+//    FHFollowListViewController *fowVC = [[FHFollowListViewController alloc] init];
+//    fowVC.yp_tabItemTitle = @"文档收藏";
     
-    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC,followVC,fowVC, nil];
+    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC,followVC, nil];
 }
 
 @end

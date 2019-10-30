@@ -101,4 +101,28 @@ typedef void (^failureBlock)(NSError *error);
                          success:(successBlock)success
                          failure:(failureBlock)failure;
 
+
+#pragma mark 上传用户朋友圈背景图
++ (void)updatePersonPYQBgImageWithUrl:(NSString *)url
+                            parameter:(NSDictionary *)parameter
+                            imageData:(NSData *)imageData
+                              success:(successBlock)success
+                              failure:(failureBlock)failure;
+
+
+#pragma mark 多图上传
++ (void)uploadImagesWithUrl:(NSString *)url
+                 parameters:(NSDictionary *)parameters
+                      image:(NSArray *)imageArray
+                    success:(successBlock)success
+                    failure:(failureBlock)failure;
+
+
+#pragma mark — 上传视频
++ (void)updateVideoWithUrl:(NSString *)url
+                 parameter:(NSDictionary *)parameter
+                 videoData:(NSData *)videoData
+                   success:(successBlock)success
+                   failure:(failureBlock)failure;
+
 @end

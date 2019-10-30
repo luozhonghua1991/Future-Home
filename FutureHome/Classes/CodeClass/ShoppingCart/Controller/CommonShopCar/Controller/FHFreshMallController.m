@@ -192,7 +192,7 @@
 }
 
 - (void)fh_creatSelectBtn {
-    //我的社群 我的视界 商业服务 公共服务
+    //我的社云 我的动态 商业服务 公共服务
     CGSize size1 = [UIlabelTool sizeWithString:@"生鲜商城" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     
     myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"生鲜商城" tag:1];
@@ -498,7 +498,7 @@
     if (!_locationLabel) {
         _locationLabel =  [[UILabel alloc] init];
         _locationLabel.text = @"未来生鲜龙湖U城店未来式未来式未来式";
-        _locationLabel.textColor = [UIColor purpleColor];
+        _locationLabel.textColor = [UIColor blackColor];
         _locationLabel.font = [UIFont systemFontOfSize:15];
         _locationLabel.textAlignment = NSTextAlignmentCenter;
     }

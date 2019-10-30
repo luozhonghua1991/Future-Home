@@ -37,9 +37,9 @@
 //    FHAfterSaleController *friendVC = [[FHAfterSaleController alloc] init];
 //    friendVC.yp_tabItemTitle = @"退换/售后";
     
-    FHGoodsListController *groupVC = [[FHGoodsListController alloc] init];
+    FHWaitOrderController *groupVC = [[FHWaitOrderController alloc] init];
     groupVC.yp_tabItemTitle = @"待收货";
-//    groupVC.type = 1;
+    groupVC.type = 1;
     
     FHWaitOrderController *hotVC = [[FHWaitOrderController alloc] init];
     hotVC.yp_tabItemTitle = @"待评价";

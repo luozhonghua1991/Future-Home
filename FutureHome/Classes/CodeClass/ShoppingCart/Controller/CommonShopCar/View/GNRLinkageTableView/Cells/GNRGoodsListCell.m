@@ -31,7 +31,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(250), (self.contentView.height - 88) / 2, 30, 88)];
+    self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77 - 60, (self.contentView.height - 88) / 2, 60, 88)];
     [self.contentView addSubview:self.stepperSuperView];
     
     self.nameL.font = [UIFont boldSystemFontOfSize:14];
@@ -39,10 +39,10 @@
     self.specsLabel.frame = CGRectMake(self.nameL.x, self.nameL.y + self.nameL.size.height + 13, ZH_SCALE_SCREEN_Width(100), 12);
     [self.contentView addSubview:self.specsLabel];
     
-    self.priceLabel.frame = CGRectMake(0, self.nameL.y + self.nameL.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
+    self.priceLabel.frame = CGRectMake(20, self.nameL.y + self.nameL.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
     [self.contentView addSubview:self.priceLabel];
     
-    self.stockLabel.frame = CGRectMake(0, self.priceLabel.y + self.priceLabel.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
+    self.stockLabel.frame = CGRectMake(23, self.priceLabel.y + self.priceLabel.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
     [self.contentView addSubview:self.stockLabel];
     
     [self.stepperSuperView addSubview:self.stepper];
@@ -54,12 +54,14 @@
             }
         }
     }];
+    
     __weak typeof(self) wself = self;
     [wself.stepper addActionBlock:^(UIButton * btn) {
         if ([wself.delegate respondsToSelector:@selector(stepper:addSender:cell:)]) {
             [wself.delegate stepper:wself.stepper addSender:btn cell:wself];
         }
     }];
+    
     [wself.stepper subActionBlock:^(UIButton * btn) {
         if ([wself.delegate respondsToSelector:@selector(stepper:subSender:cell:)]) {
             [wself.delegate stepper:wself.stepper subSender:btn cell:wself];

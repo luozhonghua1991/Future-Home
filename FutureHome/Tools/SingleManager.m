@@ -60,7 +60,6 @@ static id shareObj = nil;
     
     NSDate* inputDate = nil;
     if (shijianchuo) {
-        
         inputDate = [NSDate dateWithTimeIntervalSince1970:[shijianchuo doubleValue]];
     }else if (date) {
         inputDate = [_dateFormatter dateFromString:date];

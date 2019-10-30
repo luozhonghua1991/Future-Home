@@ -23,9 +23,9 @@
 }
 /** 创建动态 */
 @property (nonatomic, strong) UIButton *creatRrendsBtn;
-/** 我的社群 */
+/** 我的社云 */
 @property (nonatomic, strong) FHMyGroupController *myGroup;
-/** 我的视界 */
+/** 我的动态 */
 @property (nonatomic, strong) FHMyVideoController  *myVideo;
 /** 商业服务 */
 @property (nonatomic, strong) FHBusinessServicesController *businssService;
@@ -146,14 +146,14 @@
 }
 
 - (void)fh_creatSelectBtn {
-    //我的社群 我的视界 商业服务 公共服务
-    CGSize size1 = [UIlabelTool sizeWithString:@"我的社群" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
+    //我的社云 我的动态 商业服务 公共服务
+    CGSize size1 = [UIlabelTool sizeWithString:@"我的社云" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     
-    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"我的社群" tag:1];
+    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"我的社云" tag:1];
     [myGroupBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     
-    CGSize size2 = [UIlabelTool sizeWithString:@"我的视界" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"我的视界" tag:2];
+    CGSize size2 = [UIlabelTool sizeWithString:@"我的动态" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
+    myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"我的动态" tag:2];
     
     CGSize size3 = [UIlabelTool sizeWithString:@"商家服务" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     businssServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myVideoBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size3.width, self.selectNavView.frame.size.height)title:@"商家服务" tag:3];

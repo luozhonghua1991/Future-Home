@@ -19,6 +19,7 @@
 #import "ZJPickerView.h"
 #import "FHLoginTool.h"
 #import "BAAlertController.h"
+#import "HZPhotoBrowser.h"
 
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]

@@ -51,6 +51,7 @@
     
     FHReleaseManagementController *hotVC = [[FHReleaseManagementController alloc] init];
     hotVC.yp_tabItemTitle = @"发布管理";
+    hotVC.property_id = self.property_id;
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC, nil];
 }

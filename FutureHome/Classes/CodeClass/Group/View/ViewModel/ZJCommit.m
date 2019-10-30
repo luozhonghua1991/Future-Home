@@ -57,25 +57,37 @@
     return self;
 }
 
-//-(id)initWithDict:(NSDictionary *)dict{
-//    if (self == [super init]) {
-//        self.avatar  = dict[@"avatar"];
-//        self.nickname = dict[@"nickname"];
-//        self.content = dict[@"content"];
-//        self.img_data = dict[@"img_data"];
+-(id)initWithDongTaiDict:(NSDictionary *)dict {
+    if (self == [super init]) {
+        NSArray *arr = dict[@"medias"];
+        NSMutableArray *imageArrs = [[NSMutableArray alloc] init];
+        for (NSDictionary *dic in arr) {
+            [imageArrs addObject:dic[@"path"]];
+        }
+        self.avatar  = dict[@"avatar"];
+        self.nickname = dict[@"nickname"];
+        self.content = dict[@"content"];
+        self.img_data = [imageArrs toReadableJSONString];
 //        self.like_id = dict[@"like_id"];
-//        self.like_count = dict[@"like_count"];
+        self.like_count = dict[@"like_num"];
 //        self.unlike_count = dict[@"unlike_count"];
-//        self.add_time = dict[@"add_time"];
+        self.add_time = dict[@"create_time"];
+        self.view_num = [dict[@"view_num"] integerValue];
+        self.comment_num = [dict[@"comment_num"] integerValue];
+        self.user_id = dict[@"user_id"];
 //        self.rating = dict[@"rating"];
-//        
-//        _identifier = [self uniqueIdentifier];
-//    }
-//    return self;
-//}
+        
+        _identifier = [self uniqueIdentifier];
+    }
+    return self;
+}
 
-+(instancetype)commitWithDict:(NSDictionary *)dict{
++(instancetype)commitWithDict:(NSDictionary *)dict {
     return [[self alloc] initWithDict:dict];
+}
+
++(instancetype)commitWithDongtaiDict:(NSDictionary *)dict {
+    return [[self alloc] initWithDongTaiDict:dict];
 }
 
 - (NSString *)uniqueIdentifier

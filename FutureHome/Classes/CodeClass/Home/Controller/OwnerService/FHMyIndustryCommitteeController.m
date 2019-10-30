@@ -62,7 +62,7 @@
     [self.view addSubview:self.logoLabel];
     self.compliteBtn = [self creaBtnWithBtnTitle:@"提交业主资料料认证" frame:CGRectMake(10, MaxY(self.logoLabel) + 50, SCREEN_WIDTH - 20, 45) tag:0];
     [self.view addSubview:self.compliteBtn];
-    self.numerBtn = [self creaBtnWithBtnTitle:@"申请社区服务账号" frame:CGRectMake(10, MaxY(self.compliteBtn) + 25, SCREEN_WIDTH - 20, 45) tag:1];
+    self.numerBtn = [self creaBtnWithBtnTitle:@"申请业主服务账号" frame:CGRectMake(10, MaxY(self.compliteBtn) + 25, SCREEN_WIDTH - 20, 45) tag:1];
     [self.view addSubview:self.numerBtn];
 }
 

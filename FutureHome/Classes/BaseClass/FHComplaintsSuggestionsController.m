@@ -31,6 +31,16 @@
     [self fh_creatBottomBtn];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [SingleManager shareManager].isComplaintsSuggestions = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+     [SingleManager shareManager].isComplaintsSuggestions = NO;
+}
+
 - (void)fh_creatUI {
     self.scrollView.frame = CGRectMake(0, MaxY(self.suggestionsTextView), SCREEN_WIDTH, SCREEN_HEIGHT);
     self.scrollView.delegate = self;
@@ -104,6 +114,7 @@
                                self.suggestionsTextView.text,@"content",
                                @(self.type),@"type",
                                nil];
+    
     [AFNetWorkTool post:@"public/complaint" params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
@@ -166,6 +177,5 @@
     }
     return _suggestionsTextView;
 }
-
 
 @end

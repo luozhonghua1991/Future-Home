@@ -319,7 +319,7 @@
     } else if (selectIndex.row == 5) {
         /** 物业管理 */
     } else if (selectIndex.row == 6) {
-        /** 物业招标 */
+        /** 招标服务 */
     } else if (selectIndex.row == 7) {
         /** 活动关爱 */
     } else if (selectIndex.row == 8) {

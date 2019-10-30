@@ -21,8 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger type;
 /** 是否是自己的回复 */
 @property (nonatomic, assign) BOOL isSelf;
-/** 1是自己 0是看的别人 */
+/** 1是自己 0是看的别人 2刚进来的状态*/
 @property (nonatomic, assign) NSInteger personType;
+/** 用户的ID */
+@property (nonatomic, copy) NSString *personID;
+/** 关注信息 */
+@property (nonatomic, copy) NSString *follow_msg;
 
 @end
 

@@ -47,7 +47,9 @@
 
 +(instancetype)commitWithDict:(NSDictionary *)dict;
 
++(instancetype)commitWithDongtaiDict:(NSDictionary *)dict;
 
+-(id)initWithDongTaiDict:(NSDictionary *)dict;
 /*
  
  name    type    desc

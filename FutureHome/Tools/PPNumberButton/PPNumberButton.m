@@ -93,11 +93,17 @@
     _longPressSpaceTime = 0.1f;
     
     //加,减按钮
-    _increaseBtn = [self creatButton];
-    _decreaseBtn = [self creatButton];
+    if (!_increaseBtn) {
+        _increaseBtn = [self creatButton];
+    }
+    if (!_decreaseBtn) {
+        _decreaseBtn = [self creatButton];
+    }
     
     //数量展示/输入框
-    _textField = [[UITextField alloc] init];
+    if (!_textField) {
+        _textField = [[UITextField alloc] init];
+    }
     _textField.delegate = self;
     _textField.textAlignment = NSTextAlignmentCenter;
     _textField.keyboardType = UIKeyboardTypeDecimalPad;
@@ -160,9 +166,9 @@
     [_textField resignFirstResponder];
     
     if (sender == _increaseBtn) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:CGFLOAT_MAX target:self selector:@selector(increase) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:_longPressSpaceTime target:self selector:@selector(increase) userInfo:nil repeats:YES];
     } else {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:CGFLOAT_MAX target:self selector:@selector(decrease) userInfo:nil repeats:YES];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:_longPressSpaceTime target:self selector:@selector(decrease) userInfo:nil repeats:YES];
     }
     [_timer fire];
 }
@@ -175,7 +181,7 @@
 {
     [self checkTextFieldNumberWithUpdate];
     
-    CGFloat number = [_textField.text floatValue] +     self.stepValue;
+    CGFloat number = [_textField.text floatValue] +  self.stepValue;
     
     if (number <= _maxValue) {
         // 当按钮为"减号按钮隐藏模式",且输入框值==设定最小值,减号按钮展开
@@ -249,8 +255,7 @@
 }
 
 /// 检查TextField中数字的合法性,并修正
-- (void)checkTextFieldNumberWithUpdate
-{
+- (void)checkTextFieldNumberWithUpdate {
     NSString *minValueString = nil;
     NSString *maxValueString = nil;
     if (self.decimalNum) {
@@ -288,7 +293,7 @@
             
             if (self.decimalNum) {
                 _textField.text = [NSString stringWithFormat:@"%.1f",_minValue-1];
-            }else{
+            } else{
                 _textField.text = [NSString stringWithFormat:@"%.f",_minValue-1];
             }
             

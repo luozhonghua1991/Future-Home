@@ -47,7 +47,6 @@
 }
 
 
-
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {

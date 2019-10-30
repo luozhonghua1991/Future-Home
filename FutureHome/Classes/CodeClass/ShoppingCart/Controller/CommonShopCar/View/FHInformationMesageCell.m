@@ -103,8 +103,8 @@
     if (!_timeLabel) {
         _timeLabel = [[UILabel alloc] init];
         _timeLabel.textAlignment = NSTextAlignmentLeft;
-        _timeLabel.font = [UIFont systemFontOfSize:13];
-        _timeLabel.textColor = [UIColor blackColor];
+        _timeLabel.font = [UIFont systemFontOfSize:12];
+        _timeLabel.textColor = HEX_COLOR(0x8f8f8f);
 #warning message
         _timeLabel.text = @"更新时间 2018/09/04";
     }
@@ -117,7 +117,7 @@
         _readCountLabel = [[UILabel alloc] init];
         _readCountLabel.textAlignment = NSTextAlignmentRight;
         _readCountLabel.font = [UIFont systemFontOfSize:13];
-        _readCountLabel.textColor = [UIColor blackColor];
+        _readCountLabel.textColor = HEX_COLOR(0x8f8f8f);
 #warning message
         _readCountLabel.text = @"阅读量  10086";
     }

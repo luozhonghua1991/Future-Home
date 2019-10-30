@@ -68,6 +68,15 @@
     self.priceLabel.text = [NSString stringWithFormat:@"￥%ld",(long)_houseListModel.rent];
 }
 
+- (void)setManagementModel:(FHReleaseManagemengModel *)managementModel {
+    _managementModel = managementModel;
+    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_managementModel.img_ids] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.houseNameLabel.text = _managementModel.community;
+    self.houseTypeLabel.text = _managementModel.hall;
+    self.priceSugmentLabel.text = _managementModel.require;
+    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",_managementModel.rent];
+}
+
 #pragma mark — setter && getter
 - (UIImageView *)leftImgView {
     if (!_leftImgView) {

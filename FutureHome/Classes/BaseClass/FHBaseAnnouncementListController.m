@@ -96,6 +96,11 @@
     [AFNetWorkTool get:@"public/noticeList" params:paramsDic success:^(id responseObj) {
         NSDictionary *dic = responseObj[@"data"];
         self.noticeListArrs = [FHNoticeListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
+        if (self.noticeListArrs.count == 0) {
+            [self.clickButton setTitle:@"申请招标服务" forState:UIControlStateNormal];
+            [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            self.clickButton.enabled = NO;
+        }
         [weakSelf.listTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.listTable reloadData];
@@ -123,6 +128,7 @@
         NSDictionary *dic = responseObj[@"data"];
         NSInteger status = [dic[@"status"] integerValue];
         self.pid = dic[@"id"];
+        
         if (self.ID == 6) {
             NSString *title = dic[@"apply_title"];
             /** 申请通道 */
@@ -232,8 +238,8 @@
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
-    if ([self.titleString isEqualToString:@"物业招标"]) {
-        [self viewControllerPushOther:@""];
+    if ([self.titleString isEqualToString:@"招标服务"]) {
+//        [self viewControllerPushOther:@""];
         FHApplicationBiddingController *vc = [[FHApplicationBiddingController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         vc.property_id = self.property_id;

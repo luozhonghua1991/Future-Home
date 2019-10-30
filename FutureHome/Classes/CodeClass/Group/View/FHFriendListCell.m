@@ -26,9 +26,14 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.headerImgView.frame = CGRectMake(10, 7.5, 55, 55);
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.nameLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, 0, 200, 70);
     self.followOrNoBtn.frame = CGRectMake(self.contentView.width - 100, 15.5, 80, 35);
+}
+
+- (void)setFollowListModel:(FHFollowListModel *)followListModel {
+    _followListModel = followListModel;
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_followListModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.nameLabel.text = _followListModel.nickname;
 }
 
 - (void)awakeFromNib {

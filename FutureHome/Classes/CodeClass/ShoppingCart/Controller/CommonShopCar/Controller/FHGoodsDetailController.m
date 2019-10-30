@@ -120,12 +120,17 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.goodsDetailModel = self.goodsDetailModel;
     
-    self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(SCREEN_WIDTH - 120, 11, 100, 20)];
+    /** 重用问题 */
+    if (!self.numberButton) {
+        self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(SCREEN_WIDTH - 120, 11, 100, 20)];
+    }
     // 初始化时隐藏减按钮
     self.numberButton.decreaseHide = YES;
+    self.numberButton.longPressSpaceTime = CGFLOAT_MAX;
     self.numberButton.increaseImage = [UIImage imageNamed:@"increase_eleme"];
     self.numberButton.decreaseImage = [UIImage imageNamed:@"decrease_eleme"];
     self.numberButton.currentNumber = self.currentNumber;
+//    self.numberButton.currentNumber = 7;
     WS(weakSelf);
     self.numberButton.resultBlock = ^(PPNumberButton *ppBtn, CGFloat number, BOOL increaseStatus) {
         if (increaseStatus) {
@@ -151,8 +156,10 @@
             }
         }
         NSLog(@"%f",number);
+//        weakSelf.numberButton.currentNumber = number;
     };
-    [SingleManager shareManager].numberButton = self.numberButton;
+//    [SingleManager shareManager].numberButton = self.numberButton;
+    
     [cell.contentView addSubview:self.numberButton];
     
     return cell;
@@ -178,28 +185,12 @@
 #pragma mark  -- 点击banner的代理方法
 /** 点击图片*/
 - (void)infiniteScrollView:(BHInfiniteScrollView *)infiniteScrollView didSelectItemAtIndex:(NSInteger)index {
-    return;
-    
-    SDPhotoBrowser *browser = [[SDPhotoBrowser alloc] init];
-    browser.sourceImagesContainerView = self.view;
-    NSArray *urlsArray = @[self.goodsModel.goodsImage];
-    browser.imageCount = self.urlArrays.count;
-    browser.currentImageIndex = index;
-    browser.delegate = self;
-    [browser show]; // 展示图片浏览器
-}
-
-- (NSURL *)photoBrowser:(SDPhotoBrowser *)browser highQualityImageURLForIndex:(NSInteger)index {
-    NSString *urlString = self.urlArrays[index];
-    NSURL *url = [NSURL URLWithString:urlString];
-    return url;
-}
-
-- (UIImage *)photoBrowser:(SDPhotoBrowser *)browser placeholderImageForIndex:(NSInteger)index {
-//    NSArray *urlsArray = @[@"奔驰1",@"奔驰2",@"奔驰3"];
-    //    UIImage *imageView = [UIImage imageNamed:@"%@",[urlsArray objectAtIndex:index]];
-    UIImage *imageView = [UIImage imageNamed:@""];
-    return imageView;
+    HZPhotoBrowser *browser = [[HZPhotoBrowser alloc] init];
+    browser.isFullWidthForLandScape = YES;
+    browser.isNeedLandscape = YES;
+    browser.currentImageIndex = (int)index;
+    browser.imageArray = self.urlArrays;
+    [browser show];
 }
 
 #pragma mark — setter & getter

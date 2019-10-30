@@ -38,47 +38,83 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (self.authModel.audit_status == 0) {
-        /** 没有填过认证资料 */
-        UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
-        _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
-        _button.backgroundColor = HEX_COLOR(0x1296db);
-        _button.layer.cornerRadius = 25;
-        _button.layer.masksToBounds = YES;
-        _button.clipsToBounds = YES;
-        [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_button addTarget:self action:@selector(goOwnerCertification) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_button];
-        [_button setTitle:@"前往认证业主信息" forState:UIControlStateNormal];
-    } else if (self.authModel.audit_status == 1) {
-        /** 资料审核中 */
-        UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
-        _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
-        _button.backgroundColor = HEX_COLOR(0x1296db);
-        _button.layer.cornerRadius = 25;
-        _button.layer.masksToBounds = YES;
-        _button.clipsToBounds = YES;
-        [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _button.enabled = NO;
-        [self.view addSubview:_button];
-        [_button setTitle:@"资料审核中" forState:UIControlStateNormal];
-    } else if (self.authModel.audit_status == 2) {
+    if ([self.type isEqualToString:@"我的业委"]) {
+        [self fh_creatNav];
         //显示用户所填资料
         [self fh_creatUI];
         [self fh_layoutSubViews];
-    } else if (self.authModel.audit_status == 3) {
-        /** 审核失败 */
-        UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
-        _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
-        _button.backgroundColor = HEX_COLOR(0x1296db);
-        _button.layer.cornerRadius = 25;
-        _button.layer.masksToBounds = YES;
-        _button.clipsToBounds = YES;
-        [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_button addTarget:self action:@selector(goOwnerCertification) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:_button];
-        [_button setTitle:@"审核失败,请重新前往认证业主信息" forState:UIControlStateNormal];
+    } else {
+        if (self.authModel.audit_status == 0) {
+            /** 没有填过认证资料 */
+            UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
+            _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
+            _button.backgroundColor = HEX_COLOR(0x1296db);
+            _button.layer.cornerRadius = 25;
+            _button.layer.masksToBounds = YES;
+            _button.clipsToBounds = YES;
+            [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [_button addTarget:self action:@selector(goOwnerCertification) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:_button];
+            [_button setTitle:@"前往认证业主信息" forState:UIControlStateNormal];
+        } else if (self.authModel.audit_status == 1) {
+            /** 资料审核中 */
+            UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
+            _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
+            _button.backgroundColor = HEX_COLOR(0x1296db);
+            _button.layer.cornerRadius = 25;
+            _button.layer.masksToBounds = YES;
+            _button.clipsToBounds = YES;
+            [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            _button.enabled = NO;
+            [self.view addSubview:_button];
+            [_button setTitle:@"资料审核中" forState:UIControlStateNormal];
+        } else if (self.authModel.audit_status == 2) {
+            //显示用户所填资料
+            [self fh_creatUI];
+            [self fh_layoutSubViews];
+        } else if (self.authModel.audit_status == 3) {
+            /** 审核失败 */
+            UIButton *_button = [UIButton buttonWithType:UIButtonTypeCustom];
+            _button.frame = CGRectMake(10, ScreenHeight / 2 - 30, ScreenWidth - 20, 50);
+            _button.backgroundColor = HEX_COLOR(0x1296db);
+            _button.layer.cornerRadius = 25;
+            _button.layer.masksToBounds = YES;
+            _button.clipsToBounds = YES;
+            [_button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [_button addTarget:self action:@selector(goOwnerCertification) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:_button];
+            [_button setTitle:@"审核失败,请重新前往认证业主信息" forState:UIControlStateNormal];
+        }
     }
+}
+
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = self.type;
+    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:backBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [self.navgationView addSubview:bottomLineView];
+}
+
+- (void)backBtnClick {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)fh_creatUI {
@@ -98,7 +134,11 @@
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
     CGFloat commonCellHeight = 50.0f;
-    self.scrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    if ([self.type isEqualToString:@"我的业委"]) {
+        self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight);
+    } else {
+        self.scrollView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
     self.ownerNameView.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
     self.ownerCodeView.frame = CGRectMake(0, MaxY(self.ownerNameView), SCREEN_WIDTH, commonCellHeight);
     self.phoneNumberView.frame = CGRectMake(0, MaxY(self.ownerCodeView), SCREEN_WIDTH, commonCellHeight);

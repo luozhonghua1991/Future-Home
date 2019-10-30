@@ -259,6 +259,9 @@
                 NSString *msg = responseObj[@"msg"];
                 [self.view makeToast:msg];
                 [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
+            } else {
+                NSString *msg = responseObj[@"msg"];
+                [self.view makeToast:msg];
             }
         } failure:^(NSError *error) {
             
