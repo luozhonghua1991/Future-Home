@@ -38,7 +38,7 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 }
 
 /** 初始化collectionView */
--(void)initPickerView{
+-(void)initPickerView {
     _showActionSheetViewController = self;
     
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -80,6 +80,9 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    if ([SingleManager shareManager].isSelectVideo || [SingleManager shareManager].isSelectPhoto) {
+        return _imageArray.count;
+    }
     return _imageArray.count+1;
 }
 
@@ -174,18 +177,6 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 }
 #pragma mark - 选择图片
 - (void)addNewImg {
-    if ([SingleManager shareManager].isSelectVideo) {
-        MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
-        [[UIApplication sharedApplication].keyWindow addSubview:hud];
-        hud.removeFromSuperViewOnHide = YES;
-        hud.userInteractionEnabled = NO;
-        hud.mode = MBProgressHUDModeText;
-        hud.label.text = @"图片和视频不能同时选择";
-        [hud showAnimated:YES];
-        [hud hideAnimated:YES afterDelay:2];
-        return;
-        
-    }
     if (!_imgPickerActionSheet) {
         _imgPickerActionSheet = [[HWImagePickerSheet alloc] init];
         _imgPickerActionSheet.delegate = self;
@@ -199,26 +190,44 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 }
 
 #pragma mark - 删除照片
-- (void)deletePhoto:(UIButton *)sender{
-    
-    [_imageArray removeObjectAtIndex:sender.tag];
-    [_arrSelected removeObjectAtIndex:sender.tag];
-    
-    
-    [self.pickerCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:sender.tag inSection:0]]];
-    
-    for (NSInteger item = sender.tag; item <= _imageArray.count; item++) {
-        HWCollectionViewCell *cell = (HWCollectionViewCell*)[self.pickerCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:0]];
-        cell.closeButton.tag--;
-        cell.profilePhoto.tag--;
+- (void)deletePhoto:(UIButton *)sender {
+    if ([SingleManager shareManager].isSelectVideo) {
+        /** 视频的选中状态 */
+        [_imageArray removeAllObjects];
+        [SingleManager shareManager].isSelectVideo = NO;
+        [SingleManager shareManager].videoPath = nil;
+        [self.pickerCollectionView reloadData];
+    } else {
+        [_imageArray removeObjectAtIndex:sender.tag];
+        [_arrSelected removeObjectAtIndex:sender.tag];
+        
+        
+        [self.pickerCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:sender.tag inSection:0]]];
+        
+        for (NSInteger item = sender.tag; item <= _imageArray.count; item++) {
+            HWCollectionViewCell *cell = (HWCollectionViewCell*)[self.pickerCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:0]];
+            cell.closeButton.tag--;
+            cell.profilePhoto.tag--;
+        }
+        
+        [self changeCollectionViewHeight];
     }
-    
-    [self changeCollectionViewHeight];
 }
 
 #pragma mark - 改变view，collectionView高度
-- (void)changeCollectionViewHeight{
-    
+- (void)changeCollectionViewHeight {
+    if ([SingleManager shareManager].isSelectPhoto) {
+        if (_arrSelected.count == 0) {
+            [SingleManager shareManager].isSelectPhoto = NO;
+            [self.pickerCollectionView reloadData];
+        } else {
+            [self changeFrame];
+        }
+    }
+     [self changeFrame];
+}
+
+- (void)changeFrame {
     if (_collectionFrameY) {
         _pickerCollectionView.frame = CGRectMake(0, _collectionFrameY, [UIScreen mainScreen].bounds.size.width, (((float)[UIScreen mainScreen].bounds.size.width-64.0) /3 +20.0)* ((int)(_arrSelected.count)/3 +1)+20.0);
     }
@@ -226,8 +235,9 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
         _pickerCollectionView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, (((float)[UIScreen mainScreen].bounds.size.width-64.0) /3.0 +20.0)* ((int)(_arrSelected.count)/3 +1)+20.0);
     }
     [self pickerViewFrameChanged];
-    
 }
+
+
 /**
  *  相册完成选择得到图片
  */

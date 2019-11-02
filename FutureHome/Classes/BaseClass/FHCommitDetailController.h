@@ -17,13 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *ID;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger property_id;
-/** 1 物业  2 业委 */
+/** 1 物业  2 业委 3 朋友圈*/
 @property (nonatomic, assign) NSInteger type;
 /** 是否能评论 */
 @property (nonatomic, assign) BOOL isCanCommit;
 /** 传过来的评论数据 */
 @property (nonatomic, strong) NSDictionary *dataDic;
-
+/** 传过来的评论数据 */
+@property (nonatomic, strong) NSDictionary *dongTaiDataDic;
 
 @end
 

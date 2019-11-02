@@ -60,11 +60,13 @@
     
     if (![SingleManager shareManager].isComplaintsSuggestions) {
         /** 拍摄视频 */
-        UIAlertAction *actionVideo = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"录制视频"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            /** 拍摄视频 */
-            [self addTakeVideo];
-        }];
-        [alertController addAction:actionVideo];
+        if (![SingleManager shareManager].isSelectPhoto) {
+            UIAlertAction *actionVideo = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"录制视频"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                /** 拍摄视频 */
+                [self addTakeVideo];
+            }];
+            [alertController addAction:actionVideo];
+        }
     }
     
     [alertController addAction:actionCancel];
@@ -78,8 +80,7 @@
 }
 
 //调用系统录像
-- (void)addTakeVideo
-{
+- (void)addTakeVideo {
     _imagePickerVc = [[UIImagePickerController alloc] init];
     _imagePickerVc.delegate = self;
     _imagePickerVc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
@@ -258,7 +259,8 @@
         NSURL *newVideoUrl ; //一般.mp4
         NSDateFormatter *formater = [[NSDateFormatter alloc] init];//用时间给文件全名，以免重复，在测试的时候其实可以判断文件是否存在若存在，则删除，重新生成文件即可
         [formater setDateFormat:@"yyyy-MM-dd-HH:mm:ss"];
-        newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/tmp/output-%@.mp4", [formater stringFromDate:[NSDate date]]]];//这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
+        newVideoUrl = [NSURL fileURLWithPath:[NSHomeDirectory() stringByAppendingFormat:@"/tmp/output-%@.mp4", [formater stringFromDate:[NSDate date]]]];
+        //这个是保存在app自己的沙盒路径里，后面可以选择是否在上传后删除掉。我建议删除掉，免得占空间。
         [SingleManager shareManager].videoPath = [newVideoUrl absoluteString];
         //视频压缩
         [self convertVideoQuailtyWithInputURL:sourceURL outputURL:newVideoUrl completeHandler:nil];
@@ -295,10 +297,10 @@
 - (void)finishSelectImg{
     //正方形缩略图
     NSMutableArray *thumbnailImgArr = [NSMutableArray array];
-    
     if ([SingleManager shareManager].isSelectVideo) {
         [thumbnailImgArr addObject:self.videoImage];
     } else {
+        [SingleManager shareManager].isSelectPhoto = YES;
         for (ALAsset *set in _arrSelected) {
             //        CGImageRef cgImg = [set thumbnail];
             CGImageRef cgImg = [set aspectRatioThumbnail];

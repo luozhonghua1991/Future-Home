@@ -44,6 +44,7 @@
         self.nickname = dict[@"nickname"];
         self.content = dict[@"content"];
         self.img_data = [dict[@"img_ids"] toReadableJSONString];
+//        self.img_data = dict[@"img_data"];
         self.ID = dict[@"id"];
 //        self.like_count = dict[@"like_count"];
 //        self.unlike_count = dict[@"unlike_count"];
@@ -64,10 +65,12 @@
         for (NSDictionary *dic in arr) {
             [imageArrs addObject:dic[@"path"]];
         }
+        self.ID = dict[@"id"];
         self.avatar  = dict[@"avatar"];
         self.nickname = dict[@"nickname"];
         self.content = dict[@"content"];
         self.img_data = [imageArrs toReadableJSONString];
+//        self.img_data = dict[@"img_data"];
 //        self.like_id = dict[@"like_id"];
         self.like_count = dict[@"like_num"];
 //        self.unlike_count = dict[@"unlike_count"];

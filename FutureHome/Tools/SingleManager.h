@@ -71,12 +71,21 @@
 
 /** 是否是选择发布动态中的视频状态  如果选择了视频 就不能选择图片 */
 @property (nonatomic, assign) BOOL isSelectVideo;
+/** 是否是选择发布动态中的图片状态  如果选择了图片 就不能选择视频 */
+@property (nonatomic, assign) BOOL isSelectPhoto;
 /** 是否是投诉建议界面 */
 @property (nonatomic, assign) BOOL isComplaintsSuggestions;
 /**
  *  视频的path
  */
 @property (nonatomic,copy)NSString   *videoPath;
+/** 动态cell有图片的高度 */
+@property (nonatomic, assign) CGFloat cellPicHeight;
+/** 动态cell没有图片的高度 */
+@property (nonatomic, assign) CGFloat cellNoPicHeight;
+/** 动态cell有视频的高度 */
+@property (nonatomic, assign) CGFloat cellVideoHeight;
+
 
 
 

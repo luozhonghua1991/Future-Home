@@ -13,16 +13,23 @@
 #import "XHInputView.h"
 #import "FHCommitModel.h"
 #import "FHCommitDetaolCell.h"
+#import "ZJNoHavePhotoCell.h"
 
-#define kMasonryCell @"kMasonryCell"
+/** 没有图片的 */
+#define kNoPicMasonryCell @"kNoPicMasonryCell"
+/** 有图片的 */
+#define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete>
+@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate>
 
 @property(nonatomic ,strong) UITableView *mainTable;
 
 @property(nonatomic ,strong) NSMutableArray *dataArray;
 /** 评论列表 */
 @property (nonatomic, strong) NSMutableArray *commitDataArrs;
+
+/** 二维码图 */
+@property (nonatomic, strong) UIImageView *codeImgView;
 
 @end
 
@@ -33,10 +40,16 @@
     // Do any additional setup after loading the view.
     [self fh_creatNav];
     [self setUpAllView];
-//    /** 评论详情数据 */
-    [self requestWithDic:self.dataDic];
+    if (self.type == 3) {
+        //    /** 评论详情数据 */
+        [self requestWithDic:self.dongTaiDataDic];
+    } else {
+        //    /** 评论详情数据 */
+        [self requestWithDic:self.dataDic];
+    }
     /** 评论数据 */
     [self getCommitsData];
+    
     if (!self.isCanCommit) {
         [self fh_creatBottomInputView];
     }
@@ -72,6 +85,44 @@
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.navgationView addSubview:bottomLineView];
+    
+    self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, MainStatusBarHeight + 5, 25, 25)];
+    self.codeImgView.image = [UIImage imageNamed:@"saoyisao-2"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+    self.codeImgView.userInteractionEnabled = YES;
+    [self.codeImgView addGestureRecognizer:tap];
+    [self.navgationView addSubview:self.codeImgView];
+}
+
+- (void)tapClick {
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"确定删除该条动态吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex {
+//    switch (buttonIndex)
+//    {
+//        case 0:
+//        {
+//            /** 做删除动态的操作 */
+//
+////            [self addCamera];
+//            break;
+//        }
+//        case 1:
+//        {
+//            ZHLog(@"取消");
+//            break;
+//        }
+//        default:
+//
+//            break;
+//    }
 }
 
 - (void)backBtnClick {
@@ -83,15 +134,25 @@
 - (void)getCommitsData {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                 @(account.user_id),@"user_id",
-                 @(self.property_id),@"property_id",
-                 @(self.type),@"type",
-                 self.ID,@"id",
-                 nil];
-    
+    NSString *url;
+    NSDictionary *paramsDic;
+    if (self.type == 3) {
+        url = @"sheyun/commentList";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.ID,@"id",
+                     nil];
+    } else {
+        url = @"public/complaintDetail";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     @(self.property_id),@"property_id",
+                     @(self.type),@"type",
+                     self.ID,@"id",
+                     nil];
+    }
     self.commitDataArrs = [[NSMutableArray alloc] init];
-    [AFNetWorkTool get:@"public/complaintDetail" params:paramsDic success:^(id responseObj) {
+    [AFNetWorkTool get:url params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
         weakSelf.commitDataArrs = [FHCommitModel mj_objectArrayWithKeyValuesArray:Dic[@"list"]];
         [weakSelf.mainTable reloadData];
@@ -106,8 +167,14 @@
     NSMutableArray *arrM = [NSMutableArray array];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSDictionary *dictDict in arr) {
-            ZJCommit *commit = [ZJCommit commitWithDict:dictDict];
-            [arrM addObject:commit];
+            if (self.type == 3) {
+                ZJCommit *commit = [ZJCommit commitWithDongtaiDict:dictDict];
+                [arrM addObject:commit];
+            } else {
+                ZJCommit *commit = [ZJCommit commitWithDict:dictDict];
+                [arrM addObject:commit];
+            }
+            
         }
         self.dataArray = arrM;
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -131,7 +198,8 @@
         self.mainTable.estimatedRowHeight = 0.01;
     }
     // 必须先注册cell，否则会报错
-    [self.mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kMasonryCell];
+    [self.mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
+    [self.mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
     [self.mainTable registerClass:[FHCommitDetaolCell class] forCellReuseIdentifier:NSStringFromClass([FHCommitDetaolCell class])];
     [self.view addSubview:self.mainTable];
 }
@@ -149,12 +217,21 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kMasonryCell];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.weakSelf = self;
-        [self configureCell:cell atIndexPath:indexPath];
-        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        return cell;
+        ZJCommit *commit = self.dataArray[indexPath.row];
+        if (commit.pic_urls > 0) {
+            ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.weakSelf = self;
+            [self configureCell:cell atIndexPath:indexPath];
+            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+            return cell;
+        } else {
+            ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
+            photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [self configureNoCell:photoCell atIndexPath:indexPath];
+            
+            return photoCell;
+        }
     }
     FHCommitDetaolCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommitDetaolCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -165,11 +242,19 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+     ZJCommit *commit = self.dataArray[indexPath.row];
     if (indexPath.section == 0) {
-        // 计算缓存cell的高度
-        return [self.mainTable fd_heightForCellWithIdentifier:kMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
-            [self configureCell:cell atIndexPath:indexPath];
-        }];
+        if (commit.pic_urls > 0) {
+            // 计算缓存cell的高度
+//            return [self.mainTable fd_heightForCellWithIdentifier:kPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
+//                [self configureCell:cell atIndexPath:indexPath];
+//            }];
+            return [SingleManager shareManager].cellPicHeight;
+        } else {
+            return [self.mainTable fd_heightForCellWithIdentifier:kNoPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJNoHavePhotoCell *photoCell) {
+                [self configureNoCell:photoCell atIndexPath:indexPath];
+            }];
+        }
     }
     return 70.0f;
 }
@@ -206,10 +291,15 @@
     return [[UIView alloc] init];
 }
 
+
 #pragma mark - 给cell赋值
 - (void)configureCell:(ZJMasonryAutolayoutCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     // 采用计算frame模式还是自动布局模式，默认为NO，自动布局模式
     //    cell.fd_enforceFrameLayout = NO;
+    cell.model = self.dataArray[indexPath.row];
+}
+
+- (void)configureNoCell:(ZJNoHavePhotoCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     cell.model = self.dataArray[indexPath.row];
 }
 
@@ -274,9 +364,6 @@
     [AFNetWorkTool post:@"public/feedComplaints" params:paramsDic success:^(id responseObj) {
         
         [weakSelf getCommitsData];
-//        NSDictionary *Dic = responseObj[@"data"];
-//        weakSelf.commitDataArrs = [FHCommitModel mj_objectArrayWithKeyValuesArray:Dic[@"list"]];
-//        [weakSelf.mainTable reloadData];
     } failure:^(NSError *error) {
     }];
 }

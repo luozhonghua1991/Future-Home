@@ -348,11 +348,8 @@
     [session setResponseSerializer:serializer];
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     
-//    //设置 POST请求文件上传
-//    [session.requestSerializer setValue:@"multipart/form-data; boundary=BOUNDARY" forHTTPHeaderField:@"Content-Type"];
-    
     [session POST:urlStr parameters:parameter constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-        [formData appendPartWithFileData:videoData name:@"file[]" fileName:@"futureHome.mp4" mimeType:@"     video/mpeg4"];
+        [formData appendPartWithFileData:videoData name:@"file[]" fileName:@"futureHome.mp4" mimeType:@"     video/mp4"];
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
             success(responseObject);

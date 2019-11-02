@@ -32,7 +32,7 @@
     return self;
 }
 
--(void)setUpAllView{
+-(void)setUpAllView {
     for (int i =0; i<9; i++) {
         UIImageView *imageV = [[UIImageView alloc]init];
         imageV.contentMode = UIViewContentModeScaleAspectFill;
@@ -62,7 +62,8 @@
     [self setNeedsLayout];
 }
 #pragma mark -  图片点击事件
--(void)imgVClick:(UITapGestureRecognizer *)sender{
+-(void)imgVClick:(UITapGestureRecognizer *)sender {
+    
     NSLog(@"点击了第%ld个图片",sender.view.tag + 1);
     
     NSMutableArray *items = @[].mutableCopy;

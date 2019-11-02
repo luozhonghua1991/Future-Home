@@ -25,7 +25,9 @@
 
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self;
 
-#define Placeholder_Image [UIImage imageNamed:@"DPPhoto_library_holdImage"] //占位图
+//#define Placeholder_Image [UIImage imageNamed:@"DPPhoto_library_holdImage"] //占位图
+
+#define Placeholder_Image [UIImage imageNamed:@"头像"]
 
 #define RGB_COLOR(r,g,b,a) [UIColor colorWithRed:(r)/255.0 green:(g)/255.0 blue:(b)/255.0 alpha:(a)] //颜色
 

@@ -121,7 +121,7 @@
         else if ([photo dataUsingEncoding:NSUTF8StringEncoding]) {
             self.photoImageView.image = [[UIImage alloc]initWithData:[photo dataUsingEncoding:NSUTF8StringEncoding]];
         } else {
-            self.photoImageView.image = Placeholder_Image;
+//            self.photoImageView.image = Placeholder_Image;
         }
     }
     //UIImage 类型

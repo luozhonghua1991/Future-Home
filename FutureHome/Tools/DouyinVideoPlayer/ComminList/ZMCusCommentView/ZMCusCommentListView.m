@@ -20,6 +20,10 @@
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHCommentListModel *commentListModel;
 
+/** 评论列表数据 */
+@property (nonatomic, copy) NSArray *listDataArrs;
+
+
 @end
 
 
@@ -65,6 +69,7 @@
 
     if (!_tableView) {
         _tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStylePlain];
+//        _tableView = [[UITableView alloc] initWithFrame:self.bounds style:UITableViewStyleGrouped];
         _tableView.backgroundColor = [UIColor whiteColor];
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator=NO;
@@ -73,8 +78,13 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _tableView.tableFooterView = [UIView new];
         _tableView.estimatedRowHeight = 10000;
+//        if (@available (iOS 11.0, *)) {
+//            _tableView.estimatedSectionHeaderHeight = 0.01;
+//            _tableView.estimatedSectionFooterHeight = 0.01;
+//            _tableView.estimatedRowHeight = 0.01;
+//        }
         [_tableView registerClass:[ZMCusCommentListContentCell class] forCellReuseIdentifier:NSStringFromClass([ZMCusCommentListContentCell class])];
-        [_tableView registerClass:[ZMCusCommentListReplyContentCell class] forCellReuseIdentifier:NSStringFromClass([ZMCusCommentListReplyContentCell class])];
+//        [_tableView registerClass:[ZMCusCommentListReplyContentCell class] forCellReuseIdentifier:NSStringFromClass([ZMCusCommentListReplyContentCell class])];
         [self addSubview:_tableView];
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.edges.mas_equalTo(UIEdgeInsetsMake(70,0, ZMCusComentBottomViewHeight+ZMCusCommentViewTopHeight+SAFE_AREA_BOTTOM, 0));
@@ -103,6 +113,8 @@
 
 - (void)setCommentListDataArrs:(NSMutableArray *)commentListDataArrs {
     _commentListDataArrs = commentListDataArrs;
+    self.listDataArrs = commentListDataArrs;
+    _commentListDataArrs = [FHCommentListModel mj_objectArrayWithKeyValuesArray:commentListDataArrs];
     [self.tableView reloadData];
 }
 
@@ -113,8 +125,11 @@
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+//    return self.commentListDataArrs.count;
 }
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+//    return 1;
+    
     return self.commentListDataArrs.count;
 }
 
@@ -122,10 +137,11 @@
     //如果你需要做成多级回复的话，可以改一下tableview为section 的形式去做
 //    FHCommentListModel *model = self.commentListDataArrs[indexPath.row];
 //    if (IS_NULL_ARRAY(model.child)) {
-        ZMCusCommentListContentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZMCusCommentListContentCell class]) forIndexPath:indexPath];
+      ZMCusCommentListContentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZMCusCommentListContentCell class]) forIndexPath:indexPath];
         FHCommentListModel *model = self.commentListDataArrs[indexPath.row];
-        cell.commentListModel = model;
-        return cell;
+//    FHCommentListModel *model = self.commentListDataArrs[indexPath.section];
+    cell.commentListModel = model;
+    return cell;
 //    } else {
 //        ZMCusCommentListReplyContentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZMCusCommentListReplyContentCell class]) forIndexPath:indexPath];
 //        [cell configData:nil];
@@ -136,6 +152,7 @@
     
     return UITableViewAutomaticDimension;
 }
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
@@ -153,8 +170,25 @@
             self.replyBtnBlock();
         }
     }
-
 }
+
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+//    FHCommentListModel *model = self.commentListDataArrs[section];
+//    if (model.child.count > 0) {
+//        return 100.f;
+//    }
+//    return 0.01f;
+//}
+//
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+//    return 0.01f;
+//}
+//
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 100)];
+//    view.backgroundColor = [UIColor whiteColor];
+//    return view;
+//}
 
 - (void)repeatDelay{
     self.isSelect = NO;

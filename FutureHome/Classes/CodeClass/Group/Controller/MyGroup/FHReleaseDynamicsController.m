@@ -17,6 +17,9 @@
 @property (nonatomic, strong) NSMutableArray *imgSelectArrs;
 /** 服务器返回的图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectImgArrays;
+/** 是否选择了 */
+@property (nonatomic, assign) BOOL isSelect;
+
 
 @end
 
@@ -30,7 +33,6 @@
     [self fh_creatUI];
     [self fh_creatBottomBtn];
 }
-
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -58,6 +60,8 @@
 }
 
 - (void)backBtnClick {
+    [SingleManager shareManager].isSelectVideo = NO;
+    [SingleManager shareManager].isSelectPhoto = NO;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -96,6 +100,11 @@
 
 /** 发布动态 */
 - (void)addInvoiceBtnClick {
+    if (self.isSelect) {
+        return;
+    } else {
+        self.isSelect = YES;
+    }
     if (self.suggestionsTextView.text.length <= 0||[self.suggestionsTextView.text isEqualToString:@""]) {
         [self.view makeToast:@"请填写内容"];
         return;
@@ -119,10 +128,12 @@
                                    nil];
         
         [AFNetWorkTool uploadImagesWithUrl:@"sheyun/publishDynamic" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {
+            [weakSelf.view makeToast:responseObj[@"上传中请稍后..."]];
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
                 [weakSelf.view makeToast:responseObj[@"msg"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [SingleManager shareManager].isSelectPhoto = NO;
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
@@ -135,18 +146,19 @@
 }
 
 - (void)updateVideoWithRequest {
+    NSData *videoData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SingleManager shareManager].videoPath]];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                /**视频2 */
                                @"2",@"type",
-                               @[[SingleManager shareManager].videoPath],@"file[]",
+                               @[videoData],@"file[]",
                                self.suggestionsTextView.text,@"content",
                                nil];
-    
-    NSData *videoData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SingleManager shareManager].videoPath]];
+
     [AFNetWorkTool updateVideoWithUrl:@"sheyun/publishDynamic" parameter:paramsDic videoData:videoData success:^(id responseObj) {
+        [weakSelf.view makeToast:responseObj[@"上传中请稍后..."]];
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
                 [weakSelf.view makeToast:responseObj[@"msg"]];
@@ -158,7 +170,7 @@
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-            
+
         }];
 }
 

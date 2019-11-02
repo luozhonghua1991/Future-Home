@@ -12,8 +12,12 @@
 #import "ZJCommit.h"
 #import "FHPersonTrendsController.h"
 #import "FHCommitDetailController.h"
+#import "ZJNoHavePhotoCell.h"
 
-#define kMasonryCell @"kMasonryCell"
+/** 没有图片的 */
+#define kNoPicMasonryCell @"kNoPicMasonryCell"
+/** 有图片的 */
+#define kPicMasonryCell @"kPicMasonryCell"
 
 @interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,ZJMasonryAutolayoutCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 
@@ -126,9 +130,9 @@
                 [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
                 [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
                 weakSelf.nameLabel.text = dic[@"nickname"];
+                weakSelf.rulesLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"praise_num"]];
                 weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
                 weakSelf.followLabel.text = [NSString stringWithFormat:@"关注: %@",dic[@"follow_num"]];
-                weakSelf.rulesLabel.text = @"";
                 weakSelf.updateLabel.text = [NSString stringWithFormat:@"发布: %@",dic[@"publish_num"]];
                 if ([dic[@"is_follow"] integerValue] == 0) {
                     [weakSelf.relationBtn setTitle:@"+关注" forState:UIControlStateNormal];
@@ -216,11 +220,12 @@
     }
     self.mainTable.delegate = self;
     self.mainTable.dataSource = self;
-    self.mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.mainTable.tableFooterView = [[UIView alloc] init];
     self.mainTable.estimatedRowHeight = 100;
     // 必须先注册cell，否则会报错
-    [self.mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kMasonryCell];
+    [_mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
+    [_mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
     [self.view addSubview:self.mainTable];
     if (self.isHaveHeaderView) {
         self.mainTable.tableHeaderView = self.headerView;
@@ -233,29 +238,47 @@
     return self.dataArray.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kMasonryCell];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.weakSelf = self;
-    cell.delegate = self;
-    [self configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ZJCommit *commit = self.dataArray[indexPath.row];
+    if (commit.pic_urls > 0) {
+        ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.weakSelf = self;
+        cell.delegate = self;
+        [self configureCell:cell atIndexPath:indexPath];
+        
+        return cell;
+    } else {
+        ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
+        photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self configureNoCell:photoCell atIndexPath:indexPath];
+        
+        return photoCell;
+    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    // 计算缓存cell的高度
-    return [self.mainTable fd_heightForCellWithIdentifier:kMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
-        [self configureCell:cell atIndexPath:indexPath];
-    }];
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ZJCommit *commit = self.dataArray[indexPath.row];
+    if (commit.pic_urls > 0) {
+        // 计算缓存cell的高度
+//        return [self.mainTable fd_heightForCellWithIdentifier:kPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
+//            [self configureCell:cell atIndexPath:indexPath];
+//        }];
+        return [SingleManager shareManager].cellPicHeight;
+    } else {
+        return [self.mainTable fd_heightForCellWithIdentifier:kNoPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJNoHavePhotoCell *photoCell) {
+            [self configureNoCell:photoCell atIndexPath:indexPath];
+        }];
+    }
 }
+
 
 #pragma mark - 给cell赋值
 - (void)configureCell:(ZJMasonryAutolayoutCell *)cell atIndexPath:(NSIndexPath *)indexPath{
-    // 采用计算frame模式还是自动布局模式，默认为NO，自动布局模式
-//        cell.fd_enforceFrameLayout = NO;
+    cell.model = self.dataArray[indexPath.row];
+}
+
+- (void)configureNoCell:(ZJNoHavePhotoCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     cell.model = self.dataArray[indexPath.row];
 }
 
@@ -271,15 +294,24 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ZJCommit *model = self.dataArray[indexPath.row];
     FHCommitDetailController *vc = [[FHCommitDetailController alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
+    if ([self.yp_tabItemTitle isEqualToString:@"云动态"] || [self.yp_tabItemTitle isEqualToString:@"动态"]) {
+        vc.type = 3;
+        vc.dongTaiDataDic = self.commitsListArrs[indexPath.row];
+        vc.isCanCommit = NO;
+    } else {
+        vc.isCanCommit = self.isSelf;
+        vc.dataDic = self.commitsListArrs[indexPath.row];
+     
+        
+        vc.type = self.type;
+        vc.property_id = self.property_id;
+    }
     vc.ID = model.ID;
-    vc.type = self.type;
-    vc.property_id = self.property_id;
-    vc.isCanCommit = self.isSelf;
-    vc.dataDic = self.commitsListArrs[indexPath.row];
+    vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
