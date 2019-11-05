@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHOtherFollowCell : UITableViewCell
+@interface FHOtherFollowViewCell : UITableViewCell
 /** 头像 */
 @property (nonatomic, strong) UIImageView *headerImgView;
 /** 标题 */

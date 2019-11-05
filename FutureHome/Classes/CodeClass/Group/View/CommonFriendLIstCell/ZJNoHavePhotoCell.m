@@ -45,6 +45,8 @@
 @property(nonatomic ,strong) UIView         *topLine;
 /** 浏览次数 */
 @property (nonatomic, strong) UIButton *eyeBtn;
+/** 点赞按钮 */
+@property (nonatomic, strong) UIButton *upBtn;
 /** 评论按钮 */
 @property (nonatomic, strong) UIButton *commitBtn;
 
@@ -60,94 +62,111 @@
 }
 
 
--(void)setModel:(ZJCommit *)model{
+-(void)setModel:(ZJCommit *)model {
     _model = model;
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:model.avatar]];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     
-    self.nameLab.text = model.nickname;
-    NSInteger time = [model.add_time integerValue];
+    self.nameLab.text = _model.nickname;
+    NSInteger time = [_model.add_time integerValue];
     self.timeLab.text = [NSDate dateWithTimeInterval:time format:@"MM月dd日"];
-    self.contentLab.text = model.content;
+    self.contentLab.text = _model.content;
     
-    CGSize size = [UIlabelTool sizeWithString:self.contentLab.text font:self.contentLab.font];
-    [_contentLab mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->_avatar.mas_bottom).offset(10);
-        make.left.equalTo(self->_nameLab.mas_left);
-        make.right.mas_equalTo(-15);
-        make.height.mas_equalTo(size.height);
-    }];
+    CGSize size = [UIlabelTool sizeWithString:self.contentLab.text font:self.contentLab.font width:SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15];
+    self.contentLab.frame = CGRectMake(MaxX(self.avatar) + 15, MaxY(self.avatar) + 5, SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15, size.height);
+    
+    self.bottomView.frame = CGRectMake(0, MaxY(self.contentLab) + 10, SCREEN_WIDTH, 35);
+    
+    [self.eyeBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.view_num] forState:UIControlStateNormal];
+    [self.upBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.like_count] forState:UIControlStateNormal];
+    [self.commitBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.comment_num] forState:UIControlStateNormal];
+    
+    [SingleManager shareManager].cellNoPicHeight = MaxY(self.bottomView) + 5;
 }
 
 // 添加所子控件
--(void)setUpAllView{
+-(void)setUpAllView {
     // 头像
-    self.avatar = [UIImageView zj_imageViewWithImage:@"" SuperView:self.contentView contentMode:UIViewContentModeScaleAspectFill isClip:YES constraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(15);
-        make.top.mas_equalTo(15);
-        make.width.height.mas_equalTo(40);
-    }];
+    if (!self.avatar) {
+        self.avatar = [[UIImageView alloc] init];
+        self.avatar.image = [UIImage imageNamed:@""];
+        [self.contentView addSubview:self.avatar];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarClick)];
+        self.avatar.userInteractionEnabled = YES;
+        [self.avatar addGestureRecognizer:tap];
+    }
     
     // 昵称
-    self.nameLab = [UILabel zj_labelWithFontSize:15 textColor:kBlackColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self->_avatar.mas_centerY);
-        make.left.equalTo(self->_avatar.mas_right).offset(15);
-        make.right.mas_equalTo(-100);
-        make.height.mas_equalTo(20);
-    }];
+    if (!self.nameLab) {
+        self.nameLab = [[UILabel alloc] init];
+        self.nameLab.font = [UIFont systemFontOfSize:15];
+        self.nameLab.textColor = kBlueColor;
+        self.nameLab.numberOfLines = 1;
+        [self.contentView addSubview:self.nameLab];
+    }
     
     // 时间
-    self.timeLab = [UILabel zj_labelWithFontSize:12 textColor:kLightGrayColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(self->_avatar.mas_centerY);
-        make.right.mas_equalTo(-15);
-        make.width.mas_equalTo(80);
-        make.height.mas_equalTo(20);
-        
-    }];
-    self.timeLab.textAlignment = NSTextAlignmentRight;
+    if (!self.timeLab) {
+        self.timeLab = [[UILabel alloc] init];
+        self.timeLab.font = [UIFont systemFontOfSize:12];
+        self.timeLab.textColor = kLightGrayColor;
+        self.timeLab.numberOfLines = 1;
+        self.timeLab.textAlignment = NSTextAlignmentRight;
+        [self.contentView addSubview:self.timeLab];
+    }
     
     // 内容
-    self.contentLab = [UILabel zj_labelWithFontSize:14 lines:0 text:nil textColor:kBlackColor superView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->_avatar.mas_bottom).offset(10);
-        make.left.equalTo(self->_nameLab.mas_left);
-        make.right.mas_equalTo(-15);
-//        make.height.mas_lessThanOrEqualTo(16);
-        make.height.mas_equalTo(0.001);
-    }];
+    if (!self.contentLab) {
+        self.contentLab = [[UILabel alloc] init];
+        self.contentLab.font = [UIFont systemFontOfSize:14];
+        self.contentLab.textColor = kBlackColor;
+        self.contentLab.numberOfLines = 0;
+        self.contentLab.textAlignment = NSTextAlignmentLeft;
+        [self.contentView addSubview:self.contentLab];
+    }
     
-#warning 注意  不管你的布局是怎样的 ，一定要有一个(最好是最底部的控件)相对 contentView.bottom的约束，否则计算cell的高度的时候会不正确！
-    self.bottomView = [UIView zj_viewWithBackColor:kGreenColor supView:self.contentView constraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self->_contentLab.mas_bottom).offset(15);
-        make.left.mas_equalTo(0);
-        make.right.mas_equalTo(0);
-        make.height.mas_equalTo(35);
-        make.bottom.mas_equalTo(-5); // 这句很重要！！！
-    }];
+    //下面的 浏览量 点赞 评论数
+    if (!self.bottomView) {
+        self.bottomView = [[UIView alloc] init];
+        [self.contentView addSubview:self.bottomView];
+    }
     
-    //最上面的的分割线
-    self.topLine = [UIView zj_viewWithBackColor:kLightGrayColor supView:self.bottomView constraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(0);
-        make.left.mas_equalTo(self->_nameLab.mas_left);
-        make.right.mas_equalTo(0);
-        make.height.mas_equalTo(0.5);
-    }];
+    if (!self.topLine) {
+        self.topLine = [[UIView alloc] init];
+        self.topLine.backgroundColor = kLightGrayColor;
+        [self.bottomView addSubview:self.topLine];
+    }
+    //浏览量
+    if (!self.eyeBtn) {
+        self.eyeBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"阅读量"]];
+    }
+    
+    //点赞
+    if (!self.upBtn) {
+        self.upBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"1点赞"]];
+    }
+    
+    //评论量
+    if (!self.commitBtn) {
+        self.commitBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"评论、"]];
+    }
+    
+    /** 设置frame */
+    [self fh_layoutSubviews];
+}
 
-    self.eyeBtn = [self creatBtnWithTitle:@"11" image:[UIImage imageNamed:@"头像"]];
-    [self.bottomView addSubview:self.eyeBtn];
-    [_eyeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self->_nameLab.mas_left);
-        make.centerY.mas_equalTo(self.bottomView.centerY);
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(20);
-    }];
-
-    self.commitBtn = [self creatBtnWithTitle:@"22" image:[UIImage imageNamed:@"头像"]];
-    [self.bottomView addSubview:self.commitBtn];
-    [_commitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.mas_equalTo(-15);
-        make.centerY.mas_equalTo(self.bottomView.centerY);
-        make.width.mas_equalTo(100);
-        make.height.mas_equalTo(20);
-    }];
+- (void)fh_layoutSubviews {
+    self.avatar.frame = CGRectMake(15, 15, 40, 40);
+    self.nameLab.frame = CGRectMake(MaxX(self.avatar) + 15, 0, SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 100, 20);
+    self.nameLab.centerY = self.avatar.centerY;
+    self.timeLab.frame = CGRectMake(0, 0, SCREEN_WIDTH - 15, 20);
+    self.timeLab.centerY = self.avatar.centerY;
+    self.bottomView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 35);
+    self.topLine.frame = CGRectMake(MaxX(self.avatar) + 15, 0, SCREEN_WIDTH - (MaxX(self.avatar) + 15), 0.25);
+    CGFloat btnWidth = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
+    self.eyeBtn.frame = CGRectMake(MaxX(self.avatar) + 15, 10, btnWidth, 15);
+    self.upBtn.frame = CGRectMake(MaxX(self.eyeBtn) + 10, 10, btnWidth, 15);
+    self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 10, btnWidth, 15);
     
 }
 
@@ -156,8 +175,18 @@
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitleColor:kLightGrayColor forState:UIControlStateNormal];
     [btn setImage:imgage forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:12];
+    btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
+    btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     btn.enabled = NO;
+    [self.bottomView addSubview:btn];
     return btn;
+}
+
+- (void)avatarClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJNoHavePhotoCellSelectModel:)]) {
+        [_delegate fh_ZJNoHavePhotoCellSelectModel:self.model];
+    }
 }
 
 - (void)awakeFromNib {

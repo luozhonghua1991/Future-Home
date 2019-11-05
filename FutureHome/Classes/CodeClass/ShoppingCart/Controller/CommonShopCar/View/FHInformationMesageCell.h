@@ -10,9 +10,13 @@
 #import "FHInformationModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
+@class FHScrollNewsModel;
+
 @interface FHInformationMesageCell : UITableViewCell
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHInformationModel *infoModel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScrollNewsModel *newsModel;
 
 @end
 

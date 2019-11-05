@@ -14,6 +14,7 @@
 #import "FHCommitModel.h"
 #import "FHCommitDetaolCell.h"
 #import "ZJNoHavePhotoCell.h"
+#import "FHZJHaveMoveCell.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
@@ -190,7 +191,7 @@
     self.mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, kScreenWidth, kScreenHeight - MainSizeHeight - 40) style:UITableViewStylePlain];
     self.mainTable.delegate = self;
     self.mainTable.dataSource = self;
-    self.mainTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.mainTable.tableFooterView = [[UIView alloc] init];
     if (@available (iOS 11.0, *)) {
         self.mainTable.estimatedSectionHeaderHeight = 0.01;
@@ -201,6 +202,9 @@
     [self.mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
     [self.mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
     [self.mainTable registerClass:[FHCommitDetaolCell class] forCellReuseIdentifier:NSStringFromClass([FHCommitDetaolCell class])];
+    if (self.type == 3) {
+        [self.mainTable registerClass:[FHZJHaveMoveCell class] forCellReuseIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
+    }
     [self.view addSubview:self.mainTable];
 }
 
@@ -216,23 +220,51 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ZJCommit *commit = self.dataArray[indexPath.row];
     if (indexPath.section == 0) {
-        ZJCommit *commit = self.dataArray[indexPath.row];
-        if (commit.pic_urls > 0) {
-            ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.weakSelf = self;
-            [self configureCell:cell atIndexPath:indexPath];
-            tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-            return cell;
-        } else {
+        if (self.type == 3) {
+            if (commit.medias.count > 0) {
+                NSDictionary *dic = commit.medias[0];
+                if ([dic[@"type"] integerValue]== 2) {
+                    /** 视频Cell */
+                    FHZJHaveMoveCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.model = self.dataArray[indexPath.row];
+                    return cell;
+                    
+                } else if ([dic[@"type"] integerValue]== 1) {
+                    /** 图片Cell */
+                    ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.weakSelf = self;
+                    [self configureCell:cell atIndexPath:indexPath];
+                    
+                    return cell;
+                }
+            }
+            /** 纯文字Cell */
             ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
             photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [self configureNoCell:photoCell atIndexPath:indexPath];
-            
             return photoCell;
+        } else {
+            if (commit.pic_urls > 0) {
+                ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.weakSelf = self;
+                [self configureCell:cell atIndexPath:indexPath];
+                tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+                return cell;
+            } else {
+                ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
+                photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                [self configureNoCell:photoCell atIndexPath:indexPath];
+                
+                return photoCell;
+            }
         }
     }
+    
     FHCommitDetaolCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommitDetaolCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -242,18 +274,24 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-     ZJCommit *commit = self.dataArray[indexPath.row];
+    ZJCommit *commit = self.dataArray[indexPath.row];
     if (indexPath.section == 0) {
-        if (commit.pic_urls > 0) {
-            // 计算缓存cell的高度
-//            return [self.mainTable fd_heightForCellWithIdentifier:kPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
-//                [self configureCell:cell atIndexPath:indexPath];
-//            }];
-            return [SingleManager shareManager].cellPicHeight;
+        if (self.type == 3) {
+            if (commit.medias.count > 0) {
+                NSDictionary *dic = commit.medias[0];
+                if ([dic[@"type"] integerValue]== 2) {
+                    return [SingleManager shareManager].cellVideoHeight;
+                } else if ([dic[@"type"] integerValue]== 1) {
+                    return [SingleManager shareManager].cellPicHeight;
+                }
+            }
+            return [SingleManager shareManager].cellNoPicHeight;
         } else {
-            return [self.mainTable fd_heightForCellWithIdentifier:kNoPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJNoHavePhotoCell *photoCell) {
-                [self configureNoCell:photoCell atIndexPath:indexPath];
-            }];
+            if (commit.pic_urls > 0) {
+                return [SingleManager shareManager].cellPicHeight;
+            } else {
+                return  [SingleManager shareManager].cellNoPicHeight;
+            }
         }
     }
     return 70.0f;
@@ -294,8 +332,6 @@
 
 #pragma mark - 给cell赋值
 - (void)configureCell:(ZJMasonryAutolayoutCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    // 采用计算frame模式还是自动布局模式，默认为NO，自动布局模式
-    //    cell.fd_enforceFrameLayout = NO;
     cell.model = self.dataArray[indexPath.row];
 }
 

@@ -25,6 +25,7 @@
 #import "UIView+Toast.h"
 #import "UIColor+Extend.h"
 /** 常用工具 */
+#import "MJRefresh.h"
 #import "MBProgressHUD.h"
 #import "UIImageView+WebCache.h"
 #import "UIView+Extend.h"

@@ -9,6 +9,7 @@
 #import "FHSuggestionController.h"
 #import "FHComplaintsSuggestionsController.h"
 #import "FHCircleHotPointController.h"
+#import "FHSuggestionListController.h"
 
 @interface FHSuggestionController ()
 
@@ -22,13 +23,13 @@
 }
 
 - (void)initViewControllers {
-    FHCircleHotPointController *messageVC = [[FHCircleHotPointController alloc] init];
+    FHSuggestionListController *messageVC = [[FHSuggestionListController alloc] init];
     messageVC.yp_tabItemTitle = @"全部列表";
     messageVC.property_id = self.property_id;
     messageVC.type = self.type;
     messageVC.isSelf = NO;
     
-    FHCircleHotPointController *groupVC = [[FHCircleHotPointController alloc] init];
+    FHSuggestionListController *groupVC = [[FHSuggestionListController alloc] init];
     groupVC.yp_tabItemTitle = @"我的投诉建议";
     groupVC.property_id = self.property_id;
     groupVC.type = self.type;

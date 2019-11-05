@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHMyPhotoController : BaseViewController
 /** 用户id */
 @property (nonatomic, copy) NSString *user_id;
+/** type 1 是没有tabbar的 */
+@property (nonatomic, assign) NSInteger type;
+
 
 @end
 

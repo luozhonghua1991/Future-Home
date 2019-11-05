@@ -44,14 +44,11 @@
         self.nickname = dict[@"nickname"];
         self.content = dict[@"content"];
         self.img_data = [dict[@"img_ids"] toReadableJSONString];
-//        self.img_data = dict[@"img_data"];
         self.ID = dict[@"id"];
-//        self.like_count = dict[@"like_count"];
-//        self.unlike_count = dict[@"unlike_count"];
         self.add_time = dict[@"create_time"];
-//        self.rating = dict[@"rating"];
         self.view_num = [dict[@"view_num"] integerValue];
         self.comment_num = [dict[@"comment_num"] integerValue];
+        self.like_count = [dict[@"like_num"] integerValue];
         self.user_id = dict[@"user_id"];
         _identifier = [self uniqueIdentifier];
     }
@@ -65,20 +62,17 @@
         for (NSDictionary *dic in arr) {
             [imageArrs addObject:dic[@"path"]];
         }
+        self.medias = dict[@"medias"];
         self.ID = dict[@"id"];
         self.avatar  = dict[@"avatar"];
         self.nickname = dict[@"nickname"];
         self.content = dict[@"content"];
         self.img_data = [imageArrs toReadableJSONString];
-//        self.img_data = dict[@"img_data"];
-//        self.like_id = dict[@"like_id"];
-        self.like_count = dict[@"like_num"];
-//        self.unlike_count = dict[@"unlike_count"];
+        self.like_count = [dict[@"like_num"] integerValue];
         self.add_time = dict[@"create_time"];
         self.view_num = [dict[@"view_num"] integerValue];
         self.comment_num = [dict[@"comment_num"] integerValue];
         self.user_id = dict[@"user_id"];
-//        self.rating = dict[@"rating"];
         
         _identifier = [self uniqueIdentifier];
     }

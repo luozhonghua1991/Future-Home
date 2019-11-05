@@ -41,8 +41,9 @@
     FHOtherFollowController *friendVC = [[FHOtherFollowController alloc] init];
     friendVC.yp_tabItemTitle = @"文档收藏";
     
-    FHOtherFollowController *friend1VC = [[FHOtherFollowController alloc] init];
+    FHMyVideosController *friend1VC = [[FHMyVideosController alloc] init];
     friend1VC.yp_tabItemTitle = @"视频收藏";
+    friend1VC.type = 1;
     
     self.viewControllers = [NSMutableArray arrayWithObjects:videosVC, photoVC,followVC,friendVC,friend1VC, nil];
     

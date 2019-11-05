@@ -15,6 +15,10 @@
 /** 用户id */
 @property (nonatomic, copy) NSString *user_id;
 
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSArray *medias;
+
+
 @property(nonatomic, copy) NSString     *comments_id;
 @property(nonatomic, copy) NSString     *supper_parent_id;
 @property(nonatomic, copy) NSString     *parent_id;
@@ -26,15 +30,18 @@
 @property(nonatomic, copy) NSString     *content;
 @property(nonatomic, copy) NSString     *add_time;
 @property(nonatomic, copy) NSString     *like_id;
-@property(nonatomic, copy) NSString     *like_count;
+
 @property(nonatomic, copy) NSString     *unlike_count;
 @property(nonatomic, copy) NSString     *is_show;
 @property(nonatomic, copy) NSString     *img_data;
 @property(nonatomic, copy) NSString     *like_type;
+
+
 /** 查看次数 */
-@property (nonatomic, assign) NSInteger view_num;
+@property (nonatomic, assign) NSInteger    view_num;
+@property(nonatomic, assign) NSInteger     like_count;
 /** 评论个数 */
-@property (nonatomic, assign) NSInteger comment_num;
+@property (nonatomic, assign) NSInteger    comment_num;
 
 
 @property(nonatomic, strong) NSArray    *pic_urls;

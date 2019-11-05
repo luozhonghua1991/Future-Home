@@ -11,9 +11,21 @@
 NS_ASSUME_NONNULL_BEGIN
 @class ZJCommit;
 
+@protocol ZJNoHavePhotoCellDelegate <NSObject>
+
+@required // 必须实现的方法 默认
+
+@optional // 可选实现的方法
+
+- (void)fh_ZJNoHavePhotoCellSelectModel:(ZJCommit *)model;
+
+@end
+
 @interface ZJNoHavePhotoCell : UITableViewCell
 
 @property(nonatomic ,strong) ZJCommit           *model;
+
+@property(nonatomic, weak) id<ZJNoHavePhotoCellDelegate> delegate;
 
 @end
 

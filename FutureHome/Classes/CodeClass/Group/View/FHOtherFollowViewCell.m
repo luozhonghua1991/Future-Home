@@ -6,9 +6,9 @@
 //  Copyright © 2019 同熙传媒. All rights reserved.
 //  收藏cell
 
-#import "FHOtherFollowCell.h"
+#import "FHOtherFollowViewCell.h"
 
-@implementation FHOtherFollowCell
+@implementation FHOtherFollowViewCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {

@@ -49,8 +49,13 @@
 }
 
 - (void)setUpAllView {
-    CGFloat tabbarH = [self getTabbarHeight];
-    self.mainTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70) style:UITableViewStylePlain];
+    if (self.type != 1) {
+        CGFloat tabbarH = [self getTabbarHeight];
+        self.mainTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70) style:UITableViewStylePlain];
+    } else {
+        CGFloat tabbarH = 0;
+        self.mainTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 35) style:UITableViewStylePlain];
+    }
     _mainTable.delegate = self;
     _mainTable.dataSource = self;
     _mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -133,65 +138,5 @@
     }
     return _dataArray;
 }
-
-//#pragma mark  -- tableViewDelagate
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return self.picListArrs.count;
-////    return 2;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-//    return 0.01f;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-//    return 0.01f;
-//}
-//
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    NSDictionary *dic = self.picListArrs[indexPath.row];
-//    NSArray *arr = dic[@"path"];
-//    self.photoListView = [[DPPhotoListView alloc] initWithFrame:CGRectMake(80, 10, SCREEN_WIDTH - 80, SCREEN_HEIGHT) numberOfCellInRow:3 lineSpacing:15 dataSource:[arr mutableCopy]];
-//    CGFloat height = [self.photoListView getItemSizeHeight];
-//    CGFloat photoListHeight = 0.0;
-//    if (arr.count == 0) {
-//        photoListHeight = 0;
-//    } else if (arr.count <= 3) {
-//        photoListHeight = height + 15;
-//    } else if (arr.count <=6 && arr.count > 3) {
-//        photoListHeight = 2 * height + 15 * 2;
-//    } else if (arr.count <=9 && arr.count > 6) {
-//        photoListHeight = 3 * height + 15 * 3;
-//    }
-//
-//    return photoListHeight;
-//}
-//
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    FHMyPhotoListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHMyPhotoListCell class])];
-//    NSDictionary *dic = self.picListArrs[indexPath.row];
-//    cell.timeLabel.text = dic[@"create_time"];
-//    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//    cell.imgArrs = dic[@"path"];
-//    return cell;
-//}
-//
-//#pragma mark — setter & getter
-//- (UITableView *)homeTable {
-//    if (_homeTable == nil) {
-//        CGFloat tabbarH = [self getTabbarHeight];
-//        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70) style:UITableViewStylePlain];
-//        _homeTable.dataSource = self;
-//        _homeTable.delegate = self;
-//        _homeTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-//        _homeTable.showsVerticalScrollIndicator = NO;
-//        if (@available (iOS 11.0, *)) {
-//            _homeTable.estimatedSectionHeaderHeight = 0.01;
-//            _homeTable.estimatedSectionFooterHeight = 0.01;
-//            _homeTable.estimatedRowHeight = 0.01;
-//        }
-//    }
-//    return _homeTable;
-//}
 
 @end

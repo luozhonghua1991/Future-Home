@@ -9,6 +9,9 @@
 #import "FHMyVideosController.h"
 #import "FHCommonVideosCollectionCell.h"
 #import "ZFDouYinViewController.h"
+#import "ZFDouYinViewController.h"
+#import "ZFTableData.h"
+#import "FHVideosListModel.h"
 
 @interface FHMyVideosController () <UITableViewDelegate,UITableViewDataSource,FHCommonVideosCollectionCellDelegate>
 /** 主页列表数据 */
@@ -19,6 +22,10 @@
 @property (nonatomic, strong) UILabel *videosCountLabel;
 /** 获赞数量 */
 @property (nonatomic, strong) UILabel *getUpCountLabel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *videoListArrs;
+/** <#strong属性注释#> */
+@property (nonatomic, copy) NSArray *videoListDataArrs;
 
 @end
 
@@ -28,9 +35,45 @@
     [super viewDidLoad];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonVideosCollectionCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
-    self.homeTable.tableHeaderView = self.tableHeaderView;
-    self.homeTable.tableHeaderView.height = self.tableHeaderView.height;
+    [self getRequest];
 }
+
+
+- (void)getRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *url;
+    NSDictionary *paramsDictionary;
+    if (self.type == 1) {
+        /** 获取收藏的视频列表 */
+        paramsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @(account.user_id),@"user_id",
+                            self.user_id ? self.user_id : @(account.user_id),@"uid",
+                            nil];
+        url = @"sheyun/videoCollect";
+    } else {
+        /** 获取视频列表 */
+        paramsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                            @(account.user_id),@"user_id",
+                            self.user_id ? self.user_id : @(account.user_id),@"uid",
+                            nil];
+        url = @"sheyun/myVideo";
+    }
+
+    [AFNetWorkTool get:url params:paramsDictionary success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            self.videoListArrs = [[NSMutableArray alloc] init];
+            weakSelf.videoListDataArrs = responseObj[@"data"][@"list"];
+            self.videoListArrs = [FHVideosListModel mj_objectArrayWithKeyValuesArray:weakSelf.videoListDataArrs];
+            [weakSelf.homeTable reloadData];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -46,19 +89,23 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_HEIGHT - MainSizeHeight - [self getTabbarHeight] - 70;
+    return SCREEN_HEIGHT - MainSizeHeight - 35 - 20;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHCommonVideosCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 35 - 20;
     cell.delegate = self;
+    cell.rowCount = self.videoListArrs.count;
+    cell.videoListArrs = self.videoListArrs;
     return cell;
 }
 
 - (void)FHCommonVideosCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
-    [douyin playTheIndex:0];
+    douyin.videoListDataArrs = self.videoListDataArrs;
+    [douyin playTheIndex:selectIndex.item];
     douyin.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:douyin animated:YES];
 }
@@ -67,7 +114,7 @@
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
         CGFloat tabbarH = [self getTabbarHeight];
-        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70) style:UITableViewStylePlain];
+        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70 - 20) style:UITableViewStylePlain];
         _homeTable.dataSource = self;
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;

@@ -1,23 +1,14 @@
 //
-//  ZJMasonryAutolayoutCell.m
-//  ZJUIKit
+//  FHZJHaveMoveCell.m
+//  FutureHome
 //
-//  Created by dzj on 2018/1/26.
-//  Copyright © 2018年 kapokcloud. All rights reserved.
-//
-/**
- *  ZJKitTool
- *
- *  GitHub地址：https://github.com/Dzhijian/ZJKitTool
- *
- *  本库会不断更新工具类，以及添加一些模块案例，请各位大神们多多指教，支持一下。😆
- */
-#import "ZJMasonryAutolayoutCell.h"
+//  Created by 同熙传媒 on 2019/11/2.
+//  Copyright © 2019 同熙传媒. All rights reserved.
+//  带有视频的Cell
+
+#import "FHZJHaveMoveCell.h"
 #import "ZJCommit.h"
-#import "ZJCommitPhotoView.h"
-#import "UITableView+FDTemplateLayoutCell.h"
 #import "ZJCategory.h"
-#import "ZJUIMasonsyKit.h"
 
 #define kBlackColor       [UIColor blackColor]
 #define kDarkGrayColor    [UIColor darkGrayColor]
@@ -34,24 +25,27 @@
 #define kBrownColor       [UIColor brownColor]
 #define kClearColor       [UIColor clearColor]
 
-@interface ZJMasonryAutolayoutCell()
+@interface FHZJHaveMoveCell ()
+//昵称
+@property(nonatomic ,strong) UILabel        *nameLab;
 // 头像
 @property(nonatomic ,strong) UIImageView    *avatar;
-// 昵称
-@property(nonatomic ,strong) UILabel        *nameLab;
 // 时间
 @property(nonatomic ,strong) UILabel        *timeLab;
 // 内容
 @property(nonatomic ,strong) UILabel        *contentLab;
-// 图片
-@property(nonatomic ,strong) ZJCommitPhotoView *photosView;
-
+/** 视频图片 */
+@property (nonatomic, strong) UIImageView   *videoImageView;
+/** 视频图片 */
+@property (nonatomic, strong) UIImageView   *videoPlayImageView;
+// 视频label
+@property(nonatomic ,strong) UILabel        *videoLab;
 /** 底部View */
-@property (nonatomic, strong) UIView         *bottomView;
+@property (nonatomic, strong) UIView        *bottomView;
 // 最上面的分割线
 @property(nonatomic ,strong) UIView         *topLine;
 /** 浏览次数 */
-@property (nonatomic, strong) UIButton      *eyeBtn;
+@property (nonatomic, strong) UIButton *eyeBtn;
 /** 点赞按钮 */
 @property (nonatomic, strong) UIButton *upBtn;
 /** 评论按钮 */
@@ -59,8 +53,7 @@
 
 @end
 
-@implementation ZJMasonryAutolayoutCell
-
+@implementation FHZJHaveMoveCell
 
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
@@ -69,7 +62,8 @@
     return self;
 }
 
--(void)setModel:(ZJCommit *)model{
+
+-(void)setModel:(ZJCommit *)model {
     _model = model;
     [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     
@@ -79,38 +73,27 @@
     self.contentLab.text = _model.content;
     
     CGSize size = [UIlabelTool sizeWithString:self.contentLab.text font:self.contentLab.font width:SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15];
-    NSInteger count = model.pic_urls.count;
-    self.photosView.pic_urls = model.pic_urls;
-    self.photosView.selfVc = _weakSelf;
-    //重新更新约束
-    CGFloat oneheight = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
-    // 三目运算符 小于或等于3张 显示一行的高度 ,大于3张小于或等于6行，显示2行的高度 ，大于6行，显示3行的高度
-    CGFloat photoHeight = count<=3 ? oneheight : (count<=6 ? 2 * oneheight + 10 : oneheight *3+20);
-    
     self.contentLab.frame = CGRectMake(MaxX(self.avatar) + 15, MaxY(self.avatar) + 5, SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15, size.height);
     
-    CGFloat top = MaxY(self.contentLab) + 5;
-    CGFloat leftX = MaxX(self.avatar) + 15;
-    [_photosView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(top);
-        make.left.mas_equalTo(leftX);
-        make.width.mas_equalTo(SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15);
-        make.height.mas_equalTo(photoHeight);
-    }];
+    CGFloat oneheight = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
+    NSDictionary *dic = _model.medias[0];
+    [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.videoImageView.frame = CGRectMake(MaxX(self.avatar) + 15, MaxY(self.contentLab) + 5, oneheight, oneheight);
+    self.videoPlayImageView.frame = CGRectMake(0, 0, 48, 48);
+    self.videoPlayImageView.centerX = self.videoImageView.frame.size.width / 2;
+    self.videoPlayImageView.centerY = self.videoImageView.frame.size.height / 2;
     
-    self.bottomView.frame = CGRectMake(0, MaxY(self.contentLab) + 10 + photoHeight + 10, SCREEN_WIDTH, 35);
+    self.bottomView.frame = CGRectMake(0, MaxY(self.videoImageView) + 10, SCREEN_WIDTH, 35);
     
     [self.eyeBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.view_num] forState:UIControlStateNormal];
     [self.upBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.like_count] forState:UIControlStateNormal];
     [self.commitBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.comment_num] forState:UIControlStateNormal];
     
-    [SingleManager shareManager].cellPicHeight = MaxY(self.bottomView) + 5;
-    
+    [SingleManager shareManager].cellVideoHeight = MaxY(self.bottomView) + 5;
 }
 
-
 // 添加所子控件
-- (void)setUpAllView {
+-(void)setUpAllView {
     // 头像
     if (!self.avatar) {
         self.avatar = [[UIImageView alloc] init];
@@ -151,19 +134,32 @@
         [self.contentView addSubview:self.contentLab];
     }
     
-    // 图片
-    if (!self.photosView) {
-        self.photosView = [[ZJCommitPhotoView alloc]init];
-        [self.contentView addSubview:self.photosView];
-        CGFloat top = MaxY(self.contentLab) + 5;
-        CGFloat leftX = MaxX(self.avatar) + 15;
-        [_photosView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(top);
-            make.left.mas_equalTo(leftX);
-            make.width.mas_equalTo(SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15);
-            make.height.mas_equalTo(0.001);
-        }];
+    if (!self.videoImageView) {
+        self.videoImageView = [[UIImageView alloc] init];
+        self.videoImageView.userInteractionEnabled = YES;
+        [self.contentView addSubview:self.videoImageView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(videoClick)];
+        [self.videoImageView addGestureRecognizer:tap];
     }
+    
+    if (!self.videoPlayImageView) {
+        self.videoPlayImageView = [[UIImageView alloc] init];
+        self.videoPlayImageView.userInteractionEnabled = YES;
+        self.videoPlayImageView.image = [UIImage imageNamed:@"播放 (1)"];
+        [self.videoImageView addSubview:self.videoPlayImageView];
+    }
+    
+//    if (!self.videoLab) {
+//        self.videoLab = [[UILabel alloc] init];
+//        self.videoLab.font = [UIFont systemFontOfSize:30];
+//        self.videoLab.textColor = [UIColor whiteColor];
+//        self.videoLab.numberOfLines = 0;
+//        self.videoLab.textAlignment = NSTextAlignmentCenter;
+//        self.videoLab.text = @"这是视频";
+//        [self.videoImageView addSubview:self.videoLab];
+//    }
+    
     //下面的 浏览量 点赞 评论数
     if (!self.bottomView) {
         self.bottomView = [[UIView alloc] init];
@@ -200,6 +196,7 @@
     self.nameLab.centerY = self.avatar.centerY;
     self.timeLab.frame = CGRectMake(0, 0, SCREEN_WIDTH - 15, 20);
     self.timeLab.centerY = self.avatar.centerY;
+    
     self.bottomView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 35);
     self.topLine.frame = CGRectMake(MaxX(self.avatar) + 15, 0, SCREEN_WIDTH - (MaxX(self.avatar) + 15), 0.25);
     CGFloat btnWidth = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
@@ -207,13 +204,6 @@
     self.upBtn.frame = CGRectMake(MaxX(self.eyeBtn) + 10, 10, btnWidth, 15);
     self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 10, btnWidth, 15);
     
-}
-
-
-- (void)avatarClick {
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJMasonryAutolayoutCellDelegateWithModel:)]) {
-        [_delegate fh_ZJMasonryAutolayoutCellDelegateWithModel:self.model];
-    }
 }
 
 - (UIButton *)creatBtnWithTitle:(NSString *)title image:(UIImage *)imgage{
@@ -227,6 +217,18 @@
     btn.enabled = NO;
     [self.bottomView addSubview:btn];
     return btn;
+}
+
+- (void)avatarClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJHaveMoveCellDelagateSelectModel:)]) {
+        [_delegate fh_ZJHaveMoveCellDelagateSelectModel:self.model];
+    }
+}
+
+- (void)videoClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJHaveMoveCellDelagateSelectMovieModel:)]) {
+        [_delegate fh_ZJHaveMoveCellDelagateSelectMovieModel:self.model];
+    }
 }
 
 - (void)awakeFromNib {

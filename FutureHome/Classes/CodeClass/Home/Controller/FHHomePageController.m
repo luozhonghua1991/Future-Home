@@ -25,6 +25,7 @@
 #import "FHScanTool.h"
 #import "PYSearchViewController.h"
 #import "FHVideoPlayerController.h"
+#import "FHScrollNewsController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate,PYSearchViewControllerDelegate>
 {
@@ -60,6 +61,11 @@
 @property (nonatomic,strong) UIImageView             *messageImgView;
 /** 商店id */
 @property (nonatomic, copy) NSString *shopID;
+/** 滚动消息数组 */
+@property (nonatomic, strong) NSMutableArray *soureArray;
+/** <#strong属性注释#> */
+@property (nonatomic, copy) NSArray *scrollNewsArrs;
+
 
 @end
 
@@ -127,9 +133,7 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             NSArray *arr = responseObj[@"data"];
             NSDictionary *dic = arr[0];
-            /** 商
-             
-             铺ID */
+            /** 商铺ID */
             weakSelf.shopID = dic[@"property_id"];
         }
     } failure:^(NSError *error) {
@@ -229,6 +233,12 @@
 - (void)marqueeTapGes:(UITapGestureRecognizer *)ges {
     [self.verticalMarquee marqueeOfSettingWithState:MarqueePause_V];
 //    [self.navigationController pushViewController:[[testVC alloc] init] animated:YES];
+    /** 点击进入滚动消息 */
+    FHScrollNewsController *news = [[FHScrollNewsController alloc] init];
+    news.type = @"1";
+    news.hidesBottomBarWhenPushed = YES;
+    news.listInfoArrs = self.scrollNewsArrs;
+    [self.navigationController pushViewController:news animated:YES];
 }
 
 
@@ -236,6 +246,7 @@
 - (void)fh_refreshBannerData {
     [self fh_getTopBanner];
     [self fh_bottomTopBanner];
+    [self getListInfo];
 }
 
 - (void)fh_getTopBanner {
@@ -276,6 +287,30 @@
             [self->bottomUrlArrays addObject:dic[@"url"]];
         }
         [weakSelf.homeTable reloadData];
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)getListInfo {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"5",@"limit",
+                               @"1",@"type", nil];
+    [AFNetWorkTool get:@"ScrollNew/getListInfo" params:paramsDic success:^(id responseObj) {
+        self.soureArray = [[NSMutableArray alloc] init];
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSArray *arr = responseObj[@"data"][@"list"];
+            self.scrollNewsArrs = arr;
+            for (NSDictionary * dic in arr) {
+                [self.soureArray addObject:dic[@"title"]];
+            }
+            [weakSelf.homeTable reloadData];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
     }];
@@ -331,12 +366,12 @@
         UITapGestureRecognizer *vtap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marqueeTapGes:)];
         [self.verticalMarquee addGestureRecognizer:vtap];
         [locationView addSubview:self.verticalMarquee];
-        NSArray *soureArray = @[@"1. 谁曾从谁的青春里走过，留下了笑靥",
-                                @"2. 谁曾在谁的花季里停留，温暖了想念",
-                                @"3. 谁又从谁的雨季里消失，泛滥了眼泪"
-                                ];
+//        NSArray *soureArray = @[@"1. 谁曾从谁的青春里走过，留下了笑靥",
+//                                @"2. 谁曾在谁的花季里停留，温暖了想念",
+//                                @"3. 谁又从谁的雨季里消失，泛滥了眼泪"
+//                                ];
         
-        self.verticalMarquee.sourceArray = soureArray;
+        self.verticalMarquee.sourceArray = self.soureArray;
         // 开始滚动
         [self.verticalMarquee marqueeOfSettingWithState:MarqueeStart_V];
         

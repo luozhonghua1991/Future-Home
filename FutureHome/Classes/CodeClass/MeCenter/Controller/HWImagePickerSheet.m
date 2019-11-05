@@ -17,7 +17,6 @@
 @property (nonatomic, strong) UIImagePickerController *imagePickerVc;
 
 @property (nonatomic, strong) MBProgressHUD *videoHud;
-
 /** <#copy属性注释#> */
 @property (nonatomic, strong) UIImage *videoImage;
 

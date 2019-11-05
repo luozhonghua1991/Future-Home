@@ -88,10 +88,12 @@
     FHMyVideosController *photoVC = [[FHMyVideosController alloc] init];
     photoVC.yp_tabItemTitle = @"视频";
     photoVC.user_id = self.user_id;
+//    photoVC.
     
     FHMyPhotoController *followVC = [[FHMyPhotoController alloc] init];
     followVC.yp_tabItemTitle = @"相册";
     followVC.user_id = self.user_id;
+    followVC.type = 1;
     
     FHFriendLisController *follow1VC = [[FHFriendLisController alloc] init];
     follow1VC.yp_tabItemTitle = @"关注";

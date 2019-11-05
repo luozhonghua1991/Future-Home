@@ -7,19 +7,20 @@
 //  云动态
 
 #import "FHCircleHotPointController.h"
-#import "UITableView+FDTemplateLayoutCell.h"
 #import "ZJMasonryAutolayoutCell.h"
 #import "ZJCommit.h"
-#import "FHPersonTrendsController.h"
 #import "FHCommitDetailController.h"
 #import "ZJNoHavePhotoCell.h"
+#import "FHPersonTrendsController.h"
+#import "FHZJHaveMoveCell.h"
+#import "ZFDouYinViewController.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
 /** 有图片的 */
 #define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,ZJMasonryAutolayoutCellDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
+@interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate>
 
 @property(nonatomic ,strong) UITableView *mainTable;
 
@@ -50,7 +51,8 @@
 @property (nonatomic, strong) NSArray *commitsListArrs;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *followMessage;
-
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *videoListDataArrs;
 
 @end
 
@@ -69,111 +71,98 @@
 
 #pragma mark - 获取数据
 - (void)getCommitsData {
-    if ([self.yp_tabItemTitle isEqualToString:@"云动态"] || [self.yp_tabItemTitle isEqualToString:@"动态"]) {
-        WS(weakSelf);
-        Account *account = [AccountStorage readAccount];
-        /** 朋友圈封面信息 */
-        NSString *uid;
-        NSDictionary *paramsDicy;
-        NSDictionary *headerParamsDic;
-        if (self.personType == 1) {
-            /** 自己看自己 */
-            uid = [NSString stringWithFormat:@"%ld",(long)account.user_id];
-            paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         @(account.user_id),@"uid",
-                         nil];
-            headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         @(account.user_id),@"uid", nil];
-            [self.updateBtn setTitle:@"+发布" forState:UIControlStateNormal];
-            self.relationBtn.hidden = YES;
-        } else if (self.personType == 0) {
-            uid = self.personID;
-            paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         uid,@"uid",
-                         nil];
-            headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         uid,@"uid", nil];
-            [self.updateBtn setTitle:@"+对话" forState:UIControlStateNormal];
-            self.relationBtn.hidden = NO;
-        } else {
-            paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         nil];
-            headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         @(account.user_id),@"uid", nil];
-            [self.updateBtn setTitle:@"+发布" forState:UIControlStateNormal];
-            self.relationBtn.hidden = YES;
-        }
-        
-        /** 朋友圈动态数据 */
-        [AFNetWorkTool get:@"sheyun/friendCircle" params:paramsDicy success:^(id responseObj) {
-            if ([responseObj[@"code"] integerValue] == 1) {
-                NSDictionary *Dic = responseObj[@"data"];
-                [weakSelf requestWithDontTaiDic:Dic];
-            } else {
-                [self.view makeToast:responseObj[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-//            [weakSelf.homeTable reloadData];
-        }];
-        
-        
-        /** 朋友圈头部数据 */
-        [AFNetWorkTool get:@"sheyun/circleInfo" params:headerParamsDic success:^(id responseObj) {
-            if ([responseObj[@"code"] integerValue] == 1) {
-                NSDictionary *dic = responseObj[@"data"];
-                [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
-                [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
-                weakSelf.nameLabel.text = dic[@"nickname"];
-                weakSelf.rulesLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"praise_num"]];
-                weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
-                weakSelf.followLabel.text = [NSString stringWithFormat:@"关注: %@",dic[@"follow_num"]];
-                weakSelf.updateLabel.text = [NSString stringWithFormat:@"发布: %@",dic[@"publish_num"]];
-                if ([dic[@"is_follow"] integerValue] == 0) {
-                    [weakSelf.relationBtn setTitle:@"+关注" forState:UIControlStateNormal];
-                } else if ([dic[@"is_follow"] integerValue] == 1) {
-                    [weakSelf.relationBtn setTitle:@"已关注" forState:UIControlStateNormal];
-                } else if ([dic[@"is_follow"] integerValue] == 2) {
-                    [weakSelf.relationBtn setTitle:@"互为关注" forState:UIControlStateNormal];
-                }
-                [weakSelf.mainTable reloadData];
-            } else {
-                [self.view makeToast:responseObj[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            [weakSelf.mainTable reloadData];
-        }];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    /** 朋友圈封面信息 */
+    NSString *uid;
+    NSDictionary *paramsDicy;
+    NSDictionary *headerParamsDic;
+    if (self.personType == 1) {
+        /** 自己看自己 */
+        uid = [NSString stringWithFormat:@"%ld",(long)account.user_id];
+        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     @(account.user_id),@"uid",
+                     nil];
+        headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @(account.user_id),@"user_id",
+                           @(account.user_id),@"uid", nil];
+        [self.updateBtn setTitle:@"+发布" forState:UIControlStateNormal];
+        self.relationBtn.hidden = YES;
+    } else if (self.personType == 0) {
+        uid = self.personID;
+        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     uid,@"uid",
+                     nil];
+        headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @(account.user_id),@"user_id",
+                           uid,@"uid", nil];
+        [self.updateBtn setTitle:@"+对话" forState:UIControlStateNormal];
+        self.relationBtn.hidden = NO;
     } else {
-        /** 投诉或者建议接口 */
-        WS(weakSelf);
-        Account *account = [AccountStorage readAccount];
-        NSDictionary *paramsDic;
-        if (self.isSelf) {
-            paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         @(self.property_id),@"property_id",
-                         @(self.type),@"type",
-                         @(1),@"self",
-                         nil];
-        } else {
-            paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                         @(account.user_id),@"user_id",
-                         @(self.property_id),@"property_id",
-                         @(self.type),@"type",
-                         nil];
-        }
-        
-        [AFNetWorkTool get:@"public/complaintList" params:paramsDic success:^(id responseObj) {
-            NSDictionary *Dic = responseObj[@"data"];
-            [weakSelf requestWithDic:Dic];
-        } failure:^(NSError *error) {
-        }];
+        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     nil];
+        headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                           @(account.user_id),@"user_id",
+                           @(account.user_id),@"uid", nil];
+        [self.updateBtn setTitle:@"+发布" forState:UIControlStateNormal];
+        self.relationBtn.hidden = YES;
     }
+    
+    /** 朋友圈动态数据 */
+    [AFNetWorkTool get:@"sheyun/friendCircle" params:paramsDicy success:^(id responseObj) {
+        self.videoListDataArrs = [[NSMutableArray alloc]init];
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *Dic = responseObj[@"data"];
+            NSArray *arr = Dic[@"list"];
+            for (NSDictionary *dic  in arr) {
+                NSArray *videoArr = dic[@"medias"];
+                if (videoArr.count > 0) {
+                    NSDictionary *videoDic = videoArr[0];
+                    if ([videoDic[@"type"] integerValue] == 2) {
+                        [self.videoListDataArrs addObject:videoDic];
+                    }
+                }
+            }
+            [weakSelf requestWithDontTaiDic:Dic];
+            
+            
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+    
+    
+    /** 朋友圈头部数据 */
+    [AFNetWorkTool get:@"sheyun/circleInfo" params:headerParamsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            weakSelf.nameLabel.text = dic[@"nickname"];
+            weakSelf.rulesLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"praise_num"]];
+            weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
+            weakSelf.followLabel.text = [NSString stringWithFormat:@"关注: %@",dic[@"follow_num"]];
+            weakSelf.updateLabel.text = [NSString stringWithFormat:@"发布: %@",dic[@"publish_num"]];
+            if ([dic[@"is_follow"] integerValue] == 0) {
+                [weakSelf.relationBtn setTitle:@"+关注" forState:UIControlStateNormal];
+            } else if ([dic[@"is_follow"] integerValue] == 1) {
+                [weakSelf.relationBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            } else if ([dic[@"is_follow"] integerValue] == 2) {
+                [weakSelf.relationBtn setTitle:@"互为关注" forState:UIControlStateNormal];
+            }
+            [weakSelf.mainTable reloadData];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.mainTable reloadData];
+    }];
+    
 }
 
 - (void)requestWithDontTaiDic:(NSDictionary *)dic {
@@ -183,24 +172,6 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSDictionary *dictDict in commitsList) {
             ZJCommit *commit = [ZJCommit commitWithDongtaiDict:dictDict];
-            [arrM addObject:commit];
-        }
-        self.dataArray = arrM;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.mainTable reloadData];
-            });
-        });
-    });
-}
-
-- (void)requestWithDic:(NSDictionary *)dic {
-    NSArray *commitsList = [dic objectForKey:@"list"];
-    self.commitsListArrs = commitsList;
-    NSMutableArray *arrM = [NSMutableArray array];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (NSDictionary *dictDict in commitsList) {
-            ZJCommit *commit = [ZJCommit commitWithDict:dictDict];
             [arrM addObject:commit];
         }
         self.dataArray = arrM;
@@ -226,6 +197,8 @@
     // 必须先注册cell，否则会报错
     [_mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
     [_mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
+    [_mainTable registerClass:[FHZJHaveMoveCell class] forCellReuseIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
+    
     [self.view addSubview:self.mainTable];
     if (self.isHaveHeaderView) {
         self.mainTable.tableHeaderView = self.headerView;
@@ -234,42 +207,54 @@
     
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataArray.count;
 }
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZJCommit *commit = self.dataArray[indexPath.row];
-    if (commit.pic_urls > 0) {
-        ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.weakSelf = self;
-        cell.delegate = self;
-        [self configureCell:cell atIndexPath:indexPath];
-        
-        return cell;
-    } else {
+    //视频单独处理
+        if (commit.medias.count > 0) {
+            NSDictionary *dic = commit.medias[0];
+            if ([dic[@"type"] integerValue]== 2) {
+                /** 视频Cell */
+                FHZJHaveMoveCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.model = self.dataArray[indexPath.row];
+                cell.delegate = self;
+                return cell;
+                
+            } else if ([dic[@"type"] integerValue]== 1) {
+                /** 图片Cell */
+                ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.weakSelf = self;
+                cell.delegate = self;
+                [self configureCell:cell atIndexPath:indexPath];
+                
+                return cell;
+            }
+        }
+        /** 纯文字Cell */
         ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
         photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        photoCell.delegate = self;
         [self configureNoCell:photoCell atIndexPath:indexPath];
-        
         return photoCell;
-    }
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZJCommit *commit = self.dataArray[indexPath.row];
-    if (commit.pic_urls > 0) {
-        // 计算缓存cell的高度
-//        return [self.mainTable fd_heightForCellWithIdentifier:kPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJMasonryAutolayoutCell *cell) {
-//            [self configureCell:cell atIndexPath:indexPath];
-//        }];
-        return [SingleManager shareManager].cellPicHeight;
-    } else {
-        return [self.mainTable fd_heightForCellWithIdentifier:kNoPicMasonryCell cacheByIndexPath:indexPath configuration:^(ZJNoHavePhotoCell *photoCell) {
-            [self configureNoCell:photoCell atIndexPath:indexPath];
-        }];
+    if (commit.medias.count > 0) {
+        NSDictionary *dic = commit.medias[0];
+        if ([dic[@"type"] integerValue]== 2) {
+            return [SingleManager shareManager].cellVideoHeight;
+        } else if ([dic[@"type"] integerValue]== 1) {
+            return [SingleManager shareManager].cellPicHeight;
+        }
     }
+    return [SingleManager shareManager].cellNoPicHeight;
 }
 
 
@@ -284,6 +269,32 @@
 
 - (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model {
     /** 去用户的动态 */
+   [self pushVCWithModel:model];
+}
+
+- (void)fh_ZJNoHavePhotoCellSelectModel:(ZJCommit *)model {
+    [self pushVCWithModel:model];
+}
+
+- (void)fh_ZJHaveMoveCellDelagateSelectModel:(ZJCommit *)Model {
+    [self pushVCWithModel:Model];
+}
+
+/** 点击视频的播放 */
+- (void)fh_ZJHaveMoveCellDelagateSelectMovieModel:(ZJCommit *)Model {
+    NSDictionary *dic = Model.medias[0];
+    if ([self.videoListDataArrs containsObject:dic]) {
+        NSInteger index = [self.videoListDataArrs indexOfObject:dic];
+        ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
+        douyin.videoListDataArrs = self.videoListDataArrs;
+        [douyin playTheIndex:index];
+        douyin.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:douyin animated:YES];
+    }
+}
+
+- (void)pushVCWithModel:(ZJCommit *)model {
+    /** 去用户的动态 */
     FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
     vc.titleString = model.nickname;
     [SingleManager shareManager].isSelectPerson = YES;
@@ -294,22 +305,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     ZJCommit *model = self.dataArray[indexPath.row];
     FHCommitDetailController *vc = [[FHCommitDetailController alloc] init];
-    if ([self.yp_tabItemTitle isEqualToString:@"云动态"] || [self.yp_tabItemTitle isEqualToString:@"动态"]) {
-        vc.type = 3;
-        vc.dongTaiDataDic = self.commitsListArrs[indexPath.row];
-        vc.isCanCommit = NO;
-    } else {
-        vc.isCanCommit = self.isSelf;
-        vc.dataDic = self.commitsListArrs[indexPath.row];
-     
-        
-        vc.type = self.type;
-        vc.property_id = self.property_id;
-    }
+    vc.type = 3;
+    vc.dongTaiDataDic = self.commitsListArrs[indexPath.row];
+    vc.isCanCommit = NO;
     vc.ID = model.ID;
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];

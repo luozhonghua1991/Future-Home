@@ -39,6 +39,8 @@
     [super viewDidLoad];
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
+    self.homeTable.tableHeaderView = self.headerView;
+    self.homeTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
     [self.homeTable registerClass:[FHGoodsDetailCell class] forCellReuseIdentifier:NSStringFromClass([FHGoodsDetailCell class])];
     [self.view addSubview:self.shoppingBar];
     [self getGoodsDetailRequest];
@@ -85,7 +87,8 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.urlArrays = dic[@"img_ids"];
-            weakSelf.homeTable.tableHeaderView = self.headerView;
+            self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.urlArrays scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
+            [self.headerView addSubview:self.topScrollView];
             self.goodsDetailModel = [FHGoodsDetailModel mj_objectWithKeyValues:dic];
             [weakSelf.homeTable reloadData];
         } else {
@@ -214,9 +217,7 @@
 - (UIView *)headerView {
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
-        _headerView.backgroundColor = [UIColor redColor];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.urlArrays scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
-        [_headerView addSubview:self.topScrollView];
+        _headerView.backgroundColor = [UIColor whiteColor];
     }
     return _headerView;
 }

@@ -1,15 +1,15 @@
 //
-//  FHInformationMesageCell.m
+//  FHOtherFollowCell.m
 //  FutureHome
 //
-//  Created by 同熙传媒 on 2019/8/7.
+//  Created by 同熙传媒 on 2019/11/4.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  信息发布界面
+//  文档收藏
 
-#import "FHInformationMesageCell.h"
-#import "FHScrollNewsModel.h"
+#import "FHOtherFollowCell.h"
+#import "FHDocumentCollectModel.h"
 
-@interface FHInformationMesageCell ()
+@interface FHOtherFollowCell ()
 /** 内容label */
 @property (nonatomic, strong) UILabel *contentLabel;
 /** 头像 */
@@ -20,11 +20,9 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 /** 阅读数量label */
 @property (nonatomic, strong) UILabel *readCountLabel;
-
 @end
 
-@implementation FHInformationMesageCell
-
+@implementation FHOtherFollowCell
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     if (self = [super initWithStyle:style
@@ -51,32 +49,12 @@
     self.readCountLabel.frame = CGRectMake(0, 0, self.grayView.width, 25);
 }
 
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
-
-
-- (void)setInfoModel:(FHInformationModel *)infoModel {
-    _infoModel = infoModel;
-    self.contentLabel.text = _infoModel.title;
-    self.timeLabel.text = [NSString stringWithFormat:@"更新时间: %@",_infoModel.updatetime];
-    self.readCountLabel.text = [NSString stringWithFormat:@"阅读量: %@",_infoModel.show];
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_infoModel.coverthumb]];
-}
-
-- (void)setNewsModel:(FHScrollNewsModel *)newsModel {
-    _newsModel = newsModel;
-    self.contentLabel.text = _newsModel.title;
-    self.timeLabel.text = [NSString stringWithFormat:@"更新时间: %@",_newsModel.insert_time];
-    self.readCountLabel.text = [NSString stringWithFormat:@"阅读量: %@",_newsModel.browse];
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_newsModel.coverthumb]];
+- (void)setCollectModel:(FHDocumentCollectModel *)collectModel {
+    _collectModel = collectModel;
+    self.contentLabel.text = _collectModel.title;
+    self.timeLabel.text = [NSString stringWithFormat:@"更新时间: %@",_collectModel.updatetime];
+    self.readCountLabel.text = [NSString stringWithFormat:@"阅读量: %@",_collectModel.browse];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_collectModel.coverthumb]];
 }
 
 #pragma mark — setter && getter
@@ -131,6 +109,18 @@
         _readCountLabel.text = @"阅读量  10086";
     }
     return _readCountLabel;
+}
+
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    // Initialization code
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
+    [super setSelected:selected animated:animated];
+
+    // Configure the view for the selected state
 }
 
 @end

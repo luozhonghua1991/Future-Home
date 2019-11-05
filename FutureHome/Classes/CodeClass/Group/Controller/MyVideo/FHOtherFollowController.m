@@ -8,24 +8,78 @@
 
 #import "FHOtherFollowController.h"
 #import "FHOtherFollowCell.h"
+#import "FHWebViewController.h"
+#import "FHDocumentCollectModel.h"
 
 @interface FHOtherFollowController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** 文档收藏列表 */
+@property (nonatomic, strong) NSMutableArray *documentCollectArrs;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger page;
+
 @end
 
 @implementation FHOtherFollowController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.homeTable];
+    self.page = 1;
+    self.documentCollectArrs = [[NSMutableArray alloc] init];
     [self.homeTable registerClass:[FHOtherFollowCell class] forCellReuseIdentifier:NSStringFromClass([FHOtherFollowCell class])];
+    [self.view addSubview:self.homeTable];
+    [self getRequest];
+    [self setSettingMJRefreshConfiguration];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+}
+
+- (void)setSettingMJRefreshConfiguration {
+    self.homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getRequest];
+    }];
+    
+    self.homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getRequest)];
+    // 马上进入刷新状态
+//        [photoAlbumVC.mj_header beginRefreshing];
+    
+//    //上啦加载
+//    self.homeTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+//        self.page ++;
+////        [self getPersonalPhotoAlbumData];
+//        [self.homeTable.mj_footer endRefreshing];
+//    }];
+}
+
+- (void)getRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(self.page),@"page", nil];
+    
+    [AFNetWorkTool get:@"sheyun/documentCollect" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            self.documentCollectArrs = [FHDocumentCollectModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
+            [weakSelf.homeTable reloadData];
+            [weakSelf.homeTable.mj_header endRefreshing];
+            [weakSelf.homeTable.mj_footer endRefreshing];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable.mj_header endRefreshing];
+        [weakSelf.homeTable.mj_footer endRefreshing];
+    }];
+}
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 15;
+    return self.documentCollectArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -37,13 +91,26 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70.0f;
+    return 100.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHOtherFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHOtherFollowCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.collectModel = self.documentCollectArrs[indexPath.row];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FHDocumentCollectModel *infoModel = self.documentCollectArrs[indexPath.row];
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    Account *account = [AccountStorage readAccount];
+    web.urlString = [NSString stringWithFormat:@"%@?id=%@&userid=%ld",infoModel.singpage,infoModel.id,(long)account.user_id];
+    web.hidesBottomBarWhenPushed = YES;
+    web.titleString = infoModel.title;
+    web.isHaveProgress = YES;
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 
