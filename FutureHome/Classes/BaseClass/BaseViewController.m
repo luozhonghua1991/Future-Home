@@ -10,6 +10,7 @@
 
 
 @interface BaseViewController ()
+
 /** 带搜索的View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
 /** iOS7 之后布局部分 */
@@ -195,6 +196,25 @@
     return self.bottomBannerArrays;
 }
 
+- (void)loadInit
+{
+    [self headerReload];
+}
+- (void)loadNext
+{
+    [self footerReload];
+}
+
+- (void)headerReload
+{}
+
+- (void)footerReload
+{}
+
+- (void)delayEndRefresh:(MJRefreshComponent *)cmp
+{
+    [cmp endRefreshing];
+}
 
 
 

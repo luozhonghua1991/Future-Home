@@ -63,9 +63,6 @@
 @property (nonatomic, copy) NSString *shopID;
 /** 滚动消息数组 */
 @property (nonatomic, strong) NSMutableArray *soureArray;
-/** <#strong属性注释#> */
-@property (nonatomic, copy) NSArray *scrollNewsArrs;
-
 
 @end
 
@@ -237,7 +234,6 @@
     FHScrollNewsController *news = [[FHScrollNewsController alloc] init];
     news.type = @"1";
     news.hidesBottomBarWhenPushed = YES;
-    news.listInfoArrs = self.scrollNewsArrs;
     [self.navigationController pushViewController:news animated:YES];
 }
 
@@ -303,7 +299,6 @@
         self.soureArray = [[NSMutableArray alloc] init];
         if ([responseObj[@"code"] integerValue] == 1) {
             NSArray *arr = responseObj[@"data"][@"list"];
-            self.scrollNewsArrs = arr;
             for (NSDictionary * dic in arr) {
                 [self.soureArray addObject:dic[@"title"]];
             }

@@ -64,10 +64,10 @@
     [self getCommitsData];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self getCommitsData];
-}
+//- (void)viewWillAppear:(BOOL)animated {
+//    [super viewWillAppear:animated];
+//    [self getCommitsData];
+//}
 
 #pragma mark - 获取数据
 - (void)getCommitsData {
@@ -175,9 +175,12 @@
             [arrM addObject:commit];
         }
         self.dataArray = arrM;
+        WS(weakSelf);
         dispatch_async(dispatch_get_main_queue(), ^{
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self.mainTable reloadData];
+                [weakSelf.mainTable reloadData];
+                [weakSelf.mainTable.mj_header endRefreshing];
+                
             });
         });
     });
@@ -204,6 +207,8 @@
         self.mainTable.tableHeaderView = self.headerView;
         self.mainTable.tableHeaderView.height = self.headerView.height;
     }
+    
+    self.mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getCommitsData)];
     
 }
 

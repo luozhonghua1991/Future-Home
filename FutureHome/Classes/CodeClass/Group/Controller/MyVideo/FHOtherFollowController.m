@@ -12,6 +12,10 @@
 #import "FHDocumentCollectModel.h"
 
 @interface FHOtherFollowController () <UITableViewDelegate,UITableViewDataSource>
+{
+    NSInteger curPage;
+    NSInteger tolPage;
+}
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 文档收藏列表 */
@@ -25,12 +29,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.page = 1;
     self.documentCollectArrs = [[NSMutableArray alloc] init];
     [self.homeTable registerClass:[FHOtherFollowCell class] forCellReuseIdentifier:NSStringFromClass([FHOtherFollowCell class])];
     [self.view addSubview:self.homeTable];
-    [self getRequest];
-    [self setSettingMJRefreshConfiguration];
+    [self loadInit];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -38,36 +40,52 @@
     
 }
 
-- (void)setSettingMJRefreshConfiguration {
-    self.homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self getRequest];
-    }];
+#pragma mark -- MJrefresh
+- (void)headerReload {
+    curPage = 1;
+    tolPage = 1;
+    [self.homeTable.mj_footer resetNoMoreData];
     
-    self.homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getRequest)];
-    // 马上进入刷新状态
-//        [photoAlbumVC.mj_header beginRefreshing];
-    
-//    //上啦加载
-//    self.homeTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
-//        self.page ++;
-////        [self getPersonalPhotoAlbumData];
-//        [self.homeTable.mj_footer endRefreshing];
-//    }];
+    [self getRequestLoadHead:YES];
 }
 
-- (void)getRequest {
+- (void)footerReload {
+    if (++curPage <= tolPage) {
+        [self getRequestLoadHead:NO];
+    } else {
+        [self.homeTable.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
+- (void)getRequestLoadHead:(BOOL)isHead {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @(self.page),@"page", nil];
+                               @(curPage),@"page", nil];
     
     [AFNetWorkTool get:@"sheyun/documentCollect" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            self.documentCollectArrs = [FHDocumentCollectModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
+            if (isHead) {
+                [self.documentCollectArrs removeAllObjects];
+            }
+            [self endRefreshAction];
+            self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
+            [self.documentCollectArrs addObjectsFromArray:[FHDocumentCollectModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
             [weakSelf.homeTable reloadData];
-            [weakSelf.homeTable.mj_header endRefreshing];
-            [weakSelf.homeTable.mj_footer endRefreshing];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -98,7 +116,59 @@
     FHOtherFollowCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHOtherFollowCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.collectModel = self.documentCollectArrs[indexPath.row];
+    
+    //添加长按手势
+    UILongPressGestureRecognizer * longPressGesture =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+    
+    longPressGesture.minimumPressDuration = 1.5f;//设置长按 时间
+    [cell addGestureRecognizer:longPressGesture];
+    
     return cell;
+}
+
+- (void) cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {
+    if (longRecognizer.state==UIGestureRecognizerStateBegan) {
+        //成为第一响应者，需重写该方法
+        [self becomeFirstResponder];
+        
+        CGPoint location = [longRecognizer locationInView:self.homeTable];
+        NSIndexPath * indexPath = [self.homeTable indexPathForRowAtPoint:location];
+        //可以得到此时你点击的哪一行
+        
+        //在此添加你想要完成的功能
+        WS(weakSelf);
+        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定要取消收藏吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                /** 取消收藏文档 */
+                [weakSelf fh_cancleFollowInfoWithIndex:indexPath];
+            }
+        }];
+    }
+}
+
+- (void)fh_cancleFollowInfoWithIndex:(NSIndexPath *)index {
+    FHDocumentCollectModel * model = self.documentCollectArrs[index.row];
+    /** 取消收藏的接口 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               model.cid,@"cid",
+                               nil];
+    [AFNetWorkTool post:@"sheyun/cancelDocCollect" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"取消收藏成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                /** 确定 */
+                weakSelf.page = 1;
+                [weakSelf getRequestLoadHead:YES];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -114,6 +184,19 @@
 }
 
 
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
@@ -123,6 +206,10 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _homeTable.showsVerticalScrollIndicator = NO;
+        _homeTable.emptyDataSetSource = self;
+        _homeTable.emptyDataSetDelegate = self;
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadInit)];
+        _homeTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadNext)];
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

@@ -747,6 +747,7 @@
 		4ACAD07E23192E0F0064BA95 /* FHMyIndustryCommitteeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACAD07D23192E0F0064BA95 /* FHMyIndustryCommitteeController.m */; };
 		4ACB2CA72371511300F569EF /* FHScrollNewsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB2CA62371511300F569EF /* FHScrollNewsController.m */; };
 		4ACB2CAA2371635200F569EF /* FHScrollNewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB2CA92371635200F569EF /* FHScrollNewsModel.m */; };
+		4ACB2CB1237185FD00F569EF /* UIScrollView+EmptyDataSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACB2CAF237185FD00F569EF /* UIScrollView+EmptyDataSet.m */; };
 		4ACCD87B236C1D3B0020F10E /* FHPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACCD87A236C1D3B0020F10E /* FHPhotoModel.m */; };
 		4ACD3D7423050A4A0075DEF2 /* FHWatingOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD3D7323050A4A0075DEF2 /* FHWatingOrderCell.m */; };
 		4AD1D2A32356FEAB00D11966 /* areajson.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AD1D2A22356FEAB00D11966 /* areajson.json */; };
@@ -2385,6 +2386,8 @@
 		4ACB2CA62371511300F569EF /* FHScrollNewsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScrollNewsController.m; sourceTree = "<group>"; };
 		4ACB2CA82371635200F569EF /* FHScrollNewsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHScrollNewsModel.h; sourceTree = "<group>"; };
 		4ACB2CA92371635200F569EF /* FHScrollNewsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScrollNewsModel.m; sourceTree = "<group>"; };
+		4ACB2CAF237185FD00F569EF /* UIScrollView+EmptyDataSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDataSet.m"; sourceTree = "<group>"; };
+		4ACB2CB0237185FD00F569EF /* UIScrollView+EmptyDataSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDataSet.h"; sourceTree = "<group>"; };
 		4ACCD879236C1D3B0020F10E /* FHPhotoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPhotoModel.h; sourceTree = "<group>"; };
 		4ACCD87A236C1D3B0020F10E /* FHPhotoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPhotoModel.m; sourceTree = "<group>"; };
 		4ACD3D7223050A4A0075DEF2 /* FHWatingOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHWatingOrderCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Controller/ViewManagement/FHWatingOrderCell.h; sourceTree = SOURCE_ROOT; };
@@ -3204,6 +3207,7 @@
 		4A6DA9FE22C06F5C00F29455 /* libiary */ = {
 			isa = PBXGroup;
 			children = (
+				4ACB2CAE237185DA00F569EF /* DZNEemptyData */,
 				4A6E5A4D23703B220098DB67 /* MJRefresh */,
 				4AC409B82359C304006E1486 /* ptotoBrowser */,
 				4A68D2A023587846003A3CB6 /* DPPhotoListView */,
@@ -5566,6 +5570,15 @@
 			path = CustomerService;
 			sourceTree = "<group>";
 		};
+		4ACB2CAE237185DA00F569EF /* DZNEemptyData */ = {
+			isa = PBXGroup;
+			children = (
+				4ACB2CB0237185FD00F569EF /* UIScrollView+EmptyDataSet.h */,
+				4ACB2CAF237185FD00F569EF /* UIScrollView+EmptyDataSet.m */,
+			);
+			path = DZNEemptyData;
+			sourceTree = "<group>";
+		};
 		4AD1D2A823571D1100D11966 /* FHAddressPickerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -6154,6 +6167,7 @@
 				4A9CB209230BCA42004A3763 /* YYSpriteSheetImage.m in Sources */,
 				4AB2045322F2DD7300111AC4 /* ZXEmailAddressParsedResult.m in Sources */,
 				4AA7B3B822CC873B00462389 /* RWPasswordView.m in Sources */,
+				4ACB2CB1237185FD00F569EF /* UIScrollView+EmptyDataSet.m in Sources */,
 				4AB2041822F2DD7300111AC4 /* ZXAI01AndOtherAIs.m in Sources */,
 				4AB203E322F2DD7300111AC4 /* ZXPDF417BarcodeValue.m in Sources */,
 				4A45F5C32361B214009F25B8 /* FHReleaseDynamicsController.m in Sources */,

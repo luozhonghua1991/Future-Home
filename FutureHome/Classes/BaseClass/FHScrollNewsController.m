@@ -32,6 +32,7 @@
     [self.homeTable registerClass:[FHInformationMesageCell class] forCellReuseIdentifier:NSStringFromClass([FHInformationMesageCell class])];
     [self.view addSubview:self.homeTable];
     [self getRequest];
+    [self setSettingMJRefreshConfiguration];
 }
 
 #pragma mark — 通用导航栏
@@ -41,7 +42,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"滚动消息";
+    titleLabel.text = @"滚动消息列表";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -76,12 +77,28 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             self.scrollNewsArrs = [FHScrollNewsModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
             [weakSelf.homeTable reloadData];
+            [weakSelf.homeTable.mj_header endRefreshing];
+            [weakSelf.homeTable.mj_footer endRefreshing];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        [weakSelf.homeTable reloadData];
+        [weakSelf.homeTable.mj_header endRefreshing];
+        [weakSelf.homeTable.mj_footer endRefreshing];
     }];
+}
+
+- (void)setSettingMJRefreshConfiguration {
+    self.homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getRequest)];
+    // 马上进入刷新状态
+    //        [photoAlbumVC.mj_header beginRefreshing];
+    
+    //    //上啦加载
+    //    self.homeTable.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{
+    //        self.page ++;
+    ////        [self getPersonalPhotoAlbumData];
+    //        [self.homeTable.mj_footer endRefreshing];
+    //    }];
 }
 
 

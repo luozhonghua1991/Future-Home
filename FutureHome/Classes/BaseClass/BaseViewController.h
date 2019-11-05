@@ -21,10 +21,14 @@
 #import "BAAlertController.h"
 #import "HZPhotoBrowser.h"
 
+
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]
 
-@interface BaseViewController : UIViewController 
+@interface BaseViewController : UIViewController <
+DZNEmptyDataSetSource,
+DZNEmptyDataSetDelegate
+>
 /**
  用了自定义的手势返回，则系统的手势返回屏蔽
  不用自定义的手势返回，则系统的手势返回启用
@@ -60,5 +64,14 @@
 //- (NSMutableArray *)getTopBannersImgArrysWithType:(NSInteger )type;
 
 //- (NSMutableArray *)getBottomBannersImgArrysWithType:(NSInteger )type;
+
+- (void)loadInit;
+- (void)loadNext;
+- (void)headerReload;
+- (void)footerReload;
+/**
+ *  结束刷新
+ */
+- (void)delayEndRefresh:(MJRefreshComponent *)cmp;
 
 @end
