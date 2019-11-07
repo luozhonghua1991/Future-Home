@@ -10,7 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHFreshMallFollowListController : UIViewController
+@interface FHFreshMallFollowListController : BaseViewController
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *titleString;
+/** 1物业收藏 2业委收藏 3.生鲜收藏 4社交收藏 5医药收藏 */
+@property (nonatomic, copy) NSString *type;
+
 
 @end
 

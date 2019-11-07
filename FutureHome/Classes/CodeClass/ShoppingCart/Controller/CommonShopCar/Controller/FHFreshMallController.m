@@ -129,7 +129,7 @@
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:shareBtn];
+//    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
@@ -330,17 +330,6 @@
     [self.view addSubview:shareView];
 }
 
-/** 收藏按钮 */
-- (void)followBtnClick {
-//    [self.followDownMenu showMenu];
-    [self.view makeToast:@"添加收藏成功"];
-}
-
-/** 搜索事件 */
-- (void)searchBtnClick {
-    
-}
-
 /** 菜单按钮 */
 - (void)menuBtnClick {
     //显示收藏列表菜单
@@ -350,6 +339,9 @@
         [[SingleManager shareManager].shoppingBar removeFromSuperview];
     }
     FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
+    listVC.titleString = @"生鲜收藏";
+    listVC.type = @"3";
+    listVC.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:listVC animated:YES];
 
 }

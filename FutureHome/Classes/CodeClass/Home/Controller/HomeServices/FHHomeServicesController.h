@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHHomeServicesController : BaseViewController
+/** 物业的ID */
+@property (nonatomic, copy) NSString *homeServicesID;
 
 @end
 

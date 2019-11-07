@@ -25,16 +25,19 @@
 - (void)initViewControllers {
     FHCollectListViewController *videosVC = [[FHCollectListViewController alloc] init];
     videosVC.yp_tabItemTitle = @"生鲜收藏";
+    videosVC.type = @"3";
     
     FHCollectListViewController *videos1VC = [[FHCollectListViewController alloc] init];
     videos1VC.yp_tabItemTitle = @"商业收藏";
+    videos1VC.type = @"4";
     
     FHCollectListViewController *videos2VC = [[FHCollectListViewController alloc] init];
     videos2VC.yp_tabItemTitle = @"医药收藏";
+    videos2VC.type = @"5";
     
-//  FHSearchBelowController *photoVC = [[FHSearchBelowController alloc] init];
     FHCollectListViewController *photoVC = [[FHCollectListViewController alloc] init];
     photoVC.yp_tabItemTitle = @"查找附近";
+    photoVC.type = @"2019";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:videosVC,videos1VC,videos2VC,photoVC, nil];
     

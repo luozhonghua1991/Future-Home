@@ -87,9 +87,9 @@
     searchView.layer.masksToBounds = YES;
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(0, 0, 50, 15);
-    searchBtn.centerX = searchView.width / 2;
-    searchBtn.centerY = searchView.height / 2;
+    searchBtn.frame = searchView.bounds;
+//    searchBtn.centerX = searchView.width / 2;
+//    searchBtn.centerY = searchView.height / 2;
     [searchBtn setTitle:@" 搜索" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];

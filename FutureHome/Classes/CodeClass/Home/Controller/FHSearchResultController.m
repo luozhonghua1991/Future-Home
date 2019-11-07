@@ -9,8 +9,9 @@
 #import "FHSearchResultController.h"
 #import "FHSearchResultCell.h"
 #import "FHSearchResultModel.h"
+#import "FHPersonTrendsController.h"
 
-@interface FHSearchResultController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHSearchResultController () <UITableViewDelegate,UITableViewDataSource,FHSearchResultCellDelegate>
 {
     NSInteger curPage;
     NSInteger tolPage;
@@ -133,6 +134,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHSearchResultCell class])];
+    cell.delegate = self;
     if ([self.type isEqualToString:@"1"]) {
         cell.distanceLabel.hidden = YES;
     } else {
@@ -174,6 +176,24 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)fh_selectAvaterWithModel:(FHSearchResultModel *)model {
+    if ([self.type isEqualToString:@"1"]) {
+        /** 搜索用户 跳到用户的动态 */
+        /** 去用户的动态 */
+        FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+        vc.titleString = model.name;
+        [SingleManager shareManager].isSelectPerson = YES;
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.user_id = model.id;
+        vc.personType = 0;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 

@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHCollectListViewController : BaseViewController
+/** 3.生鲜收藏 4社交商业 5医药 */
+@property (nonatomic, copy) NSString *type;
 
 @end
 

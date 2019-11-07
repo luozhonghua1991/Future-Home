@@ -70,10 +70,23 @@
     // Configure the view for the selected state
 }
 
+#pragma mark — event
+- (void)tapClick {
+    if (_delegate !=nil && [_delegate respondsToSelector:@selector(fh_selectAvaterWithModel:)]) {
+        [_delegate fh_selectAvaterWithModel:self.resultModel];
+    }
+}
+
+
 #pragma mark — setter && getter
 - (UIImageView *)headerImgView {
     if (!_headerImgView) {
         _headerImgView = [[UIImageView alloc] init];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        _headerImgView.userInteractionEnabled = YES;
+        [_headerImgView addGestureRecognizer:tap];
+        
     }
     return _headerImgView;
 }

@@ -19,6 +19,7 @@
 #import "FHMenagerController.h"
 #import "FHPropertyCostsController.h"
 #import "FHGarageManagementController.h"
+#import "FHFreshMallFollowListController.h"
 
 @interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -78,9 +79,9 @@
                                @(account.user_id),@"user_id",
                                @(1),@"type", nil];
     [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
-        NSArray *arr = responseObj[@"data"];
+        NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
-        self->property_id = [dic[@"property_id"] integerValue];
+        self->property_id = [dic[@"id"] integerValue];
         /** 获取banner数据 */
         [self fh_refreshBannerData];
     } failure:^(NSError *error) {
@@ -122,7 +123,7 @@
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
     [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:shareBtn];
+//    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
@@ -141,6 +142,19 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+/** 收藏物业 */
+- (void)followBtnClick {
+    
+}
+/** 我的收藏界面 */
+- (void)menuBtnClick {
+    /** 去到收藏列表 */
+    FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
+    listVC.hidesBottomBarWhenPushed = YES;
+    listVC.titleString = @"物业收藏";
+    listVC.type = @"1";
+    [self.navigationController pushViewController:listVC animated:YES];
+}
 
 #pragma mark — request
 - (void)fh_refreshBannerData {
@@ -310,17 +324,6 @@
     mallScrollView.contentMode = UIViewContentModeScaleAspectFill;
     mallScrollView.tag = scrollViewTag;
     return mallScrollView;
-}
-
-
-#pragma mark — event
-/** 搜索事件 */
-- (void)searchClick {
-    
-}
-/** 收藏事件 */
-- (void)collectClick {
-    
 }
 
 

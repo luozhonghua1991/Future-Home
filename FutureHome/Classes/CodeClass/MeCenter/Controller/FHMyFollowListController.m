@@ -76,18 +76,23 @@
 - (void)initViewControllers {
     FHFollowListViewController *messageVC = [[FHFollowListViewController alloc] init];
     messageVC.yp_tabItemTitle = @"物业";
+    messageVC.type = @"1";
     
     FHFollowListViewController *groupVC = [[FHFollowListViewController alloc] init];
     groupVC.yp_tabItemTitle = @"业委";
+    groupVC.type = @"2";
     
     FHFollowListViewController *hotVC = [[FHFollowListViewController alloc] init];
     hotVC.yp_tabItemTitle = @"生鲜";
+    hotVC.type = @"3";
     
     FHFollowListViewController *friendVC = [[FHFollowListViewController alloc] init];
     friendVC.yp_tabItemTitle = @"商家";
+    friendVC.type = @"4";
     
     FHFollowListViewController *followVC = [[FHFollowListViewController alloc] init];
     followVC.yp_tabItemTitle = @"药店";
+    followVC.type = @"5";
     
 //    FHFollowListViewController *fowVC = [[FHFollowListViewController alloc] init];
 //    fowVC.yp_tabItemTitle = @"文档收藏";

@@ -8,15 +8,32 @@
 
 #import "FHFollowListViewController.h"
 #import "FHFollowListViewCell.h"
+#import "FHSearchResultCell.h"
+#import "FHSearchResultModel.h"
+#import "FHCommonFollowAndPlacementCell.h"
+#import "FHCommonFollowModel.h"
 
-@interface FHFollowListViewController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHFollowListViewController ()
+<
+UITableViewDelegate,
+UITableViewDataSource,
+FHCommonFollowAndPlacementCellDelegate,
+FDActionSheetDelegate
+>
+{
+    NSInteger curPage;
+    NSInteger tolPage;
+}
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** tableHeaderView */
 @property (nonatomic, strong) UIView *tableHeaderView;
 /** 个数label */
 @property (nonatomic, strong) UILabel *countLabel;
-
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *dataArrs;
+/** 收藏的主键 */
+@property (nonatomic, copy) NSString *cid;
 
 @end
 
@@ -24,25 +41,77 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    self.dataArrs = [[NSMutableArray alloc] init];
+    [self.homeTable registerClass:[FHCommonFollowAndPlacementCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonFollowAndPlacementCell class])];
     [self.view addSubview:self.homeTable];
-    self.homeTable.tableHeaderView = self.tableHeaderView;
-    self.countLabel.text = [NSString stringWithFormat:@"%@数量: 520",self.yp_tabItemTitle];
-    [self.tableHeaderView addSubview:self.countLabel];
-    [self.homeTable registerClass:[FHFollowListViewCell class] forCellReuseIdentifier:NSStringFromClass([FHFollowListViewCell class])];
+    [self loadInit];
 }
+
+#pragma mark -- MJrefresh
+- (void)headerReload {
+    curPage = 1;
+    tolPage = 1;
+    [self.homeTable.mj_footer resetNoMoreData];
+    
+    [self getRequestDataLoadHead:YES];
+}
+
+- (void)footerReload {
+    if (++curPage <= tolPage) {
+        [self getRequestDataLoadHead:NO];
+    } else {
+        [self.homeTable.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+- (void)endRefreshAction {
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
+
+#pragma mark — request
+- (void)getRequestDataLoadHead:(BOOL)isHead {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.type,@"type",
+                               @(curPage),@"page",
+                               nil];
+    [AFNetWorkTool get:@"userCenter/collectList" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (isHead) {
+                [self.dataArrs removeAllObjects];
+            }
+            [self endRefreshAction];
+            self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
+            [self.dataArrs addObjectsFromArray:[FHCommonFollowModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
+            [weakSelf.homeTable reloadData];
+        } else {
+            [self endRefreshAction];
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 
 #pragma mark  -- tableViewDelagate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.dataArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 10.f;
+    return 0.01f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -50,51 +119,134 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.yp_tabItemTitle isEqualToString:@"文档收藏"]) {
-        return 100;
-    }
-    return 40;
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if ([self.yp_tabItemTitle isEqualToString:@"文档收藏"]) {
-        UIView *view = [[UIView alloc] init];
-        return view;
-    }
-    UIView *view = [[UIView alloc] init];
-    view.backgroundColor = [UIColor whiteColor];
-    return view;
+    return 92.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.yp_tabItemTitle isEqualToString:@"文档收藏"]) {
-        FHFollowListViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHFollowListViewCell class])];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.backgroundColor = ZH_COLOR(242, 242, 242);
-        return cell;
-    }
-    static NSString *ID = @"cell1";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
-    }
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.textLabel.text = @"恒大未来城一期物业平台";
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.detailTextLabel.text = @"CQW190786";
-    cell.backgroundColor = ZH_COLOR(242, 242, 242);
+    FHCommonFollowAndPlacementCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonFollowAndPlacementCell class])];
+    cell.followModel = self.dataArrs[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)fh_selectMenuWithModel:(FHCommonFollowModel *)followModle {
+    self.cid = followModle.cid;
+    /** 进行置顶和取消收藏的操作 */
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"请按照您的需要设置收藏" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"置顶店铺",@"取消收藏", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *16];
+    [actionSheet setButtonTitleColor:[UIColor blueColor] bgColor:nil fontSize:SCREEN_HEIGHT/667 *16 atIndex:0];
+    [actionSheet setButtonTitleColor:[UIColor orangeColor] bgColor:nil fontSize:SCREEN_HEIGHT/667 *16 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+- (void)fh_selectAvaterWithModel:(FHCommonFollowModel *)followModle {
+    /** 跳转到物业 */
+    
+}
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            /** 进行置顶 */
+            [self fh_placeShop];
+            break;
+        }
+        case 1:
+        {
+            /** 取消收藏 */
+            [self fh_cancleFollowShop];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+
+/** 置顶功能 */
+- (void)fh_placeShop {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               weakSelf.cid,@"cid",
+                               weakSelf.type,@"type",
+                               nil];
+    [AFNetWorkTool post:@"public/roofPlacement" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"置顶成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf loadInit];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+- (void)fh_cancleFollowShop {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               weakSelf.cid,@"cid",
+                               weakSelf.type,@"type",
+                               nil];
+    [AFNetWorkTool post:@"public/cancelCollect" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"取消收藏成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf loadInit];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
-        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT) style:UITableViewStylePlain];
+        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - 35) style:UITableViewStylePlain];
         _homeTable.dataSource = self;
         _homeTable.delegate = self;
-        _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _homeTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _homeTable.showsVerticalScrollIndicator = NO;
-        _homeTable.backgroundColor = ZH_COLOR(242, 242, 242);
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadInit)];
+        _homeTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadNext)];
+        _homeTable.emptyDataSetSource = self;
+        _homeTable.emptyDataSetDelegate = self;
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

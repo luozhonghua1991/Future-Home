@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHFollowListViewController : BaseViewController
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *type;
 
 @end
 
