@@ -12,6 +12,8 @@
 #import "FHBusinessServicesController.h"
 #import "FHPublicServiceController.h"
 #import "FHCreatRrendsController.h"
+#import "FHMainSearchController.h"
+#import "FHScanTool.h"
 
 @interface FHGroupController () <UIScrollViewDelegate>
 {
@@ -33,7 +35,8 @@
 @property (nonatomic, strong) FHPublicServiceController *puclicService;
 /** 选择导航View */
 @property (nonatomic, strong) UIView *selectNavView;
-
+/** 二维码图 */
+@property (nonatomic, strong) UIImageView *codeImgView;
 
 @property (nonatomic, copy) NSArray <UIViewController *> *viewControllers;
 
@@ -77,7 +80,7 @@
     [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(60, MainStatusBarHeight, SCREEN_WIDTH - 130, 30)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(30, MainStatusBarHeight, SCREEN_WIDTH - 130, 30)];
     searchView.backgroundColor = [UIColor whiteColor];
     searchView.layer.cornerRadius = 15;
     searchView.clipsToBounds = YES;
@@ -91,7 +94,7 @@
     [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [searchBtn setImage:[UIImage imageNamed:@"xingtaiduICON_sousuo--"] forState:UIControlStateNormal];
-//    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [searchBtn addTarget:self action:@selector(searchBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [searchView addSubview:searchBtn];
     [self.navgationView addSubview:searchView];
     
@@ -106,6 +109,13 @@
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.navgationView addSubview:bottomLineView];
+    
+    self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, MainStatusBarHeight + 5, 25, 25)];
+    self.codeImgView.image = [UIImage imageNamed:@"saoyisao-2"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+    self.codeImgView.userInteractionEnabled = YES;
+    [self.codeImgView addGestureRecognizer:tap];
+    [self.navgationView addSubview:self.codeImgView];
 }
 
 - (void)backBtnClick {
@@ -116,6 +126,20 @@
     FHCreatRrendsController *creat = [[FHCreatRrendsController alloc] init];
     creat.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:creat animated:YES];
+}
+
+/** 二维码扫描事件 */
+- (void)tapClick {
+    [FHScanTool fh_makeScanClick];
+}
+
+/** 搜索事件 */
+- (void)searchBtnClick {
+    FHMainSearchController *search = [[FHMainSearchController alloc] init];
+    search.titleString = @"搜索";
+    search.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:search animated:YES];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

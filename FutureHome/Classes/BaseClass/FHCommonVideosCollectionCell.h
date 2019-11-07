@@ -9,12 +9,13 @@
 #import <UIKit/UIKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
+@class FHVideosListModel;
 @protocol FHCommonVideosCollectionCellDelegate <NSObject>
 
 @optional // 可选实现的方法
 - (void)FHCommonVideosCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex;
 
+- (void)fh_collectionCancleVideoSelectIndex:(NSIndexPath *)selectIndex model:(FHVideosListModel *)model;
 @end
 
 @interface FHCommonVideosCollectionCell : UITableViewCell
@@ -28,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) CGFloat collectionViewHeight;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *shopID;
+/** type 1类型  2生鲜视频列表*/
+@property (nonatomic, assign) NSInteger type;
+
 
 @end
 

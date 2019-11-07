@@ -26,6 +26,7 @@
 #import "PYSearchViewController.h"
 #import "FHVideoPlayerController.h"
 #import "FHScrollNewsController.h"
+#import "FHMainSearchController.h"
 
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate,PYSearchViewControllerDelegate>
 {
@@ -166,9 +167,7 @@
     searchView.layer.masksToBounds = YES;
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(0, 0, 50, 15);
-    searchBtn.centerX = searchView.width / 2;
-    searchBtn.centerY = searchView.height / 2;
+    searchBtn.frame = searchView.bounds;
     [searchBtn setTitle:@" 搜索" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -194,29 +193,11 @@
 
 /** 搜索事件 */
 - (void)searchBtnClick {
-    // 1.创建热门搜索
-    // 2. 创建控制器
-    PYSearchViewController *searchViewController = [PYSearchViewController searchViewControllerWithHotSearches:hotSeaches searchBarPlaceholder:@"搜索" didSearchBlock:^(PYSearchViewController *searchViewController, UISearchBar *searchBar, NSString *searchText) {
-        // 开始搜索执行以下代码
-        // 如：跳转到指定控制器
-//        SearchResultsViewController *result = [[SearchResultsViewController alloc]init];
-//        result.searchText = searchBar.text;
-//        [searchViewController.navigationController pushViewController:result animated:NO];
-    }];
-    // 3. 设置风格
-    // 选择热门搜索
-    searchViewController.hotSearchStyle = PYHotSearchStyleARCBorderTag; // 热门搜索风格根据选择
-    searchViewController.searchHistoryStyle = PYHotSearchStyleDefault; // 搜索历史风格为default
-    searchViewController.searchBarBackgroundColor = COLOR_6;
-    searchViewController.cancelButton.tintColor = COLOR_3;
+    FHMainSearchController *search = [[FHMainSearchController alloc] init];
+    search.titleString = @"搜索";
+    search.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:search animated:YES];
     
-    // 4. 设置代理
-    searchViewController.delegate = self;
-    // 5. 跳转到搜索控制器
-    //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:searchViewController];
-    //    [self presentViewController:nav  animated:NO completion:nil];
-    searchViewController.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:searchViewController animated:NO];
 }
 
 /** 点击取消时调用 */

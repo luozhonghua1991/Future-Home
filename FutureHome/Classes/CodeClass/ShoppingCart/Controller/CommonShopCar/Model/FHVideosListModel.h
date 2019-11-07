@@ -19,9 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *path;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *cover;
-
-
-
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *cid;
 
 @end
 

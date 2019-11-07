@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHMyVideosController : BaseViewController
 /** 用户id */
 @property (nonatomic, copy) NSString *user_id;
-/** 1视频收藏 */
+/** 1视频收藏 2生鲜视频 需要一个头部区域 */
 @property (nonatomic, assign) NSInteger type;
 
 

@@ -64,10 +64,10 @@
     [self getCommitsData];
 }
 
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    [self getCommitsData];
-//}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self getCommitsData];
+}
 
 #pragma mark - 获取数据
 - (void)getCommitsData {

@@ -9,8 +9,14 @@
 #import "FHCommonVideosCollectionCell.h"
 #import "FHVideoListViewCell.h"
 #import "FHServiceCommonHeaderView.h"
+#import "FHVideosListModel.h"
 
-@interface FHCommonVideosCollectionCell () <UICollectionViewDataSource,UICollectionViewDelegate>
+@interface FHCommonVideosCollectionCell ()
+<UICollectionViewDataSource,
+UICollectionViewDelegate,
+DZNEmptyDataSetSource,
+DZNEmptyDataSetDelegate
+>
 /** 视频列表collection */
 @property (nonatomic, strong) UICollectionView *videoCollectionView;
 /** 标头数据 */
@@ -41,7 +47,9 @@
 - (void)setVideoListArrs:(NSMutableArray *)videoListArrs {
     _videoListArrs = videoListArrs;
     [self.videoCollectionView reloadData];
-    [self.videoCollectionView setContentOffset:CGPointMake(0, -140)];
+    if (self.type == 2) {
+        [self.videoCollectionView setContentOffset:CGPointMake(0, -140)];
+    }
 }
 
 - (void)setShopID:(NSString *)shopID {
@@ -77,7 +85,30 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHVideoListViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHVideoListViewCell class]) forIndexPath:indexPath];
     cell.videoListModel = self.videoListArrs[indexPath.item];
+    if (self.type == 1) {
+        /** 才有取消收藏功能 */
+        //添加长按手势
+        UILongPressGestureRecognizer * longPressGesture =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+        
+        longPressGesture.minimumPressDuration = 1.5f;//设置长按 时间
+        [cell addGestureRecognizer:longPressGesture];
+    }
     return cell;
+}
+
+- (void)cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {
+    if (longRecognizer.state==UIGestureRecognizerStateBegan) {
+        //成为第一响应者，需重写该方法
+        [self becomeFirstResponder];
+        
+        CGPoint location = [longRecognizer locationInView:self.videoCollectionView];
+        NSIndexPath * indexPath = [self.videoCollectionView indexPathForItemAtPoint:location];
+        FHVideosListModel *model = self.videoListArrs[indexPath.item];
+        //可以得到此时你点击的哪一行
+        if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_collectionCancleVideoSelectIndex:model:)]) {
+            [_delegate fh_collectionCancleVideoSelectIndex:indexPath model:model];
+        }
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -90,6 +121,18 @@
     _collectionViewHeight = collectionViewHeight;
     self.videoCollectionView.height = _collectionViewHeight;
     [self layoutSubviews];
+}
+
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
 
@@ -110,7 +153,9 @@
         _videoCollectionView.dataSource = self;
         _videoCollectionView.delegate = self;
         _videoCollectionView.scrollsToTop = NO;
-    }
+        _videoCollectionView.emptyDataSetSource = self;
+        _videoCollectionView.emptyDataSetDelegate = self;
+        }
     return _videoCollectionView;
 }
 

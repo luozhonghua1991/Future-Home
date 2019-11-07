@@ -26,13 +26,13 @@
     self.isHaveNavgationView = YES;
     self.navgationView.userInteractionEnabled = YES;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = self.titleString;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.userInteractionEnabled = YES;
-    [self.navgationView addSubview:titleLabel];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    self.titleLabel.text = self.titleString;
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:self.titleLabel];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);

@@ -25,7 +25,8 @@
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]
 
-@interface BaseViewController : UIViewController <
+@interface BaseViewController : UIViewController
+<
 DZNEmptyDataSetSource,
 DZNEmptyDataSetDelegate
 >
@@ -40,6 +41,7 @@ DZNEmptyDataSetDelegate
 @property (nonatomic, assign) BOOL isHaveNav;
 /** 自定义导航栏视图 */
 @property (nonatomic, strong) UIView *navgationView;
+
 
 @property (nonatomic,retain) MBProgressHUD* hud;
 - (void)addHud;

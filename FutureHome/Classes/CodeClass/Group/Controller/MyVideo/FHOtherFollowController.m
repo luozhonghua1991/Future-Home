@@ -160,8 +160,7 @@
             [weakSelf.view makeToast:@"取消收藏成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 确定 */
-                weakSelf.page = 1;
-                [weakSelf getRequestLoadHead:YES];
+                [weakSelf loadInit];
             });
         } else {
             NSString *msg = responseObj[@"msg"];

@@ -142,6 +142,8 @@
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
+                [self.lodingHud hideAnimated:YES];
+                self.lodingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
@@ -176,6 +178,8 @@
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
+                [self.lodingHud hideAnimated:YES];
+                self.lodingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {

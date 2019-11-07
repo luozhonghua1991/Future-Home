@@ -89,6 +89,7 @@
     FHCommonVideosCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 70;
+    cell.type = 2;
     cell.delegate = self;
     cell.rowCount = self.videoListArrs.count;
     cell.videoListArrs = self.videoListArrs;

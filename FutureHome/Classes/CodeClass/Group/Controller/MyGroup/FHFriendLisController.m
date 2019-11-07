@@ -91,9 +91,9 @@
         [cell.followOrNoBtn setTitle:@"√已关注" forState:UIControlStateNormal];
         [cell.followOrNoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     }  else {
-        cell.followOrNoBtn.layer.borderColor = HEX_COLOR(0x1296db).CGColor;
+        cell.followOrNoBtn.layer.borderColor = [UIColor orangeColor].CGColor;
         [cell.followOrNoBtn setTitle:@"＋关注" forState:UIControlStateNormal];
-        [cell.followOrNoBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+        [cell.followOrNoBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
     }
     [cell.followOrNoBtn addTarget:self action:@selector(followOrNoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.followOrNoBtn.tag = indexPath.row;

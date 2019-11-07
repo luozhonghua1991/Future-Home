@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHBaseHaveNavTabberController : YPTabBarController
 /** 标题名字 */
 @property (nonatomic, copy) NSString *titleString;
+/** 标题label */
+@property (nonatomic, strong) UILabel *titleLabel;
 
 - (void)initViewControllers;
 
