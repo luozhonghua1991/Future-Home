@@ -39,6 +39,7 @@
     if ([SingleManager shareManager].shoppingBar) {
         [[SingleManager shareManager].shoppingBar removeFromSuperview];
     }
+    [self getRequest];
 }
 
 - (void)getRequest {
@@ -101,6 +102,7 @@
     ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
     douyin.videoListDataArrs = self.videoListDataArrs;
     [douyin playTheIndex:selectIndex.item];
+    douyin.type = @"1";
     douyin.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:douyin animated:YES];
 }

@@ -160,7 +160,7 @@
 }
 
 - (void)fh_creatSerchView {
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(MaxX(self.locationBtn) + 10, MainStatusBarHeight, SCREEN_WIDTH - 130, 30)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(MaxX(self.locationBtn) + 10, MainStatusBarHeight, SCREEN_WIDTH - 130, 35)];
     searchView.backgroundColor = [UIColor whiteColor];
     searchView.layer.cornerRadius = 15;
     searchView.clipsToBounds = YES;

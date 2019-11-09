@@ -13,6 +13,9 @@
 @property (nonatomic, copy) NSString *shopID;
 /** <#strong属性注释#> */
 @property (nonatomic, copy) NSArray *videoListDataArrs;
+/** 1生鲜 2朋友圈 */
+@property (nonatomic, copy) NSString *type;
+
 
 - (void)playTheIndex:(NSInteger)index;
 

@@ -42,7 +42,7 @@
     return self;
 }
 
-+(instancetype)commitWithDict:(NSDictionary *)dict{
++ (instancetype)commitWithDict:(NSDictionary *)dict{
     return [[self alloc]initWithDict:dict];
 }
 

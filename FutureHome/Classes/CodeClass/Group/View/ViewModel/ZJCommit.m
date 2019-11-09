@@ -50,6 +50,8 @@
         self.comment_num = [dict[@"comment_num"] integerValue];
         self.like_count = [dict[@"like_num"] integerValue];
         self.user_id = dict[@"user_id"];
+        self.like_status = [dict[@"like_status"] integerValue];
+        
         _identifier = [self uniqueIdentifier];
     }
     return self;
@@ -73,6 +75,7 @@
         self.view_num = [dict[@"view_num"] integerValue];
         self.comment_num = [dict[@"comment_num"] integerValue];
         self.user_id = dict[@"user_id"];
+        self.like_status = [dict[@"like_status"] integerValue];
         
         _identifier = [self uniqueIdentifier];
     }

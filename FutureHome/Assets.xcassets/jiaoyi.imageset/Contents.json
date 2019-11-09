@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "jiaoyi.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "03商业服务50*50.png",
       "scale" : "2x"
     },
     {

@@ -15,9 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @required // 必须实现的方法 默认
 
-@optional // 可选实现的方法
-
+@optional
+// 可选实现的方法
 - (void)fh_ZJNoHavePhotoCellSelectModel:(ZJCommit *)model;
+
+- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model;
 
 @end
 

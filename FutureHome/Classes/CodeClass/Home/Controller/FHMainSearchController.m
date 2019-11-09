@@ -27,7 +27,7 @@
 
 - (void)setUpUI {
     /** 创建搜索View */
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(MainNavgationBarHeight + 25, MainStatusBarHeight + 5, SCREEN_WIDTH - 100, 30)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(MainNavgationBarHeight + 25, MainStatusBarHeight, SCREEN_WIDTH - 100, 35)];
     searchView.backgroundColor = [UIColor whiteColor];
     searchView.layer.cornerRadius = 15;
     searchView.clipsToBounds = YES;
@@ -39,7 +39,7 @@
     [searchBtn setImage:[UIImage imageNamed:@"xingtaiduICON_sousuo--"] forState:UIControlStateNormal];
     [searchView addSubview:searchBtn];
     
-    self.searchTF = [[UITextField alloc] initWithFrame:CGRectMake(MaxX(searchBtn), 0, SCREEN_WIDTH - 100 - MaxX(searchBtn) - 20, 30)];
+    self.searchTF = [[UITextField alloc] initWithFrame:CGRectMake(MaxX(searchBtn), 0, SCREEN_WIDTH - 100 - MaxX(searchBtn) - 20, 35)];
     [self.searchTF becomeFirstResponder];
     self.searchTF.delegate = self;
     [searchView addSubview:self.searchTF];

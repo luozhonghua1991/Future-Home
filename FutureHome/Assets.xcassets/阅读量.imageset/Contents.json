@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "阅读量.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "云动态阅读量36*36.png",
       "scale" : "2x"
     },
     {

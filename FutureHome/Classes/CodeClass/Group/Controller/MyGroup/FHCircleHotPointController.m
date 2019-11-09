@@ -285,12 +285,49 @@
     [self pushVCWithModel:Model];
 }
 
+
+- (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model {
+    /** 用户点赞 */
+    [self getRequestLickWithModel:Model];
+}
+
+- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model {
+    /** 用户点赞 */
+    [self getRequestLickWithModel:model];
+}
+
+- (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model {
+    /** 用户点赞 */
+    [self getRequestLickWithModel:model];
+}
+
+- (void)getRequestLickWithModel:(ZJCommit *)model {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"1",@"type",
+                               model.ID,@"pid",
+                               @"user_id",@"uid",
+                               nil];
+    [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf getCommitsData];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
 /** 点击视频的播放 */
 - (void)fh_ZJHaveMoveCellDelagateSelectMovieModel:(ZJCommit *)Model {
     NSDictionary *dic = Model.medias[0];
     if ([self.videoListDataArrs containsObject:dic]) {
         NSInteger index = [self.videoListDataArrs indexOfObject:dic];
         ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
+        /** 朋友圈视频点赞 */
+        douyin.type = @"2";
         douyin.videoListDataArrs = self.videoListDataArrs;
         [douyin playTheIndex:index];
         douyin.hidesBottomBarWhenPushed = YES;

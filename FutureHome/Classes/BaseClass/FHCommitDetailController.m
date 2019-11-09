@@ -42,7 +42,7 @@
     [self fh_creatNav];
     [self setUpAllView];
     if (self.type == 3) {
-        //    /** 评论详情数据 */
+        //    /** 动态详情数据 */
         [self requestWithDic:self.dongTaiDataDic];
     } else {
         //    /** 评论详情数据 */
@@ -56,12 +56,6 @@
     }
 }
 
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//    /** 评论详情数据 */
-//    [self requestWithDic:self.dataDic];
-//    [self getCommitsData];
-//}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -87,18 +81,25 @@
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.navgationView addSubview:bottomLineView];
     
-    self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, MainStatusBarHeight + 5, 25, 25)];
-    self.codeImgView.image = [UIImage imageNamed:@"saoyisao-2"];
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
-    self.codeImgView.userInteractionEnabled = YES;
-    [self.codeImgView addGestureRecognizer:tap];
-    [self.navgationView addSubview:self.codeImgView];
+    if (self.type == 3) {
+        Account *account = [AccountStorage readAccount];
+        if ([self.dongTaiDataDic[@"user_id"] integerValue] == account.user_id) {
+            UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
+            [deleteBtn setTitle:@"···" forState:UIControlStateNormal];
+            deleteBtn.titleLabel.font = [UIFont systemFontOfSize:35];
+            [deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [deleteBtn addTarget:self action:@selector(tapClick) forControlEvents:UIControlEventTouchUpInside];
+            [self.navgationView addSubview:deleteBtn];
+        }
+    }
 }
 
 - (void)tapClick {
-    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"确定删除该条动态吗？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"确定删除该条动态吗？" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消", nil];
     [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
     [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
     [actionSheet addAnimation];
     [actionSheet show];
 }
@@ -106,24 +107,49 @@
 
 #pragma mark - <FDActionSheetDelegate>
 - (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex {
-//    switch (buttonIndex)
-//    {
-//        case 0:
-//        {
-//            /** 做删除动态的操作 */
-//
-////            [self addCamera];
-//            break;
-//        }
-//        case 1:
-//        {
-//            ZHLog(@"取消");
-//            break;
-//        }
-//        default:
-//
-//            break;
-//    }
+    switch (buttonIndex)
+    {
+        case 0: {
+            /** 做删除动态的操作 */
+            [self deleteDynamic];
+            break;
+        }
+        case 1: {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+
+            break;
+    }
+}
+
+- (void)deleteDynamic {
+    ZJCommit *commit = self.dataArray[0];
+    Account *account = [AccountStorage readAccount];
+    if ([commit.user_id integerValue] == account.user_id) {
+        /** 只能删除自己的动态 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   commit.ID,@"id",
+                                   nil];
+        
+        [AFNetWorkTool post:@"sheyun/deleteDynamic" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"操作成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+    
 }
 
 - (void)backBtnClick {

@@ -2,11 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "评论点赞.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "已收藏.png",
+      "filename" : "视频点赞前70*70.png",
       "scale" : "2x"
     },
     {

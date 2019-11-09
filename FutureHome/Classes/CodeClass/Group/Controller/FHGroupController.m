@@ -80,7 +80,7 @@
     [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     
-    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(30, MainStatusBarHeight, SCREEN_WIDTH - 130, 30)];
+    UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(30, MainStatusBarHeight, SCREEN_WIDTH - 90, 35)];
     searchView.backgroundColor = [UIColor whiteColor];
     searchView.layer.cornerRadius = 15;
     searchView.clipsToBounds = YES;

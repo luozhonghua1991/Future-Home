@@ -36,6 +36,10 @@
 @property(nonatomic, copy) NSString     *img_data;
 @property(nonatomic, copy) NSString     *like_type;
 
+/** 1点赞 2没点赞 */
+@property (nonatomic, assign) NSInteger like_status;
+
+
 
 /** 查看次数 */
 @property (nonatomic, assign) NSInteger    view_num;

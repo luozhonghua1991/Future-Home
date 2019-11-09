@@ -74,9 +74,17 @@
     [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     
     self.nameLab.text = _model.nickname;
-    NSInteger time = [_model.add_time integerValue];
-    self.timeLab.text = [NSDate dateWithTimeInterval:time format:@"MM月dd日"];
+    
+    self.timeLab.text = _model.add_time;
     self.contentLab.text = _model.content;
+    if (_model.like_status == 2) {
+        [self.upBtn setImage:[UIImage imageNamed:@"1点赞"] forState:UIControlStateNormal];
+        [self.upBtn addTarget:self action:@selector(upBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        self.upBtn.enabled = YES;
+    } else if (_model.like_status == 1) {
+        self.upBtn.enabled = YES;
+        [self.upBtn setImage:[UIImage imageNamed:@"2已点赞"] forState:UIControlStateNormal];
+    }
     
     CGSize size = [UIlabelTool sizeWithString:self.contentLab.text font:self.contentLab.font width:SCREEN_WIDTH - (MaxX(self.avatar) + 15) - 15];
     NSInteger count = model.pic_urls.count;
@@ -134,7 +142,7 @@
     // 时间
     if (!self.timeLab) {
         self.timeLab = [[UILabel alloc] init];
-        self.timeLab.font = [UIFont systemFontOfSize:12];
+        self.timeLab.font = [UIFont systemFontOfSize:13];
         self.timeLab.textColor = kLightGrayColor;
         self.timeLab.numberOfLines = 1;
         self.timeLab.textAlignment = NSTextAlignmentRight;
@@ -177,17 +185,17 @@
     }
     //浏览量
     if (!self.eyeBtn) {
-        self.eyeBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"阅读量"]];
+        self.eyeBtn = [self creatBtnWithTitle:@"0" image:[UIImage imageNamed:@"阅读量"]];
     }
     
     //点赞
     if (!self.upBtn) {
-        self.upBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"1点赞"]];
+        self.upBtn = [self creatBtnWithTitle:@"0" image:[UIImage imageNamed:@"1点赞"]];
     }
     
     //评论量
     if (!self.commitBtn) {
-        self.commitBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"评论、"]];
+        self.commitBtn = [self creatBtnWithTitle:@"0" image:[UIImage imageNamed:@"评论、"]];
     }
     
     /** 设置frame */
@@ -203,10 +211,9 @@
     self.bottomView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 35);
     self.topLine.frame = CGRectMake(MaxX(self.avatar) + 15, 0, SCREEN_WIDTH - (MaxX(self.avatar) + 15), 0.25);
     CGFloat btnWidth = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
-    self.eyeBtn.frame = CGRectMake(MaxX(self.avatar) + 15, 10, btnWidth, 15);
-    self.upBtn.frame = CGRectMake(MaxX(self.eyeBtn) + 10, 10, btnWidth, 15);
-    self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 10, btnWidth, 15);
-    
+    self.eyeBtn.frame = CGRectMake(MaxX(self.avatar) + 15, 11/2, btnWidth, 24);
+    self.upBtn.frame = CGRectMake(MaxX(self.eyeBtn) + 10, 11/2, btnWidth, 24);
+    self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 11/2, btnWidth, 24);
 }
 
 
@@ -216,12 +223,18 @@
     }
 }
 
+- (void)upBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:)]) {
+        [_delegate fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:self.model];
+    }
+}
+
 - (UIButton *)creatBtnWithTitle:(NSString *)title image:(UIImage *)imgage{
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitleColor:kLightGrayColor forState:UIControlStateNormal];
     [btn setImage:imgage forState:UIControlStateNormal];
-    btn.titleLabel.font = [UIFont systemFontOfSize:12];
+    btn.titleLabel.font = [UIFont systemFontOfSize:13];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
     btn.enabled = NO;

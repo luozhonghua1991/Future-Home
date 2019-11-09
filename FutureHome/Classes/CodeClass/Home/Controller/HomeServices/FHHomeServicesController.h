@@ -7,12 +7,15 @@
 //
 
 #import "BaseViewController.h"
+#import "FHCommonFollowModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHHomeServicesController : BaseViewController
-/** 物业的ID */
-@property (nonatomic, copy) NSString *homeServicesID;
+///** 物业的ID */
+//@property (nonatomic, assign) NSInteger homeServices_ID;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHCommonFollowModel *model;
 
 @end
 

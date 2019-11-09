@@ -58,13 +58,14 @@
     [self getSearchResultLoadHead:YES searchTitle:self.searchText];
 }
 
-//- (void)footerReload {
+- (void)footerReload {
+    [self.homeTable.mj_footer endRefreshingWithNoMoreData];
 //    if (++curPage <= tolPage) {
 //        [self getSearchResultLoadHead:NO searchTitle:self.searchText];
 //    } else {
 //        [self.homeTable.mj_footer endRefreshingWithNoMoreData];
 //    }
-//}
+}
 
 - (void)endRefreshAction
 {
@@ -209,7 +210,14 @@
                      @(account.user_id),@"user_id",
                      resultModel.id,@"follow_id", nil];
     } else {
-        NSInteger type = [self.type integerValue] - 1;
+        NSInteger type;
+        if ([self.type isEqualToString:@"3"]) {
+            type = 1;
+        } else if([self.type isEqualToString:@"2"]){
+            type = 2;
+        } else {
+            type = [self.type integerValue] - 1;
+        }
         urlString = @"public/collect";
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",

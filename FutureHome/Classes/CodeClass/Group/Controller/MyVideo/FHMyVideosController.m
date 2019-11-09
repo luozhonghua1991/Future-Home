@@ -44,6 +44,11 @@
     [self loadInit];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadInit];
+}
+
 #pragma mark -- MJrefresh
 - (void)headerReload {
     curPage = 1;
@@ -184,6 +189,7 @@
 - (void)FHCommonVideosCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
     douyin.videoListDataArrs = self.videoListDataArrs;
+    douyin.type = @"2";
     [douyin playTheIndex:selectIndex.item];
     douyin.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:douyin animated:YES];

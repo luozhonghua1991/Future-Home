@@ -30,8 +30,10 @@
 @property (nonatomic, copy) NSString *thumbnail_url;
 /** 视频链接 */
 @property (nonatomic, copy) NSString *video_url;
-/** 0不喜欢 1喜欢 */
-@property (nonatomic, copy) NSString *islike;
+/** 0不喜欢  1喜欢 */
+@property (nonatomic, assign) NSInteger islike;
+/** 0未收藏 1已收藏 */
+@property (nonatomic, assign) NSInteger isconnection;
 /** 点赞数量 */
 @property (nonatomic, copy) NSString *like;
 /** 评论数 */

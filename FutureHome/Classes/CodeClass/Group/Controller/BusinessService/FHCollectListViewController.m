@@ -147,7 +147,10 @@ FHSearchResultCellDelegate
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 92.0;
+    if ([self.type isEqualToString:@"2019"]) {
+        return 92.0;
+    }
+    return 70.0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -230,7 +233,7 @@ FHSearchResultCellDelegate
 - (void)fh_selectMenuWithModel:(FHCommonFollowModel *)followModle {
     self.cid = followModle.cid;
     /** 进行置顶和取消收藏的操作 */
-    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"请按照您的需要设置收藏" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"置顶店铺",@"取消收藏", nil];
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"请按照您的需要设置收藏" delegate:self cancelButtonTitle:nil otherButtonTitles:@"置顶店铺",@"取消收藏", nil];
     [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *16];
     [actionSheet setButtonTitleColor:[UIColor blueColor] bgColor:nil fontSize:SCREEN_HEIGHT/667 *16 atIndex:0];
     [actionSheet setButtonTitleColor:[UIColor orangeColor] bgColor:nil fontSize:SCREEN_HEIGHT/667 *16 atIndex:1];

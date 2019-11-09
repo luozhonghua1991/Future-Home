@@ -43,6 +43,8 @@
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 /** 下面的image */
 @property (nonatomic, copy) NSArray *bottomImageArrs;
+/** <#strong属性注释#> */
+@property (nonatomic, copy) NSString *homeServiceName;
 
 @end
 
@@ -74,6 +76,9 @@
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
     
+    if (self.model) {
+        return;
+    }
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -82,6 +87,7 @@
         NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
         self->property_id = [dic[@"id"] integerValue];
+        self.realSstateSNameLabel.text = dic[@"name"];
         /** 获取banner数据 */
         [self fh_refreshBannerData];
     } failure:^(NSError *error) {
@@ -90,6 +96,13 @@
     }];
 }
 
+- (void)setModel:(FHCommonFollowModel *)model {
+    _model = model;
+    property_id = [_model.id integerValue];
+    self.homeServiceName = model.name;
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -122,7 +135,7 @@
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -178,6 +191,7 @@
             [self->topBannerArrays addObject:dic[@"path"]];
             [self->topUrlArrays addObject:dic[@"url"]];
         }
+        
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -193,6 +207,7 @@
                                @(account.user_id),@"user_id",
                                @(property_id),@"pid",
                                @(2),@"type", nil];
+    
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
         NSArray *upDicArr = Dic[@"downlist"];
@@ -247,7 +262,7 @@
         locationView.tag = 2017;
         
         self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
-        self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
+        self.realSstateSNameLabel.text = self.homeServiceName;
         self.realSstateSNameLabel.textColor = [UIColor blackColor];
         self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -314,6 +329,7 @@
 - (BHInfiniteScrollView *)fh_creatBHInfiniterScrollerViewWithImageArrays:(NSArray *)imageArrs
                                                          scrollViewFrame:(CGRect )scrollViewFrame
                                                            scrollViewTag:(NSInteger)scrollViewTag {
+
     BHInfiniteScrollView *mallScrollView = [BHInfiniteScrollView
                                             infiniteScrollViewWithFrame:scrollViewFrame Delegate:self ImagesArray:imageArrs];
     
