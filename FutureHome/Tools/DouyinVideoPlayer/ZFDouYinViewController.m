@@ -115,6 +115,8 @@ static NSString *kIdentifier = @"kIdentifier";
     for (NSDictionary *dataDic in self.videoListDataArrs) {
         ZFTableData *data = [[ZFTableData alloc] init];
         data.dataID = [dataDic objectForKey:@"id"];
+        data.aid = [[dataDic objectForKey:@"aid"] integerValue];
+        data.pid = [[dataDic objectForKey:@"pid"] integerValue];
         data.video_url = [dataDic objectForKey:@"path"];
         data.title = [dataDic objectForKey:@"videoname"];
         data.thumbnail_url = [dataDic objectForKey:@"logo"];
@@ -226,8 +228,9 @@ static NSString *kIdentifier = @"kIdentifier";
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
                                    @"2",@"type",
-                                   data.dataID,@"pid",
+                                   data.dataID ? data.dataID : @(data.aid) ,@"pid",
                                    nil];
+        
         [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
             NSInteger count = [label.text integerValue];
             if ([responseObj[@"code"] integerValue] == 1) {
@@ -248,6 +251,7 @@ static NSString *kIdentifier = @"kIdentifier";
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
+            
         }];
     } else if ([self.type isEqualToString:@"1"]) {
         WS(weakSelf);
@@ -285,15 +289,23 @@ static NSString *kIdentifier = @"kIdentifier";
 /** 收藏视频 */
 - (void)fh_ZFDouYinCellDelegateSelectFollowClick:(ZFTableData *)data
                                          withBtn:(UIButton *)btn {
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic;
+    if ([self.type isEqualToString:@"1"]) {
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.type,@"type",
+                     data.dataID,@"aid",
+                     nil];
+    } else if ([self.type isEqualToString:@"2"]) {
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.type,@"type",
+                     @(data.pid),@"aid",
+                     nil];
+    }
     /** 视频收藏 */
     WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               self.type,@"type",
-                               data.dataID,@"aid",
-                               nil];
-    
     [AFNetWorkTool post:@"sheyun/doVideoCollect" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"收藏成功"];
@@ -384,7 +396,7 @@ static NSString *kIdentifier = @"kIdentifier";
         _tableView.zf_scrollViewDidStopScrollCallback = ^(NSIndexPath * _Nonnull indexPath) {
             @strongify(self)
             if (self.player.playingIndexPath) return;
-            if (indexPath.row == self.dataSource.count-1) {
+            if (indexPath.row == self.dataSource.count - 1) {
                 /// 加载下一页数据
                 [self requestData];
                 self.player.assetURLs = self.urls;

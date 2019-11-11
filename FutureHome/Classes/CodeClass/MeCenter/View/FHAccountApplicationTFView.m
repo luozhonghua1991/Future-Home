@@ -40,7 +40,7 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 23, 200, 15)];
-        _titleLabel.textColor = [UIColor blackColor];
+        _titleLabel.textColor = HEX_COLOR(0x878787);
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.font = [UIFont systemFontOfSize:15];
     }

@@ -64,8 +64,24 @@
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
+    [self creatAleat];
 }
 
+- (void)creatAleat {
+    NSArray *buttonTitleColorArray = @[[UIColor blackColor], [UIColor blueColor]] ;
+    
+    [UIAlertController ba_alertShowInViewController:self
+                                              title:@"提示"
+                                            message:self.tips2
+                                   buttonTitleArray:@[@"取 消", @"确 定"]
+                              buttonTitleColorArray:buttonTitleColorArray
+                                              block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                  if (buttonIndex == 0) {
+                                                      [self.navigationController popViewControllerAnimated:YES];
+                                                  }
+                                                  
+                                              }];
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -74,7 +90,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"普通商业服务账号申请";
+    titleLabel.text = @"开通商业服务平台账户";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -103,7 +119,7 @@
     /** 初始化collectionView */
     [self initPickerView];
     
-    [self.scrollView addSubview:self.accountTypeView];
+//    [self.scrollView addSubview:self.accountTypeView];
     [self.scrollView addSubview:self.serviceDeskView];
     [self.serviceDeskView addSubview:self.serviceDeskNameTF];
     
@@ -134,8 +150,8 @@
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
-    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
-    self.serviceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.accountTypeView.frame), SCREEN_WIDTH, 50);
+//    self.accountTypeView.frame =
+    self.serviceDeskView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
     self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
     self.applicantNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, 50);
     self.applicantCardView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantNameView.frame), SCREEN_WIDTH, 50);

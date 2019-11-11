@@ -147,7 +147,7 @@
     cell.delegate = self;
     cell.rowCount = self.videoListArrs.count;
     cell.videoListArrs = self.videoListArrs;
-    cell.type = 1;
+    cell.type = self.type;
     return cell;
 }
 
@@ -157,7 +157,7 @@
     [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定要取消收藏该视频吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         if (buttonIndex == 1) {
             /** 取消收藏视频 */
-            [weakSelf fh_collectionCancleVideoSelectIndex:selectIndex model:model];
+            [weakSelf fh_cancleVideoInfoWithIndex:selectIndex model:model];
         }
     }];
 }
@@ -170,6 +170,7 @@
                                @(account.user_id),@"user_id",
                                model.cid,@"cid",
                                nil];
+    
     [AFNetWorkTool post:@"sheyun/cancelVideoCollect" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"取消收藏成功"];

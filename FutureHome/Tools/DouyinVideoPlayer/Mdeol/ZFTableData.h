@@ -12,6 +12,10 @@
 @interface ZFTableData : NSObject
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *dataID;
+/** <#copy属性注释#> */
+@property (nonatomic, assign) NSInteger pid;
+/** <#copy属性注释#> */
+@property (nonatomic, assign) NSInteger aid;
 
 @property (nonatomic, copy) NSString *nick_name;
 //@property (nonatomic, copy) NSString *head;

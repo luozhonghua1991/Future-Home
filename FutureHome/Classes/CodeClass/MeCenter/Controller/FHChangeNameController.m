@@ -62,7 +62,26 @@
 }
 
 - (void)finishBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
+    /** 修改昵称 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.nameTF.text,@"nickname", nil];
+    [AFNetWorkTool post:@"userCenter/updateNickname" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"修改用户昵称成功"];
+            account.name = self.nameTF.text;
+            [AccountStorage saveAccount:account];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)fh_creatUI {

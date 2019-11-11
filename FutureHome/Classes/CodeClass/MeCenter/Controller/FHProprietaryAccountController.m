@@ -106,6 +106,23 @@
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
+    [self creatAleat];
+}
+
+- (void)creatAleat {
+    NSArray *buttonTitleColorArray = @[[UIColor blackColor], [UIColor blueColor]] ;
+    
+    [UIAlertController ba_alertShowInViewController:self
+                                              title:@"提示"
+                                            message:self.tips2
+                                   buttonTitleArray:@[@"取 消", @"确 定"]
+                              buttonTitleColorArray:buttonTitleColorArray
+                                              block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                  if (buttonIndex == 0) {
+                                                      [self.navigationController popViewControllerAnimated:YES];
+                                                  }
+                                                  
+                                              }];
 }
 
 
@@ -116,7 +133,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"业主账户申请";
+    titleLabel.text = @"联合开通业主服务/物业服务平台账户";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -142,7 +159,7 @@
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
     
-    [self.scrollView addSubview:self.accountTypeView];
+//    [self.scrollView addSubview:self.accountTypeView];
     [self.scrollView addSubview:self.normalBlueBtn];
     
     [self.scrollView addSubview:self.personServiceDeskView];
@@ -202,8 +219,8 @@
 - (void)fh_layoutSubViews {
     CGFloat commonCellHeight = 50.0f;
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
-    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
-    self.normalBlueBtn.frame = CGRectMake(0, CGRectGetMaxY(self.accountTypeView.frame) + 20, SCREEN_WIDTH, commonCellHeight - 5);
+//    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
+    self.normalBlueBtn.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
     self.personServiceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.normalBlueBtn.frame), SCREEN_WIDTH, commonCellHeight);
     self.serviceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.personServiceDeskView.frame), SCREEN_WIDTH, commonCellHeight);
     self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
@@ -371,7 +388,7 @@
 - (UIButton *)topGreenBtn {
     if (!_topGreenBtn) {
         _topGreenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_topGreenBtn setTitle:@"主要申请业主基本信息" forState:UIControlStateNormal];
+        [_topGreenBtn setTitle:@"联名申请业主1基本信息" forState:UIControlStateNormal];
         _topGreenBtn.userInteractionEnabled = NO;
         _topGreenBtn.backgroundColor = ZH_COLOR(124, 202, 155);
     }

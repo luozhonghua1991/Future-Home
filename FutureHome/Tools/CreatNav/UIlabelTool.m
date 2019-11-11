@@ -62,7 +62,7 @@
     NSString *initial = wordText;
     NSString *text = [initial stringByReplacingOccurrencesOfString:willChangeColorWord1 withString:willChangeColorWord1];
     NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:text];
-    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:SCREEN_HEIGHT/667*12] range:NSMakeRange(0, initial.length)];
+    [mutableAttributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:SCREEN_HEIGHT/667*14] range:NSMakeRange(0, initial.length)];
     [mutableAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, initial.length)];
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:[NSString stringWithFormat:@"(%@)",willChangeColorWord1] options:kNilOptions error:nil];
     NSRange range = NSMakeRange(0,text.length);

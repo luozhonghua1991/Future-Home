@@ -331,9 +331,9 @@
 }
 
 - (void)sureBtnClick:(UIButton *)button {
-    _provinceString = [_parentAdcodeString stringByReplacingCharactersInRange:NSMakeRange(2, 4) withString:@"0000"];
+     NSString *provinceCodeString = [_parentAdcodeString stringByReplacingCharactersInRange:NSMakeRange(2, 4) withString:@"0000"];
     if (_sureBtnBlock) {
-        _sureBtnBlock(_provinceString, _cityString, _districtString, _addressCodeString,_parentAdcodeString,_provinceString);
+        _sureBtnBlock(_provinceString, _cityString, _districtString, _addressCodeString,_parentAdcodeString,provinceCodeString);
     }
 }
 

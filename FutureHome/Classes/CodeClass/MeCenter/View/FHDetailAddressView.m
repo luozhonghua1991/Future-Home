@@ -60,7 +60,7 @@
         _leftProvinceDataLabel.textColor = [UIColor blackColor];
         _leftProvinceDataLabel.textAlignment = NSTextAlignmentLeft;
         _leftProvinceDataLabel.font = [UIFont systemFontOfSize:13];
-        _leftProvinceDataLabel.text = @"北京市";
+        _leftProvinceDataLabel.text = @"";
     }
     return _leftProvinceDataLabel;
 }
@@ -82,7 +82,7 @@
         _centerProvinceDataLabel.textColor = [UIColor blackColor];
         _centerProvinceDataLabel.textAlignment = NSTextAlignmentLeft;
         _centerProvinceDataLabel.font = [UIFont systemFontOfSize:13];
-        _centerProvinceDataLabel.text = @"乌鲁木齐市";
+        _centerProvinceDataLabel.text = @"";
     }
     return _centerProvinceDataLabel;
 }
@@ -104,7 +104,7 @@
         _rightProvinceDataLabel.textColor = [UIColor blackColor];
         _rightProvinceDataLabel.textAlignment = NSTextAlignmentLeft;
         _rightProvinceDataLabel.font = [UIFont systemFontOfSize:13];
-        _rightProvinceDataLabel.text = @"阿克苏啦啦啦啦啦啦啦";
+        _rightProvinceDataLabel.text = @"";
     }
     return _rightProvinceDataLabel;
 }

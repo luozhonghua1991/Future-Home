@@ -13,8 +13,11 @@
 #import "FHUserAgreementView.h"
 #import "FHDetailAddressView.h"
 #import "FHProofOfOwnershipView.h"
+#import "NSArray+JSON.h"
+#import "FHAddressPickerView.h"
 
-@interface FHBuinessAccountApplicationController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate>
+
+@interface FHBuinessAccountApplicationController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 /** 大的滚动视图 */
 //@property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
 /** 大的滚动视图 */
@@ -54,6 +57,18 @@
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
 
+/** 省的ID */
+@property (nonatomic, copy) NSString *province_id;
+/** 市的ID */
+@property (nonatomic, copy) NSString *city_id;
+/** 区的ID */
+@property (nonatomic, copy) NSString *area_id;
+/** 选择的是第几个 */
+@property (nonatomic, assign) NSInteger selectIndex;
+/** 选择的ID cards 图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectIDCardsImgArrs;
+
+@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 
 @end
 
@@ -61,9 +76,32 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
+    [self creatAleat];
+}
+
+- (void)creatAleat {
+    NSArray *buttonTitleColorArray = @[[UIColor blackColor], [UIColor blueColor]] ;
+    
+    [UIAlertController ba_alertShowInViewController:self
+                                              title:@"提示"
+                                            message:self.tips2
+                                   buttonTitleArray:@[@"取 消", @"确 定"]
+                              buttonTitleColorArray:buttonTitleColorArray
+                                              block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                  if (buttonIndex == 0) {
+                                                      [self.navigationController popViewControllerAnimated:YES];
+                                                  }
+                                                  
+                                              }];
+    
+//    [UIAlertController ba_alertAttributedShowInViewController:self attributedTitle:[[NSMutableAttributedString alloc] initWithString:@"提示"] attributedMessage:[UIlabelTool willChangeHtmlString:self.tips2] buttonTitleArray:@[@"取 消", @"确 定"] buttonTitleColorArray:buttonTitleColorArray block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+//        ;
+//    }];
+    
 }
 
 
@@ -74,7 +112,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"商业物业账户申请";
+    titleLabel.text = @"开通商业物业服务平台账户";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -103,7 +141,7 @@
     /** 初始化collectionView */
     [self initPickerView];
     
-    [self.scrollView addSubview:self.accountTypeView];
+//    [self.scrollView addSubview:self.accountTypeView];
     [self.scrollView addSubview:self.serviceDeskView];
     [self.serviceDeskView addSubview:self.serviceDeskNameTF];
     
@@ -127,14 +165,54 @@
     [self.scrollView addSubview:self.agreementView];
     /** 确认并提交按钮 */
     [self.scrollView addSubview:self.submitBtn];
+    
+    
+    @weakify(self)
+    //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
+    _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+    //默认为NO
+    //_addressPickerView.showLastSelect = YES;
+    _addressPickerView.cancelBtnBlock = ^() {
+        @strongify(self)
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
+    _addressPickerView.sureBtnBlock = ^(NSString *province,
+                                        NSString *city,
+                                        NSString *district,
+                                        NSString *addressCode,
+                                        NSString *parentCode,
+                                        NSString *provienceCode) {
+        //返回过来的信息在后面的这四个参数中,使用的时候要做非空判断,(province和addressCode为必返回参数,可以不做非空判断)
+        @strongify(self)
+        NSString *showString;
+        if (city != nil) {
+            showString = [NSString stringWithFormat:@"%@",city];
+        }else{
+            showString = province;
+        }
+        
+        if (district != nil) {
+            showString = [NSString stringWithFormat:@"%@%@", showString, district];
+        }
+        
+        self.detailAddressView.leftProvinceDataLabel.text = province;
+        self.detailAddressView.centerProvinceDataLabel.text = city;
+        self.detailAddressView.rightProvinceDataLabel.text = district;
+        self.province_id = provienceCode;
+        self.city_id = parentCode;
+        self.area_id = addressCode;
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
 }
 
 
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
-    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
-    self.serviceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.accountTypeView.frame), SCREEN_WIDTH, 50);
+//    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
+    self.serviceDeskView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
     self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
     self.applicantNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, 50);
     self.applicantCardView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantNameView.frame), SCREEN_WIDTH, 50);
@@ -147,114 +225,6 @@
     self.shipView.frame = CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame), SCREEN_WIDTH, 60);
     [self updateViewsFrame];
 }
-
-/*
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    [self.scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.mas_equalTo(UIEdgeInsetsMake(MainSizeHeight, 0, 0, 0 ));
-    }];
-    
-    [self.accountTypeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(0);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.serviceDeskView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.accountTypeView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.serviceDeskNameTF mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(20);
-        make.left.mas_equalTo(SCREEN_WIDTH - 270);
-        make.width.mas_equalTo(260);
-        make.height.mas_equalTo(20);
-    }];
-    
-    [self.applicantNameView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.serviceDeskView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.applicantCardView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.applicantNameView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.phoneNumberView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.applicantCardView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.phoneView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.phoneNumberView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.mailView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.phoneView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.detailAddressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.mailView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.addressView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.detailAddressView.mas_bottom);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(50);
-    }];
-    
-    [self.personCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.addressView.mas_bottom).offset(0);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(180);
-    }];
-    
-    [self.shipView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.personCodeView.mas_bottom).offset(0);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(138);
-    }];
-    
-    [self.agreementView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.shipView.mas_bottom).offset(0);
-        make.left.mas_equalTo(0);
-        make.width.mas_equalTo(self.view.width);
-        make.height.mas_equalTo(15);
-    }];
-    
-    [self.submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.agreementView.mas_bottom).offset(120);
-        make.centerX.mas_equalTo(self.view);
-        make.width.mas_equalTo(160);
-        make.height.mas_equalTo(55);
-    }];
-}
- */
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint point = scrollView.contentOffset;
@@ -274,6 +244,7 @@
         self.view.userInteractionEnabled = YES;
         self.scrollView.userInteractionEnabled = YES;
         self.detailAddressView.userInteractionEnabled = YES;
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressClick)];
         [self.detailAddressView addGestureRecognizer:tap];
         [self.scrollView addSubview:self.detailAddressView];
@@ -284,16 +255,112 @@
 #pragma mark — event
 /** 地址选择 */
 - (void)addressClick {
-    
+    [self.addressPickerView showInView:self.view];
 }
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
+    /** 选取图片 */
+    self.selectIndex = index;
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [self addCamera];
+            break;
+        }
+        case 1:
+        {
+            [self addPhotoClick];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+//调用系统相机
+- (void)addCamera {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
+        cameraPicker.delegate = self;
+        cameraPicker.allowsEditing = NO;  //是否可编辑
+        //摄像头
+        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+    }
+}
+
+/**
+ *  跳转相册页面
+ */
+- (void)addPhotoClick {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - <相册处理区域>
+/**
+ *  拍摄完成后要执行的方法
+ */
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (self.selectIndex == 1) {
+        self.certificationView.leftImgView.image = image;
+        [self.selectIDCardsImgArrs addObject:image];
+    } else if (self.selectIndex == 2) {
+        self.certificationView.centerImgView.image = image;
+        [self.selectIDCardsImgArrs addObject:image];
+    } else {
+        self.certificationView.rightImgView.image = image;
+        [self.selectIDCardsImgArrs addObject:image];
+    }
+     [picker dismissViewControllerAnimated:YES completion:nil];
     
 }
 
 - (void)submitBtnClick {
     /** 确认并提交 */
-
+    if (self.selectIDCardsImgArrs.count != 3) {
+        [self.view makeToast:@"身份证信息认证不能为空"];
+        return;
+    }
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.serviceDeskView.contentTF.text,@"shop_name",
+                               self.province_id,@"province_id",
+                               self.city_id,@"city_id",
+                               self.area_id,@"area_id",
+                               self.applicantNameView.contentTF.text,@"name",
+                               self.applicantCardView.contentTF.text,@"idcard",
+                               self.phoneNumberView.contentTF.text,@"phone",
+                               self.phoneView.contentTF.text,@"shopmobie",
+                               self.mailView.contentTF.text,@"email",
+                               self.addressView.contentTF.text,@"streetaddress",
+                               nil];
+    
 }
 
 - (void)pickerViewFrameChanged {

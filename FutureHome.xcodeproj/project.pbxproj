@@ -414,6 +414,7 @@
 		4AA3090622E6FDBD00695FFE /* FHAboutFutureHomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA3090522E6FDBD00695FFE /* FHAboutFutureHomeController.m */; };
 		4AA452722351B80E001110ED /* FHCommentListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA452712351B80E001110ED /* FHCommentListModel.m */; };
 		4AA452B32351B9EE001110ED /* FHCommentReplyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA452B22351B9EE001110ED /* FHCommentReplyModel.m */; };
+		4AA6E0BA2379166200FCB62F /* FHLosProtocolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6E0B92379166200FCB62F /* FHLosProtocolModel.m */; };
 		4AA7B37122CC400F00462389 /* FHLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37022CC400F00462389 /* FHLoginController.m */; };
 		4AA7B37522CC536700462389 /* CurrentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37422CC536700462389 /* CurrentViewController.m */; };
 		4AA7B37822CC57DD00462389 /* FHLoginTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AA7B37722CC57DD00462389 /* FHLoginTool.m */; };
@@ -1707,6 +1708,8 @@
 		4AA452712351B80E001110ED /* FHCommentListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommentListModel.m; sourceTree = "<group>"; };
 		4AA452B12351B9EE001110ED /* FHCommentReplyModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommentReplyModel.h; sourceTree = "<group>"; };
 		4AA452B22351B9EE001110ED /* FHCommentReplyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommentReplyModel.m; sourceTree = "<group>"; };
+		4AA6E0B82379166200FCB62F /* FHLosProtocolModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLosProtocolModel.h; sourceTree = "<group>"; };
+		4AA6E0B92379166200FCB62F /* FHLosProtocolModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLosProtocolModel.m; sourceTree = "<group>"; };
 		4AA7B36F22CC400F00462389 /* FHLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHLoginController.h; sourceTree = "<group>"; };
 		4AA7B37022CC400F00462389 /* FHLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHLoginController.m; sourceTree = "<group>"; };
 		4AA7B37322CC536700462389 /* CurrentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentViewController.h; sourceTree = "<group>"; };
@@ -3217,7 +3220,7 @@
 		4A6DA9FB22C06F0D00F29455 /* MeCenter */ = {
 			isa = PBXGroup;
 			children = (
-				4A6DAA0F22C07CBF00F29455 /* Model */,
+				4AA6E0B72379164D00FCB62F /* Model */,
 				4A6DAA0E22C07CBA00F29455 /* View */,
 				4A6DAA0D22C07CB400F29455 /* Controller */,
 			);
@@ -3588,13 +3591,6 @@
 				4AC4C77222EA90CB00E5D9BA /* FHPrivacySettingsCell.m */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		4A6DAA0F22C07CBF00F29455 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		4A6DAA1022C0A7A800F29455 /* BaseClass */ = {
@@ -4374,6 +4370,15 @@
 				4AA3090022E6FA2400695FFE /* NSMutableAttributedString+BAKit.m */,
 			);
 			path = BAAlertController;
+			sourceTree = "<group>";
+		};
+		4AA6E0B72379164D00FCB62F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6E0B82379166200FCB62F /* FHLosProtocolModel.h */,
+				4AA6E0B92379166200FCB62F /* FHLosProtocolModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		4AA7B37222CC536700462389 /* CurrentVC */ = {
@@ -6411,6 +6416,7 @@
 				4AB2042C22F2DD7300111AC4 /* ZXCode128Writer.m in Sources */,
 				4AA9AF6D2302625200D28638 /* Province.m in Sources */,
 				4AD5CCE4233212B700066726 /* SDPhotoBrowser.m in Sources */,
+				4AA6E0BA2379166200FCB62F /* FHLosProtocolModel.m in Sources */,
 				4A6DAA3822C0AD3100F29455 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				4A9CB20D230BCA42004A3763 /* YYAnimatedImageView.m in Sources */,
 				4AB2038722F2DD7300111AC4 /* ZXByteMatrix.m in Sources */,

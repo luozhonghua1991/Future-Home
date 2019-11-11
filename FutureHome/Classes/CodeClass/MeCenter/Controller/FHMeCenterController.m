@@ -35,16 +35,17 @@
                       @"开通账户",
                       @"关于未来家园"];
     [self.view addSubview:self.meCenterTable];
-    self.meCenterTable.tableHeaderView = self.meCenterHeaderView;
-    self.meCenterHeaderView.height = self.meCenterHeaderView.height;
     self.meCenterTable.tableFooterView = self.meCenterFooterView;
     self.meCenterFooterView.height = self.meCenterFooterView.height;
+    self.meCenterTable.tableHeaderView = self.meCenterHeaderView;
+    self.meCenterHeaderView.height = self.meCenterHeaderView.height;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     Account *account = [AccountStorage readAccount];
     [self.meCenterHeaderView.userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.meCenterHeaderView.userNameLabel.text = account.name;
 }
 
 #pragma mark — 通用导航栏
