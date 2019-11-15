@@ -152,6 +152,7 @@
     }
 }
 
+
 - (void)updateVideoWithRequest {
     //显示加载视图
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];

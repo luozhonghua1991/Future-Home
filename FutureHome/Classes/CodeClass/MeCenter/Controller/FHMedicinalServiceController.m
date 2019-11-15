@@ -256,7 +256,7 @@
         _serviceDeskNameTF = [[UITextField alloc] init];
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
-        _serviceDeskNameTF.text = @"和平药房恒大未来城店";
+        _serviceDeskNameTF.text = @"";
         _serviceDeskNameTF.placeholder = @"(限12字)";
     }
     return _serviceDeskNameTF;

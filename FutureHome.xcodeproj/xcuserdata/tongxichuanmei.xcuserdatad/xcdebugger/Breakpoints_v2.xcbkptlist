@@ -20,11 +20,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Classes/CodeClass/Group/Controller/MyGroup/FHReleaseDynamicsController.m"
-            timestampString = "594734236.402336"
+            timestampString = "595423966.5061769"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "-updateVideoWithRequest"
             landmarkType = "7">
          </BreakpointContent>
@@ -68,12 +68,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
-            timestampString = "595136637.932874"
+            timestampString = "595473747.662006"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "+post:params:success:failure:"
+            startingLineNumber = "365"
+            endingLineNumber = "365"
+            landmarkName = "+uploadImagesWithUrl:parameters:image:otherImage:success:failure:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -84,12 +84,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
-            timestampString = "595136637.933953"
+            timestampString = "595473747.663368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "+get:params:success:failure:"
+            startingLineNumber = "369"
+            endingLineNumber = "369"
+            landmarkName = "+uploadImagesWithUrl:parameters:image:otherImage:success:failure:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

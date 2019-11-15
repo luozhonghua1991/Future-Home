@@ -46,7 +46,7 @@
                         frame:(CGRect )frame
                           tag:(NSInteger )tag {
     UIImageView *view = [[UIImageView alloc] initWithFrame:frame];
-    view.image = [UIImage imageNamed:@"头像"];
+    view.image = [UIImage imageNamed:@""];
     view.tag = tag;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 100, 20)];
@@ -101,6 +101,7 @@
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
 //        _leftImgView.backgroundColor = HEX_COLOR(0x1296db);
         _leftImgView.backgroundColor = [UIColor clearColor];
+        _leftImgView.image = [UIImage imageNamed:@"头像"];
         _leftImgView.userInteractionEnabled = YES;
     }
     return _leftImgView;
@@ -111,6 +112,7 @@
         _centerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
 //        _centerImgView.backgroundColor = HEX_COLOR(0x1296db);
         _centerImgView.backgroundColor = [UIColor clearColor];
+        _centerImgView.image = [UIImage imageNamed:@"头像"];
         _centerImgView.userInteractionEnabled = YES;
     }
     return _centerImgView;
@@ -120,6 +122,7 @@
     if (!_rightImgView) {
         _rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
 //        _rightImgView.backgroundColor = HEX_COLOR(0x1296db);
+        _rightImgView.image = [UIImage imageNamed:@"头像"];
         _rightImgView.backgroundColor = [UIColor clearColor];
         _rightImgView.userInteractionEnabled = YES;
     }

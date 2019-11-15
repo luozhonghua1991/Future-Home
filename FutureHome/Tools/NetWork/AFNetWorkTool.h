@@ -118,6 +118,15 @@ typedef void (^failureBlock)(NSError *error);
                     failure:(failureBlock)failure;
 
 
+#pragma mark — 开通账户多图上传
++ (void)uploadImagesWithUrl:(NSString *)url
+                 parameters:(NSDictionary *)parameters
+                      image:(NSArray *)imageArray
+                 otherImage:(NSArray *)otherImageArray
+                    success:(successBlock)success
+                    failure:(failureBlock)failure;
+
+
 #pragma mark — 上传视频
 + (void)updateVideoWithUrl:(NSString *)url
                  parameter:(NSDictionary *)parameter

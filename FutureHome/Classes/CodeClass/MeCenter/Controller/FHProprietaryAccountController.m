@@ -329,7 +329,7 @@
     if (!_personServiceDeskView) {
         _personServiceDeskView = [[FHAccountApplicationTFView alloc] init];
         _personServiceDeskView.titleLabel.text = @"业主服务平台名称";
-        _personServiceDeskView.contentTF.text = @"恒大未来城物业服务平台";
+        _personServiceDeskView.contentTF.text = @"";
         _personServiceDeskView.contentTF.placeholder = @"(限12字)";
     }
     return _personServiceDeskView;

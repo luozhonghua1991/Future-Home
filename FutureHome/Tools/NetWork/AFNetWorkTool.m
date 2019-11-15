@@ -138,6 +138,7 @@
         failure(error);
     }];
 }
+
 #pragma mark put网络请求
 + (void)put:(NSString *)url
      params:(NSDictionary *)params
@@ -313,9 +314,51 @@
     
     [session POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
-        for (int i = 0; i < imageArray.count; i++){
+        for (int i = 0; i < imageArray.count; i++) {
             NSData *imageData = UIImageJPEGRepresentation(imageArray[i], 1);
             [formData appendPartWithFileData:imageData name:@"file[]" fileName:@"futureHome.png" mimeType:@"image/jpeg"];
+        }
+    } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        if (success) {
+            success(responseObject);
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        if (failure) {
+            failure(error);
+        }
+    }];
+    
+}
+
+
+#pragma mark — 开通账户多图上传
++ (void)uploadImagesWithUrl:(NSString *)url
+                 parameters:(NSDictionary *)parameters
+                      image:(NSArray *)imageArray
+                 otherImage:(NSArray *)otherImageArray
+                    success:(successBlock)success
+                    failure:(failureBlock)failure  {
+    Account *account = [AccountStorage readAccount];
+    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
+    NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
+    AFHTTPSessionManager *session = [AFHTTPSessionManager manager];
+    //  申明请求的数据是json类型
+    AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
+    [serializer setRemovesKeysWithNullValues:YES];
+    //如果接受类型不一致请替换一致text/html或别的
+    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    [session setResponseSerializer:serializer];
+    [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
+    
+    [session POST:urlStr parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
+        for (int i = 0; i < imageArray.count; i++) {
+            NSData *imageData = UIImageJPEGRepresentation(imageArray[i], 1);
+            [formData appendPartWithFileData:imageData name:@"file[]" fileName:@"futureHome.png" mimeType:@"image/jpeg"];
+        }
+        for (int i = 0; i < otherImageArray.count; i++) {
+            NSData *imageData = UIImageJPEGRepresentation(otherImageArray[i], 0.5);
+            [formData appendPartWithFileData:imageData name:@"idCardFile[]" fileName:@"futureHome.png" mimeType:@"image/jpeg"];
         }
     } progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {

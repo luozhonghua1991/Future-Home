@@ -45,7 +45,7 @@
 #pragma mark — setter && getter
 - (UILabel *)leftProvinceLabel {
     if (!_leftProvinceLabel) {
-        _leftProvinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 23, 20, 15)];
+        _leftProvinceLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 23, 20, 15)];
         _leftProvinceLabel.textColor = [UIColor blackColor];
         _leftProvinceLabel.textAlignment = NSTextAlignmentLeft;
         _leftProvinceLabel.font = [UIFont systemFontOfSize:15];

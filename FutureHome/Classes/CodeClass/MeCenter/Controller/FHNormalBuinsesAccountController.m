@@ -253,7 +253,7 @@
         _serviceDeskNameTF = [[UITextField alloc] init];
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
-        _serviceDeskNameTF.text = @"纵贯线酒楼";
+        _serviceDeskNameTF.text = @"";
         _serviceDeskNameTF.placeholder = @"(限12字)";
     }
     return _serviceDeskNameTF;
