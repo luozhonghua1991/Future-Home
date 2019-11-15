@@ -19,22 +19,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Group/Controller/MyGroup/FHReleaseDynamicsController.m"
-            timestampString = "595423966.5061769"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
-            landmarkName = "-updateVideoWithRequest"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FutureHome/Classes/CodeClass/Home/Controller/OwnerService/FHOwnerServiceController.m"
             timestampString = "594890147.895135"
             startingColumnNumber = "9223372036854775807"
@@ -67,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
-            timestampString = "595473747.662006"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHFreshServiceAccountController.m"
+            timestampString = "595509462.253378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "365"
-            endingLineNumber = "365"
-            landmarkName = "+uploadImagesWithUrl:parameters:image:otherImage:success:failure:"
+            startingLineNumber = "407"
+            endingLineNumber = "407"
+            landmarkName = "-commitAccountDataRequest"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -83,13 +67,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
-            timestampString = "595473747.663368"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHFreshServiceAccountController.m"
+            timestampString = "595509462.253691"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "369"
-            endingLineNumber = "369"
-            landmarkName = "+uploadImagesWithUrl:parameters:image:otherImage:success:failure:"
+            startingLineNumber = "420"
+            endingLineNumber = "420"
+            landmarkName = "-fh_selectPayTypeWIthTag:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHFreshServiceAccountController.m"
+            timestampString = "595509462.253884"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
+            landmarkName = "-commitAccountDataRequest"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

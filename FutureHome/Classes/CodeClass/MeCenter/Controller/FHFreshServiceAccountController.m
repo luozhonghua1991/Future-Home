@@ -20,8 +20,9 @@
 #import "WXApi.h"
 #import "FHCommonPaySelectView.h"
 #import "FHAppDelegate.h"
+#import "FHWebViewController.h"
 
-@interface FHFreshServiceAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface FHFreshServiceAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 账户类型View */
@@ -91,7 +92,6 @@
 
 - (void)creatAleat {
     NSArray *buttonTitleColorArray = @[[UIColor blackColor], [UIColor blueColor]] ;
-    
     [UIAlertController ba_alertShowInViewController:self
                                               title:@"提示"
                                             message:self.tips2
@@ -338,25 +338,33 @@
     
 }
 
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = self.protocol;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
 
 - (void)submitBtnClick {
-    [self commitAccountDataRequest];
     /** 确认并提交 */
-    //    if (self.selectIDCardsImgArrs.count != 3) {
-    //        [self.view makeToast:@"身份认证信息认证不能为空"];
-    //        return;
-    //    }
+    if (self.selectIDCardsImgArrs.count != 3) {
+        [self.view makeToast:@"身份认证信息认证不能为空"];
+        return;
+    }
+    
     /** 先加一个弹框提示 */
-//    WS(weakSelf);
-//    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-//        if (buttonIndex == 1) {
-//            /** 点击提交信息 */
-//            [weakSelf commitAccountDataRequest];
-//        }
-//    }];
-//    [self payView];
-//    self.submitBtn.userInteractionEnabled = NO;
-//    [self showPayView];
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf payView];
+            weakSelf.submitBtn.userInteractionEnabled = NO;
+            [weakSelf showPayView];
+        }
+    }];
+    /** 点击提交信息 */
+//    [weakSelf commitAccountDataRequest];
 }
 
 - (void)commitAccountDataRequest {
@@ -397,26 +405,25 @@
             //                //                wechatButton.hidden = YES;
             //            }
             //            /** 支付宝支付 */
-            //            [FHCommonALiPayTool doAPPayWithAppsecertKey:responseObj[@"data"]];
+                        [FHCommonALiPayTool doAPPayWithAppsecertKey:responseObj[@"data"]];
+            /** 支付宝支付成功后 回调 */
+
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
         
     }];
-    
-//    WS(weakSelf);
-//    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"请检查您提交的申请资料是否完整准确，如若有误，请点击确认提交!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-//        if (buttonIndex == 0) {
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//    }];
+}
+
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    [self commitAccountDataRequest];
 }
 
 
 #pragma mark - 显示支付弹窗
 - (void)showPayView{
-    
     __weak FHFreshServiceAccountController *weakSelf = self;
     self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [UIView animateWithDuration:0.5 animations:^{
@@ -612,7 +619,7 @@
 - (FHCommonPaySelectView *)payView {
     if (!_payView) {
         self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:@"在线支付支付价格为:￥0.2\n在线支付支付价格"];
-//        _payView.delegate = self;
+        _payView.delegate = self;
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate.window addSubview:_payView];

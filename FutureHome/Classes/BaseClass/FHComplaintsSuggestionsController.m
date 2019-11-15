@@ -33,12 +33,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [SingleManager shareManager].isComplaintsSuggestions = YES;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-     [SingleManager shareManager].isComplaintsSuggestions = NO;
 }
 
 - (void)fh_creatUI {

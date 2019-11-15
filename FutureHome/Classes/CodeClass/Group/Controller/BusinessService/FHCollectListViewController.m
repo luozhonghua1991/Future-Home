@@ -185,6 +185,7 @@ FHSearchResultCellDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

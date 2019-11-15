@@ -11,6 +11,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol FHCommonPaySelectViewDelegate <NSObject>
+
+@required // 必须实现的方法 默认
+
+@optional // 可选实现的方法
+
+/** 1selectType微信 2支付宝 */
+- (void)fh_selectPayTypeWIthTag:(NSInteger )selectType;
+
+@end
+
+
+
+
 @interface FHCommonPaySelectView : UIView
 
 @property (nonatomic, strong) UIView *backgroungView;
@@ -33,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) MoneyButton *bottomSelectBtn;
 
 @property (nonatomic, strong) UIButton *online;
+
+@property(nonatomic, weak) id<FHCommonPaySelectViewDelegate> delegate;
 
 -(UIView *)initWithFrame:(CGRect )frame andNSString:(NSString *)title;
 

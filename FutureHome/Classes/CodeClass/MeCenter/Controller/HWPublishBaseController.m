@@ -80,8 +80,11 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([SingleManager shareManager].isSelectVideo || [SingleManager shareManager].isSelectPhoto) {
-        return _imageArray.count;
+    if ([SingleManager shareManager].isDongTaiType) {
+        if ([SingleManager shareManager].isSelectVideo || [SingleManager shareManager].isSelectPhoto) {
+            return _imageArray.count;
+        }
+        return _imageArray.count+1;
     }
     return _imageArray.count+1;
 }

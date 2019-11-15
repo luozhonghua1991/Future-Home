@@ -73,8 +73,8 @@
 @property (nonatomic, assign) BOOL isSelectVideo;
 /** 是否是选择发布动态中的图片状态  如果选择了图片 就不能选择视频 */
 @property (nonatomic, assign) BOOL isSelectPhoto;
-/** 是否是投诉建议界面 */
-@property (nonatomic, assign) BOOL isComplaintsSuggestions;
+/** 是否是动态状态的界面 */
+@property (nonatomic, assign) BOOL isDongTaiType;
 /**
  *  视频的path
  */

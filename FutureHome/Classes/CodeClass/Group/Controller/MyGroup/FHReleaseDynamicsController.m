@@ -36,6 +36,16 @@
     [self fh_creatBottomBtn];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [SingleManager shareManager].isDongTaiType = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SingleManager shareManager].isDongTaiType = NO;
+}
+
 #pragma mark — 通用导航栏
 #pragma mark — privite
 - (void)fh_creatNav {

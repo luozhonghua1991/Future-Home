@@ -57,7 +57,9 @@
         [self loadImgDataAndShowAllGroup];
     }];
     
-    if (![SingleManager shareManager].isComplaintsSuggestions) {
+    if ([SingleManager shareManager].isDongTaiType) {
+        /** 只有动态的情况下 才有视频 */
+
         /** 拍摄视频 */
         if (![SingleManager shareManager].isSelectPhoto) {
             UIAlertAction *actionVideo = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"录制视频"] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {

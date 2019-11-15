@@ -225,9 +225,9 @@
 -(void)onlineBtnAction:(UIButton *)sender{
     [self upDownSelf];
     
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(PayViewOnlinePay)]) {
-//        [self.delegate PayViewOnlinePay];
-//    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(fh_selectPayTypeWIthTag:)]) {
+        [self.delegate fh_selectPayTypeWIthTag:1];
+    }
 }
 
 
