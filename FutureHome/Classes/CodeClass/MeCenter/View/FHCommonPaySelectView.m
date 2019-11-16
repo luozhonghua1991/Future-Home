@@ -60,6 +60,7 @@
     
     _topSelectBtn = [[MoneyButton alloc] init];
     [_topSelectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    _topSelectBtn.tag = 2;
     [_topSelectBtn addTarget:self action:@selector(creditBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     _topSelectBtn.param = @"fales";
     [_backgroungView addSubview:_topSelectBtn];
@@ -76,8 +77,9 @@
     [_backgroungView addSubview:_bottomLogoImgView];
     
     _bottomSelectBtn = [[MoneyButton alloc] init];
+    _bottomSelectBtn.tag = 1;
     [_bottomSelectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
-    [_bottomSelectBtn addTarget:self action:@selector(isUseWalltMoney:) forControlEvents:UIControlEventTouchUpInside];
+    [_bottomSelectBtn addTarget:self action:@selector(creditBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     _bottomSelectBtn.param = @"fales";
     [_backgroungView addSubview:_bottomSelectBtn];
 
@@ -187,46 +189,27 @@
 
 #pragma mark- 勾选微信还是支付宝
 // 选中微信
-- (void)creditBtnAction:(MoneyButton *)sender
-{
-    if ([sender.param isEqualToString:@"true"]) {
-        
-        sender.param = @"fales";
-        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+- (void)creditBtnAction:(MoneyButton *)sender {
+    if (sender.tag == 2) {
+        /** 微信 */
+        [self.topSelectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+        [self.bottomSelectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+        [self.online setTitle:@"微信支付" forState:UIControlStateNormal];
     } else {
-        //点击选中
-        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
-        sender.param= @"true";
+        /** 支付宝 */
+        [self.topSelectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+        [self.bottomSelectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+        [self.online setTitle:@"支付宝支付" forState:UIControlStateNormal];
     }
+    self.selectType = sender.tag;
     
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(PayViewIsCreditWith:)]) {
-//        [self.delegate PayViewIsCreditWith:sender.param];
-//    }
 }
-
-// 选中支付宝
-- (void)isUseWalltMoney:(MoneyButton *)sender {
-    if ([sender.param isEqualToString:@"fales"]) {
-        sender.param = @"true";
-        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
-    } else {
-        //点击选中
-        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
-        sender.param= @"fales";
-    }
-    
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(PayViewIsUseMoneyWith:)]) {
-//        [self.delegate PayViewIsUseMoneyWith:sender.param];
-//    }
-}
-
 
 #pragma mark - 在线支付按钮点击事件
 -(void)onlineBtnAction:(UIButton *)sender{
     [self upDownSelf];
-    
     if (self.delegate && [self.delegate respondsToSelector:@selector(fh_selectPayTypeWIthTag:)]) {
-        [self.delegate fh_selectPayTypeWIthTag:1];
+        [self.delegate fh_selectPayTypeWIthTag:self.selectType];
     }
 }
 

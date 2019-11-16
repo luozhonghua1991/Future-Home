@@ -21,6 +21,7 @@
 #import "FHCommonPaySelectView.h"
 #import "FHAppDelegate.h"
 #import "FHWebViewController.h"
+#import "LeoPayManager.h"
 
 @interface FHFreshServiceAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 /** 大的滚动视图 */
@@ -76,6 +77,9 @@
 @property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 
 @property (nonatomic, strong) FHCommonPaySelectView *payView;
+/** 1支付宝  2 微信 */
+@property (nonatomic, assign) NSInteger payType;
+
 
 @end
 
@@ -353,7 +357,6 @@
         [self.view makeToast:@"身份认证信息认证不能为空"];
         return;
     }
-    
     /** 先加一个弹框提示 */
     WS(weakSelf);
     [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -363,8 +366,6 @@
             [weakSelf showPayView];
         }
     }];
-    /** 点击提交信息 */
-//    [weakSelf commitAccountDataRequest];
 }
 
 - (void)commitAccountDataRequest {
@@ -372,19 +373,19 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.serviceDeskNameTF.text,@"shop_name",
+                               self.serviceDeskNameTF.text,@"shopname",
                                self.province_id,@"province_id",
                                self.city_id,@"city_id",
                                self.area_id,@"area_id",
                                self.applicantNameView.contentTF.text,@"name",
                                self.applicantCardView.contentTF.text,@"idcard",
                                self.phoneNumberView.contentTF.text,@"phone",
-                               self.phoneView.contentTF.text,@"shopmobie",
+                               self.phoneView.contentTF.text,@"shopmobile",
                                self.mailView.contentTF.text,@"email",
                                self.addressView.contentTF.text,@"streetaddress",
                                self.businessDescriptionTextView.text,@"maininformation",
                                self.price,@"total",
-                               @"1",@"type",
+                               @(self.payType),@"type",
                                @"3",@"ordertype",
                                self.selectIDCardsImgArrs,@"idCardFile[]",
                                [self getSmallImageArray],@"file[]",
@@ -404,10 +405,19 @@
             //            }else{
             //                //                wechatButton.hidden = YES;
             //            }
-            //            /** 支付宝支付 */
-                        [FHCommonALiPayTool doAPPayWithAppsecertKey:responseObj[@"data"]];
-            /** 支付宝支付成功后 回调 */
-
+            
+            LeoPayManager *manager = [LeoPayManager getInstance];
+            [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                if (respCode == 0) {
+                    /** 支付成功 */
+                    WS(weakSelf);
+                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账户信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                        if (buttonIndex == 0) {
+                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                        }
+                    }];
+                }
+            }];
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
@@ -418,6 +428,7 @@
 
 - (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
     /** 请求支付宝签名 */
+    self.payType = selectType;
     [self commitAccountDataRequest];
 }
 
@@ -618,7 +629,7 @@
 
 - (FHCommonPaySelectView *)payView {
     if (!_payView) {
-        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:@"在线支付支付价格为:￥0.2\n在线支付支付价格"];
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.open]];
         _payView.delegate = self;
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;

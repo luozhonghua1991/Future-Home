@@ -50,6 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, weak) id<FHCommonPaySelectViewDelegate> delegate;
 
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectType;
+
 -(UIView *)initWithFrame:(CGRect )frame andNSString:(NSString *)title;
 
 @end

@@ -296,6 +296,7 @@
 		4A793D3B231F8FBB00893255 /* FHOwnerCertificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3A231F8FBB00893255 /* FHOwnerCertificationController.m */; };
 		4A793D3E231F917C00893255 /* FHOwnerCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3D231F917C00893255 /* FHOwnerCertificationViewController.m */; };
 		4A809C11236C43BA00DE63FD /* ZJNoHavePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A809C0F236C43BA00DE63FD /* ZJNoHavePhotoCell.m */; };
+		4A852F0D237F90510058D812 /* LeoPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A852F0C237F90500058D812 /* LeoPayManager.m */; };
 		4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6522C210D90083E00C /* FHMenuListCell.m */; };
 		4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */; };
 		4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6E22C3663F0083E00C /* FHCommonNavView.m */; };
@@ -1551,6 +1552,8 @@
 		4A793D3D231F917C00893255 /* FHOwnerCertificationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOwnerCertificationViewController.m; sourceTree = "<group>"; };
 		4A809C0F236C43BA00DE63FD /* ZJNoHavePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJNoHavePhotoCell.m; sourceTree = "<group>"; };
 		4A809C10236C43BA00DE63FD /* ZJNoHavePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJNoHavePhotoCell.h; sourceTree = "<group>"; };
+		4A852F0B237F90500058D812 /* LeoPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeoPayManager.h; sourceTree = "<group>"; };
+		4A852F0C237F90500058D812 /* LeoPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeoPayManager.m; sourceTree = "<group>"; };
 		4A8D8C6422C210D90083E00C /* FHMenuListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCell.h; sourceTree = "<group>"; };
 		4A8D8C6522C210D90083E00C /* FHMenuListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMenuListCell.m; sourceTree = "<group>"; };
 		4A8D8C6722C21B900083E00C /* FHMenuListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCollectionCell.h; sourceTree = "<group>"; };
@@ -3583,6 +3586,8 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4A852F0B237F90500058D812 /* LeoPayManager.h */,
+				4A852F0C237F90500058D812 /* LeoPayManager.m */,
 				4AD1D2A823571D1100D11966 /* FHAddressPickerView */,
 				4A0603F1232892D100AE8F53 /* PPNumberButton */,
 				4A70423623113E420023E5C3 /* Account.h */,
@@ -6720,6 +6725,7 @@
 				4A70D54B22EE9E7B007AABDC /* ClearCaChe.m in Sources */,
 				4AB203E522F2DD7300111AC4 /* ZXPDF417Codeword.m in Sources */,
 				4AB203CD22F2DD7300111AC4 /* ZXGenericGF.m in Sources */,
+				4A852F0D237F90510058D812 /* LeoPayManager.m in Sources */,
 				4A6DAB4022C0ADAF00F29455 /* NJKWebViewProgressView.m in Sources */,
 				4A9CB2AE230BCD23004A3763 /* UIWebView+ZJMasonryKit.m in Sources */,
 				4A6DAB5D22C0ADAF00F29455 /* MJExtensionConst.m in Sources */,
