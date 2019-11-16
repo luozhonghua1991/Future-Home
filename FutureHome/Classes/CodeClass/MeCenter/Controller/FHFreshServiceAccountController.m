@@ -23,7 +23,16 @@
 #import "FHWebViewController.h"
 #import "LeoPayManager.h"
 
-@interface FHFreshServiceAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
+@interface FHFreshServiceAccountController ()
+<UITextFieldDelegate,
+UIScrollViewDelegate,
+FHCertificationImgViewDelegate,
+FHUserAgreementViewDelegate,
+FDActionSheetDelegate,
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate,
+FHCommonPaySelectViewDelegate
+>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 账户类型View */
@@ -79,6 +88,8 @@
 @property (nonatomic, strong) FHCommonPaySelectView *payView;
 /** 1支付宝  2 微信 */
 @property (nonatomic, assign) NSInteger payType;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectCount;
 
 
 @end
@@ -87,6 +98,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectCount = 0;
     self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
@@ -350,11 +362,24 @@
     [self.navigationController pushViewController:web animated:YES];
 }
 
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
+}
 
 - (void)submitBtnClick {
     /** 确认并提交 */
     if (self.selectIDCardsImgArrs.count != 3) {
         [self.view makeToast:@"身份认证信息认证不能为空"];
+        return;
+    }
+    if (self.selectCount % 2 != 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
     /** 先加一个弹框提示 */

@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 用户协议的点击方法 */
 - (void)FHUserAgreementViewClick;
 
+/** 确定协议的按钮 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender;
+
 @end
 
 @interface FHUserAgreementView : UIView

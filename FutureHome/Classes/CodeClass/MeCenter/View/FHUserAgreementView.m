@@ -43,13 +43,19 @@
     self.contentView.height = 15;
     self.contentView.centerX = self.width / 2;
     
-    self.agrmmmentLabel.frame = CGRectMake(15, 0, size.width,
+    self.agrmmmentLabel.frame = CGRectMake(17, 0, size.width,
                                            15);
 }
 
 - (void)tapClick {
     if (_delegate != nil && [_delegate respondsToSelector:@selector(FHUserAgreementViewClick)]) {
         [_delegate FHUserAgreementViewClick];
+    }
+}
+
+- (void)selectBtnClick:(UIButton *)sender {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_fhuserAgreementWithBtn:)]) {
+        [_delegate fh_fhuserAgreementWithBtn:sender];
     }
 }
 
@@ -68,7 +74,8 @@
     if (!_selectBtn) {
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _selectBtn.frame = CGRectMake(0, 0, 15, 15);
-        _selectBtn.backgroundColor = HEX_COLOR(0x1296db);
+        [_selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+        [_selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _selectBtn;
 }
