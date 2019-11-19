@@ -19,8 +19,7 @@
 @property (nonatomic,copy) NSString *strAddress;
 /**详细地址*/
 @property (nonatomic,copy) NSString *strDetialAddress;
-/**判断是否有地址数据 如果没有添加地址的时候就要给个默认值*/
-@property (nonatomic,assign) BOOL isNoAddress;
+
 
 /**地址id*/
 @property (nonatomic,assign) NSInteger addressID;

@@ -28,12 +28,6 @@
     HYJFAddressAdministrationController *messageVC = [[HYJFAddressAdministrationController alloc] init];
     messageVC.yp_tabItemTitle = @"地址管理";
     
-//    FHNormalManagerController *groupVC = [[FHNormalManagerController alloc] init];
-//    groupVC.yp_tabItemTitle = @"普票管理";
-//
-//    FHSpecialManagerController *hotVC = [[FHSpecialManagerController alloc] init];
-//    hotVC.yp_tabItemTitle = @"专票管理";
-    
     FHInvoiceListController *friendVC = [[FHInvoiceListController alloc] init];
     friendVC.yp_tabItemTitle = @"发票管理";
     

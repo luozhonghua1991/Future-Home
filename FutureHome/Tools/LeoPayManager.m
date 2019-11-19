@@ -245,8 +245,7 @@
 
 
 //支付宝
-+ (BOOL)alipayHandleOpenURL:(NSURL *)url
-{
++ (BOOL)alipayHandleOpenURL:(NSURL *)url {
     [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
         
         LeoPayManager *manager = [LeoPayManager getInstance];

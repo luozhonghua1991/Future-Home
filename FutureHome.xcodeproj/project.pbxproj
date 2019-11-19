@@ -38,6 +38,7 @@
 		4A1351D522F92EF800CDDBB5 /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1351CA22F92EF800CDDBB5 /* TZImagePickerController.m */; };
 		4A1351DB22F9306700CDDBB5 /* CustomAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1351DA22F9306700CDDBB5 /* CustomAlertView.m */; };
 		4A1351DE22F956F000CDDBB5 /* FHGroupMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1351DD22F956F000CDDBB5 /* FHGroupMessageController.m */; };
+		4A14A503238295190059CC83 /* FHInvoiceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A14A502238295190059CC83 /* FHInvoiceModel.m */; };
 		4A153E802372634700CFE6B6 /* FHMainSearchController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A153E7F2372634700CFE6B6 /* FHMainSearchController.m */; };
 		4A153E8323726E5400CFE6B6 /* FHSearchResultController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A153E8223726E5400CFE6B6 /* FHSearchResultController.m */; };
 		4A153E86237270B800CFE6B6 /* FHSearchResultCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A153E85237270B800CFE6B6 /* FHSearchResultCell.m */; };
@@ -972,6 +973,8 @@
 		4A1351DA22F9306700CDDBB5 /* CustomAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAlertView.m; sourceTree = "<group>"; };
 		4A1351DC22F956F000CDDBB5 /* FHGroupMessageController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGroupMessageController.h; sourceTree = "<group>"; };
 		4A1351DD22F956F000CDDBB5 /* FHGroupMessageController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGroupMessageController.m; sourceTree = "<group>"; };
+		4A14A501238295190059CC83 /* FHInvoiceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHInvoiceModel.h; sourceTree = "<group>"; };
+		4A14A502238295190059CC83 /* FHInvoiceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHInvoiceModel.m; sourceTree = "<group>"; };
 		4A153E7E2372634700CFE6B6 /* FHMainSearchController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMainSearchController.h; sourceTree = "<group>"; };
 		4A153E7F2372634700CFE6B6 /* FHMainSearchController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMainSearchController.m; sourceTree = "<group>"; };
 		4A153E8123726E5400CFE6B6 /* FHSearchResultController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSearchResultController.h; sourceTree = "<group>"; };
@@ -2844,6 +2847,15 @@
 			path = TZImagePickerController;
 			sourceTree = "<group>";
 		};
+		4A14A500238295060059CC83 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A14A501238295190059CC83 /* FHInvoiceModel.h */,
+				4A14A502238295190059CC83 /* FHInvoiceModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4A153E8723729FD300CFE6B6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -3519,7 +3531,7 @@
 			isa = PBXGroup;
 			children = (
 				4A6DAA0A22C07CA400F29455 /* Controller */,
-				4A6DAA0C22C07CAF00F29455 /* Model */,
+				4A14A500238295060059CC83 /* Model */,
 				4A6DAA0B22C07CAA00F29455 /* View */,
 			);
 			path = ShoppingCart;
@@ -3814,13 +3826,6 @@
 				4A331AF52327AF8500457136 /* FHGoodsDetailCell.m */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		4A6DAA0C22C07CAF00F29455 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		4A6DAA0D22C07CB400F29455 /* Controller */ = {
@@ -7196,6 +7201,7 @@
 				4A6DAA7B22C0AD4C00F29455 /* IQUIViewController+Additions.m in Sources */,
 				4A9CB27F230BCC81004A3763 /* UICollectionViewCell+ZJBaseFunctions.m in Sources */,
 				4A70D54C22EE9E7B007AABDC /* SingleManager.m in Sources */,
+				4A14A503238295190059CC83 /* FHInvoiceModel.m in Sources */,
 				4AA7B37522CC536700462389 /* CurrentViewController.m in Sources */,
 				4A9E84EB2323561D0070CE4A /* SDImageCacheConfig.m in Sources */,
 				4AF51B5622D07E6A00AA04EC /* GNRCartFooter.m in Sources */,

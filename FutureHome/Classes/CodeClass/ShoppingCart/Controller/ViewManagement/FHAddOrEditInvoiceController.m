@@ -12,6 +12,10 @@
 {
     UITextField *companyNameTF;//公司名字TF
     UITextField *companyCodeTF;//公司编号TF
+    UITextField *companyAddressTF;//公司地址TF
+    UITextField *companyPhoneTF;//公司电话TF
+    UITextField *companyBankTF;//公司开户银行TF
+    UITextField *companyAccountTF;//公司开户账号TF
     UIButton *conserveBtn;//保存按钮
     
 }
@@ -80,16 +84,59 @@
 }
 
 //保存按钮
-- (void)creatBottomBtn{
+- (void)creatBottomBtn {
     if (conserveBtn == nil) {
         conserveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        conserveBtn.frame = CGRectMake(0, SCREEN_HEIGHT - MainSizeHeight - 70 - ZH_SCALE_SCREEN_Height(50) - [self getTabbarHeight],SCREEN_WIDTH , (50));
+        conserveBtn.frame = CGRectMake(0, SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50),SCREEN_WIDTH , (50));
         conserveBtn.backgroundColor = HEX_COLOR(0x1296db);
         [conserveBtn setTitle:@"保存" forState:UIControlStateNormal];
         [conserveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        [conserveBtn addTarget:self action:@selector(conserveBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [conserveBtn addTarget:self action:@selector(conserveBtnClick) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:conserveBtn];
     }
+}
+
+
+- (void)conserveBtnClick {
+    /** 保存发票 */
+    /** id新增的话 传0 更新的话传 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic;
+    if ([self.titleName isEqualToString:@"添加发票"]) {
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     companyNameTF.text,@"company",
+                     companyCodeTF.text,@"code",
+                     companyAddressTF.text,@"address",
+                     companyPhoneTF.text,@"tel",
+                     companyBankTF.text,@"openbank",
+                     companyAccountTF.text,@"accountinfo",
+                     nil];
+    } else {
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.companyID,@"id",
+                     companyNameTF.text,@"company",
+                     companyCodeTF.text,@"code",
+                     companyAddressTF.text,@"address",
+                     companyPhoneTF.text,@"tel",
+                     companyBankTF.text,@"openbank",
+                     companyAccountTF.text,@"accountinfo",
+                     nil];
+    }
+    
+    [AFNetWorkTool post:@"shop/addeditInvoice" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"保存成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 #pragma mark - TableDelegate
@@ -99,7 +146,7 @@
 }
 //返回区数
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 6;
 }
 
 //返回每个区行数
@@ -129,7 +176,7 @@
             companyNameTF.delegate = self;
             companyNameTF.font = [UIFont systemFontOfSize:15];
             [cell.contentView addSubview:companyNameTF];
-        } else {
+        }   else if (indexPath.section == 1) {
             leftLab.text = @"公司税号:";
             //手机号码TF
             companyCodeTF = [[UITextField alloc] initWithFrame:CGRectMake((100), 0, (263), (44))];
@@ -142,6 +189,57 @@
             companyCodeTF.keyboardType = UIKeyboardTypeNumberPad;
             companyCodeTF.font = [UIFont systemFontOfSize:15];
             [cell.contentView addSubview:companyCodeTF];
+        } else if(indexPath.section == 2) {
+            leftLab.text = @"公司地址:";
+            //收件人TF
+            companyAddressTF = [[UITextField alloc] initWithFrame:CGRectMake((100), 0, (263), (44))];
+            if (!IsStringEmpty(self.companyName)) {
+                companyAddressTF.text = self.companyAddress;
+            }
+            companyAddressTF.placeholder = @"          请输入公司地址";
+            companyAddressTF.textAlignment = NSTextAlignmentRight;
+            companyAddressTF.delegate = self;
+            companyAddressTF.font = [UIFont systemFontOfSize:15];
+            [cell.contentView addSubview:companyAddressTF];
+            
+        } else if(indexPath.section == 3) {
+            leftLab.text = @"公司电话:";
+            //收件人TF
+            companyPhoneTF = [[UITextField alloc] initWithFrame:CGRectMake((100), 0, (263), (44))];
+            if (!IsStringEmpty(self.companyPhone)) {
+                companyPhoneTF.text = self.companyPhone;
+            }
+            companyPhoneTF.placeholder = @"          请输入公司电话";
+            companyPhoneTF.textAlignment = NSTextAlignmentRight;
+            companyPhoneTF.delegate = self;
+            companyPhoneTF.font = [UIFont systemFontOfSize:15];
+            [cell.contentView addSubview:companyPhoneTF];
+            
+        } else if(indexPath.section == 4) {
+            leftLab.text = @"开户银行:";
+            //收件人TF
+            companyBankTF = [[UITextField alloc] initWithFrame:CGRectMake((100), 0, (263), (44))];
+            if (!IsStringEmpty(self.companyBank)) {
+                companyBankTF.text = self.companyBank;
+            }
+            companyBankTF.placeholder = @"          请输入开户银行";
+            companyBankTF.textAlignment = NSTextAlignmentRight;
+            companyBankTF.delegate = self;
+            companyBankTF.font = [UIFont systemFontOfSize:15];
+            [cell.contentView addSubview:companyBankTF];
+            
+        } else if(indexPath.section == 5) {
+            leftLab.text = @"开户账号:";
+            //收件人TF
+            companyAccountTF = [[UITextField alloc] initWithFrame:CGRectMake((100), 0, (263), (44))];
+            if (!IsStringEmpty(self.companyAccount)) {
+                companyAccountTF.text = self.companyAccount;
+            }
+            companyAccountTF.placeholder = @"          请输入开户账号";
+            companyAccountTF.textAlignment = NSTextAlignmentRight;
+            companyAccountTF.delegate = self;
+            companyAccountTF.font = [UIFont systemFontOfSize:15];
+            [cell.contentView addSubview:companyAccountTF];
             
         }
     }
@@ -151,11 +249,7 @@
 }
 
 //返回每行的高
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 3) {
-        return (90);
-    }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return (44);
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{

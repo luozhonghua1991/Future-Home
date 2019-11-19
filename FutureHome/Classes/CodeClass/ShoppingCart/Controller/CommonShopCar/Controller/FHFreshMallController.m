@@ -58,6 +58,24 @@
     [self fh_creatUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.shopID,@"shop_id", nil];
+    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            weakSelf.locationLabel.text = dic[@"shopname"];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
 - (void)getRequest {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -133,8 +151,15 @@
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
-    [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
-    [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    if ([self.isCollect isEqualToString:@"0"]) {
+        [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    } else if ([self.isCollect isEqualToString:@"1"]) {
+        [followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+    } else {
+        [followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+    }
+    
+    [followBtn addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -160,21 +185,8 @@
     self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
-    /** 获取商家详情 */
-    WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               self.shopID,@"shop_id", nil];
-    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
-        if ([responseObj[@"code"] integerValue] == 1) {
-            NSDictionary *dic = responseObj[@"data"];
-            weakSelf.locationLabel.text = dic[@"shopname"];
-        } else {
-            [self.view makeToast:responseObj[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-    }];
+//    /** 获取商家详情 */
+ 
     [titleView addSubview:self.locationLabel];
     
     self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 65, 12, 50, 12);
@@ -330,6 +342,39 @@
     [self.view addSubview:shareView];
 }
 
+- (void)followBtnClick:(UIButton *)sender {
+    /** <#属性注释#> */
+    if ([self.isCollect isEqualToString:@"0"]) {
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSString *urlString;
+        NSDictionary *paramsDic;
+        urlString = @"public/collect";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.shopID,@"id",
+                     @"3",@"type",nil];
+        [AFNetWorkTool post:urlString params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"收藏成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [sender setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+                });
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    } else if ([self.isCollect isEqualToString:@"1"]) {
+        [self.view makeToast:@"已经收藏过该店铺"];
+        return;
+    } else {
+        [self.view makeToast:@"已经收藏过该店铺"];
+        return;
+    }
+}
+
 /** 菜单按钮 */
 - (void)menuBtnClick {
     //显示收藏列表菜单
@@ -342,6 +387,9 @@
     listVC.titleString = @"生鲜收藏";
     listVC.type = @"3";
     listVC.hidesBottomBarWhenPushed = YES;
+    listVC.selectShopBlock = ^(NSString * _Nonnull shopID) {
+        self.shopID = shopID;
+    };
     [self.navigationController pushViewController:listVC animated:YES];
 
 }
@@ -489,7 +537,7 @@
 - (UILabel  *)locationLabel{
     if (!_locationLabel) {
         _locationLabel =  [[UILabel alloc] init];
-        _locationLabel.text = @"未来生鲜龙湖U城店未来式未来式未来式";
+        _locationLabel.text = @"";
         _locationLabel.textColor = [UIColor blackColor];
         _locationLabel.font = [UIFont systemFontOfSize:15];
         _locationLabel.textAlignment = NSTextAlignmentCenter;

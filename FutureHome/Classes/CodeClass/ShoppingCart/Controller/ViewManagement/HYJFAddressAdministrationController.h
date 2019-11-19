@@ -9,5 +9,7 @@
 #import "BaseViewController.h"
 
 @interface HYJFAddressAdministrationController : BaseViewController
+/** 是否有导航栏 */
+@property (nonatomic, assign) BOOL isHaveNavBar;
 
 @end

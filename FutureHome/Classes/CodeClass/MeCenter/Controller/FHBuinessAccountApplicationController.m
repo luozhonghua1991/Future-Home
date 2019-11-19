@@ -15,9 +15,12 @@
 #import "FHProofOfOwnershipView.h"
 #import "NSArray+JSON.h"
 #import "FHAddressPickerView.h"
+#import "FHCommonPaySelectView.h"
+#import "FHAppDelegate.h"
+#import "FHWebViewController.h"
+#import "LeoPayManager.h"
 
-
-@interface FHBuinessAccountApplicationController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+@interface FHBuinessAccountApplicationController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,FDActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 /** 大的滚动视图 */
 //@property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
 /** 大的滚动视图 */
@@ -70,12 +73,19 @@
 
 @property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 
+@property (nonatomic, strong) FHCommonPaySelectView *payView;
+/** 1支付宝  2 微信 */
+@property (nonatomic, assign) NSInteger payType;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectCount;
+
 @end
 
 @implementation FHBuinessAccountApplicationController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectCount = 0;
     self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
@@ -97,11 +107,6 @@
                                                   }
                                                   
                                               }];
-    
-//    [UIAlertController ba_alertAttributedShowInViewController:self attributedTitle:[[NSMutableAttributedString alloc] initWithString:@"提示"] attributedMessage:[UIlabelTool willChangeHtmlString:self.tips2] buttonTitleArray:@[@"取 消", @"确 定"] buttonTitleColorArray:buttonTitleColorArray block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-//        ;
-//    }];
-    
 }
 
 
@@ -345,22 +350,96 @@
         [self.view makeToast:@"身份证信息认证不能为空"];
         return;
     }
+    if (self.selectCount % 2 != 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
+        return;
+    }
+    
+    /** 先加一个弹框提示 */
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf payView];
+            weakSelf.submitBtn.userInteractionEnabled = NO;
+            [weakSelf showPayView];
+        }
+    }];
+}
+
+- (void)commitAccountDataRequest {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.serviceDeskView.contentTF.text,@"shop_name",
+                               self.serviceDeskNameTF.text,@"shopname",
                                self.province_id,@"province_id",
                                self.city_id,@"city_id",
                                self.area_id,@"area_id",
                                self.applicantNameView.contentTF.text,@"name",
                                self.applicantCardView.contentTF.text,@"idcard",
                                self.phoneNumberView.contentTF.text,@"phone",
-                               self.phoneView.contentTF.text,@"shopmobie",
+                               self.phoneView.contentTF.text,@"shopmobile",
                                self.mailView.contentTF.text,@"email",
                                self.addressView.contentTF.text,@"streetaddress",
+                               self.price,@"total",
+                               @(self.payType),@"type",
+                               @"1",@"ordertype",
+                               self.selectIDCardsImgArrs,@"idCardFile[]",
+                               [self getSmallImageArray],@"file[]",
                                nil];
     
+    [AFNetWorkTool uploadImagesWithUrl:@"shop/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 账户资料传给后台成功 */
+            
+            /** 选择支付方式 */
+            //            [WXApi sendReq:[PayReq new] completion:^(BOOL success) {
+            //
+            //            }];
+            //            // 判断手机有没有微信
+            //            if ([WXApi isWXAppInstalled]) {
+            //                //                wechatButton.hidden = NO;
+            //            }else{
+            //                //                wechatButton.hidden = YES;
+            //            }
+            
+            LeoPayManager *manager = [LeoPayManager getInstance];
+            [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                if (respCode == 0) {
+                    /** 支付成功 */
+                    WS(weakSelf);
+                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账户信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                        if (buttonIndex == 0) {
+                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                        }
+                    }];
+                }
+            }];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    self.payType = selectType;
+    [self commitAccountDataRequest];
+}
+
+
+#pragma mark - 显示支付弹窗
+- (void)showPayView{
+    __weak FHBuinessAccountApplicationController *weakSelf = self;
+    self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [weakSelf.payView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        weakSelf.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        self.submitBtn.userInteractionEnabled = YES;
+    }];
 }
 
 - (void)pickerViewFrameChanged {
@@ -528,6 +607,17 @@
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
+}
+
+- (FHCommonPaySelectView *)payView {
+    if (!_payView) {
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.open]];
+        _payView.delegate = self;
+    }
+    FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:_payView];
+    
+    return _payView;
 }
 
 @end

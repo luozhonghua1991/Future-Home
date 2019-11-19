@@ -10,6 +10,8 @@
 #import "FHWatingOrderCell.h"
 #import "HYJFAddressAdministrationController.h"
 #import "FHInvoiceListController.h"
+#import "BRPlaceholderTextView.h"
+#import "FHInvoiceListController.h"
 
 @interface FHSureOrderController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
@@ -18,6 +20,14 @@
 @property (nonatomic, strong) UILabel *logisticsLabel;
 /** 支付方式label */
 @property (nonatomic, strong) UILabel *payTypeLabel;
+/** 发票label */
+@property (nonatomic, strong) UILabel *invoiceLabel;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isSelectBtn;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isSelectAddress;
+/** 营业说明textView */
+@property (nonatomic, strong) BRPlaceholderTextView *businessDescriptionTextView;
 
 @end
 
@@ -25,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isSelectBtn = NO;
     [self fh_creatNav];
     [self creatBottomBtn];
     [self.view addSubview:self.homeTable];
@@ -120,7 +131,11 @@
     } else if (indexPath.section == 0) {
         return 40.0f;
     } else {
-        return 40.0f;
+        if (indexPath.row == 0) {
+            return 40.0f;
+        } else {
+            return 100.0f;
+        }
     }
 }
 
@@ -139,10 +154,14 @@
             self.logisticsLabel = cell.detailTextLabel;
         } else if (indexPath.row ==1) {
             cell.textLabel.text = @"是否开票";
-            cell.detailTextLabel.text = @"";
+            UISwitch *selectSeitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/375*48, SCREEN_HEIGHT/667*30)];
+            [selectSeitch setOn:self.isSelectBtn animated:NO];
+            cell.accessoryView = selectSeitch;
+            [selectSeitch addTarget:self action:@selector(selectSeitchOnClick) forControlEvents:UIControlEventValueChanged];
         } else if (indexPath.row ==2) {
             cell.textLabel.text = @"开票单位";
             cell.detailTextLabel.text = @"请选择开票单位 >";
+            self.invoiceLabel = cell.detailTextLabel;
         } else {
             cell.textLabel.text = @"收货地址";
             cell.detailTextLabel.text = @"请选择收货地址 >";
@@ -160,14 +179,21 @@
             cell.textLabel.text = @"支付方式";
             cell.detailTextLabel.text = @"请选择支付方式 >";
         } else {
-            cell.textLabel.text = @"信息备注";
-            cell.detailTextLabel.text = @"备注信息(非必填) >";
+            self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+            [cell addSubview:self.businessDescriptionTextView];
         }
         return cell;
     }
     FHWatingOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHWatingOrderCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+}
+
+/**
+ *  多选按钮控制
+ */
+- (void)selectSeitchOnClick {
+    self.isSelectBtn = !self.isSelectBtn;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -231,16 +257,35 @@
             [ZJNormalPickerView zj_showStringPickerWithTitle:@"物流方式" dataSource:@[@"快递到家",@"预定前往",@"实时配送"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
                 NSLog(@"index---%ld",index);
                 self.logisticsLabel.text = selectValue;
+                if ([selectValue isEqualToString:@"预定前往"]) {
+                    self.isSelectAddress = NO;
+                } else {
+                    self.isSelectAddress = YES;
+                }
             } cancelBlock:^{
                 
             }];
         }
-        if (indexPath.row == 2) {
+        if (indexPath.row == 3) {
             /** 地址选择 */
+            if (!self.isSelectAddress) {
+                [self.view makeToast:@"你不能进行选择地址"];
+                return;
+            }
             [self viewControllerPushOther:@""];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 2) {
+            if (!self.isSelectBtn) {
+                [self.view makeToast:@"你不能进行选择发票"];
+                return;
+            }
             /** 发票选择 */
-            [self viewControllerPushOther:@""];
+            FHInvoiceListController *vx = [[FHInvoiceListController alloc] init];
+            vx.isHaveNavBar = YES;
+            vx.hidesBottomBarWhenPushed = YES;
+            vx.selectResultBlock = ^(FHInvoiceModel * _Nonnull invoiceModel) {
+                self.invoiceLabel.text = invoiceModel.companyname;
+            };
+            [self.navigationController pushViewController:vx animated:YES];
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
@@ -251,6 +296,7 @@
                 
             }];
         } else {
+            
         }
     }
 }
@@ -271,6 +317,22 @@
         }
     }
     return _homeTable;
+}
+
+
+- (BRPlaceholderTextView *)businessDescriptionTextView {
+    if (!_businessDescriptionTextView) {
+        _businessDescriptionTextView = [[BRPlaceholderTextView alloc] init];
+        _businessDescriptionTextView.layer.borderWidth = 1;
+        _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
+        _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+        NSString *titleString = @"信息备注 备注信息(非必填)";
+        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
+        [attributedTitle changeColor:[UIColor lightGrayColor] rang:[attributedTitle changeSystemFontFloat:13 from:0 legth:14]];
+        _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
+    }
+    return _businessDescriptionTextView;
 }
 
 @end

@@ -10,6 +10,7 @@
 #import "FHSearchResultCell.h"
 #import "FHSearchResultModel.h"
 #import "FHPersonTrendsController.h"
+#import "FHFreshMallController.h"
 
 @interface FHSearchResultController () <UITableViewDelegate,UITableViewDataSource,FHSearchResultCellDelegate>
 {
@@ -184,6 +185,7 @@
 }
 
 - (void)fh_selectAvaterWithModel:(FHSearchResultModel *)model {
+    [self.navigationController popViewControllerAnimated:YES];
     if ([self.type isEqualToString:@"1"]) {
         /** 搜索用户 跳到用户的动态 */
         /** 去用户的动态 */
@@ -194,6 +196,14 @@
         vc.user_id = model.id;
         vc.personType = 0;
         [self.navigationController pushViewController:vc animated:YES];
+    } else if ([self.type isEqualToString:@"4"]) {
+        /** 生鲜 */
+        /** 生鲜服务 */
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
     }
 }
 

@@ -7,10 +7,15 @@
 //
 
 #import "BaseViewController.h"
-
+#import "FHInvoiceModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHInvoiceListController : BaseViewController
+// <#属性block#>
+@property (nonatomic, copy) void(^selectResultBlock)(FHInvoiceModel *invoiceModel);
+
+/** 是否有导航栏 */
+@property (nonatomic, assign) BOOL isHaveNavBar;
 
 @end
 

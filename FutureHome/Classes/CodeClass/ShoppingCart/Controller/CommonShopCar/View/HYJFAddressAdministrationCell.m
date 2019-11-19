@@ -64,7 +64,7 @@
     addressBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     addressBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
     [addressBtn addTarget:self action:@selector(changeDefultAddressClick) forControlEvents:UIControlEventTouchUpInside];
-    [bottomView addSubview:addressBtn];
+//    [bottomView addSubview:addressBtn];
 
     editBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     editBtn.frame = CGRectMake(ZH_SCALE_SCREEN_Width(245), 0, ZH_SCALE_SCREEN_Width(65), ZH_SCALE_SCREEN_Height(40));
@@ -86,25 +86,25 @@
 }
 - (void)setAddressModel:(HYJFAllAddressModel *)addressModel{
     _addressModel = addressModel;
-//    nameLabel.text = [NSString stringWithFormat:@"姓名: %@",addressModel.name];
-//    phoneLabel.text = addressModel.phone;
+    nameLabel.text = [NSString stringWithFormat:@"姓名: %@",_addressModel.name];
+    phoneLabel.text = _addressModel.mobile;
 //    addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.province,addressModel.city,addressModel.district,addressModel.address];
-    addressLabel.text = @"重庆市沙坪坝大学城";
+    addressLabel.text = _addressModel.address;
     CGSize size = [UIlabelTool sizeWithString:addressLabel.text font:addressLabel.font];
     addressLabel.frame = CGRectMake(ZH_SCALE_SCREEN_Width(12), CGRectGetMaxY(phoneLabel.frame) + ZH_SCALE_SCREEN_Height(8), ZH_SCALE_SCREEN_Width(320), size.height);
     addressLabel.numberOfLines = 0;
     lineView.frame = CGRectMake(0, CGRectGetMaxY(addressLabel.frame) + ZH_SCALE_SCREEN_Height(10), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(1));
 
-    if (addressModel.isDefault == 1) {
-        //默认地址
-        [addressBtn setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
-        [addressBtn setTitle:@"默认地址" forState:UIControlStateNormal];
-        [addressBtn setTitleColor:ZH_COLOR(255, 182, 55) forState:UIControlStateNormal];
-    } else {
-        [addressBtn setImage:[UIImage imageNamed:@"unChecked"] forState:UIControlStateNormal];
-        [addressBtn setTitle:@"设为默认地址" forState:UIControlStateNormal];
-        [addressBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    }
+//    if (addressModel.isDefault == 1) {
+//        //默认地址
+//        [addressBtn setImage:[UIImage imageNamed:@"checked"] forState:UIControlStateNormal];
+//        [addressBtn setTitle:@"默认地址" forState:UIControlStateNormal];
+//        [addressBtn setTitleColor:ZH_COLOR(255, 182, 55) forState:UIControlStateNormal];
+//    } else {
+//        [addressBtn setImage:[UIImage imageNamed:@"unChecked"] forState:UIControlStateNormal];
+//        [addressBtn setTitle:@"设为默认地址" forState:UIControlStateNormal];
+//        [addressBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//    }
     
     bottomView.frame = CGRectMake(0, CGRectGetMaxY(addressLabel.frame) + ZH_SCALE_SCREEN_Height(16), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(40));
 
@@ -118,30 +118,6 @@
 #pragma mark  -- 改变默认地址
 - (void)changeDefultAddressClick {
     
-//    if (self.addressModel.isDefault == 1) {
-//        return;
-//    }
-//
-//    NSDictionary *params = @{@"isDefault":@(1)};
-    __weak typeof(self) weakSelf = self;
-//
-//    NSString *urlStr = [NSString stringWithFormat:@"Address/%d?isDefault=1",self.addressModel.id];
-//
-//    [AFNetWorkTool put:urlStr params:nil success:^(id responseObj) {
-//        int code = [[responseObj objectForKey:@"code"] intValue];
-//        if (code == 0) {
-//            [ZHProgressHUD showMessage:@"设置成功" inView:[UIApplication sharedApplication].keyWindow];
-//
-            if ([weakSelf.controller respondsToSelector:@selector(changeDefaultAddress)]) {
-                [weakSelf.controller performSelector:@selector(changeDefaultAddress)];
-            }
-//        }else{
-//            [ZHProgressHUD showMessage:[responseObj objectForKey:@"msg"] inView:[UIApplication sharedApplication].keyWindow];
-//        }
-//    } failure:^(NSError *error) {
-//        //
-//        NSLog(@"error === %@",error);
-//    }];
 }
 
 #pragma mark  -- 编辑地址
@@ -152,25 +128,10 @@
 }
 
 #pragma mark  -- 删除地址
-- (void)deleteBtnClick{
-    __weak typeof(self) weakSelf = self;
-
-    NSString *urlStr = [NSString stringWithFormat:@"Address/%d",self.addressModel.id];
-    
-    [AFNetWorkTool deleteRequest:urlStr params:nil success:^(id responseObj) {
-        int code = [[responseObj objectForKey:@"code"] intValue];
-        if (code == 0) {
-            [ZHProgressHUD showMessage:@"删除成功" inView:[UIApplication sharedApplication].keyWindow];
-
-            if ([weakSelf.controller respondsToSelector:@selector(changeDefaultAddress)]) {
-                [weakSelf.controller performSelector:@selector(changeDefaultAddress)];
-            }
-        }else{
-            [ZHProgressHUD showMessage:[responseObj objectForKey:@"msg"] inView:[UIApplication sharedApplication].keyWindow];
-        }
-    } failure:^(NSError *error) {
-        //
-    }];
+- (void)deleteBtnClick {
+    if ([self.controller respondsToSelector:@selector(deleteAddress:)]) {
+        [self.controller performSelector:@selector(deleteAddress:) withObject:self.addressModel];
+    }
 }
 
 - (void)awakeFromNib {

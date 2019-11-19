@@ -15,13 +15,14 @@
 #import "FHCommitDetaolCell.h"
 #import "ZJNoHavePhotoCell.h"
 #import "FHZJHaveMoveCell.h"
+#import "FHPersonTrendsController.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
 /** 有图片的 */
 #define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate>
+@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate>
 
 @property(nonatomic ,strong) UITableView *mainTable;
 
@@ -246,8 +247,8 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ZJCommit *commit = self.dataArray[indexPath.row];
     if (indexPath.section == 0) {
+        ZJCommit *commit = self.dataArray[indexPath.row];
         if (self.type == 3) {
             if (commit.medias.count > 0) {
                 NSDictionary *dic = commit.medias[0];
@@ -256,6 +257,7 @@
                     FHZJHaveMoveCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.model = self.dataArray[indexPath.row];
+                    cell.delegate = self;
                     return cell;
                     
                 } else if ([dic[@"type"] integerValue]== 1) {
@@ -263,6 +265,7 @@
                     ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.weakSelf = self;
+                    cell.delegate = self;
                     [self configureCell:cell atIndexPath:indexPath];
                     
                     return cell;
@@ -272,18 +275,21 @@
             ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
             photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
             [self configureNoCell:photoCell atIndexPath:indexPath];
+            photoCell.delegate = self;
             return photoCell;
         } else {
             if (commit.pic_urls > 0) {
                 ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.weakSelf = self;
+                cell.delegate = self;
                 [self configureCell:cell atIndexPath:indexPath];
                 tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
                 return cell;
             } else {
                 ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
                 photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                photoCell.delegate = self;
                 [self configureNoCell:photoCell atIndexPath:indexPath];
                 
                 return photoCell;
@@ -300,8 +306,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ZJCommit *commit = self.dataArray[indexPath.row];
     if (indexPath.section == 0) {
+        ZJCommit *commit = self.dataArray[indexPath.row];
         if (self.type == 3) {
             if (commit.medias.count > 0) {
                 NSDictionary *dic = commit.medias[0];
@@ -383,6 +389,64 @@
     [bottomView addGestureRecognizer:tap];
 }
 
+- (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model {
+    /** 去用户的动态 */
+    [self pushVCWithModel:model];
+}
+
+- (void)fh_ZJNoHavePhotoCellSelectModel:(ZJCommit *)model {
+    [self pushVCWithModel:model];
+}
+
+- (void)fh_ZJHaveMoveCellDelagateSelectModel:(ZJCommit *)Model {
+    [self pushVCWithModel:Model];
+}
+
+- (void)pushVCWithModel:(ZJCommit *)model {
+    /** 去用户的动态 */
+    FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+    vc.titleString = model.nickname;
+    [SingleManager shareManager].isSelectPerson = YES;
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.user_id = model.user_id;
+    vc.personType = 0;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model {
+    /** 用户点赞 */
+//    [self getRequestLickWithModel:Model];
+}
+
+- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model {
+    /** 用户点赞 */
+//    [self getRequestLickWithModel:model];
+}
+
+- (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model {
+    /** 用户点赞 */
+//    [self getRequestLickWithModel:model];
+}
+
+//- (void)getRequestLickWithModel:(ZJCommit *)model {
+//    WS(weakSelf);
+//    Account *account = [AccountStorage readAccount];
+//    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                               @(account.user_id),@"user_id",
+//                               @"1",@"type",
+//                               model.ID,@"pid",
+//                               @"user_id",@"uid",
+//                               nil];
+//    [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
+//        if ([responseObj[@"code"] integerValue] == 1) {
+//
+//        } else {
+//            [self.view makeToast:responseObj[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//    }];
+//}
+
 #pragma mark — event
 - (void)showInputView {
     /** 可以评论 */
@@ -417,16 +481,17 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                 @(account.user_id),@"user_id",
-                                @(self.property_id),@"property_id",
-                                @(self.type),@"type",
-                                self.ID,@"id",
+                                @"0",@"to_id",
+                                @"1",@"type",
+                                self.ID,@"pid",
                                 text,@"content",
                                 nil];
+    
     self.commitDataArrs = [[NSMutableArray alloc] init];
-    [AFNetWorkTool post:@"public/feedComplaints" params:paramsDic success:^(id responseObj) {
-        
+    [AFNetWorkTool post:@"sheyun/circleComment" params:paramsDic success:^(id responseObj) {
         [weakSelf getCommitsData];
     } failure:^(NSError *error) {
+        
     }];
 }
 

@@ -8,6 +8,8 @@
 
 #import "HYJFAddOrEditAddressController.h"
 #import "AddressPickerView.h"
+#import "FHAddressPickerView.h"
+
 @interface HYJFAddOrEditAddressController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UITextViewDelegate,AddressPickerViewDelegate>
 {
     AddressPickerView *addressPicker;//地址选择
@@ -27,9 +29,12 @@
 }
 /**tbale*/
 @property (nonatomic,strong) UITableView *editAddTableView;
+@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 @end
 
 @implementation HYJFAddOrEditAddressController
+
+
 //懒加载
 - (UITableView *)editAddTableView{
     if (_editAddTableView == nil) {
@@ -54,11 +59,8 @@
     self.view.backgroundColor = [UIColor colorWithHexStr:@"#EDECEC"];
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self fh_creatNav];
-    [self crearAddressPickView];
     [self creatTopView];
     [self creatBottomBtn];
-
-    [self getAddressCode:self.province City:self.city Area:self.district];
 }
 
 #pragma mark — 通用导航栏
@@ -90,23 +92,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark  -- 创建地址选择picker
-- (void)crearAddressPickView{
-    if (addressPicker == nil) {
-        addressPicker = [[AddressPickerView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260)];
-        addressPicker.delegate = self;
-        [self.view addSubview:addressPicker];
-    }
-}
 #pragma mark  -- 创建上面的视图
 - (void)creatTopView{
     [self.view addSubview:self.editAddTableView];
 }
+
 //保存按钮
 - (void)creatBottomBtn{
     if (conserveBtn == nil) {
         conserveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        conserveBtn.frame = CGRectMake(0,SCREEN_HEIGHT - MainSizeHeight - 70 - ZH_SCALE_SCREEN_Height(50) - [self getTabbarHeight], SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
+        conserveBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
         conserveBtn.backgroundColor = HEX_COLOR(0x1296db);
         [conserveBtn setTitle:@"保存" forState:UIControlStateNormal];
         [conserveBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -115,44 +110,32 @@
     }
 }
 #pragma mark  -- 保存地址
-- (void)conserveBtnClick{
-//    [self.navigationController popViewControllerAnimated:YES];
-//    return;
+- (void)conserveBtnClick {
     //首先判断手机号格式是否正确
     if ([self.titleName isEqualToString:@"添加地址"]) {
-        
-        if (self.isNoAddress) {
-            isDefault = 1;
-        } else {
-            isDefault = 0;
-        }
-
         //添加地址保存
+        Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   recipientsTF.text,@"name",
+                                   @(account.user_id),@"user_id",
+                                   recipientsTF.text,@"username",
                                    phoneNumberTF.text,@"phone",
-
-                                   strProvince,@"provinceCode",
-                                   strCity,@"cityCode",
-                                   strArea,@"districtCode",
-
+                                   strProvince,@"province_id",
+                                   strCity,@"city_id",
+                                   strArea,@"area_id",
                                    detailAddressTextView.text,@"address",
-                                   @(isDefault),@"isDefault",
+                                   @"0",@"id",
                                    nil];
-
-        NSString *urlStr = [NSString stringWithFormat:@"Address"];
-//        NSString *paramStr = [NSString stringWithFormat:@"?name=%@&phone=%@&provinceCode=%@&cityCode=%@&districtCode=%@&address=%@&isDefault=%ld",recipientsTF.text,phoneNumberTF.text,strProvince,strCity,strArea,detailAddressTextView.text,isDefault];
-//        urlStr = [urlStr stringByAppendingString:paramStr];
-//        urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         //POST请求 新增用户地址信息
         __weak typeof(self)weakSelf = self;
-        [AFNetWorkTool post:urlStr params:paramsDic success:^(id responseObj) {
+        [AFNetWorkTool post:@"shop/addOrUpdateddress" params:paramsDic success:^(id responseObj) {
             ZHLog(@"新增用户地址信息%@",responseObj);
             int code = [[responseObj objectForKey:@"code"] intValue];
-            if (code == 0) {
+            if (code == 1) {
                 //请求数据成功
                 [ZHProgressHUD showMessage:@"添加成功" inView:weakSelf.view];
-                [self.navigationController popViewControllerAnimated:YES];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
             } else {
                 [ZHProgressHUD showMessage:[responseObj objectForKey:@"msg"] inView:weakSelf.view];
             }
@@ -160,38 +143,24 @@
             [ZHProgressHUD showMessage:@"添加出错" inView:weakSelf.view];
             NSLog(@"%@",error.description);
         }];
-    }
-
-    else if ([self.titleName isEqualToString:@"编辑地址"]){
-
-        if (self.isNoAddress) {
-            isDefault = 1;
-        } else {
-            isDefault = 0;
-        }
-
-        //添加地址保存
-//        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                                   recipientsTF.text,@"name",
-//                                   phoneNumberTF.text,@"phone",
-//
-//                                   strProvince,@"provinceCode",
-//                                   strCity,@"cityCode",
-//                                   strArea,@"districtCode",
-//
-//                                   detailAddressTextView.text,@"address",
-//                                   @(isDefault),@"isDefault",
-//                                   nil];
-
-        NSString *urlStr = [NSString stringWithFormat:@"Address/%ld",self.addressID];
-        NSString *paramStr = [NSString stringWithFormat:@"?name=%@&phone=%@&provinceCode=%@&cityCode=%@&districtCode=%@&address=%@&isDefault=%ld",recipientsTF.text,phoneNumberTF.text,strProvince,strCity,strArea,detailAddressTextView.text,isDefault];
-        urlStr = [urlStr stringByAppendingString:paramStr];
-        urlStr = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
+    } else if ([self.titleName isEqualToString:@"编辑地址"]) {
+        /** 编辑地址 */
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   recipientsTF.text,@"username",
+                                   phoneNumberTF.text,@"phone",
+                                   strProvince,@"province_id",
+                                   strCity,@"city_id",
+                                   strArea,@"area_id",
+                                   detailAddressTextView.text,@"address",
+                                   @(self.addressID),@"id",
+                                   nil];
+        
         __weak typeof(self)weakSelf = self;
-        [AFNetWorkTool put:urlStr params:nil success:^(id responseObj) {
+        [AFNetWorkTool post:@"shop/addOrUpdateddress" params:paramsDic success:^(id responseObj) {
             int code = [[responseObj objectForKey:@"code"] intValue];
-            if (code == 0) {
+            if (code == 1) {
                 //请求数据成功
                 [ZHProgressHUD showMessage:@"编辑成功" inView:[UIApplication sharedApplication].keyWindow];
                 [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -205,8 +174,8 @@
     }
 
 }
-#pragma mark - TableDelegate
 
+#pragma mark - TableDelegate
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
     return 0.01;
 }
@@ -262,13 +231,54 @@
             addressLabel  = [[UILabel alloc]init];
             addressLabel.frame = CGRectMake(105, 0,263,44);
             if (IsStringEmpty(self.strAddress)) {
-                addressLabel.textColor = [UIColor lightGrayColor];
+                addressLabel.textColor = [UIColor blackColor];
                 addressLabel.text = @"           请选择地址 >";
             } else {
                 addressLabel.text = self.strAddress;
             }
+            strProvince = self.province;
+            strCity = self.city;
+            strArea = self.district;
             addressLabel.font = [UIFont systemFontOfSize:15];
             addressLabel.textAlignment = NSTextAlignmentRight;
+            
+            @weakify(self)
+            //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
+            _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+            //默认为NO
+            //_addressPickerView.showLastSelect = YES;
+            _addressPickerView.cancelBtnBlock = ^() {
+                @strongify(self)
+                //移除掉地址选择器
+                [self.addressPickerView hiddenInView];
+            };
+            _addressPickerView.sureBtnBlock = ^(NSString *province,
+                                                NSString *city,
+                                                NSString *district,
+                                                NSString *addressCode,
+                                                NSString *parentCode,
+                                                NSString *provienceCode) {
+                //返回过来的信息在后面的这四个参数中,使用的时候要做非空判断,(province和addressCode为必返回参数,可以不做非空判断)
+                @strongify(self)
+                NSString *showString;
+                if (city != nil) {
+                    showString = [NSString stringWithFormat:@"%@",city];
+                }else{
+                    showString = province;
+                }
+                
+                if (district != nil) {
+                    showString = [NSString stringWithFormat:@"%@%@", showString, district];
+                }
+                
+                self->addressLabel.text = [NSString stringWithFormat:@"%@%@%@",province,city,district];
+                self->strProvince = provienceCode;
+                self->strCity = parentCode;
+                self->strArea = addressCode;
+                //移除掉地址选择器
+                [self.addressPickerView hiddenInView];
+                self->conserveBtn.hidden = NO;
+            };
 
             //topView添加手势 点击进入邀请的好友记录
             UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addressLabelClick)];
@@ -316,102 +326,9 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 //弹出地址选择picker
-- (void)addressLabelClick{
-    [self.view bringSubviewToFront:addressPicker];
-    [recipientsTF resignFirstResponder];
-    [phoneNumberTF resignFirstResponder];
-    [detailAddressTextView resignFirstResponder];
-    [addressPicker show];
+- (void)addressLabelClick {
+    [self.addressPickerView showInView:self.view];
     conserveBtn.hidden = YES;
-
-}
-//取消按钮的代理方法
-- (void)cancelBtnClick{
-    [self hidePickViewAndPlayBtn];
-}
-
-//选中地址之后的代理方法
-- (void)sureBtnClickReturnProvince:(NSString *)province City:(NSString *)city Area:(NSString *)area{
-    addressLabel.textColor = [UIColor blackColor];
-    if (IsStringEmpty(area)) {
-        strArea = @"";
-        addressLabel.text = [NSString stringWithFormat:@"%@%@",province,city];
-    } else {
-        addressLabel.text = [NSString stringWithFormat:@"%@%@%@",province,city,area];
-        strArea = area;
-    }
-
-    [self getAddressCode:province City:city Area:area];
-
-    [self hidePickViewAndPlayBtn];
-}
-
-- (void) getAddressCode:(NSString *)province City:(NSString *)city Area:(NSString *)area{
-    if (IsStringEmpty(province) || IsStringEmpty(city) || IsStringEmpty(area)) {
-        return;
-    }
-    //获取省份
-    [AFNetWorkTool get:@"Address/getProvincesCode" params:nil success:^(id responseObj) {
-        //
-        int code = [[responseObj objectForKey:@"code"] intValue];
-        NSDictionary *dataDic = [responseObj objectForKey:@"data"];
-        if (code == 0) {
-            //
-            for (NSString *key in dataDic.allKeys) {
-                if ([[dataDic objectForKey:key] isEqualToString:province]) {
-                    strProvince = key;
-                    break;
-                }
-            }
-
-            //获取城市
-            [AFNetWorkTool get:@"Address/getCityCode" params:@{@"provincesCode":strProvince} success:^(id responseObj) {
-                int code = [[responseObj objectForKey:@"code"] intValue];
-                NSDictionary *dataDic = [responseObj objectForKey:@"data"];
-                if (code == 0) {
-                    //
-                    for (NSString *key in dataDic.allKeys) {
-                        if ([[dataDic objectForKey:key] isEqualToString:city] || [[dataDic objectForKey:key] isEqualToString:@"市辖区"]) {
-                            strCity = key;
-                            break;
-                        }
-                    }
-                    //获取区域
-                    [AFNetWorkTool get:@"Address/getDistrictCode" params:@{@"provincesCode":strProvince,@"cityCode":strCity} success:^(id responseObj) {
-                        int code = [[responseObj objectForKey:@"code"] intValue];
-                        NSDictionary *dataDic = [responseObj objectForKey:@"data"];
-                        if (code == 0) {
-                            //
-                            for (NSString *key in dataDic.allKeys) {
-                                if ([[dataDic objectForKey:key] isEqualToString:area]) {
-                                    strArea = key;
-                                    break;
-                                }
-                            }
-
-                        }
-                    } failure:^(NSError *error) {
-                        //
-                    }];
-                }
-            } failure:^(NSError *error) {
-                //
-            }];
-        }
-    } failure:^(NSError *error) {
-
-    }];
-}
-
-
--(void)hidePickViewAndPlayBtn{
-    if (conserveBtn.isHidden == YES) {
-        [addressPicker hide];
-        conserveBtn.hidden = NO;
-    } else {
-        [addressPicker show];
-        conserveBtn.hidden = YES;
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -419,15 +336,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark textFieldDelegate
 

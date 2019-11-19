@@ -163,6 +163,9 @@ FDActionSheetDelegate
         home.model = model;
         home.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:home animated:YES];
+    } else if ([self.type isEqualToString:@"3"]) {
+        self.selectShopBlock(model.id);
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

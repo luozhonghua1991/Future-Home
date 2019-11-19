@@ -378,7 +378,7 @@ FHCommonPaySelectViewDelegate
         [self.view makeToast:@"身份认证信息认证不能为空"];
         return;
     }
-    if (self.selectCount % 2 != 0) {
+    if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
@@ -436,11 +436,13 @@ FHCommonPaySelectViewDelegate
                 if (respCode == 0) {
                     /** 支付成功 */
                     WS(weakSelf);
-                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账户信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                         if (buttonIndex == 0) {
                             [weakSelf.navigationController popViewControllerAnimated:YES];
                         }
                     }];
+                } else if (respCode == -2) {
+                    [self.view makeToast:respMsg];
                 }
             }];
         } else {

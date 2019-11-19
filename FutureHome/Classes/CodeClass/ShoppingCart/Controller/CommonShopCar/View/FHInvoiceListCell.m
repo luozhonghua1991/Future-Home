@@ -8,6 +8,7 @@
 
 #import "FHInvoiceListCell.h"
 #import "UIColor+Extend.h"
+#import "FHInvoiceModel.h"
 
 @interface FHInvoiceListCell ()
 {
@@ -29,21 +30,18 @@
         [self setUpUI];
     }
     return self;
-    
 }
 
-- (void)setUpUI{
+- (void)setUpUI {
     nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(12), ZH_SCALE_SCREEN_Height(15), ZH_SCALE_SCREEN_Width(150), ZH_SCALE_SCREEN_Height(15))];
     nameLabel.textAlignment = NSTextAlignmentLeft;
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font =[UIFont systemFontOfSize:15];
-    nameLabel.text = @"XXXXXX";
     [self.contentView addSubview:nameLabel];
     
     addressLabel = [[UILabel alloc]init];
     addressLabel.textColor = [UIColor blackColor];
     addressLabel.font =[UIFont systemFontOfSize:12];
-    addressLabel.text = @"重庆市沙坪坝大学城";
     [self.contentView addSubview:addressLabel];
     
     lineView = [[UIView alloc]init];
@@ -68,14 +66,34 @@
     [bottomView addSubview:deleteBtn];
 }
 
+
+/** 编辑按钮 */
+- (void)editBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_invoiceListCellSelectModel:)]) {
+        [_delegate fh_invoiceListCellSelectModel:self.invoiceModel];
+    }
+}
+
+/** 删除按钮 */
+- (void)deleteBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_deleteInvoiceListCellSelectModel:)]) {
+        [_delegate fh_deleteInvoiceListCellSelectModel:self.invoiceModel];
+    }
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
-    addressLabel.text = @"重庆市沙坪坝大学城";
     CGSize size = [UIlabelTool sizeWithString:addressLabel.text font:addressLabel.font];
     addressLabel.frame = CGRectMake(ZH_SCALE_SCREEN_Width(12), CGRectGetMaxY(nameLabel.frame) + ZH_SCALE_SCREEN_Height(8), ZH_SCALE_SCREEN_Width(320), size.height);
     addressLabel.numberOfLines = 0;
     lineView.frame = CGRectMake(0, CGRectGetMaxY(addressLabel.frame) + ZH_SCALE_SCREEN_Height(10), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(1));
     bottomView.frame = CGRectMake(0, CGRectGetMaxY(addressLabel.frame) + ZH_SCALE_SCREEN_Height(16), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(40));
+}
+
+- (void)setInvoiceModel:(FHInvoiceModel *)invoiceModel {
+    _invoiceModel = invoiceModel;
+    addressLabel.text = _invoiceModel.companyaddress;
+    nameLabel.text = _invoiceModel.companyname;
 }
 
 - (void)awakeFromNib {

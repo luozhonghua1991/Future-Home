@@ -14,8 +14,26 @@
 #import "FHDetailAddressView.h"
 #import "FHProofOfOwnershipView.h"
 #import "BRPlaceholderTextView.h"
+#import "NSArray+JSON.h"
+#import "FHAddressPickerView.h"
+#import "FHCommonALiPayTool.h"
+#import "WXApi.h"
+#import "FHCommonPaySelectView.h"
+#import "FHAppDelegate.h"
+#import "FHWebViewController.h"
+#import "LeoPayManager.h"
 
-@interface FHNormalBuinsesAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate>
+@interface FHNormalBuinsesAccountController ()
+<
+UITextFieldDelegate,
+UIScrollViewDelegate,
+FHCertificationImgViewDelegate,
+FHUserAgreementViewDelegate,
+FDActionSheetDelegate,
+UIImagePickerControllerDelegate,
+UINavigationControllerDelegate,
+FHCommonPaySelectViewDelegate
+>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 账户类型View */
@@ -55,12 +73,33 @@
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
 
+/** 省的ID */
+@property (nonatomic, copy) NSString *province_id;
+/** 市的ID */
+@property (nonatomic, copy) NSString *city_id;
+/** 区的ID */
+@property (nonatomic, copy) NSString *area_id;
+/** 选择的是第几个 */
+@property (nonatomic, assign) NSInteger selectIndex;
+/** 选择的ID cards 图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectIDCardsImgArrs;
+
+@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
+
+@property (nonatomic, strong) FHCommonPaySelectView *payView;
+/** 1支付宝  2 微信 */
+@property (nonatomic, assign) NSInteger payType;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectCount;
+
 @end
 
 @implementation FHNormalBuinsesAccountController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectCount = 0;
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -144,6 +183,45 @@
     [self.scrollView addSubview:self.agreementView];
     /** 确认并提交按钮 */
     [self.scrollView addSubview:self.submitBtn];
+    
+    @weakify(self)
+    //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
+    _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+    //默认为NO
+    //_addressPickerView.showLastSelect = YES;
+    _addressPickerView.cancelBtnBlock = ^() {
+        @strongify(self)
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
+    _addressPickerView.sureBtnBlock = ^(NSString *province,
+                                        NSString *city,
+                                        NSString *district,
+                                        NSString *addressCode,
+                                        NSString *parentCode,
+                                        NSString *provienceCode) {
+        //返回过来的信息在后面的这四个参数中,使用的时候要做非空判断,(province和addressCode为必返回参数,可以不做非空判断)
+        @strongify(self)
+        NSString *showString;
+        if (city != nil) {
+            showString = [NSString stringWithFormat:@"%@",city];
+        }else{
+            showString = province;
+        }
+        
+        if (district != nil) {
+            showString = [NSString stringWithFormat:@"%@%@", showString, district];
+        }
+        
+        self.detailAddressView.leftProvinceDataLabel.text = province;
+        self.detailAddressView.centerProvinceDataLabel.text = city;
+        self.detailAddressView.rightProvinceDataLabel.text = district;
+        self.province_id = provienceCode;
+        self.city_id = parentCode;
+        self.area_id = addressCode;
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
 }
 
 
@@ -194,17 +272,205 @@
 #pragma mark — event
 /** 地址选择 */
 - (void)addressClick {
-    
+    [self.addressPickerView showInView:self.view];
 }
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
+    /** 选取图片 */
+    self.selectIndex = index;
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [self addCamera];
+            break;
+        }
+        case 1:
+        {
+            [self addPhotoClick];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+//调用系统相机
+- (void)addCamera {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
+        cameraPicker.delegate = self;
+        cameraPicker.allowsEditing = NO;  //是否可编辑
+        //摄像头
+        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+    }
+}
+
+/**
+ *  跳转相册页面
+ */
+- (void)addPhotoClick {
+    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    imagePickerController.delegate = self;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePickerController animated:YES completion:nil];
+}
+
+#pragma mark - <相册处理区域>
+/**
+ *  拍摄完成后要执行的方法
+ */
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (self.selectIndex == 1) {
+        self.certificationView.leftImgView.image = image;
+        [self.selectIDCardsImgArrs addObject:image];
+    } else if (self.selectIndex == 2) {
+        self.certificationView.centerImgView.image = image;
+        [self.selectIDCardsImgArrs addObject:image];
+    } else {
+        self.certificationView.rightImgView.image = image;
+        [self.selectIDCardsImgArrs addObject:image];
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
     
+}
+
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = self.protocol;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
 }
 
 - (void)submitBtnClick {
     /** 确认并提交 */
-    
+    if (self.selectIDCardsImgArrs.count != 3) {
+        [self.view makeToast:@"身份认证信息认证不能为空"];
+        return;
+    }
+    if (self.selectCount % 2 != 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
+        return;
+    }
+    /** 先加一个弹框提示 */
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf payView];
+            weakSelf.submitBtn.userInteractionEnabled = NO;
+            [weakSelf showPayView];
+        }
+    }];
 }
+
+- (void)commitAccountDataRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.serviceDeskNameTF.text,@"shopname",
+                               self.province_id,@"province_id",
+                               self.city_id,@"city_id",
+                               self.area_id,@"area_id",
+                               self.applicantNameView.contentTF.text,@"name",
+                               self.applicantCardView.contentTF.text,@"idcard",
+                               self.phoneNumberView.contentTF.text,@"phone",
+                               self.phoneView.contentTF.text,@"shopmobile",
+                               self.mailView.contentTF.text,@"email",
+                               self.addressView.contentTF.text,@"streetaddress",
+                               self.businessDescriptionTextView.text,@"maininformation",
+                               self.price,@"total",
+                               @(self.payType),@"type",
+                               @"4",@"ordertype",
+                               self.selectIDCardsImgArrs,@"idCardFile[]",
+                               [self getSmallImageArray],@"file[]",
+                               nil];
+    
+    [AFNetWorkTool uploadImagesWithUrl:@"shop/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 账户资料传给后台成功 */
+            
+            /** 选择支付方式 */
+            //            [WXApi sendReq:[PayReq new] completion:^(BOOL success) {
+            //
+            //            }];
+            //            // 判断手机有没有微信
+            //            if ([WXApi isWXAppInstalled]) {
+            //                //                wechatButton.hidden = NO;
+            //            }else{
+            //                //                wechatButton.hidden = YES;
+            //            }
+            
+            LeoPayManager *manager = [LeoPayManager getInstance];
+            [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                if (respCode == 0) {
+                    /** 支付成功 */
+                    WS(weakSelf);
+                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账户信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                        if (buttonIndex == 0) {
+                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                        }
+                    }];
+                }
+            }];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    self.payType = selectType;
+    [self commitAccountDataRequest];
+}
+
+
+#pragma mark - 显示支付弹窗
+- (void)showPayView{
+    __weak FHNormalBuinsesAccountController *weakSelf = self;
+    self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [weakSelf.payView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        weakSelf.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        self.submitBtn.userInteractionEnabled = YES;
+    }];
+}
+
 
 - (void)pickerViewFrameChanged {
     [self updateViewsFrame];
@@ -386,6 +652,17 @@
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
+}
+
+- (FHCommonPaySelectView *)payView {
+    if (!_payView) {
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.open]];
+        _payView.delegate = self;
+    }
+    FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:_payView];
+    
+    return _payView;
 }
 
 @end
