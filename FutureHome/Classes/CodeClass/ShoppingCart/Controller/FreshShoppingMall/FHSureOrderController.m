@@ -12,6 +12,7 @@
 #import "FHInvoiceListController.h"
 #import "BRPlaceholderTextView.h"
 #import "FHInvoiceListController.h"
+#import "HYJFAddressAdministrationController.h"
 
 @interface FHSureOrderController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
@@ -22,6 +23,8 @@
 @property (nonatomic, strong) UILabel *payTypeLabel;
 /** 发票label */
 @property (nonatomic, strong) UILabel *invoiceLabel;
+/** 地址label */
+@property (nonatomic, strong) UILabel *addressLabel;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) BOOL isSelectBtn;
 /** <#assign属性注释#> */
@@ -165,6 +168,7 @@
         } else {
             cell.textLabel.text = @"收货地址";
             cell.detailTextLabel.text = @"请选择收货地址 >";
+            self.addressLabel = cell.detailTextLabel;
         }
         return cell;
     } else if (indexPath.section == 2) {
@@ -272,7 +276,13 @@
                 [self.view makeToast:@"你不能进行选择地址"];
                 return;
             }
-            [self viewControllerPushOther:@""];
+            HYJFAddressAdministrationController *vx = [[HYJFAddressAdministrationController alloc] init];
+            vx.isHaveNavBar = YES;
+            vx.hidesBottomBarWhenPushed = YES;
+            vx.selectResultBlock = ^(HYJFAllAddressModel * _Nonnull addressModel) {
+                self.addressLabel.text = addressModel.address;
+            };
+            [self.navigationController pushViewController:vx animated:YES];
         } else if (indexPath.row == 2) {
             if (!self.isSelectBtn) {
                 [self.view makeToast:@"你不能进行选择发票"];

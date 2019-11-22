@@ -7,8 +7,12 @@
 //
 
 #import "BaseViewController.h"
+#import "HYJFAllAddressModel.h"
 
 @interface HYJFAddressAdministrationController : BaseViewController
+// 属性block
+@property (nonatomic, copy) void(^selectResultBlock)(HYJFAllAddressModel *addressModel);
+
 /** 是否有导航栏 */
 @property (nonatomic, assign) BOOL isHaveNavBar;
 
