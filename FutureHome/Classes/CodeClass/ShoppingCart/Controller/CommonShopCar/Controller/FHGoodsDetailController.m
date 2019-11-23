@@ -44,6 +44,7 @@
     [self.homeTable registerClass:[FHGoodsDetailCell class] forCellReuseIdentifier:NSStringFromClass([FHGoodsDetailCell class])];
     [self.view addSubview:self.shoppingBar];
     [self getGoodsDetailRequest];
+    [self.view addSubview:[SingleManager shareManager].shoppingBar];
 }
 
 

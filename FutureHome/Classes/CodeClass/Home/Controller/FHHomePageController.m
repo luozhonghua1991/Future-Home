@@ -112,9 +112,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([SingleManager shareManager].shoppingBar) {
-        [[SingleManager shareManager].shoppingBar removeFromSuperview];
-    }
     /** 获取banner数据 */
     [self fh_refreshBannerData];
     [self fh_getShopFollowList];
@@ -456,10 +453,12 @@
         FHHealthServicesController *health = [[FHHealthServicesController alloc] init];
         [self pushVCWithName:health];
     } else if (indexPath.row == 3) {
+        [SingleManager shareManager].selectType = @"HomePage";
         /** 生鲜服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
         goodList.shopID = self.shopID;
+        goodList.titleString = @"生鲜商城";
         [self pushVCWithName:goodList];
     } else if (indexPath.row == 4) {
         /** 理财服务 */

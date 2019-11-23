@@ -10,6 +10,7 @@
 #import "FHCommonFollowAndPlacementCell.h"
 #import "FHCommonFollowModel.h"
 #import "FHHomeServicesController.h"
+#import "FHFreshMallController.h"
 
 @interface FHFreshMallFollowListController ()
 <
@@ -156,6 +157,7 @@ FDActionSheetDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     FHCommonFollowModel *model = self.dataArrs[indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([self.type isEqualToString:@"1"]) {
@@ -164,8 +166,26 @@ FDActionSheetDelegate
         home.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {
-        self.selectShopBlock(model.id);
-        [self.navigationController popViewControllerAnimated:YES];
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"生鲜商城";
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"4"]) {
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"商业商城";
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"5"]) {
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"医药商城";
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
     }
 }
 

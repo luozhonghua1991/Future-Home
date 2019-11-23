@@ -14,6 +14,9 @@
 #import "FFDropDownMenuView.h"
 #import "FHFreshMallFollowListController.h"
 #import "JSShareView.h"
+#import "FHHomePageController.h"
+#import "FHMeCenterController.h"
+#import "FHGroupController.h"
 
 @interface FHFreshMallController () <UIScrollViewDelegate,JSShareViewDelegate>
 {
@@ -48,7 +51,6 @@
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *videosListArrs;
 
-
 @end
 
 @implementation FHFreshMallController
@@ -60,20 +62,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               self.shopID,@"shop_id", nil];
-    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
-        if ([responseObj[@"code"] integerValue] == 1) {
-            NSDictionary *dic = responseObj[@"data"];
-            weakSelf.locationLabel.text = dic[@"shopname"];
-        } else {
-            [self.view makeToast:responseObj[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-    }];
 }
 
 - (void)getRequest {
@@ -91,7 +79,6 @@
     [AFNetWorkTool get:@"shop/getUserVideo" params:paramsDictionary success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             weakSelf.videosListArrs = responseObj[@"data"][@"list"];
-            
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -122,15 +109,13 @@
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, SCREEN_WIDTH, 0.5)];
     bottomLine.backgroundColor = [UIColor lightGrayColor];
     [self.tabBar addSubview:bottomLine];
-    
-    [self fh_setupFollowDropDownMenu];
     [self initViewControllers];
 }
 
 #pragma mark — privite
 - (void)fh_creatNav {
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"生鲜服务";
+    titleLabel.text = self.titleString;
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -185,6 +170,20 @@
     self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.shopID,@"shop_id", nil];
+    [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            NSDictionary *dic = responseObj[@"data"];
+            weakSelf.locationLabel.text = dic[@"shopname"];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
 //    /** 获取商家详情 */
  
     [titleView addSubview:self.locationLabel];
@@ -203,144 +202,38 @@
     [self.view addSubview:self.selectNavView];
 }
 
-- (void)fh_creatSelectBtn {
-    //我的社云 我的动态 商业服务 公共服务
-    CGSize size1 = [UIlabelTool sizeWithString:@"生鲜商城" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    
-    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"生鲜商城" tag:1];
-    [myGroupBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
-    
-    CGSize size2 = [UIlabelTool sizeWithString:@"信息发布" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"信息发布" tag:2];
-    
-    CGSize size3 = [UIlabelTool sizeWithString:@"视频发布" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    businssServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myVideoBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size3.width, self.selectNavView.frame.size.height)title:@"视频发布" tag:3];
-    
-    CGSize size4 = [UIlabelTool sizeWithString:@"对话记录" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
-    publickServiceBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(businssServiceBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size4.width, self.selectNavView.frame.size.height)title:@"对话记录" tag:4];
-}
-
-- (void)fh_setMainScrollView {
-    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    mainScrollView.delegate = self;
-    mainScrollView.pagingEnabled = YES;
-    mainScrollView.showsHorizontalScrollIndicator = NO;
-    mainScrollView.showsVerticalScrollIndicator = NO;
-    mainScrollView.bounces = NO;
-    [self.view insertSubview:mainScrollView belowSubview:self.navgationView];
-    NSArray *views = @[self.myGroup.view, self.myVideo.view,self.businssService.view,self.puclicService.view];
-    self.viewControllers = @[self.myGroup,self.myVideo,self.businssService,self.puclicService];
-    for (int i = 0; i < self.viewControllers.count; i++){
-        //添加背景，把四个VC的view贴到mainScrollView上面
-        UIView *pageView = views[i];
-        pageView.frame = CGRectMake(SCREEN_WIDTH * i, 0, mainScrollView.frame.size.width, mainScrollView.frame.size.height);
-        [mainScrollView addSubview:pageView];
-    }
-    mainScrollView.contentSize = CGSizeMake(SCREEN_WIDTH * (self.viewControllers.count), 0);
-}
-
-//- (void)setViewControllers:(NSArray *)viewControllers {
-//
-//    for (UIViewController *controller in self.viewControllers) {
-//        [controller removeFromParentViewController];
-//        [controller.view removeFromSuperview];
-//    }
-//
-//    _viewControllers = [viewControllers copy];
-//    [_viewControllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        [self addChildViewController:obj];
-//    }];
-//
-//    // 更新scrollView的content size
-//    if (mainScrollView) {
-//        mainScrollView.contentSize =  CGSizeMake(SCREEN_WIDTH * (self.viewControllers.count), 0);
-//    }
-//}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    double index_ = scrollView.contentOffset.x / SCREEN_WIDTH;
-    [self sliderAnimationWithTag:(int)(index_ + 0.5) + 1];
-    
-}
-
-/** 初始化收藏菜单 */
-- (void)fh_setupFollowDropDownMenu {
-    NSArray *modelsArray = [self getFollowMenuModelsArray];
-    self.followDownMenu = [FFDropDownMenuView ff_DefaultStyleDropDownMenuWithMenuModelsArray:modelsArray menuWidth:ZH_SCALE_SCREEN_Width(150) eachItemHeight:ZH_SCALE_SCREEN_Height(50) menuRightMargin:kScreenWidth - ZH_SCALE_SCREEN_Width(150) - 10 triangleRightMargin:20];
-    self.followDownMenu.triangleColor = [UIColor clearColor];
-}
-
-/** 获取收藏菜单模型数组 */
-- (NSArray *)getFollowMenuModelsArray {
-    __weak typeof(self) weakSelf = self;
-    //添加收藏该生鲜店
-    FFDropDownMenuModel *menuModel0 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"添加收藏该生鲜店" menuItemIconName:@""  menuItemMessageNum:0 menuBlock:^{
-    }];
-    //添加为生鲜商城收藏
-    FFDropDownMenuModel *menuModel1 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"添加为生鲜商城收藏" menuItemIconName:@""  menuItemMessageNum:0 menuBlock:^{
-    }];
-    
-    //确认
-    FFDropDownMenuModel *menuModel2 = [FFDropDownMenuModel ff_DropDownMenuModelWithMenuItemTitle:@"确认" menuItemIconName:@"" menuItemMessageNum:0 menuBlock:^{
-        /** 添加到收藏列表 */
-
-    }];
-    NSArray *menuModelArr = @[menuModel0, menuModel1,menuModel2];
-    return menuModelArr;
-}
-
 #pragma mark — event
 - (void)backBtnClick {
-    if ([SingleManager shareManager].shoppingBar) {
-        [[SingleManager shareManager].shoppingBar removeFromSuperview];
+    /** 回到homePageVC */
+    if ([[SingleManager shareManager].selectType isEqualToString:@"HomePage"]) {
+        __block FHHomePageController *meVC ;
+        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+            if([obj isKindOfClass:[FHHomePageController class]]) {
+                meVC = (FHHomePageController *)obj;
+            }
+        }];
+        [self.navigationController popToViewController:meVC animated:YES];
+    } else if ([[SingleManager shareManager].selectType isEqualToString:@"MeCenter"]) {
+        __block FHMeCenterController *vc;
+        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+            if([obj isKindOfClass:[FHMeCenterController class]]) {
+                vc = (FHMeCenterController *)obj;
+            }
+        }];
+        self.tabBarController.selectedIndex = 0;
+        [self.navigationController popToViewController:vc animated:YES];
+    } else if ([[SingleManager shareManager].selectType isEqualToString:@"Group"]) {
+        __block FHGroupController *vc;
+        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+            if([obj isKindOfClass:[FHGroupController class]]) {
+                vc = (FHGroupController *)obj;
+            }
+        }];
+        self.tabBarController.selectedIndex = 0;
+        [self.navigationController popToViewController:vc animated:YES];
     }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
-/** 分享按钮 */
-- (void)shareBtnClick {
-    return;
-    JSShareView *shareView =[JSShareView showShareViewWithPublishContent:@{@"text"  :@"",
-                                                                           @"image" :@"",
-                                                                           @"tittle":@"",
-                                                                           @"url"   :@""
-                                                                           }
-                                                               DataArray:@[@{@(0):@[@{@"朋友圈":@"community_share_friend"}
-                                                                                    ,@{@"微信":@"community_share_wechat"}
-                                                                                    ,@{@"QQ":@"community_share_qq"}
-                                                                                    ,@{@"QQ空间":@"community_share_space"}
-                                                                                    ,@{@"新浪微博":@"community_share_weibo"}]}
-                                                                           
-                                                                           ,@{@(1):@[@{@"举报":@"community_share_report"}]}]
-                                                              TypeArray1:@[]
-                                                              TypeArray2:@[]
-                                                            IsShowReport:YES
-                                                            isLocalImage:NO
-                                                             addViewType:@""
-                                                                  Result:^(ShareType type, BOOL isSuccess) {
-                                                                      if (isSuccess) {
-                                                                          MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
-                                                                          [self.view addSubview:hud];
-                                                                          hud.mode = MBProgressHUDModeText;
-                                                                          hud.labelText = @"分享成功";
-                                                                          hud.userInteractionEnabled = NO;
-                                                                          hud.removeFromSuperViewOnHide = YES;
-                                                                          [hud show:YES];
-                                                                          [hud hide:YES afterDelay:2];
-                                                                      } else{
-                                                                          MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:self.view];
-                                                                          [self.view addSubview:hud];
-                                                                          hud.mode = MBProgressHUDModeText;
-                                                                          hud.labelText = @"分享失败";
-                                                                          hud.userInteractionEnabled = NO;
-                                                                          hud.removeFromSuperViewOnHide = YES;
-                                                                          [hud show:YES];
-                                                                          [hud hide:YES afterDelay:2];
-                                                                      }
-                                                                  }];
-    shareView.delegate = self;
-    [self.view addSubview:shareView];
-}
 
 - (void)followBtnClick:(UIButton *)sender {
     /** <#属性注释#> */
@@ -377,21 +270,20 @@
 
 /** 菜单按钮 */
 - (void)menuBtnClick {
-    //显示收藏列表菜单
-//    [self.followDownMenu showMenu];
     /** 去到收藏列表 */
-    if ([SingleManager shareManager].shoppingBar) {
-        [[SingleManager shareManager].shoppingBar removeFromSuperview];
-    }
     FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
-    listVC.titleString = @"生鲜收藏";
-    listVC.type = @"3";
+    if ([self.titleString isEqualToString:@"生鲜商城"]) {
+        listVC.titleString = @"生鲜收藏";
+        listVC.type = @"3";
+    } else if ([self.titleString isEqualToString:@"商业商城"]) {
+        listVC.titleString = @"商业收藏";
+        listVC.type = @"4";
+    } else if ([self.titleString isEqualToString:@"医药商城"]) {
+        listVC.titleString = @"医药收藏";
+        listVC.type = @"5";
+    }
     listVC.hidesBottomBarWhenPushed = YES;
-    listVC.selectShopBlock = ^(NSString * _Nonnull shopID) {
-        self.shopID = shopID;
-    };
     [self.navigationController pushViewController:listVC animated:YES];
-
 }
 
 - (void)codeImgViewClick {
@@ -401,7 +293,6 @@
 
 - (void)navigationLabelClick {
     /** y一键导航事件 */
-    
 }
 
 
@@ -419,6 +310,7 @@
     
     return btn;
 }
+
 //Btn的点击方法
 -(void)sliderAction:(UIButton *)sender {
     [self sliderAnimationWithTag:sender.tag];
@@ -474,12 +366,11 @@
         [self->publickServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     }];
-    
 }
 
 - (void)initViewControllers {
     FHGoodsListController *messageVC = [[FHGoodsListController alloc] init];
-    messageVC.yp_tabItemTitle = @"生鲜商城";
+    messageVC.yp_tabItemTitle = @"商品列表";
     messageVC.shopID = self.shopID;
     
     FHInformationController *groupVC = [[FHInformationController alloc] init];
@@ -496,6 +387,7 @@
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC, nil];
 }
+
 
 #pragma mark — setter && getter#pragma mark - 懒加载
 - (UIView *)selectNavView {

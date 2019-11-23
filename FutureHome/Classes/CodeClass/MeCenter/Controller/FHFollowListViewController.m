@@ -12,6 +12,7 @@
 #import "FHSearchResultModel.h"
 #import "FHCommonFollowAndPlacementCell.h"
 #import "FHCommonFollowModel.h"
+#import "FHFreshMallController.h"
 
 @interface FHFollowListViewController ()
 <
@@ -131,6 +132,46 @@ FDActionSheetDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [SingleManager shareManager].selectType = @"MeCenter";
+    FHCommonFollowModel*model = self.dataArrs[indexPath.row];
+    if ([self.type isEqualToString:@"1"]) {
+        /** 搜索用户 跳到用户的动态 */
+        /** 去用户的动态 */
+//        FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+//        vc.titleString = model.name;
+//        [SingleManager shareManager].isSelectPerson = YES;
+//        vc.hidesBottomBarWhenPushed = YES;
+//        vc.user_id = model.id;
+//        vc.personType = 0;
+//        [self.navigationController pushViewController:vc animated:YES];
+    } else if ([self.type isEqualToString:@"3"]) {
+        /** 生鲜 */
+        /** 生鲜商城 */
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        goodList.titleString = @"生鲜商城";
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"4"]) {
+        /** 商业 */
+        /** 商业商城 */
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        goodList.titleString = @"商业商城";
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"5"]) {
+        /** 医药 */
+        /** 医药商城 */
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        goodList.titleString = @"医药商城";
+        [self.navigationController pushViewController:goodList animated:YES];
+    }
 }
 
 - (void)fh_selectMenuWithModel:(FHCommonFollowModel *)followModle {

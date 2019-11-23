@@ -32,40 +32,43 @@
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    self.edgesForExtendedLayout = UIRectEdgeAll;
-//    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.goodsListView];
     [self initData];
-//    [self.view addSubview:self.shoppingBar];
     [SingleManager shareManager].shoppingBar = self.shoppingBar;
-    [[UIApplication sharedApplication].delegate.window addSubview:[SingleManager shareManager].shoppingBar];
-    
+    [self.view addSubview:[SingleManager shareManager].shoppingBar];
 }
 
-- (void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication].delegate.window addSubview:[SingleManager shareManager].shoppingBar];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
-    self.navigationController.navigationBar.tintColor = HEX_COLOR(0x1296db);
-    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:0]];
+    [self.view addSubview:[SingleManager shareManager].shoppingBar];
+    /** 新过来的商家 重新展示 shoppingBar */
+//    if ([SingleManager shareManager].shoppingBar) {
+//        [self.shoppingBar removeFromSuperview];
+//        [[SingleManager shareManager].shoppingBar removeFromSuperview];
+//        [SingleManager shareManager].shoppingBar = self.shoppingBar;
+//    }
+    
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+//    self.navigationController.navigationBar.tintColor = HEX_COLOR(0x1296db);
+//    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor colorWithWhite:1 alpha:0]];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-}
-
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    [self.navigationController.navigationBar setShadowImage:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
-    [self.navigationController.navigationBar lt_reset];
-}
+//- (void)viewDidAppear:(BOOL)animated{
+//    [super viewDidAppear:animated];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//}
+//
+//- (void)viewDidDisappear:(BOOL)animated{
+//    [super viewDidDisappear:animated];
+//    [self.navigationController.navigationBar setShadowImage:nil];
+//}
+//
+//- (void)viewWillDisappear:(BOOL)animated{
+//    [super viewWillDisappear:animated];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+//    self.navigationController.navigationBar.tintColor = [UIColor blackColor];
+//    [self.navigationController.navigationBar lt_reset];
+//}
 
 - (void)initData {
     WS(weakSelf);
@@ -242,7 +245,6 @@ valueChangedForCount:(NSInteger)count
 #pragma mark — GNRShoppingBarDelegate
 /** 支付事件 */
 - (void)GNRShoppingBarDelegatePayAction {
-    [[SingleManager shareManager].shoppingBar removeFromSuperview];
     FHSureOrderController *vc = [[FHSureOrderController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
@@ -276,7 +278,7 @@ valueChangedForCount:(NSInteger)count
 #pragma mark — setter && getter
 - (GNRLinkageTableView *)goodsListView{
     if (!_goodsListView) {
-        _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight + 44 + 35, self.view.bounds.size.width, self.view.bounds.size.height-[GNRShoppingBar defaultHeight] - MainSizeHeight - 44 - 35)] ;
+        _goodsListView = [[GNRLinkageTableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight + 44 + 35, self.view.bounds.size.width, self.view.bounds.size.height - [GNRShoppingBar defaultHeight] - MainSizeHeight - 44 - 35)] ;
         _goodsListView.target = self;
         _goodsListView.delegate = self;
         _goodsListView.shopID = self.shopID;
@@ -289,6 +291,7 @@ valueChangedForCount:(NSInteger)count
         _shoppingBar = [GNRShoppingBar barWithStyle:GNRShoppingBarStyleDefault showInView:self.view];
         _shoppingBar.cartView.target = self;
         _shoppingBar.delegate = self;
+        
         [_shoppingBar.cartView.header.cleanBtn addTarget:self action:@selector(cleanGoodsCartAction:) forControlEvents:UIControlEventTouchUpInside];
         
         CGRect rect = [self.view convertRect:_shoppingBar.shoppingBarView.shoppingCartIcon.frame fromView:_shoppingBar.shoppingBarView];

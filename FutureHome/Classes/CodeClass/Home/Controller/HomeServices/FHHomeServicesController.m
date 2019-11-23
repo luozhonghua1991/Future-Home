@@ -20,6 +20,7 @@
 #import "FHPropertyCostsController.h"
 #import "FHGarageManagementController.h"
 #import "FHFreshMallFollowListController.h"
+#import "FHHomePageController.h"
 
 @interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -152,7 +153,13 @@
 }
 
 - (void)backBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
+    __block FHHomePageController *meVC ;
+    [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+        if([obj isKindOfClass:[FHHomePageController class]]) {
+            meVC = (FHHomePageController *)obj;
+        }
+    }];
+    [self.navigationController popToViewController:meVC animated:YES];
 }
 
 /** 收藏物业 */

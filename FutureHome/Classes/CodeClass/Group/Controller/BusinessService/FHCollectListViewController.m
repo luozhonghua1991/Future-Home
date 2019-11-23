@@ -185,7 +185,30 @@ FHSearchResultCellDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
+    [SingleManager shareManager].selectType = @"Group";
+    FHCommonFollowModel *followModel = self.dataArrs[indexPath.row];
+    if ([self.type isEqualToString:@"3"]) {
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"生鲜商城";
+        goodList.shopID = followModel.id;
+        goodList.isCollect = followModel.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"4"]) {
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"商业商城";
+        goodList.shopID = followModel.id;
+        goodList.isCollect = followModel.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"5"]) {
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"医药商城";
+        goodList.shopID = followModel.id;
+        goodList.isCollect = followModel.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    }
 }
 
 
@@ -221,15 +244,6 @@ FHSearchResultCellDelegate
         [weakSelf.homeTable reloadData];
     }];
 }
-
-
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    /** 生鲜服务 */
-//    FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
-//    goodList.hidesBottomBarWhenPushed = YES;
-//    [self.navigationController pushViewController:goodList animated:YES];
-//}
-
 
 - (void)fh_selectMenuWithModel:(FHCommonFollowModel *)followModle {
     self.cid = followModle.cid;

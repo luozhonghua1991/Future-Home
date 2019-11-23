@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *shopID;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *isCollect;
-
+/** 标题名字 */
+@property (nonatomic, copy) NSString *titleString;
 
 @end
 

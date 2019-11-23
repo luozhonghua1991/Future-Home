@@ -182,10 +182,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FHSearchResultModel *resultModel = self.searchResultArrs[indexPath.row];
+    [self fh_selectAvaterWithModel:resultModel];
 }
 
 - (void)fh_selectAvaterWithModel:(FHSearchResultModel *)model {
-    [self.navigationController popViewControllerAnimated:YES];
+    [SingleManager shareManager].selectType = @"HomePage";
     if ([self.type isEqualToString:@"1"]) {
         /** 搜索用户 跳到用户的动态 */
         /** 去用户的动态 */
@@ -201,6 +203,25 @@
         /** 生鲜服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"生鲜商城";
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"5"]) {
+        /** 商业 */
+        /** 商业服务 */
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"商业商城";
+        goodList.shopID = model.id;
+        goodList.isCollect = model.is_collect;
+        [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"6"]) {
+        /** 医药 */
+        /** 医药服务 */
+        FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+        goodList.hidesBottomBarWhenPushed = YES;
+        goodList.titleString = @"医药商城";
         goodList.shopID = model.id;
         goodList.isCollect = model.is_collect;
         [self.navigationController pushViewController:goodList animated:YES];

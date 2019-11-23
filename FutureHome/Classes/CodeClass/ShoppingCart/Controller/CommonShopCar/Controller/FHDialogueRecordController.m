@@ -30,9 +30,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    if ([SingleManager shareManager].shoppingBar) {
-        [[SingleManager shareManager].shoppingBar removeFromSuperview];
-    }
 }
 
 

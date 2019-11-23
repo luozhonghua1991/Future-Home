@@ -17,6 +17,7 @@
 #import "FHMyIndustryCommitteeController.h"
 #import "FHAuthModel.h"
 #import "FHOwnerCertificationController.h"
+#import "FHHomePageController.h"
 
 @interface FHOwnerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -139,7 +140,13 @@
 }
 
 - (void)backBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
+    __block FHHomePageController *meVC ;
+    [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+        if([obj isKindOfClass:[FHHomePageController class]]) {
+            meVC = (FHHomePageController *)obj;
+        }
+    }];
+    [self.navigationController popToViewController:meVC animated:YES];
 }
 
 
