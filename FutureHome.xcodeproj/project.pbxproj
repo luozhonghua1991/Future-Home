@@ -69,6 +69,9 @@
 		4A25D47E237ABFBB0036CD8D /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A25D430237ABFBB0036CD8D /* libssl.a */; };
 		4A25D47F237ABFBB0036CD8D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A25D47D237ABFBB0036CD8D /* libcrypto.a */; };
 		4A25D485237AC9220036CD8D /* FHCommonALiPayTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A25D484237AC9220036CD8D /* FHCommonALiPayTool.m */; };
+		4A2C0D302388CAC400CED425 /* FHNewWatiingOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */; };
+		4A2C0D362389163100CED425 /* FHGoodListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D352389163100CED425 /* FHGoodListCollectionCell.m */; };
+		4A2C0D39238945FA00CED425 /* FHGoodsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D38238945FA00CED425 /* FHGoodsListModel.m */; };
 		4A2E6C0922E04D3100F33F7C /* JhtMarquee.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2E6C0822E04D3100F33F7C /* JhtMarquee.framework */; };
 		4A2E6C1822E056B200F33F7C /* BHInfiniteScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6C0E22E056B200F33F7C /* BHInfiniteScrollView.m */; };
 		4A2E6C1922E056B200F33F7C /* FXPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6C1022E056B200F33F7C /* FXPageControl.m */; };
@@ -483,6 +486,7 @@
 		4AAC981D22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981422D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m */; };
 		4AAC981E22D70F5300E4D0B8 /* FFDropDownMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981622D70F5300E4D0B8 /* FFDropDownMenuModel.m */; };
 		4AAC981F22D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981722D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m */; };
+		4AAE629D238D413A00699C5B /* FHOrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE629C238D413A00699C5B /* FHOrderListModel.m */; };
 		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */; };
 		4AB2011A22F284D800111AC4 /* FastForwardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AB2011522F284D800111AC4 /* FastForwardView.xib */; };
@@ -1095,6 +1099,12 @@
 		4A25D47D237ABFBB0036CD8D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		4A25D483237AC9220036CD8D /* FHCommonALiPayTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonALiPayTool.h; sourceTree = "<group>"; };
 		4A25D484237AC9220036CD8D /* FHCommonALiPayTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonALiPayTool.m; sourceTree = "<group>"; };
+		4A2C0D2E2388CAC400CED425 /* FHNewWatiingOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHNewWatiingOrderCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHNewWatiingOrderCell.h; sourceTree = SOURCE_ROOT; };
+		4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FHNewWatiingOrderCell.m; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHNewWatiingOrderCell.m; sourceTree = SOURCE_ROOT; };
+		4A2C0D342389163100CED425 /* FHGoodListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHGoodListCollectionCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHGoodListCollectionCell.h; sourceTree = SOURCE_ROOT; };
+		4A2C0D352389163100CED425 /* FHGoodListCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FHGoodListCollectionCell.m; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHGoodListCollectionCell.m; sourceTree = SOURCE_ROOT; };
+		4A2C0D37238945FA00CED425 /* FHGoodsListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGoodsListModel.h; sourceTree = "<group>"; };
+		4A2C0D38238945FA00CED425 /* FHGoodsListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGoodsListModel.m; sourceTree = "<group>"; };
 		4A2E6C0822E04D3100F33F7C /* JhtMarquee.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = JhtMarquee.framework; sourceTree = "<group>"; };
 		4A2E6C0E22E056B200F33F7C /* BHInfiniteScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollView.m; sourceTree = "<group>"; };
 		4A2E6C1022E056B200F33F7C /* FXPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXPageControl.m; sourceTree = "<group>"; };
@@ -1940,6 +1950,8 @@
 		4AAC981622D70F5300E4D0B8 /* FFDropDownMenuModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuModel.m; sourceTree = "<group>"; };
 		4AAC981722D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFDropDownMenuTriangleView.m; sourceTree = "<group>"; };
 		4AAC981822D70F5300E4D0B8 /* FFDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenu.h; sourceTree = "<group>"; };
+		4AAE629B238D413A00699C5B /* FHOrderListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOrderListModel.h; sourceTree = "<group>"; };
+		4AAE629C238D413A00699C5B /* FHOrderListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOrderListModel.m; sourceTree = "<group>"; };
 		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
 		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserInfoHeaderBaseView.h; sourceTree = "<group>"; };
@@ -2852,6 +2864,8 @@
 			children = (
 				4A14A501238295190059CC83 /* FHInvoiceModel.h */,
 				4A14A502238295190059CC83 /* FHInvoiceModel.m */,
+				4A2C0D37238945FA00CED425 /* FHGoodsListModel.h */,
+				4A2C0D38238945FA00CED425 /* FHGoodsListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -3818,12 +3832,16 @@
 		4A6DAA0B22C07CAA00F29455 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A2C0D2E2388CAC400CED425 /* FHNewWatiingOrderCell.h */,
+				4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */,
 				4ACD3D7223050A4A0075DEF2 /* FHWatingOrderCell.h */,
 				4ACD3D7323050A4A0075DEF2 /* FHWatingOrderCell.m */,
 				4A51D98523079D0B00A5313E /* FHCommonDetailCell.h */,
 				4A51D98623079D0B00A5313E /* FHCommonDetailCell.m */,
 				4A331AF42327AF8500457136 /* FHGoodsDetailCell.h */,
 				4A331AF52327AF8500457136 /* FHGoodsDetailCell.m */,
+				4A2C0D342389163100CED425 /* FHGoodListCollectionCell.h */,
+				4A2C0D352389163100CED425 /* FHGoodListCollectionCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -6203,6 +6221,8 @@
 				4A200298234B38C500B277A3 /* FHInformationModel.m */,
 				4A71AA51234C9C77000C9BA9 /* FHVideosListModel.h */,
 				4A71AA52234C9C77000C9BA9 /* FHVideosListModel.m */,
+				4AAE629B238D413A00699C5B /* FHOrderListModel.h */,
+				4AAE629C238D413A00699C5B /* FHOrderListModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6534,6 +6554,7 @@
 				4AB203E322F2DD7300111AC4 /* ZXPDF417BarcodeValue.m in Sources */,
 				4A45F5C32361B214009F25B8 /* FHReleaseDynamicsController.m in Sources */,
 				4A6DAA8822C0AD6100F29455 /* GDPerformanceMonitor.m in Sources */,
+				4A2C0D302388CAC400CED425 /* FHNewWatiingOrderCell.m in Sources */,
 				4AA9AF6C2302625200D28638 /* City.m in Sources */,
 				4AF3BA15232158D100B46762 /* FHMedicalHistoryCell.m in Sources */,
 				4AB2041D22F2DD7300111AC4 /* ZXRSSExpandedGeneralAppIdDecoder.m in Sources */,
@@ -6828,6 +6849,7 @@
 				4A8E0D6022DEFB5500F814F7 /* FHCertificationView.m in Sources */,
 				4AB203DB22F2DD7300111AC4 /* ZXPDF417CodewordDecoder.m in Sources */,
 				4A6DAA3722C0AD3100F29455 /* UIRefreshControl+AFNetworking.m in Sources */,
+				4A2C0D362389163100CED425 /* FHGoodListCollectionCell.m in Sources */,
 				4AB2042B22F2DD7300111AC4 /* ZXRSSFinderPattern.m in Sources */,
 				4AB203F922F2DD7300111AC4 /* ZXDataMatrixDecodedBitStreamParser.m in Sources */,
 				4A59F1FF2304108300AE3B31 /* FHAddOrEditInvoiceController.m in Sources */,
@@ -7209,6 +7231,7 @@
 				4A153E8C23729FE500CFE6B6 /* FHHealthHistoryModel.m in Sources */,
 				4AF51B5E22D07ECA00AA04EC /* GNRShoppingBar.m in Sources */,
 				4AB2041022F2DD7300111AC4 /* ZXAI01weightDecoder.m in Sources */,
+				4A2C0D39238945FA00CED425 /* FHGoodsListModel.m in Sources */,
 				4A1351B122F92E2F00CDDBB5 /* FHFriendMessageController.m in Sources */,
 				4AA3090622E6FDBD00695FFE /* FHAboutFutureHomeController.m in Sources */,
 				4A5EB858230D15C800F90FF6 /* ZFOrientationObserver.m in Sources */,
@@ -7228,6 +7251,7 @@
 				4A793D38231F88E600893255 /* FHHouseSaleController.m in Sources */,
 				4AB2040B22F2DD7300111AC4 /* ZXMultiFormatUPCEANReader.m in Sources */,
 				4A59F96B22C0B6D100867031 /* UIViewController+popType.m in Sources */,
+				4AAE629D238D413A00699C5B /* FHOrderListModel.m in Sources */,
 				4AA0D92C22CF45B2003F61D2 /* FHScanCodeController.m in Sources */,
 				4A68D2DF23587846003A3CB6 /* DPPhotoBrowser.m in Sources */,
 				4AB203E622F2DD7300111AC4 /* ZXPDF417DetectionResult.m in Sources */,

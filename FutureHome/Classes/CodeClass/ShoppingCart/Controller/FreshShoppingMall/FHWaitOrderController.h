@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger type;
 /** 1代付款 2待收货 3待评价 4退换 售后 */
 @property (nonatomic, assign) NSInteger status;
+/** 1 生鲜商城订单 2 社交商业订单 3 药品商城订单 */
+@property (nonatomic, copy) NSString *order_type;
+
 
 @end
 

@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *is_collect;
 /** 名字 */
 @property (nonatomic, copy) NSString *name;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *type;
+
 
 @end
 

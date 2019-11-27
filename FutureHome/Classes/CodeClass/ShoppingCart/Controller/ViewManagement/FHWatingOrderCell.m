@@ -7,6 +7,7 @@
 //
 
 #import "FHWatingOrderCell.h"
+#import "FHOrderListModel.h"
 
 @implementation FHWatingOrderCell
 
@@ -34,6 +35,15 @@
     self.shopNameLabel.frame = CGRectMake(MaxX(self.shopImgView) + 10, 25, 200, 15);
     self.contentLabel.frame = CGRectMake(MaxX(self.shopImgView) + 10, MaxY(self.shopNameLabel) + 10, 200, 13);
     self.allPriceLabel.frame = CGRectMake(0, MaxY(self.shopNameLabel) + 5, SCREEN_WIDTH - 10, 13);
+}
+
+- (void)setOrderModel:(FHOrderListModel *)orderModel {
+    _orderModel = orderModel;
+    [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_orderModel.cover] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.shopNameLabel.text = _orderModel.desc;
+    self.contentLabel.text = [NSString stringWithFormat:@"￥%@x%@",_orderModel.sell_price,_orderModel.number];
+    CGFloat allPrice = [_orderModel.sell_price floatValue] * [_orderModel.number integerValue];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"￥%0.2f",allPrice];
 }
 
 #pragma mark — setter && getter

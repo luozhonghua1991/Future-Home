@@ -8,10 +8,31 @@
 
 #import "FHOrderDetailController.h"
 #import "FHWatingOrderCell.h"
+#import "FHOrderListModel.h"
 
 @interface FHOrderDetailController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** 用户名字 */
+@property (nonatomic, copy) NSString *nameString;
+/** 地址 */
+@property (nonatomic, copy) NSString *addressString;
+/** 物流方式 */
+@property (nonatomic, copy) NSString *typeString;
+/** 公司名字 */
+@property (nonatomic, copy) NSString *companyNameString;
+/** 店铺名字 */
+@property (nonatomic, copy) NSString *shopNameStirng;
+/** 订单编号 */
+@property (nonatomic, copy) NSString *orderCodeString;
+/** 支付类型 */
+@property (nonatomic, copy) NSString *payMentTypeString;
+/** 订单备注 */
+@property (nonatomic, copy) NSString *orederInfoStirng;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *goodArrs;
+/** 总价 */
+@property (nonatomic, assign) CGFloat totalMoneyString;
 
 @end
 
@@ -19,11 +40,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.goodArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self creatBottomBtn];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHWatingOrderCell class] forCellReuseIdentifier:NSStringFromClass([FHWatingOrderCell class])];
+    [self getRequest];
 }
+
+- (void)getRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.order_id,@"order_id", nil];
+    [AFNetWorkTool get:@"shop/getSingOrder" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.orderCodeString = responseObj[@"data"][@"order_number"];
+            weakSelf.payMentTypeString = @"支付宝支付";
+            weakSelf.shopNameStirng = responseObj[@"data"][@"shopname"];
+            weakSelf.nameString = responseObj[@"data"][@"buyuser"];
+            weakSelf.addressString = responseObj[@"data"][@"detailedaddress"];
+            weakSelf.companyNameString = responseObj[@"data"][@"companyname"];
+            weakSelf.totalMoneyString = [responseObj[@"data"][@"total_money"] floatValue];
+            weakSelf.orederInfoStirng = responseObj[@"data"][@"distribution"];
+            NSInteger payString  = [responseObj[@"data"][@"pay_way"] integerValue];
+            if (payString == 1) {
+                weakSelf.payMentTypeString = @"支付宝支付";
+            } else if (payString == 2) {
+                weakSelf.payMentTypeString = @"微信支付";
+            }
+            weakSelf.goodArrs = [FHOrderListModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"goods"]];
+            [weakSelf.homeTable reloadData];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -64,18 +120,10 @@
     [self.view addSubview:bottomBtn];
     if (self.type == 0) {
         /** 待付款 */
-//        UIButton *cancleBtn = [self creatBtnWithBtnName:@"取消订单"];
-//        cancleBtn.frame = CGRectMake(SCREEN_WIDTH - 140, 50, 60, 20);
-//        [bgView addSubview:cancleBtn];
-//
-//        UIButton *watieOrderBtn = [self creatBtnWithBtnName:@"待付款"];
-//        watieOrderBtn.frame = CGRectMake(SCREEN_WIDTH - 70, 50, 60, 20);
-//        [bgView addSubview:watieOrderBtn];
+       [bottomBtn setTitle:@"待付款" forState:UIControlStateNormal];
     } else if (self.type == 1) {
         /** 待收货 */
-//        UIButton *waitGetBtn = [self creatBtnWithBtnName:@"确认收货"];
-//        waitGetBtn.frame = CGRectMake(SCREEN_WIDTH - 70, 50, 60, 20);
-//        [bgView addSubview:waitGetBtn];
+        [bottomBtn setTitle:@"待收货" forState:UIControlStateNormal];
     } else if (self.type == 2) {
         /** 待评价 */
         [bottomBtn setTitle:@"待评价" forState:UIControlStateNormal];
@@ -94,7 +142,7 @@
     if (section == 0) {
         return 3;
     } else if (section == 1) {
-        return 5;
+        return self.goodArrs.count;
     } else {
         return 3;
     }
@@ -137,9 +185,9 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     label.font = [UIFont systemFontOfSize:14];
-    label.text = @"未来生鲜-龙湖U城店";
     label.textColor = [UIColor blackColor];
     label.textAlignment = NSTextAlignmentCenter;
+    label.text = self.shopNameStirng;
     [view addSubview:label];
     
     return bgView;
@@ -162,7 +210,7 @@
     
     UILabel *topRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 10, 40)];
     topRightLabel.font = [UIFont systemFontOfSize:13];
-    topRightLabel.text = @"￥10";
+    topRightLabel.text = @"￥0";
     topRightLabel.textColor = [UIColor blackColor];
     topRightLabel.textAlignment = NSTextAlignmentRight;
     [bgView addSubview:topRightLabel];
@@ -173,7 +221,7 @@
     
     UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH - 10, 40)];
     bottomLabel.font = [UIFont systemFontOfSize:14];
-    bottomLabel.text = @"合计 : 370";
+    bottomLabel.text = [NSString stringWithFormat:@"合计 : %.2f",self.totalMoneyString];
     bottomLabel.textColor = [UIColor blackColor];
     bottomLabel.textAlignment = NSTextAlignmentRight;
     [bgView addSubview:bottomLabel];
@@ -192,8 +240,8 @@
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.textColor = [UIColor blackColor];
-            cell.textLabel.text = @"Loren_";
-            cell.detailTextLabel.text = @"重庆市恒大未来城";
+            cell.textLabel.text = [NSString stringWithFormat:@"姓名: %@",self.nameString];
+            cell.detailTextLabel.text = [NSString stringWithFormat:@"地址: %@",self.addressString];
             return cell;
         } else {
             static NSString *ID = @"cell1";
@@ -204,12 +252,16 @@
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.textColor = [UIColor blackColor];
-            if (indexPath.row ==0) {
+            if (indexPath.row == 0) {
                 cell.textLabel.text = @"物流方式";
                 cell.detailTextLabel.text = @"快递到家";
             } else {
                 cell.textLabel.text = @"开票单位";
-                cell.detailTextLabel.text = @"重庆同熙传媒科技有限公司";
+                if (IsStringEmpty(self.companyNameString)) {
+                    cell.detailTextLabel.text = @"暂无发票";
+                } else {
+                    cell.detailTextLabel.text = self.companyNameString;
+                }
             }
             return cell;
         }
@@ -224,17 +276,22 @@
         cell.detailTextLabel.textColor = [UIColor blackColor];
         if (indexPath.row == 0) {
             cell.textLabel.text = @"订单编号";
-            cell.detailTextLabel.text = @"CQ23341344";
+            cell.detailTextLabel.text = self.orderCodeString;
         } else if (indexPath.row == 1) {
             cell.textLabel.text = @"支付方式";
-            cell.detailTextLabel.text = @"微信支付";
+            cell.detailTextLabel.text = self.payMentTypeString;
         } else {
             cell.textLabel.text = @"信息备注";
-            cell.detailTextLabel.text = @"备注信息(非必填)>";
+            if (IsStringEmpty(self.orederInfoStirng)) {
+                cell.detailTextLabel.text = @"暂无备注";
+            } else {
+                cell.detailTextLabel.text = self.orederInfoStirng;
+            }
         }
         return cell;
     }
     FHWatingOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHWatingOrderCell class])];
+    cell.orderModel = self.goodArrs[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }

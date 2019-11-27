@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHOrderDetailController : BaseViewController
 /** 0待付款 1待收货 2待评价 3售后 */
 @property (nonatomic, assign) NSInteger type;
+/** 订单详情id */
+@property (nonatomic, copy) NSString *order_id;
 
 @end
 

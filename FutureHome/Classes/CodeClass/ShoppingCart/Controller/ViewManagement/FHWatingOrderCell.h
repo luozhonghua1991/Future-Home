@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class FHOrderListModel;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHWatingOrderCell : UITableViewCell
@@ -23,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *allPriceLabel;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) UIView *bottomLineView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHOrderListModel *orderModel;
+
 
 @end
 

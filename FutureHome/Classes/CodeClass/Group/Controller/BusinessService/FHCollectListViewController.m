@@ -208,7 +208,28 @@ FHSearchResultCellDelegate
         goodList.shopID = followModel.id;
         goodList.isCollect = followModel.is_collect;
         [self.navigationController pushViewController:goodList animated:YES];
+    } else if ([self.type isEqualToString:@"2019"]) {
+        FHSearchResultModel *resultModel = self.dataArrs[indexPath.row];
+        if ([resultModel.type isEqualToString:@"3"]) {
+            [self pushVCWithTitle:@"生鲜商城" shopID:resultModel.id isCollect:resultModel.is_collect];
+        } else if ([resultModel.type isEqualToString:@"4"]) {
+            [self pushVCWithTitle:@"商业商城" shopID:resultModel.id isCollect:resultModel.is_collect];
+        } else if ([resultModel.type isEqualToString:@"5"]) {
+            [self pushVCWithTitle:@"医药商城" shopID:resultModel.id isCollect:resultModel.is_collect];
+        }
     }
+}
+
+
+- (void)pushVCWithTitle:(NSString *)title
+                 shopID:(NSString *)shopID
+              isCollect:(NSString *)isCollect {
+    FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+    goodList.hidesBottomBarWhenPushed = YES;
+    goodList.titleString = title;
+    goodList.shopID = shopID;
+    goodList.isCollect = isCollect;
+    [self.navigationController pushViewController:goodList animated:YES];
 }
 
 
