@@ -13,6 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHGoodsListController : BaseViewController
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *shopID;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *type;
+
 
 @end
 

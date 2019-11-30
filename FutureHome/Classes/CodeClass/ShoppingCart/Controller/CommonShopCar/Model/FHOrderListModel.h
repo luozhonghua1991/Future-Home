@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 图片 */
 @property (nonatomic, copy) NSString *cover;
 /** 描述 */
-@property (nonatomic, copy) NSString *desc;
+@property (nonatomic, copy) NSString *productname;
 /** 物品id */
 @property (nonatomic, copy) NSString *goods_id;
 /** <#copy属性注释#> */

@@ -190,7 +190,6 @@ valueChangedForCount:(NSInteger)count
 
 #pragma mark - 跳入购物车动画
 -(void)jumpToCartAnimationWithAddBtnRect:(CGRect)rect {
-    
     CGFloat startX = rect.origin.x;
     CGFloat startY = rect.origin.y;
     
@@ -247,6 +246,9 @@ valueChangedForCount:(NSInteger)count
 - (void)GNRShoppingBarDelegatePayAction {
     FHSureOrderController *vc = [[FHSureOrderController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.shopID = self.shopID;
+    /** 3 生鲜商城订单 4 社交商业订单 5 药品商城订单 */
+    vc.type = self.type;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

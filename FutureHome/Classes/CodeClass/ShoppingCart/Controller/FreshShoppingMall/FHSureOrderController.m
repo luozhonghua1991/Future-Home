@@ -13,6 +13,9 @@
 #import "BRPlaceholderTextView.h"
 #import "FHInvoiceListController.h"
 #import "HYJFAddressAdministrationController.h"
+#import "GNRGoodsModel.h"
+#import "LeoPayManager.h"
+#import "NSArray+JSON.h"
 
 @interface FHSureOrderController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
@@ -31,6 +34,14 @@
 @property (nonatomic, assign) BOOL isSelectAddress;
 /** 营业说明textView */
 @property (nonatomic, strong) BRPlaceholderTextView *businessDescriptionTextView;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger payType;
+/** 发票id */
+@property (nonatomic, copy) NSString *invoiceid;
+/** 地址id */
+@property (nonatomic, copy) NSString *adderssid;
+/** 物流类型  1快递到家 15天  2预定前往 7天  3实时配送 3天 */
+@property (nonatomic, copy) NSString *wuType;
 
 @end
 
@@ -84,7 +95,7 @@
     
     UILabel *allPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 150, ZH_SCALE_SCREEN_Height(50))];
     allPriceLabel.font = [UIFont systemFontOfSize:14];
-    allPriceLabel.text = @"支付金额: ￥145";
+    allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
     allPriceLabel.textColor = [UIColor redColor];
     allPriceLabel.textAlignment = NSTextAlignmentLeft;
     [whiteBttomView addSubview:allPriceLabel];
@@ -94,10 +105,82 @@
     bottomBtn.backgroundColor = [UIColor redColor];
     [bottomBtn setTitle:@"确认支付" forState:UIControlStateNormal];
     [bottomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [completedBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [bottomBtn addTarget:self action:@selector(surePayClick) forControlEvents:UIControlEventTouchUpInside];
     [whiteBttomView addSubview:bottomBtn];
 }
 
+/** 新增的 */
+- (void)surePayClick {
+    NSMutableArray *newGoodsArr = [[NSMutableArray alloc] init];
+    for (GNRGoodsModel *model in [SingleManager shareManager].goodsArrs) {
+        NSMutableDictionary *goodsDic = [[NSMutableDictionary alloc] init];
+        [goodsDic setObject:model.number forKey:@"selectCount"];
+        [goodsDic setObject:model.goodsID forKey:@"id"];
+        [newGoodsArr addObject:goodsDic];
+    }
+    
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               [SingleManager shareManager].totalMoneyString,@"total_money",
+                               [SingleManager shareManager].totalMoneyString,@"pay_money",
+                               @(weakSelf.payType),@"pay_way",
+                               weakSelf.shopID,@"shop_id",
+                               /** 发票的id */
+                               weakSelf.invoiceid,@"invoiceid",
+                               weakSelf.adderssid,@"address",
+                               /** 备注 */
+                               weakSelf.businessDescriptionTextView.text,@"remark",
+                               weakSelf.type,@"ordertype",
+                               /** 配送方式 */
+                               weakSelf.wuType,@"type",
+                               /** json数组 */
+                               [newGoodsArr toReadableJSONString],@"shopcontent",
+                               @"0",@"order_id",
+                               /** 种类个数 */
+                               @([SingleManager shareManager].goodsArrs.count),@"number",
+                               nil];
+    
+    [AFNetWorkTool post:@"shop/downOrder" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (weakSelf.payType == 1) {
+                /** 支付宝支付 */
+                LeoPayManager *manager = [LeoPayManager getInstance];
+                [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                    if (respCode == 0) {
+                        /** 支付成功 */
+                        WS(weakSelf);
+                        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"购买成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                            if (buttonIndex == 0) {
+                                [weakSelf.navigationController popViewControllerAnimated:YES];
+                            }
+                        }];
+                    } else if (respCode == -2) {
+                        [self.view makeToast:respMsg];
+                    }
+                }];
+            }
+            /** 账户资料传给后台成功 */
+            /** 选择支付方式 */
+            //            [WXApi sendReq:[PayReq new] completion:^(BOOL success) {
+            //
+            //            }];
+            //            // 判断手机有没有微信
+            //            if ([WXApi isWXAppInstalled]) {
+            //                //                wechatButton.hidden = NO;
+            //            }else{
+            //                //                wechatButton.hidden = YES;
+            //            }
+            
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+        
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -108,7 +191,7 @@
     if (section == 0) {
         return 4;
     } else if (section == 1) {
-        return 5;
+        return [SingleManager shareManager].goodsArrs.count;
     } else {
         return 2;
     }
@@ -182,6 +265,7 @@
         if (indexPath.row == 0) {
             cell.textLabel.text = @"支付方式";
             cell.detailTextLabel.text = @"请选择支付方式 >";
+            self.payTypeLabel = cell.detailTextLabel;
         } else {
             self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
             [cell addSubview:self.businessDescriptionTextView];
@@ -189,6 +273,7 @@
         return cell;
     }
     FHWatingOrderCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHWatingOrderCell class])];
+    cell.goodsModel = [SingleManager shareManager].goodsArrs[indexPath.row];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
@@ -210,7 +295,7 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
     label.font = [UIFont systemFontOfSize:14];
-    label.text = @"未来生鲜-龙湖U城店";
+    label.text = [SingleManager shareManager].shopName;
     label.textColor = [UIColor blackColor];
     label.textAlignment = NSTextAlignmentCenter;
     [view addSubview:label];
@@ -235,7 +320,7 @@
     
     UILabel *topRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 10, 40)];
     topRightLabel.font = [UIFont systemFontOfSize:13];
-    topRightLabel.text = @"￥10";
+    topRightLabel.text = @"￥0";
     topRightLabel.textColor = [UIColor blackColor];
     topRightLabel.textAlignment = NSTextAlignmentRight;
     [bgView addSubview:topRightLabel];
@@ -246,7 +331,7 @@
     
     UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH - 10, 40)];
     bottomLabel.font = [UIFont systemFontOfSize:14];
-    bottomLabel.text = @"合计 : 370";
+    bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
     bottomLabel.textColor = [UIColor blackColor];
     bottomLabel.textAlignment = NSTextAlignmentRight;
     [bgView addSubview:bottomLabel];
@@ -266,6 +351,13 @@
                 } else {
                     self.isSelectAddress = YES;
                 }
+                if (index == 0) {
+                    self.wuType = @"1";
+                } else if (index == 1) {
+                    self.wuType = @"2";
+                } else {
+                    self.wuType = @"3";
+                }
             } cancelBlock:^{
                 
             }];
@@ -281,6 +373,7 @@
             vx.hidesBottomBarWhenPushed = YES;
             vx.selectResultBlock = ^(HYJFAllAddressModel * _Nonnull addressModel) {
                 self.addressLabel.text = addressModel.address;
+                self.adderssid = [NSString stringWithFormat:@"%d",addressModel.id];
             };
             [self.navigationController pushViewController:vx animated:YES];
         } else if (indexPath.row == 2) {
@@ -294,6 +387,7 @@
             vx.hidesBottomBarWhenPushed = YES;
             vx.selectResultBlock = ^(FHInvoiceModel * _Nonnull invoiceModel) {
                 self.invoiceLabel.text = invoiceModel.companyname;
+                self.invoiceid = invoiceModel.id;
             };
             [self.navigationController pushViewController:vx animated:YES];
         }
@@ -301,6 +395,11 @@
         if (indexPath.row == 0) {
             [ZJNormalPickerView zj_showStringPickerWithTitle:@"支付方式" dataSource:@[@"微信支付",@"支付宝支付"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
                 NSLog(@"index---%ld",index);
+                if (index == 0) {
+                    self.payType = 2;
+                } else if (index == 1) {
+                    self.payType = 1;
+                }
                 self.payTypeLabel.text = selectValue;
             } cancelBlock:^{
                 

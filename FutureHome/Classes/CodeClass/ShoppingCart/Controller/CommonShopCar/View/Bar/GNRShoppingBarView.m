@@ -50,6 +50,8 @@
     //btn
     self.payBtn.backgroundColor = price?COLOR_16F(0x1C86EE, 1):[UIColor lightGrayColor];
     self.payBtn.enabled = price;
+    
+    [SingleManager shareManager].totalMoneyString = [NSString stringWithFormat:@"%.2f",price];
 }
 
 @end

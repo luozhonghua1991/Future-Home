@@ -37,7 +37,7 @@
 }
 
 //更新购物袋中的商品
-- (void)updateGoods:(GNRGoodsModel *)goods{
+- (void)updateGoods:(GNRGoodsModel *)goods {
     NSInteger number = goods.number.integerValue;//购物袋中商品的数量
     if (number>0) {
         if (![_goodsArr containsObject:goods]) {
@@ -48,6 +48,8 @@
             [_goodsArr removeObject:goods];
         }
     }
+    [SingleManager shareManager].goodsArrs = [[NSMutableArray alloc] init];
+    [[SingleManager shareManager].goodsArrs addObjectsFromArray:_goodsArr];
 }
 
 //清空购物袋

@@ -7,10 +7,20 @@
 //
 
 #import "BaseViewController.h"
+#import "GNRGoodsModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHSureOrderController : BaseViewController
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *shopNameString;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *goodsArrs;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *shopID;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *type;
+
 
 @end
 

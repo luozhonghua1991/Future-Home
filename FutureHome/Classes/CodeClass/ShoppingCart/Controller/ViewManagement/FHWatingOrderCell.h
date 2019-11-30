@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class FHOrderListModel;
+@class GNRGoodsModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,7 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIView *bottomLineView;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHOrderListModel *orderModel;
-
+/** <#strong属性注释#> */
+@property (nonatomic, strong) GNRGoodsModel *goodsModel;
 
 @end
 

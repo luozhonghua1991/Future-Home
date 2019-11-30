@@ -87,6 +87,12 @@
 @property (nonatomic, assign) CGFloat cellVideoHeight;
 /** 选择的类型 */
 @property (nonatomic, copy) NSString *selectType;
+/** 商店名字 */
+@property (nonatomic, copy) NSString *shopName;
+/** 商品数组 */
+@property (nonatomic, strong) NSMutableArray *goodsArrs;
+/** 总价 */
+@property (nonatomic, copy) NSString *totalMoneyString;
 
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串

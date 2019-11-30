@@ -179,6 +179,7 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.locationLabel.text = dic[@"shopname"];
+            [SingleManager shareManager].shopName = dic[@"shopname"];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -370,6 +371,13 @@
 
 - (void)initViewControllers {
     FHGoodsListController *messageVC = [[FHGoodsListController alloc] init];
+    if ([self.titleString isEqualToString:@"生鲜商城"]) {
+        messageVC.type = @"3";
+    } else if ([self.titleString isEqualToString:@"商业商城"]) {
+        messageVC.type = @"4";
+    } else if ([self.titleString isEqualToString:@"医药商城"]) {
+        messageVC.type = @"5";
+    }
     messageVC.yp_tabItemTitle = @"商品列表";
     messageVC.shopID = self.shopID;
     
