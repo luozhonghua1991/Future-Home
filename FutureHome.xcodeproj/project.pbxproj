@@ -744,6 +744,8 @@
 		4AB2047422F2EAB100111AC4 /* FHLBXScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047322F2EAB100111AC4 /* FHLBXScanViewController.m */; };
 		4AB2047722F2ED2600111AC4 /* FHScanTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047622F2ED2600111AC4 /* FHScanTool.m */; };
 		4AB2047B22F2ED7900111AC4 /* AnalyzPermisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047922F2ED7800111AC4 /* AnalyzPermisViewController.m */; };
+		4ABA6F4023991B7C0033E71A /* FHReturnRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */; };
+		4ABA6F4323992EC50033E71A /* FHGoodsCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */; };
 		4AC11C99231E105700F15FD7 /* FHPropertyCostsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC11C98231E105700F15FD7 /* FHPropertyCostsController.m */; };
 		4AC11C9F231E39EC00F15FD7 /* FHGarageManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC11C9E231E39EC00F15FD7 /* FHGarageManagementController.m */; };
 		4AC11CA2231E3BF000F15FD7 /* FHCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC11CA1231E3BF000F15FD7 /* FHCollectionHeaderView.m */; };
@@ -2486,6 +2488,10 @@
 		4AB2047622F2ED2600111AC4 /* FHScanTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanTool.m; sourceTree = "<group>"; };
 		4AB2047922F2ED7800111AC4 /* AnalyzPermisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyzPermisViewController.m; sourceTree = "<group>"; };
 		4AB2047A22F2ED7800111AC4 /* AnalyzPermisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyzPermisViewController.h; sourceTree = "<group>"; };
+		4ABA6F3E23991B7C0033E71A /* FHReturnRefundController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHReturnRefundController.h; sourceTree = "<group>"; };
+		4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHReturnRefundController.m; sourceTree = "<group>"; };
+		4ABA6F4123992EC50033E71A /* FHGoodsCommitController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGoodsCommitController.h; sourceTree = "<group>"; };
+		4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGoodsCommitController.m; sourceTree = "<group>"; };
 		4AC11C97231E105700F15FD7 /* FHPropertyCostsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPropertyCostsController.h; sourceTree = "<group>"; };
 		4AC11C98231E105700F15FD7 /* FHPropertyCostsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPropertyCostsController.m; sourceTree = "<group>"; };
 		4AC11C9D231E39EC00F15FD7 /* FHGarageManagementController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGarageManagementController.h; sourceTree = "<group>"; };
@@ -5838,6 +5844,10 @@
 				4A51D9892307FC5200A5313E /* FHSureOrderController.m */,
 				4A51D98223079AEE00A5313E /* FHOrderDetailController.h */,
 				4A51D98323079AEE00A5313E /* FHOrderDetailController.m */,
+				4ABA6F3E23991B7C0033E71A /* FHReturnRefundController.h */,
+				4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */,
+				4ABA6F4123992EC50033E71A /* FHGoodsCommitController.h */,
+				4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */,
 				4AC67E2422C8AED100842C0D /* FHWaitOrderController.h */,
 				4AC67E2522C8AED100842C0D /* FHWaitOrderController.m */,
 				4AC67E2722C8AF1300842C0D /* FHWaitGetController.h */,
@@ -7087,6 +7097,7 @@
 				4A97078E22DC70EA00FD18EC /* FHAccountApplicationTFView.m in Sources */,
 				4AB2045F22F2DD7300111AC4 /* ZXImage.m in Sources */,
 				4AB2039222F2DD7300111AC4 /* ZXBinaryBitmap.m in Sources */,
+				4ABA6F4323992EC50033E71A /* FHGoodsCommitController.m in Sources */,
 				4AB203C822F2DD7300111AC4 /* ZXPerspectiveTransform.m in Sources */,
 				4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */,
 				4A6E5A8623703B220098DB67 /* MJRefreshBackStateFooter.m in Sources */,
@@ -7342,6 +7353,7 @@
 				4A9CB2C5230C002C004A3763 /* FHBaseHaveNavTabberController.m in Sources */,
 				4A6DA9C522C05C6F00F29455 /* FHAppDelegate.mm in Sources */,
 				4A70D50822EE9BB9007AABDC /* AFNetWorkTool.m in Sources */,
+				4ABA6F4023991B7C0033E71A /* FHReturnRefundController.m in Sources */,
 				4A9E84FA232397FD0070CE4A /* FHElectRepeatTFView.m in Sources */,
 				4AB203EC22F2DD7300111AC4 /* ZXDataMatrixReader.m in Sources */,
 				4A31F612230A99650010C1F4 /* ZJAddressModel.m in Sources */,

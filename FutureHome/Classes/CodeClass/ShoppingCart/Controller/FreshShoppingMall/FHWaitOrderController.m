@@ -13,6 +13,8 @@
 #import "FHGoodsListModel.h"
 #import "FHCommonPaySelectView.h"
 #import "FHAppDelegate.h"
+#import "FHReturnRefundController.h"
+#import "FHGoodsCommitController.h"
 
 @interface FHWaitOrderController () <UITableViewDelegate,UITableViewDataSource,FHCommonPaySelectViewDelegate>
 {
@@ -181,17 +183,47 @@
         /** 待付款 */
     } else if (self.status == 2) {
         /** 待收货 */
+        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确认收货吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                /** 提交选举的人的资料 */
+                WS(weakSelf);
+                Account *account = [AccountStorage readAccount];
+                NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           @(account.user_id),@"user_id",
+                                           listModel.id,@"order_id", nil];
+                [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
+                    if ([responseObj[@"code"] integerValue] == 1) {
+                        [weakSelf loadInit];
+                        [weakSelf.homeTable reloadData];
+                    } else {
+                        [weakSelf.view makeToast:responseObj[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    [weakSelf.homeTable reloadData];
+                }];
+            }
+        }];
     } else if (self.status == 3){
         /** 待评价 和 已经评价 */
         if ([listModel.iscomment isEqualToString:@"0"]) {
             /** 待评价的操作 */
+            FHGoodsCommitController *commit = [[FHGoodsCommitController alloc] init];
+            commit.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:commit animated:YES];
         }
     } else if (self.status == 4){
         /** 退货相关的 */
         if ([listModel.status integerValue] >= 2) {
-            if ([listModel.status isEqualToString:@"6"]||[listModel.status isEqualToString:@"7"]||[listModel.status isEqualToString:@"4"]) {
+            if ([listModel.status isEqualToString:@"6"]||
+                [listModel.status isEqualToString:@"7"]||
+                [listModel.status isEqualToString:@"4"]) {
             } else {
                /** 退货退款操作 */
+                FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.orderID = listModel.id;
+                vc.totolePrice = [NSString stringWithFormat:@"￥%@",listModel.pay_money];
+                [self.navigationController pushViewController:vc animated:YES];
             }
         }
     }

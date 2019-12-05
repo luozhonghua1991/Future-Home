@@ -10,6 +10,8 @@
 #import "FHWatingOrderCell.h"
 #import "FHOrderListModel.h"
 #import "BRPlaceholderTextView.h"
+#import "FHReturnRefundController.h"
+#import "FHGoodsCommitController.h"
 
 @interface FHOrderDetailController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
@@ -124,7 +126,7 @@
     bottomBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
     bottomBtn.backgroundColor = HEX_COLOR(0x1296db);
     [bottomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//        [completedBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [bottomBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
     NSString *typeString;
     if (self.status == 1) {
         typeString = @"待付款";
@@ -156,6 +158,51 @@
     [bottomBtn setTitle:typeString forState:UIControlStateNormal];
     
     [self.view addSubview:bottomBtn];
+}
+
+- (void)addInvoiceBtnClick {
+    if (self.status == 2) {
+        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确认收货吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                /** 提交选举的人的资料 */
+                WS(weakSelf);
+                Account *account = [AccountStorage readAccount];
+                NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           @(account.user_id),@"user_id",
+                                           weakSelf.listModel.id,@"order_id", nil];
+                [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
+                    if ([responseObj[@"code"] integerValue] == 1) {
+                        [self.navigationController popViewControllerAnimated:YES];
+                    } else {
+                        [weakSelf.view makeToast:responseObj[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                    [weakSelf.homeTable reloadData];
+                }];
+            }
+        }];
+    } else if (self.status == 4) {
+        /** 退货退款操作 */
+        if ([self.listModel.status integerValue] >= 2) {
+            if ([self.listModel.status isEqualToString:@"6"]||
+                [self.listModel.status isEqualToString:@"7"]||
+                [self.listModel.status isEqualToString:@"4"]) {
+            } else {
+                /** 退货退款操作 */
+                FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.orderID = self.listModel.id;
+                vc.totolePrice = [NSString stringWithFormat:@"￥%@",self.listModel.pay_money];
+                [self.navigationController pushViewController:vc animated:YES];
+            }
+        }
+    } else if (self.status == 3) {
+        if ([self.listModel.iscomment isEqualToString:@"0"]) {
+            FHGoodsCommitController *commit = [[FHGoodsCommitController alloc] init];
+            commit.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:commit animated:YES];
+        }
+    }
 }
 
 #pragma mark  -- tableViewDelagate
