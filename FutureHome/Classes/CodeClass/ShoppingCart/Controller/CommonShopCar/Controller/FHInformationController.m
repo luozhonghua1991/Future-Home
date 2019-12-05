@@ -11,6 +11,7 @@
 #import "FHInformationMesageCell.h"
 #import "FHInformationModel.h"
 #import "FHWebViewController.h"
+#import "FHPersonCommitsMainController.h"
 
 @interface FHInformationController () <UITableViewDelegate,UITableViewDataSource>
 /** 标头数据 */
@@ -127,7 +128,11 @@
 #pragma mark — event
 /** 用户评论 */
 - (void)personCountBtnClick {
-    
+    FHPersonCommitsMainController *commit = [[FHPersonCommitsMainController alloc] init];
+    commit.titleString = @"评论列表";
+    commit.hidesBottomBarWhenPushed = YES;
+    commit.shopID = self.shopID;
+    [self.navigationController pushViewController:commit animated:YES];
 }
 
 

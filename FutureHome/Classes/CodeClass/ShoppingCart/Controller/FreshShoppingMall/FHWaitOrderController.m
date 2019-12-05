@@ -11,8 +11,10 @@
 #import "FHOrderDetailController.h"
 #import "FHNewWatiingOrderCell.h"
 #import "FHGoodsListModel.h"
+#import "FHCommonPaySelectView.h"
+#import "FHAppDelegate.h"
 
-@interface FHWaitOrderController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHWaitOrderController () <UITableViewDelegate,UITableViewDataSource,FHCommonPaySelectViewDelegate>
 {
     NSInteger curPage;
     NSInteger tolPage;
@@ -21,6 +23,11 @@
 @property (nonatomic, strong) UITableView *homeTable;
 /** 数据列表 */
 @property (nonatomic, strong) NSMutableArray *dataListArrs;
+
+@property (nonatomic, strong) FHCommonPaySelectView *payView;
+/** <#copy属性注释#> */
+//@property (nonatomic, copy) NSString *typeString;
+
 
 @end
 
@@ -79,14 +86,14 @@
     [AFNetWorkTool get:@"shop/getOrderList" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
-                [self.dataListArrs removeAllObjects];
+                [weakSelf.dataListArrs removeAllObjects];
             }
-            [self endRefreshAction];
+            [weakSelf endRefreshAction];
             self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
-            [self.dataListArrs addObjectsFromArray:[FHGoodsListModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
+            [weakSelf.dataListArrs addObjectsFromArray:[FHGoodsListModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
             [weakSelf.homeTable reloadData];
         } else {
-            [self.view makeToast:responseObj[@"msg"]];
+            [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -118,15 +125,40 @@
         FHGoodsListModel *listModel = self.dataListArrs[indexPath.row];
         cell.listModel = listModel;
         cell.goodsImgArrs = listModel.covers;
+        cell.typeBtn.tag = indexPath.row;
         NSString *typeString;
         if (self.status == 1) {
-            typeString =@"待付款";
+            typeString = @"待付款";
+            cell.statueBtn.hidden = NO;
+            cell.statueBtn.tag = indexPath.row;
+            [cell.statueBtn addTarget:self action:@selector(statueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         } else if (self.status == 2) {
-            typeString =@"待收货";
+            typeString = @"确认收货";
         } else if (self.status == 3) {
-            typeString =@"待评价";
+            if ([listModel.iscomment isEqualToString:@"0"]) {
+                typeString = @"待评价";
+            } else if ([listModel.iscomment isEqualToString:@"1"]) {
+                [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+                typeString = @"已评价";
+            }
+        } else if (self.status == 4) {
+            if ([listModel.status integerValue] >= 2) {
+                if ([listModel.status integerValue] == 6) {
+                    typeString = @"退款成功";
+                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+                } else if ([listModel.status integerValue] == 7) {
+                    typeString = @"拒绝退款";
+                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+                } else if ([listModel.status integerValue] == 4) {
+                    typeString = @"已完成";
+                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+                } else {
+                    typeString = @"退货退款";
+                }
+            }
         }
         [cell.typeBtn setTitle:typeString forState:UIControlStateNormal];
+        [cell.typeBtn addTarget:self action:@selector(typeClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return cell;
@@ -136,11 +168,69 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FHGoodsListModel *listModel = self.dataListArrs[indexPath.row];
     FHOrderDetailController *detail = [[FHOrderDetailController alloc] init];
-    detail.type = self.type;
+    detail.status = self.status;
     detail.hidesBottomBarWhenPushed = YES;
     detail.order_id = listModel.id;
+    detail.listModel = listModel;
     [self.navigationController pushViewController:detail animated:YES];
 }
+
+- (void)typeClick:(UIButton *)sender {
+    FHGoodsListModel *listModel = self.dataListArrs[sender.tag];
+    if (self.status == 1) {
+        /** 待付款 */
+    } else if (self.status == 2) {
+        /** 待收货 */
+    } else if (self.status == 3){
+        /** 待评价 和 已经评价 */
+        if ([listModel.iscomment isEqualToString:@"0"]) {
+            /** 待评价的操作 */
+        }
+    } else if (self.status == 4){
+        /** 退货相关的 */
+        if ([listModel.status integerValue] >= 2) {
+            if ([listModel.status isEqualToString:@"6"]||[listModel.status isEqualToString:@"7"]||[listModel.status isEqualToString:@"4"]) {
+            } else {
+               /** 退货退款操作 */
+            }
+        }
+    }
+}
+
+/** 取消订单 */
+- (void)statueBtnClick:(UIButton *)sender {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定要取消订单吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            /** 确定删除 */
+            [weakSelf cancelOrderWithSelectindex:sender.tag];
+        }
+    }];
+}
+
+
+- (void)cancelOrderWithSelectindex:(NSInteger )indexPath {
+    FHGoodsListModel *listModel = self.dataListArrs[indexPath];
+    /** 取消订单 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               listModel.id,@"order_id", nil];
+    [AFNetWorkTool post:@"shop/cancelOrder" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"取消订单成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf loadInit];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
 
 #pragma mark - DZNEmptyDataSetDelegate
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
@@ -152,6 +242,15 @@
                                  };
     
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (void)creatPayViewWithPrice:(NSString *)price {
+    if (!self.payView) {
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",price]];
+        _payView.delegate = self;
+    }
+    FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:_payView];
 }
 
 
@@ -176,5 +275,6 @@
     }
     return _homeTable;
 }
+
 
 @end

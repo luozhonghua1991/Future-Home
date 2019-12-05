@@ -128,8 +128,8 @@
                                @(weakSelf.payType),@"pay_way",
                                weakSelf.shopID,@"shop_id",
                                /** 发票的id */
-                               weakSelf.invoiceid,@"invoiceid",
-                               weakSelf.adderssid,@"address",
+                               weakSelf.invoiceid ? weakSelf.invoiceid : @"0",@"invoiceid",
+                               weakSelf.adderssid ? weakSelf.adderssid : @"0",@"address",
                                /** 备注 */
                                weakSelf.businessDescriptionTextView.text,@"remark",
                                weakSelf.type,@"ordertype",

@@ -17,6 +17,7 @@
 #import "FHHomePageController.h"
 #import "FHMeCenterController.h"
 #import "FHGroupController.h"
+#import "CQRouteManager.h"
 
 @interface FHFreshMallController () <UIScrollViewDelegate,JSShareViewDelegate>
 {
@@ -50,6 +51,11 @@
 @property (nonatomic, strong) FFDropDownMenuView     *followListMenu;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *videosListArrs;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) CGFloat lat;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) CGFloat lng;
+
 
 @end
 
@@ -179,6 +185,8 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.locationLabel.text = dic[@"shopname"];
+            weakSelf.lat = [dic[@"lat"] floatValue];
+            weakSelf.lng = [dic[@"lng"] floatValue];
             [SingleManager shareManager].shopName = dic[@"shopname"];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
@@ -294,6 +302,7 @@
 
 - (void)navigationLabelClick {
     /** y一键导航事件 */
+    [CQRouteManager presentRouteNaviMenuOnController:self withCoordate:CLLocationCoordinate2DMake(self.lat, self.lng) destination:self.locationLabel.text];
 }
 
 

@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *pay_money;
 /** 商店名字 */
 @property (nonatomic, copy) NSString *shopname;
-/** <#copy属性注释#> */
+/** 订单状态 1下单(待付款) 2付款(等待接单)(待发货) 3送达(完成)(待评价) 4已经完成(已经评价) 5 申请退款 6退款成功 7拒绝退款*/
 @property (nonatomic, copy) NSString *status;
-/** <#copy属性注释#> */
+/** 1快递到家 2预订前往 3实时配送 */
 @property (nonatomic, copy) NSString *type;
 /** 0没有申请退款 1申请退款 */
 @property (nonatomic, copy) NSString *isapply;

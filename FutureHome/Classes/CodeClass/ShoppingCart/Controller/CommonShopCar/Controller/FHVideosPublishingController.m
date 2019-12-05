@@ -12,6 +12,7 @@
 #import "ZFDouYinViewController.h"
 #import "ZFTableData.h"
 #import "FHVideosListModel.h"
+#import "FHPersonCommitsMainController.h"
 
 @interface FHVideosPublishingController () <UITableViewDelegate,UITableViewDataSource,FHCommonVideosCollectionCellDelegate>
 /** 主页列表数据 */
@@ -30,6 +31,7 @@
     [self.view addSubview:self.homeTable];
     self.homeTable.tableHeaderView = self.tableHeaderView;
     self.homeTable.tableHeaderView.height = self.tableHeaderView.height;
+    [self.tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.homeTable registerClass:[FHCommonVideosCollectionCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
     [self getRequest];
 }
@@ -64,6 +66,15 @@
     }];
 }
 
+#pragma mark — event
+/** 用户评论 */
+- (void)personCountBtnClick {
+    FHPersonCommitsMainController *commit = [[FHPersonCommitsMainController alloc] init];
+    commit.titleString = @"评论列表";
+    commit.hidesBottomBarWhenPushed = YES;
+    commit.shopID = self.shopID;
+    [self.navigationController pushViewController:commit animated:YES];
+}
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -104,9 +115,6 @@
     [self.navigationController pushViewController:douyin animated:YES];
 }
 
-- (void)personCountBtnClick {
-    
-}
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {

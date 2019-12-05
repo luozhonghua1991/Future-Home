@@ -127,8 +127,6 @@
                 }
             }
             [weakSelf requestWithDontTaiDic:Dic];
-            
-            
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }

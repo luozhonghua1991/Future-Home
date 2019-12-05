@@ -82,12 +82,31 @@
     return self;
 }
 
-+(instancetype)commitWithDict:(NSDictionary *)dict {
+- (id)initWithGoodsCommitDict:(NSDictionary *)dict {
+    if (self == [super init]) {
+        self.avatar  = dict[@"avatar"];
+        self.nickname = dict[@"nickname"];
+        self.content = dict[@"content"];
+        self.img_data = [dict[@"sellershow"] toReadableJSONString];
+        self.ID = dict[@"id"];
+        self.add_time = dict[@"add_time"];
+        self.user_id = dict[@"user_id"];
+        
+        _identifier = [self uniqueIdentifier];
+    }
+    return self;
+}
+
++ (instancetype)commitWithDict:(NSDictionary *)dict {
     return [[self alloc] initWithDict:dict];
 }
 
-+(instancetype)commitWithDongtaiDict:(NSDictionary *)dict {
++ (instancetype)commitWithDongtaiDict:(NSDictionary *)dict {
     return [[self alloc] initWithDongTaiDict:dict];
+}
+
++ (instancetype)commitWithGoodsCommitDict:(NSDictionary *)dict {
+    return [[self alloc] initWithGoodsCommitDict:dict];
 }
 
 - (NSString *)uniqueIdentifier

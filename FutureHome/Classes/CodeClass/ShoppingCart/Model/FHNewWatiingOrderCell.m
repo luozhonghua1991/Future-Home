@@ -56,6 +56,7 @@
     [self.whiteBgView addSubview:self.priceLabel];
     [self.whiteBgView addSubview:self.countLabel];
     [self.whiteBgView addSubview:self.bottomLineView];
+    [self.whiteBgView addSubview:self.statueBtn];
     [self.whiteBgView addSubview:self.typeBtn];
 }
 
@@ -70,11 +71,21 @@
     self.priceLabel.frame = CGRectMake(0, MaxY(self.topLineView) + 30, SCREEN_WIDTH - 15 , 15);
     self.countLabel.frame = CGRectMake(0, MaxY(self.priceLabel) + 10, SCREEN_WIDTH - 15 , 15);
     self.bottomLineView.frame = CGRectMake(15, MaxY(self.topLineView) + 100, SCREEN_WIDTH - 15 , 0.5);
+    self.statueBtn.frame = CGRectMake(SCREEN_WIDTH - 170, MaxY(self.bottomLineView) + 18, 70, 30);
     self.typeBtn.frame = CGRectMake(SCREEN_WIDTH - 85, MaxY(self.bottomLineView) + 18, 70, 30);
 }
 
 - (void)setListModel:(FHGoodsListModel *)listModel {
     _listModel = listModel;
+    NSString *typeString;
+    if ([_listModel.type isEqualToString:@"1"]) {
+        typeString = @"快递到家";
+    } else if ([_listModel.type isEqualToString:@"2"]) {
+        typeString = @"预定前往";
+    } else if ([_listModel.type isEqualToString:@"3"]) {
+        typeString = @"实时配送";
+    }
+    self.orderTypeLabel.text = [NSString stringWithFormat:@"配送类型 : %@",typeString];
     self.titleLabel.text = [NSString stringWithFormat:@"   %@",_listModel.shopname];
     self.orderTimeLabel.text = [NSString stringWithFormat:@"下单时间: %@",_listModel.add_time];
     self.priceLabel.text  = [NSString stringWithFormat:@"￥%@",_listModel.pay_money];
@@ -137,7 +148,7 @@
     if (!_orderTypeLabel) {
         _orderTypeLabel = [[UILabel alloc] init];
         _orderTypeLabel.font = [UIFont systemFontOfSize:14];
-        _orderTypeLabel.text = @"配送时间: 快递到家";
+        _orderTypeLabel.text = @"";
         _orderTypeLabel.textColor = HEX_COLOR(0x1296db);
         _orderTypeLabel.textAlignment = NSTextAlignmentRight;
     }
@@ -182,6 +193,18 @@
     return _bottomLineView;
 }
 
+- (UIButton *)statueBtn {
+    if (!_statueBtn) {
+        _statueBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_statueBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+        [_statueBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        _statueBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+        _statueBtn.backgroundColor = HEX_COLOR(0x1296db);
+        _statueBtn.hidden = YES;
+    }
+    return _statueBtn;
+}
+
 - (UIButton *)typeBtn {
     if (!_typeBtn) {
         _typeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -189,7 +212,6 @@
         [_typeBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _typeBtn.titleLabel.font = [UIFont systemFontOfSize:13];
         _typeBtn.backgroundColor = HEX_COLOR(0x1296db);
-//        [_typeBtn addTarget:self action:@selector(<#metodName#>) forControlEvents:UIControlEventTouchUpInside];
     }
     return _typeBtn;
 }

@@ -106,6 +106,7 @@
     if ([self.titleName isEqualToString:@"添加发票"]) {
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
+                     @"0",@"id",
                      companyNameTF.text,@"company",
                      companyCodeTF.text,@"code",
                      companyAddressTF.text,@"address",
@@ -136,6 +137,7 @@
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [weakSelf.view makeToast:@"保存失败"];
     }];
 }
 

@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) FHGoodsListModel *listModel;
 /** 图片 */
 @property (nonatomic, copy) NSArray *goodsImgArrs;
+/** 类型状态按钮 */
+@property (nonatomic, strong) UIButton *statueBtn;
 /** 类型按钮 */
 @property (nonatomic, strong) UIButton *typeBtn;
 

@@ -53,14 +53,19 @@
 @property(nonatomic ,copy) NSString     *identifier;
 /** <#strong属性注释#> */
 //@property (nonatomic, strong) ZJCommitFrame *commitFrame;
+- (id)initWithDict:(NSDictionary *)dict;
 
--(instancetype)initWithDict:(NSDictionary *)dict;
+- (id)initWithDongTaiDict:(NSDictionary *)dict;
 
-+(instancetype)commitWithDict:(NSDictionary *)dict;
+- (id)initWithGoodsCommitDict:(NSDictionary *)dict;
 
-+(instancetype)commitWithDongtaiDict:(NSDictionary *)dict;
++ (instancetype)commitWithDict:(NSDictionary *)dict;
 
--(id)initWithDongTaiDict:(NSDictionary *)dict;
++ (instancetype)commitWithDongtaiDict:(NSDictionary *)dict;
+
++ (instancetype)commitWithGoodsCommitDict:(NSDictionary *)dict;
+
+
 /*
  
  name    type    desc

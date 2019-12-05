@@ -9,6 +9,7 @@
 #import "FHOrderDetailController.h"
 #import "FHWatingOrderCell.h"
 #import "FHOrderListModel.h"
+#import "BRPlaceholderTextView.h"
 
 @interface FHOrderDetailController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
@@ -33,6 +34,8 @@
 @property (nonatomic, strong) NSMutableArray *goodArrs;
 /** 总价 */
 @property (nonatomic, assign) CGFloat totalMoneyString;
+/** 营业说明textView */
+@property (nonatomic, strong) BRPlaceholderTextView *businessDescriptionTextView;
 
 @end
 
@@ -57,13 +60,19 @@
     [AFNetWorkTool get:@"shop/getSingOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             weakSelf.orderCodeString = responseObj[@"data"][@"order_number"];
-            weakSelf.payMentTypeString = @"支付宝支付";
             weakSelf.shopNameStirng = responseObj[@"data"][@"shopname"];
             weakSelf.nameString = responseObj[@"data"][@"buyuser"];
             weakSelf.addressString = responseObj[@"data"][@"detailedaddress"];
             weakSelf.companyNameString = responseObj[@"data"][@"companyname"];
             weakSelf.totalMoneyString = [responseObj[@"data"][@"total_money"] floatValue];
-            weakSelf.orederInfoStirng = responseObj[@"data"][@"distribution"];
+            weakSelf.orederInfoStirng = responseObj[@"data"][@"remark"];
+            if ([responseObj[@"data"][@"type"] integerValue] == 1) {
+                weakSelf.typeString = @"快递到家";
+            } else if ([responseObj[@"data"][@"type"] integerValue] == 2) {
+                weakSelf.typeString = @"预定前往";
+            } else if ([responseObj[@"data"][@"type"] integerValue] == 3) {
+                weakSelf.typeString = @"实时配送";
+            }
             NSInteger payString  = [responseObj[@"data"][@"pay_way"] integerValue];
             if (payString == 1) {
                 weakSelf.payMentTypeString = @"支付宝支付";
@@ -114,23 +123,39 @@
     UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     bottomBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
     bottomBtn.backgroundColor = HEX_COLOR(0x1296db);
-    [bottomBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
     [bottomBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    //    [completedBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:bottomBtn];
-    if (self.type == 0) {
-        /** 待付款 */
-       [bottomBtn setTitle:@"待付款" forState:UIControlStateNormal];
-    } else if (self.type == 1) {
-        /** 待收货 */
-        [bottomBtn setTitle:@"待收货" forState:UIControlStateNormal];
-    } else if (self.type == 2) {
-        /** 待评价 */
-        [bottomBtn setTitle:@"待评价" forState:UIControlStateNormal];
-    } else if (self.type == 3) {
-        /** 退货退款 */
-        [bottomBtn setTitle:@"已完成" forState:UIControlStateNormal];
+//        [completedBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    NSString *typeString;
+    if (self.status == 1) {
+        typeString = @"待付款";
+    } else if (self.status == 2) {
+        typeString = @"确认收货";
+    } else if (self.status == 3) {
+        if ([self.listModel.iscomment isEqualToString:@"0"]) {
+            typeString = @"待评价";
+        } else if ([self.listModel.iscomment isEqualToString:@"1"]) {
+            [bottomBtn setBackgroundColor:[UIColor lightGrayColor]];
+            typeString = @"已评价";
+        }
+    } else if (self.status == 4) {
+        if ([self.listModel.status integerValue] >= 2) {
+            if ([self.listModel.status integerValue] == 6) {
+                typeString = @"退款成功";
+                [bottomBtn setBackgroundColor:[UIColor lightGrayColor]];
+            } else if ([self.listModel.status integerValue] == 7) {
+                typeString = @"拒绝退款";
+                [bottomBtn setBackgroundColor:[UIColor lightGrayColor]];
+            } else if ([self.listModel.status integerValue] == 4) {
+                typeString = @"已完成";
+                [bottomBtn setBackgroundColor:[UIColor lightGrayColor]];
+            } else {
+                typeString = @"退货退款";
+            }
+        }
     }
+    [bottomBtn setTitle:typeString forState:UIControlStateNormal];
+    
+    [self.view addSubview:bottomBtn];
 }
 
 #pragma mark  -- tableViewDelagate
@@ -171,6 +196,9 @@
         }
         return 40.0f;
     } else {
+        if (indexPath.row == 2) {
+            return 110.0f;
+        }
         return 40.0f;
     }
 }
@@ -254,11 +282,11 @@
             cell.detailTextLabel.textColor = [UIColor blackColor];
             if (indexPath.row == 0) {
                 cell.textLabel.text = @"物流方式";
-                cell.detailTextLabel.text = @"快递到家";
+                cell.detailTextLabel.text = self.typeString;
             } else {
                 cell.textLabel.text = @"开票单位";
                 if (IsStringEmpty(self.companyNameString)) {
-                    cell.detailTextLabel.text = @"暂无发票";
+                    cell.detailTextLabel.text = @"无需开票";
                 } else {
                     cell.detailTextLabel.text = self.companyNameString;
                 }
@@ -281,12 +309,13 @@
             cell.textLabel.text = @"支付方式";
             cell.detailTextLabel.text = self.payMentTypeString;
         } else {
-            cell.textLabel.text = @"信息备注";
+            self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
             if (IsStringEmpty(self.orederInfoStirng)) {
-                cell.detailTextLabel.text = @"暂无备注";
+                self.businessDescriptionTextView.text = @"暂无备注";
             } else {
-                cell.detailTextLabel.text = self.orederInfoStirng;
+                self.businessDescriptionTextView.text = [NSString stringWithFormat:@"备注信息 : %@",self.orederInfoStirng];
             }
+            [cell addSubview:self.businessDescriptionTextView];
         }
         return cell;
     }
@@ -312,6 +341,21 @@
         }
     }
     return _homeTable;
+}
+
+- (BRPlaceholderTextView *)businessDescriptionTextView {
+    if (!_businessDescriptionTextView) {
+        _businessDescriptionTextView = [[BRPlaceholderTextView alloc] init];
+        _businessDescriptionTextView.layer.borderWidth = 1;
+        _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
+        _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+        NSString *titleString = @"信息备注 备注信息(非必填)";
+        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
+        [attributedTitle changeColor:[UIColor lightGrayColor] rang:[attributedTitle changeSystemFontFloat:13 from:0 legth:14]];
+        _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
+    }
+    return _businessDescriptionTextView;
 }
 
 @end
