@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHGoodsCommitController : HWPublishBaseController
+/** 订单id */
+@property (nonatomic, copy) NSString *orderID;
 
 @end
 

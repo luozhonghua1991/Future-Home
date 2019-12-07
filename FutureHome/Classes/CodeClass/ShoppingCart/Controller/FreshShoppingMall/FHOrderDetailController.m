@@ -164,7 +164,7 @@
     if (self.status == 2) {
         [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确认收货吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
-                /** 提交选举的人的资料 */
+                /** 确认收货 */
                 WS(weakSelf);
                 Account *account = [AccountStorage readAccount];
                 NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -172,7 +172,7 @@
                                            weakSelf.listModel.id,@"order_id", nil];
                 [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
                     if ([responseObj[@"code"] integerValue] == 1) {
-                        [self.navigationController popViewControllerAnimated:YES];
+                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                     } else {
                         [weakSelf.view makeToast:responseObj[@"msg"]];
                     }
@@ -200,6 +200,7 @@
         if ([self.listModel.iscomment isEqualToString:@"0"]) {
             FHGoodsCommitController *commit = [[FHGoodsCommitController alloc] init];
             commit.hidesBottomBarWhenPushed = YES;
+            commit.orderID = self.listModel.id;
             [self.navigationController pushViewController:commit animated:YES];
         }
     }

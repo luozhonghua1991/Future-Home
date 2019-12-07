@@ -31,12 +31,20 @@
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger type;
 
+@property (nonatomic, strong) MBProgressHUD *lodingHud;
+
+@property (nonatomic, assign)BOOL ifSelected;//是否选中
+
+@property (nonatomic, strong)NSIndexPath * lastSelected;//上一次选中的索引
+
+
 @end
 
 @implementation FHGoodsCommitController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.ifSelected = NO;
     self.topLogoNameArrs = @[@"喜欢满意",
                              @"感觉一般",
                              @"不满意"];
@@ -107,6 +115,7 @@
     [self initPickerView];
 }
 
+
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
     CGFloat commonCellHeight = 50.0f;
@@ -121,7 +130,38 @@
 
 
 - (void)sureBtnClick {
+    /** 添加商品评论 */
+    //显示加载视图
+    self.imgSelectArrs = [[NSMutableArray alloc] init];
+    [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.orderID,@"order_id",
+                               @(self.type),@"experience",
+                               self.imgSelectArrs,@"file[]",
+                               self.businessDescriptionTextView.text,@"content",
+                               nil];
     
+    [AFNetWorkTool uploadImagesWithUrl:@"shop/orderComment" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {
+        NSInteger code = [responseObj[@"code"] integerValue];
+        if (code == 1) {
+            [self.lodingHud hideAnimated:YES];
+            self.lodingHud = nil;
+            [weakSelf.view makeToast:@"添加商品评论成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+            });
+        } else {
+            [self.lodingHud hideAnimated:YES];
+            self.lodingHud = nil;
+            [weakSelf.view makeToast:responseObj[@"提交评论失败"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -144,13 +184,30 @@
     FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
-    if (self.topLastIndexPath == indexPath) {
+    cell.selectBtn.enabled = NO;
+    if (self.ifSelected) {
         cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
     } else {
         cell.selectBtn.backgroundColor = [UIColor redColor];
     }
     return cell;
 }
+
+#pragma mark -tableView代理方法
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSIndexPath * temp = self.lastSelected;//暂存上一次选中的行
+    if (temp && temp != indexPath)//如果上一次的选中的行存在,并且不是当前选中的这一行,则让上一行不选中
+    {
+        self.ifSelected = NO;//修改之前选中的cell的数据为不选中
+        [tableView reloadRowsAtIndexPaths:@[temp] withRowAnimation:UITableViewRowAnimationAutomatic];//刷新该行
+    }
+    self.lastSelected = indexPath;//选中的修改为当前行
+    self.ifSelected = YES;//修改这个被选中的一行
+    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];//重新刷新
+    self.type = indexPath.row + 1;
+    
+}
+
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
@@ -212,6 +269,17 @@
         _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
     }
     return _businessDescriptionTextView;
+}
+
+- (MBProgressHUD *)lodingHud{
+    if (_lodingHud == nil) {
+        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+        _lodingHud.removeFromSuperViewOnHide = YES;
+        _lodingHud.label.text = @"评论提交中...请稍后";
+        [_lodingHud showAnimated:YES];
+    }
+    return _lodingHud;
 }
 
 @end

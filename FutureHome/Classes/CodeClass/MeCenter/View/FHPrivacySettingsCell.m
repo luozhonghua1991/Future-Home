@@ -20,7 +20,7 @@
 - (void)fh_setUpUI {
     self.selectBtn.frame = CGRectMake(20, 10, 15, 15);
     [self.contentView addSubview:self.selectBtn];
-    self.logoLabel.frame = CGRectMake(MaxX(self.selectBtn), 10, 100, 13);
+    self.logoLabel.frame = CGRectMake(MaxX(self.selectBtn) + 3, 10, 100, 13);
     [self.contentView addSubview:self.logoLabel];
 }
 

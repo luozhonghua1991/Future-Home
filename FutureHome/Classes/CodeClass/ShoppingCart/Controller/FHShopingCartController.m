@@ -76,18 +76,18 @@
 
 - (void)fh_creatSelectBtn {
     //生鲜商城订单 社交商业订单 微商城订单 查看管理
-    CGSize size1 = [UIlabelTool sizeWithString:@"生鲜商城订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    freshShoppingMallBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(5),3, size1.width, self.selectNavView.frame.size.height)title:@"生鲜商城订单" tag:1];
-    [freshShoppingMallBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+    CGSize size1 = [UIlabelTool sizeWithString:@"生鲜商城" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
+    freshShoppingMallBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(25),3, size1.width, self.selectNavView.frame.size.height)title:@"生鲜商城" tag:1];
+    [freshShoppingMallBtn setTitleColor:HEX_COLOR(0x0000FF) forState:UIControlStateNormal];
     
-    CGSize size2 = [UIlabelTool sizeWithString:@"社交商业订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    buinessListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(freshShoppingMallBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size2.width, self.selectNavView.frame.size.height)title:@"社交商业订单" tag:2];
+    CGSize size2 = [UIlabelTool sizeWithString:@"社交商业" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
+    buinessListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(freshShoppingMallBtn.frame) + ZH_SCALE_SCREEN_Width(28),3, size2.width, self.selectNavView.frame.size.height)title:@"社交商业" tag:2];
     
-    CGSize size3 = [UIlabelTool sizeWithString:@"医药商城订单" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    littleShopListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(buinessListBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size3.width, self.selectNavView.frame.size.height)title:@"医药商城订单" tag:3];
+    CGSize size3 = [UIlabelTool sizeWithString:@"医药商城" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
+    littleShopListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(buinessListBtn.frame) + ZH_SCALE_SCREEN_Width(28),3, size3.width, self.selectNavView.frame.size.height)title:@"医药商城" tag:3];
     
-    CGSize size4 = [UIlabelTool sizeWithString:@"地址/发票" font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
-    viewManagementBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(littleShopListBtn.frame) + ZH_SCALE_SCREEN_Width(25),3, size4.width, self.selectNavView.frame.size.height)title:@"地址/发票" tag:4];
+    CGSize size4 = [UIlabelTool sizeWithString:@"地址/发票" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
+    viewManagementBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(littleShopListBtn.frame) + ZH_SCALE_SCREEN_Width(28),3, size4.width, self.selectNavView.frame.size.height)title:@"地址/发票" tag:4];
 }
 
 - (void)fh_setMainScrollView {
@@ -139,7 +139,7 @@
 - (UIButton *)creatBtnWithFrame:(CGRect )frame title:(NSString *)title tag:(NSInteger ) tag{
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = frame;
-    btn.titleLabel.font = [UIFont systemFontOfSize:14];
+    btn.titleLabel.font = [UIFont systemFontOfSize:15];
     [btn addTarget:self action:@selector(sliderAction:) forControlEvents:UIControlEventTouchUpInside];
     [btn setTitle:title forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -202,7 +202,7 @@
         [self->buinessListBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->littleShopListBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->viewManagementBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+        [sender setTitleColor:HEX_COLOR(0x0000FF) forState:UIControlStateNormal];
     }];
     
 }
