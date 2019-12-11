@@ -15,6 +15,7 @@
 #import "FHAppDelegate.h"
 #import "FHReturnRefundController.h"
 #import "FHGoodsCommitController.h"
+#import "LeoPayManager.h"
 
 @interface FHWaitOrderController () <UITableViewDelegate,UITableViewDataSource,FHCommonPaySelectViewDelegate>
 {
@@ -27,8 +28,10 @@
 @property (nonatomic, strong) NSMutableArray *dataListArrs;
 
 @property (nonatomic, strong) FHCommonPaySelectView *payView;
-/** <#copy属性注释#> */
-//@property (nonatomic, copy) NSString *typeString;
+/** 支付类型 1 支付宝 2 微信*/
+@property (nonatomic, assign) NSInteger payType;
+/** 订单id */
+@property (nonatomic, copy) NSString *orderID;
 
 
 @end
@@ -181,6 +184,9 @@
     FHGoodsListModel *listModel = self.dataListArrs[sender.tag];
     if (self.status == 1) {
         /** 待付款 */
+        self.orderID = listModel.id;
+        [self creatPayViewWithPrice:listModel.pay_money];
+        [self showPayView];
     } else if (self.status == 2) {
         /** 待收货 */
         [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确认收货吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -280,6 +286,17 @@
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 
+#pragma mark - 显示支付弹窗
+- (void)showPayView{
+    __weak FHWaitOrderController *weakSelf = self;
+    self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [weakSelf.payView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        weakSelf.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    }];
+}
+
 - (void)creatPayViewWithPrice:(NSString *)price {
     if (!self.payView) {
         self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",price]];
@@ -289,6 +306,49 @@
     [delegate.window addSubview:_payView];
 }
 
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    self.payType = selectType;
+    /** 待付款的操作 */
+    [self sureOrderRequest];
+}
+
+- (void)sureOrderRequest {
+    /** 待付款的下单 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.orderID,@"order_id",
+                               @(self.payType),@"pay_way",
+                               nil];
+    
+    [AFNetWorkTool post:@"shop/orderPaid" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (weakSelf.payType == 1) {
+                /** 支付宝支付 */
+                LeoPayManager *manager = [LeoPayManager getInstance];
+                [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                    if (respCode == 0) {
+                        /** 支付成功 */
+                        WS(weakSelf);
+                        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"付款成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                            if (buttonIndex == 0) {
+                                [weakSelf loadInit];
+                            }
+                        }];
+                    } else if (respCode == -2) {
+                        [self.view makeToast:respMsg];
+                    }
+                }];
+            }
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {

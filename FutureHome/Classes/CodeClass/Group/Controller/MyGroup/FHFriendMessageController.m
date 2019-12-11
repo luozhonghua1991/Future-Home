@@ -16,7 +16,8 @@
     NSMutableArray *_imgs;//图片数组
     BOOL isNotice;
 }
-
+/** 自定义导航栏视图 */
+@property (nonatomic, strong) UIView *navgationView;
 /**
  * 聊天的tableView
  */
@@ -45,15 +46,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fh_creatNav];
-//    [self.view addSubview:self.tableView];
-    [self.view addSubview:self.chatToolBar];
+////    [self.view addSubview:self.tableView];
+//    [self.view addSubview:self.chatToolBar];
+}
+
+//隐藏导航栏
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
 }
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
 - (void)fh_creatNav {
-    self.isHaveNavgationView = YES;
-    self.navgationView.userInteractionEnabled = YES;
+    if (!self.navgationView) {
+        self.navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainSizeHeight)];
+        self.navgationView.backgroundColor = HEX_COLOR(0x1296db);
+        self.navgationView.userInteractionEnabled = YES;
+        [self.view addSubview:self.navgationView];
+        self.navgationView.userInteractionEnabled = YES;
+    }
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = self.titleString;
@@ -77,51 +94,51 @@
 - (void)backBtnClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-
-#pragma mark — event
-// 点击背景隐藏
-- (void)keyBoardHidden {
-    [self.chatToolBar endEditing:YES];
-}
-
-- (void)applicationDidEnterBackground {
-    [_chatToolBar cancelTouchRecord];
-}
-
-- (void)aClockButtonClick {
-    
-}
-
-#pragma mark — setter && getter
-//- (UITableView *)tableView{
-//    if (_tableView == nil) {
-//        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width, self.view.frame.size.height - MainSizeHeight -self.chatToolBar.frame.size.height) style:UITableViewStylePlain];
-//        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-//        _tableView.delegate = self;
-//        _tableView.dataSource = self;
-//        _tableView.backgroundColor = [UIColor whiteColor];
-//        _tableView.tableFooterView = [[UIView alloc] init];
-//        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    }
 //
-//    return _tableView;
+//
+//#pragma mark — event
+//// 点击背景隐藏
+//- (void)keyBoardHidden {
+//    [self.chatToolBar endEditing:YES];
 //}
-
-- (DXMessageToolBar *)chatToolBar {
-    if (_chatToolBar == nil) {
-        MessageType messageType = MessageTypeChat;
-        _chatToolBar = [[DXMessageToolBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - [DXMessageToolBar defaultHeight], self.view.frame.size.width, [DXMessageToolBar defaultHeight])MessageType:messageType];
-        _chatToolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
-        _chatToolBar.delegate = self;
-        //单聊
-        ChatMoreType type = ChatMoreTypeChat;
-        _chatToolBar.moreView = [[DXChatBarMoreView alloc] initWithFrame:CGRectMake(0, (kVerticalPadding * 2 + kInputTextViewMinHeight), _chatToolBar.frame.size.width, 100) typw:type];
-        _chatToolBar.moreView.backgroundColor = RGBACOLOR(240, 242, 247, 1);
-        _chatToolBar.moreView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-    }
-    
-    return _chatToolBar;
-}
+//
+//- (void)applicationDidEnterBackground {
+//    [_chatToolBar cancelTouchRecord];
+//}
+//
+//- (void)aClockButtonClick {
+//    
+//}
+//
+//#pragma mark — setter && getter
+////- (UITableView *)tableView{
+////    if (_tableView == nil) {
+////        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width, self.view.frame.size.height - MainSizeHeight -self.chatToolBar.frame.size.height) style:UITableViewStylePlain];
+////        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+////        _tableView.delegate = self;
+////        _tableView.dataSource = self;
+////        _tableView.backgroundColor = [UIColor whiteColor];
+////        _tableView.tableFooterView = [[UIView alloc] init];
+////        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+////    }
+////
+////    return _tableView;
+////}
+//
+//- (DXMessageToolBar *)chatToolBar {
+//    if (_chatToolBar == nil) {
+//        MessageType messageType = MessageTypeChat;
+//        _chatToolBar = [[DXMessageToolBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - [DXMessageToolBar defaultHeight], self.view.frame.size.width, [DXMessageToolBar defaultHeight])MessageType:messageType];
+//        _chatToolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
+//        _chatToolBar.delegate = self;
+//        //单聊
+//        ChatMoreType type = ChatMoreTypeChat;
+//        _chatToolBar.moreView = [[DXChatBarMoreView alloc] initWithFrame:CGRectMake(0, (kVerticalPadding * 2 + kInputTextViewMinHeight), _chatToolBar.frame.size.width, 100) typw:type];
+//        _chatToolBar.moreView.backgroundColor = RGBACOLOR(240, 242, 247, 1);
+//        _chatToolBar.moreView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+//    }
+//    
+//    return _chatToolBar;
+//}
 
 @end

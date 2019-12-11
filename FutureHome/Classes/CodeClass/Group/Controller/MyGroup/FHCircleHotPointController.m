@@ -71,6 +71,7 @@
 
 #pragma mark - 获取数据
 - (void)getCommitsData {
+    
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     /** 朋友圈封面信息 */
@@ -128,10 +129,11 @@
             }
             [weakSelf requestWithDontTaiDic:Dic];
         } else {
+            [weakSelf.mainTable.mj_header endRefreshing];
             [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        
+        [weakSelf.mainTable.mj_header endRefreshing];
     }];
     
     

@@ -71,7 +71,7 @@
     [AFNetWorkTool post:@"userCenter/updateNickname" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"修改用户昵称成功"];
-            account.name = self.nameTF.text;
+            account.nickname = self.nameTF.text;
             [AccountStorage saveAccount:account];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];

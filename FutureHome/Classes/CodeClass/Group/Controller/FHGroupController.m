@@ -173,8 +173,8 @@
     //我的社云 我的动态 商业服务 公共服务
     CGSize size1 = [UIlabelTool sizeWithString:@"我的社云" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     
-    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(7),3, size1.width, self.selectNavView.frame.size.height)title:@"我的社云" tag:1];
-    [myGroupBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+    myGroupBtn = [self creatBtnWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(10),3, size1.width, self.selectNavView.frame.size.height)title:@"我的社云" tag:1];
+    [myGroupBtn setTitleColor:HEX_COLOR(0x0000FF) forState:UIControlStateNormal];
     
     CGSize size2 = [UIlabelTool sizeWithString:@"我的动态" font:[UIFont systemFontOfSize:16] width:SCREEN_WIDTH];
     myVideoBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(myGroupBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size2.width, self.selectNavView.frame.size.height)title:@"我的动态" tag:2];

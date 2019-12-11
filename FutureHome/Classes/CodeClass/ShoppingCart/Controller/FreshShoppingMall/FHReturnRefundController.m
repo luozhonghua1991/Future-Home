@@ -133,7 +133,8 @@
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        
+        [self.lodingHud hideAnimated:YES];
+        self.lodingHud = nil;
     }];
 }
 

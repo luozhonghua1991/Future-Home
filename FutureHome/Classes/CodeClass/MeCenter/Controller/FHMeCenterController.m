@@ -33,7 +33,7 @@
                       @"实名认证",
                       @"隐私设置",
                       @"开通账户",
-                      @"关于未来家园"];
+                      @"关于社云"];
     [self.view addSubview:self.meCenterTable];
     self.meCenterTable.tableFooterView = self.meCenterFooterView;
     self.meCenterFooterView.height = self.meCenterFooterView.height;
@@ -45,7 +45,7 @@
     [super viewWillAppear:animated];
     Account *account = [AccountStorage readAccount];
     [self.meCenterHeaderView.userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
-    self.meCenterHeaderView.userNameLabel.text = account.name;
+    self.meCenterHeaderView.userNameLabel.text = account.nickname;
 }
 
 #pragma mark — 通用导航栏
@@ -129,8 +129,8 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
-    cell.textLabel.text = @"客服电话";
-    cell.detailTextLabel.text = @"02555555555";
+    cell.textLabel.text = @"投诉邮箱";
+    cell.detailTextLabel.text = @"123456@qq.com";
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

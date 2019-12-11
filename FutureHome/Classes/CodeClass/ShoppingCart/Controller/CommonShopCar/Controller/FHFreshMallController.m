@@ -141,7 +141,7 @@
 //    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 2  - 10, MainStatusBarHeight, 35, 35);
+    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 10, MainStatusBarHeight, 28, 28);
     if ([self.isCollect isEqualToString:@"0"]) {
         [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     } else if ([self.isCollect isEqualToString:@"1"]) {
@@ -154,7 +154,7 @@
     [self.navgationView addSubview:followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 35 - 5, MainStatusBarHeight, 35, 35);
+    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 28 - 5, MainStatusBarHeight, 28, 28);
     [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
     [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:menuBtn];

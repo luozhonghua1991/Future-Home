@@ -12,8 +12,11 @@
 #import "BRPlaceholderTextView.h"
 #import "FHReturnRefundController.h"
 #import "FHGoodsCommitController.h"
+#import "FHCommonPaySelectView.h"
+#import "FHAppDelegate.h"
+#import "LeoPayManager.h"
 
-@interface FHOrderDetailController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHOrderDetailController () <UITableViewDelegate,UITableViewDataSource,FHCommonPaySelectViewDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 用户名字 */
@@ -38,6 +41,10 @@
 @property (nonatomic, assign) CGFloat totalMoneyString;
 /** 营业说明textView */
 @property (nonatomic, strong) BRPlaceholderTextView *businessDescriptionTextView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHCommonPaySelectView *payView;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger payType;
 
 @end
 
@@ -129,7 +136,18 @@
     [bottomBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
     NSString *typeString;
     if (self.status == 1) {
+        UIButton *cancelBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        cancelBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH / 2 - 1, ZH_SCALE_SCREEN_Height(50));
+        cancelBtn.backgroundColor = HEX_COLOR(0x1296db);
+        [cancelBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [cancelBtn addTarget:self action:@selector(cancelBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [cancelBtn setTitle:@"取消订单" forState:UIControlStateNormal];
+        [self.view addSubview:cancelBtn];
+        
         typeString = @"待付款";
+        bottomBtn.frame = CGRectMake(MaxX(cancelBtn) + 1 ,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH / 2, ZH_SCALE_SCREEN_Height(50));
+        
     } else if (self.status == 2) {
         typeString = @"确认收货";
     } else if (self.status == 3) {
@@ -160,6 +178,40 @@
     [self.view addSubview:bottomBtn];
 }
 
+/** 取消订单 */
+- (void)cancelBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定要取消订单吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            /** 确定删除 */
+            [weakSelf cancelOrderWithRequest];
+        }
+    }];
+}
+
+- (void)cancelOrderWithRequest {
+    /** 取消订单 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.listModel.id,@"order_id", nil];
+    [AFNetWorkTool post:@"shop/cancelOrder" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"取消订单成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
+
+
+/** 确认收货 */
 - (void)addInvoiceBtnClick {
     if (self.status == 2) {
         [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确认收货吗?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -203,7 +255,75 @@
             commit.orderID = self.listModel.id;
             [self.navigationController pushViewController:commit animated:YES];
         }
+    } else if (self.status == 1) {
+        /** 代付款 */
+        [self creatPayViewWithPrice:self.listModel.pay_money];
+        [self showPayView];
     }
+}
+
+#pragma mark - 显示支付弹窗
+- (void)showPayView{
+    __weak FHOrderDetailController *weakSelf = self;
+    self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [weakSelf.payView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        weakSelf.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+    }];
+}
+
+- (void)creatPayViewWithPrice:(NSString *)price {
+    if (!self.payView) {
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.listModel.pay_money]];
+        _payView.delegate = self;
+    }
+    FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:_payView];
+}
+
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    self.payType = selectType;
+    /** 待付款的操作 */
+    [self sureOrderRequest];
+}
+
+- (void)sureOrderRequest {
+    /** 待付款的下单 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.listModel.id,@"order_id",
+                               @(self.payType),@"pay_way",
+                               nil];
+    
+    [AFNetWorkTool post:@"shop/orderPaid" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (weakSelf.payType == 1) {
+                /** 支付宝支付 */
+                LeoPayManager *manager = [LeoPayManager getInstance];
+                [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                    if (respCode == 0) {
+                        /** 支付成功 */
+                        WS(weakSelf);
+                        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"付款成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                            if (buttonIndex == 0) {
+                                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                            }
+                        }];
+                    } else if (respCode == -2) {
+                        [self.view makeToast:respMsg];
+                    }
+                }];
+            }
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
 }
 
 #pragma mark  -- tableViewDelagate

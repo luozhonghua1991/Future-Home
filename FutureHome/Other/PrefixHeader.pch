@@ -40,6 +40,7 @@
 #import "Header.h"
 #import "AccountStorage.h"
 #import "Account.h"
+#import <RongIMKit/RongIMKit.h>
 
 
 //获取当前屏幕的宽高
@@ -91,6 +92,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 //iPhone X底部边距
 #define STATUS_BAR_HIGHT CGRectGetHeight([UIApplication sharedApplication].statusBarFrame)
 #define SAFE_AREA_BOTTOM (STATUS_BAR_HIGHT > 20 ? 34.0 : 0.0)
+#define RONGCLOUDAPPKEY @"bmdehs6pbaqis"
 
 // block
 #define weakify(var) \

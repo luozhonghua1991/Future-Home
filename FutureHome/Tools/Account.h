@@ -30,6 +30,9 @@
 /** 手机号 */
 @property (nonatomic, copy) NSString *mobile;
 
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *rong_token;
+
 
 ///** Analyst: 分析师 NormalUser: 普通用户 */
 //@property (nonatomic, copy) NSString *type;

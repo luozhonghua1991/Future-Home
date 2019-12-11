@@ -205,7 +205,7 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homeTable.showsVerticalScrollIndicator = NO;
-        _homeTable.scrollEnabled = NO;
+        _homeTable.scrollEnabled = YES;
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

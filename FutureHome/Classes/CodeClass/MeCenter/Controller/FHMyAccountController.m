@@ -118,7 +118,7 @@
     } else if (indexPath.row == 1) {
         /** 修改昵称 */
         FHChangeNameController *change = [[FHChangeNameController alloc] init];
-        change.strNikeName = self.account.name;
+        change.strNikeName = self.account.nickname;
         [self.navigationController pushViewController:change animated:YES];
     } else if (indexPath.row == 4) {
         /** 修改个性签名 */

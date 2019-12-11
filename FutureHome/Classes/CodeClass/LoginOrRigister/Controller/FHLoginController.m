@@ -256,6 +256,15 @@
                 /** 保存用户信息 */
                 Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
                 [AccountStorage saveAccount:account];
+                //登录融云服务器,开始阶段可以先从融云API调试网站获取，之后token需要通过服务器到融云服务器取。
+                NSString*token=account.rong_token;
+                [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+                    //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
+                } error:^(RCConnectErrorCode status) {
+                    NSLog(@"login error status: %ld.", (long)status);
+                } tokenIncorrect:^{
+                    NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
+                }];
                 NSString *msg = responseObj[@"msg"];
                 [self.view makeToast:msg];
                 [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];

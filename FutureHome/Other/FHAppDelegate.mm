@@ -18,10 +18,11 @@
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
 #import "LeoPayManager.h"
+#import <RongIMKit/RongIMKit.h>
 
 static FHAppDelegate* pSelf = nil;
 
-@interface FHAppDelegate () <WXApiDelegate>
+@interface FHAppDelegate () <WXApiDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate>
 
 @end
 
@@ -33,6 +34,22 @@ static FHAppDelegate* pSelf = nil;
     [self.window makeKeyAndVisible];
     pSelf = self;
     [WXApi registerApp:@"wx73519589eb9e4996" universalLink:@""];
+    
+    [[RCIM sharedRCIM] initWithAppKey:RONGCLOUDAPPKEY];
+    [RCIM sharedRCIM].connectionStatusDelegate = self;
+    [[RCIM sharedRCIM] setUserInfoDataSource:self];
+    /** 与融云服务器建立连接 */
+    Account *account = [AccountStorage readAccount];
+    if (account.rong_token) {
+        [[RCIM sharedRCIM] connectWithToken:account.rong_token success:^(NSString *userId) {
+        } error:^(RCConnectErrorCode status) {
+            NSLog(@"login error status: %ld.", (long)status);
+        } tokenIncorrect:^{
+            NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
+        }];
+    } else {
+        [FHLoginTool fh_makePersonToLoging];
+    }
     [self setTabBarController];
     return YES;
 }
@@ -173,5 +190,46 @@ static FHAppDelegate* pSelf = nil;
     return YES;
 }
 
+
+// MARK: - 融云服务器连接状态监听
+- (void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status {
+    if (status == ConnectionStatus_Connected) {
+        NSLog(@"融云服务器连接成功!");
+    } else  {
+        if (status == ConnectionStatus_SignUp) {
+            NSLog(@"融云服务器断开连接!");
+        } else {
+            NSLog(@"融云服务器连接失败!");
+        }
+    }
+}
+
+// 设置会话的头像和昵称等   是好友的头像和昵称，不是自己的
+- (void)getUserInfoWithUserId:(NSString *)userId
+                   completion:(void (^)(RCUserInfo *userInfo))completion {
+    NSLog(@"------ userID = %@ ---------", userId);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   userId,@"userId",
+                                   nil];
+        
+        [AFNetWorkTool get:@"sheyun/getUserInfor" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+                userInfo.userId = userId;
+                userInfo.name = responseObj[@"data"][@"userName"];
+                userInfo.portraitUri = responseObj[@"data"][@"userPortrait"];
+                return completion(userInfo);
+            } else {
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+        return completion(nil);
+    });
+}
 
 @end

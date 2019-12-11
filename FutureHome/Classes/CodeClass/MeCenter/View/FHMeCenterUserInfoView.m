@@ -84,8 +84,8 @@
     if (!_userNameLabel) {
         _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 20, 100, 16)];
 //        _userNameLabel.text = @"许大宝~";
-        if (!IsStringEmpty(self.account.name)) {
-            _userNameLabel.text = [NSString stringWithFormat:@"%@",self.account.name];
+        if (!IsStringEmpty(self.account.nickname)) {
+            _userNameLabel.text = [NSString stringWithFormat:@"%@",self.account.nickname];
         }
         _userNameLabel.textColor = [UIColor blackColor];
         _userNameLabel.textAlignment = NSTextAlignmentLeft;
@@ -97,7 +97,7 @@
     if (!_futureHomeCodeLabel) {
         _futureHomeCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 50, 200, 16)];
 //        _futureHomeCodeLabel.text = @"未来家园号:11111111";
-        _futureHomeCodeLabel.text = [NSString stringWithFormat:@"未来家园号: %@",self.account.username];
+        _futureHomeCodeLabel.text = [NSString stringWithFormat:@"社云号: %@",self.account.username];
         _futureHomeCodeLabel.textColor = [UIColor blackColor];
         _futureHomeCodeLabel.textAlignment = NSTextAlignmentLeft;
     }

@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/7/23.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  关于未来家园
+//  关于社云
 
 #import "FHAboutFutureHomeController.h"
 
@@ -38,7 +38,7 @@
     self.isHaveNavgationView = YES; self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"关于未来家园";
+    titleLabel.text = @"关于社云";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;

@@ -374,10 +374,11 @@ FHCommonPaySelectViewDelegate
 
 - (void)submitBtnClick {
     /** 确认并提交 */
-    if (self.selectIDCardsImgArrs.count != 3) {
-        [self.view makeToast:@"身份认证信息认证不能为空"];
-        return;
-    }
+//    if (self.selectIDCardsImgArrs.count != 3) {
+//        [self.view makeToast:@"身份认证信息认证不能为空"];
+//        return;
+//    }
+    
     if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
