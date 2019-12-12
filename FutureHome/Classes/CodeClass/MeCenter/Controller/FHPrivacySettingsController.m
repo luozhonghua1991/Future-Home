@@ -71,79 +71,80 @@
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 2) {
-        return 1;
-    }
-    return 3;
+//    if (section == 2) {
+//        return 1;
+//    }
+    return 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    if (section == 2) {
-        return 10.0f;
-    }
-    return 37.0f;
+//    if (section == 2) {
+//        return 10.0f;
+//    }
+//    return 37.0f;
+    return 0.01;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 2) {
+//    if (section == 2) {
         return 0.0f;
-    }
-    return 40.01f;
+//    }
+//    return 40.01f;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 35;
 }
 
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 2) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
-        view.backgroundColor = [UIColor whiteColor];
-        return view;
-    } else {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
-        view.backgroundColor = [UIColor whiteColor];
-        
-        UILabel *logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 16)];
-        logoLabel.textAlignment = NSTextAlignmentLeft;
-        
-        if (section == 0) {
-            logoLabel.text = @"谁可以发消息给我";
-        } else {
-            logoLabel.text = @"谁可以看我的朋友圈";
-        }
-        [view addSubview:logoLabel];
-        return view;
-    }
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+//    if (section == 2) {
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 30)];
+//        view.backgroundColor = [UIColor whiteColor];
+//        return view;
+//    } else {
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+//        view.backgroundColor = [UIColor whiteColor];
+//
+//        UILabel *logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 200, 16)];
+//        logoLabel.textAlignment = NSTextAlignmentLeft;
+//
+//        if (section == 0) {
+//            logoLabel.text = @"谁可以发消息给我";
+//        } else {
+//            logoLabel.text = @"谁可以看我的朋友圈";
+//        }
+//        [view addSubview:logoLabel];
+//        return view;
+//    }
+//}
 
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
-    if (section == 2) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 10)];
-        view.backgroundColor = [UIColor whiteColor];
-        
-        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 2, SCREEN_WIDTH - 40, 1)];
-        bottomLine.backgroundColor = [UIColor lightGrayColor];
-        [view addSubview:bottomLine];
-        
-        return view;
-    } else {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 37)];
-        view.backgroundColor = [UIColor whiteColor];
-        
-        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 2, SCREEN_WIDTH - 40, 1)];
-        bottomLine.backgroundColor = [UIColor lightGrayColor];
-        [view addSubview:bottomLine];
-        return view;
-    }
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+//    if (section == 2) {
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 10)];
+//        view.backgroundColor = [UIColor whiteColor];
+//
+//        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 2, SCREEN_WIDTH - 40, 1)];
+//        bottomLine.backgroundColor = [UIColor lightGrayColor];
+//        [view addSubview:bottomLine];
+//
+//        return view;
+//    } else {
+//        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 37)];
+//        view.backgroundColor = [UIColor whiteColor];
+//
+//        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(20, 2, SCREEN_WIDTH - 40, 1)];
+//        bottomLine.backgroundColor = [UIColor lightGrayColor];
+//        [view addSubview:bottomLine];
+//        return view;
+//    }
+//}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
+//    if (indexPath.section == 1) {
         static NSString *ID = @"cell1";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
         if (!cell) {
@@ -153,34 +154,39 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    } else if (indexPath.section == 0) {
-            FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
-            if (self.topLastIndexPath == indexPath) {
-                cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
-            } else {
-                cell.selectBtn.backgroundColor = [UIColor redColor];
-            }
-        return cell;
-        } else {
-            FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.bottomLogoNameArrs[indexPath.row]];
-            if (self.bottomLastIndexPath == indexPath) {
-                cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
-            } else {
-                cell.selectBtn.backgroundColor = [UIColor redColor];
-            }
-              return cell;
-        }
+//    } else if (indexPath.section == 0) {
+//            FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
+//            if (self.topLastIndexPath == indexPath) {
+//                cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
+//            } else {
+//                cell.selectBtn.backgroundColor = [UIColor redColor];
+//            }
+//        return cell;
+//        } else {
+//            FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
+//            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.bottomLogoNameArrs[indexPath.row]];
+//            if (self.bottomLastIndexPath == indexPath) {
+//                cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
+//            } else {
+//                cell.selectBtn.backgroundColor = [UIColor redColor];
+//            }
+//              return cell;
+//        }
     
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self viewControllerPushOther:@"FHBlackListController"];
+    return;
+    
+    
     if (indexPath.section == 2) {
         /** 黑名单列表 */
-        [self viewControllerPushOther:@"FHBlackListController"];
+        
     } else {
         if (indexPath.section == 0) {
             FHPrivacySettingsCell *oldCell = [tableView cellForRowAtIndexPath:self.topLastIndexPath];
@@ -201,7 +207,7 @@
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
-        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight + 50, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - 50) style:UITableViewStylePlain];
+        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) style:UITableViewStylePlain];
         _homeTable.dataSource = self;
         _homeTable.delegate = self;
         _homeTable.showsVerticalScrollIndicator = NO;

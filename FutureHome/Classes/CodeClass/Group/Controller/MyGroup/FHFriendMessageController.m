@@ -9,13 +9,17 @@
 #import "FHFriendMessageController.h"
 #import "DXMessageToolBar.h"
 #import "TZImagePickerController.h"
+#import "FHPersonDetailController.h"
 
-@interface FHFriendMessageController () <UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,DXChatBarMoreViewDelegate,DXMessageToolBarDelegate,TZImagePickerControllerDelegate,UITextViewDelegate>
+@interface FHFriendMessageController () <RCPluginBoardViewDelegate>
 
 {
     NSMutableArray *_imgs;//图片数组
     BOOL isNotice;
 }
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIImageView *codeImgView;
+
 /** 自定义导航栏视图 */
 @property (nonatomic, strong) UIView *navgationView;
 /**
@@ -46,8 +50,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fh_creatNav];
-////    [self.view addSubview:self.tableView];
-//    [self.view addSubview:self.chatToolBar];
+    self.conversationMessageCollectionView.backgroundColor = [UIColor whiteColor];
+    [self.chatSessionInputBarControl.pluginBoardView removeItemAtIndex:2];
 }
 
 //隐藏导航栏
@@ -89,56 +93,26 @@
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [self.navgationView addSubview:bottomLineView];
+    
+    self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, MainStatusBarHeight + 5, 25, 25)];
+    self.codeImgView.image = [UIImage imageNamed:@"geren"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+    self.codeImgView.userInteractionEnabled = YES;
+    [self.codeImgView addGestureRecognizer:tap];
+    [self.navgationView addSubview:self.codeImgView];
 }
 
 - (void)backBtnClick {
     [self.navigationController popViewControllerAnimated:YES];
 }
-//
-//
-//#pragma mark — event
-//// 点击背景隐藏
-//- (void)keyBoardHidden {
-//    [self.chatToolBar endEditing:YES];
-//}
-//
-//- (void)applicationDidEnterBackground {
-//    [_chatToolBar cancelTouchRecord];
-//}
-//
-//- (void)aClockButtonClick {
-//    
-//}
-//
-//#pragma mark — setter && getter
-////- (UITableView *)tableView{
-////    if (_tableView == nil) {
-////        _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width, self.view.frame.size.height - MainSizeHeight -self.chatToolBar.frame.size.height) style:UITableViewStylePlain];
-////        _tableView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-////        _tableView.delegate = self;
-////        _tableView.dataSource = self;
-////        _tableView.backgroundColor = [UIColor whiteColor];
-////        _tableView.tableFooterView = [[UIView alloc] init];
-////        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-////    }
-////
-////    return _tableView;
-////}
-//
-//- (DXMessageToolBar *)chatToolBar {
-//    if (_chatToolBar == nil) {
-//        MessageType messageType = MessageTypeChat;
-//        _chatToolBar = [[DXMessageToolBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - [DXMessageToolBar defaultHeight], self.view.frame.size.width, [DXMessageToolBar defaultHeight])MessageType:messageType];
-//        _chatToolBar.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
-//        _chatToolBar.delegate = self;
-//        //单聊
-//        ChatMoreType type = ChatMoreTypeChat;
-//        _chatToolBar.moreView = [[DXChatBarMoreView alloc] initWithFrame:CGRectMake(0, (kVerticalPadding * 2 + kInputTextViewMinHeight), _chatToolBar.frame.size.width, 100) typw:type];
-//        _chatToolBar.moreView.backgroundColor = RGBACOLOR(240, 242, 247, 1);
-//        _chatToolBar.moreView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
-//    }
-//    
-//    return _chatToolBar;
-//}
+
+- (void)tapClick {
+    /** 用户详情 */
+    FHPersonDetailController *vc = [[FHPersonDetailController alloc] init];
+    vc.targetId = self.targetId;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 @end

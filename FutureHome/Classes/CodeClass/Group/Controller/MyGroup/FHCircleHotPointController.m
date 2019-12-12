@@ -14,6 +14,7 @@
 #import "FHPersonTrendsController.h"
 #import "FHZJHaveMoveCell.h"
 #import "ZFDouYinViewController.h"
+#import "FHFriendMessageController.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
@@ -53,6 +54,12 @@
 @property (nonatomic, copy) NSString *followMessage;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *videoListDataArrs;
+
+/** 融云用户的userID */
+@property (nonatomic, copy) NSString *username;
+/** 用户的昵称 */
+@property (nonatomic, copy) NSString *nickname;
+
 
 @end
 
@@ -141,6 +148,8 @@
     [AFNetWorkTool get:@"sheyun/circleInfo" params:headerParamsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
+            weakSelf.username = dic[@"username"];
+            weakSelf.nickname = dic[@"nickname"];
             [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
             [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
             weakSelf.nameLabel.text = dic[@"nickname"];
@@ -361,7 +370,12 @@
 - (void)updateBtnClcik {
     if (self.personType == 0) {
         /** 聊天 */
-        
+        FHFriendMessageController *conversationVC = [[FHFriendMessageController alloc] init];
+        conversationVC.conversationType = ConversationType_PRIVATE;
+        conversationVC.targetId = self.username;
+        conversationVC.titleString = self.nickname;
+        conversationVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:conversationVC animated:YES];
     } else {
         /** 发布动态 */
         [self viewControllerPushOther:@"FHReleaseDynamicsController"];

@@ -517,6 +517,7 @@
 		4AAC981E22D70F5300E4D0B8 /* FFDropDownMenuModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981622D70F5300E4D0B8 /* FFDropDownMenuModel.m */; };
 		4AAC981F22D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAC981722D70F5300E4D0B8 /* FFDropDownMenuTriangleView.m */; };
 		4AAE629D238D413A00699C5B /* FHOrderListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE629C238D413A00699C5B /* FHOrderListModel.m */; };
+		4AAE66E123A21EB000CD65EE /* FHPersonDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AAE66E023A21EB000CD65EE /* FHPersonDetailController.m */; };
 		4AB0168722CB2B97001D6995 /* FHMeCenterUserInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */; };
 		4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0168922CB4A60001D6995 /* FHUserInfoHeaderBaseView.m */; };
 		4AB2011A22F284D800111AC4 /* FastForwardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AB2011522F284D800111AC4 /* FastForwardView.xib */; };
@@ -2021,6 +2022,8 @@
 		4AAC981822D70F5300E4D0B8 /* FFDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFDropDownMenu.h; sourceTree = "<group>"; };
 		4AAE629B238D413A00699C5B /* FHOrderListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOrderListModel.h; sourceTree = "<group>"; };
 		4AAE629C238D413A00699C5B /* FHOrderListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOrderListModel.m; sourceTree = "<group>"; };
+		4AAE66DF23A21EB000CD65EE /* FHPersonDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPersonDetailController.h; sourceTree = "<group>"; };
+		4AAE66E023A21EB000CD65EE /* FHPersonDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPersonDetailController.m; sourceTree = "<group>"; };
 		4AB0168522CB2B97001D6995 /* FHMeCenterUserInfoView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMeCenterUserInfoView.h; sourceTree = "<group>"; };
 		4AB0168622CB2B97001D6995 /* FHMeCenterUserInfoView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMeCenterUserInfoView.m; sourceTree = "<group>"; };
 		4AB0168822CB4A60001D6995 /* FHUserInfoHeaderBaseView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHUserInfoHeaderBaseView.h; sourceTree = "<group>"; };
@@ -5891,6 +5894,8 @@
 		4AC67DE622C8481E00842C0D /* MyGroup */ = {
 			isa = PBXGroup;
 			children = (
+				4AAE66DF23A21EB000CD65EE /* FHPersonDetailController.h */,
+				4AAE66E023A21EB000CD65EE /* FHPersonDetailController.m */,
 				4A448CDD22C702E5003D0712 /* FHMyGroupController.h */,
 				4A448CDE22C702E5003D0712 /* FHMyGroupController.m */,
 				4AC67DE322C8481200842C0D /* FHMessageController.h */,
@@ -6704,6 +6709,7 @@
 				4A97078B22DC63F300FD18EC /* FHBuinessAccountApplicationController.m in Sources */,
 				4A51D98A2307FC5200A5313E /* FHSureOrderController.m in Sources */,
 				4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */,
+				4AAE66E123A21EB000CD65EE /* FHPersonDetailController.m in Sources */,
 				4AB203B122F2DD7300111AC4 /* ZXQRCodeMode.m in Sources */,
 				4A6DAA9A22C0AD7C00F29455 /* LCTabBarController.m in Sources */,
 				4AE8464F22E2B940009E165B /* FHProofOfOwnershipView.m in Sources */,

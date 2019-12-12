@@ -93,6 +93,9 @@
 @property (nonatomic, strong) NSMutableArray *goodsArrs;
 /** 总价 */
 @property (nonatomic, copy) NSString *totalMoneyString;
+/** 用户的所有好友信息数组 */
+@property (nonatomic, strong) NSArray *allFriendsArrs;
+
 
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串

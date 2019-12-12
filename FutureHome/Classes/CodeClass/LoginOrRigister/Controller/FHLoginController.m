@@ -260,6 +260,11 @@
                 NSString*token=account.rong_token;
                 [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
                     //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
+                    RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+                    userInfo.userId = account.username;
+                    userInfo.name = account.nickname;
+                    userInfo.portraitUri = account.avatar;
+                    [RCIM sharedRCIM].currentUserInfo = userInfo;
                 } error:^(RCConnectErrorCode status) {
                     NSLog(@"login error status: %ld.", (long)status);
                 } tokenIncorrect:^{

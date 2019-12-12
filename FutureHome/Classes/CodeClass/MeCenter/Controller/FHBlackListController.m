@@ -12,6 +12,8 @@
 @interface FHBlackListController () <UITableViewDataSource,UITableViewDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** 黑名单列表 */
+@property (nonatomic, strong) NSMutableArray *blackListArrs;
 
 @end
 
@@ -22,6 +24,7 @@
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHBlackListCell class] forCellReuseIdentifier:NSStringFromClass([FHBlackListCell class])];
+    [self getDataWithRequest];
 }
 
 
@@ -54,10 +57,30 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)getDataWithRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               account.username,@"userId", nil];
+    [AFNetWorkTool get:@"sheyun/userBlacklist" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            self.blackListArrs = [[NSMutableArray alloc] init];
+            [weakSelf.blackListArrs addObjectsFromArray:responseObj[@"data"]];
+            [weakSelf.homeTable reloadData];
+            weakSelf.homeTable.emptyDataSetSource = self;
+            weakSelf.homeTable.emptyDataSetDelegate = self;
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+}
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return self.blackListArrs.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -69,24 +92,74 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.0f;
+    return 70.0f;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHBlackListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHBlackListCell class])];
-    cell.deleteBtn.tag = indexPath.row;
-    [cell.deleteBtn addTarget:self action:@selector(deleteClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary *dic = self.blackListArrs[indexPath.row];
+    [cell.headerImg sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+    cell.nameLabel.text = dic[@"nickname"];
+    //添加长按手势
+    UILongPressGestureRecognizer * longPressGesture =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+    
+    longPressGesture.minimumPressDuration = 1.5f;//设置长按 时间
+    [cell addGestureRecognizer:longPressGesture];
+    
     return cell;
 }
 
+- (void)cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {
+    if (longRecognizer.state==UIGestureRecognizerStateBegan) {
+        //成为第一响应者，需重写该方法
+        [self becomeFirstResponder];
+        
+        CGPoint location = [longRecognizer locationInView:self.homeTable];
+        NSIndexPath * indexPath = [self.homeTable indexPathForRowAtPoint:location];
+        NSDictionary *dic = self.blackListArrs[indexPath.row];
+        
+        WS(weakSelf);
+        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定是否移除黑名单" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                /** 取消收藏视频 */
+                [weakSelf removeBlackListWithPersonDic:dic];
+            }
+        }];
+    }
+}
 
-#pragma mark — event
-- (void)deleteClick:(UIButton *)sender {
-    NSInteger selectIndex = sender.tag;
+- (void)removeBlackListWithPersonDic:(NSDictionary *)dic {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               dic[@"username"],@"number_str",
+                               account.username,@"userId",
+                               nil];
+    [AFNetWorkTool post:@"sheyun/userBlacklistRemove" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf getDataWithRequest];
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
 }
 
 
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {

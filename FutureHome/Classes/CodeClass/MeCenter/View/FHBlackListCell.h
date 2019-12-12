@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHBlackListCell : UITableViewCell
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIImageView *headerImg;
 /** 名字 */
 @property (nonatomic, strong) UILabel *nameLabel;
 /** 删除按钮 */

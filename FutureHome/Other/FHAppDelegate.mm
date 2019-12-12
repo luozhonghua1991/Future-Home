@@ -23,6 +23,8 @@
 static FHAppDelegate* pSelf = nil;
 
 @interface FHAppDelegate () <WXApiDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate>
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *allFriendArrs;
 
 @end
 
@@ -33,6 +35,7 @@ static FHAppDelegate* pSelf = nil;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     pSelf = self;
+    self.allFriendArrs = [[NSMutableArray alloc] init];
     [WXApi registerApp:@"wx73519589eb9e4996" universalLink:@""];
     
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUDAPPKEY];
@@ -42,6 +45,12 @@ static FHAppDelegate* pSelf = nil;
     Account *account = [AccountStorage readAccount];
     if (account.rong_token) {
         [[RCIM sharedRCIM] connectWithToken:account.rong_token success:^(NSString *userId) {
+            //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
+            RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+            userInfo.userId = account.username;
+            userInfo.name = account.nickname;
+            userInfo.portraitUri = account.avatar;
+            [RCIM sharedRCIM].currentUserInfo = userInfo;
         } error:^(RCConnectErrorCode status) {
             NSLog(@"login error status: %ld.", (long)status);
         } tokenIncorrect:^{
@@ -207,6 +216,8 @@ static FHAppDelegate* pSelf = nil;
 // 设置会话的头像和昵称等   是好友的头像和昵称，不是自己的
 - (void)getUserInfoWithUserId:(NSString *)userId
                    completion:(void (^)(RCUserInfo *userInfo))completion {
+    [self.allFriendArrs addObject:userId];
+    [SingleManager shareManager].allFriendsArrs = self.allFriendArrs.mutableCopy;
     NSLog(@"------ userID = %@ ---------", userId);
     dispatch_async(dispatch_get_main_queue(), ^{
         Account *account = [AccountStorage readAccount];
