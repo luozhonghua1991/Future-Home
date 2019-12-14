@@ -70,7 +70,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor  whiteColor];
-    NSLog(@"%@加载出来了",self);
+//    NSLog(@"%@加载出来了",self);
     if (@available(iOS 11.0, *)){
         [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
         if (SCREEN_HEIGHT == 812) {// iphone X

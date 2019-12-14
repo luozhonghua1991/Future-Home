@@ -7,12 +7,9 @@
 //  对话列表界面
 
 #import "FHMessageController.h"
-#import "FHChatMessageCell.h"
 #import "FHFriendMessageController.h"
 
-@interface FHMessageController () <UITableViewDelegate,UITableViewDataSource>
-/** 主页列表数据 */
-//@property (nonatomic, strong) UITableView *homeTable;
+@interface FHMessageController () <RCIMUserInfoDataSource>
 
 @end
 
@@ -20,14 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.conversationListTableView.tableFooterView = [UIView new];
     //设置需要显示哪些类型的会话
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),
                                         ]];
-    //设置需要将哪些类型的会话在会话列表中聚合显示
-    [self setCollectionConversationType:@[@(ConversationType_DISCUSSION),
-                                          @(ConversationType_GROUP)]];
-    
+    self.conversationListTableView.tableFooterView = [UIView new];
 }
 
 //隐藏导航栏
@@ -40,24 +33,6 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
 }
-
-#pragma mark - <RCIMUserInfoDataSource>
-/*!
- 获取用户信息
- @param userId      用户ID
- @param completion  获取用户信息完成之后需要执行的Block [userInfo:该用户ID对应的用户信息]
- @discussion SDK通过此方法获取用户信息并显示，请在completion中返回该用户ID对应的用户信息。
- 在您设置了用户信息提供者之后，SDK在需要显示用户信息的时候，会调用此方法，向您请求用户信息用于显示。
- */
-//-(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion
-//{
-//    //设置用户信息
-//    NSString *avatarURL = @"http://xxxxxx.com/static/avatar/137180371639017.jpeg";
-//    RCUserInfo *userInfo = [[RCUserInfo alloc] initWithUserId:userId name:userId portrait:avatarURL];
-//    
-//    //block回调设置用户信息
-//    completion(userInfo);
-//}
 
 //重写RCConversationListViewController的onSelectedTableRow事件
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
@@ -72,7 +47,7 @@
     [AFNetWorkTool get:@"sheyun/getUserInfor" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             FHFriendMessageController *conversationVC = [[FHFriendMessageController alloc] init];
-            conversationVC.conversationType = model.conversationType;
+            conversationVC.conversationType = ConversationType_PRIVATE;
             conversationVC.targetId = model.targetId;
             conversationVC.titleString = responseObj[@"data"][@"userName"];
             conversationVC.hidesBottomBarWhenPushed = YES;
@@ -83,10 +58,6 @@
     } failure:^(NSError *error) {
         
     }];
-}
-
-- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left {
-    
 }
 
 //- (void)viewDidLoad {
@@ -146,6 +117,37 @@
 //        }
 //    }
 //    return _homeTable;
+//}
+
+//- (UIView *)headerView {
+//    if (!_headerView) {
+//        _headerView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
+//        _headerView.backgroundColor = [UIColor redColor];
+//    }
+//    return _headerView;
+//}
+//
+//- (UILabel *)groupCountLabel {
+//    if (!_groupCountLabel) {
+//        _groupCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, SCREEN_WIDTH - 200, 13)];
+//        _groupCountLabel.font = [UIFont systemFontOfSize:13];
+//        _groupCountLabel.text = @"群聊数量 : 21 ";
+//        _groupCountLabel.textColor = [UIColor blackColor];
+//        _groupCountLabel.textAlignment = NSTextAlignmentLeft;
+//    }
+//    return _groupCountLabel;
+//}
+//
+//- (UIButton *)creatGroupBtn {
+//    if (!_creatGroupBtn) {
+//        _creatGroupBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//        _creatGroupBtn.frame = CGRectMake(SCREEN_WIDTH - 100, 15, 100, 13);
+//        [_creatGroupBtn setTitle:@"＋新建群聊" forState:UIControlStateNormal];
+//        [_creatGroupBtn setTitleColor:[UIColor orangeColor] forState:UIControlStateNormal];
+//        _creatGroupBtn.titleLabel.font = [UIFont systemFontOfSize:13];
+//        [_creatGroupBtn addTarget:self action:@selector(creatGroupBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    }
+//    return _creatGroupBtn;
 //}
 
 @end

@@ -232,7 +232,7 @@
         [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             GNRGoodsModel * goods = [GNRGoodsModel new];
             goods.goodsName = [obj objectForKey:@"title"];
-            goods.goodsPrice = [obj objectForKey:@"sell_price"];
+            goods.goodsPrice = [NSString stringWithFormat:@"%.2f",[[obj objectForKey:@"sell_price"] floatValue]];
             goods.goodsImage = [obj objectForKey:@"cover"];
             goods.goodsPlace = [obj objectForKey:@"Place"];
             goods.goodsUnitAtr = [obj objectForKey:@"UnitAtr"];

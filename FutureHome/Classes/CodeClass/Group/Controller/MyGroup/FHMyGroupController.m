@@ -40,11 +40,6 @@
 - (void)initViewControllers {
     FHMessageController *messageVC = [[FHMessageController alloc] init];
     messageVC.yp_tabItemTitle = @"对话";
-//    NSArray *array = [NSArray arrayWithObject:[NSNumber numberWithInt:@""]];
-//    [messageVC setDisplayConversationTypes:array];
-//    [messageVC setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
-//    messageVC.isEnteredToCollectionViewController = YES;
-//    [messageVC setCollectionConversationType:nil];
 
     FHGroupMessageListController *groupVC = [[FHGroupMessageListController alloc] init];
     groupVC.yp_tabItemTitle = @"群聊";

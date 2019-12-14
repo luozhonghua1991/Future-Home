@@ -91,6 +91,7 @@
             self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.urlArrays scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
             [self.headerView addSubview:self.topScrollView];
             self.goodsDetailModel = [FHGoodsDetailModel mj_objectWithKeyValues:dic];
+            self.goodsDetailModel.sell_price = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"sell_price"] floatValue]];
             [weakSelf.homeTable reloadData];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
@@ -115,7 +116,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_WIDTH;
+    return [SingleManager shareManager].goodsDetailHeight + 50;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -205,7 +206,6 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homeTable.showsVerticalScrollIndicator = NO;
-        _homeTable.scrollEnabled = YES;
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

@@ -8,6 +8,8 @@
 
 #import "FHGroupMessageListController.h"
 #import "FHGroupMessageCell.h"
+#import "FHSelectGroupMemberController.h"
+#import "FHFriendMessageController.h"
 
 @interface FHGroupMessageListController () <UITableViewDelegate,UITableViewDataSource>
 /** 主页列表数据 */
@@ -25,62 +27,81 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.homeTable];
-    [self.homeTable registerClass:[FHGroupMessageCell class] forCellReuseIdentifier:NSStringFromClass([FHGroupMessageCell class])];
+    //设置需要显示哪些类型的会话
+    [self setDisplayConversationTypes:@[@(ConversationType_GROUP),
+                                        ]];
+    self.conversationListTableView.tableFooterView = [UIView new];
+    self.conversationListTableView.tableHeaderView = self.headerView;
     [self.headerView addSubview:self.groupCountLabel];
     [self.headerView addSubview:self.creatGroupBtn];
-    self.homeTable.tableHeaderView = self.headerView;
-    self.homeTable.tableHeaderView.height = self.headerView.height;
+    self.headerView.userInteractionEnabled = YES;
+    self.conversationListTableView.tableHeaderView.height = self.headerView.height;
 }
 
-
-#pragma mark  -- tableViewDelagate
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 15;
+//隐藏导航栏
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.01f;
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 0.01f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 70.0f;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FHGroupMessageCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHGroupMessageCell class])];
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    return cell;
-}
-
 
 
 #pragma mark — event
 - (void)creatGroupBtnClick {
     /** 创建新的群聊 */
-
+    FHSelectGroupMemberController *VC = [[FHSelectGroupMemberController alloc] init];
+    VC.hidesBottomBarWhenPushed = YES;
+    VC.type = @"1";
+    [self.navigationController pushViewController:VC animated:YES];
 }
+
+//重写RCConversationListViewController的onSelectedTableRow事件
+- (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
+         conversationModel:(RCConversationModel *)model
+               atIndexPath:(NSIndexPath *)indexPath {
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               model.targetId,@"groupId",
+                               nil];
+    
+    [AFNetWorkTool get:@"sheyun/getGroupDetail" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            FHFriendMessageController *conversationVC = [[FHFriendMessageController alloc] init];
+            conversationVC.conversationType = ConversationType_GROUP;
+            conversationVC.targetId = model.targetId;
+            conversationVC.titleString = responseObj[@"data"][@"groupName"];
+            conversationVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:conversationVC animated:YES];
+        } else {
+            
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
 
 
 #pragma mark — setter & getter
-- (UITableView *)homeTable {
-    if (_homeTable == nil) {
-        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - [self getTabbarHeight] - MainSizeHeight - 70 - 35) style:UITableViewStylePlain];
-        _homeTable.dataSource = self;
-        _homeTable.delegate = self;
-        _homeTable.showsVerticalScrollIndicator = NO;
-        if (@available (iOS 11.0, *)) {
-            _homeTable.estimatedSectionHeaderHeight = 0.01;
-            _homeTable.estimatedSectionFooterHeight = 0.01;
-            _homeTable.estimatedRowHeight = 0.01;
-        }
-    }
-    return _homeTable;
-}
+//- (UITableView *)homeTable {
+//    if (_homeTable == nil) {
+//        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - [self getTabbarHeight] - MainSizeHeight - 70 - 35) style:UITableViewStylePlain];
+//        _homeTable.dataSource = self;
+//        _homeTable.delegate = self;
+//        _homeTable.showsVerticalScrollIndicator = NO;
+//        if (@available (iOS 11.0, *)) {
+//            _homeTable.estimatedSectionHeaderHeight = 0.01;
+//            _homeTable.estimatedSectionFooterHeight = 0.01;
+//            _homeTable.estimatedRowHeight = 0.01;
+//        }
+//    }
+//    return _homeTable;
+//}
 
 - (UIView *)headerView {
     if (!_headerView) {
@@ -92,7 +113,7 @@
 
 - (UILabel *)groupCountLabel {
     if (!_groupCountLabel) {
-        _groupCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 15, SCREEN_WIDTH - 200, 13)];
+        _groupCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, SCREEN_WIDTH - 200, 13)];
         _groupCountLabel.font = [UIFont systemFontOfSize:13];
         _groupCountLabel.text = @"群聊数量 : 21 ";
         _groupCountLabel.textColor = [UIColor blackColor];

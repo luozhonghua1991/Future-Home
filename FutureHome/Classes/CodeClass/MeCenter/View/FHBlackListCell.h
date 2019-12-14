@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *nameLabel;
 /** 删除按钮 */
 @property (nonatomic, strong) UIButton *deleteBtn;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger numberCount;
 
 @end
 

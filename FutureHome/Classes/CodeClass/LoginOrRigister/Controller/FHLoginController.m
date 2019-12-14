@@ -258,6 +258,7 @@
                 [AccountStorage saveAccount:account];
                 //登录融云服务器,开始阶段可以先从融云API调试网站获取，之后token需要通过服务器到融云服务器取。
                 NSString*token=account.rong_token;
+                
                 [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
                     //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
                     RCUserInfo *userInfo = [[RCUserInfo alloc] init];
@@ -265,6 +266,17 @@
                     userInfo.name = account.nickname;
                     userInfo.portraitUri = account.avatar;
                     [RCIM sharedRCIM].currentUserInfo = userInfo;
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        RCConversationViewController *conversationVC = [[RCConversationViewController alloc] init];
+//                        conversationVC.conversationType = ConversationType_PRIVATE;
+//                        conversationVC.targetId = @"100000005";
+//                        conversationVC.title = @"聊一下";
+//                        conversationVC.hidesBottomBarWhenPushed = YES;
+//                        [self.navigationController pushViewController:conversationVC animated:YES];
+//                    });
+                   
+                    
+                    
                 } error:^(RCConnectErrorCode status) {
                     NSLog(@"login error status: %ld.", (long)status);
                 } tokenIncorrect:^{

@@ -7,10 +7,11 @@
 //
 
 #import "BaseViewController.h"
+#import "FHMessageController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHGroupMessageListController : BaseViewController
+@interface FHGroupMessageListController : RCConversationListViewController
 
 @end
 

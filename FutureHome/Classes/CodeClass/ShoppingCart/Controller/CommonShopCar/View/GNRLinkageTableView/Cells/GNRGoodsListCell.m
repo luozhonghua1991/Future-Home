@@ -31,6 +31,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.LocationLabel.textColor = [UIColor lightGrayColor];
     self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77 - 60, (self.contentView.height - 88) / 2, 60, 88)];
     [self.contentView addSubview:self.stepperSuperView];
     
@@ -91,9 +92,9 @@
     _nameL.text = _goods.goodsName;
     [self.goodsImageV sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@",_goods.goodsImage]]];
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",_goods.goodsPrice];
-    self.LocationLabel.text = [NSString stringWithFormat:@"产地: %@",_goods.goodsPlace];
+    self.LocationLabel.text = [NSString stringWithFormat:@"产地:%@",_goods.goodsPlace];
     self.specsLabel.text = [NSString stringWithFormat:@"%@",_goods.goodsUnitAtr];
-    self.stockLabel.text = [NSString stringWithFormat:@"库存: %@",_goods.goodsSafetStock];
+    self.stockLabel.text = [NSString stringWithFormat:@"库存:%@",_goods.goodsSafetStock];
     /** 价格 */
 //    self.priceLabel.text = [NSString stringWithFormat:@"￥%@",_goods.goodsPrice];
     _stepper.count = _goods.number.integerValue;
@@ -129,6 +130,7 @@
         _priceLabel.text = @"￥9.8 元/份";
         _priceLabel.font = [UIFont systemFontOfSize:12];
         _priceLabel.textAlignment = NSTextAlignmentRight;
+        _priceLabel.textColor = [UIColor redColor];
     }
     return _priceLabel;
 }

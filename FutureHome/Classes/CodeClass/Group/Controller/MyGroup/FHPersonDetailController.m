@@ -67,7 +67,7 @@
 
 //返回每个区行数
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 4;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -79,11 +79,16 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (indexPath.row == 0) {
         cell.textLabel.text = @"加入黑名单";
-    } else {
+    } else if(indexPath.row == 1) {
         cell.textLabel.text = @"清除聊天数据";
+    } else if(indexPath.row == 2) {
+        cell.textLabel.text = @"删除会话";
+    } else if(indexPath.row == 3) {
+        cell.textLabel.text = @"会话置顶";
     }
     return cell;
 }
+
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -103,8 +108,10 @@
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.view makeToast:@"添加黑名单成功"];
                         /** 删除聊天记录 */
-                        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:weakSelf.targetId];
-                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                       BOOL isClear =  [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:weakSelf.targetId];
+                        if (isClear) {
+                            [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                        }
                     } else {
                         [weakSelf.view makeToast:responseObj[@"msg"]];
                     }
@@ -113,19 +120,46 @@
                 }];
             }
         }];
-    } else {
+    } else if (indexPath.row == 1) {
         WS(weakSelf);
         [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定删除聊天记录吗" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
             if (buttonIndex == 1) {
                 /** 删除聊天记录 */
-//                [[RCIMClient sharedRCIMClient] deleteMessages:@[weakSelf.targetId]];
-                [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:weakSelf.targetId];
+                [[RCIMClient sharedRCIMClient] clearHistoryMessages:ConversationType_PRIVATE targetId:weakSelf.targetId recordTime:0 clearRemote:NO success:^{
+                    [self.view makeToast:@"删除聊天记录成功"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                } error:^(RCErrorCode status) {
+                    [self.view makeToast:@"删除聊天记录失败"];
+                }];
+            }
+        }];
+    } else if (indexPath.row == 2) {
+        WS(weakSelf);
+        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定删除该条会话吗" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+            if (buttonIndex == 1) {
+                /** 删除聊天记录 */
+                BOOL isClear = [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:weakSelf.targetId];
+                if (isClear) {
+                    [self.view makeToast:@"删除会话成功"];
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [self.navigationController popToRootViewControllerAnimated:YES];
+                    });
+                }
                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
             }
         }];
+    } else if (indexPath.row == 3) {
+        BOOL isTop =  [[RCIMClient sharedRCIMClient] setConversationToTop:ConversationType_PRIVATE targetId:self.targetId isTop:YES];
+        if (isTop) {
+            [self.view makeToast:@"置顶成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            });
+        }
     }
 }
-
 
 
 #pragma mark — setter && getter

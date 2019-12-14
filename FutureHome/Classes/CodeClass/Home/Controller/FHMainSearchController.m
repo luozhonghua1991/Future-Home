@@ -40,16 +40,23 @@
     [searchView addSubview:searchBtn];
     
     self.searchTF = [[UITextField alloc] initWithFrame:CGRectMake(MaxX(searchBtn), 0, SCREEN_WIDTH - 100 - MaxX(searchBtn) - 20, 35)];
+    self.searchTF.returnKeyType = UIReturnKeySearch;
     [self.searchTF becomeFirstResponder];
     self.searchTF.delegate = self;
     [searchView addSubview:self.searchTF];
     [self.navgationView addSubview:searchView];
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     self.searchText = textField.text;
-    NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:self.searchText,@"searchText", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"GETSEARCHRESULT" object:nil userInfo:dict];
+    if ([string isEqualToString:@"\n"]) {
+        NSDictionary *dict =[[NSDictionary alloc] initWithObjectsAndKeys:self.searchText,@"searchText", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"GETSEARCHRESULT" object:nil userInfo:dict];
+        [self.searchTF  resignFirstResponder];
+        return NO;
+    }
+    return YES;
+
 }
 
 - (void)initViewControllers {

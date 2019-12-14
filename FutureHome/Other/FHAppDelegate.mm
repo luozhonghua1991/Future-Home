@@ -22,7 +22,7 @@
 
 static FHAppDelegate* pSelf = nil;
 
-@interface FHAppDelegate () <WXApiDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate>
+@interface FHAppDelegate () <WXApiDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate,RCIMGroupInfoDataSource>
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *allFriendArrs;
 
@@ -41,6 +41,7 @@ static FHAppDelegate* pSelf = nil;
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUDAPPKEY];
     [RCIM sharedRCIM].connectionStatusDelegate = self;
     [[RCIM sharedRCIM] setUserInfoDataSource:self];
+    [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     /** 与融云服务器建立连接 */
     Account *account = [AccountStorage readAccount];
     if (account.rong_token) {
@@ -213,11 +214,11 @@ static FHAppDelegate* pSelf = nil;
     }
 }
 
+
+#pragma mark - <RCIMUserInfoDataSource>
 // 设置会话的头像和昵称等   是好友的头像和昵称，不是自己的
 - (void)getUserInfoWithUserId:(NSString *)userId
                    completion:(void (^)(RCUserInfo *userInfo))completion {
-    [self.allFriendArrs addObject:userId];
-    [SingleManager shareManager].allFriendsArrs = self.allFriendArrs.mutableCopy;
     NSLog(@"------ userID = %@ ---------", userId);
     dispatch_async(dispatch_get_main_queue(), ^{
         Account *account = [AccountStorage readAccount];
@@ -233,6 +234,32 @@ static FHAppDelegate* pSelf = nil;
                 userInfo.name = responseObj[@"data"][@"userName"];
                 userInfo.portraitUri = responseObj[@"data"][@"userPortrait"];
                 return completion(userInfo);
+            } else {
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+        return completion(nil);
+    });
+}
+
+- (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {
+    NSLog(@"------ userID = %@ ---------", groupId);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   groupId,@"groupId",
+                                   nil];
+        
+        [AFNetWorkTool get:@"sheyun/getGroupDetail" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                RCGroup *groupInfo = [[RCGroup alloc] init];
+                groupInfo.groupId = groupId;
+                groupInfo.groupName = responseObj[@"data"][@"groupName"];
+                groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+                return completion(groupInfo);
             } else {
                 
             }

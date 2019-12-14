@@ -54,7 +54,7 @@
     [self.chatSessionInputBarControl.pluginBoardView removeItemAtIndex:2];
 }
 
-//隐藏导航栏
+////隐藏导航栏
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
@@ -95,7 +95,13 @@
     [self.navgationView addSubview:bottomLineView];
     
     self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 40, MainStatusBarHeight + 5, 25, 25)];
-    self.codeImgView.image = [UIImage imageNamed:@"geren"];
+    if (self.conversationType == ConversationType_PRIVATE) {
+        /** 单聊 */
+        self.codeImgView.image = [UIImage imageNamed:@"geren"];
+    } else if (self.conversationType == ConversationType_GROUP) {
+        /** 群聊 */
+        
+    }
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
     self.codeImgView.userInteractionEnabled = YES;
     [self.codeImgView addGestureRecognizer:tap];
@@ -103,7 +109,7 @@
 }
 
 - (void)backBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 - (void)tapClick {
@@ -113,6 +119,5 @@
     vc.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:vc animated:YES];
 }
-
 
 @end

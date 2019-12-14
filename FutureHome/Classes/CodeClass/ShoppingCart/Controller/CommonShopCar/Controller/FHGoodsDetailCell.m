@@ -72,15 +72,16 @@
 - (void)setGoodsDetailModel:(FHGoodsDetailModel *)goodsDetailModel {
     _goodsDetailModel = goodsDetailModel;
     self.titleNameLabel.text = _goodsDetailModel.title;
-    self.producingAreaLabel.text = [NSString stringWithFormat:@"产地: %@",_goodsDetailModel.Place];
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"商品原价: %@元",_goodsDetailModel.origin_price];
-    self.dayCountLabel.text = [NSString stringWithFormat:@"每日限购: %@",_goodsDetailModel.limit_num];
-    self.typeLabel.text = [NSString stringWithFormat:@"规格: %@",_goodsDetailModel.UnitAtr];
-    self.priceLabel.text = [NSString stringWithFormat:@"售价: %@元",_goodsDetailModel.sell_price];
-    self.allCountLabel.text = [NSString stringWithFormat:@"库存: %@",_goodsDetailModel.SafetStock];
-    self.goodsInfoLabel.text = [NSString stringWithFormat:@"商品描述:\n\n       %@",_goodsDetailModel.desc];
+    self.producingAreaLabel.text = [NSString stringWithFormat:@"产地:%@",_goodsDetailModel.Place];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"商品原价:%@元",_goodsDetailModel.origin_price];
+    self.dayCountLabel.text = [NSString stringWithFormat:@"每日限购:%@",_goodsDetailModel.limit_num];
+    self.typeLabel.text = [NSString stringWithFormat:@"规格:%@",_goodsDetailModel.UnitAtr];
+    self.priceLabel.text = [NSString stringWithFormat:@"售价:%@元",_goodsDetailModel.sell_price];
+    self.allCountLabel.text = [NSString stringWithFormat:@"库存:%@",_goodsDetailModel.SafetStock];
+    self.goodsInfoLabel.text = [NSString stringWithFormat:@"商品描述:\n\n%@",_goodsDetailModel.desc];
     CGSize size = [UIlabelTool sizeWithString:self.goodsInfoLabel.text font:[UIFont systemFontOfSize:14] width:SCREEN_WIDTH];
     self.goodsInfoLabel.frame = CGRectMake(10, MaxY(self.dayCountLabel) + 20, SCREEN_WIDTH - 15, size.height);
+    [SingleManager shareManager].goodsDetailHeight = MaxY(self.goodsInfoLabel) + 5;
     [self layoutIfNeeded];
     [self setNeedsLayout];
 }
