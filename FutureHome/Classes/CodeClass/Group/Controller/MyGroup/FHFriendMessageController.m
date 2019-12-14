@@ -10,6 +10,7 @@
 #import "DXMessageToolBar.h"
 #import "TZImagePickerController.h"
 #import "FHPersonDetailController.h"
+#import "FHGroupDetailController.h"
 
 @interface FHFriendMessageController () <RCPluginBoardViewDelegate>
 
@@ -22,6 +23,9 @@
 
 /** 自定义导航栏视图 */
 @property (nonatomic, strong) UIView *navgationView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UILabel *titleLabel;
+
 /**
  * 聊天的tableView
  */
@@ -58,6 +62,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    
+//    self.titleLabel.text = @"你好";
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -76,13 +82,13 @@
         self.navgationView.userInteractionEnabled = YES;
     }
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = self.titleString;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.userInteractionEnabled = YES;
-    [self.navgationView addSubview:titleLabel];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    self.titleLabel.text = self.titleString;
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:self.titleLabel];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
@@ -100,7 +106,7 @@
         self.codeImgView.image = [UIImage imageNamed:@"geren"];
     } else if (self.conversationType == ConversationType_GROUP) {
         /** 群聊 */
-        
+        self.codeImgView.image = [UIImage imageNamed:@"qun"];
     }
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
     self.codeImgView.userInteractionEnabled = YES;
@@ -114,10 +120,18 @@
 
 - (void)tapClick {
     /** 用户详情 */
-    FHPersonDetailController *vc = [[FHPersonDetailController alloc] init];
-    vc.targetId = self.targetId;
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:YES];
+    if (self.conversationType == ConversationType_GROUP) {
+        FHGroupDetailController *vc = [[FHGroupDetailController alloc] init];
+        vc.groupID = self.targetId;
+        vc.groupName = self.titleLabel.text;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        FHPersonDetailController *vc = [[FHPersonDetailController alloc] init];
+        vc.targetId = self.targetId;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 @end

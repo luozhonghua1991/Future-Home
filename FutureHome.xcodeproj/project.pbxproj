@@ -758,6 +758,14 @@
 		4ABA6F4023991B7C0033E71A /* FHReturnRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */; };
 		4ABA6F4323992EC50033E71A /* FHGoodsCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */; };
 		4ABBFF3423A484E4004FBBDE /* FHCreatGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF3323A484E4004FBBDE /* FHCreatGroupController.m */; };
+		4ABBFF3A23A4DA96004FBBDE /* FHGroupDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF3923A4DA96004FBBDE /* FHGroupDetailController.m */; };
+		4ABBFF8923A4E0AB004FBBDE /* TopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF8623A4E0AA004FBBDE /* TopViewController.m */; };
+		4ABBFF8A23A4E0AB004FBBDE /* TopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ABBFF8823A4E0AA004FBBDE /* TopViewController.xib */; };
+		4ABBFF9123A4E0B6004FBBDE /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ABBFF8B23A4E0B5004FBBDE /* CollectionViewCell.xib */; };
+		4ABBFF9223A4E0B6004FBBDE /* CollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF8E23A4E0B6004FBBDE /* CollectionViewCell.m */; };
+		4ABBFF9323A4E0B6004FBBDE /* GroupInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4ABBFF8F23A4E0B6004FBBDE /* GroupInfoCell.xib */; };
+		4ABBFF9423A4E0B6004FBBDE /* GroupInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF9023A4E0B6004FBBDE /* GroupInfoCell.m */; };
+		4ABBFF9723A4E0C4004FBBDE /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF9623A4E0C4004FBBDE /* PersonModel.m */; };
 		4AC11C99231E105700F15FD7 /* FHPropertyCostsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC11C98231E105700F15FD7 /* FHPropertyCostsController.m */; };
 		4AC11C9F231E39EC00F15FD7 /* FHGarageManagementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC11C9E231E39EC00F15FD7 /* FHGarageManagementController.m */; };
 		4AC11CA2231E3BF000F15FD7 /* FHCollectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AC11CA1231E3BF000F15FD7 /* FHCollectionHeaderView.m */; };
@@ -2505,6 +2513,19 @@
 		4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGoodsCommitController.m; sourceTree = "<group>"; };
 		4ABBFF3223A484E4004FBBDE /* FHCreatGroupController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCreatGroupController.h; sourceTree = "<group>"; };
 		4ABBFF3323A484E4004FBBDE /* FHCreatGroupController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCreatGroupController.m; sourceTree = "<group>"; };
+		4ABBFF3823A4DA96004FBBDE /* FHGroupDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGroupDetailController.h; sourceTree = "<group>"; };
+		4ABBFF3923A4DA96004FBBDE /* FHGroupDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGroupDetailController.m; sourceTree = "<group>"; };
+		4ABBFF8623A4E0AA004FBBDE /* TopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopViewController.m; sourceTree = "<group>"; };
+		4ABBFF8723A4E0AA004FBBDE /* TopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopViewController.h; sourceTree = "<group>"; };
+		4ABBFF8823A4E0AA004FBBDE /* TopViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TopViewController.xib; sourceTree = "<group>"; };
+		4ABBFF8B23A4E0B5004FBBDE /* CollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
+		4ABBFF8C23A4E0B5004FBBDE /* GroupInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupInfoCell.h; sourceTree = "<group>"; };
+		4ABBFF8D23A4E0B5004FBBDE /* CollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewCell.h; sourceTree = "<group>"; };
+		4ABBFF8E23A4E0B6004FBBDE /* CollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewCell.m; sourceTree = "<group>"; };
+		4ABBFF8F23A4E0B6004FBBDE /* GroupInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupInfoCell.xib; sourceTree = "<group>"; };
+		4ABBFF9023A4E0B6004FBBDE /* GroupInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupInfoCell.m; sourceTree = "<group>"; };
+		4ABBFF9523A4E0C3004FBBDE /* PersonModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonModel.h; sourceTree = "<group>"; };
+		4ABBFF9623A4E0C4004FBBDE /* PersonModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonModel.m; sourceTree = "<group>"; };
 		4AC11C97231E105700F15FD7 /* FHPropertyCostsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPropertyCostsController.h; sourceTree = "<group>"; };
 		4AC11C98231E105700F15FD7 /* FHPropertyCostsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPropertyCostsController.m; sourceTree = "<group>"; };
 		4AC11C9D231E39EC00F15FD7 /* FHGarageManagementController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGarageManagementController.h; sourceTree = "<group>"; };
@@ -5748,6 +5769,24 @@
 			path = AnalyzingPermissions;
 			sourceTree = "<group>";
 		};
+		4ABBFF3B23A4E044004FBBDE /* GroupDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				4ABBFF9523A4E0C3004FBBDE /* PersonModel.h */,
+				4ABBFF9623A4E0C4004FBBDE /* PersonModel.m */,
+				4ABBFF8723A4E0AA004FBBDE /* TopViewController.h */,
+				4ABBFF8623A4E0AA004FBBDE /* TopViewController.m */,
+				4ABBFF8823A4E0AA004FBBDE /* TopViewController.xib */,
+				4ABBFF8D23A4E0B5004FBBDE /* CollectionViewCell.h */,
+				4ABBFF8E23A4E0B6004FBBDE /* CollectionViewCell.m */,
+				4ABBFF8B23A4E0B5004FBBDE /* CollectionViewCell.xib */,
+				4ABBFF8C23A4E0B5004FBBDE /* GroupInfoCell.h */,
+				4ABBFF9023A4E0B6004FBBDE /* GroupInfoCell.m */,
+				4ABBFF8F23A4E0B6004FBBDE /* GroupInfoCell.xib */,
+			);
+			path = GroupDetailView;
+			sourceTree = "<group>";
+		};
 		4AC30A9C2334D0C600776752 /* XHInputView */ = {
 			isa = PBXGroup;
 			children = (
@@ -5799,6 +5838,9 @@
 				4AC671D023A36D240029682E /* FHSelectGroupMemberController.m */,
 				4ABBFF3223A484E4004FBBDE /* FHCreatGroupController.h */,
 				4ABBFF3323A484E4004FBBDE /* FHCreatGroupController.m */,
+				4ABBFF3823A4DA96004FBBDE /* FHGroupDetailController.h */,
+				4ABBFF3923A4DA96004FBBDE /* FHGroupDetailController.m */,
+				4ABBFF3B23A4E044004FBBDE /* GroupDetailView */,
 			);
 			path = MyGroup;
 			sourceTree = "<group>";
@@ -6513,6 +6555,7 @@
 				4AE8493F22E30727009E165B /* ico_check_select@3x.png in Resources */,
 				4AF51B3F22D07DEB00AA04EC /* GNRShopHeader.xib in Resources */,
 				4AE8494F22E30727009E165B /* MImaCell.xib in Resources */,
+				4ABBFF8A23A4E0AB004FBBDE /* TopViewController.xib in Resources */,
 				4A6DAB8622C0ADBC00F29455 /* images.bundle in Resources */,
 				4A6DAA9922C0AD7C00F29455 /* LCTabBarController.bundle in Resources */,
 				4AB2011B22F284D800111AC4 /* WMPlayer.bundle in Resources */,
@@ -6540,9 +6583,11 @@
 				4AF51B3522D07DEB00AA04EC /* GNRGoodsIndexCell.xib in Resources */,
 				4AE8495B22E30727009E165B /* none.png in Resources */,
 				4A68D2E223587846003A3CB6 /* DPPhoto_choose_unSelect.png in Resources */,
+				4ABBFF9323A4E0B6004FBBDE /* GroupInfoCell.xib in Resources */,
 				4AE8497122E3076A009E165B /* HWCollectionViewCell.xib in Resources */,
 				4AE8493E22E30727009E165B /* ico_check_select@2x.png in Resources */,
 				4A935316237BF3E500035E60 /* README.txt in Resources */,
+				4ABBFF9123A4E0B6004FBBDE /* CollectionViewCell.xib in Resources */,
 				4AE8495222E30727009E165B /* MGroupCell.xib in Resources */,
 				4AF51B6022D07ECA00AA04EC /* GNRShoppingBarView.xib in Resources */,
 				4A5EB87F230D180A00F90FF6 /* data.json in Resources */,
@@ -7000,6 +7045,7 @@
 				4AB2047722F2ED2600111AC4 /* FHScanTool.m in Sources */,
 				4A5EB861230D15C800F90FF6 /* ZFIJKPlayerManager.m in Sources */,
 				4A6E5A7E23703B220098DB67 /* UIScrollView+MJRefresh.m in Sources */,
+				4ABBFF9723A4E0C4004FBBDE /* PersonModel.m in Sources */,
 				4A9CB2BC230BF5EE004A3763 /* FHGreenController.m in Sources */,
 				4AB2045122F2DD7300111AC4 /* ZXAddressBookAUResultParser.m in Sources */,
 				4A153E902372CAB800CFE6B6 /* FHSearchResultModel.m in Sources */,
@@ -7128,6 +7174,7 @@
 				4A5EB85D230D15C800F90FF6 /* ZFPlayerView.m in Sources */,
 				4A9E84DA2323561D0070CE4A /* MKAnnotationView+WebCache.m in Sources */,
 				4A25D485237AC9220036CD8D /* FHCommonALiPayTool.m in Sources */,
+				4ABBFF9423A4E0B6004FBBDE /* GroupInfoCell.m in Sources */,
 				4AB2038622F2DD7300111AC4 /* ZXPlanarYUVLuminanceSource.m in Sources */,
 				4A6E5A7F23703B220098DB67 /* MJRefreshConst.m in Sources */,
 				4AC67E0622C84E5A00842C0D /* FHOtherFollowController.m in Sources */,
@@ -7321,6 +7368,7 @@
 				4A5EB87E230D180A00F90FF6 /* ZFTableData.m in Sources */,
 				4AF51B4022D07DEB00AA04EC /* GNRSectionHeader.m in Sources */,
 				4AB203A322F2DD7300111AC4 /* ZXQRCodeMaskUtil.m in Sources */,
+				4ABBFF8923A4E0AB004FBBDE /* TopViewController.m in Sources */,
 				4A5EB85C230D15C800F90FF6 /* ZFFloatView.m in Sources */,
 				4A71AA53234C9C77000C9BA9 /* FHVideosListModel.m in Sources */,
 				4AB2043022F2DD7300111AC4 /* ZXUPCEANExtension5Support.m in Sources */,
@@ -7349,6 +7397,7 @@
 				4AB203DF22F2DD7300111AC4 /* ZXPDF417DecodedBitStreamParser.m in Sources */,
 				4AB203B422F2DD7300111AC4 /* ZXQRCodeErrorCorrectionLevel.m in Sources */,
 				4A9E84E42323561D0070CE4A /* SDWebImageCompat.m in Sources */,
+				4ABBFF9223A4E0B6004FBBDE /* CollectionViewCell.m in Sources */,
 				4A3DD95A234C3619004E278D /* UIView+Frame.m in Sources */,
 				4AE8495022E30727009E165B /* MShowAllGroup.m in Sources */,
 				4AC67E2622C8AED100842C0D /* FHWaitOrderController.m in Sources */,
@@ -7366,6 +7415,7 @@
 				4A31F612230A99650010C1F4 /* ZJAddressModel.m in Sources */,
 				4A9E84D92323561D0070CE4A /* UIImage+WebP.m in Sources */,
 				4A6DAB5E22C0ADAF00F29455 /* NSObject+MJProperty.m in Sources */,
+				4ABBFF3A23A4DA96004FBBDE /* FHGroupDetailController.m in Sources */,
 				4A6DAB5C22C0ADAF00F29455 /* NSObject+MJCoding.m in Sources */,
 				4AB203FC22F2DD7300111AC4 /* ZXDataMatrixDecoder.m in Sources */,
 				4AB2046622F2DD7300111AC4 /* UIAlertView+LBXAlertAction.m in Sources */,
