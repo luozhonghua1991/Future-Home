@@ -11,7 +11,7 @@
 #import "FHSelectGroupMemberController.h"
 #import "FHFriendMessageController.h"
 
-@interface FHGroupMessageListController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHGroupMessageListController () <UIScrollViewDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 表头 */
@@ -28,6 +28,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置需要显示哪些类型的会话
+    CGFloat tabbarHeight;
+    if (KIsiPhoneX || IS_IPHONE_Xr || IS_IPHONE_Xs_Max || IS_IPHONE_Xs) {
+        tabbarHeight = 83;
+    } else {
+        tabbarHeight = 49;
+    }
+    self.conversationListTableView.height = SCREEN_HEIGHT - tabbarHeight - MainSizeHeight - 35;
     [self setDisplayConversationTypes:@[@(ConversationType_GROUP),
                                         ]];
     self.conversationListTableView.tableFooterView = [UIView new];
@@ -55,7 +62,7 @@
     /** 创建新的群聊 */
     FHSelectGroupMemberController *VC = [[FHSelectGroupMemberController alloc] init];
     VC.hidesBottomBarWhenPushed = YES;
-    VC.type = @"1";
+    VC.groupMemberType = GroupMemberType_creatGroup;
     [self.navigationController pushViewController:VC animated:YES];
 }
 
@@ -85,7 +92,13 @@
     }];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [SingleManager shareManager].scrolling = YES;
+}
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView; {
+    
+}
 
 #pragma mark — setter & getter
 //- (UITableView *)homeTable {

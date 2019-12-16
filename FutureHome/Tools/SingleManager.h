@@ -95,9 +95,11 @@
 @property (nonatomic, copy) NSString *totalMoneyString;
 /** 用户的所有好友信息数组 */
 @property (nonatomic, strong) NSArray *allFriendsArrs;
-
 /** 商品详情高度 */
 @property (nonatomic, assign) CGFloat goodsDetailHeight;
+/** 是否滚动状态 */
+@property (nonatomic, assign) BOOL scrolling;
+
 
 
 /**

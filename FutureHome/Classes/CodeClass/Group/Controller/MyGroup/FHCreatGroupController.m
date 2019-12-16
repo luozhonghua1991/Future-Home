@@ -219,6 +219,8 @@
 /** 确定按钮点击事件 */
 - (void)nextBtnClick {
     WS(weakSelf);
+    [self.view makeToast:@"创建群聊中···"];
+    self.nextBtn.userInteractionEnabled = NO;
     Account *account = [AccountStorage readAccount];
     NSString *personSelectString = [self.selectPersonArrs componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -240,9 +242,11 @@
                 conversationVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:conversationVC animated:YES];
             });
+        } else {
+            self.nextBtn.userInteractionEnabled = YES;
         }
     } failure:^(NSError *error) {
-        
+        self.nextBtn.userInteractionEnabled = YES;
     }];
 }
 

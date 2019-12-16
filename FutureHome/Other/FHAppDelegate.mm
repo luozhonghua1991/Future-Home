@@ -219,6 +219,9 @@ static FHAppDelegate* pSelf = nil;
 // 设置会话的头像和昵称等   是好友的头像和昵称，不是自己的
 - (void)getUserInfoWithUserId:(NSString *)userId
                    completion:(void (^)(RCUserInfo *userInfo))completion {
+    if ([SingleManager shareManager].scrolling) {
+        return;
+    }
     NSLog(@"------ userID = %@ ---------", userId);
     dispatch_async(dispatch_get_main_queue(), ^{
         Account *account = [AccountStorage readAccount];
@@ -245,7 +248,10 @@ static FHAppDelegate* pSelf = nil;
 }
 
 - (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {
-    NSLog(@"------ userID = %@ ---------", groupId);
+    if ([SingleManager shareManager].scrolling) {
+        return;
+    }
+    NSLog(@"------ groupId = %@ ---------", groupId);
     dispatch_async(dispatch_get_main_queue(), ^{
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:

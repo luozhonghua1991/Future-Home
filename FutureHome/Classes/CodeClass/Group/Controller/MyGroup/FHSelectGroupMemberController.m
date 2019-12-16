@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSMutableArray *blackListArrs;
 /** 选取的用户数组 */
 @property (nonatomic, strong) NSMutableArray *selectPersonArrs;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -41,13 +43,12 @@
     self.isHaveNavgationView = YES;
     self.navgationView.userInteractionEnabled = YES;
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"选择群组成员";
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.userInteractionEnabled = YES;
-    [self.navgationView addSubview:titleLabel];
+    self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.userInteractionEnabled = YES;
+    [self.navgationView addSubview:self.titleLabel];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
@@ -64,26 +65,76 @@
     [sureBtn setTitle:@"确定" forState:UIControlStateNormal];
     sureBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [sureBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:sureBtn];
+    if (self.groupMemberType == GroupMemberType_allMemberList) {
+        self.titleLabel.text = @"群组成员列表";
+    } else {
+        self.titleLabel.text = @"选择群组成员";
+        [self.navgationView addSubview:sureBtn];
+    }
 }
 
 /** 点击确定 到创建群组界面 */
 - (void)sureBtnClick {
-    /** 跳转到创建群组界面 */
-    Account *account = [AccountStorage readAccount];
-    if (self.selectPersonArrs.count <= 0) {
-        [self.view makeToast:@"创建群组人数不能小于1"];
-        return;
+    if (self.groupMemberType == GroupMemberType_creatGroup) {
+        /** 跳转到创建群组界面 */
+        Account *account = [AccountStorage readAccount];
+        if (self.selectPersonArrs.count <= 0) {
+            [self.view makeToast:@"选择人数不能小于1"];
+            return;
+        }
+        if (![self.selectPersonArrs containsObject:account.username]) {
+            [self.selectPersonArrs addObject:account.username];
+        }
+        NSLog(@"xxxxxxxxx%lu",(unsigned long)self.selectPersonArrs.count);
+        FHCreatGroupController *group = [[FHCreatGroupController alloc] init];
+        group.hidesBottomBarWhenPushed = YES;
+        group.selectPersonArrs = self.selectPersonArrs.mutableCopy;
+        [self.navigationController pushViewController:group animated:YES];
+    } else if (self.groupMemberType == GroupMemberType_addMember) {
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSString *personSelectString = [self.selectPersonArrs componentsJoinedByString:@","];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   self.groupId,@"groupId",
+                                   self.groupName,@"groupName",
+                                   personSelectString,@"number_str",
+                                   nil];
+        [AFNetWorkTool post:@"sheyun/joinsGroup" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"邀请进群成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                });
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    } else if (self.groupMemberType == GroupMemberType_subMember) {
+        /** 移除群成员 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSString *personSelectString = [self.selectPersonArrs componentsJoinedByString:@","];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   self.groupId,@"groupId",
+                                   personSelectString,@"number_str",
+                                   nil];
+        [AFNetWorkTool post:@"sheyun/groupQuit" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"移除群成员成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.navigationController popToRootViewControllerAnimated:YES];
+                });
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
     }
-    if (![self.selectPersonArrs containsObject:account.username]) {
-        [self.selectPersonArrs addObject:account.username];
-    }
-    
-    NSLog(@"xxxxxxxxx%lu",(unsigned long)self.selectPersonArrs.count);
-    FHCreatGroupController *group = [[FHCreatGroupController alloc] init];
-    group.hidesBottomBarWhenPushed = YES;
-    group.selectPersonArrs = self.selectPersonArrs.mutableCopy;
-    [self.navigationController pushViewController:group animated:YES];
 }
 
 - (void)backBtnClick {
@@ -92,13 +143,27 @@
 
 
 - (void)getDataWithRequest {
-    WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @(account.user_id),@"uid",
-                               nil];
-    [AFNetWorkTool get:@"sheyun/mutualConcern" params:paramsDic success:^(id responseObj) {
+    NSString *url;
+    NSDictionary *paramsDic;
+    if (self.groupMemberType == GroupMemberType_allMemberList ||
+        self.groupMemberType == GroupMemberType_subMember) {
+        /** 群组成员列表 */
+        url = @"sheyun/getGroupList";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.groupId,@"groupId",
+                     nil];
+    } else {
+        /** 用户的互关列表 */
+        url = @"sheyun/mutualConcern";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     @(account.user_id),@"uid",
+                     nil];
+    }
+    WS(weakSelf);
+    [AFNetWorkTool get:url params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSArray *arr = responseObj[@"data"];
             [weakSelf.blackListArrs addObjectsFromArray:arr];
@@ -183,8 +248,10 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homeTable.showsVerticalScrollIndicator = NO;
-        _homeTable.allowsMultipleSelectionDuringEditing = YES;
-        [_homeTable setEditing:YES animated:YES];
+        if (self.groupMemberType != GroupMemberType_allMemberList) {
+            _homeTable.allowsMultipleSelectionDuringEditing = YES;
+            [_homeTable setEditing:YES animated:YES];
+        }
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

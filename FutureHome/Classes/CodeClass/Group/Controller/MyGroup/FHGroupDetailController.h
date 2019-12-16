@@ -11,9 +11,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHGroupDetailController : BaseViewController
-/** <#copy属性注释#> */
+/** 群ID */
 @property (nonatomic, copy) NSString *groupID;
-/** <#strong属性注释#> */
+/** 群名字 */
 @property (nonatomic, strong) NSString *groupName;
 
 @end

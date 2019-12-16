@@ -9,7 +9,7 @@
 #import "FHMessageController.h"
 #import "FHFriendMessageController.h"
 
-@interface FHMessageController () <RCIMUserInfoDataSource>
+@interface FHMessageController () 
 
 @end
 
@@ -17,6 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    CGFloat tabbarHeight;
+    if (KIsiPhoneX || IS_IPHONE_Xr || IS_IPHONE_Xs_Max || IS_IPHONE_Xs) {
+        tabbarHeight = 83;
+    } else {
+        tabbarHeight = 49;
+    }
+    self.conversationListTableView.height = SCREEN_HEIGHT - tabbarHeight - MainSizeHeight - 35;
     //设置需要显示哪些类型的会话
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),
                                         ]];
