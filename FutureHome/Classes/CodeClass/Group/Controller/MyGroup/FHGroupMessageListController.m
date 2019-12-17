@@ -43,6 +43,8 @@
     [self.headerView addSubview:self.creatGroupBtn];
     self.headerView.userInteractionEnabled = YES;
     self.conversationListTableView.tableHeaderView.height = self.headerView.height;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateGroupCount) name:@"UPDATEGROUPCOUNT" object:nil];
 }
 
 //隐藏导航栏
@@ -56,6 +58,9 @@
     self.navigationController.navigationBar.hidden = NO;
 }
 
+- (void)updateGroupCount {
+    self.groupCountLabel.text = [NSString stringWithFormat:@"群聊数量 : %lu ",(unsigned long)[SingleManager shareManager].allGroupsArrs.count];
+}
 
 #pragma mark — event
 - (void)creatGroupBtnClick {
@@ -128,7 +133,6 @@
     if (!_groupCountLabel) {
         _groupCountLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, SCREEN_WIDTH - 200, 13)];
         _groupCountLabel.font = [UIFont systemFontOfSize:13];
-        _groupCountLabel.text = @"群聊数量 : 21 ";
         _groupCountLabel.textColor = [UIColor blackColor];
         _groupCountLabel.textAlignment = NSTextAlignmentLeft;
     }

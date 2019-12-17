@@ -31,6 +31,7 @@ static FHAppDelegate* pSelf = nil;
 @implementation FHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [SingleManager shareManager].allGroupsArrs = [[NSMutableArray alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -253,6 +254,11 @@ static FHAppDelegate* pSelf = nil;
     }
     NSLog(@"------ groupId = %@ ---------", groupId);
     dispatch_async(dispatch_get_main_queue(), ^{
+        if (![[SingleManager shareManager].allGroupsArrs containsObject:groupId]) {
+            [[SingleManager shareManager].allGroupsArrs addObject:groupId];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATEGROUPCOUNT" object:nil];
+        }
+        
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",

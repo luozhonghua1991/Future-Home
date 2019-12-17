@@ -470,7 +470,12 @@
     if ([string isEqualToString:@"\n"]) {
         [self.groupNameTF  resignFirstResponder];
         /** 修改群名字 */
-        [self updateGroupName];
+        if (self.isGroupOwner) {
+            [self updateGroupName];
+        } else {
+            self.groupNameTF.text = self.groupName;
+            [self.view makeToast:@"你不是群主不能做此操作。。。"];
+        }
         return NO;
     }
     return YES;

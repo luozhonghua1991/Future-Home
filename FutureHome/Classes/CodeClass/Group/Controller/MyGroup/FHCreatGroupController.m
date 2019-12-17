@@ -153,7 +153,7 @@
     {
         UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
         cameraPicker.delegate = self;
-        cameraPicker.allowsEditing = NO;  //是否可编辑
+        cameraPicker.allowsEditing = YES;  //是否可编辑
         //摄像头
         cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [self presentViewController:cameraPicker animated:YES completion:nil];
@@ -166,7 +166,7 @@
 - (void)addPhotoClick {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
     imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = NO;
+    imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     [self presentViewController:imagePickerController animated:YES completion:nil];
 }
@@ -177,7 +177,7 @@
  *  拍摄完成后要执行的方法
  */
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    UIImage * image = [info objectForKey:UIImagePickerControllerEditedImage];
     self.groupImg = image;
     [self.addImagBtn setBackgroundImage:self.groupImg forState:UIControlStateNormal];
     [picker dismissViewControllerAnimated:YES completion:nil];

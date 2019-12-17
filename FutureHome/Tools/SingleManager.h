@@ -93,8 +93,8 @@
 @property (nonatomic, strong) NSMutableArray *goodsArrs;
 /** 总价 */
 @property (nonatomic, copy) NSString *totalMoneyString;
-/** 用户的所有好友信息数组 */
-@property (nonatomic, strong) NSArray *allFriendsArrs;
+/** 用户的所有群组 */
+@property (nonatomic, strong) NSMutableArray *allGroupsArrs;
 /** 商品详情高度 */
 @property (nonatomic, assign) CGFloat goodsDetailHeight;
 /** 是否滚动状态 */

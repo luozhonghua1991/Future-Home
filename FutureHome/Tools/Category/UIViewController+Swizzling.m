@@ -63,7 +63,7 @@
     if([className isEqualToString:@"RCPhotosPickerController"] ||
        [className isEqualToString:@"UIImagePickerController"]) {
         UICollectionView *vc =  (UICollectionView*)self.view.subviews[0] ;
-        vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT) ;
+        vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) ;
     }
 
     [self hhview];
@@ -75,7 +75,7 @@
     
     if([className isEqualToString:@"RCAlumListTableViewController"]) {
         UITableView *vc =  ( UITableView*)self.view ;
-        vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT) ;
+        vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) ;
     }
     [self hhview1:animated];
 }
