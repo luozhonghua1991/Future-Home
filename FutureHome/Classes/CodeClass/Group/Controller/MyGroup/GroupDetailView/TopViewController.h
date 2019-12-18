@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import  "PersonModel.h"
 @protocol TopViewControllerDelagate <NSObject>
-
+@optional
 -(void)addBtnClick;
 -(void)subBtnClick;
 -(void)delDataWithStr:(PersonModel*)strF;

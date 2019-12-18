@@ -266,17 +266,6 @@
                     userInfo.name = account.nickname;
                     userInfo.portraitUri = account.avatar;
                     [RCIM sharedRCIM].currentUserInfo = userInfo;
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        RCConversationViewController *conversationVC = [[RCConversationViewController alloc] init];
-//                        conversationVC.conversationType = ConversationType_PRIVATE;
-//                        conversationVC.targetId = @"100000005";
-//                        conversationVC.title = @"聊一下";
-//                        conversationVC.hidesBottomBarWhenPushed = YES;
-//                        [self.navigationController pushViewController:conversationVC animated:YES];
-//                    });
-                   
-                    
-                    
                 } error:^(RCConnectErrorCode status) {
                     NSLog(@"login error status: %ld.", (long)status);
                 } tokenIncorrect:^{

@@ -11,7 +11,7 @@
 #import "GroupInfoCell.h"
 #import "FHSelectGroupMemberController.h"
 
-@interface FHGroupDetailController () <UITableViewDataSource,UITableViewDelegate,TopViewControllerDelagate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,UITextFieldDelegate>
+@interface FHGroupDetailController () <UITableViewDataSource,UITableViewDelegate,TopViewControllerDelagate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,UITextFieldDelegate,RCIMGroupInfoDataSource>
 {
     UITableView *_showTable;
     TopViewController *_topview;
@@ -36,6 +36,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     [self fh_creatNav];
     [self initMyView];
     [self initCreateData];
@@ -242,9 +243,9 @@
     topcell.nameShow.text = @"";
     if (indexPath.section == 2) {
         if (!self.groupNameTF) {
-            self.groupNameTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 140, 4.5, 120, 35)];
+            self.groupNameTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 220, 4.5, 200, 35)];
             self.groupNameTF.text = self.groupName;
-            self.groupNameTF.font = [UIFont systemFontOfSize:20];
+            self.groupNameTF.font = [UIFont systemFontOfSize:14];
             self.groupNameTF.delegate = self;
             self.groupNameTF.returnKeyType = UIReturnKeyDone;
             [topcell.contentView addSubview:self.groupNameTF];
@@ -323,11 +324,12 @@
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.view makeToast:@"解散群成功"];
                         /** 删除聊天记录 */
-//                        BOOL isClear =  [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:weakSelf.groupID];
+                        BOOL isClear =  [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:weakSelf.groupID];
+                        [self deleteGroupID];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                            if (isClear) {
+                            if (isClear) {
                                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//                            }
+                            }
                         });
                     } else {
                         [weakSelf.view makeToast:responseObj[@"msg"]];
@@ -353,11 +355,12 @@
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.view makeToast:@"删除并退出群成功"];
 //                        /** 删除聊天记录 */
-//                        BOOL isClear =  [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:weakSelf.groupID];
+                        BOOL isClear =  [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:weakSelf.groupID];
+                        [self deleteGroupID];
                         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                            if (isClear) {
+                            if (isClear) {
                                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-//                            }
+                            }
                         });
                     } else {
                         [weakSelf.view makeToast:responseObj[@"msg"]];
@@ -367,6 +370,13 @@
                 }];
             }
         }];
+    }
+}
+
+- (void)deleteGroupID {
+    if ([[SingleManager shareManager].allGroupsArrs containsObject:self.groupID]) {
+        [[SingleManager shareManager].allGroupsArrs removeObject:self.groupID];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATEGROUPCOUNT" object:nil];
     }
 }
 
@@ -455,10 +465,13 @@
     [AFNetWorkTool updateHeaderImageWithUrl:@"sheyun/updateGroupPortrait" parameter:paramsDic imageData:imageData success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"修改群头像成功"];
+            RCGroup *groupInfo = [[RCGroup alloc] init];
+            groupInfo.groupId = self.groupID;
+            groupInfo.groupName = responseObj[@"data"][@"groupName"];
+            groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+            [[RCIM sharedRCIM] refreshGroupInfoCache:groupInfo withGroupId:weakSelf.groupID];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                //                            if (isClear) {
                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                //                            }
             });
         } else {
         }
@@ -494,12 +507,13 @@
     [AFNetWorkTool post:@"sheyun/refreshGroup" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"修改群名字成功"];
-            /** 删除聊天记录 */
-            //                        BOOL isClear =  [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:weakSelf.groupID];
+            RCGroup *groupInfo = [[RCGroup alloc] init];
+            groupInfo.groupId = weakSelf.groupID;
+            groupInfo.groupName = responseObj[@"data"][@"groupName"];
+            groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+            [[RCIM sharedRCIM] refreshGroupInfoCache:groupInfo withGroupId:weakSelf.groupID];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                //                            if (isClear) {
                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
-                //                            }
             });
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];

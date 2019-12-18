@@ -229,8 +229,9 @@
     } buttonsStatement:@"知道了",nil];
 }
 
-- (void)showNextVCWithScanResult:(LBXScanResult*)strResult
-{
+#pragma mark — 二维码扫描结果处理
+/** 扫描的结果的相关处理 */
+- (void)showNextVCWithScanResult:(LBXScanResult*)strResult {
 //    ScanResultViewController *vc = [ScanResultViewController new];
 //    vc.imgScan = strResult.imgScanned;
 //    
@@ -239,7 +240,6 @@
 //    vc.strCodeType = strResult.strBarCodeType;
 //    
 //    [self.navigationController pushViewController:vc animated:YES];
-    
     ZHLog(@"扫描出来的二维码内容:%@",strResult.strScanned);
     NSArray *array = [strResult.strScanned componentsSeparatedByString:@"goods-"];
     if (array.count == 2) {

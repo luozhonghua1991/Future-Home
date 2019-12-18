@@ -14,7 +14,7 @@
 #import <JhtMarquee/JhtVerticalMarquee.h>
 #import "FHScrollNewsController.h"
 
-@interface FHCustomerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
+@interface FHCustomerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate,RCIMUserInfoDataSource>
 {
     NSMutableArray *topBannerArrays;
     NSMutableArray *bottomBannerArrays;
@@ -50,6 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[RCIM sharedRCIM] setUserInfoDataSource:self];
     [self fh_creatNav];
     self.bottomLogoNameArrs = @[@"物业客服",
                                 @"业主客服",
@@ -332,28 +333,55 @@
 
 #pragma mark — FHCommonCollectionViewDelegate
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
-    if (selectIndex.row == 0) {
-        /** 公告通知 */
-    } else if (selectIndex.row == 1) {
-        /** 业主大会 */
-    } else if (selectIndex.row == 2) {
-        /** 选举服务 */
-    } else if (selectIndex.row == 3) {
-        /** 业委管理 */
-    } else if (selectIndex.row == 4) {
-        /** 财务公开 */
-    } else if (selectIndex.row == 5) {
-        /** 物业管理 */
-    } else if (selectIndex.row == 6) {
-        /** 招标服务 */
-    } else if (selectIndex.row == 7) {
-        /** 活动关爱 */
-    } else if (selectIndex.row == 8) {
-        /** 投诉建议 */
-    } else if (selectIndex.row == 9) {
-        /** 我的业委 */
-        
-    }
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(selectIndex.row + 1),@"type", nil];
+    [AFNetWorkTool get:@"service/index" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+                userInfo.userId = responseObj[@"data"][@"username"];
+                userInfo.name = responseObj[@"data"][@"nickname"];
+                userInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
+                
+                RCConversationViewController *conversationVC = [[RCConversationViewController alloc] init];
+                conversationVC.conversationType = ConversationType_PRIVATE;
+                conversationVC.targetId = responseObj[@"data"][@"username"];
+                conversationVC.title = responseObj[@"data"][@"nickname"];
+                conversationVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:conversationVC animated:YES];
+            });
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
+//    if (selectIndex.row == 0) {
+//        /** 公告通知 */
+//    } else if (selectIndex.row == 1) {
+//        /** 业主大会 */
+//    } else if (selectIndex.row == 2) {
+//        /** 选举服务 */
+//    } else if (selectIndex.row == 3) {
+//        /** 业委管理 */
+//    } else if (selectIndex.row == 4) {
+//        /** 财务公开 */
+//    } else if (selectIndex.row == 5) {
+//        /** 物业管理 */
+//    } else if (selectIndex.row == 6) {
+//        /** 招标服务 */
+//    } else if (selectIndex.row == 7) {
+//        /** 活动关爱 */
+//    } else if (selectIndex.row == 8) {
+//        /** 投诉建议 */
+//    } else if (selectIndex.row == 9) {
+//        /** 我的业委 */
+//
+//    }
 }
 
 
