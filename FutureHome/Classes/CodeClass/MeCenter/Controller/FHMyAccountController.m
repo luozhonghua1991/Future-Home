@@ -90,6 +90,7 @@
     
     if (indexPath.row == 0||indexPath.row == 3) {
         cell.headerImg.hidden = NO;
+        cell.headerImg.image = [UIImage imageNamed:@"black_erweima"];
         if (indexPath.row == 0) {
             self.headerImageView = cell.headerImg;
             [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:self.account.avatar]];

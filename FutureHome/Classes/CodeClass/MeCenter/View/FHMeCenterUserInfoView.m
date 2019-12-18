@@ -53,6 +53,19 @@
     [self.topContentView addSubview:self.logoLabel];
 }
 
+#pragma mark - 得到jsonString
+- (NSString*)DataTOjsonString:(id)object {
+    NSString *jsonString;
+    NSError *error;
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:object options:NSJSONWritingPrettyPrinted error:&error];
+    if (!jsonData) {
+        NSLog(@"Got an error: %@", error);
+    } else {
+        jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    return jsonString;
+}
+
 
 #pragma mark - 懒加载
 - (UIView *)topContentView {
@@ -96,7 +109,6 @@
 - (UILabel *)futureHomeCodeLabel {
     if (!_futureHomeCodeLabel) {
         _futureHomeCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 50, 200, 16)];
-//        _futureHomeCodeLabel.text = @"未来家园号:11111111";
         _futureHomeCodeLabel.text = [NSString stringWithFormat:@"社云号: %@",self.account.username];
         _futureHomeCodeLabel.textColor = [UIColor blackColor];
         _futureHomeCodeLabel.textAlignment = NSTextAlignmentLeft;
@@ -107,7 +119,18 @@
 - (UIImageView *)codeImgView {
     if (!_codeImgView) {
         _codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75, 5, 65, 65)];
-        _codeImgView.backgroundColor = HEX_COLOR(0x1296db);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"",@"address",
+                                   @"com.sheyun",@"app_key",
+                                   @(account.user_id),@"id",
+                                   @"false",@"is_collect",
+                                   account.nickname,@"name",
+                                   @"0",@"slat",
+                                   @"0",@"slng",
+                                   @"1",@"type",
+                                   nil];
+        _codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:paramsDic] size:65.0];
     }
     return _codeImgView;
 }

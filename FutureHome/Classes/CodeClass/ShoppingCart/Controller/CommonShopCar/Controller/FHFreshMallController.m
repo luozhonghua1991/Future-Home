@@ -166,11 +166,14 @@
     titleView.userInteractionEnabled = YES;
     
     if (!self.codeImgView) {
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(5, 0, 42, 42)];
-        self.codeImgView.backgroundColor = [UIColor redColor];
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
+        self.codeImgView.contentMode = UIViewContentModeScaleAspectFit;
+        self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
+        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(codeImgViewClick)];
         self.codeImgView.userInteractionEnabled = YES;
         [self.codeImgView addGestureRecognizer:tap];
+        
         [titleView addSubview:self.codeImgView];
     }
     self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);

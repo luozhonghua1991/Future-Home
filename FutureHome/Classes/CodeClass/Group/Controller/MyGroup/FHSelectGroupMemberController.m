@@ -146,13 +146,21 @@
     Account *account = [AccountStorage readAccount];
     NSString *url;
     NSDictionary *paramsDic;
-    if (self.groupMemberType == GroupMemberType_allMemberList ||
-        self.groupMemberType == GroupMemberType_subMember) {
+    if (self.groupMemberType == GroupMemberType_allMemberList) {
         /** 群组成员列表 */
         url = @"sheyun/getGroupList";
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
                      self.groupId,@"groupId",
+                     @"1",@"type",
+                     nil];
+    } else if (self.groupMemberType == GroupMemberType_subMember) {
+        /** 删除群组成员 */
+        url = @"sheyun/getGroupList";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     self.groupId,@"groupId",
+                     @"2",@"type",
                      nil];
     } else {
         /** 用户的互关列表 */

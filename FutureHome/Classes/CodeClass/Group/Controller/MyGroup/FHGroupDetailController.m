@@ -11,7 +11,7 @@
 #import "GroupInfoCell.h"
 #import "FHSelectGroupMemberController.h"
 
-@interface FHGroupDetailController () <UITableViewDataSource,UITableViewDelegate,TopViewControllerDelagate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,UITextFieldDelegate,RCIMGroupInfoDataSource>
+@interface FHGroupDetailController () <UITableViewDataSource,UITableViewDelegate,TopViewControllerDelagate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,UITextFieldDelegate>
 {
     UITableView *_showTable;
     TopViewController *_topview;
@@ -36,7 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     [self fh_creatNav];
     [self initMyView];
     [self initCreateData];

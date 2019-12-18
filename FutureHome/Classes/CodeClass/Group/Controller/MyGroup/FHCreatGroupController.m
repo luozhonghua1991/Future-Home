@@ -232,6 +232,11 @@
     NSData *imageData = UIImageJPEGRepresentation(self.groupImg,0.5);
     [AFNetWorkTool updateHeaderImageWithUrl:@"sheyun/createGroup" parameter:paramsDic imageData:imageData success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            RCGroup *groupInfo = [[RCGroup alloc] init];
+            groupInfo.groupId = responseObj[@"data"][@"groupId"];
+            groupInfo.groupName = responseObj[@"data"][@"groupName"];
+            groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+            [[RCIM sharedRCIM] refreshGroupInfoCache:groupInfo withGroupId:groupInfo.groupId];
             [self.view makeToast:@"创建群聊成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 跳转到对应的群聊 */

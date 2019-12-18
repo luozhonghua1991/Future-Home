@@ -131,6 +131,10 @@
 		4A448CE522C70437003D0712 /* FHBusinessServicesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CE422C70437003D0712 /* FHBusinessServicesController.m */; };
 		4A448CE822C7051B003D0712 /* FHPublicServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A448CE722C7051B003D0712 /* FHPublicServiceController.m */; };
 		4A45F5C32361B214009F25B8 /* FHReleaseDynamicsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A45F5C22361B214009F25B8 /* FHReleaseDynamicsController.m */; };
+		4A48AB6F23AA1EC100AEC284 /* SGQRCode.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4A48AB6823AA1EC100AEC284 /* SGQRCode.bundle */; };
+		4A48AB7023AA1EC100AEC284 /* SGQRCodeObtainConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6923AA1EC100AEC284 /* SGQRCodeObtainConfigure.m */; };
+		4A48AB7123AA1EC100AEC284 /* SGQRCodeObtain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6D23AA1EC100AEC284 /* SGQRCodeObtain.m */; };
+		4A48AB7223AA1EC100AEC284 /* SGQRCodeScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */; };
 		4A4A9C612348A8D700B2D578 /* FHAutographController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A9C602348A8D700B2D578 /* FHAutographController.m */; };
 		4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */; };
 		4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */; };
@@ -1228,6 +1232,14 @@
 		4A448CE722C7051B003D0712 /* FHPublicServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPublicServiceController.m; sourceTree = "<group>"; };
 		4A45F5C12361B214009F25B8 /* FHReleaseDynamicsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHReleaseDynamicsController.h; sourceTree = "<group>"; };
 		4A45F5C22361B214009F25B8 /* FHReleaseDynamicsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHReleaseDynamicsController.m; sourceTree = "<group>"; };
+		4A48AB6723AA1EC100AEC284 /* SGQRCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCode.h; sourceTree = "<group>"; };
+		4A48AB6823AA1EC100AEC284 /* SGQRCode.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SGQRCode.bundle; sourceTree = "<group>"; };
+		4A48AB6923AA1EC100AEC284 /* SGQRCodeObtainConfigure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeObtainConfigure.m; sourceTree = "<group>"; };
+		4A48AB6A23AA1EC100AEC284 /* SGQRCodeObtain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeObtain.h; sourceTree = "<group>"; };
+		4A48AB6B23AA1EC100AEC284 /* SGQRCodeScanView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeScanView.h; sourceTree = "<group>"; };
+		4A48AB6C23AA1EC100AEC284 /* SGQRCodeObtainConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeObtainConfigure.h; sourceTree = "<group>"; };
+		4A48AB6D23AA1EC100AEC284 /* SGQRCodeObtain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeObtain.m; sourceTree = "<group>"; };
+		4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanView.m; sourceTree = "<group>"; };
 		4A4A9C5F2348A8D700B2D578 /* FHAutographController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAutographController.h; sourceTree = "<group>"; };
 		4A4A9C602348A8D700B2D578 /* FHAutographController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAutographController.m; sourceTree = "<group>"; };
 		4A4BEF0B22CDF88C00FD00DE /* FHRigisterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHRigisterController.h; sourceTree = "<group>"; };
@@ -3247,6 +3259,21 @@
 			path = ZMCusCommentView;
 			sourceTree = "<group>";
 		};
+		4A48AB6623AA1EC100AEC284 /* SGQRCode */ = {
+			isa = PBXGroup;
+			children = (
+				4A48AB6723AA1EC100AEC284 /* SGQRCode.h */,
+				4A48AB6823AA1EC100AEC284 /* SGQRCode.bundle */,
+				4A48AB6923AA1EC100AEC284 /* SGQRCodeObtainConfigure.m */,
+				4A48AB6A23AA1EC100AEC284 /* SGQRCodeObtain.h */,
+				4A48AB6B23AA1EC100AEC284 /* SGQRCodeScanView.h */,
+				4A48AB6C23AA1EC100AEC284 /* SGQRCodeObtainConfigure.h */,
+				4A48AB6D23AA1EC100AEC284 /* SGQRCodeObtain.m */,
+				4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */,
+			);
+			path = SGQRCode;
+			sourceTree = "<group>";
+		};
 		4A4BEF0E22CDFA4900FD00DE /* Toast */ = {
 			isa = PBXGroup;
 			children = (
@@ -3700,6 +3727,7 @@
 		4A6DA9FE22C06F5C00F29455 /* libiary */ = {
 			isa = PBXGroup;
 			children = (
+				4A48AB6623AA1EC100AEC284 /* SGQRCode */,
 				4A140AC3239E3A8800130CC9 /* RongCloud */,
 				4A25D319237A58710036CD8D /* ALiPay */,
 				4ACB2CAE237185DA00F569EF /* DZNEemptyData */,
@@ -6553,6 +6581,7 @@
 				4A209EA723A09AE500C40100 /* RCColor.plist in Resources */,
 				4AA7B38A22CC7CD600462389 /* LICENSE.txt in Resources */,
 				4AE8493F22E30727009E165B /* ico_check_select@3x.png in Resources */,
+				4A48AB6F23AA1EC100AEC284 /* SGQRCode.bundle in Resources */,
 				4AF51B3F22D07DEB00AA04EC /* GNRShopHeader.xib in Resources */,
 				4AE8494F22E30727009E165B /* MImaCell.xib in Resources */,
 				4ABBFF8A23A4E0AB004FBBDE /* TopViewController.xib in Resources */,
@@ -6886,6 +6915,7 @@
 				4AB2042422F2DD7300111AC4 /* ZXBitArrayBuilder.m in Sources */,
 				4AE8497A22E316A7009E165B /* FHProprietaryAccountController.m in Sources */,
 				4AB2046522F2DD7300111AC4 /* UIActionSheet+LBXAlertAction.m in Sources */,
+				4A48AB7223AA1EC100AEC284 /* SGQRCodeScanView.m in Sources */,
 				4A68D2DB23587846003A3CB6 /* UIView+DPCategory.m in Sources */,
 				4AB2042622F2DD7300111AC4 /* ZXRSS14Reader.m in Sources */,
 				4AAC981D22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m in Sources */,
@@ -6988,6 +7018,7 @@
 				4AB2046F22F2DD7300111AC4 /* LBXScanNetAnimation.m in Sources */,
 				4AB2047422F2EAB100111AC4 /* FHLBXScanViewController.m in Sources */,
 				4AA308F722E6DFF500695FFE /* FHBlackListCell.m in Sources */,
+				4A48AB7023AA1EC100AEC284 /* SGQRCodeObtainConfigure.m in Sources */,
 				4A5EB877230D17DF00F90FF6 /* ZFTableViewCellLayout.m in Sources */,
 				4AB203BB22F2DD7300111AC4 /* ZXQRCodeReader.m in Sources */,
 				4A9E84EC2323561D0070CE4A /* UIView+WebCacheOperation.m in Sources */,
@@ -7152,6 +7183,7 @@
 				4A9B2B40232B91CA009E94FD /* NSArray+JSON.m in Sources */,
 				4A9E84DD2323561D0070CE4A /* UIImageView+HighlightedWebCache.m in Sources */,
 				4AB2012E22F28CB100111AC4 /* JSShareView.m in Sources */,
+				4A48AB7123AA1EC100AEC284 /* SGQRCodeObtain.m in Sources */,
 				4A97078E22DC70EA00FD18EC /* FHAccountApplicationTFView.m in Sources */,
 				4AB2045F22F2DD7300111AC4 /* ZXImage.m in Sources */,
 				4AB2039222F2DD7300111AC4 /* ZXBinaryBitmap.m in Sources */,

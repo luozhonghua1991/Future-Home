@@ -270,8 +270,9 @@
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
         [locationView addSubview:self.realSstateSNameLabel];
         
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 0, SCREEN_WIDTH * 0.116, SCREEN_WIDTH * 0.116)];
-        self.codeImgView.backgroundColor = [UIColor yellowColor];
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
+        self.codeImgView.contentMode = UIViewContentModeScaleAspectFit;
+        self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];;
         [locationView addSubview:self.codeImgView];
         
         [cell addSubview:locationView];

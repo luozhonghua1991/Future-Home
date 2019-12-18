@@ -249,7 +249,6 @@ static FHAppDelegate* pSelf = nil;
 }
 
 - (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {
-    
     if ([SingleManager shareManager].scrolling) {
         return;
     }
