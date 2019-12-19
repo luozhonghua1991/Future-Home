@@ -83,12 +83,12 @@
     FHFriendListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHFriendListCell class])];
     cell.followListModel = self.followListDataArrs[indexPath.row];
     if ([cell.followListModel.follow_msg isEqualToString:@"互为关注"]) {
-        cell.followOrNoBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        cell.followOrNoBtn.layer.borderColor = HEX_COLOR(0x1296db).CGColor;
         [cell.followOrNoBtn setTitle:@"互为关注" forState:UIControlStateNormal];
-        [cell.followOrNoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+        [cell.followOrNoBtn setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
     } else if ([cell.followListModel.follow_msg isEqualToString:@"已关注"]) {
         cell.followOrNoBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        [cell.followOrNoBtn setTitle:@"√已关注" forState:UIControlStateNormal];
+        [cell.followOrNoBtn setTitle:@"已关注" forState:UIControlStateNormal];
         [cell.followOrNoBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     }  else {
         cell.followOrNoBtn.layer.borderColor = [UIColor orangeColor].CGColor;
@@ -108,6 +108,7 @@
     [SingleManager shareManager].isSelectPerson = YES;
     vc.hidesBottomBarWhenPushed = YES;
     vc.personType = 0;
+    vc.follow_msg = followListModel.follow_msg;
     if ([self.yp_tabItemTitle isEqualToString:@"粉丝"]) {
         vc.user_id = followListModel.follower;
     } else {

@@ -21,6 +21,7 @@
 #import "FHGarageManagementController.h"
 #import "FHFreshMallFollowListController.h"
 #import "FHHomePageController.h"
+#import "FHScanDetailAlertView.h"
 
 @interface FHHomeServicesController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -46,6 +47,10 @@
 @property (nonatomic, copy) NSArray *bottomImageArrs;
 /** <#strong属性注释#> */
 @property (nonatomic, copy) NSString *homeServiceName;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *userName;
 
 @end
 
@@ -89,6 +94,7 @@
         NSDictionary *dic = arr[0];
         self->property_id = [dic[@"id"] integerValue];
         self.realSstateSNameLabel.text = dic[@"name"];
+        self.userName = dic[@"username"];
         /** 获取banner数据 */
         [self fh_refreshBannerData];
     } failure:^(NSError *error) {
@@ -278,6 +284,9 @@
         self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
         self.codeImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        self.codeImgView.userInteractionEnabled = YES;
+        [self.codeImgView addGestureRecognizer:tap];
         [locationView addSubview:self.codeImgView];
         
         
@@ -333,6 +342,14 @@
     }
 }
 
+- (void)tapClick {
+    self.codeDetailView.alpha = 0;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.codeDetailView.alpha = 1;
+    }];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+}
 
 /** 创建轮播图的实例方法 */
 - (BHInfiniteScrollView *)fh_creatBHInfiniterScrollerViewWithImageArrays:(NSArray *)imageArrs
@@ -484,6 +501,27 @@
         }
     }
     return _homeTable;
+}
+
+- (FHScanDetailAlertView *)codeDetailView {
+    if (!_codeDetailView) {
+        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(account.user_id),@"id",
+                                   self.realSstateSNameLabel.text,@"name",
+                                   self.userName,@"username",
+                                   @"2",@"type",
+                                   /** 下面的用不到 没啥用 */
+                                   @"false",@"is_collect",
+                                   @"0",@"slat",
+                                   @"0",@"slng",
+                                   @"",@"address",
+                                   nil];
+        _codeDetailView.dataDetaildic = paramsDic;
+    }
+    return _codeDetailView;
 }
 
 @end

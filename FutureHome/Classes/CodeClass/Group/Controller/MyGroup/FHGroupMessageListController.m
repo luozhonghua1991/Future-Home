@@ -105,6 +105,10 @@
     
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
 #pragma mark — setter & getter
 //- (UITableView *)homeTable {
 //    if (_homeTable == nil) {

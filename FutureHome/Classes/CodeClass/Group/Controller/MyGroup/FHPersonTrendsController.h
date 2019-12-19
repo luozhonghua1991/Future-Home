@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 关注信息 */
 @property (nonatomic, copy) NSString *follow_msg;
 
-
-
 @end
 
 NS_ASSUME_NONNULL_END

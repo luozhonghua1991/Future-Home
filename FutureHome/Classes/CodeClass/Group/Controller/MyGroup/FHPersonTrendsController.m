@@ -84,6 +84,7 @@
     hotVC.isHaveHeaderView = YES;
     hotVC.personType = self.personType;
     hotVC.personID = self.user_id;
+    hotVC.follow_msg = self.follow_msg;
     
     FHMyVideosController *photoVC = [[FHMyVideosController alloc] init];
     photoVC.yp_tabItemTitle = @"视频";

@@ -59,6 +59,8 @@
 @property (nonatomic, copy) NSString *username;
 /** 用户的昵称 */
 @property (nonatomic, copy) NSString *nickname;
+/** 参数 */
+@property (nonatomic, copy) NSDictionary *headerParamsDic;
 
 
 @end
@@ -106,7 +108,9 @@
         headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                            @(account.user_id),@"user_id",
                            uid,@"uid", nil];
-        [self.updateBtn setTitle:@"+对话" forState:UIControlStateNormal];
+        self.headerParamsDic = headerParamsDic;
+        self.relationBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 25, 90, 35);
+        self.updateBtn.hidden = YES;
         self.relationBtn.hidden = NO;
     } else {
         paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
@@ -157,12 +161,12 @@
             weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
             weakSelf.followLabel.text = [NSString stringWithFormat:@"关注: %@",dic[@"follow_num"]];
             weakSelf.updateLabel.text = [NSString stringWithFormat:@"发布: %@",dic[@"publish_num"]];
-            if ([dic[@"is_follow"] integerValue] == 0) {
+            if ([dic[@"is_follow"] integerValue] == 1) {
                 [weakSelf.relationBtn setTitle:@"+关注" forState:UIControlStateNormal];
-            } else if ([dic[@"is_follow"] integerValue] == 1) {
-                [weakSelf.relationBtn setTitle:@"已关注" forState:UIControlStateNormal];
             } else if ([dic[@"is_follow"] integerValue] == 2) {
-                [weakSelf.relationBtn setTitle:@"互为关注" forState:UIControlStateNormal];
+                [weakSelf.relationBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            } else if ([dic[@"is_follow"] integerValue] == 3) {
+                [weakSelf.relationBtn setTitle:@"+聊天" forState:UIControlStateNormal];
             }
             [weakSelf.mainTable reloadData];
         } else {
@@ -369,13 +373,6 @@
 
 - (void)updateBtnClcik {
     if (self.personType == 0) {
-        /** 聊天 */
-        FHFriendMessageController *conversationVC = [[FHFriendMessageController alloc] init];
-        conversationVC.conversationType = ConversationType_PRIVATE;
-        conversationVC.targetId = self.username;
-        conversationVC.titleString = self.nickname;
-        conversationVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:conversationVC animated:YES];
     } else {
         /** 发布动态 */
         [self viewControllerPushOther:@"FHReleaseDynamicsController"];
@@ -385,8 +382,51 @@
 
 /**  切换关系的按钮点击事件 */
 - (void)relationBtnClcik:(UIButton *)sender {
-    
+    if ([sender.currentTitle isEqualToString:@"+聊天"]) {
+        /** 聊天 */
+        FHFriendMessageController *conversationVC = [[FHFriendMessageController alloc] init];
+        conversationVC.conversationType = ConversationType_PRIVATE;
+        conversationVC.targetId = self.username;
+        conversationVC.titleString = self.nickname;
+        conversationVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:conversationVC animated:YES];
+    } else if ([sender.currentTitle isEqualToString:@"+关注"]) {
+        /** +关注的方法 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   //                                   @(32),@"user_id",
+                                   self.personID,@"follow_id", nil];
+        
+        [AFNetWorkTool post:@"sheyun/doFollow" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"操作成功"];
+                
+                [AFNetWorkTool get:@"sheyun/circleInfo" params:self.headerParamsDic success:^(id responseObj) {
+                    if ([responseObj[@"code"] integerValue] == 1) {
+                        NSDictionary *dic = responseObj[@"data"];
+                        if ([dic[@"is_follow"] integerValue] == 1) {
+                            [weakSelf.relationBtn setTitle:@"+关注" forState:UIControlStateNormal];
+                        } else if ([dic[@"is_follow"] integerValue] == 2) {
+                            [weakSelf.relationBtn setTitle:@"已关注" forState:UIControlStateNormal];
+                        } else if ([dic[@"is_follow"] integerValue] == 3) {
+                            [weakSelf.relationBtn setTitle:@"+聊天" forState:UIControlStateNormal];
+                        }
+                    } else {
+                        [self.view makeToast:responseObj[@"msg"]];
+                    }
+                } failure:^(NSError *error) {
+                }];
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
+
 
 - (void)imgViewClick {
     /** 选取图片 */
@@ -562,10 +602,11 @@
 - (UIButton *)updateBtn {
     if (!_updateBtn) {
         _updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _updateBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 25, 80, 25);
+        _updateBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 25, 90, 35);
         [_updateBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         [_updateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _updateBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _updateBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        _updateBtn.layer.cornerRadius = 35 / 2;
         [_updateBtn addTarget:self action:@selector(updateBtnClcik) forControlEvents:UIControlEventTouchUpInside];
     }
     return _updateBtn;
@@ -574,10 +615,11 @@
 - (UIButton *)relationBtn {
     if (!_relationBtn) {
         _relationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _relationBtn.frame = CGRectMake(MaxX(_updateBtn) + 10, MaxY(self.updateLabel) + 25, 80, 25);
+        _relationBtn.frame = CGRectMake(MaxX(_updateBtn) + 10, MaxY(self.updateLabel) + 25, 90, 35);
         [_relationBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         [_relationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        _relationBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        _relationBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+        _relationBtn.layer.cornerRadius = 35 / 2;
         [_relationBtn addTarget:self action:@selector(relationBtnClcik:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _relationBtn;

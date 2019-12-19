@@ -135,6 +135,7 @@
 		4A48AB7023AA1EC100AEC284 /* SGQRCodeObtainConfigure.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6923AA1EC100AEC284 /* SGQRCodeObtainConfigure.m */; };
 		4A48AB7123AA1EC100AEC284 /* SGQRCodeObtain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6D23AA1EC100AEC284 /* SGQRCodeObtain.m */; };
 		4A48AB7223AA1EC100AEC284 /* SGQRCodeScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */; };
+		4A48AB7523AA331A00AEC284 /* FHScanDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB7423AA331A00AEC284 /* FHScanDetailAlertView.m */; };
 		4A4A9C612348A8D700B2D578 /* FHAutographController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A9C602348A8D700B2D578 /* FHAutographController.m */; };
 		4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */; };
 		4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */; };
@@ -1240,6 +1241,8 @@
 		4A48AB6C23AA1EC100AEC284 /* SGQRCodeObtainConfigure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SGQRCodeObtainConfigure.h; sourceTree = "<group>"; };
 		4A48AB6D23AA1EC100AEC284 /* SGQRCodeObtain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeObtain.m; sourceTree = "<group>"; };
 		4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanView.m; sourceTree = "<group>"; };
+		4A48AB7323AA331A00AEC284 /* FHScanDetailAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHScanDetailAlertView.h; sourceTree = "<group>"; };
+		4A48AB7423AA331A00AEC284 /* FHScanDetailAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanDetailAlertView.m; sourceTree = "<group>"; };
 		4A4A9C5F2348A8D700B2D578 /* FHAutographController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAutographController.h; sourceTree = "<group>"; };
 		4A4A9C602348A8D700B2D578 /* FHAutographController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAutographController.m; sourceTree = "<group>"; };
 		4A4BEF0B22CDF88C00FD00DE /* FHRigisterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHRigisterController.h; sourceTree = "<group>"; };
@@ -3907,6 +3910,8 @@
 				4AC67E4022C8C05F00842C0D /* OwnerService */,
 				4AC67E4122C8C11100842C0D /* HealthServices */,
 				4AC67E4322C8C4F800842C0D /* CustomerService */,
+				4A48AB7323AA331A00AEC284 /* FHScanDetailAlertView.h */,
+				4A48AB7423AA331A00AEC284 /* FHScanDetailAlertView.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -6691,6 +6696,7 @@
 				4AC409C42359C304006E1486 /* HZPhotoBrowserView.m in Sources */,
 				4A5EB888230D189000F90FF6 /* ZFDouYinControlView.m in Sources */,
 				4A9CB209230BCA42004A3763 /* YYSpriteSheetImage.m in Sources */,
+				4A48AB7523AA331A00AEC284 /* FHScanDetailAlertView.m in Sources */,
 				4AB2045322F2DD7300111AC4 /* ZXEmailAddressParsedResult.m in Sources */,
 				4AA7B3B822CC873B00462389 /* RWPasswordView.m in Sources */,
 				4ACB2CB1237185FD00F569EF /* UIScrollView+EmptyDataSet.m in Sources */,

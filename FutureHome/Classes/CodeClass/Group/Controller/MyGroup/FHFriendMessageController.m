@@ -62,8 +62,6 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-    
-//    self.titleLabel.text = @"你好";
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

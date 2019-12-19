@@ -67,6 +67,10 @@
     }];
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
 //- (void)viewDidLoad {
 //    [super viewDidLoad];
 //    [self.view addSubview:self.homeTable];
