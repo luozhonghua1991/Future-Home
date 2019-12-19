@@ -93,7 +93,7 @@
         NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
         self->property_id = [dic[@"id"] integerValue];
-        self.realSstateSNameLabel.text = dic[@"name"];
+        self.homeServiceName = dic[@"name"];
         self.userName = dic[@"username"];
         /** 获取banner数据 */
         [self fh_refreshBannerData];
@@ -506,18 +506,17 @@
 - (FHScanDetailAlertView *)codeDetailView {
     if (!_codeDetailView) {
         _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-        Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",
-                                   @(account.user_id),@"id",
+                                   @(property_id),@"id",
                                    self.realSstateSNameLabel.text,@"name",
                                    self.userName,@"username",
                                    @"2",@"type",
                                    /** 下面的用不到 没啥用 */
-                                   @"false",@"is_collect",
-                                   @"0",@"slat",
-                                   @"0",@"slng",
-                                   @"",@"address",
+//                                   @"false",@"is_collect",
+//                                   @"0",@"slat",
+//                                   @"0",@"slng",
+//                                   @"",@"address",
                                    nil];
         _codeDetailView.dataDetaildic = paramsDic;
     }

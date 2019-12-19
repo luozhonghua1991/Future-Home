@@ -51,11 +51,11 @@
     [self.whiteBgView addSubview:self.topLabel];
     
     [self.whiteBgView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(80);
-        make.right.mas_equalTo(-80);
+        make.left.mas_equalTo(70);
+        make.right.mas_equalTo(-70);
         make.centerX.mas_equalTo(self);
         make.centerY.mas_equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 160, 350));
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 140, SCREEN_WIDTH - 140));
     }];
     
     [self.codeImgView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -65,9 +65,9 @@
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(30);
+        make.top.mas_equalTo(10);
         make.left.mas_equalTo(0);
-        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 160, 16));
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 140, 16));
     }];
     
     [self.closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -77,9 +77,9 @@
     }];
     
     [self.topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.codeImgView.mas_bottom).offset(10);
+        make.top.mas_equalTo(self.codeImgView.mas_bottom).offset(5);
         make.left.mas_equalTo(0);
-        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 160, 114));
+        make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 140, 16));
     }];
 }
 
@@ -93,6 +93,7 @@
     self.codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:_dataDetaildic] size:150];
     self.titleLabel.text = [NSString stringWithFormat:@"社云账号:%@",_dataDetaildic[@"username"]];
     self.topLabel.text = _dataDetaildic[@"name"];
+    
 }
 
 #pragma mark - 得到jsonString
@@ -149,12 +150,11 @@
 
 - (UILabel *)topLabel {
     if (!_topLabel) {
-        _topLabel = [[UILabel alloc]init];
+        _topLabel = [[UILabel alloc] init];
         _topLabel.textColor = HEX_COLOR(0x4D4D4D);
-        _topLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:13];
+        _topLabel.font = [UIFont fontWithName:@"PingFangSC-Medium" size:16];
         _topLabel.text = @"";
         _topLabel.textAlignment = NSTextAlignmentCenter;
-        _topLabel.numberOfLines = 0;
     }
     return _topLabel;
 }

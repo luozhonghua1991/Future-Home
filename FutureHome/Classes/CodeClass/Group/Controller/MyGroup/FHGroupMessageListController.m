@@ -139,6 +139,7 @@
         _groupCountLabel.font = [UIFont systemFontOfSize:13];
         _groupCountLabel.textColor = [UIColor blackColor];
         _groupCountLabel.textAlignment = NSTextAlignmentLeft;
+        _groupCountLabel.text = [NSString stringWithFormat:@"群聊数量 : %lu ",(unsigned long)[SingleManager shareManager].allGroupsArrs.count];
     }
     return _groupCountLabel;
 }

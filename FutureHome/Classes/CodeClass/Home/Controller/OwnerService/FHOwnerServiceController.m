@@ -18,6 +18,7 @@
 #import "FHAuthModel.h"
 #import "FHOwnerCertificationController.h"
 #import "FHHomePageController.h"
+#import "FHScanDetailAlertView.h"
 
 @interface FHOwnerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -41,9 +42,14 @@
 @property (nonatomic, copy) NSArray *bottomLogoNameArrs;
 /** 下面的image */
 @property (nonatomic, copy) NSArray *bottomImageArrs;
-
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHAuthModel *authModel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *userName;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *name;
 
 @end
 
@@ -83,6 +89,8 @@
         NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
         self->property_id = [dic[@"id"] integerValue];
+        self.userName = dic[@"username"];
+        self.name = dic[@"name"];
         /** 获取banner数据 */
         [self fh_refreshBannerData];
     } failure:^(NSError *error) {
@@ -264,7 +272,7 @@
         locationView.tag = 2017;
         
         self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
-        self.realSstateSNameLabel.text = @"恒大未来城一期-恒大物业服务平台";
+        self.realSstateSNameLabel.text = self.name;
         self.realSstateSNameLabel.textColor = [UIColor blackColor];
         self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
@@ -272,7 +280,12 @@
         
         self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
         self.codeImgView.contentMode = UIViewContentModeScaleAspectFit;
-        self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];;
+        self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        self.codeImgView.userInteractionEnabled = YES;
+        [self.codeImgView addGestureRecognizer:tap];
+        
         [locationView addSubview:self.codeImgView];
         
         [cell addSubview:locationView];
@@ -328,6 +341,14 @@
     }
 }
 
+- (void)tapClick {
+    self.codeDetailView.alpha = 0;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.codeDetailView.alpha = 1;
+    }];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+}
 
 /** 创建轮播图的实例方法 */
 - (BHInfiniteScrollView *)fh_creatBHInfiniterScrollerViewWithImageArrays:(NSArray *)imageArrs
@@ -504,6 +525,26 @@
         }
     }
     return _homeTable;
+}
+
+- (FHScanDetailAlertView *)codeDetailView {
+    if (!_codeDetailView) {
+        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(property_id),@"id",
+                                   self.realSstateSNameLabel.text,@"name",
+                                   self.userName,@"username",
+                                   @"3",@"type",
+                                   /** 下面的用不到 没啥用 */
+//                                   @"false",@"is_collect",
+//                                   @"0",@"slat",
+//                                   @"0",@"slng",
+//                                   @"",@"address",
+                                   nil];
+        _codeDetailView.dataDetaildic = paramsDic;
+    }
+    return _codeDetailView;
 }
 
 @end

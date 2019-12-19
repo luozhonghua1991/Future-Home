@@ -7,6 +7,7 @@
 //  个人中心 个人信息View
 
 #import "FHMeCenterUserInfoView.h"
+#import "FHScanDetailAlertView.h"
 
 @interface FHMeCenterUserInfoView ()
 /** 上面的线 */
@@ -29,7 +30,8 @@
 
 /** <#strong属性注释#> */
 @property (nonatomic, strong) Account *account;
-
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
 
 @end
 
@@ -66,6 +68,14 @@
     return jsonString;
 }
 
+- (void)tapClick {
+    self.codeDetailView.alpha = 0;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.codeDetailView.alpha = 1;
+    }];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+}
 
 #pragma mark - 懒加载
 - (UIView *)topContentView {
@@ -131,6 +141,10 @@
                                    @"1",@"type",
                                    nil];
         _codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:paramsDic] size:65.0];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        _codeImgView.userInteractionEnabled = YES;
+        [_codeImgView addGestureRecognizer:tap];
     }
     return _codeImgView;
 }
@@ -212,6 +226,27 @@
         _myView = [[FHUserInfoHeaderBaseView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH / 4 *3, 0, SCREEN_WIDTH / 4, 65)];
     }
     return _myView;
+}
+
+- (FHScanDetailAlertView *)codeDetailView {
+    if (!_codeDetailView) {
+        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(account.user_id),@"id",
+                                   account.nickname,@"name",
+                                   account.username,@"username",
+                                   @"1",@"type",
+                                   /** 下面的用不到 没啥用 */
+//                                   @"false",@"is_collect",
+//                                   @"0",@"slat",
+//                                   @"0",@"slng",
+//                                   @"",@"address",
+                                   nil];
+        _codeDetailView.dataDetaildic = paramsDic;
+    }
+    return _codeDetailView;
 }
 
 @end

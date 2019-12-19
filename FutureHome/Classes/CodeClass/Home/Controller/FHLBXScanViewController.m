@@ -10,6 +10,10 @@
 #import "LBXScanResult.h"
 #import "LBXScanWrapper.h"
 #import "LBXScanVideoZoomView.h"
+#import "FHHomeServicesController.h"
+#import "FHOwnerServiceController.h"
+#import "FHPersonTrendsController.h"
+#import "FHFreshMallController.h"
 
 @interface FHLBXScanViewController ()
 @property (nonatomic, strong) LBXScanVideoZoomView *zoomView;
@@ -241,20 +245,74 @@
 //    
 //    [self.navigationController pushViewController:vc animated:YES];
     ZHLog(@"扫描出来的二维码内容:%@",strResult.strScanned);
-    NSArray *array = [strResult.strScanned componentsSeparatedByString:@"goods-"];
-    if (array.count == 2) {
-        NSArray *array1 = [[array objectAtIndex:1] componentsSeparatedByString:@".html"];
-        ZHLog(@"扫描出来的产品ID:%@",[array1 objectAtIndex:0]);
-       
-//        [self.navigationController pushViewController:goodsDetailVC animated:YES];
-    }else{
-        NSURL * url = [NSURL URLWithString: strResult.strScanned];
-        if ([[UIApplication sharedApplication] canOpenURL: url]) {
-            [[UIApplication sharedApplication] openURL: url];
-        } else {
+    NSDictionary *resultDic = [self dictionaryWithJsonString:strResult.strScanned];
+    if ([resultDic[@"app_key"] isEqualToString:@"com.sheyun"]) {
+        /** 社云相关的二维码 */
+        NSString *type = resultDic[@"type"];
+        if ([type isEqualToString:@"1"]) {
+            FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+            vc.titleString = resultDic[@"name"];
+            [SingleManager shareManager].isSelectPerson = YES;
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.user_id = resultDic[@"id"];
+            vc.personType = 0;
+            [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
+        } else if ([type isEqualToString:@"2"]) {
             
+        } else if ([type isEqualToString:@"3"]) {
+            
+        } else if ([type isEqualToString:@"4"]) {
+            FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+            goodList.hidesBottomBarWhenPushed = YES;
+            goodList.titleString = @"生鲜商城";
+            goodList.shopID = resultDic[@"id"];
+//            goodList.isCollect = followModel.is_collect;
+            [self.navigationController pushViewController:goodList animated:YES];
+        } else if ([type isEqualToString:@"5"]) {
+            FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+            goodList.hidesBottomBarWhenPushed = YES;
+            goodList.titleString = @"商业商城";
+            goodList.shopID = resultDic[@"id"];
+//            goodList.isCollect = followModel.is_collect;
+            [self.navigationController pushViewController:goodList animated:YES];
+        } else if ([type isEqualToString:@"6"]) {
+            FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+            goodList.hidesBottomBarWhenPushed = YES;
+            goodList.titleString = @"医药商城";
+            goodList.shopID = resultDic[@"id"];
+//            goodList.isCollect = followModel.is_collect;
+            [self.navigationController pushViewController:goodList animated:YES];
         }
     }
+//    NSArray *array = [strResult.strScanned componentsSeparatedByString:@"goods-"];
+//    if (array.count == 2) {
+//        NSArray *array1 = [[array objectAtIndex:1] componentsSeparatedByString:@".html"];
+//        ZHLog(@"扫描出来的产品ID:%@",[array1 objectAtIndex:0]);
+//
+////        [self.navigationController pushViewController:goodsDetailVC animated:YES];
+//    }else{
+//        NSURL * url = [NSURL URLWithString: strResult.strScanned];
+//        if ([[UIApplication sharedApplication] canOpenURL: url]) {
+//            [[UIApplication sharedApplication] openURL: url];
+//        } else {
+//
+//        }
+//    }
+}
+
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString
+{
+    if (jsonString == nil) {
+        return nil;
+    }
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError *err;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
 }
 
 

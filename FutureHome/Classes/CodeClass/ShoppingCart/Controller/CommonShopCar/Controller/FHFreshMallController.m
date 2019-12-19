@@ -18,6 +18,7 @@
 #import "FHMeCenterController.h"
 #import "FHGroupController.h"
 #import "CQRouteManager.h"
+#import "FHScanDetailAlertView.h"
 
 @interface FHFreshMallController () <UIScrollViewDelegate,JSShareViewDelegate>
 {
@@ -55,7 +56,10 @@
 @property (nonatomic, assign) CGFloat lat;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) CGFloat lng;
-
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *username;
 
 @end
 
@@ -188,6 +192,7 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.locationLabel.text = dic[@"shopname"];
+            weakSelf.username = dic[@"username"];
             weakSelf.lat = [dic[@"lat"] floatValue];
             weakSelf.lng = [dic[@"lng"] floatValue];
             [SingleManager shareManager].shopName = dic[@"shopname"];
@@ -243,6 +248,8 @@
         }];
         self.tabBarController.selectedIndex = 0;
         [self.navigationController popToViewController:vc animated:YES];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 
@@ -300,7 +307,12 @@
 
 - (void)codeImgViewClick {
     /** 二维码地图点击放大 */
-    
+    self.codeDetailView.alpha = 0;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.codeDetailView.alpha = 1;
+    }];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
 }
 
 - (void)navigationLabelClick {
@@ -468,5 +480,32 @@
     return _navigationLabel;
 }
 
+- (FHScanDetailAlertView *)codeDetailView {
+    if (!_codeDetailView) {
+        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        NSString *type;
+        if ([self.titleString isEqualToString:@"生鲜商城"]) {
+            type = @"4";
+        } else if ([self.titleString isEqualToString:@"商业商城"]) {
+            type = @"5";
+        } else if ([self.titleString isEqualToString:@"医药商城"]) {
+            type = @"6";
+        }
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   self.shopID,@"id",
+                                   self.locationLabel.text,@"name",
+                                   self.username,@"username",
+                                   type,@"type",
+                                   /** 下面的用不到 没啥用 */
+//                                   @"false",@"is_collect",
+//                                   @"0",@"slat",
+//                                   @"0",@"slng",
+//                                   @"",@"address",
+                                   nil];
+        _codeDetailView.dataDetaildic = paramsDic;
+    }
+    return _codeDetailView;
+}
 
 @end

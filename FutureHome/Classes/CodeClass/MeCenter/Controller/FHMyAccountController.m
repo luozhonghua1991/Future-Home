@@ -10,6 +10,7 @@
 #import "FHMyAccountCell.h"
 #import "FHChangeNameController.h"
 #import "FHAutographController.h"
+#import "FHScanDetailAlertView.h"
 
 @interface FHMyAccountController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 /** table */
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) UIImageView *headerImageView;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) Account *account;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
 
 @end
 
@@ -28,7 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.account = [AccountStorage readAccount];
     self.isHaveNavgationView = YES;
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
@@ -36,6 +38,11 @@
     self.logoArrs = @[@"头像",@"昵称",@"未来家园号",@"未来家园号",@"个性签名"];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.account = [AccountStorage readAccount];
+    [self.homeTable reloadData];
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -99,9 +106,16 @@
         cell.contentLabel.hidden = YES;
     } else {
         cell.headerImg.hidden = YES;
-        
-        cell.rightArrowImg.hidden = NO;
+        cell.rightArrowImg.hidden = YES;
         cell.contentLabel.hidden = NO;
+        if (indexPath.row == 1) {
+            cell.contentLabel.text = self.account.nickname;
+        }
+        if (indexPath.row == 2) {
+            cell.contentLabel.text = self.account.username;
+        } else {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
     }
     return cell;
 }
@@ -126,6 +140,13 @@
         FHAutographController *change = [[FHAutographController alloc] init];
 //        change.strAutograph = self.account.name;
         [self.navigationController pushViewController:change animated:YES];
+    } else if (indexPath.row == 3) {
+        self.codeDetailView.alpha = 0;
+        [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+        [UIView animateWithDuration:0.3 animations:^{
+            self.codeDetailView.alpha = 1;
+        }];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
     }
 }
 
@@ -221,6 +242,26 @@
         }
     }
     return _homeTable;
+}
+
+- (FHScanDetailAlertView *)codeDetailView {
+    if (!_codeDetailView) {
+        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(self.account.user_id),@"id",
+                                   self.account.nickname,@"name",
+                                   self.account.username,@"username",
+                                   @"1",@"type",
+                                   /** 下面的用不到 没啥用 */
+//                                   @"false",@"is_collect",
+//                                   @"0",@"slat",
+//                                   @"0",@"slng",
+//                                   @"",@"address",
+                                   nil];
+        _codeDetailView.dataDetaildic = paramsDic;
+    }
+    return _codeDetailView;
 }
 
 @end
