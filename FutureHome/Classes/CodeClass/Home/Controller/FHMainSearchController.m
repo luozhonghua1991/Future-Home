@@ -62,27 +62,33 @@
 - (void)initViewControllers {
     FHSearchResultController *person = [[FHSearchResultController alloc] init];
     person.yp_tabItemTitle = @"用户";
-    person.type = @"1";
+//    person.type = @"1";
+    person.type = @"0";
     
     FHSearchResultController *photoVC = [[FHSearchResultController alloc] init];
-    photoVC.yp_tabItemTitle = @"业主";
-    photoVC.type = @"2";
+    photoVC.yp_tabItemTitle = @"物业";
+//    photoVC.type = @"2";
+    photoVC.type = @"1";
     
     FHSearchResultController *property = [[FHSearchResultController alloc] init];
-    property.yp_tabItemTitle = @"物业";
-    property.type = @"3";
+    property.yp_tabItemTitle = @"业主";
+//    property.type = @"3";
+    property.type = @"2";
     
     FHSearchResultController *fish = [[FHSearchResultController alloc] init];
     fish.yp_tabItemTitle = @"生鲜";
-    fish.type = @"4";
+//    fish.type = @"4";
+    fish.type = @"3";
     
     FHSearchResultController *bussiness = [[FHSearchResultController alloc] init];
     bussiness.yp_tabItemTitle = @"商业";
-    bussiness.type = @"5";
+//    bussiness.type = @"5";
+    bussiness.type = @"4";
     
     FHSearchResultController *health = [[FHSearchResultController alloc] init];
     health.yp_tabItemTitle = @"医药";
-    health.type = @"6";
+//    health.type = @"6";
+    health.type = @"5";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:person, photoVC,property,fish,bussiness,health, nil];
 }

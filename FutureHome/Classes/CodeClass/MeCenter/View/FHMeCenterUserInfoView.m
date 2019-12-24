@@ -7,7 +7,7 @@
 //  个人中心 个人信息View
 
 #import "FHMeCenterUserInfoView.h"
-#import "FHScanDetailAlertView.h"
+
 
 @interface FHMeCenterUserInfoView ()
 /** 上面的线 */
@@ -30,8 +30,7 @@
 
 /** <#strong属性注释#> */
 @property (nonatomic, strong) Account *account;
-/** <#strong属性注释#> */
-@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
+
 
 @end
 
@@ -69,12 +68,15 @@
 }
 
 - (void)tapClick {
-    self.codeDetailView.alpha = 0;
-    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
-    [UIView animateWithDuration:0.3 animations:^{
-        self.codeDetailView.alpha = 1;
-    }];
-    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_personCodeTapCLick)]) {
+        [_delegate fh_personCodeTapCLick];
+    }
+//    self.codeDetailView.alpha = 0;
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.codeDetailView.alpha = 1;
+//    }];
+//    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
 }
 
 #pragma mark - 懒加载
@@ -105,8 +107,7 @@
 
 - (UILabel *)userNameLabel {
     if (!_userNameLabel) {
-        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 20, 100, 16)];
-//        _userNameLabel.text = @"许大宝~";
+        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 20, 245, 15)];
         if (!IsStringEmpty(self.account.nickname)) {
             _userNameLabel.text = [NSString stringWithFormat:@"%@",self.account.nickname];
         }

@@ -34,6 +34,19 @@
     [self fh_getRequest];
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 - (void)fh_getRequest {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -50,6 +63,7 @@
     
     [AFNetWorkTool get:url params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [self endRefreshAction];
             self.followListDataArrs = [[NSMutableArray alloc] init];
             self.followListDataArrs = [FHFollowListModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
             [weakSelf.homeTable reloadData];
@@ -163,6 +177,20 @@
     }
 }
 
+
+
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
@@ -178,6 +206,9 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _homeTable.showsVerticalScrollIndicator = NO;
+        _homeTable.emptyDataSetSource = self;
+        _homeTable.emptyDataSetDelegate = self;
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fh_getRequest)];
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

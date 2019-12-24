@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/9/19.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  信息详情界面
+//  动态详情界面
 
 #import "FHCommitDetailController.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -65,7 +65,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"信息详情";
+    titleLabel.text = @"动态详情";
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -376,13 +376,22 @@
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH - 50, 35)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 100, 25)];
     label.text = @"我来说两句。。。";
     label.layer.borderColor = [UIColor lightGrayColor].CGColor;
     label.layer.borderWidth = 1;
     label.font = [UIFont systemFontOfSize:15];
     label.userInteractionEnabled = YES;
     [bottomView addSubview:label];
+    
+    UIButton *pushBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    pushBtn.backgroundColor = HEX_COLOR(0x1296db);
+    [pushBtn setTitle:@"发布" forState:0];
+    pushBtn.enabled = NO;
+    pushBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 50, 25);
+    [bottomView addSubview:pushBtn];
+    
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showInputView)];
     bottomView.userInteractionEnabled = YES;

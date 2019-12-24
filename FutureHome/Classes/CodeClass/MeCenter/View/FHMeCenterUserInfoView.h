@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "FHUserInfoHeaderBaseView.h"
+#import "FHScanDetailAlertView.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol FHMeCenterUserInfoViewDelegate <NSObject>
+
+@required // 必须实现的方法 默认
+
+@optional // 可选实现的方法
+- (void)fh_personCodeTapCLick;
+
+@end
 
 @interface FHMeCenterUserInfoView : UIView
 /** 用户头像 */
@@ -28,6 +38,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) FHUserInfoHeaderBaseView *followView;
 /** 我的动态 */
 @property (nonatomic, strong) FHUserInfoHeaderBaseView *myView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
+
+@property(nonatomic, weak) id<FHMeCenterUserInfoViewDelegate> delegate;
 
 @end
 

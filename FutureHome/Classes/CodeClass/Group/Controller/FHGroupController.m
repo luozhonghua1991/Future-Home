@@ -298,7 +298,7 @@
         [self->myVideoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->businssServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self->publickServiceBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [sender setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+        [sender setTitleColor:HEX_COLOR(0x0000FF) forState:UIControlStateNormal];
     }];
     
 }

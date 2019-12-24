@@ -61,7 +61,7 @@
     if (KIsiPhoneX) {
         [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(33, 33, 0, 33) tapSwitchAnimated:YES];
     } else {
-        [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(33, 31, 0, 31) tapSwitchAnimated:YES];
+        [self.tabBar setItemSelectedBgInsets:UIEdgeInsetsMake(33, 25, 0, 25) tapSwitchAnimated:YES];
     }
     self.tabBar.itemSelectedBgScrollFollowContent = YES;
     self.tabBar.itemColorChangeFollowContentScroll = NO;

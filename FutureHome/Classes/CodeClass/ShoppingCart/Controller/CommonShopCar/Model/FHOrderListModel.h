@@ -22,9 +22,12 @@ NS_ASSUME_NONNULL_BEGIN
 /** 个数 */
 @property (nonatomic, copy) NSString *number;
 /** 支付id */
-@property (nonatomic, copy) NSString *order_id;
+@property (nonatomic, copy) NSString *order_idass;
 /** 单个价格 */
 @property (nonatomic, copy) NSString *sell_price;
+
+/** 单个价格 */
+//@property (nonatomic, assign) float  sell_price;
 
 @end
 

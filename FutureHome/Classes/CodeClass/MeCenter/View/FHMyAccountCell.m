@@ -32,7 +32,7 @@
 - (void)fh_setUpUI {
     self.logoLabel.frame = CGRectMake(20, 55, SCREEN_WIDTH, 14);
     [self.contentView addSubview:self.logoLabel];
-    self.contentLabel.frame = CGRectMake(0, 55, SCREEN_WIDTH - 65, 14);
+    self.contentLabel.frame = CGRectMake(0, 55, SCREEN_WIDTH - 35, 15);
     [self.contentView addSubview:self.contentLabel];
     self.rightArrowImg.frame = CGRectMake(SCREEN_WIDTH - 30, 55, 20, 14);
     [self.contentView addSubview:self.rightArrowImg];
@@ -81,7 +81,7 @@
     if (!_contentLabel) {
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textAlignment = NSTextAlignmentRight;
-        _contentLabel.font = [UIFont systemFontOfSize:14];
+        _contentLabel.font = [UIFont systemFontOfSize:15];
         _contentLabel.textColor = [UIColor blackColor];
 #warning message
         _contentLabel.text = self.account.username;

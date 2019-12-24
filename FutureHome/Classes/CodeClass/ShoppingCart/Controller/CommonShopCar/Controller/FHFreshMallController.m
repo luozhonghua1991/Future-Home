@@ -145,7 +145,7 @@
 //    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 10, MainStatusBarHeight, 28, 28);
+    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
     if ([self.isCollect isEqualToString:@"0"]) {
         [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     } else if ([self.isCollect isEqualToString:@"1"]) {
@@ -158,7 +158,7 @@
     [self.navgationView addSubview:followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 28 - 5, MainStatusBarHeight, 28, 28);
+    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 33, MainStatusBarHeight +5, 28, 28);
     [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
     [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:menuBtn];
@@ -458,11 +458,11 @@
     return _puclicService;
 }
 
-- (UILabel  *)locationLabel{
+- (UILabel  *)locationLabel {
     if (!_locationLabel) {
         _locationLabel =  [[UILabel alloc] init];
         _locationLabel.text = @"";
-        _locationLabel.textColor = [UIColor blackColor];
+        _locationLabel.textColor = [UIColor blueColor];
         _locationLabel.font = [UIFont systemFontOfSize:15];
         _locationLabel.textAlignment = NSTextAlignmentCenter;
     }

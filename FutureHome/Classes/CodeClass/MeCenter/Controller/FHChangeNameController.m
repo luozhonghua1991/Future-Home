@@ -67,7 +67,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.nameTF.text,@"nickname", nil];
+                               self.nameTF.text,@"nickname",
+//                               account.autograph,@"autograph",
+                               nil];
     [AFNetWorkTool post:@"userCenter/updateNickname" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"修改用户昵称成功"];
@@ -97,7 +99,7 @@
 - (void)nikeNameTextFiledChangeOnClick:(UITextField *)textField
 {
     if (textField.text.length <= 0) {
-        _nameTF.placeholder = @"请输入10个字符以内的新昵称";
+        _nameTF.placeholder = @"请输入16个字符以内的新昵称";
     }
 }
 
@@ -105,7 +107,7 @@
 - (UILabel  *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,MainSizeHeight + 20, SCREEN_WIDTH - 24, 20)];
-        _titleLabel.text = @"昵称支持1-10个字符";
+        _titleLabel.text = @"昵称支持1-16个字符";
         _titleLabel.font = [UIFont systemFontOfSize:20];
         _titleLabel.textColor = [UIColor lightGrayColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;

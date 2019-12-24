@@ -137,7 +137,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHSearchResultCell class])];
     cell.delegate = self;
-    if ([self.type isEqualToString:@"1"]) {
+    if ([self.type isEqualToString:@"0"]) {
         cell.distanceLabel.hidden = YES;
     } else {
         cell.distanceLabel.hidden = NO;
@@ -145,7 +145,7 @@
     cell.resultModel = self.searchResultArrs[indexPath.row];
     cell.rightBtn.tag = indexPath.row;
     [cell.rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    if (![self.type isEqualToString:@"1"]) {
+    if (![self.type isEqualToString:@"0"]) {
         if ([cell.resultModel.is_collect isEqualToString:@"0"]) {
             /** 未收藏 */
             cell.rightBtn.layer.borderColor = [UIColor orangeColor].CGColor;
@@ -188,7 +188,7 @@
 
 - (void)fh_selectAvaterWithModel:(FHSearchResultModel *)model {
     [SingleManager shareManager].selectType = @"HomePage";
-    if ([self.type isEqualToString:@"1"]) {
+    if ([self.type isEqualToString:@"0"]) {
         /** 搜索用户 跳到用户的动态 */
         /** 去用户的动态 */
         FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
@@ -198,7 +198,7 @@
         vc.user_id = model.id;
         vc.personType = 0;
         [self.navigationController pushViewController:vc animated:YES];
-    } else if ([self.type isEqualToString:@"4"]) {
+    } else if ([self.type isEqualToString:@"3"]) {
         /** 生鲜 */
         /** 生鲜服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
@@ -207,7 +207,7 @@
         goodList.shopID = model.id;
         goodList.isCollect = model.is_collect;
         [self.navigationController pushViewController:goodList animated:YES];
-    } else if ([self.type isEqualToString:@"5"]) {
+    } else if ([self.type isEqualToString:@"4"]) {
         /** 商业 */
         /** 商业服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
@@ -216,7 +216,7 @@
         goodList.shopID = model.id;
         goodList.isCollect = model.is_collect;
         [self.navigationController pushViewController:goodList animated:YES];
-    } else if ([self.type isEqualToString:@"6"]) {
+    } else if ([self.type isEqualToString:@"5"]) {
         /** 医药 */
         /** 医药服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
@@ -235,25 +235,25 @@
     Account *account = [AccountStorage readAccount];
     NSString *urlString;
     NSDictionary *paramsDic;
-    if ([self.type isEqualToString:@"1"]) {
+    if ([self.type isEqualToString:@"0"]) {
         urlString = @"sheyun/doFollow";
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
                      resultModel.id,@"follow_id", nil];
     } else {
-        NSInteger type;
-        if ([self.type isEqualToString:@"3"]) {
-            type = 1;
-        } else if([self.type isEqualToString:@"2"]){
-            type = 2;
-        } else {
-            type = [self.type integerValue] - 1;
-        }
+//        NSInteger type;
+//        if ([self.type isEqualToString:@"3"]) {
+//            type = 1;
+//        } else if([self.type isEqualToString:@"2"]){
+//            type = 2;
+//        } else {
+//            type = [self.type integerValue] - 1;
+//        }
         urlString = @"public/collect";
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
                      resultModel.id,@"id",
-                     @(type),@"type",nil];
+                     self.type,@"type",nil];
     }
     [self cancleCollectRequest:urlString parmars:paramsDic];
 }

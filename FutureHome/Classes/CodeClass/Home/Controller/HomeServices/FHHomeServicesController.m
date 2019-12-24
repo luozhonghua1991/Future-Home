@@ -66,7 +66,7 @@
                                 @"装修维修",
                                 @"物业费用",
                                 @"车库管理",
-                                @"房屋出售",
+                                @"租售信息",
                                 @"投诉建议",
                                 @"我的物业"];
     self.bottomImageArrs = @[@"2-1社区公告",
@@ -146,13 +146,13 @@
 //    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 10, MainStatusBarHeight, 28, 28);
+    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
     [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 28 - 5, MainStatusBarHeight, 28, 28);
+    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 33, MainStatusBarHeight +5, 28, 28);
     [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
     [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:menuBtn];
@@ -276,7 +276,7 @@
         
         self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
         self.realSstateSNameLabel.text = self.homeServiceName;
-        self.realSstateSNameLabel.textColor = [UIColor blackColor];
+        self.realSstateSNameLabel.textColor = [UIColor blueColor];
         self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
         [locationView addSubview:self.realSstateSNameLabel];
@@ -428,7 +428,7 @@
         /** 房屋租售 */
 //        [self pushAnnouncementControllerWithTitle:@"房屋租售"];
         FHRentalAndSaleController *vc = [[FHRentalAndSaleController alloc] init];
-        vc.titleString = @"房屋租售";
+        vc.titleString = @"租售信息";
         vc.hidesBottomBarWhenPushed = YES;
         vc.property_id = property_id;
         [self.navigationController pushViewController:vc animated:YES];

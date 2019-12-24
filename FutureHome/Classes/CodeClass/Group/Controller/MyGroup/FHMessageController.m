@@ -41,10 +41,18 @@
     self.navigationController.navigationBar.hidden = NO;
 }
 
+- (void)didTapCellPortrait:(RCConversationModel *)model {
+    [self pushVCWithModel:model];
+}
+
 //重写RCConversationListViewController的onSelectedTableRow事件
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
          conversationModel:(RCConversationModel *)model
                atIndexPath:(NSIndexPath *)indexPath {
+    [self pushVCWithModel:model];
+}
+
+- (void)pushVCWithModel:(RCConversationModel *)model {
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -70,6 +78,8 @@
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
 }
+
+
 
 //- (void)viewDidLoad {
 //    [super viewDidLoad];

@@ -88,7 +88,7 @@
     self.orderTypeLabel.text = [NSString stringWithFormat:@"配送类型 : %@",typeString];
     self.titleLabel.text = [NSString stringWithFormat:@"   %@",_listModel.shopname];
     self.orderTimeLabel.text = [NSString stringWithFormat:@"下单时间: %@",_listModel.add_time];
-    self.priceLabel.text  = [NSString stringWithFormat:@"￥%@",_listModel.pay_money];
+    self.priceLabel.text  = [NSString stringWithFormat:@"￥%.2f",[_listModel.pay_money floatValue]];
     self.countLabel.text = [NSString stringWithFormat:@"共%@件",_listModel.number];
 }
 

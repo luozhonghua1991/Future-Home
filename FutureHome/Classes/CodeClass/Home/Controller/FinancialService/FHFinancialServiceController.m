@@ -52,7 +52,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fh_creatNav];
-    self.bottomLogoNameArrs = @[@"生鲜行情",
+    self.bottomLogoNameArrs = @[@"三农生态",
                                 @"房产大观",
                                 @"经济头条",
                                 @"民生资讯",
@@ -350,7 +350,7 @@
 - (void)FHCommonCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     if (selectIndex.row == 0) {
         /** 生鲜行情 */
-        [self pushAnnouncementControllerWithTitle:@"生鲜行情" ID:1];
+        [self pushAnnouncementControllerWithTitle:@"三农生态" ID:1];
     } else if (selectIndex.row == 1) {
         /** 房产大观 */
         [self pushAnnouncementControllerWithTitle:@"房产大观" ID:2];

@@ -48,6 +48,8 @@
 @property (nonatomic, strong) UIImageView *personHeaderImgView;
 /** 姓名label */
 @property (nonatomic, strong) UILabel *nameLabel;
+/** 个性签名 */
+@property (nonatomic, strong) UILabel *autographLabel;
 /** 数据 */
 @property (nonatomic, strong) NSArray *commitsListArrs;
 /** <#copy属性注释#> */
@@ -109,7 +111,7 @@
                            @(account.user_id),@"user_id",
                            uid,@"uid", nil];
         self.headerParamsDic = headerParamsDic;
-        self.relationBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 25, 90, 35);
+        self.relationBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 18, 70, 32);
         self.updateBtn.hidden = YES;
         self.relationBtn.hidden = NO;
     } else {
@@ -157,7 +159,8 @@
             [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
             [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
             weakSelf.nameLabel.text = dic[@"nickname"];
-            weakSelf.rulesLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"praise_num"]];
+            weakSelf.autographLabel.text = dic[@"autograph"];
+            weakSelf.rulesLabel.text = [NSString stringWithFormat:@"获赞: %@",dic[@"praise_num"]];
             weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
             weakSelf.followLabel.text = [NSString stringWithFormat:@"关注: %@",dic[@"follow_num"]];
             weakSelf.updateLabel.text = [NSString stringWithFormat:@"发布: %@",dic[@"publish_num"]];
@@ -539,6 +542,7 @@
         [_headerView addSubview:self.relationBtn];
         [_headerView addSubview:self.personHeaderImgView];
         [_headerView addSubview:self.nameLabel];
+        [_headerView addSubview:self.autographLabel];
         _headerView.userInteractionEnabled = YES;
     }
     return _headerView;
@@ -557,7 +561,7 @@
 
 - (UILabel *)rulesLabel {
     if (!_rulesLabel) {
-        _rulesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 80, 200, 13)];
+        _rulesLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 80, 200, 16)];
         _rulesLabel.textAlignment = NSTextAlignmentLeft;
         _rulesLabel.text = @"超赞: 54.8W";
         _rulesLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -568,7 +572,7 @@
 
 - (UILabel *)fansLabel {
     if (!_fansLabel) {
-        _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, MaxY(self.rulesLabel) + 20, 200, 13)];
+        _fansLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, MaxY(self.rulesLabel) + 20, 200, 16)];
         _fansLabel.textAlignment = NSTextAlignmentLeft;
         _fansLabel.text = @"粉丝: 54.8W";
         _fansLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -579,7 +583,7 @@
 
 - (UILabel *)followLabel {
     if (!_followLabel) {
-        _followLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, MaxY(self.fansLabel) + 20, 200, 13)];
+        _followLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, MaxY(self.fansLabel) + 20, 200, 16)];
         _followLabel.textAlignment = NSTextAlignmentLeft;
         _followLabel.text = @"超赞: 54.8W";
         _followLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -590,7 +594,7 @@
 
 - (UILabel *)updateLabel {
     if (!_updateLabel) {
-        _updateLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, MaxY(self.followLabel) + 20, 200, 13)];
+        _updateLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, MaxY(self.followLabel) + 20, 200, 16)];
         _updateLabel.textAlignment = NSTextAlignmentLeft;
         _updateLabel.text = @"发布: 54.8W";
         _updateLabel.font = [UIFont boldSystemFontOfSize:16];
@@ -602,11 +606,11 @@
 - (UIButton *)updateBtn {
     if (!_updateBtn) {
         _updateBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _updateBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 25, 90, 35);
+        _updateBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 18, 70, 32);
         [_updateBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         [_updateBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _updateBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        _updateBtn.layer.cornerRadius = 35 / 2;
+        _updateBtn.layer.cornerRadius = 32 / 2;
         [_updateBtn addTarget:self action:@selector(updateBtnClcik) forControlEvents:UIControlEventTouchUpInside];
     }
     return _updateBtn;
@@ -615,11 +619,11 @@
 - (UIButton *)relationBtn {
     if (!_relationBtn) {
         _relationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _relationBtn.frame = CGRectMake(MaxX(_updateBtn) + 10, MaxY(self.updateLabel) + 25, 90, 35);
+        _relationBtn.frame = CGRectMake(MaxX(_updateBtn) + 10, MaxY(self.updateLabel) + 18, 70, 32);
         [_relationBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         [_relationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _relationBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-        _relationBtn.layer.cornerRadius = 35 / 2;
+        _relationBtn.layer.cornerRadius = 32 / 2;
         [_relationBtn addTarget:self action:@selector(relationBtnClcik:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _relationBtn;
@@ -627,9 +631,9 @@
 
 - (UIImageView *)personHeaderImgView {
     if (!_personHeaderImgView) {
-        _personHeaderImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 65, MaxY(self.headerBgImgView) - 25, 50, 50)];
+        _personHeaderImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75, MaxY(self.headerBgImgView) - 25, 60, 60)];
         _personHeaderImgView.userInteractionEnabled = YES;
-        _personHeaderImgView.layer.cornerRadius = 10;
+        _personHeaderImgView.layer.cornerRadius = 5;
         _personHeaderImgView.layer.masksToBounds = YES;
         _personHeaderImgView.clipsToBounds = YES;
     }
@@ -638,13 +642,24 @@
 
 - (UILabel *)nameLabel {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MaxY(self.headerBgImgView) - 20, SCREEN_WIDTH - 70, 13)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MaxY(self.headerBgImgView) - 20, SCREEN_WIDTH - 90, 16)];
         _nameLabel.textAlignment = NSTextAlignmentRight;
         _nameLabel.text = @"许大宝~";
-        _nameLabel.font = [UIFont boldSystemFontOfSize:13];
+        _nameLabel.font = [UIFont boldSystemFontOfSize:16];
         _nameLabel.textColor = [UIColor whiteColor];
     }
     return _nameLabel;
+}
+
+- (UILabel *)autographLabel {
+    if (!_autographLabel) {
+        _autographLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MaxY(self.nameLabel) + 22, SCREEN_WIDTH - 90, 14)];
+        _autographLabel.textAlignment = NSTextAlignmentRight;
+        _autographLabel.text = @"暂无个性签名~";
+        _autographLabel.font = [UIFont systemFontOfSize:14];
+        _autographLabel.textColor = HEX_COLOR(0x383838);
+    }
+    return _autographLabel;
 }
 
 @end

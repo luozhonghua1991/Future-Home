@@ -13,6 +13,8 @@
     @public
     NSString *_phone;
 }
+/** 个性签名 */
+@property (nonatomic, copy) NSString *autograph;
 /** id */
 @property (nonatomic, assign) NSInteger user_id;
 /** 账号 */

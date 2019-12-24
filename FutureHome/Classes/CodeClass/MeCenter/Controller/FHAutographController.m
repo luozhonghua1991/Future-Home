@@ -62,7 +62,27 @@
 }
 
 - (void)finishBtnClick {
-    [self.navigationController popViewControllerAnimated:YES];
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               account.nickname,@"nickname",
+                               self.nameTF.text,@"autograph",
+                               nil];
+    [AFNetWorkTool post:@"userCenter/updateNickname" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"修改个性签名成功"];
+            account.autograph = self.nameTF.text;
+            [AccountStorage saveAccount:account];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 - (void)fh_creatUI {
@@ -78,7 +98,7 @@
 - (void)nikeNameTextFiledChangeOnClick:(UITextField *)textField
 {
     if (textField.text.length <= 0) {
-        _nameTF.placeholder = @"请输入10个字符以内的个性签名";
+        _nameTF.placeholder = @"请输入20个字符以内的个性签名";
     }
 }
 
@@ -86,7 +106,7 @@
 - (UILabel  *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(12,MainSizeHeight + 20, SCREEN_WIDTH - 24, 20)];
-        _titleLabel.text = @"个性签名支持1-10个字符";
+        _titleLabel.text = @"个性签名支持1-20个字符";
         _titleLabel.font = [UIFont systemFontOfSize:20];
         _titleLabel.textColor = [UIColor lightGrayColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;

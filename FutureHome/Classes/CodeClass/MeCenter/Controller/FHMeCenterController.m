@@ -9,8 +9,9 @@
 #import "FHMeCenterController.h"
 #import "FHMeCenterUserInfoView.h"
 #import "FHLoginTool.h"
+#import "FHScanDetailAlertView.h"
 
-@interface FHMeCenterController () <UITableViewDelegate,UITableViewDataSource,FDActionSheetDelegate>
+@interface FHMeCenterController () <UITableViewDelegate,UITableViewDataSource,FDActionSheetDelegate,FHMeCenterUserInfoViewDelegate>
 /** 个人中心列表数据 */
 @property (nonatomic, strong) UITableView *meCenterTable;
 /** 个人信息提示数据 */
@@ -19,6 +20,8 @@
 @property (nonatomic, strong) FHMeCenterUserInfoView *meCenterHeaderView;
 /** 表尾部视图 */
 @property (nonatomic, strong) UIView *meCenterFooterView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
 
 @end
 
@@ -46,7 +49,15 @@
     Account *account = [AccountStorage readAccount];
     [self.meCenterHeaderView.userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.meCenterHeaderView.userNameLabel.text = account.nickname;
+    self.meCenterHeaderView.futureHomeCodeLabel.text = [NSString stringWithFormat:@"社云号: %@",account.username];
 }
+
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    if (self.codeDetailView) {
+//        [self.codeDetailView removeFromSuperview];
+//    }
+//}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -188,6 +199,19 @@
     /** 切换用户 */
 }
 
+- (void)fh_personCodeTapCLick {
+    if (self.codeDetailView) {
+        [self.codeDetailView removeFromSuperview];
+        self.codeDetailView = nil;
+    }
+    self.codeDetailView.alpha = 0;
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+    [UIView animateWithDuration:0.3 animations:^{
+        self.codeDetailView.alpha = 1;
+    }];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
+}
+
 #pragma mark — setter & getter
 - (UITableView *)meCenterTable {
     if (_meCenterTable == nil) {
@@ -232,8 +256,30 @@
 - (FHMeCenterUserInfoView *)meCenterHeaderView {
     if (!_meCenterHeaderView) {
         _meCenterHeaderView = [[FHMeCenterUserInfoView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 85 + 20)];
+        _meCenterHeaderView.delegate = self;
     }
     return _meCenterHeaderView;
+}
+
+- (FHScanDetailAlertView *)codeDetailView {
+    if (!_codeDetailView) {
+        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(account.user_id),@"id",
+                                   account.nickname,@"name",
+                                   account.username,@"username",
+                                   @"1",@"type",
+                                   /** 下面的用不到 没啥用 */
+                                   //                                   @"false",@"is_collect",
+                                   //                                   @"0",@"slat",
+                                   //                                   @"0",@"slng",
+                                   //                                   @"",@"address",
+                                   nil];
+        _codeDetailView.dataDetaildic = paramsDic;
+    }
+    return _codeDetailView;
 }
 
 @end

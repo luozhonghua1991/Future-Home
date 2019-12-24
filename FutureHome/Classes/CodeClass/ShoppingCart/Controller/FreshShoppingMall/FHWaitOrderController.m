@@ -46,6 +46,10 @@
     [self loadInit];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self loadInit];
+}
 
 #pragma mark -- MJrefresh
 - (void)headerReload {

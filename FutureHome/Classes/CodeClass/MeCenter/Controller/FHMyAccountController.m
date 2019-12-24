@@ -111,6 +111,9 @@
         if (indexPath.row == 1) {
             cell.contentLabel.text = self.account.nickname;
         }
+        if (indexPath.row == 4) {
+            cell.contentLabel.text = self.account.autograph ? self.account.autograph : @"暂无个性签名";
+        }
         if (indexPath.row == 2) {
             cell.contentLabel.text = self.account.username;
         } else {
@@ -138,7 +141,7 @@
     } else if (indexPath.row == 4) {
         /** 修改个性签名 */
         FHAutographController *change = [[FHAutographController alloc] init];
-//        change.strAutograph = self.account.name;
+        change.strAutograph = self.account.autograph;
         [self.navigationController pushViewController:change animated:YES];
     } else if (indexPath.row == 3) {
         self.codeDetailView.alpha = 0;

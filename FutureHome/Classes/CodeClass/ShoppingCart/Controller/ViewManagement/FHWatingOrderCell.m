@@ -42,7 +42,7 @@
     _orderModel = orderModel;
     [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_orderModel.cover] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.shopNameLabel.text = _orderModel.productname;
-    self.contentLabel.text = [NSString stringWithFormat:@"￥%@x%@",_orderModel.sell_price,_orderModel.number];
+    self.contentLabel.text = [NSString stringWithFormat:@"￥%.2f x %@",[[NSString stringWithFormat:@"%.2f",[_orderModel.sell_price floatValue]] doubleValue],_orderModel.number];
     CGFloat allPrice = [_orderModel.sell_price floatValue] * [_orderModel.number integerValue];
     self.allPriceLabel.text = [NSString stringWithFormat:@"￥%0.2f",allPrice];
 }
@@ -51,9 +51,10 @@
     _goodsModel = goodsModel;
     [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_goodsModel.goodsImage] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.shopNameLabel.text = _goodsModel.goodsName;
-    self.contentLabel.text = [NSString stringWithFormat:@"￥%@x%@",_goodsModel.goodsPrice,_goodsModel.number];
+    self.contentLabel.text = [NSString stringWithFormat:@"￥%.2f x %@",[[NSString stringWithFormat:@"%.2f",[_goodsModel.goodsPrice floatValue]] doubleValue],_goodsModel.number];
     CGFloat allPrice = [_goodsModel.goodsPrice floatValue] * [_goodsModel.number integerValue];
     self.allPriceLabel.text = [NSString stringWithFormat:@"￥%0.2f",allPrice];
+    
 }
 
 

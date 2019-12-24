@@ -13,7 +13,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor colorWithRed:10/255.0 green:10/255.0 blue:10/255.0 alpha:0.3];
-        [self rw_setUpUI];
+         [self rw_setUpUI];
     }
     return self;
 }
@@ -65,7 +65,7 @@
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(10);
+        make.top.mas_equalTo(23);
         make.left.mas_equalTo(0);
         make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 140, 16));
     }];
@@ -77,7 +77,7 @@
     }];
     
     [self.topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(self.codeImgView.mas_bottom).offset(5);
+        make.top.mas_equalTo(self.codeImgView.mas_bottom).offset(15);
         make.left.mas_equalTo(0);
         make.size.mas_equalTo(CGSizeMake(SCREEN_WIDTH - 140, 16));
     }];

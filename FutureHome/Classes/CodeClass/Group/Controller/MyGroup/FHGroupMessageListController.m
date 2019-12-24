@@ -71,10 +71,18 @@
     [self.navigationController pushViewController:VC animated:YES];
 }
 
+- (void)didTapCellPortrait:(RCConversationModel *)model {
+    [self pushVCWithModel:model];
+}
+
 //重写RCConversationListViewController的onSelectedTableRow事件
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
          conversationModel:(RCConversationModel *)model
                atIndexPath:(NSIndexPath *)indexPath {
+    [self pushVCWithModel:model];
+}
+
+- (void)pushVCWithModel:(RCConversationModel *)model {
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",

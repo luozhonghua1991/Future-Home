@@ -67,7 +67,7 @@
                                 @"招标服务",
                                 @"活动关爱",
                                 @"投诉建议",
-                                @"我的业委"];
+                                @"业主认证"];
     self.bottomImageArrs = @[@"3-1业委公告",
                              @"3-2业主大会",
                              @"3-4业委管理",
@@ -135,13 +135,13 @@
 //    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 10, MainStatusBarHeight, 28, 28);
+    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
     [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 28 - 5, MainStatusBarHeight, 28, 28);
+    menuBtn.frame = CGRectMake(SCREEN_WIDTH - 33, MainStatusBarHeight +5, 28, 28);
     [menuBtn setImage:[UIImage imageNamed:@"chazhaobiaodanliebiao"] forState:UIControlStateNormal];
     [menuBtn addTarget:self action:@selector(menuBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:menuBtn];
@@ -273,7 +273,7 @@
         
         self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
         self.realSstateSNameLabel.text = self.name;
-        self.realSstateSNameLabel.textColor = [UIColor blackColor];
+        self.realSstateSNameLabel.textColor = [UIColor blueColor];
         self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
         [locationView addSubview:self.realSstateSNameLabel];
