@@ -232,6 +232,8 @@
     NSData *imageData = UIImageJPEGRepresentation(self.groupImg,0.5);
     [AFNetWorkTool updateHeaderImageWithUrl:@"sheyun/createGroup" parameter:paramsDic imageData:imageData success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [[SingleManager shareManager].allGroupsArrs addObject:responseObj[@"data"][@"groupId"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATEGROUPCOUNT" object:nil];
             RCGroup *groupInfo = [[RCGroup alloc] init];
             groupInfo.groupId = responseObj[@"data"][@"groupId"];
             groupInfo.groupName = responseObj[@"data"][@"groupName"];

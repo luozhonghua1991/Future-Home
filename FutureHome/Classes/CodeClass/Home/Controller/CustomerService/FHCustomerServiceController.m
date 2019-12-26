@@ -54,21 +54,21 @@
     [self fh_creatNav];
     self.bottomLogoNameArrs = @[@"物业客服",
                                 @"业主客服",
-                                @"健康客服",
                                 @"生鲜客服",
-                                @"理财客服",
                                 @"商业客服",
-                                @"公共客服",
+                                @"医药客服",
+                                @"健康客服",
+                                @"理财客服",
                                 @"综合客服",
                                 @"平台建议",
                                 @"商业合作"];
     self.bottomImageArrs = @[@"6-1狗狗物业客服",
                              @"6-2熊猫业主客服",
-                             @"6-3健康客服",
                              @"6-4生鲜兔兔客服",
-                             @"6-5牛牛理财客服",
                              @"6-6商业长颈鹿客服",
                              @"6-7 羊羊公共客服-2",
+                             @"6-3健康客服",
+                             @"6-5牛牛理财客服",
                              @"6-8综合猴猴客服",
                              @"6-9平台建议",
                              @"6-10商业合作"];
@@ -341,18 +341,18 @@
     [AFNetWorkTool get:@"service/index" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
-                userInfo.userId = responseObj[@"data"][@"username"];
-                userInfo.name = responseObj[@"data"][@"nickname"];
-                userInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
-                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
-                
                 RCConversationViewController *conversationVC = [[RCConversationViewController alloc] init];
                 conversationVC.conversationType = ConversationType_PRIVATE;
                 conversationVC.targetId = responseObj[@"data"][@"username"];
                 conversationVC.title = responseObj[@"data"][@"nickname"];
                 conversationVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:conversationVC animated:YES];
+                
+                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+                userInfo.userId = responseObj[@"data"][@"username"];
+                userInfo.name = responseObj[@"data"][@"nickname"];
+                userInfo.portraitUri = responseObj[@"data"][@"avatar"];
+                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
             });
         } else {
             [self.view makeToast:responseObj[@"msg"]];
@@ -360,6 +360,9 @@
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
     }];
+    
+    
+    
 //    if (selectIndex.row == 0) {
 //        /** 公告通知 */
 //    } else if (selectIndex.row == 1) {

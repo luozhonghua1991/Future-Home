@@ -8,6 +8,7 @@
 
 #import "FHMessageController.h"
 #import "FHFriendMessageController.h"
+#import "FHAppDelegate.h"
 
 @interface FHMessageController () 
 
@@ -45,6 +46,7 @@
     [self pushVCWithModel:model];
 }
 
+
 //重写RCConversationListViewController的onSelectedTableRow事件
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType
          conversationModel:(RCConversationModel *)model
@@ -58,7 +60,7 @@
                                @(account.user_id),@"user_id",
                                model.targetId,@"userId",
                                nil];
-    
+
     [AFNetWorkTool get:@"sheyun/getUserInfor" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             FHFriendMessageController *conversationVC = [[FHFriendMessageController alloc] init];
@@ -68,10 +70,10 @@
             conversationVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:conversationVC animated:YES];
         } else {
-            
+
         }
     } failure:^(NSError *error) {
-        
+
     }];
 }
 

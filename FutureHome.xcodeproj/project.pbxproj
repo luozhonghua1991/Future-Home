@@ -826,6 +826,7 @@
 		4AD1D2A7235708BC00D11966 /* citys.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AD1D2A5235708BC00D11966 /* citys.json */; };
 		4AD1D2AD23571D2800D11966 /* AddressDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1D2AB23571D2800D11966 /* AddressDataSource.m */; };
 		4AD1D2AE23571D2800D11966 /* FHAddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD1D2AC23571D2800D11966 /* FHAddressPickerView.m */; };
+		4AD357F723B34C6800D2979D /* FHCustomerServiceCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD357F623B34C6800D2979D /* FHCustomerServiceCommitController.m */; };
 		4AD4665922FAA14C0070AE24 /* FHCreatRrendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4665822FAA14C0070AE24 /* FHCreatRrendsController.m */; };
 		4AD4665C22FAB32C0070AE24 /* FHServiceCommonHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4665B22FAB32C0070AE24 /* FHServiceCommonHeaderView.m */; };
 		4AD4665F22FABB3D0070AE24 /* FHInformationMesageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD4665E22FABB3D0070AE24 /* FHInformationMesageCell.m */; };
@@ -2649,6 +2650,8 @@
 		4AD1D2AA23571D2800D11966 /* AddressDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressDataSource.h; sourceTree = "<group>"; };
 		4AD1D2AB23571D2800D11966 /* AddressDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressDataSource.m; sourceTree = "<group>"; };
 		4AD1D2AC23571D2800D11966 /* FHAddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHAddressPickerView.m; sourceTree = "<group>"; };
+		4AD357F523B34C6800D2979D /* FHCustomerServiceCommitController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCustomerServiceCommitController.h; sourceTree = "<group>"; };
+		4AD357F623B34C6800D2979D /* FHCustomerServiceCommitController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCustomerServiceCommitController.m; sourceTree = "<group>"; };
 		4AD4665722FAA14C0070AE24 /* FHCreatRrendsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCreatRrendsController.h; sourceTree = "<group>"; };
 		4AD4665822FAA14C0070AE24 /* FHCreatRrendsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCreatRrendsController.m; sourceTree = "<group>"; };
 		4AD4665A22FAB32C0070AE24 /* FHServiceCommonHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHServiceCommonHeaderView.h; sourceTree = "<group>"; };
@@ -4134,6 +4137,8 @@
 				4AC30AA42334D92800776752 /* FHCommitDetaolCell.m */,
 				4ACAD076231919EE0064BA95 /* FHComplaintsSuggestionsController.h */,
 				4ACAD077231919EE0064BA95 /* FHComplaintsSuggestionsController.m */,
+				4AD357F523B34C6800D2979D /* FHCustomerServiceCommitController.h */,
+				4AD357F623B34C6800D2979D /* FHCustomerServiceCommitController.m */,
 			);
 			path = BaseClass;
 			sourceTree = "<group>";
@@ -7454,6 +7459,7 @@
 				4A9E84D92323561D0070CE4A /* UIImage+WebP.m in Sources */,
 				4A6DAB5E22C0ADAF00F29455 /* NSObject+MJProperty.m in Sources */,
 				4ABBFF3A23A4DA96004FBBDE /* FHGroupDetailController.m in Sources */,
+				4AD357F723B34C6800D2979D /* FHCustomerServiceCommitController.m in Sources */,
 				4A6DAB5C22C0ADAF00F29455 /* NSObject+MJCoding.m in Sources */,
 				4AB203FC22F2DD7300111AC4 /* ZXDataMatrixDecoder.m in Sources */,
 				4AB2046622F2DD7300111AC4 /* UIAlertView+LBXAlertAction.m in Sources */,

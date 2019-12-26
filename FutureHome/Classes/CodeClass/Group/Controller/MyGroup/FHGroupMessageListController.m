@@ -51,11 +51,17 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
+    [self refreshGroupInfo];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
+}
+
+- (void)refreshGroupInfo {
+    /** 刷新群组信息的方法 */
+
 }
 
 - (void)updateGroupCount {
@@ -115,6 +121,12 @@
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return NO;
+}
+
+
+/** 获取后台发送过来的消息 */
+- (void)didReceiveMessageNotification:(NSNotification *)notification {
+    
 }
 
 #pragma mark — setter & getter

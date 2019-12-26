@@ -19,8 +19,9 @@
 #import "FHGroupController.h"
 #import "CQRouteManager.h"
 #import "FHScanDetailAlertView.h"
+#import "FHCustomerServiceCommitController.h"
 
-@interface FHFreshMallController () <UIScrollViewDelegate,JSShareViewDelegate>
+@interface FHFreshMallController () <UIScrollViewDelegate>
 {
     UIScrollView *mainScrollView;
     UIButton *myGroupBtn;
@@ -60,6 +61,8 @@
 @property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *username;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHCustomerServiceCommitController *conversationVC;
 
 @end
 
@@ -414,10 +417,32 @@
     hotVC.shopID = self.shopID;
     hotVC.videoListDataArrs = self.videosListArrs;
     
-    FHDialogueRecordController *friendVC = [[FHDialogueRecordController alloc] init];
-    friendVC.yp_tabItemTitle = @"对话记录";
-    
-    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC, nil];
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"3",@"type", nil];
+    [AFNetWorkTool get:@"service/index" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.conversationVC = [[FHCustomerServiceCommitController alloc] init];
+                self.conversationVC.conversationType = ConversationType_PRIVATE;
+                self.conversationVC.targetId = responseObj[@"data"][@"username"];
+                self.conversationVC.yp_tabItemTitle = @"对话记录";
+                
+                self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,self.conversationVC, nil];
+                
+                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+                userInfo.userId = responseObj[@"data"][@"username"];
+                userInfo.name = responseObj[@"data"][@"nickname"];
+                userInfo.portraitUri = responseObj[@"data"][@"avatar"];
+                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
+            });
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 

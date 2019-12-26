@@ -220,9 +220,7 @@ static FHAppDelegate* pSelf = nil;
 // 设置会话的头像和昵称等   是好友的头像和昵称，不是自己的
 - (void)getUserInfoWithUserId:(NSString *)userId
                    completion:(void (^)(RCUserInfo *userInfo))completion {
-    if ([SingleManager shareManager].scrolling) {
-        return;
-    }
+    
     NSLog(@"------ userID = %@ ---------", userId);
     dispatch_async(dispatch_get_main_queue(), ^{
         Account *account = [AccountStorage readAccount];
@@ -237,6 +235,8 @@ static FHAppDelegate* pSelf = nil;
                 userInfo.userId = userId;
                 userInfo.name = responseObj[@"data"][@"userName"];
                 userInfo.portraitUri = responseObj[@"data"][@"userPortrait"];
+                
+                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
                 return completion(userInfo);
             } else {
                 
@@ -249,9 +249,6 @@ static FHAppDelegate* pSelf = nil;
 }
 
 - (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {
-    if ([SingleManager shareManager].scrolling) {
-        return;
-    }
     NSLog(@"------ groupId = %@ ---------", groupId);
     dispatch_async(dispatch_get_main_queue(), ^{
         if (![[SingleManager shareManager].allGroupsArrs containsObject:groupId]) {
@@ -271,6 +268,8 @@ static FHAppDelegate* pSelf = nil;
                 groupInfo.groupId = groupId;
                 groupInfo.groupName = responseObj[@"data"][@"groupName"];
                 groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+                
+                [[RCIM sharedRCIM] refreshGroupInfoCache:groupInfo withGroupId:groupInfo.groupId];
                 return completion(groupInfo);
             } else {
                 

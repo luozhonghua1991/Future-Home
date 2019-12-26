@@ -12,6 +12,10 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+- (void)getUserInfoWithUserId:(NSString *)userId
+                   completion:(void (^)(RCUserInfo *userInfo))completion;
+
+- (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion;
 
 @end
 

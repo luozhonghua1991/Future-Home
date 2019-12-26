@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *is_reply;
 /** 昵称 */
 @property (nonatomic, copy) NSString *nickname;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *avatar;
 
 @end
 

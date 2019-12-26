@@ -187,6 +187,7 @@
         /** 删除用户信息 */
         [AccountStorage removeAccount];
         [FHLoginTool fh_makePersonToLoging];
+        [[SingleManager shareManager].allGroupsArrs removeAllObjects];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:logout];

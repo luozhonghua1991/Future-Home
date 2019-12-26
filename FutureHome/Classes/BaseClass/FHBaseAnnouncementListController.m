@@ -96,6 +96,7 @@
     [AFNetWorkTool get:@"public/noticeList" params:paramsDic success:^(id responseObj) {
         NSDictionary *dic = responseObj[@"data"];
         self.noticeListArrs = [FHNoticeListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
+        [self endRefreshAction];
         if (self.noticeListArrs.count == 0) {
             [self.clickButton setTitle:@"申请招标服务" forState:UIControlStateNormal];
             [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -172,6 +173,19 @@
     }];
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.listTable.mj_header;
+    MJRefreshFooter *footer = self.listTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -190,7 +204,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return  80;
+//    return  80;
+    return 100;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -220,7 +235,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     FHNoticeListModel *model = self.noticeListArrs[indexPath.row];
     FHWebViewController *web = [[FHWebViewController alloc] init];
-    web.urlString = model.url;
+    web.urlString = model.singpage;
     web.titleString = model.title;
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
@@ -271,6 +286,7 @@
         _listTable.delegate = self;
         _listTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _listTable.showsVerticalScrollIndicator = NO;
+        _listTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fh_getRequest)];
         if (@available (iOS 11.0, *)) {
             _listTable.estimatedSectionHeaderHeight = 0.01;
             _listTable.estimatedSectionFooterHeight = 0.01;

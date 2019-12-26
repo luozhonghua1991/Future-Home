@@ -69,6 +69,7 @@
     self.navigationController.navigationBar.hidden = NO;
 }
 
+
 #pragma mark — 通用导航栏
 #pragma mark — privite
 - (void)fh_creatNav {

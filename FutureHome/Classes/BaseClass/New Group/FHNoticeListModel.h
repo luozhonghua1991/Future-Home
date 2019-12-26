@@ -12,15 +12,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FHNoticeListModel : NSObject
 /** 公告ID */
-@property (nonatomic, assign) NSInteger notice_id;
+@property (nonatomic, assign) NSInteger id;
 /** 标题 */
 @property (nonatomic, copy) NSString *title;
 /** 跳转的URL */
-@property (nonatomic, copy) NSString *url;
-/** 观看册数 */
-@property (nonatomic, assign) NSInteger view_num;
-/** 创建时间 */
-@property (nonatomic, copy) NSString *create_time;
+@property (nonatomic, copy) NSString *singpage;
+/** 观看次数 */
+@property (nonatomic, assign) NSInteger show;
+/** 更新时间 */
+@property (nonatomic, copy) NSString *updatetime;
+/** 封面图 */
+@property (nonatomic, copy) NSString *coverthumb;
+
 
 @end
 

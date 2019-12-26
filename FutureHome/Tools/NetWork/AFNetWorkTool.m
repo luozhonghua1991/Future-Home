@@ -80,7 +80,7 @@
     //如果接受类型不一致请替换一致text/html或别的
     serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
     [session setResponseSerializer:serializer];
-
+    
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     //384dd4cc71aaff6b28003ccfa3fe8cffd252386d
 //    [session.requestSerializer setValue:@"384dd4cc71aaff6b28003ccfa3fe8cffd252386d" forHTTPHeaderField:@"token"];
@@ -118,7 +118,6 @@
         }
     }
     session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
-
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
     
 //     [session.requestSerializer setValue:@"384dd4cc71aaff6b28003ccfa3fe8cffd252386d" forHTTPHeaderField:@"token"];
