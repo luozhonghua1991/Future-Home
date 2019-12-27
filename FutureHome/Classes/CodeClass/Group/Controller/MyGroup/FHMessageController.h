@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHMessageController : RCConversationListViewController
+/** 个人 还是 群聊 */
+@property (nonatomic, copy) NSString *type;
 
 @end
 

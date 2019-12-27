@@ -40,9 +40,11 @@
 - (void)initViewControllers {
     FHMessageController *messageVC = [[FHMessageController alloc] init];
     messageVC.yp_tabItemTitle = @"对话";
+    messageVC.type = @"个人";
 
-    FHGroupMessageListController *groupVC = [[FHGroupMessageListController alloc] init];
+    FHMessageController *groupVC = [[FHMessageController alloc] init];
     groupVC.yp_tabItemTitle = @"群聊";
+    groupVC.type = @"群聊";
 
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
     hotVC.yp_tabItemTitle = @"云动态";
@@ -56,7 +58,7 @@
     FHFriendLisController *fansVC = [[FHFriendLisController alloc] init];
     fansVC.yp_tabItemTitle = @"粉丝";
     
-    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,followVC,fansVC, nil];
+    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC,groupVC,hotVC,followVC,fansVC, nil];
 }
 
 

@@ -22,7 +22,12 @@
 
 static FHAppDelegate* pSelf = nil;
 
-@interface FHAppDelegate () <WXApiDelegate,RCIMUserInfoDataSource,RCIMConnectionStatusDelegate,RCIMGroupInfoDataSource>
+@interface FHAppDelegate () <
+WXApiDelegate,
+RCIMUserInfoDataSource,
+RCIMConnectionStatusDelegate,
+RCIMGroupInfoDataSource
+>
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *allFriendArrs;
 
@@ -220,7 +225,7 @@ static FHAppDelegate* pSelf = nil;
 // 设置会话的头像和昵称等   是好友的头像和昵称，不是自己的
 - (void)getUserInfoWithUserId:(NSString *)userId
                    completion:(void (^)(RCUserInfo *userInfo))completion {
-    
+
     NSLog(@"------ userID = %@ ---------", userId);
     dispatch_async(dispatch_get_main_queue(), ^{
         Account *account = [AccountStorage readAccount];
@@ -228,21 +233,21 @@ static FHAppDelegate* pSelf = nil;
                                    @(account.user_id),@"user_id",
                                    userId,@"userId",
                                    nil];
-        
+
         [AFNetWorkTool get:@"sheyun/getUserInfor" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 RCUserInfo *userInfo = [[RCUserInfo alloc] init];
                 userInfo.userId = userId;
                 userInfo.name = responseObj[@"data"][@"userName"];
                 userInfo.portraitUri = responseObj[@"data"][@"userPortrait"];
-                
+
                 [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
                 return completion(userInfo);
             } else {
-                
+
             }
         } failure:^(NSError *error) {
-            
+
         }];
         return completion(nil);
     });
@@ -255,27 +260,27 @@ static FHAppDelegate* pSelf = nil;
             [[SingleManager shareManager].allGroupsArrs addObject:groupId];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATEGROUPCOUNT" object:nil];
         }
-        
+
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
                                    groupId,@"groupId",
                                    nil];
-        
+
         [AFNetWorkTool get:@"sheyun/getGroupDetail" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 RCGroup *groupInfo = [[RCGroup alloc] init];
                 groupInfo.groupId = groupId;
                 groupInfo.groupName = responseObj[@"data"][@"groupName"];
                 groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
-                
+
                 [[RCIM sharedRCIM] refreshGroupInfoCache:groupInfo withGroupId:groupInfo.groupId];
                 return completion(groupInfo);
             } else {
-                
+
             }
         } failure:^(NSError *error) {
-            
+
         }];
         return completion(nil);
     });

@@ -11,7 +11,7 @@
 #import "FHSelectGroupMemberController.h"
 #import "FHFriendMessageController.h"
 
-@interface FHGroupMessageListController () <UIScrollViewDelegate>
+@interface FHGroupMessageListController () 
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
 /** 表头 */
@@ -35,7 +35,7 @@
         tabbarHeight = 49;
     }
     self.conversationListTableView.height = SCREEN_HEIGHT - tabbarHeight - MainSizeHeight - 35;
-    [self setDisplayConversationTypes:@[@(ConversationType_GROUP),
+    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE),
                                         ]];
     self.conversationListTableView.tableFooterView = [UIView new];
     self.conversationListTableView.tableHeaderView = self.headerView;
@@ -51,7 +51,8 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = YES;
-    [self refreshGroupInfo];
+//    [self refreshGroupInfo];
+//    [[RCIM sharedRCIM] setGroupInfoDataSource:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -128,6 +129,40 @@
 - (void)didReceiveMessageNotification:(NSNotification *)notification {
     
 }
+
+//- (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *))completion {
+//    NSLog(@"------ groupId = %@ ---------", groupId);
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        if (![[SingleManager shareManager].allGroupsArrs containsObject:groupId]) {
+//            [[SingleManager shareManager].allGroupsArrs addObject:groupId];
+//            self.groupCountLabel.text = [NSString stringWithFormat:@"群聊数量 : %lu ",(unsigned long)[SingleManager shareManager].allGroupsArrs.count];
+////            [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATEGROUPCOUNT" object:nil];
+//        }
+//
+//        Account *account = [AccountStorage readAccount];
+//        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                   @(account.user_id),@"user_id",
+//                                   groupId,@"groupId",
+//                                   nil];
+//
+//        [AFNetWorkTool get:@"sheyun/getGroupDetail" params:paramsDic success:^(id responseObj) {
+//            if ([responseObj[@"code"] integerValue] == 1) {
+//                RCGroup *groupInfo = [[RCGroup alloc] init];
+//                groupInfo.groupId = groupId;
+//                groupInfo.groupName = responseObj[@"data"][@"groupName"];
+//                groupInfo.portraitUri = responseObj[@"data"][@"groupPortrait"];
+//
+//                [[RCIM sharedRCIM] refreshGroupInfoCache:groupInfo withGroupId:groupInfo.groupId];
+//                return completion(groupInfo);
+//            } else {
+//
+//            }
+//        } failure:^(NSError *error) {
+//
+//        }];
+//        return completion(nil);
+//    });
+//}
 
 #pragma mark — setter & getter
 //- (UITableView *)homeTable {
