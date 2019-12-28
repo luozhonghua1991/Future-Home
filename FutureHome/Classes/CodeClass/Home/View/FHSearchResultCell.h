@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *distanceLabel;
 
 @property(nonatomic, weak) id<FHSearchResultCellDelegate> delegate;
+/** 头像 */
+@property (nonatomic, strong) UIImageView *headerImgView;
 
 @end
 

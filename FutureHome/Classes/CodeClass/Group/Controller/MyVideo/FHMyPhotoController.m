@@ -48,6 +48,19 @@
     [self getPhotoListData];
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.mainTable.mj_header;
+    MJRefreshFooter *footer = self.mainTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 - (void)setUpAllView {
     if (self.type != 1) {
         CGFloat tabbarH = [self getTabbarHeight];
@@ -61,6 +74,7 @@
     _mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     _mainTable.tableFooterView = [[UIView alloc]init];
     _mainTable.estimatedRowHeight = 100;
+    _mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getPhotoListData)];
     // 必须先注册cell，否则会报错
     [_mainTable registerClass:[FHMyPhotoListCell class] forCellReuseIdentifier:kMasonryCell];
     [self.view addSubview:self.mainTable];
@@ -75,12 +89,13 @@
                                self.user_id ? self.user_id : @(account.user_id),@"uid", nil];
     [AFNetWorkTool get:@"sheyun/myAlbum" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [self endRefreshAction];
             [weakSelf requestWithDic:responseObj[@"data"]];
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        
+        [self endRefreshAction];
     }];
 }
 

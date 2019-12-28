@@ -42,6 +42,9 @@
     BHInfiniteScrollView *infiniteScrollView = [[self alloc] initWithFrame:frame];
     infiniteScrollView.delegate = delegate;
     infiniteScrollView.imagesArray = [NSMutableArray arrayWithArray:images];
+    if (infiniteScrollView.imagesArray.count == 0) {
+        infiniteScrollView.backgroundColor = [UIColor colorWithPatternImage: [UIImage imageNamed:@"头像"]];
+    }
     return infiniteScrollView;
 }
 

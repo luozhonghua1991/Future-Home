@@ -68,7 +68,7 @@
                                 @"车库管理",
                                 @"租售信息",
                                 @"投诉建议",
-                                @"我的物业"];
+                                @"认证发布"];
     self.bottomImageArrs = @[@"2-1社区公告",
                              @"2-2 清洁绿化",
                              @"2-3 治安消防",
@@ -443,7 +443,7 @@
     } else if (selectIndex.row == 9) {
         /** 我的物业 */
         FHAboutMyPropertyController *about = [[FHAboutMyPropertyController alloc] init];
-        about.titleString = @"我的物业";
+        about.titleString = @"认证发布";
         about.hidesBottomBarWhenPushed = YES;
         about.property_id = property_id;
         [self.navigationController pushViewController:about animated:YES];

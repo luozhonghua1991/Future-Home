@@ -22,6 +22,8 @@
 @property (nonatomic, strong) UIView *meCenterFooterView;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *isReainame;
 
 @end
 
@@ -42,6 +44,21 @@
     self.meCenterFooterView.height = self.meCenterFooterView.height;
     self.meCenterTable.tableHeaderView = self.meCenterHeaderView;
     self.meCenterHeaderView.height = self.meCenterHeaderView.height;
+    
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",nil];
+    [AFNetWorkTool get:@"userCenter/isRealname" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+          
+        } else {
+            weakSelf.isReainame = responseObj[@"msg"];
+        }
+        [self.meCenterTable reloadData];
+    } failure:^(NSError *error) {
+  
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,6 +146,9 @@
         if (indexPath.row == 5) {
             cell.detailTextLabel.text = @"版本号1.0.1";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        } else if (indexPath.row == 2) {
+            cell.detailTextLabel.text = self.isReainame;
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         } else {
             
         }
@@ -159,7 +179,9 @@
             [self viewControllerPushOther:@"FHMyFollowListController"];
         } else if (indexPath.row == 2) {
             /** 实名认证 */
-            [self viewControllerPushOther:@"FHCertificationController"];
+            if ([self.isReainame isEqualToString:@"未实名认证！"]) {
+                [self viewControllerPushOther:@"FHCertificationController"];
+            }
         } else if (indexPath.row == 3) {
             /** 隐私设置 */
             [self viewControllerPushOther:@"FHPrivacySettingsController"];

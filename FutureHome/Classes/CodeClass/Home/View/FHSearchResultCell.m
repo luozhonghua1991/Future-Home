@@ -10,8 +10,6 @@
 #import "FHSearchResultModel.h"
 
 @interface FHSearchResultCell ()
-/** 头像 */
-@property (nonatomic, strong) UIImageView *headerImgView;
 /** 名字label */
 @property (nonatomic, strong) UILabel *nameLabel;
 /** 位置label */

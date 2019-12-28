@@ -164,6 +164,7 @@ FHSearchResultCellDelegate
     FHSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHSearchResultCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.resultModel = self.dataArrs[indexPath.row];
+    cell.headerImgView.userInteractionEnabled = NO;
     cell.delegate = self;
     cell.rightBtn.tag = indexPath.row;
     [cell.rightBtn addTarget:self action:@selector(rightBtnClick:) forControlEvents:UIControlEventTouchUpInside];

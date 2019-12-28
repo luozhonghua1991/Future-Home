@@ -240,7 +240,7 @@
         _suggestionsTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _suggestionsTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _suggestionsTextView.PlaceholderLabel.textColor = [UIColor blackColor];
-        NSString *titleString = @"请输入投诉或意见内容......";
+        NSString *titleString = @"说点什么吧......";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _suggestionsTextView.PlaceholderLabel.attributedText = attributedTitle;
     }

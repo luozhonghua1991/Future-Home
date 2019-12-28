@@ -29,9 +29,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.homeTable];
-    self.homeTable.tableHeaderView = self.tableHeaderView;
-    self.homeTable.tableHeaderView.height = self.tableHeaderView.height;
-    [self.tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    self.homeTable.tableHeaderView = self.tableHeaderView;
+//    self.homeTable.tableHeaderView.height = self.tableHeaderView.height;
     [self.homeTable registerClass:[FHCommonVideosCollectionCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
     [self getRequest];
 }
@@ -103,6 +102,7 @@
     cell.rowCount = self.videoListArrs.count;
     cell.videoListArrs = self.videoListArrs;
     cell.shopID = self.shopID;
+    [cell.tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

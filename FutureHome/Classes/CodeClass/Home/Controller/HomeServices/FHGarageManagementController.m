@@ -56,6 +56,7 @@
                                       @(self.property_id),@"property_id",nil];
     /**车库管理费用 */
     [AFNetWorkTool get:@"property/carage" params:paramsDictionary success:^(id responseObj) {
+        [self endRefreshAction];
         self.headerView.leftNameArrs = [[NSMutableArray alloc] init];
         self.headerView.rightNameArrs = [[NSMutableArray alloc] init];
         NSArray *arr = responseObj[@"data"];
@@ -73,6 +74,18 @@
     }];
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.listTable.mj_header;
+    MJRefreshFooter *footer = self.listTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -117,7 +130,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return  80;
+    return  100;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,6 +152,7 @@
         _listTable.delegate = self;
         _listTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _listTable.showsVerticalScrollIndicator = NO;
+        _listTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fh_facthRequest)];
         if (@available (iOS 11.0, *)) {
             _listTable.estimatedSectionHeaderHeight = 0.01;
             _listTable.estimatedSectionFooterHeight = 0.01;

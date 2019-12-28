@@ -113,7 +113,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     /** 获取banner数据 */
-    [self fh_refreshBannerData];
     [self fh_getShopFollowList];
 }
 

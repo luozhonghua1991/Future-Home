@@ -14,7 +14,7 @@
 #import <JhtMarquee/JhtVerticalMarquee.h>
 #import "FHScrollNewsController.h"
 
-@interface FHCustomerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate,RCIMUserInfoDataSource>
+@interface FHCustomerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
     NSMutableArray *topBannerArrays;
     NSMutableArray *bottomBannerArrays;
@@ -50,7 +50,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[RCIM sharedRCIM] setUserInfoDataSource:self];
     [self fh_creatNav];
     self.bottomLogoNameArrs = @[@"物业客服",
                                 @"业主客服",

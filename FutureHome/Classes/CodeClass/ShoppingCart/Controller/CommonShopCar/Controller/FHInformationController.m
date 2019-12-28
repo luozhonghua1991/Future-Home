@@ -77,6 +77,7 @@
     
     [AFNetWorkTool get:@"shop/getUserArticle" params:paramsDictionary success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [self endRefreshAction];
             weakSelf.informationArrs = [FHInformationModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
             [weakSelf.homeTable reloadData];
         } else {
@@ -85,6 +86,19 @@
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
     }];
+}
+
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
 }
 
 #pragma mark  -- tableViewDelagate
@@ -144,6 +158,7 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _homeTable.showsVerticalScrollIndicator = NO;
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getRequest)];
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

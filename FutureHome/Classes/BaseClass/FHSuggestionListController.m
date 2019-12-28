@@ -61,6 +61,7 @@
     }
     
     [AFNetWorkTool get:@"public/complaintList" params:paramsDic success:^(id responseObj) {
+        [self endRefreshAction];
         NSDictionary *Dic = responseObj[@"data"];
         [weakSelf requestWithDic:Dic];
     } failure:^(NSError *error) {
@@ -85,6 +86,19 @@
     });
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.mainTable.mj_header;
+    MJRefreshFooter *footer = self.mainTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 - (void)setUpAllView {
     self.mainTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight - MainSizeHeight - 35) style:UITableViewStylePlain];
     self.mainTable.delegate = self;
@@ -95,6 +109,7 @@
     // 必须先注册cell，否则会报错
     [self.mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
     [self.mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
+    self.mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getCommitsData)];
     [self.view addSubview:self.mainTable];
 }
 

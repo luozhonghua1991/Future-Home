@@ -19,8 +19,7 @@ DZNEmptyDataSetDelegate
 >
 /** 视频列表collection */
 @property (nonatomic, strong) UICollectionView *videoCollectionView;
-/** 标头数据 */
-@property (nonatomic, strong) FHServiceCommonHeaderView *tableHeaderView;
+
 
 @end
 
@@ -162,7 +161,6 @@ DZNEmptyDataSetDelegate
 - (FHServiceCommonHeaderView *)tableHeaderView {
     if (!_tableHeaderView) {
         _tableHeaderView = [[FHServiceCommonHeaderView alloc] initWithFrame:CGRectMake(0, -140, SCREEN_WIDTH, 140)];
-//        [_tableHeaderView.personCountBtn addTarget:self action:@selector(personCountBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _tableHeaderView;
 }

@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FHServiceCommonHeaderView.h"
 NS_ASSUME_NONNULL_BEGIN
 @class FHVideosListModel;
 @protocol FHCommonVideosCollectionCellDelegate <NSObject>
@@ -31,7 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *shopID;
 /** type 1类型  2生鲜视频列表*/
 @property (nonatomic, assign) NSInteger type;
-
+/** 标头数据 */
+@property (nonatomic, strong) FHServiceCommonHeaderView *tableHeaderView;
 
 @end
 
