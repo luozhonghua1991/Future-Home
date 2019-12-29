@@ -52,7 +52,7 @@
     /** 评论数据 */
     [self getCommitsData];
     
-    if (self.isCanCommit) {
+    if (!self.isCanCommit) {
         [self fh_creatBottomInputView];
     }
 }
@@ -395,7 +395,7 @@
     pushBtn.enabled = NO;
     pushBtn.layer.cornerRadius = 5;
     pushBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 75, 35);
+    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 70, 35);
     [bottomView addSubview:pushBtn];
     
     

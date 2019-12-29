@@ -33,10 +33,11 @@
 
 @property (nonatomic, strong) MBProgressHUD *lodingHud;
 
-@property (nonatomic, assign)BOOL ifSelected;//是否选中
+//@property (nonatomic, assign)BOOL ifSelected;//是否选中
+//
+//@property (nonatomic, strong)NSIndexPath * lastSelected;//上一次选中的索引
 
-@property (nonatomic, strong)NSIndexPath * lastSelected;//上一次选中的索引
-
+@property (nonatomic, strong) UIButton * oldSelectBtn;
 
 @end
 
@@ -44,7 +45,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.ifSelected = NO;
     self.topLogoNameArrs = @[@"喜欢满意",
                              @"感觉一般",
                              @"不满意"];
@@ -184,27 +184,20 @@
     FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
-    cell.selectBtn.enabled = NO;
-    if (self.ifSelected) {
-        cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
-    } else {
-    }
+    [cell.selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.selectBtn.tag = indexPath.row + 1;
     return cell;
 }
 
 #pragma mark -tableView代理方法
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSIndexPath * temp = self.lastSelected;//暂存上一次选中的行
-    if (temp && temp != indexPath)//如果上一次的选中的行存在,并且不是当前选中的这一行,则让上一行不选中
-    {
-        self.ifSelected = NO;//修改之前选中的cell的数据为不选中
-        [tableView reloadRowsAtIndexPaths:@[temp] withRowAnimation:UITableViewRowAnimationAutomatic];//刷新该行
+- (void)selectBtnClick:(UIButton *)btn {
+    if (self.oldSelectBtn == btn) {
+    } else {
+        btn.backgroundColor = HEX_COLOR(0x1296db);
+        self.oldSelectBtn.backgroundColor = [UIColor whiteColor];
     }
-    self.lastSelected = indexPath;//选中的修改为当前行
-    self.ifSelected = YES;//修改这个被选中的一行
-    [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];//重新刷新
-    self.type = indexPath.row + 1;
-    
+    self.oldSelectBtn = btn;
+    self.type = btn.tag;
 }
 
 

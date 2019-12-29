@@ -7,6 +7,7 @@
 //  发布动态
 #import "FHReleaseDynamicsController.h"
 #import "BRPlaceholderTextView.h"
+#import "ZHProgressHUD.h"
 
 @interface FHReleaseDynamicsController () <UITextFieldDelegate,UIScrollViewDelegate>
 /** 大的滚动视图 */
@@ -30,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fh_creatNav];
-    self.suggestionsTextView.frame = CGRectMake(0, MainSizeHeight + 10, SCREEN_WIDTH, 150);
+    self.suggestionsTextView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 150);
     [self.view addSubview:self.suggestionsTextView];
     [self fh_creatUI];
     [self fh_creatBottomBtn];
@@ -130,7 +131,7 @@
         [self updateVideoWithRequest];
     } else {
         //显示加载视图
-        [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
+        [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -144,21 +145,18 @@
         [AFNetWorkTool uploadImagesWithUrl:@"sheyun/publishDynamic" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
-                [self.lodingHud hideAnimated:YES];
-                self.lodingHud = nil;
+                [ZHProgressHUD hide];
                 [weakSelf.view makeToast:responseObj[@"msg"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectPhoto = NO;
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [self.lodingHud hideAnimated:YES];
-                self.lodingHud = nil;
+                [ZHProgressHUD hide];
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-            [self.lodingHud hideAnimated:YES];
-            self.lodingHud = nil;
+            [ZHProgressHUD hide];
             [weakSelf.view makeToast:@"上传失败请稍后再试"];
         }];
     }
@@ -167,7 +165,7 @@
 
 - (void)updateVideoWithRequest {
     //显示加载视图
-    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
+    [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
     NSData *videoData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SingleManager shareManager].videoPath]];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -183,21 +181,18 @@
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
                 //隐藏加载视图
-                [self.lodingHud hideAnimated:YES];
-                self.lodingHud = nil;
+                [ZHProgressHUD hide];
                 [weakSelf.view makeToast:responseObj[@"msg"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectVideo = NO;
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [self.lodingHud hideAnimated:YES];
-                self.lodingHud = nil;
+                [ZHProgressHUD hide];
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-            [self.lodingHud hideAnimated:YES];
-            self.lodingHud = nil;
+            [ZHProgressHUD hide];
             [weakSelf.view makeToast:@"上传失败请稍后再试"];
         }];
 }
@@ -251,16 +246,16 @@
     return _suggestionsTextView;
 }
 
-- (MBProgressHUD *)lodingHud {
-    if (_lodingHud == nil) {
-        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
-        _lodingHud.mode = MBProgressHUDModeIndeterminate;
-        _lodingHud.removeFromSuperViewOnHide = YES;
-        _lodingHud.label.text = @"动态发布中...请稍后";
-        [_lodingHud showAnimated:YES];
-    }
-    return _lodingHud;
-}
+//- (MBProgressHUD *)lodingHud {
+//    if (_lodingHud == nil) {
+//        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+//        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+//        _lodingHud.removeFromSuperViewOnHide = YES;
+//        _lodingHud.label.text = @"动态发布中...请稍后";
+//        [_lodingHud showAnimated:YES];
+//    }
+//    return _lodingHud;
+//}
 
 @end
 
