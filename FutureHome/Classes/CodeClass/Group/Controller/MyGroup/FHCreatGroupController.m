@@ -165,6 +165,8 @@
  */
 - (void)addPhotoClick {
     UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+    UICollectionView *vc =  (UICollectionView*)imagePickerController.view.subviews[0] ;
+    vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight);
     imagePickerController.delegate = self;
     imagePickerController.allowsEditing = YES;
     imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;

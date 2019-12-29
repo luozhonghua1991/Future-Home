@@ -36,7 +36,7 @@
 
 //显示选择照片提示Sheet
 -(void)showImgPickerActionSheetInView:(UIViewController *)controller {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请选择上传类型" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请选择类型" preferredStyle:UIAlertControllerStyleActionSheet];
     UIAlertAction *actionCancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         
     }];

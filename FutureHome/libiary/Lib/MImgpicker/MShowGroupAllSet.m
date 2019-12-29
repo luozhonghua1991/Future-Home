@@ -53,7 +53,6 @@
     flowOut.minimumLineSpacing = 5;
     
     self.collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:flowOut];
-    self.collectionView.transform = CGAffineTransformMakeTranslation(0, 100);
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
     self.collectionView.showsVerticalScrollIndicator = NO;

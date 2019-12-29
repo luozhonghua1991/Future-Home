@@ -34,9 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"照片";
-    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-//    self.tableView.transform = CGAffineTransformMakeTranslation(0, 100);
-    self.tableView.transform = CGAffineTransformMakeTranslation(0, 80);
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
