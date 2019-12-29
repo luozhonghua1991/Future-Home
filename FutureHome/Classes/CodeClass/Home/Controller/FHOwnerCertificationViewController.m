@@ -242,13 +242,38 @@
  *  跳转相册页面
  */
 - (void)addPhotoClick {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    UICollectionView *vc =  (UICollectionView*)imagePickerController.view.subviews[0] ;
-    vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight);
-    imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = NO;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:imagePickerController animated:YES completion:nil];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+    imagePickerVc.showSelectBtn = YES;
+    imagePickerVc.naviBgColor = HEX_COLOR(0x1296db);
+    // You can get the photos by block, the same as by delegate.
+    // 你可以通过block或者代理，来得到用户选择的照片.
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        for (UIImage *image in photos) {
+            if (self.selectIndex == 1) {
+                self.certificationView.leftImgView.image = image;
+            } else if (self.selectIndex == 2) {
+                self.certificationView.centerImgView.image = image;
+            } else {
+                self.certificationView.rightImgView.image = image;
+            }
+            Account *account = [AccountStorage readAccount];
+            NSArray *arr = @[@"111"];
+            NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       @(account.user_id),@"user_id",
+                                       self.path,@"path",
+                                       arr,@"file[]",
+                                       nil];
+            
+            NSData *imageData = UIImageJPEGRepresentation(image,0.5);
+            [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+                NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
+                [self.selectImgArrs addObject:imgID];
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
 #pragma mark - <相册处理区域>

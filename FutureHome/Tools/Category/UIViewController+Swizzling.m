@@ -78,6 +78,10 @@
         UITableView *vc =  ( UITableView*)self.view ;
         vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight) ;
     }
+//    if([className isEqualToString:@"TZAlbumPickerController"]) {
+//        UITableView *vc =  ( UITableView*)self.view ;
+//        vc.frame = CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainStatusBarHeight) ;
+//    }
     [self hhview1:animated];
 }
 
@@ -87,6 +91,10 @@
         UICollectionView *collectionView = self.view.subviews.firstObject;
         collectionView.contentInset = UIEdgeInsetsMake(MainSizeHeight, 0, 0, 0);
     }
+//    if ([self isMemberOfClass:NSClassFromString(@"TZPhotoPickerController")]) {
+//        UICollectionView *collectionView = self.view.subviews.firstObject;
+//        collectionView.contentInset = UIEdgeInsetsMake(MainStatusBarHeight, 0, 0, 0);
+//    }
 }
 
 @end

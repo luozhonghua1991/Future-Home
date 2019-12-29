@@ -432,13 +432,17 @@
  *  跳转相册页面
  */
 - (void)addPhotoClick {
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    UICollectionView *vc =  (UICollectionView*)imagePickerController.view.subviews[0] ;
-    vc.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight);
-    imagePickerController.delegate = self;
-    imagePickerController.allowsEditing = NO;
-    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-    [self presentViewController:imagePickerController animated:YES completion:nil];
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+    imagePickerVc.showSelectBtn = YES;
+    imagePickerVc.naviBgColor = HEX_COLOR(0x1296db);
+    // You can get the photos by block, the same as by delegate.
+    // 你可以通过block或者代理，来得到用户选择的照片.
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        for (UIImage *image in photos) {
+            self.groupImgView.image = image;
+        }
+    }];
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
 }
 
 

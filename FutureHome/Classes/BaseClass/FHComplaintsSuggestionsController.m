@@ -25,7 +25,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.suggestionsTextView.frame = CGRectMake(0, 10, SCREEN_WIDTH, 150);
+    self.suggestionsTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 150);
     [self.view addSubview:self.suggestionsTextView];
     [self fh_creatUI];
     [self fh_creatBottomBtn];
@@ -169,7 +169,7 @@
         _suggestionsTextView.font = [UIFont systemFontOfSize:15];
         _suggestionsTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _suggestionsTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
-        _suggestionsTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+        _suggestionsTextView.PlaceholderLabel.textColor = [UIColor lightGrayColor];
         NSString *titleString = @"请输入投诉或意见内容......";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _suggestionsTextView.PlaceholderLabel.attributedText = attributedTitle;

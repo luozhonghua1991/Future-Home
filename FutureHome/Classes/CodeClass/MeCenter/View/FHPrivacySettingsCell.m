@@ -40,7 +40,8 @@
 - (UIButton *)selectBtn {
     if (!_selectBtn) {
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _selectBtn.backgroundColor = [UIColor redColor];
+        _selectBtn.layer.borderColor = [UIColor blackColor].CGColor;
+        _selectBtn.layer.borderWidth = 1;
     }
     return _selectBtn;
 }

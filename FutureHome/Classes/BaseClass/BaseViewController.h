@@ -20,7 +20,8 @@
 #import "FHLoginTool.h"
 #import "BAAlertController.h"
 #import "HZPhotoBrowser.h"
-
+#import "MSImagePickerController.h"
+#import "TZImagePickerController.h"
 
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]
@@ -28,7 +29,8 @@
 @interface BaseViewController : UIViewController
 <
 DZNEmptyDataSetSource,
-DZNEmptyDataSetDelegate
+DZNEmptyDataSetDelegate,
+TZImagePickerControllerDelegate
 >
 /**
  用了自定义的手势返回，则系统的手势返回屏蔽

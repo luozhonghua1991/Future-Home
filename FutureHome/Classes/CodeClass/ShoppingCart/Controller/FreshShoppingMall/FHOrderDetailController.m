@@ -244,7 +244,7 @@
                 FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
                 vc.orderID = self.listModel.id;
-                vc.totolePrice = [NSString stringWithFormat:@"￥%@",self.listModel.pay_money];
+                vc.totolePrice = [NSString stringWithFormat:@"￥%.2f",[self.listModel.pay_money floatValue]];
                 [self.navigationController pushViewController:vc animated:YES];
             }
         }

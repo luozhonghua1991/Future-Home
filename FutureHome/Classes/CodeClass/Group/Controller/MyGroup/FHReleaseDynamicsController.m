@@ -112,11 +112,12 @@
 
 /** 发布动态 */
 - (void)addInvoiceBtnClick {
-    if (self.isSelect) {
-        return;
-    } else {
-        self.isSelect = YES;
-    }
+//    if (self.isSelect) {
+//        return;
+//    } else {
+//        self.isSelect = YES;
+//    }
+    
     if (self.suggestionsTextView.text.length <= 0||[self.suggestionsTextView.text isEqualToString:@""]) {
         [self.view makeToast:@"请填写内容"];
         return;
@@ -124,7 +125,6 @@
     /*发布动态*/
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
-//    self.selectImgArrays = [[NSMutableArray alloc] init];
     if ([SingleManager shareManager].isSelectVideo) {
         /** 选择了视频 */
         [self updateVideoWithRequest];
@@ -157,7 +157,9 @@
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-            
+            [self.lodingHud hideAnimated:YES];
+            self.lodingHud = nil;
+            [weakSelf.view makeToast:@"上传失败请稍后再试"];
         }];
     }
 }
@@ -194,7 +196,9 @@
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-
+            [self.lodingHud hideAnimated:YES];
+            self.lodingHud = nil;
+            [weakSelf.view makeToast:@"上传失败请稍后再试"];
         }];
 }
 
@@ -247,7 +251,7 @@
     return _suggestionsTextView;
 }
 
-- (MBProgressHUD *)lodingHud{
+- (MBProgressHUD *)lodingHud {
     if (_lodingHud == nil) {
         _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
         _lodingHud.mode = MBProgressHUDModeIndeterminate;

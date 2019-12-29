@@ -372,13 +372,18 @@
 }
 
 - (void)fh_creatBottomInputView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 40, SCREEN_WIDTH, 40)];
+    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
     bottomView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:bottomView];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 100, 25)];
-    label.text = @"我来说两句。。。";
+    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0.5, SCREEN_WIDTH, 0.5)];
+    topLine.backgroundColor = [UIColor lightGrayColor];
+    [bottomView addSubview:topLine];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 100, 35)];
+    label.text = @" 我来说两句。。。";
     label.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    label.textColor = [UIColor lightGrayColor];
     label.layer.borderWidth = 1;
     label.font = [UIFont systemFontOfSize:15];
     label.userInteractionEnabled = YES;
@@ -388,8 +393,9 @@
     pushBtn.backgroundColor = HEX_COLOR(0x1296db);
     [pushBtn setTitle:@"发布" forState:0];
     pushBtn.enabled = NO;
+    pushBtn.layer.cornerRadius = 5;
     pushBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 50, 25);
+    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 75, 35);
     [bottomView addSubview:pushBtn];
     
     

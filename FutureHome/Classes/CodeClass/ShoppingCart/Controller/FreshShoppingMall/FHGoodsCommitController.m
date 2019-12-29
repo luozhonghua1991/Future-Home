@@ -188,7 +188,6 @@
     if (self.ifSelected) {
         cell.selectBtn.backgroundColor = HEX_COLOR(0x1296db);
     } else {
-        cell.selectBtn.backgroundColor = [UIColor redColor];
     }
     return cell;
 }

@@ -17,7 +17,7 @@ typedef enum {
     selectedCancel = 2,
     selectedCamera = 3,
     selectPhotoLib = 4
-}menuSelectedType;
+} menuSelectedType;
 /**
  *  定义选择的block方法
  */

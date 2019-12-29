@@ -71,15 +71,18 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor  whiteColor];
 //    NSLog(@"%@加载出来了",self);
-    if (@available(iOS 11.0, *)){
-        [[UIScrollView appearance] setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
-        if (SCREEN_HEIGHT == 812) {// iphone X
-            [[UITableView appearance] setContentInset:UIEdgeInsetsMake(0, 0, 35, 0)];
-            [UITableView appearance].scrollIndicatorInsets = [UITableView appearance].contentInset;
-
-        }
-    }
-    else{
+    if (@available(iOS 11.0, *)) {
+        [UITableView appearance].estimatedRowHeight = 0;
+        [UITableView appearance].estimatedSectionHeaderHeight = 0;
+        [UITableView appearance].estimatedSectionFooterHeight = 0;
+        [UIScrollView appearance].contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//        if (SCREEN_HEIGHT == 812) {// iphone X
+//            [[UITableView appearance] setContentInset:UIEdgeInsetsMake(0, 0, 35, 0)];
+//            [UITableView appearance].scrollIndicatorInsets = [UITableView appearance].contentInset;
+//
+//        }
+        
+    } else{
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
 }
@@ -130,8 +133,8 @@
 {
     if (!_hud)
     {
-        _hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        _hud.labelText=message;
+        _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        _hud.labelText = message;
     }
     
 }

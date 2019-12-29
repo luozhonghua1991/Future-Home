@@ -70,6 +70,7 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 //    addImageStrLabel.text = @"上传图片";
 //    addImageStrLabel.textColor = [UIColor colorWithRed:153.0/255.0 green:153.0/255.0 blue:153.0/255.0 alpha:1.0];
 //    [self.pickerCollectionView addSubview:addImageStrLabel];
+    
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -80,13 +81,13 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if ([SingleManager shareManager].isDongTaiType) {
-        if ([SingleManager shareManager].isSelectVideo || [SingleManager shareManager].isSelectPhoto) {
-            return _imageArray.count;
-        }
-        return _imageArray.count+1;
-    }
-    return _imageArray.count+1;
+//    if ([SingleManager shareManager].isDongTaiType) {
+//        if ([SingleManager shareManager].isSelectVideo || [SingleManager shareManager].isSelectPhoto) {
+//            return _imageArray.count;
+//        }
+//        return _imageArray.count + 1;
+//    }
+    return _imageArray.count + 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -197,36 +198,37 @@ static NSString * const reuseIdentifier = @"HWCollectionViewCell";
     if ([SingleManager shareManager].isSelectVideo) {
         /** 视频的选中状态 */
         [_imageArray removeAllObjects];
+        [_arrSelected removeAllObjects];
         [SingleManager shareManager].isSelectVideo = NO;
         [SingleManager shareManager].videoPath = nil;
         [self.pickerCollectionView reloadData];
     } else {
         [_imageArray removeObjectAtIndex:sender.tag];
         [_arrSelected removeObjectAtIndex:sender.tag];
-        
-        
+    
+    
         [self.pickerCollectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:sender.tag inSection:0]]];
-        
+    
         for (NSInteger item = sender.tag; item <= _imageArray.count; item++) {
             HWCollectionViewCell *cell = (HWCollectionViewCell*)[self.pickerCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:item inSection:0]];
             cell.closeButton.tag--;
             cell.profilePhoto.tag--;
         }
-        
+    
         [self changeCollectionViewHeight];
     }
 }
 
 #pragma mark - 改变view，collectionView高度
 - (void)changeCollectionViewHeight {
-    if ([SingleManager shareManager].isSelectPhoto) {
-        if (_arrSelected.count == 0) {
-            [SingleManager shareManager].isSelectPhoto = NO;
-            [self.pickerCollectionView reloadData];
-        } else {
-            [self changeFrame];
-        }
-    }
+//    if ([SingleManager shareManager].isSelectPhoto) {
+//        if (_arrSelected.count == 0) {
+//            [SingleManager shareManager].isSelectPhoto = NO;
+//            [self.pickerCollectionView reloadData];
+//        } else {
+//            [self changeFrame];
+//        }
+//    }
      [self changeFrame];
 }
 

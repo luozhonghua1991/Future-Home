@@ -54,9 +54,11 @@
     
     [AFNetWorkTool get:@"property/houseList" params:paramsDic success:^(id responseObj) {
         NSDictionary *dic = responseObj[@"data"];
+        [self endRefreshAction];
         self.houseDataArrs = [FHHouseListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
+        [self endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
 }
@@ -77,11 +79,27 @@
     
     [AFNetWorkTool get:@"property/parkList" params:paramsDic success:^(id responseObj) {
         NSDictionary *dic = responseObj[@"data"];
+        [self endRefreshAction];
         self.houseDataArrs = [FHHouseListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
+        [self endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
+}
+
+
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
 }
 
 #pragma mark  -- tableViewDelagate
@@ -119,6 +137,20 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
@@ -127,6 +159,13 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _homeTable.showsVerticalScrollIndicator = NO;
+        if (self.type == 0 || self.type == 1) {
+           _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fh_getHouseRequest)];
+        } else {
+            _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fh_geCarRequest)];
+        }
+        _homeTable.emptyDataSetSource = self;
+        _homeTable.emptyDataSetDelegate = self;
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

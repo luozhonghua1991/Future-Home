@@ -95,7 +95,7 @@
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     /** 获取banner数据 */
-    [self fh_refreshBannerData];
+//    [self fh_refreshBannerData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,6 +114,7 @@
     [super viewWillAppear:animated];
     /** 获取banner数据 */
     [self fh_getShopFollowList];
+    [self fh_refreshBannerData];
 }
 
 - (void)fh_getShopFollowList {
