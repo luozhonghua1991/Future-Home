@@ -11,6 +11,7 @@
 #import "FHCommonFollowModel.h"
 #import "FHHomeServicesController.h"
 #import "FHFreshMallController.h"
+#import "FHOwnerServiceController.h"
 
 @interface FHFreshMallFollowListController ()
 <
@@ -114,6 +115,7 @@ FDActionSheetDelegate
                                @(curPage),@"page",
                                nil];
     [AFNetWorkTool get:@"userCenter/collectList" params:paramsDic success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
                 [weakSelf.dataArrs removeAllObjects];
@@ -157,12 +159,19 @@ FDActionSheetDelegate
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     FHCommonFollowModel *model = self.dataArrs[indexPath.row];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if ([self.type isEqualToString:@"1"]) {
+        /** 物业 */
         FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
         home.model = model;
+        [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
+        home.hidesBottomBarWhenPushed = NO;
+        [self.navigationController pushViewController:home animated:YES];
+    } else if ([self.type isEqualToString:@"2"]) {
+        /** 业委 */
+        FHOwnerServiceController *home = [[FHOwnerServiceController alloc]init];
+//        home.model = model;
         home.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {

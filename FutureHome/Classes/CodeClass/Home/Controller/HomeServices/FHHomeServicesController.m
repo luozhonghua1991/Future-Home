@@ -103,13 +103,22 @@
     }];
 }
 
-- (void)setModel:(FHCommonFollowModel *)model {
-    _model = model;
-    property_id = [_model.id integerValue];
-    self.homeServiceName = model.name;
+//- (void)setModel:(FHCommonFollowModel *)model {
+//    _model = model;
+//    property_id = [_model.id integerValue];
+//    self.homeServiceName = model.name;
+//    /** 获取banner数据 */
+//    [self fh_refreshBannerData];
+//}
+
+- (void)setHomeSeverID:(NSInteger )HomeSeverID
+        homeServerName:(NSString *)homeServerName {
+    property_id = HomeSeverID;
+    self.homeServiceName = homeServerName;
     /** 获取banner数据 */
     [self fh_refreshBannerData];
 }
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -511,7 +520,7 @@
                                    @(property_id),@"id",
                                    self.realSstateSNameLabel.text,@"name",
                                    self.userName,@"username",
-                                   @"2",@"type",
+                                   @"1",@"type",
                                    /** 下面的用不到 没啥用 */
 //                                   @"false",@"is_collect",
 //                                   @"0",@"slat",

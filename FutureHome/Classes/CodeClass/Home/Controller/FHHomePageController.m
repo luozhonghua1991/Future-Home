@@ -95,7 +95,8 @@
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     /** 获取banner数据 */
-//    [self fh_refreshBannerData];
+    [self fh_refreshBannerData];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fefreshBanner) name:@"fefreshBanner" object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -114,6 +115,9 @@
     [super viewWillAppear:animated];
     /** 获取banner数据 */
     [self fh_getShopFollowList];
+}
+
+- (void)fefreshBanner {
     [self fh_refreshBannerData];
 }
 
@@ -152,7 +156,6 @@
     [self.locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.locationBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.locationBtn setImage:[UIImage imageNamed:@"chengshidingweiicon"] forState:UIControlStateNormal];
-//    [self.locationBtn addTarget:self action:@selector(<#metodName#>) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:self.locationBtn];
 }
 
@@ -235,12 +238,14 @@
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
         NSArray *upDicArr = Dic[@"uplist"];
+        [self endRefreshAction];
         for (NSDictionary *dic in upDicArr) {
             [self->topBannerArrays addObject:dic[@"path"]];
             [self->topUrlArrays addObject:dic[@"url"]];
         }
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
+        [self endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
 }
@@ -256,12 +261,14 @@
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
         NSArray *upDicArr = Dic[@"downlist"];
+        [self endRefreshAction];
         for (NSDictionary *dic in upDicArr) {
             [self->bottomBannerArrays addObject:dic[@"path"]];
             [self->bottomUrlArrays addObject:dic[@"url"]];
         }
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
+        [self endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
 }
@@ -276,6 +283,7 @@
     [AFNetWorkTool get:@"ScrollNew/getListInfo" params:paramsDic success:^(id responseObj) {
         self.soureArray = [[NSMutableArray alloc] init];
         if ([responseObj[@"code"] integerValue] == 1) {
+            [self endRefreshAction];
             NSArray *arr = responseObj[@"data"][@"list"];
             for (NSDictionary * dic in arr) {
                 [self.soureArray addObject:dic[@"title"]];
@@ -285,6 +293,7 @@
             [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [self endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
 }
@@ -493,6 +502,19 @@
     }
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 #pragma mark — setter & getter
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
@@ -502,6 +524,7 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homeTable.showsVerticalScrollIndicator = NO;
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fefreshBanner)];
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

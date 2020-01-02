@@ -279,7 +279,7 @@
                                    @(self.account.user_id),@"id",
                                    self.account.nickname,@"name",
                                    self.account.username,@"username",
-                                   @"1",@"type",
+                                   @"0",@"type",
                                    /** 下面的用不到 没啥用 */
 //                                   @"false",@"is_collect",
 //                                   @"0",@"slat",

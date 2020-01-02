@@ -17,6 +17,9 @@
 
 @interface FHLBXScanViewController ()
 @property (nonatomic, strong) LBXScanVideoZoomView *zoomView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHCommonFollowModel *model;
+
 @end
 
 @implementation FHLBXScanViewController
@@ -236,20 +239,13 @@
 #pragma mark — 二维码扫描结果处理
 /** 扫描的结果的相关处理 */
 - (void)showNextVCWithScanResult:(LBXScanResult*)strResult {
-//    ScanResultViewController *vc = [ScanResultViewController new];
-//    vc.imgScan = strResult.imgScanned;
-//    
-//    vc.strScan = strResult.strScanned;
-//    
-//    vc.strCodeType = strResult.strBarCodeType;
-//    
-//    [self.navigationController pushViewController:vc animated:YES];
     ZHLog(@"扫描出来的二维码内容:%@",strResult.strScanned);
     NSDictionary *resultDic = [self dictionaryWithJsonString:strResult.strScanned];
     if ([resultDic[@"app_key"] isEqualToString:@"com.sheyun"]) {
         /** 社云相关的二维码 */
-        NSString *type = resultDic[@"type"];
-        if ([type isEqualToString:@"1"]) {
+        NSInteger type = [resultDic[@"type"] integerValue];
+        if (type == 0) {
+            /** 用户 */
             FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
             vc.titleString = resultDic[@"name"];
             [SingleManager shareManager].isSelectPerson = YES;
@@ -257,31 +253,37 @@
             vc.user_id = resultDic[@"id"];
             vc.personType = 0;
             [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
-        } else if ([type isEqualToString:@"2"]) {
+        } else if (type == 1) {
+            /** 物业 */
+            FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
+            home.model = [FHCommonFollowModel new];
+            [home setHomeSeverID:[resultDic[@"id"] integerValue] homeServerName:resultDic[@"name"]];
+            home.hidesBottomBarWhenPushed = NO;
+            [self.navigationController pushViewController:home animated:YES];
+        } else if (type == 2) {
+            /** 业委 */
             
-        } else if ([type isEqualToString:@"3"]) {
-            
-        } else if ([type isEqualToString:@"4"]) {
+        } else if (type == 3) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;
             goodList.titleString = @"生鲜商城";
             goodList.shopID = resultDic[@"id"];
 //            goodList.isCollect = followModel.is_collect;
-            [self.navigationController pushViewController:goodList animated:YES];
-        } else if ([type isEqualToString:@"5"]) {
+            [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
+        } else if (type == 4) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;
             goodList.titleString = @"商业商城";
             goodList.shopID = resultDic[@"id"];
 //            goodList.isCollect = followModel.is_collect;
-            [self.navigationController pushViewController:goodList animated:YES];
-        } else if ([type isEqualToString:@"6"]) {
+            [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
+        } else if (type == 5) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;
             goodList.titleString = @"医药商城";
             goodList.shopID = resultDic[@"id"];
 //            goodList.isCollect = followModel.is_collect;
-            [self.navigationController pushViewController:goodList animated:YES];
+            [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
         }
     }
 //    NSArray *array = [strResult.strScanned componentsSeparatedByString:@"goods-"];

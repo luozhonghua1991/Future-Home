@@ -271,6 +271,7 @@
                 } tokenIncorrect:^{
                     NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
                 }];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"fefreshBanner" object:nil];
                 NSString *msg = responseObj[@"msg"];
                 [self.view makeToast:msg];
                 [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];

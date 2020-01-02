@@ -156,7 +156,7 @@
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.username = dic[@"username"];
             weakSelf.nickname = dic[@"nickname"];
-            [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]]];
             [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
             weakSelf.nameLabel.text = dic[@"nickname"];
             weakSelf.autographLabel.text = dic[@"autograph"];

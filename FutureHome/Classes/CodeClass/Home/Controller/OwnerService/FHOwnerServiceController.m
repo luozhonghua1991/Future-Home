@@ -535,7 +535,7 @@
                                    @(property_id),@"id",
                                    self.realSstateSNameLabel.text,@"name",
                                    self.userName,@"username",
-                                   @"3",@"type",
+                                   @"2",@"type",
                                    /** 下面的用不到 没啥用 */
 //                                   @"false",@"is_collect",
 //                                   @"0",@"slat",

@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHCommonFollowModel *model;
 
+- (void)setHomeSeverID:(NSInteger )HomeSeverID
+        homeServerName:(NSString *)homeServerName;
+
 @end
 
 NS_ASSUME_NONNULL_END

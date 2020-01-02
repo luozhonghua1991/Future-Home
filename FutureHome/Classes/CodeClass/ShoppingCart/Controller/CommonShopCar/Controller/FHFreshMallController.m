@@ -507,14 +507,14 @@
 
 - (FHScanDetailAlertView *)codeDetailView {
     if (!_codeDetailView) {
-        _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
+        _codeDetailView = [[FHScanDetailAlertView alloc] initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
         NSString *type;
         if ([self.titleString isEqualToString:@"生鲜商城"]) {
-            type = @"4";
+            type = @"3";
         } else if ([self.titleString isEqualToString:@"商业商城"]) {
-            type = @"5";
+            type = @"4";
         } else if ([self.titleString isEqualToString:@"医药商城"]) {
-            type = @"6";
+            type = @"5";
         }
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",

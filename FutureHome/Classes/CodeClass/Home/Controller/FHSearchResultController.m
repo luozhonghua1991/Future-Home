@@ -11,6 +11,7 @@
 #import "FHSearchResultModel.h"
 #import "FHPersonTrendsController.h"
 #import "FHFreshMallController.h"
+#import "FHHomeServicesController.h"
 
 @interface FHSearchResultController () <UITableViewDelegate,UITableViewDataSource,FHSearchResultCellDelegate>
 {
@@ -198,6 +199,20 @@
         vc.user_id = model.id;
         vc.personType = 0;
         [self.navigationController pushViewController:vc animated:YES];
+    } else if ([self.type isEqualToString:@"1"]) {
+        /** 物业 */
+        FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
+        home.model = (FHCommonFollowModel *)model;
+        [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
+        home.hidesBottomBarWhenPushed = NO;
+        [self.navigationController pushViewController:home animated:YES];
+    } else if ([self.type isEqualToString:@"2"]) {
+        /** 业主 */
+        FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
+        home.model = (FHCommonFollowModel *)model;
+        [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
+        home.hidesBottomBarWhenPushed = NO;
+        [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {
         /** 生鲜 */
         /** 生鲜服务 */
@@ -241,14 +256,6 @@
                      @(account.user_id),@"user_id",
                      resultModel.id,@"follow_id", nil];
     } else {
-//        NSInteger type;
-//        if ([self.type isEqualToString:@"3"]) {
-//            type = 1;
-//        } else if([self.type isEqualToString:@"2"]){
-//            type = 2;
-//        } else {
-//            type = [self.type integerValue] - 1;
-//        }
         urlString = @"public/collect";
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
