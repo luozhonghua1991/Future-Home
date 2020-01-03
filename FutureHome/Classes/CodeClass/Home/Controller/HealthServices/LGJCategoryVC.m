@@ -15,6 +15,8 @@
 @property (nonatomic, strong) UITableView *categoryTableView;
 @property (nonatomic, strong) NSMutableArray *categoryArr;
 @property (nonatomic, strong)  LGJProductsVC *productsVC;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UILabel *oldSelectLabel;
 
 @end
 
@@ -70,6 +72,11 @@
             weakSelf.categoryArr = [FHHealthCategoryModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"]];
             [self.categoryTableView reloadData];
             [weakSelf createProductsVC];
+            NSArray *arr = responseObj[@"data"];
+            NSDictionary *dic = arr[0];
+            NSDictionary *healthDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       dic[@"category_id"],@"category_id",nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"REFRESHHEALTH" object:nil userInfo:healthDic];
         } else {
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
@@ -91,11 +98,12 @@
 }
 
 - (void)createTableView {
-    self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width * 0.25, self.view.frame.size.height - MainSizeHeight) style:UITableViewStylePlain];
+    self.categoryTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width * 0.26, self.view.frame.size.height - MainSizeHeight) style:UITableViewStylePlain];
     self.categoryTableView.delegate = self;
     self.categoryTableView.dataSource = self;
     self.categoryTableView.showsVerticalScrollIndicator = NO;
     self.categoryTableView.backgroundColor = HEX_COLOR(0xCCCCCC);
+    self.categoryTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [self.view addSubview:self.categoryTableView];
 }
 
@@ -119,19 +127,46 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NSString *ident = @"ident";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ident];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
+        //cell里自己定义label
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(6, 0, self.view.frame.size.width * 0.26 - 6, 44)];
+        label.font = [UIFont systemFontOfSize:15];
+        label.textAlignment = NSTextAlignmentLeft;
+        label.tag = 100;
+        label.textColor = [UIColor blackColor];
+        //换行代码
+        label.numberOfLines = 0;
+        [cell.contentView addSubview:label];
+        UIView *view = [[UIView alloc] initWithFrame:cell.bounds];
+        view.backgroundColor = [UIColor whiteColor];
+        cell.selectedBackgroundView = view;
+        cell.backgroundColor = HEX_COLOR(0xE8E8E8);
     }
+    UILabel *titleLabel = (UILabel*)[cell.contentView viewWithTag:100];
     FHHealthCategoryModel *model = [self.categoryArr objectAtIndex:indexPath.row];
-    cell.textLabel.text = model.name;
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
+    titleLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    if (indexPath.row == 0) {
+        titleLabel.textColor = [UIColor blueColor];
+        self.oldSelectLabel = titleLabel;
+        NSIndexPath *selectedIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+        [self.categoryTableView selectRowAtIndexPath:selectedIndex animated:YES scrollPosition:UITableViewScrollPositionTop];
+    }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
+    UILabel *titleLabel = (UILabel*)[cell.contentView viewWithTag:100];
+    if (self.oldSelectLabel == titleLabel) {
+        
+    } else {
+        titleLabel.textColor = [UIColor blueColor];
+        self.oldSelectLabel.textColor = [UIColor blackColor];
+    }
+    self.oldSelectLabel = titleLabel;
     FHHealthCategoryModel *model = self.categoryArr[indexPath.row];
     if (_productsVC) {
 //        [_productsVC scrollToSelectedIndexPath:indexPath];

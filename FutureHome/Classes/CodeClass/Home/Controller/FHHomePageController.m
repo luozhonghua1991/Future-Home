@@ -95,7 +95,7 @@
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     /** 获取banner数据 */
-    [self fh_refreshBannerData];
+//    [self fh_refreshBannerData];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fefreshBanner) name:@"fefreshBanner" object:nil];
 }
 
@@ -229,8 +229,16 @@
 - (void)fh_getTopBanner {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    topBannerArrays = [[NSMutableArray alloc] init];
-    topUrlArrays = [[NSMutableArray alloc] init];
+    if (topBannerArrays.count > 0) {
+        [topBannerArrays removeAllObjects];
+    } else {
+         topBannerArrays = [[NSMutableArray alloc] init];
+    }
+    if (topUrlArrays.count > 0) {
+        [topUrlArrays removeAllObjects];
+    } else {
+        topUrlArrays = [[NSMutableArray alloc] init];
+    }
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(1),@"type", nil];
@@ -243,6 +251,7 @@
             [self->topBannerArrays addObject:dic[@"path"]];
             [self->topUrlArrays addObject:dic[@"url"]];
         }
+        
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [self endRefreshAction];
@@ -253,8 +262,16 @@
 - (void)fh_bottomTopBanner {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    bottomBannerArrays = [[NSMutableArray alloc] init];
-    bottomUrlArrays = [[NSMutableArray alloc] init];
+    if (bottomBannerArrays.count >0) {
+        [bottomBannerArrays removeAllObjects];
+    } else {
+        bottomBannerArrays = [[NSMutableArray alloc] init];
+    }
+    if (bottomUrlArrays.count > 0) {
+        [bottomUrlArrays removeAllObjects];
+    } else {
+      bottomUrlArrays = [[NSMutableArray alloc] init];
+    }
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(1),@"type", nil];
@@ -266,6 +283,7 @@
             [self->bottomBannerArrays addObject:dic[@"path"]];
             [self->bottomUrlArrays addObject:dic[@"url"]];
         }
+        
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [self endRefreshAction];

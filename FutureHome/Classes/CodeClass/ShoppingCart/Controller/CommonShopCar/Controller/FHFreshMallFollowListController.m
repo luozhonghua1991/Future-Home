@@ -114,8 +114,14 @@ FDActionSheetDelegate
                                self.type,@"type",
                                @(curPage),@"page",
                                nil];
-    [AFNetWorkTool get:@"userCenter/collectList" params:paramsDic success:^(id responseObj) {
-        
+    NSString *url;
+    if ([self.type isEqualToString:@"1"] ||
+        [self.type isEqualToString:@"2"]) {
+        url = @"userCenter/collection";
+    } else {
+        url = @"userCenter/collectList";
+    }
+    [AFNetWorkTool get:url params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
                 [weakSelf.dataArrs removeAllObjects];
@@ -153,8 +159,17 @@ FDActionSheetDelegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHCommonFollowAndPlacementCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonFollowAndPlacementCell class])];
-    cell.followModel = self.dataArrs[indexPath.row];
+    FHCommonFollowModel *followModel = self.dataArrs[indexPath.row];
+    cell.followModel = followModel;
     cell.delegate = self;
+    if ([self.type isEqualToString:@"1"] ||
+        [self.type isEqualToString:@"2"]) {
+        if ([followModel.is_collect isEqualToString:@"0"]) {
+            cell.rightBtn.hidden = YES;
+        } else {
+            cell.rightBtn.hidden = NO;
+        }
+    }
     return cell;
 }
 

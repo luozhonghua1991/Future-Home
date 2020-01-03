@@ -241,7 +241,7 @@
 //    } else if (self.ID == 2) {
 //        self.titleString = @"";
 //    }
-    web.titleString = self.titleString;
+    web.titleString = self.webTitleString;
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
     [self.navigationController pushViewController:web animated:YES];

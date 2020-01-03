@@ -16,8 +16,7 @@
 @property (nonatomic, strong) UILabel *nameLabel;
 /** 粉丝label */
 @property (nonatomic, strong) UILabel *fnansLabel;
-/** 右边的按钮 */
-@property (nonatomic, strong) UIButton *rightBtn;
+
 
 @end
 

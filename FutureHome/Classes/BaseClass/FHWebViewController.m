@@ -43,7 +43,9 @@ NJKWebViewProgressDelegate
 }
 
 - (void)fetchNetworkData {
-    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlString]]];
+    Account *account = [AccountStorage readAccount];
+    NSString *webUrlString = [NSString stringWithFormat:@"%@?userid=%ld",self.urlString,(long)account.user_id];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:webUrlString]]];
     
 }
 

@@ -75,6 +75,7 @@
 - (void)initViewControllers {
     FHBaseAnnouncementListController *messageVC = [[FHBaseAnnouncementListController alloc] init];
     messageVC.yp_tabItemTitle = @"机电系统";
+    messageVC.webTitleString = @"机电系统";
     messageVC.isHaveSelectView = YES;
     messageVC.type = 1;
     messageVC.ID = 9;
@@ -82,6 +83,7 @@
     
     FHBaseAnnouncementListController *groupVC = [[FHBaseAnnouncementListController alloc] init];
     groupVC.yp_tabItemTitle = @"电梯系统";
+    groupVC.webTitleString = @"电梯系统";
     groupVC.isHaveSelectView = YES;
     groupVC.type = 1;
     groupVC.ID = 10;
@@ -89,6 +91,7 @@
     
     FHBaseAnnouncementListController *hotVC = [[FHBaseAnnouncementListController alloc] init];
     hotVC.yp_tabItemTitle = @"供水排水";
+    hotVC.webTitleString = @"供水排水";
     hotVC.isHaveSelectView = YES;
     hotVC.type = 1;
     hotVC.ID = 11;
@@ -96,6 +99,7 @@
     
     FHBaseAnnouncementListController *safeVC = [[FHBaseAnnouncementListController alloc] init];
     safeVC.yp_tabItemTitle = @"供气供暖";
+    safeVC.webTitleString = @"供气供暖";
     safeVC.isHaveSelectView = YES;
     safeVC.type = 1;
     safeVC.ID = 12;

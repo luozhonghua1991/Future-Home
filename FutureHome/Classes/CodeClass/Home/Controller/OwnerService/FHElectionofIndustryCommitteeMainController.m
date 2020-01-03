@@ -23,6 +23,7 @@
 - (void)initViewControllers {
     FHBaseAnnouncementListController *messageVC = [[FHBaseAnnouncementListController alloc] init];
     messageVC.yp_tabItemTitle = @"选举管理";
+    messageVC.webTitleString = @"选举管理";
 //    messageVC.isNoHaveHeaderView = YES;
     messageVC.isHaveSelectView = YES;
     
@@ -32,6 +33,7 @@
     
     FHBaseAnnouncementListController *groupVC = [[FHBaseAnnouncementListController alloc] init];
     groupVC.yp_tabItemTitle = @"申请通道";
+    groupVC.webTitleString = @"申请通道";
 //    groupVC.isNoHaveHeaderView = YES;
     groupVC.isHaveSelectView = YES;
     groupVC.isHaveSectionView = YES;
@@ -42,6 +44,7 @@
     
     FHBaseAnnouncementListController *hotVC = [[FHBaseAnnouncementListController alloc] init];
     hotVC.yp_tabItemTitle = @"业委海选";
+    hotVC.webTitleString = @"业委海选";
 //    hotVC.isNoHaveHeaderView = YES;
     hotVC.isHaveSelectView = YES;
     hotVC.isHaveSectionView = YES;
@@ -52,6 +55,7 @@
     
     FHBaseAnnouncementListController *hoVC = [[FHBaseAnnouncementListController alloc] init];
     hoVC.yp_tabItemTitle = @"岗位选举";
+    hoVC.webTitleString = @"岗位选举";
 //    hoVC.isNoHaveHeaderView = YES;
     hoVC.isHaveSelectView = YES;
     hoVC.isHaveSectionView = YES;

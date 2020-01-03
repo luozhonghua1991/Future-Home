@@ -422,6 +422,7 @@
 //        [self pushAnnouncementControllerWithTitle:@"招标服务"];
         FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
         an.titleString = @"招标服务";
+        an.webTitleString = @"招标服务";
         an.hidesBottomBarWhenPushed = YES;
         an.isHaveSectionView = YES;
         an.ID = 10;
@@ -479,6 +480,7 @@
                                          ID:(NSInteger )ID {
     FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
     an.titleString = title;
+    an.webTitleString = title;
     an.type = 2;
     an.ID = ID;
     an.property_id = property_id;

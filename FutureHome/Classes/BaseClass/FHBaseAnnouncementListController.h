@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) BOOL isNoHaveHeaderView;
 /** 是否有区头   默认没有*/
 @property (nonatomic, assign) BOOL isHaveSectionView;
+/** web页的标题 */
+@property (nonatomic, copy) NSString *webTitleString;
 
 
 @end

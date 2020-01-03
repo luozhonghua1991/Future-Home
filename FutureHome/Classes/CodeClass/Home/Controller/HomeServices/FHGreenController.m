@@ -80,6 +80,7 @@
     messageVC.type = 1;
     messageVC.ID = 2;
     messageVC.property_id = self.property_id;
+    messageVC.webTitleString = @"园林绿化";
     
     FHBaseAnnouncementListController *groupVC = [[FHBaseAnnouncementListController alloc] init];
     groupVC.yp_tabItemTitle = @"清洁卫生";
@@ -87,6 +88,7 @@
     groupVC.type = 1;
     groupVC.ID = 3;
     groupVC.property_id = self.property_id;
+    groupVC.webTitleString = @"清洁卫生";
     
     FHBaseAnnouncementListController *hotVC = [[FHBaseAnnouncementListController alloc] init];
     hotVC.yp_tabItemTitle = @"消鼠除虫";
@@ -94,6 +96,7 @@
     hotVC.type = 1;
     hotVC.ID = 4;
     hotVC.property_id = self.property_id;
+    hotVC.webTitleString = @"消鼠除虫";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC, nil];
 }

@@ -51,6 +51,11 @@
 @property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *userName;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger is_collect;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIButton *followBtn;
+
 
 @end
 
@@ -92,9 +97,15 @@
     [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
         NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
+        self.is_collect = [dic[@"is_collect"] integerValue];
         self->property_id = [dic[@"id"] integerValue];
         self.homeServiceName = dic[@"name"];
         self.userName = dic[@"username"];
+        if (self.is_collect == 0) {
+            [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+        } else {
+            [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+        }
         /** 获取banner数据 */
         [self fh_refreshBannerData];
     } failure:^(NSError *error) {
@@ -154,11 +165,11 @@
 //    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [self.navgationView addSubview:shareBtn];
     
-    UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
-    [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
-    [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:followBtn];
+    self.followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
+    [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    [self.followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:self.followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     menuBtn.frame = CGRectMake(SCREEN_WIDTH - 33, MainStatusBarHeight +5, 28, 28);
@@ -179,7 +190,27 @@
 
 /** 收藏物业 */
 - (void)followBtnClick {
-    
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *urlString;
+    NSDictionary *paramsDic;
+    urlString = @"public/collect";
+    paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                 @(account.user_id),@"user_id",
+                 @(property_id),@"id",
+                 @"1",@"type",nil];
+    [AFNetWorkTool post:urlString params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"收藏成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
 }
 /** 我的收藏界面 */
 - (void)menuBtnClick {
@@ -392,16 +423,12 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 2) {
         /** 安保消防 */
-//        [self pushAnnouncementControllerWithTitle:@"安保消防"];
-//        [self viewControllerPushOther:@"FHSafeController"];
         FHSafeController *vc = [[FHSafeController alloc] init];
         vc.property_id = property_id;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 3) {
         /** 水电气 */
-//        [self pushAnnouncementControllerWithTitle:@"水电气"];
-//        [self viewControllerPushOther:@"FHMenagerController"];
         FHMenagerController *vc = [[FHMenagerController alloc] init];
         vc.property_id = property_id;
         vc.hidesBottomBarWhenPushed = YES;
@@ -415,8 +442,6 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 5) {
         /** 物业费用 */
-//        [self pushAnnouncementControllerWithTitle:@"物业费用"];
-//        [self viewControllerPushOther:@"FHPropertyCostsController"];
         FHPropertyCostsController *vc = [[FHPropertyCostsController alloc] init];
         vc.type = 1;
         vc.ID = 16;
@@ -425,8 +450,6 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 6) {
         /** 车库管理 */
-//        [self pushAnnouncementControllerWithTitle:@"车库管理"];
-//        [self viewControllerPushOther:@"FHGarageManagementController"];
         FHGarageManagementController *vc = [[FHGarageManagementController alloc] init];
         vc.type = 1;
         vc.ID = 17;
@@ -435,7 +458,6 @@
         [self.navigationController pushViewController:vc animated:YES];
     } else if (selectIndex.row == 7) {
         /** 房屋租售 */
-//        [self pushAnnouncementControllerWithTitle:@"房屋租售"];
         FHRentalAndSaleController *vc = [[FHRentalAndSaleController alloc] init];
         vc.titleString = @"租售信息";
         vc.hidesBottomBarWhenPushed = YES;
@@ -463,6 +485,7 @@
                                          ID:(NSInteger )ID {
     FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
     an.titleString = title;
+    an.webTitleString = title;
     an.type = 1;
     an.ID = ID;
     an.property_id = property_id;

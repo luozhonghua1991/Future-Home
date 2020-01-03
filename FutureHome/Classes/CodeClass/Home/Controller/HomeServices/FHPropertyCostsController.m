@@ -143,6 +143,16 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    FHNoticeListModel *model = self.noticeListArrs[indexPath.row];
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = model.singpage;
+    web.titleString = @"物业费用";
+    web.hidesBottomBarWhenPushed = YES;
+    web.isHaveProgress = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
 
 #pragma mark — setter & getter
 - (UITableView *)listTable {

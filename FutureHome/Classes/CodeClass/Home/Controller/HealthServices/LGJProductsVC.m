@@ -11,12 +11,17 @@
 #import "FHWebViewController.h"
 
 @interface LGJProductsVC ()<UITableViewDelegate, UITableViewDataSource>
-
+{
+    NSInteger curPage;
+    NSInteger tolPage;
+}
 @property(nonatomic, strong)UITableView *productsTableView;
 @property(nonatomic, strong)NSMutableArray *productsArr;
 @property(nonatomic, strong)NSArray *sectionArr;
 @property(nonatomic, assign)BOOL isScrollUp;//是否是向上滚动
 @property(nonatomic, assign)CGFloat lastOffsetY;//滚动即将结束时scrollView的偏移量
+/** <#assign属性注释#> */
+@property (nonatomic, copy) NSString *pid;
 
 @end
 
@@ -26,52 +31,112 @@
     [super viewDidLoad];
     _isScrollUp = false;
     _lastOffsetY = 0;
-    
-    [self configData];
     [self createTableView];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configData:) name:@"REFRESHHEALTH" object:nil];
     // Do any additional setup after loading the view.
 }
 
-- (void)configData {
-    [self getRequestWithPid:@"1"];
+- (void)configData:(NSNotification *)notification {
+    NSDictionary *dic = notification.userInfo;
+    self.productsArr = [[NSMutableArray alloc] init];
+    self.pid = dic[@"category_id"];
+    [self loadInit];
 }
 
-- (void)getRequestWithPid:(NSString *)pid {
+- (void)getRequestWithPid:(NSString *)pid loadHead:(BOOL)isHead{
     WS(weakSelf);
-    self.productsArr = [[NSMutableArray alloc] init];
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @(1),@"page",
+                               @(curPage),@"page",
                                pid,@"pid", nil];
     [AFNetWorkTool get:@"health/disesseArticle" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             /** 获取成功 */
-            weakSelf.productsArr = [FHHealthProductModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]];
+            if (isHead) {
+                [self.productsArr removeAllObjects];
+            }
+            [self endRefreshAction];
+            self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
+            [weakSelf.productsArr addObjectsFromArray:[FHHealthProductModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
             [weakSelf.productsTableView reloadData];
         } else {
+            [self endRefreshAction];
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
-        
+        [self endRefreshAction];
     }];
 }
 
 - (void)createTableView {
-    self.view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.25, 0, self.view.frame.size.width * 0.75, self.view.frame.size.height)];
+    self.view = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width * 0.26, 0, self.view.frame.size.width * 0.74, self.view.frame.size.height)];
     
-    self.productsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.frame.size.width, self.view.frame.size.height - MainSizeHeight)];
+    self.productsTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, self.view.width, self.view.height - MainSizeHeight) style:UITableViewStylePlain];
     self.productsTableView.delegate = self;
     self.productsTableView.dataSource = self;
-    self.productsTableView.showsVerticalScrollIndicator = false;
+    self.productsTableView.showsVerticalScrollIndicator = YES;
+    self.productsTableView.emptyDataSetSource = self;
+    self.productsTableView.emptyDataSetDelegate = self;
+    if (@available (iOS 11.0, *)) {
+        self.productsTableView.estimatedSectionHeaderHeight = 0;
+        self.productsTableView.estimatedSectionFooterHeight = 0;
+        self.productsTableView.estimatedRowHeight = 0;
+        self.productsTableView.contentInsetAdjustmentBehavior= UIScrollViewContentInsetAdjustmentNever;
+        
+
+    }
+//    if (@available(iOS 11.0, *)) {
+//        self.productsTableView.contentInsetAdjustmentBehavior =UIScrollViewContentInsetAdjustmentNever;
+//        self.productsTableView.contentInset =UIEdgeInsetsMake(MainSizeHeight,0,0,0);//64和49自己看效果，是否应该改成0
+//        self.productsTableView.scrollIndicatorInsets =self.productsTableView.contentInset;
+//    }
+    self.productsTableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadInit)];
+    self.productsTableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadNext)];
     [self.view addSubview:self.productsTableView];
 }
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return self.sectionCount;
-//}
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+#pragma mark -- MJrefresh
+- (void)headerReload {
+    curPage = 1;
+    tolPage = 1;
+    [self.productsTableView.mj_footer resetNoMoreData];
+    [self getRequestWithPid:self.pid loadHead:YES];
+}
+
+- (void)footerReload {
+    if (++curPage <= tolPage) {
+        [self getRequestWithPid:self.pid loadHead:NO];
+    } else {
+        [self.productsTableView.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.productsTableView.mj_header;
+    MJRefreshFooter *footer = self.productsTableView.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.productsArr.count;
@@ -81,10 +146,13 @@
     return 44;
 }
 
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    
-//    return [_sectionArr objectAtIndex:section];
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.01f;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -143,7 +211,9 @@
 
 
 - (void)resreshDataWithPid:(NSString *)pid {
-    [self getRequestWithPid:pid];
+    self.productsArr = [[NSMutableArray alloc] init];
+    self.pid = pid;
+    [self loadInit];
 }
 
 - (void)didReceiveMemoryWarning {

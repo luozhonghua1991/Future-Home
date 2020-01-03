@@ -404,6 +404,7 @@
 - (void)pushAnnouncementControllerWithTitle:(NSString *)title ID:(NSInteger )ID{
     FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
     an.titleString = title;
+    an.webTitleString = title;
     an.type = 4;
     an.ID = ID;
     an.hidesBottomBarWhenPushed = YES;

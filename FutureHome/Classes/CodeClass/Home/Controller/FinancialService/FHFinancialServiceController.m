@@ -385,6 +385,7 @@
                                          ID:(NSInteger )ID {
     FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
     an.titleString = title;
+    an.webTitleString = title;
     an.hidesBottomBarWhenPushed = YES;
     an.type = 3;
     an.ID = ID;

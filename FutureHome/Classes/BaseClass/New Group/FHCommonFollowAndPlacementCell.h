@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak) id<FHCommonFollowAndPlacementCellDelegate> delegate;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHCommonFollowModel *followModel;
+/** 右边的按钮 */
+@property (nonatomic, strong) UIButton *rightBtn;
 
 @end
 

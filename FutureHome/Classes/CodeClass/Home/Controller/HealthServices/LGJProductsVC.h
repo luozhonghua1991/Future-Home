@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
 @protocol ProductsDelegate <NSObject>
 
@@ -15,7 +16,7 @@
 
 @end
 
-@interface LGJProductsVC : UIViewController
+@interface LGJProductsVC : BaseViewController
 
 @property(nonatomic, weak) id<ProductsDelegate> delegate;/**< delegate */
 
