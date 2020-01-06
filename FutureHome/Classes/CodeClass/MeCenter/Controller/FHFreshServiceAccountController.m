@@ -71,7 +71,6 @@ FHCommonPaySelectViewDelegate
 @property (nonatomic, strong) FHUserAgreementView *agreementView;
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
-
 /** 省的ID */
 @property (nonatomic, copy) NSString *province_id;
 /** 市的ID */
@@ -672,7 +671,7 @@ FHCommonPaySelectViewDelegate
 
 - (FHCommonPaySelectView *)payView {
     if (!_payView) {
-        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.open]];
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.price]];
         _payView.delegate = self;
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;

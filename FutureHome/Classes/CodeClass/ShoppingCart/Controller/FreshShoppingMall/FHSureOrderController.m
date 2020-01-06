@@ -49,6 +49,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.wuType = @"0";
+    self.payType = 0;
     self.isSelectBtn = NO;
     [self fh_creatNav];
     [self creatBottomBtn];
@@ -111,6 +113,30 @@
 
 /** 新增的 */
 - (void)surePayClick {
+    if ([self.wuType isEqualToString:@"0"]) {
+        [self.view makeToast:@"请选择物流方式"];
+        return;
+    }
+    if ([self.wuType isEqualToString:@"1"] || [self.wuType isEqualToString:@"3"]) {
+        if ([self.addressLabel.text isEqualToString:@"请选择收货地址 >"]) {
+            [self.view makeToast:@"请选择收货地址"];
+            return;
+        }
+    }
+    if (self.payType == 0) {
+        [self.view makeToast:@"请选择支付方式"];
+        return;
+    }
+    /** 先加一个弹框提示 */
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"请检查数据是否有误,点击确定数据提交!" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitSureOrderRequest];
+        }
+    }];
+}
+
+- (void)commitSureOrderRequest {
     NSMutableArray *newGoodsArr = [[NSMutableArray alloc] init];
     for (GNRGoodsModel *model in [SingleManager shareManager].goodsArrs) {
         NSMutableDictionary *goodsDic = [[NSMutableDictionary alloc] init];

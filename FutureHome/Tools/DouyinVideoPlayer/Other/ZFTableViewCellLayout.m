@@ -90,6 +90,7 @@
         videoHeight = [UIScreen mainScreen].bounds.size.width * self.data.video_height/self.data.video_width;
     }
     return videoHeight;
+    NSLog(@"视频高度为---------------%f",videoHeight);
 }
 
 @end

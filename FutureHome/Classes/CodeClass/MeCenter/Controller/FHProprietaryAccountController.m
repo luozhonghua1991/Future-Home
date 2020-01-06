@@ -13,8 +13,17 @@
 #import "FHUserAgreementView.h"
 #import "FHDetailAddressView.h"
 #import "FHProofOfOwnershipView.h"
+#import "NSArray+JSON.h"
+#import "FHAddressPickerView.h"
+#import "FHCommonALiPayTool.h"
+#import "WXApi.h"
+#import "FHCommonPaySelectView.h"
+#import "FHAppDelegate.h"
+#import "FHWebViewController.h"
+#import "LeoPayManager.h"
 
-@interface FHProprietaryAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate>
+@interface FHProprietaryAccountController () <UITextFieldDelegate,UIScrollViewDelegate,FHCertificationImgViewDelegate,FHUserAgreementViewDelegate,UIImagePickerControllerDelegate,
+UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 账户类型View */
@@ -27,6 +36,12 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *serviceDeskView;
 /** 服务平台TF */
 @property (nonatomic, strong) UITextField *serviceDeskNameTF;
+/** 小区名称View */
+@property (nonatomic, strong) FHAccountApplicationTFView *cellNameView;
+/** 管理员名称View */
+@property (nonatomic, strong) FHAccountApplicationTFView *managerNameView;
+/**管理员身份证*/
+@property (nonatomic, strong) FHAccountApplicationTFView *managerCardView;
 
 ///** 申请人姓名View */
 //@property (nonatomic, strong) FHAccountApplicationTFView *applicantNameView;
@@ -97,12 +112,47 @@
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
 
+/** 省的ID */
+@property (nonatomic, copy) NSString *province_id;
+/** 市的ID */
+@property (nonatomic, copy) NSString *city_id;
+/** 区的ID */
+@property (nonatomic, copy) NSString *area_id;
+/** 选择的是第几个 */
+@property (nonatomic, assign) NSInteger selectIndex;
+/** 选择的是哪个用户的 */
+@property (nonatomic, assign) NSInteger selectTag;
+/** 选择的ID cards 图片数组 */
+@property (nonatomic, strong) NSMutableArray *selectIDCardsImgArrs;
+
+@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
+
+@property (nonatomic, strong) FHCommonPaySelectView *payView;
+/** 1支付宝  2 微信 */
+@property (nonatomic, assign) NSInteger payType;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectCount;
+/** 用户名字 */
+@property (nonatomic, strong) NSMutableArray *personNameArrs;
+/** 身份证 */
+@property (nonatomic, strong) NSMutableArray *idNumberArrs;
+/** 手机号 */
+@property (nonatomic, strong) NSMutableArray *phoneNumberArrs;
+/** 房间号 */
+@property (nonatomic, strong) NSMutableArray *houseNumberArrs;
+
 @end
 
 @implementation FHProprietaryAccountController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.personNameArrs = [[NSMutableArray alloc] init];
+    self.idNumberArrs = [[NSMutableArray alloc] init];
+    self.phoneNumberArrs = [[NSMutableArray alloc] init];
+    self.houseNumberArrs = [[NSMutableArray alloc] init];
+    self.selectCount = 0;
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -159,17 +209,14 @@
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
     
-//    [self.scrollView addSubview:self.accountTypeView];
     [self.scrollView addSubview:self.normalBlueBtn];
     
     [self.scrollView addSubview:self.personServiceDeskView];
     [self.scrollView addSubview:self.serviceDeskView];
     [self.serviceDeskView addSubview:self.serviceDeskNameTF];
-    
-//    [self.scrollView addSubview:self.applicantNameView];
-//    [self.scrollView addSubview:self.applicantCardView];
-//    [self.scrollView addSubview:self.phoneNumberView];
-    
+    [self.scrollView addSubview:self.cellNameView];
+    [self.scrollView addSubview:self.managerNameView];
+    [self.scrollView addSubview:self.managerCardView];
     [self fh_creatDetailAddressView];
     
     [self.scrollView addSubview:self.addressView];
@@ -184,6 +231,7 @@
     /** 业主1申请人身份证 */
     self.person1CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
     self.person1CertificationView.delegate = self;
+    self.person1CertificationView.tag = 1;
     [self.person1ApplicationCodeView addSubview:self.person1CertificationView];
     [self.scrollView addSubview:self.person1ApplicationCodeView];
     
@@ -195,6 +243,7 @@
     /** 业主2申请人身份证 */
     self.person2CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
     self.person2CertificationView.delegate = self;
+    self.person2CertificationView.tag = 2;
     [self.person2ApplicationCodeView addSubview:self.person2CertificationView];
     [self.scrollView addSubview:self.person2ApplicationCodeView];
     
@@ -206,12 +255,53 @@
     /** 业主3申请人身份证 */
     self.person3CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
     self.person3CertificationView.delegate = self;
+    self.person3CertificationView.tag = 3;
     [self.person3ApplicationCodeView addSubview:self.person3CertificationView];
     [self.scrollView addSubview:self.person3ApplicationCodeView];
 //    /** 确定授权View */
     [self.scrollView addSubview:self.agreementView];
 //    /** 确认并提交按钮 */
     [self.scrollView addSubview:self.submitBtn];
+    
+    
+    @weakify(self)
+    //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
+    _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+    //默认为NO
+    //_addressPickerView.showLastSelect = YES;
+    _addressPickerView.cancelBtnBlock = ^() {
+        @strongify(self)
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
+    _addressPickerView.sureBtnBlock = ^(NSString *province,
+                                        NSString *city,
+                                        NSString *district,
+                                        NSString *addressCode,
+                                        NSString *parentCode,
+                                        NSString *provienceCode) {
+        //返回过来的信息在后面的这四个参数中,使用的时候要做非空判断,(province和addressCode为必返回参数,可以不做非空判断)
+        @strongify(self)
+        NSString *showString;
+        if (city != nil) {
+            showString = [NSString stringWithFormat:@"%@",city];
+        }else{
+            showString = province;
+        }
+        
+        if (district != nil) {
+            showString = [NSString stringWithFormat:@"%@%@", showString, district];
+        }
+        
+        self.detailAddressView.leftProvinceDataLabel.text = province;
+        self.detailAddressView.centerProvinceDataLabel.text = city;
+        self.detailAddressView.rightProvinceDataLabel.text = district;
+        self.province_id = provienceCode;
+        self.city_id = parentCode;
+        self.area_id = addressCode;
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
 }
 
 
@@ -219,12 +309,14 @@
 - (void)fh_layoutSubViews {
     CGFloat commonCellHeight = 50.0f;
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
-//    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
     self.normalBlueBtn.frame = CGRectMake(0, 0, SCREEN_WIDTH, commonCellHeight);
     self.personServiceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.normalBlueBtn.frame), SCREEN_WIDTH, commonCellHeight);
     self.serviceDeskView.frame = CGRectMake(0, CGRectGetMaxY(self.personServiceDeskView.frame), SCREEN_WIDTH, commonCellHeight);
     self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
-    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.cellNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.managerNameView.frame = CGRectMake(0, CGRectGetMaxY(self.cellNameView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.managerCardView.frame = CGRectMake(0, CGRectGetMaxY(self.managerNameView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.managerCardView.frame), SCREEN_WIDTH, commonCellHeight);
     self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, commonCellHeight);
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame), SCREEN_WIDTH, commonCellHeight);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, commonCellHeight);
@@ -284,16 +376,309 @@
 #pragma mark — event
 /** 地址选择 */
 - (void)addressClick {
+    [self.managerCardView.contentTF resignFirstResponder];
+     [self.addressPickerView showInView:self.view];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField == self.person1NameView.contentTF) {
+        [self.personNameArrs addObject:self.person1NameView.contentTF.text];
+    } else if (textField == self.person2NameView.contentTF) {
+        [self.personNameArrs addObject:self.person2NameView.contentTF.text];
+    }else if (textField == self.person3NameView.contentTF) {
+        [self.personNameArrs addObject:self.person3NameView.contentTF.text];
+    }
+    if (textField == self.person1CodeView.contentTF) {
+        [self.idNumberArrs addObject:self.person1CodeView.contentTF.text];
+    } else if (textField == self.person2CodeView.contentTF) {
+        [self.idNumberArrs addObject:self.person2CodeView.contentTF.text];
+    }else if (textField == self.person3CodeView.contentTF) {
+        [self.idNumberArrs addObject:self.person3CodeView.contentTF.text];
+    }
+    if (textField == self.person1PhoneView.contentTF) {
+        [self.phoneNumberArrs addObject:self.person1PhoneView.contentTF.text];
+    } else if (textField == self.person2PhoneView.contentTF) {
+        [self.phoneNumberArrs addObject:self.person2PhoneView.contentTF.text];
+    }else if (textField == self.person3PhoneView.contentTF) {
+        [self.phoneNumberArrs addObject:self.person3PhoneView.contentTF.text];
+    }
+    if (textField == self.person1HourseNumberView.contentTF) {
+        [self.houseNumberArrs addObject:self.person1HourseNumberView.contentTF.text];
+    } else if (textField == self.person2HourseNumberView.contentTF) {
+        [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
+    }else if (textField == self.person3HourseNumberView.contentTF) {
+        [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
+    }
+}
+
+- (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index view:(nonnull UIView *)view {
+    [self.person1HourseNumberView.contentTF resignFirstResponder];
+    [self.person2HourseNumberView.contentTF resignFirstResponder];
+    [self.person3HourseNumberView.contentTF resignFirstResponder];
+    /** 选取图片 */
+    self.selectTag = view.tag;
+    self.selectIndex = index;
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
+#pragma mark - <FDActionSheetDelegate>
+- (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex)
+    {
+        case 0:
+        {
+            [self addCamera];
+            break;
+        }
+        case 1:
+        {
+            [self addPhotoClick];
+            break;
+        }
+        case 2:
+        {
+            ZHLog(@"取消");
+            break;
+        }
+        default:
+            
+            break;
+    }
+}
+
+//调用系统相机
+- (void)addCamera {
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        UIImagePickerController * cameraPicker = [[UIImagePickerController alloc]init];
+        cameraPicker.delegate = self;
+        cameraPicker.allowsEditing = NO;  //是否可编辑
+        //摄像头
+        cameraPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:cameraPicker animated:YES completion:nil];
+    }
+}
+
+/**
+ *  跳转相册页面
+ */
+- (void)addPhotoClick {
+    TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:1 delegate:self];
+    imagePickerVc.showSelectBtn = YES;
+    imagePickerVc.naviBgColor = HEX_COLOR(0x1296db);
+    // You can get the photos by block, the same as by delegate.
+    // 你可以通过block或者代理，来得到用户选择的照片.
+    [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets, BOOL isSelectOriginalPhoto) {
+        for (UIImage *image in photos) {
+            if (self.selectTag == 1) {
+                if (self.selectIndex == 1) {
+                    self.person1CertificationView.leftImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                } else if (self.selectIndex == 2) {
+                    self.person1CertificationView.centerImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                } else {
+                    self.person1CertificationView.rightImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                }
+            } else if (self.selectTag == 2) {
+                if (self.selectIndex == 1) {
+                    self.person2CertificationView.leftImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                } else if (self.selectIndex == 2) {
+                    self.person2CertificationView.centerImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                } else {
+                    self.person2CertificationView.rightImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                }
+            } else {
+                if (self.selectIndex == 1) {
+                    self.person3CertificationView.leftImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                } else if (self.selectIndex == 2) {
+                    self.person3CertificationView.centerImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                } else {
+                    self.person3CertificationView.rightImgView.image = image;
+                    [self.selectIDCardsImgArrs addObject:image];
+                }
+            }
+        }
+    }];
+    [self presentViewController:imagePickerVc animated:YES completion:nil];
+}
+
+#pragma mark - <相册处理区域>
+/**
+ *  拍摄完成后要执行的方法
+ */
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+    if (self.selectTag == 1) {
+        if (self.selectIndex == 1) {
+            self.person1CertificationView.leftImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        } else if (self.selectIndex == 2) {
+            self.person1CertificationView.centerImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        } else {
+            self.person1CertificationView.rightImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        }
+    } else if (self.selectTag == 2) {
+        if (self.selectIndex == 1) {
+            self.person2CertificationView.leftImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        } else if (self.selectIndex == 2) {
+            self.person2CertificationView.centerImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        } else {
+            self.person2CertificationView.rightImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        }
+    } else {
+        if (self.selectIndex == 1) {
+            self.person3CertificationView.leftImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        } else if (self.selectIndex == 2) {
+            self.person3CertificationView.centerImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        } else {
+            self.person3CertificationView.rightImgView.image = image;
+            [self.selectIDCardsImgArrs addObject:image];
+        }
+    }
+    [picker dismissViewControllerAnimated:YES completion:nil];
     
 }
 
-- (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
-    
+
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = self.protocol;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
 }
+
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
+}
+
 
 - (void)submitBtnClick {
     /** 确认并提交 */
+    if (self.selectCount % 2 == 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
+        return;
+    }
+    /** 先加一个弹框提示 */
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf payView];
+            weakSelf.submitBtn.userInteractionEnabled = NO;
+            [weakSelf showPayView];
+        }
+    }];
+}
+
+- (void)commitAccountDataRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *person_name = [self.personNameArrs componentsJoinedByString:@","];
+    NSString *id_number = [self.idNumberArrs componentsJoinedByString:@","];
+    NSString *person_mobile = [self.phoneNumberArrs componentsJoinedByString:@","];
+    NSString *house_num = [self.houseNumberArrs componentsJoinedByString:@","];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.personServiceDeskView.contentTF.text,@"property_name",
+                               self.serviceDeskNameTF.text,@"owner_name",
+                               self.cellNameView.contentTF.text,@"cell_name",
+                               self.managerNameView.contentTF.text,@"applyname",
+                               self.managerCardView.contentTF.text,@"idcard",
+                               self.province_id,@"province_id",
+//                               self.city_id,@"city_id",
+                               self.area_id,@"area_id",
+                               self.addressView.contentTF.text,@"detailedaddress",
+                               self.phoneView.contentTF.text,@"phone",
+                               self.mailView.contentTF.text,@"email",
+                               self.price,@"total",
+                               @(self.payType),@"type",
+                               @"2",@"ordertype",
+                               self.selectIDCardsImgArrs,@"file[]",
+                               person_name,@"person_name",
+                               id_number,@"id_number",
+                               person_mobile,@"person_mobile",
+                               house_num,@"house_num",
+                               nil];
     
+    [AFNetWorkTool uploadImagesWithUrl:@"owner/applyAccount" parameters:paramsDic image:self.selectIDCardsImgArrs otherImage:[NSArray new] success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 账户资料传给后台成功 */
+            
+            /** 选择支付方式 */
+            //            [WXApi sendReq:[PayReq new] completion:^(BOOL success) {
+            //
+            //            }];
+            //            // 判断手机有没有微信
+            //            if ([WXApi isWXAppInstalled]) {
+            //                //                wechatButton.hidden = NO;
+            //            }else{
+            //                //                wechatButton.hidden = YES;
+            //            }
+            
+            LeoPayManager *manager = [LeoPayManager getInstance];
+            [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                if (respCode == 0) {
+                    /** 支付成功 */
+                    WS(weakSelf);
+                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                        if (buttonIndex == 0) {
+                            [weakSelf.navigationController popViewControllerAnimated:YES];
+                        }
+                    }];
+                } else if (respCode == -2) {
+                    [self.view makeToast:respMsg];
+                }
+            }];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    self.payType = selectType;
+    [self commitAccountDataRequest];
+}
+
+
+#pragma mark - 显示支付弹窗
+- (void)showPayView{
+    __weak FHProprietaryAccountController *weakSelf = self;
+    self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [weakSelf.payView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        weakSelf.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        self.submitBtn.userInteractionEnabled = YES;
+    }];
 }
 
 
@@ -349,16 +734,45 @@
         _serviceDeskNameTF = [[UITextField alloc] init];
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
-        _serviceDeskNameTF.text = @"龙湖U城B馆物业服务平台";
+        _serviceDeskNameTF.text = @"";
         _serviceDeskNameTF.placeholder = @"(限12字)";
     }
     return _serviceDeskNameTF;
 }
 
+- (FHAccountApplicationTFView *)cellNameView {
+    if (!_cellNameView) {
+        _cellNameView = [[FHAccountApplicationTFView alloc] init];
+        _cellNameView.titleLabel.text = @"小区名称";
+        _cellNameView.contentTF.placeholder = @"(限12字)";
+    }
+    return _cellNameView;
+}
+
+- (FHAccountApplicationTFView *)managerNameView {
+    if (!_managerNameView) {
+        _managerNameView = [[FHAccountApplicationTFView alloc] init];
+        _managerNameView.titleLabel.text = @"管理员姓名";
+        _managerNameView.contentTF.delegate = self;
+        _managerNameView.contentTF.placeholder = @"请输入管理员姓名";
+    }
+    return _managerNameView;
+}
+
+- (FHAccountApplicationTFView *)managerCardView {
+    if (!_managerCardView) {
+        _managerCardView = [[FHAccountApplicationTFView alloc] init];
+        _managerCardView.titleLabel.text = @"管理员证件";
+        _managerCardView.contentTF.delegate = self;
+        _managerCardView.contentTF.placeholder = @"请输入管理员身份证号码";
+    }
+    return _managerCardView;
+}
+
 - (FHAccountApplicationTFView *)phoneView {
     if (!_phoneView) {
         _phoneView = [[FHAccountApplicationTFView alloc] init];
-        _phoneView.titleLabel.text = @"主要联系电话";
+        _phoneView.titleLabel.text = @"管理员电话";
         _phoneView.contentTF.delegate = self;
         _phoneView.contentTF.placeholder = @"(手机)";
     }
@@ -368,7 +782,7 @@
 - (FHAccountApplicationTFView *)mailView {
     if (!_mailView) {
         _mailView = [[FHAccountApplicationTFView alloc] init];
-        _mailView.titleLabel.text = @"账号接收邮箱";
+        _mailView.titleLabel.text = @"管理员邮箱";
         _mailView.contentTF.delegate = self;
         _mailView.contentTF.placeholder = @"非常重要用于接收账号登录信息";
     }
@@ -575,6 +989,17 @@
     return _submitBtn;
 }
 
+
+- (FHCommonPaySelectView *)payView {
+    if (!_payView) {
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.price]];
+        _payView.delegate = self;
+    }
+    FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:_payView];
+    
+    return _payView;
+}
 
 
 @end

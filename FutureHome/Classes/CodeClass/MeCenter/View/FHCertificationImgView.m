@@ -69,6 +69,9 @@
     if (_delegate != nil && [_delegate respondsToSelector:@selector(FHCertificationImgViewDelegateSelectIndex:)]) {
         [_delegate FHCertificationImgViewDelegateSelectIndex:recognizer.view.tag];
     }
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(FHCertificationImgViewDelegateSelectIndex:view:)]) {
+        [_delegate FHCertificationImgViewDelegateSelectIndex:recognizer.view.tag view:self];
+    }
 }
 
 #pragma mark — setter && getter

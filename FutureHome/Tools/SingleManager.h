@@ -34,8 +34,8 @@
 @property (nonatomic,assign) BOOL isVideo;
 /** 是否是断点续传状态 */
 @property (nonatomic,assign) BOOL isResumableUpload;
-/** 是否是手机网络 */
-@property (nonatomic,assign) BOOL isIphone4G;
+/** 没有联网 */
+@property (nonatomic,assign) BOOL isNoConnect;
 /** 聊天背景图 */
 @property (nonatomic,copy) NSString  *chatBgURL;
 

@@ -72,7 +72,7 @@
     if (!_contentLabel) {
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textAlignment = NSTextAlignmentLeft;
-        _contentLabel.font = [UIFont systemFontOfSize:14];
+        _contentLabel.font = [UIFont boldSystemFontOfSize:16];
         _contentLabel.textColor = [UIColor blackColor];
         _contentLabel.numberOfLines = 0;
 #warning message

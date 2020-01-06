@@ -84,17 +84,6 @@
     } failure:^(NSError *error) {
 
     }];
-    
-//    if (!_categoryArr) {
-//
-//        NSArray *numArr = @[@"一",@"二",@"三",@"四",@"五",@"六",@"七",@"八",@"九",@"十",@"十一",@"十二",@"十三",@"十四",@"十五",@"十六",@"十七",@"十八",@"十九",@"二十"];
-//        NSMutableArray *tmpArr = [NSMutableArray array];
-//        for (int i = 0; i < 20; i++) {
-//            NSString *tmpStr = [NSString stringWithFormat:@"第%@类", numArr[i]];
-//            [tmpArr addObject:tmpStr];
-//        }
-//        _categoryArr = tmpArr;
-//    }
 }
 
 - (void)createTableView {
@@ -173,17 +162,6 @@
         [_productsVC resreshDataWithPid:model.category_id];
     }
 }
-
-//#pragma mark - ProductsDelegate
-//- (void)willDisplayHeaderView:(NSInteger)section {
-//
-//    [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-//}
-//
-//- (void)didEndDisplayingHeaderView:(NSInteger)section {
-//
-//    [self.categoryTableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:section + 1 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

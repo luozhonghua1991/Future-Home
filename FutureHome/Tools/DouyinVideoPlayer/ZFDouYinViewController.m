@@ -355,13 +355,15 @@ static NSString *kIdentifier = @"kIdentifier";
 - (void)playTheVideoAtIndexPath:(NSIndexPath *)indexPath scrollToTop:(BOOL)scrollToTop {
     [self.player playTheIndexPath:indexPath scrollToTop:scrollToTop];
     [self.controlView resetControlView];
-    ZFTableData *data = self.dataSource[indexPath.row];
-    UIViewContentMode imageMode;
-    if (data.thumbnail_width >= data.thumbnail_height) {
-        imageMode = UIViewContentModeScaleAspectFit;
-    } else {
-        imageMode = UIViewContentModeScaleAspectFill;
-    }
+    
+//    ZFTableData *data = self.dataSource[indexPath.row];
+//    UIViewContentMode imageMode;
+//    if (data.video_width >= data.video_height) {
+//        imageMode = UIViewContentModeScaleAspectFit;
+//    } else {
+//        imageMode = UIViewContentModeScaleAspectFill;
+//    }
+    
 //    [self.controlView showCoverViewWithUrl:data.thumbnail_url withImageMode:imageMode];
     
 }

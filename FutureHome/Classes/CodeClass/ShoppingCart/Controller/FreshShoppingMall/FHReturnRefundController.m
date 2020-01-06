@@ -34,6 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.type = 0;
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -104,6 +105,14 @@
 }
 
 - (void)sureBtnClick {
+    if (self.type == 0) {
+        [self.view makeToast:@"请选择退货类型"];
+        return;
+    }
+    if (self.businessDescriptionTextView.text.length <= 0) {
+        [self.view makeToast:@"请输入退还原因"];
+        return;
+    }
     //显示加载视图
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
@@ -135,6 +144,7 @@
     } failure:^(NSError *error) {
         [self.lodingHud hideAnimated:YES];
         self.lodingHud = nil;
+        [weakSelf.view makeToast:@"服务器加载异常"];
     }];
 }
 

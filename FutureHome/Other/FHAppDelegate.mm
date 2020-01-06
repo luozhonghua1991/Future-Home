@@ -44,7 +44,6 @@ RCIMGroupInfoDataSource
     pSelf = self;
     self.allFriendArrs = [[NSMutableArray alloc] init];
     [WXApi registerApp:@"wx73519589eb9e4996" universalLink:@""];
-    [self checkNetWork];
     
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUDAPPKEY];
     [RCIM sharedRCIM].connectionStatusDelegate = self;
@@ -69,6 +68,7 @@ RCIMGroupInfoDataSource
         [FHLoginTool fh_makePersonToLoging];
     }
     [self setTabBarController];
+    [self checkNetWork];
     return YES;
 }
 
@@ -291,33 +291,36 @@ RCIMGroupInfoDataSource
 
 - (void)checkNetWork {
     AFNetworkReachabilityManager *mger = [AFNetworkReachabilityManager sharedManager];
+    [mger startMonitoring];
     [mger setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         switch (status) {
             case AFNetworkReachabilityStatusUnknown:
-                [SingleManager shareManager].isIphone4G = NO;
+                [SingleManager shareManager].isNoConnect = YES;
                 ZHLog(@"未知网络");
                 break;
             case AFNetworkReachabilityStatusNotReachable:
             {
-                [SingleManager shareManager].isIphone4G = NO;
+                [SingleManager shareManager].isNoConnect = YES;
                 ZHLog(@"没有网络");
                 break;
             }
             case AFNetworkReachabilityStatusReachableViaWWAN: {
-                [SingleManager shareManager].isIphone4G = YES;
                 ZHLog(@"手机自带网络");
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"fefreshBanner" object:nil];
+                
+                if ([SingleManager shareManager].isNoConnect) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"fefreshBanner" object:nil];
+                }
                 break;
             }
             default:AFNetworkReachabilityStatusReachableViaWiFi: {
-                [SingleManager shareManager].isIphone4G = NO;
                 ZHLog(@"wifi");
-                 [[NSNotificationCenter defaultCenter] postNotificationName:@"fefreshBanner" object:nil];
+                if ([SingleManager shareManager].isNoConnect) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"fefreshBanner" object:nil];
+                }
                 break;
             }
         }
     }];
-    [mger startMonitoring];
 }
 
 @end

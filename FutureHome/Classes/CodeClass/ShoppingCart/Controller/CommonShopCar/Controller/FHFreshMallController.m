@@ -122,7 +122,6 @@
     UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 34.5, SCREEN_WIDTH, 0.5)];
     bottomLine.backgroundColor = [UIColor lightGrayColor];
     [self.tabBar addSubview:bottomLine];
-    [self initViewControllers];
 }
 
 #pragma mark — privite
@@ -183,6 +182,7 @@
         
         [titleView addSubview:self.codeImgView];
     }
+    
     self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
@@ -199,6 +199,7 @@
             weakSelf.lat = [dic[@"lat"] floatValue];
             weakSelf.lng = [dic[@"lng"] floatValue];
             [SingleManager shareManager].shopName = dic[@"shopname"];
+            [self initViewControllers];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -417,32 +418,33 @@
     hotVC.shopID = self.shopID;
     hotVC.videoListDataArrs = self.videosListArrs;
     
-    Account *account = [AccountStorage readAccount];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @"3",@"type", nil];
-    [AFNetWorkTool get:@"service/index" params:paramsDic success:^(id responseObj) {
-        if ([responseObj[@"code"] integerValue] == 1) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.conversationVC = [[FHCustomerServiceCommitController alloc] init];
-                self.conversationVC.conversationType = ConversationType_PRIVATE;
-                self.conversationVC.targetId = responseObj[@"data"][@"username"];
-                self.conversationVC.yp_tabItemTitle = @"对话记录";
+    self.conversationVC = [[FHCustomerServiceCommitController alloc] init];
+    self.conversationVC.conversationType = ConversationType_PRIVATE;
+    self.conversationVC.targetId = self.username;
+    self.conversationVC.yp_tabItemTitle = @"对话记录";
+    
+    self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,self.conversationVC, nil];
+    
+//    Account *account = [AccountStorage readAccount];
+//    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                               @(account.user_id),@"user_id",
+//                               @"3",@"type", nil];
+//    [AFNetWorkTool get:@"service/index" params:paramsDic success:^(id responseObj) {
+//        if ([responseObj[@"code"] integerValue] == 1) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
                 
-                self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,self.conversationVC, nil];
-                
-                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
-                userInfo.userId = responseObj[@"data"][@"username"];
-                userInfo.name = responseObj[@"data"][@"nickname"];
-                userInfo.portraitUri = responseObj[@"data"][@"avatar"];
-                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
-            });
-        } else {
-            [self.view makeToast:responseObj[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        
-    }];
+//                RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+//                userInfo.userId = responseObj[@"data"][@"username"];
+//                userInfo.name = responseObj[@"data"][@"nickname"];
+//                userInfo.portraitUri = responseObj[@"data"][@"avatar"];
+//                [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
+//            });
+//        } else {
+//            [self.view makeToast:responseObj[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//    }];
 }
 
 

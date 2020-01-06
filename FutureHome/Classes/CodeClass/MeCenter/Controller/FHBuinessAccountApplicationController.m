@@ -359,13 +359,32 @@
     
 }
 
+
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = self.protocol;
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
+}
+
 - (void)submitBtnClick {
     /** 确认并提交 */
-    if (self.selectIDCardsImgArrs.count != 3) {
-        [self.view makeToast:@"身份证信息认证不能为空"];
-        return;
-    }
-    if (self.selectCount % 2 != 0) {
+//    if (self.selectIDCardsImgArrs.count != 3) {
+//        [self.view makeToast:@"身份证信息认证不能为空"];
+//        return;
+//    }
+    if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
@@ -386,16 +405,16 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.serviceDeskNameTF.text,@"shopname",
+                               self.serviceDeskNameTF.text,@"name",
                                self.province_id,@"province_id",
                                self.city_id,@"city_id",
                                self.area_id,@"area_id",
-                               self.applicantNameView.contentTF.text,@"name",
+                               self.applicantNameView.contentTF.text,@"applyname",
                                self.applicantCardView.contentTF.text,@"idcard",
                                self.phoneNumberView.contentTF.text,@"phone",
-                               self.phoneView.contentTF.text,@"shopmobile",
+                               self.phoneView.contentTF.text,@"mobile",
                                self.mailView.contentTF.text,@"email",
-                               self.addressView.contentTF.text,@"streetaddress",
+                               self.addressView.contentTF.text,@"detailedaddress",
                                self.price,@"total",
                                @(self.payType),@"type",
                                @"1",@"ordertype",
@@ -403,7 +422,7 @@
                                [self getSmallImageArray],@"file[]",
                                nil];
     
-    [AFNetWorkTool uploadImagesWithUrl:@"shop/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
+    [AFNetWorkTool uploadImagesWithUrl:@"property/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             /** 账户资料传给后台成功 */
             
@@ -626,7 +645,7 @@
 
 - (FHCommonPaySelectView *)payView {
     if (!_payView) {
-        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.open]];
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.price]];
         _payView.delegate = self;
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
