@@ -131,6 +131,7 @@
     FHInformationModel *infoModel = self.informationArrs[indexPath.row];
     FHWebViewController *web = [[FHWebViewController alloc] init];
     Account *account = [AccountStorage readAccount];
+    web.typeString = @"information";
     web.urlString = [NSString stringWithFormat:@"%@?id=%@&userid=%ld",infoModel.singpage,infoModel.id,(long)account.user_id];
     web.titleString = self.shopName;
     web.hidesBottomBarWhenPushed = YES;

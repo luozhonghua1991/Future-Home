@@ -715,7 +715,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _personServiceDeskView = [[FHAccountApplicationTFView alloc] init];
         _personServiceDeskView.titleLabel.text = @"业主服务平台名称";
         _personServiceDeskView.contentTF.text = @"";
-        _personServiceDeskView.contentTF.placeholder = @"(限12字)";
+        _personServiceDeskView.contentTF.placeholder = @"请输入业主服务平台名称(限12字)";
     }
     return _personServiceDeskView;
 }
@@ -735,7 +735,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"(限12字)";
+        _serviceDeskNameTF.placeholder = @"请输入物业服务平台名称(限12字)";
     }
     return _serviceDeskNameTF;
 }
@@ -744,7 +744,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     if (!_cellNameView) {
         _cellNameView = [[FHAccountApplicationTFView alloc] init];
         _cellNameView.titleLabel.text = @"小区名称";
-        _cellNameView.contentTF.placeholder = @"(限12字)";
+        _cellNameView.contentTF.placeholder = @"请输入小区名称(限12字)";
     }
     return _cellNameView;
 }
@@ -784,7 +784,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _mailView = [[FHAccountApplicationTFView alloc] init];
         _mailView.titleLabel.text = @"管理员邮箱";
         _mailView.contentTF.delegate = self;
-        _mailView.contentTF.placeholder = @"非常重要用于接收账号登录信息";
+        _mailView.contentTF.placeholder = @"请输入管理员邮箱";
     }
     return _mailView;
 }
@@ -794,7 +794,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _addressView = [[FHAccountApplicationTFView alloc] init];
         _addressView.titleLabel.text = @"街道地址";
         _addressView.contentTF.delegate = self;
-        _addressView.contentTF.placeholder = @"(准确到门牌号)";
+        _addressView.contentTF.placeholder = @"请输入街道地址(准确到门牌号)";
     }
     return _addressView;
 }
@@ -832,8 +832,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person1NameView {
     if (!_person1NameView) {
         _person1NameView = [[FHAccountApplicationTFView alloc] init];
-        _person1NameView.titleLabel.text = @"业主1姓名";
+        _person1NameView.titleLabel.text = @"真实姓名";
         _person1NameView.contentTF.delegate = self;
+        _person1NameView.contentTF.placeholder = @"请输入真实姓名";
     }
     return _person1NameView;
 }
@@ -841,8 +842,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person1CodeView {
     if (!_person1CodeView) {
         _person1CodeView = [[FHAccountApplicationTFView alloc] init];
-        _person1CodeView.titleLabel.text = @"业主1身份证";
+        _person1CodeView.titleLabel.text = @"身份证号";
         _person1CodeView.contentTF.delegate = self;
+        _person1CodeView.contentTF.placeholder = @"请输入身份证号";
     }
     return _person1CodeView;
 }
@@ -850,9 +852,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person1PhoneView {
     if (!_person1PhoneView) {
         _person1PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person1PhoneView.titleLabel.text = @"业主1联系电话";
+        _person1PhoneView.titleLabel.text = @"手机号码";
         _person1PhoneView.contentTF.delegate = self;
-        _person1PhoneView.contentTF.placeholder = @"(电话)";
+        _person1PhoneView.contentTF.placeholder = @"请输入手机号码";
         
     }
     return _person1PhoneView;
@@ -861,9 +863,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person1HourseNumberView {
     if (!_person1HourseNumberView) {
         _person1HourseNumberView = [[FHAccountApplicationTFView alloc] init];
-        _person1HourseNumberView.titleLabel.text = @"业主1房号";
+        _person1HourseNumberView.titleLabel.text = @"业主房号";
         _person1HourseNumberView.contentTF.delegate = self;
         _person1HourseNumberView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
+        _person1HourseNumberView.contentTF.placeholder = @"请输入业主房号";
     }
     return _person1HourseNumberView;
 }
@@ -871,7 +874,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHPersonCodeView *)person1ApplicationCodeView {
     if (!_person1ApplicationCodeView) {
         _person1ApplicationCodeView = [[FHPersonCodeView alloc] init];
-        _person1ApplicationCodeView.titleLabel.text = @"业主1申请人身份证";
+        _person1ApplicationCodeView.titleLabel.text = @"业主申请人身份证";
     }
     return _person1ApplicationCodeView;
 }
@@ -879,8 +882,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2NameView {
     if (!_person2NameView) {
         _person2NameView = [[FHAccountApplicationTFView alloc] init];
-        _person2NameView.titleLabel.text = @"业主2姓名";
+        _person2NameView.titleLabel.text = @"真实姓名";
         _person2NameView.contentTF.delegate = self;
+        _person2NameView.contentTF.placeholder = @"请输入真实姓名";
     }
     return _person2NameView;
 }
@@ -888,8 +892,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2CodeView {
     if (!_person2CodeView) {
         _person2CodeView = [[FHAccountApplicationTFView alloc] init];
-        _person2CodeView.titleLabel.text = @"业主2身份证";
+        _person2CodeView.titleLabel.text = @"身份证a号";
         _person2CodeView.contentTF.delegate = self;
+        _person2CodeView.contentTF.placeholder = @"请输入身份证号";
     }
     return _person2CodeView;
 }
@@ -897,9 +902,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2PhoneView {
     if (!_person2PhoneView) {
         _person2PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person2PhoneView.titleLabel.text = @"业主2联系电话";
+        _person2PhoneView.titleLabel.text = @"手机号码";
         _person2PhoneView.contentTF.delegate = self;
-        _person2PhoneView.contentTF.placeholder = @"(电话)";
+        _person2PhoneView.contentTF.placeholder = @"请输入手机号码";
         
     }
     return _person2PhoneView;
@@ -908,9 +913,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2HourseNumberView {
     if (!_person2HourseNumberView) {
         _person2HourseNumberView = [[FHAccountApplicationTFView alloc] init];
-        _person2HourseNumberView.titleLabel.text = @"业主2房号";
+        _person2HourseNumberView.titleLabel.text = @"业主房号";
         _person2HourseNumberView.contentTF.delegate = self;
         _person2HourseNumberView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
+        _person2HourseNumberView.contentTF.placeholder = @"请输入业主房号";
     }
     return _person2HourseNumberView;
 }
@@ -918,7 +924,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHPersonCodeView *)person2ApplicationCodeView {
     if (!_person2ApplicationCodeView) {
         _person2ApplicationCodeView = [[FHPersonCodeView alloc] init];
-        _person2ApplicationCodeView.titleLabel.text = @"业主2申请人身份证";
+        _person2ApplicationCodeView.titleLabel.text = @"业主申请人身份证";
     }
     return _person2ApplicationCodeView;
 }
@@ -926,8 +932,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person3NameView {
     if (!_person3NameView) {
         _person3NameView = [[FHAccountApplicationTFView alloc] init];
-        _person3NameView.titleLabel.text = @"业主3姓名";
+        _person3NameView.titleLabel.text = @"真实姓名";
         _person3NameView.contentTF.delegate = self;
+        _person3NameView.contentTF.placeholder = @"请输入真实姓名";
     }
     return _person3NameView;
 }
@@ -935,8 +942,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person3CodeView {
     if (!_person3CodeView) {
         _person3CodeView = [[FHAccountApplicationTFView alloc] init];
-        _person3CodeView.titleLabel.text = @"业主3身份证";
+        _person3CodeView.titleLabel.text = @"身份证号";
         _person3CodeView.contentTF.delegate = self;
+        _person3CodeView.contentTF.placeholder = @"请输入身份证号";
     }
     return _person3CodeView;
 }
@@ -944,9 +952,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person3PhoneView {
     if (!_person3PhoneView) {
         _person3PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person3PhoneView.titleLabel.text = @"业主3联系电话";
+        _person3PhoneView.titleLabel.text = @"手机号码";
         _person3PhoneView.contentTF.delegate = self;
-        _person3PhoneView.contentTF.placeholder = @"(电话)";
+        _person3PhoneView.contentTF.placeholder = @"请输入手机号码";
         
     }
     return _person3PhoneView;
@@ -955,9 +963,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person3HourseNumberView {
     if (!_person3HourseNumberView) {
         _person3HourseNumberView = [[FHAccountApplicationTFView alloc] init];
-        _person3HourseNumberView.titleLabel.text = @"业主3房号";
+        _person3HourseNumberView.titleLabel.text = @"业主房号";
         _person3HourseNumberView.contentTF.delegate = self;
         _person3HourseNumberView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
+        _person3HourseNumberView.contentTF.placeholder = @"请输入业主房号";
     }
     return _person3HourseNumberView;
 }
@@ -965,7 +974,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHPersonCodeView *)person3ApplicationCodeView {
     if (!_person3ApplicationCodeView) {
         _person3ApplicationCodeView = [[FHPersonCodeView alloc] init];
-        _person3ApplicationCodeView.titleLabel.text = @"业主3申请人身份证";
+        _person3ApplicationCodeView.titleLabel.text = @"业主申请人身份证";
     }
     return _person3ApplicationCodeView;
 }

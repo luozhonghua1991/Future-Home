@@ -133,7 +133,9 @@
 
 /** 视频转发 */
 - (void)shareBtnClick {
-    
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZFDouYinCellDelegateShareClick:)]) {
+        [_delegate fh_ZFDouYinCellDelegateShareClick:self.data];
+    }
 }
 
 - (UILabel *)titleLabel {

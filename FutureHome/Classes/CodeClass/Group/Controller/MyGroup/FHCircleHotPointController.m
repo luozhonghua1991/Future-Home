@@ -322,7 +322,7 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @"1",@"type",
+                               @"0",@"type",
                                model.ID,@"pid",
                                @"user_id",@"uid",
                                nil];

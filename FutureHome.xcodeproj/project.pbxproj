@@ -766,6 +766,7 @@
 		4AB2047422F2EAB100111AC4 /* FHLBXScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047322F2EAB100111AC4 /* FHLBXScanViewController.m */; };
 		4AB2047722F2ED2600111AC4 /* FHScanTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047622F2ED2600111AC4 /* FHScanTool.m */; };
 		4AB2047B22F2ED7900111AC4 /* AnalyzPermisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047922F2ED7800111AC4 /* AnalyzPermisViewController.m */; };
+		4AB8CF0323C5D5E50043F65D /* FHSharingDynamicsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8CF0223C5D5E50043F65D /* FHSharingDynamicsController.m */; };
 		4ABA6F4023991B7C0033E71A /* FHReturnRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */; };
 		4ABA6F4323992EC50033E71A /* FHGoodsCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */; };
 		4ABBFF3423A484E4004FBBDE /* FHCreatGroupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABBFF3323A484E4004FBBDE /* FHCreatGroupController.m */; };
@@ -844,6 +845,7 @@
 		4AD5CCE6233212B700066726 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD5CCE0233212B700066726 /* SDBrowserImageView.m */; };
 		4AD8916D22E9B6D1000FB415 /* FHPrivacySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD8916C22E9B6D1000FB415 /* FHPrivacySettingsController.m */; };
 		4ADCE0F7233391C5008A12C4 /* FHCommitDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCE0F6233391C5008A12C4 /* FHCommitDetailController.m */; };
+		4ADF1D1E23C4A03300A5740B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */; };
 		4AE7A81B22F7CA4100910C08 /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A80F22F7CA4000910C08 /* UIView+PYExtension.m */; };
 		4AE7A81C22F7CA4100910C08 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A81022F7CA4000910C08 /* PYSearchViewController.m */; };
 		4AE7A81D22F7CA4100910C08 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A81122F7CA4000910C08 /* PYSearchSuggestionViewController.m */; };
@@ -2541,6 +2543,8 @@
 		4AB2047622F2ED2600111AC4 /* FHScanTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanTool.m; sourceTree = "<group>"; };
 		4AB2047922F2ED7800111AC4 /* AnalyzPermisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyzPermisViewController.m; sourceTree = "<group>"; };
 		4AB2047A22F2ED7800111AC4 /* AnalyzPermisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyzPermisViewController.h; sourceTree = "<group>"; };
+		4AB8CF0123C5D5E50043F65D /* FHSharingDynamicsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSharingDynamicsController.h; sourceTree = "<group>"; };
+		4AB8CF0223C5D5E50043F65D /* FHSharingDynamicsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSharingDynamicsController.m; sourceTree = "<group>"; };
 		4ABA6F3E23991B7C0033E71A /* FHReturnRefundController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHReturnRefundController.h; sourceTree = "<group>"; };
 		4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHReturnRefundController.m; sourceTree = "<group>"; };
 		4ABA6F4123992EC50033E71A /* FHGoodsCommitController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGoodsCommitController.h; sourceTree = "<group>"; };
@@ -2693,6 +2697,7 @@
 		4AD8916C22E9B6D1000FB415 /* FHPrivacySettingsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPrivacySettingsController.m; sourceTree = "<group>"; };
 		4ADCE0F5233391C5008A12C4 /* FHCommitDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommitDetailController.h; sourceTree = "<group>"; };
 		4ADCE0F6233391C5008A12C4 /* FHCommitDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommitDetailController.m; sourceTree = "<group>"; };
+		4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		4AE7A80F22F7CA4000910C08 /* UIView+PYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYExtension.m"; sourceTree = "<group>"; };
 		4AE7A81022F7CA4000910C08 /* PYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchViewController.m; sourceTree = "<group>"; };
 		4AE7A81122F7CA4000910C08 /* PYSearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchSuggestionViewController.m; sourceTree = "<group>"; };
@@ -2861,6 +2866,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ADF1D1E23C4A03300A5740B /* JavaScriptCore.framework in Frameworks */,
 				4A140AE9239E499400130CC9 /* CoreMedia.framework in Frameworks */,
 				4A25D334237A96B30036CD8D /* CoreMotion.framework in Frameworks */,
 				4A140AFB239E4E2300130CC9 /* SafariServices.framework in Frameworks */,
@@ -3058,6 +3064,7 @@
 		4A25D31E237A605A0036CD8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */,
 				4A140AFC239E500B00130CC9 /* libstdc++.tbd */,
 				4A140AFA239E4E2200130CC9 /* SafariServices.framework */,
 				4A140AF8239E4E1C00130CC9 /* Photos.framework */,
@@ -6338,6 +6345,8 @@
 				4A92073523741EFE0091847E /* FHCommonFollowModel.m */,
 				4A920731237408310091847E /* FHCommonFollowAndPlacementCell.h */,
 				4A920732237408310091847E /* FHCommonFollowAndPlacementCell.m */,
+				4AB8CF0123C5D5E50043F65D /* FHSharingDynamicsController.h */,
+				4AB8CF0223C5D5E50043F65D /* FHSharingDynamicsController.m */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -7390,6 +7399,7 @@
 				4A25D428237ABB950036CD8D /* APOrderInfo.m in Sources */,
 				4A9CB23E230BCBC5004A3763 /* ZJReplyCell.m in Sources */,
 				4A2263B723B8A85C00F9541D /* TZPhotoPickerController.m in Sources */,
+				4AB8CF0323C5D5E50043F65D /* FHSharingDynamicsController.m in Sources */,
 				4ACD3D7423050A4A0075DEF2 /* FHWatingOrderCell.m in Sources */,
 				4AF51B4222D07DEB00AA04EC /* GNRShopHeader.m in Sources */,
 				4AB203DD22F2DD7300111AC4 /* ZXModulusGF.m in Sources */,
@@ -7731,7 +7741,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/FutureHome-ios/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -7785,7 +7795,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/FutureHome-ios/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

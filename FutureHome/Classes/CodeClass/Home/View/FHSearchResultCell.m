@@ -52,7 +52,7 @@
     _resultModel = resultModel;
     [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_resultModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.nameLabel.text = _resultModel.name;
-    self.locationLabel.text = _resultModel.autograph ? @"暂无个性签名" : _resultModel.autograph;
+    self.locationLabel.text = _resultModel.autograph;
     self.fnansLabel.text = [NSString stringWithFormat:@"粉丝 : %@",_resultModel.fans_num];
     self.distanceLabel.text = _resultModel.distance;
 }

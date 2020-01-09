@@ -23,15 +23,16 @@
 #define kPicMasonryCell @"kPicMasonryCell"
 
 @interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate>
-
 @property(nonatomic ,strong) UITableView *mainTable;
 
 @property(nonatomic ,strong) NSMutableArray *dataArray;
 /** 评论列表 */
 @property (nonatomic, strong) NSMutableArray *commitDataArrs;
-
 /** 二维码图 */
 @property (nonatomic, strong) UIImageView *codeImgView;
+/** 第一次看 */
+@property (nonatomic, assign) BOOL firstLook;
+
 
 @end
 
@@ -39,6 +40,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.firstLook = YES;
     // Do any additional setup after loading the view.
     [self fh_creatNav];
     [self setUpAllView];
@@ -163,12 +165,19 @@
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSString *url;
+    NSInteger browse;
+    if (self.firstLook) {
+        browse = 1;
+    } else {
+        browse = 0;
+    }
     NSDictionary *paramsDic;
     if (self.type == 3) {
         url = @"sheyun/commentList";
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
                      self.ID,@"id",
+                     @(browse),@"browse",
                      nil];
     } else {
         url = @"public/complaintDetail";
@@ -504,6 +513,7 @@
     
     self.commitDataArrs = [[NSMutableArray alloc] init];
     [AFNetWorkTool post:@"sheyun/circleComment" params:paramsDic success:^(id responseObj) {
+        self.firstLook = NO;
         [weakSelf getCommitsData];
     } failure:^(NSError *error) {
         

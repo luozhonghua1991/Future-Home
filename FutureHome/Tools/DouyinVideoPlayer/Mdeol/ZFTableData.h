@@ -42,5 +42,10 @@
 @property (nonatomic, copy) NSString *like;
 /** 评论数 */
 @property (nonatomic, copy) NSString *comment;
+/** 覆盖页 */
+@property (nonatomic, copy) NSString *cover;
+/** 视频类型 1.生鲜视频 2朋友圈视频 */
+@property (nonatomic, copy) NSString *video_type;
+
 
 @end

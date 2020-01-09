@@ -24,6 +24,8 @@
 /** 收藏视频的点击方法 */
 - (void)fh_ZFDouYinCellDelegateSelectFollowClick:(ZFTableData *)data
                                          withBtn:(UIButton *)btn;
+/** 分享视频的点击方法 */
+- (void)fh_ZFDouYinCellDelegateShareClick:(ZFTableData *)data;
 
 @end
 

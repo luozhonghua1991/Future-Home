@@ -9,11 +9,12 @@
 #import "FHWebViewController.h"
 #import "NJKWebViewProgressView.h"
 #import "NJKWebViewProgress.h"
+#import "FHSharingDynamicsController.h"
 
 @interface FHWebViewController ()
 <
 UIWebViewDelegate,
-NJKWebViewProgressDelegate
+XYSJSExport
 >
 
 /** <#Description#> */
@@ -44,7 +45,12 @@ NJKWebViewProgressDelegate
 
 - (void)fetchNetworkData {
     Account *account = [AccountStorage readAccount];
-    NSString *webUrlString = [NSString stringWithFormat:@"%@?userid=%ld",self.urlString,(long)account.user_id];
+    NSString *webUrlString;
+    if ([self.typeString isEqualToString:@"information"]) {
+        webUrlString = self.urlString;
+    } else {
+        webUrlString = [NSString stringWithFormat:@"%@?userid=%ld",self.urlString,(long)account.user_id];
+    }
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:webUrlString]]];
     
 }
@@ -53,7 +59,7 @@ NJKWebViewProgressDelegate
 {
     [super viewWillAppear:animated];
     if (self.isHaveProgress) {
-         [self.navigationController.navigationBar addSubview:self.webViewProgressView];
+//         [self.navigationController.navigationBar addSubview:self.webViewProgressView];
     }
     [self fh_creatNav];
 }
@@ -61,9 +67,9 @@ NJKWebViewProgressDelegate
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    if (self.webViewProgressView) {
-        [self.webViewProgressView removeFromSuperview];
-    }
+//    if (self.webViewProgressView) {
+//        [self.webViewProgressView removeFromSuperview];
+//    }
 }
 
 - (void)viewDidLayoutSubviews
@@ -74,20 +80,23 @@ NJKWebViewProgressDelegate
     }];
 }
 
-#pragma mark - NJKWebViewProgressDelegate
--(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-{
-    [_webViewProgressView setProgress:progress animated:YES];
-    self.title = [_webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-}
+//#pragma mark - NJKWebViewProgressDelegate
+//-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
+//{
+//    [_webViewProgressView setProgress:progress animated:YES];
+//    self.title = [_webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+//}
 
 #pragma mark - UIWebViewDelegate
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.getElementsByClassName('sn-ibar-toggle')[0].style.display = 'none'"];
-    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.getElementsByClassName('sn-ibar-toggle').style.display = 'none'"];
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+//    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.getElementsByClassName('sn-ibar-toggle')[0].style.display = 'none'"];
+//    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.getElementsByClassName('sn-ibar-toggle').style.display = 'none'"];
     
-    [self removeHTMLTtitle];
+    __weak typeof (self) weakSelf = self;
+    self.context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
+    self.context[@"ios"] = weakSelf;
+    
+//    [self removeHTMLTtitle];
 }
 
 - (void)removeHTMLTtitle
@@ -153,34 +162,60 @@ NJKWebViewProgressDelegate
 }
 
 
+- (void)doShareWithPerson:(NSString *)person {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *dic = [self dictionaryWithJsonString:person];
+        /** 文章转发 */
+        FHSharingDynamicsController *vc = [[FHSharingDynamicsController alloc] init];
+        vc.type = @"文章";
+        vc.dataDic = dic;
+        vc.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:vc animated:YES];
+    });
+}
+
+
+- (NSDictionary *)dictionaryWithJsonString:(NSString *)jsonString {
+    
+    if (jsonString == nil) {
+        return nil;
+    }
+    
+    NSData  * jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSError * err;
+    NSDictionary * dic = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                         options:NSJSONReadingMutableContainers
+                                                           error:&err];
+    if(err) {
+        NSLog(@"json解析失败：%@",err);
+        return nil;
+    }
+    return dic;
+}
+
+/**清除缓存和cookie*/
+- (void)cleanCacheAndCookie{
+    //清除cookies
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [storage cookies]){
+        [storage deleteCookie:cookie];
+    }
+    //清除UIWebView的缓存
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    NSURLCache * cache = [NSURLCache sharedURLCache];
+    [cache removeAllCachedResponses];
+    [cache setDiskCapacity:0];
+    [cache setMemoryCapacity:0];
+}
+
 #pragma mark - Getters and Setters
-- (NJKWebViewProgressView *)webViewProgressView {
-    if (_webViewProgressView == nil) {
-        _webViewProgressView = [[NJKWebViewProgressView alloc] init];
-        
-        CGRect navBounds = self.navigationController.navigationBar.bounds;
-        CGRect barFrame = CGRectMake(0,navBounds.size.height - 2,navBounds.size.width,2);
-        _webViewProgressView = [[NJKWebViewProgressView alloc] initWithFrame:barFrame];
-        _webViewProgressView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin;
-        [_webViewProgressView setProgress:0 animated:YES];
-    }
-    return _webViewProgressView;
-}
-- (NJKWebViewProgress *)webViewProgress {
-    if (_webViewProgress == nil) {
-        _webViewProgress = [[NJKWebViewProgress alloc] init];
-        _webViewProgress.webViewProxyDelegate = self;
-        _webViewProgress.progressDelegate = self;
-        
-        self.webView.delegate = _webViewProgress;
-    }
-    return _webViewProgress;
-}
 
 - (UIWebView *)webView {
     if (_webView == nil) {
         _webView = [[UIWebView alloc] init];
         _webView.dataDetectorTypes = UIDataDetectorTypeNone;
+        _webView.delegate = self;
     }
     return _webView;
 }

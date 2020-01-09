@@ -145,8 +145,6 @@
     self.showInView = self.scrollView;
     /** 初始化collectionView */
     [self initPickerView];
-    
-//    [self.scrollView addSubview:self.accountTypeView];
     [self.scrollView addSubview:self.serviceDeskView];
     [self.serviceDeskView addSubview:self.serviceDeskNameTF];
     
@@ -216,7 +214,6 @@
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
-//    self.accountTypeView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
     self.serviceDeskView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
     self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
     self.applicantNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, 50);
@@ -499,16 +496,6 @@
     return _scrollView;
 }
 
-- (FHAccountApplicationTFView *)accountTypeView {
-    if (!_accountTypeView) {
-        _accountTypeView = [[FHAccountApplicationTFView alloc] init];
-        _accountTypeView.titleLabel.text = @"账号类型";
-        _accountTypeView.contentTF.text = @"商业物业服务平台账号";
-        _accountTypeView.contentTF.enabled = NO;
-    }
-    return _accountTypeView;
-}
-
 - (FHAccountApplicationTFView *)serviceDeskView {
     if (!_serviceDeskView) {
         _serviceDeskView = [[FHAccountApplicationTFView alloc] init];
@@ -524,7 +511,7 @@
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"(限12字)";
+        _serviceDeskNameTF.placeholder = @"请输入物业服务平台名称(限12字)";
     }
     return _serviceDeskNameTF;
 }
@@ -534,6 +521,7 @@
         _applicantNameView = [[FHAccountApplicationTFView alloc] init];
         _applicantNameView.titleLabel.text = @"申请人姓名";
         _applicantNameView.contentTF.delegate = self;
+        _applicantNameView.contentTF.placeholder = @"请输入申请人姓名";
     }
     return _applicantNameView;
 }
@@ -543,6 +531,7 @@
         _applicantCardView = [[FHAccountApplicationTFView alloc] init];
         _applicantCardView.titleLabel.text = @"申请人身份证";
         _applicantCardView.contentTF.delegate = self;
+        _applicantCardView.contentTF.placeholder = @"请输入申请人身份证";
     }
     return _applicantCardView;
 }
@@ -550,8 +539,9 @@
 - (FHAccountApplicationTFView *)phoneNumberView {
     if (!_phoneNumberView) {
         _phoneNumberView = [[FHAccountApplicationTFView alloc] init];
-        _phoneNumberView.titleLabel.text = @"联系电话(手机)";
+        _phoneNumberView.titleLabel.text = @"手机号码";
         _phoneNumberView.contentTF.delegate = self;
+        _phoneNumberView.contentTF.placeholder = @"请输入手机号码";
     }
     return _phoneNumberView;
 }
@@ -561,7 +551,7 @@
         _phoneView = [[FHAccountApplicationTFView alloc] init];
         _phoneView.titleLabel.text = @"联系电话";
         _phoneView.contentTF.delegate = self;
-        _phoneView.contentTF.placeholder = @"(座机选填)";
+        _phoneView.contentTF.placeholder = @"座机选填";
     }
     return _phoneView;
 }
@@ -569,8 +559,9 @@
 - (FHAccountApplicationTFView *)mailView {
     if (!_mailView) {
         _mailView = [[FHAccountApplicationTFView alloc] init];
-        _mailView.titleLabel.text = @"账号接收邮箱";
+        _mailView.titleLabel.text = @"电子邮箱";
         _mailView.contentTF.delegate = self;
+        _mailView.contentTF.placeholder = @"请输入电子邮箱";
     }
     return _mailView;
 }
@@ -580,7 +571,7 @@
         _addressView = [[FHAccountApplicationTFView alloc] init];
         _addressView.titleLabel.text = @"街道地址";
         _addressView.contentTF.delegate = self;
-        _addressView.contentTF.placeholder = @"(准确到门牌号)";
+        _addressView.contentTF.placeholder = @"请输入街道地址(准确到门牌号)";
     }
     return _addressView;
 }

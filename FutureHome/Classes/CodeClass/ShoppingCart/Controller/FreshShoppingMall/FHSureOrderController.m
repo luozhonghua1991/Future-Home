@@ -258,8 +258,10 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
         }
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+        cell.textLabel.textColor = HEX_COLOR(0x525252);
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
+        cell.detailTextLabel.textColor = [UIColor blackColor];
         if (indexPath.row ==0) {
             cell.textLabel.text = @"物流方式";
             cell.detailTextLabel.text = @"请选择物流方式 >";

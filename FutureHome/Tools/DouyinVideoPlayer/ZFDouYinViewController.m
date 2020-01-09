@@ -21,6 +21,7 @@
 #import "ZMCusCommentView.h"
 #import "FHAppDelegate.h"
 #import "FHCommentListModel.h"
+#import "FHSharingDynamicsController.h"
 
 static NSString *kIdentifier = @"kIdentifier";
 
@@ -114,6 +115,7 @@ static NSString *kIdentifier = @"kIdentifier";
     /** 获取视频列表 */
     for (NSDictionary *dataDic in self.videoListDataArrs) {
         ZFTableData *data = [[ZFTableData alloc] init];
+        data.cover = [dataDic objectForKey:@"cover"];
         data.dataID = [dataDic objectForKey:@"id"];
         data.aid = [[dataDic objectForKey:@"aid"] integerValue];
         data.pid = [[dataDic objectForKey:@"pid"] integerValue];
@@ -345,6 +347,15 @@ static NSString *kIdentifier = @"kIdentifier";
     }];
 }
 
+/** 分享按钮 */
+- (void)fh_ZFDouYinCellDelegateShareClick:(ZFTableData *)data {
+    FHSharingDynamicsController *vc = [[FHSharingDynamicsController alloc] init];
+    vc.type = @"视频";
+    vc.data = data;
+    vc.video_type = self.type;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - private method
 - (void)backClick:(UIButton *)sender {

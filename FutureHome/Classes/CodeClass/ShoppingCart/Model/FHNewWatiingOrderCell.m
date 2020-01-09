@@ -138,7 +138,7 @@
         _orderTimeLabel = [[UILabel alloc] init];
         _orderTimeLabel.font = [UIFont systemFontOfSize:14];
         _orderTimeLabel.text = @"下单时间: 2019-11-09 17:36:41";
-        _orderTimeLabel.textColor = [UIColor lightGrayColor];
+        _orderTimeLabel.textColor = HEX_COLOR(0x525252);
         _orderTimeLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _orderTimeLabel;

@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHZJHaveMoveCell : UITableViewCell
 
 @property(nonatomic ,strong) ZJCommit           *model;
+
 @property(nonatomic, weak) id<FHZJHaveMoveCellDelagate> delegate;
 
 @end

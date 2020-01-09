@@ -535,7 +535,7 @@ FHCommonPaySelectViewDelegate
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"(限12字)";
+        _serviceDeskNameTF.placeholder = @"请输入生鲜服务平台名称(限12字)";
     }
     return _serviceDeskNameTF;
 }
@@ -545,6 +545,7 @@ FHCommonPaySelectViewDelegate
         _applicantNameView = [[FHAccountApplicationTFView alloc] init];
         _applicantNameView.titleLabel.text = @"申请人姓名";
         _applicantNameView.contentTF.delegate = self;
+        _applicantNameView.contentTF.placeholder = @"请输入申请人姓名";
     }
     return _applicantNameView;
 }
@@ -554,6 +555,7 @@ FHCommonPaySelectViewDelegate
         _applicantCardView = [[FHAccountApplicationTFView alloc] init];
         _applicantCardView.titleLabel.text = @"申请人身份证";
         _applicantCardView.contentTF.delegate = self;
+        _applicantCardView.contentTF.placeholder = @"请输入申请人身份证";
     }
     return _applicantCardView;
 }
@@ -561,8 +563,9 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)phoneNumberView {
     if (!_phoneNumberView) {
         _phoneNumberView = [[FHAccountApplicationTFView alloc] init];
-        _phoneNumberView.titleLabel.text = @"联系电话(手机)";
+        _phoneNumberView.titleLabel.text = @"手机号码";
         _phoneNumberView.contentTF.delegate = self;
+        _phoneNumberView.contentTF.placeholder = @"请输入手机号码";
     }
     return _phoneNumberView;
 }
@@ -572,7 +575,7 @@ FHCommonPaySelectViewDelegate
         _phoneView = [[FHAccountApplicationTFView alloc] init];
         _phoneView.titleLabel.text = @"联系电话";
         _phoneView.contentTF.delegate = self;
-        _phoneView.contentTF.placeholder = @"(座机选填)";
+        _phoneView.contentTF.placeholder = @"请输入座机选填";
     }
     return _phoneView;
 }
@@ -580,8 +583,9 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)mailView {
     if (!_mailView) {
         _mailView = [[FHAccountApplicationTFView alloc] init];
-        _mailView.titleLabel.text = @"账号接收邮箱";
+        _mailView.titleLabel.text = @"电子邮箱";
         _mailView.contentTF.delegate = self;
+        _mailView.contentTF.placeholder = @"请输入电子邮箱";
     }
     return _mailView;
 }
@@ -591,7 +595,7 @@ FHCommonPaySelectViewDelegate
         _addressView = [[FHAccountApplicationTFView alloc] init];
         _addressView.titleLabel.text = @"街道地址";
         _addressView.contentTF.delegate = self;
-        _addressView.contentTF.placeholder = @"(准确到门牌号)";
+        _addressView.contentTF.placeholder = @"请输入街道地址(准确到门牌号)";
     }
     return _addressView;
 }

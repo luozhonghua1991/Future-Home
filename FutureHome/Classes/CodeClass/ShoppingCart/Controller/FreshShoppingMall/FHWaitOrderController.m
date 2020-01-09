@@ -105,6 +105,7 @@
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [weakSelf endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
 }
@@ -141,11 +142,14 @@
             cell.statueBtn.hidden = NO;
             cell.statueBtn.tag = indexPath.row;
             [cell.statueBtn addTarget:self action:@selector(statueBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+             [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         } else if (self.status == 2) {
             typeString = @"确认收货";
+            [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         } else if (self.status == 3) {
             if ([listModel.iscomment isEqualToString:@"0"]) {
                 typeString = @"待评价";
+                [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
             } else if ([listModel.iscomment isEqualToString:@"1"]) {
                 [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 typeString = @"已评价";
@@ -161,8 +165,12 @@
                 } else if ([listModel.status integerValue] == 4) {
                     typeString = @"已完成";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+                } else if ([listModel.status integerValue] == 5) {
+                    typeString = @"退款中";
+                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 } else {
                     typeString = @"退货退款";
+                    [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
                 }
             }
         }
@@ -230,7 +238,8 @@
         if ([listModel.status integerValue] >= 2) {
             if ([listModel.status isEqualToString:@"6"]||
                 [listModel.status isEqualToString:@"7"]||
-                [listModel.status isEqualToString:@"4"]) {
+                [listModel.status isEqualToString:@"4"]||
+                [listModel.status isEqualToString:@"5"]) {
             } else {
                /** 退货退款操作 */
                 FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];

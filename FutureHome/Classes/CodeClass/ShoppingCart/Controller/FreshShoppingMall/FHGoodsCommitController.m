@@ -124,10 +124,17 @@
     self.homeTable.frame = CGRectMake(0, MaxY(self.dateView), SCREEN_WIDTH, 110);
     self.hospitalView.frame = CGRectMake(0, MaxY(self.homeTable), SCREEN_WIDTH, commonCellHeight);
     self.businessDescriptionTextView.frame = CGRectMake(10, MaxY(self.hospitalView), SCREEN_WIDTH - 20, 150);
-    [self updatePickerViewFrameY:MaxY(self.businessDescriptionTextView)];
-    self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
+    [self updateViewsFrame];
 }
 
+- (void)pickerViewFrameChanged {
+    [self updateViewsFrame];
+}
+
+- (void)updateViewsFrame {
+    [self updatePickerViewFrameY:MaxY(self.businessDescriptionTextView)];
+    self.scrollView.contentSize = CGSizeMake(0,MaxY(self.businessDescriptionTextView) + [self getPickerViewFrame].size.height + MainSizeHeight + 20);
+}
 
 - (void)sureBtnClick {
     /** 添加商品评论 */

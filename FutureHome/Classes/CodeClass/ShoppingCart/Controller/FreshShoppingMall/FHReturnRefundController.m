@@ -100,8 +100,16 @@
     self.hospitalView.frame = CGRectMake(0, MaxY(self.dateView), SCREEN_WIDTH, commonCellHeight);
     self.allPriceView.frame = CGRectMake(0, MaxY(self.hospitalView), SCREEN_WIDTH, commonCellHeight);
     self.businessDescriptionTextView.frame = CGRectMake(10, MaxY(self.allPriceView), SCREEN_WIDTH - 20, 150);
+   [self updateViewsFrame];
+}
+
+- (void)pickerViewFrameChanged {
+    [self updateViewsFrame];
+}
+
+- (void)updateViewsFrame {
     [self updatePickerViewFrameY:MaxY(self.businessDescriptionTextView)];
-    self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
+    self.scrollView.contentSize = CGSizeMake(0,MaxY(self.businessDescriptionTextView) + [self getPickerViewFrame].size.height + MainSizeHeight + 20);
 }
 
 - (void)sureBtnClick {
@@ -176,7 +184,7 @@
         _dateView = [[FHAccountApplicationTFView alloc] init];
         _dateView.titleLabel.text = @"申请类型";
         _dateView.contentTF.placeholder = @"请选择退货类型 >";
-        
+        [_dateView.contentTF setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
         _dateView.contentTF.enabled = NO;
         _dateView.contentTF.userInteractionEnabled = YES;
         _dateView.userInteractionEnabled = YES;
@@ -190,7 +198,9 @@
     if (!_hospitalView) {
         _hospitalView = [[FHAccountApplicationTFView alloc] init];
         _hospitalView.titleLabel.text = @"退款金额";
-        _hospitalView.contentTF.placeholder = self.totolePrice;
+        _hospitalView.contentTF.width = 240;
+        _hospitalView.contentTF.font = [UIFont systemFontOfSize:16];
+        _hospitalView.contentTF.text = self.totolePrice;
         _hospitalView.contentTF.enabled = NO;
     }
     return _hospitalView;
