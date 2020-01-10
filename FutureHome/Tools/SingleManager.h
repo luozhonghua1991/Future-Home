@@ -85,6 +85,8 @@
 @property (nonatomic, assign) CGFloat cellNoPicHeight;
 /** 动态cell有视频的高度 */
 @property (nonatomic, assign) CGFloat cellVideoHeight;
+/** 视频或者文章的高度 */
+@property (nonatomic, assign) CGFloat cellArtileOrVideoHeight;
 /** 选择的类型 */
 @property (nonatomic, copy) NSString *selectType;
 /** 商店名字 */

@@ -23,7 +23,7 @@
 @property(nonatomic, copy) NSString     *supper_parent_id;
 @property(nonatomic, copy) NSString     *parent_id;
 @property(nonatomic, copy) NSString     *uid;
-@property(nonatomic, copy) NSString     *ttype;
+@property(nonatomic, copy) NSString     *type;
 @property(nonatomic, copy) NSString     *avatar;
 @property(nonatomic, copy) NSString     *rating;
 @property(nonatomic, copy) NSString     *nickname;
@@ -51,6 +51,17 @@
 @property(nonatomic, strong) NSArray    *pic_urls;
 
 @property(nonatomic ,copy) NSString     *identifier;
+
+/** 分享封面图 */
+@property (nonatomic, copy) NSString *cover;
+/** 分享来自 */
+@property (nonatomic, copy) NSString *forwarder;
+/** 跳转的路径 */
+@property (nonatomic, copy) NSString *path;
+/** 文章名字 */
+@property (nonatomic, copy) NSString *videoname;
+
+
 /** <#strong属性注释#> */
 //@property (nonatomic, strong) ZJCommitFrame *commitFrame;
 - (id)initWithDict:(NSDictionary *)dict;

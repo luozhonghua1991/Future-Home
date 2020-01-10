@@ -40,7 +40,7 @@
     [super layoutSubviews];
     //高度70
     self.headerImgView.frame = CGRectMake(10, 7.5, 55, 55);
-    self.nameLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, 20, 200, 13);
+    self.nameLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, 20, 270, 13);
     self.fnansLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, MaxY(self.nameLabel) + 10, 200, 13);
     self.rightBtn.frame = CGRectMake(self.contentView.width - 60, MaxY(self.nameLabel) - 5, 40, 25);
 }

@@ -15,6 +15,7 @@
 #import "FHZJHaveMoveCell.h"
 #import "ZFDouYinViewController.h"
 #import "FHFriendMessageController.h"
+#import "FHArticleOrVideoShareCell.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
@@ -217,6 +218,8 @@
     [_mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
     [_mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
     [_mainTable registerClass:[FHZJHaveMoveCell class] forCellReuseIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
+    [_mainTable registerClass:[FHArticleOrVideoShareCell class] forCellReuseIdentifier:NSStringFromClass([FHArticleOrVideoShareCell class])];
+    
     
     [self.view addSubview:self.mainTable];
     if (self.isHaveHeaderView) {
@@ -254,6 +257,13 @@
                 [self configureCell:cell atIndexPath:indexPath];
                 
                 return cell;
+            } else if ([dic[@"type"] integerValue]== 3 || [dic[@"type"] integerValue]== 4) {
+                /** 转发文章或者视频 */
+                FHArticleOrVideoShareCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHArticleOrVideoShareCell class])];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.model = self.dataArray[indexPath.row];
+//                cell.delegate = self;
+                return cell;
             }
         }
         /** 纯文字Cell */
@@ -273,6 +283,8 @@
             return [SingleManager shareManager].cellVideoHeight;
         } else if ([dic[@"type"] integerValue]== 1) {
             return [SingleManager shareManager].cellPicHeight;
+        } else if ([dic[@"type"] integerValue]== 3 || [dic[@"type"] integerValue]== 4) {
+            return  [SingleManager shareManager].cellArtileOrVideoHeight;
         }
     }
     return [SingleManager shareManager].cellNoPicHeight;

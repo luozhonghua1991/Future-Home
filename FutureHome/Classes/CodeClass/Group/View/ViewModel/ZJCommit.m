@@ -64,6 +64,16 @@
         for (NSDictionary *dic in arr) {
             [imageArrs addObject:dic[@"path"]];
         }
+        if ([dict[@"type"] integerValue] == 3 || [dict[@"type"] integerValue] == 4) {
+            /** 分享公告的界面 */
+            NSArray *arr = dict[@"medias"];
+            NSDictionary *dic = arr[0];
+            self.cover = dic[@"cover"];
+            self.forwarder = dic[@"forwarder"];
+            self.path = dic[@"path"];
+            self.videoname = dic[@"videoname"];
+        }
+        self.type = dict[@"type"];
         self.medias = dict[@"medias"];
         self.ID = dict[@"id"];
         self.avatar  = dict[@"avatar"];

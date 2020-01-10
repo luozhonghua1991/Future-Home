@@ -39,9 +39,9 @@
         _titleLabel.font = [UIFont systemFontOfSize:15];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.backgroundColor = [UIColor whiteColor];
-        NSString *titleString = @"商家客服电话: 15928426620";
+        NSString *titleString = [NSString stringWithFormat:@"商家客服电话: %@",self.shopMobieString] ;
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
-        [attributedTitle changeColor:[UIColor blueColor] rang:[attributedTitle changeSystemFontFloat:15 from:8 legth:11]];
+        [attributedTitle changeColor:[UIColor blueColor] rang:[attributedTitle changeSystemFontFloat:15 from:8 legth:self.shopMobieString.length]];
         _titleLabel.attributedText = attributedTitle;
     }
     return _titleLabel;

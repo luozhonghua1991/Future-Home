@@ -63,6 +63,9 @@
 @property (nonatomic, copy) NSString *username;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHCustomerServiceCommitController *conversationVC;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *shopMobie;
+
 
 @end
 
@@ -198,6 +201,7 @@
             weakSelf.username = dic[@"username"];
             weakSelf.lat = [dic[@"lat"] floatValue];
             weakSelf.lng = [dic[@"lng"] floatValue];
+            weakSelf.shopMobie = dic[@"shopmobile"];
             [SingleManager shareManager].shopName = dic[@"shopname"];
             [self initViewControllers];
         } else {
@@ -422,7 +426,7 @@
     self.conversationVC.conversationType = ConversationType_PRIVATE;
     self.conversationVC.targetId = self.username;
     self.conversationVC.yp_tabItemTitle = @"对话记录";
-    
+    self.conversationVC.shopMobieString = self.shopMobie;
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,self.conversationVC, nil];
     
 //    Account *account = [AccountStorage readAccount];
