@@ -163,6 +163,12 @@
     } else {
         /** 关注和未关注 */
         if ([cell.resultModel.is_collect isEqualToString:@"0"]) {
+            Account *account = [AccountStorage readAccount];
+            if ([cell.resultModel.id integerValue] == account.user_id) {
+                cell.rightBtn.hidden = YES;
+            } else {
+                cell.rightBtn.hidden = NO;
+            }
             /** 未关注 */
             cell.rightBtn.layer.borderColor = [UIColor orangeColor].CGColor;
             [cell.rightBtn setTitle:@"+关注" forState:UIControlStateNormal];
@@ -170,6 +176,7 @@
             cell.rightBtn.enabled = YES;
         } else if ([cell.resultModel.is_collect isEqualToString:@"1"]){
             /** 已关注 */
+            cell.rightBtn.hidden = NO;
             cell.rightBtn.layer.borderColor = [UIColor lightGrayColor].CGColor;
             [cell.rightBtn setTitle:@"已关注" forState:UIControlStateNormal];
             [cell.rightBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];

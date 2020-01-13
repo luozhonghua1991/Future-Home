@@ -58,28 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
-            timestampString = "600002312.553914"
+            timestampString = "600401915.680264"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "368"
             endingLineNumber = "368"
             landmarkName = "+uploadImagesWithUrl:parameters:image:otherImage:success:failure:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Group/Controller/MyVideo/FHMyVideosController.m"
-            timestampString = "600260292.3943681"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "193"
-            endingLineNumber = "193"
-            landmarkName = "-FHCommonVideosCollectionCellDelegateSelectIndex:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -91,22 +75,6 @@
             continueAfterRunningActions = "No"
             scope = "0"
             stopOnStyle = "0">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Group/Controller/MyGroup/FHCircleHotPointController.m"
-            timestampString = "600347232.5629489"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "187"
-            endingLineNumber = "187"
-            landmarkName = "-requestWithDontTaiDic:"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

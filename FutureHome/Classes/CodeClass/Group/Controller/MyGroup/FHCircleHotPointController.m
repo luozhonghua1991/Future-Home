@@ -16,13 +16,14 @@
 #import "ZFDouYinViewController.h"
 #import "FHFriendMessageController.h"
 #import "FHArticleOrVideoShareCell.h"
+#import "FHWebViewController.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
 /** 有图片的 */
 #define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate>
+@interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate,FHArticleOrVideoShareCellDelegate>
 
 @property(nonatomic ,strong) UITableView *mainTable;
 
@@ -262,7 +263,7 @@
                 FHArticleOrVideoShareCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHArticleOrVideoShareCell class])];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 cell.model = self.dataArray[indexPath.row];
-//                cell.delegate = self;
+                cell.delegate = self;
                 return cell;
             }
         }
@@ -313,6 +314,9 @@
     [self pushVCWithModel:Model];
 }
 
+- (void)artileOrVideoShareAvaterClickWithModel:(ZJCommit *)model {
+    [self pushVCWithModel:model];
+}
 
 - (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model {
     /** 用户点赞 */
@@ -328,6 +332,35 @@
     /** 用户点赞 */
     [self getRequestLickWithModel:model];
 }
+
+- (void)artileOrVideoShareLikeClickWithModel:(ZJCommit *)model {
+    /** 用户点赞 */
+    [self getRequestLickWithModel:model];
+}
+
+- (void)artileOrVideoShareInfoDetailCLickWithModel:(ZJCommit *)model type:(NSInteger)type {
+    if (type == 3) {
+        /** 跳转到文档详情 */
+        FHWebViewController *web = [[FHWebViewController alloc] init];
+        web.urlString = model.path;
+        web.titleString = model.videoname;
+        web.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:web animated:YES];
+    } else {
+        /** 跳转到视频 */
+        NSMutableArray *videoArr = [[NSMutableArray alloc] init];
+        NSDictionary *dic = model.medias[0];
+        [videoArr addObject:dic];
+        ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
+        /** 朋友圈视频 */
+        douyin.type = @"2";
+        douyin.videoListDataArrs = videoArr;
+        [douyin playTheIndex:0];
+        douyin.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:douyin animated:YES];
+        }
+}
+
 
 - (void)getRequestLickWithModel:(ZJCommit *)model {
     WS(weakSelf);

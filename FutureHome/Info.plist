@@ -42,7 +42,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20191229</string>
+	<string>20200111</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>iosamap</string>

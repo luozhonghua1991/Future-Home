@@ -164,10 +164,12 @@
         } else {
             [self.lodingHud hideAnimated:YES];
             self.lodingHud = nil;
-            [weakSelf.view makeToast:responseObj[@"提交评论失败"]];
+            [weakSelf.view makeToast:@"提交评论失败,请稍后重试"];
         }
     } failure:^(NSError *error) {
-        
+        [self.lodingHud hideAnimated:YES];
+        self.lodingHud = nil;
+        [weakSelf.view makeToast:@"提交评论失败,请稍后重试"];
     }];
 }
 

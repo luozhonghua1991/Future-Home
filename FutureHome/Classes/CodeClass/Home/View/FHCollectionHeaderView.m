@@ -48,8 +48,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     FHheadercCollectioCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHheadercCollectioCell class]) forIndexPath:indexPath];
     cell.numberCount = self.numberCount;
-    cell.leftLabel.text = [NSString stringWithFormat:@"%@",self.leftNameArrs[indexPath.item]];
-    cell.rightLabel.text = [NSString stringWithFormat:@"%@",self.rightNameArrs[indexPath.item]];
+    if (self.leftNameArrs.count > 0) {
+        cell.leftLabel.text = [NSString stringWithFormat:@"%@",self.leftNameArrs[indexPath.item]];
+    }
+    if (self.rightNameArrs.count > 0) {
+        cell.rightLabel.text = [NSString stringWithFormat:@"%@",self.rightNameArrs[indexPath.item]];
+    }
     return cell;
 }
 

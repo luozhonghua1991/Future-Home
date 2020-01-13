@@ -178,6 +178,7 @@
     web.urlString = [NSString stringWithFormat:@"%@?id=%@&userid=%ld",infoModel.singpage,infoModel.id,(long)account.user_id];
     web.hidesBottomBarWhenPushed = YES;
     web.titleString = infoModel.title;
+    web.typeString = @"information";
     web.isHaveProgress = YES;
     [self.navigationController pushViewController:web animated:YES];
 }

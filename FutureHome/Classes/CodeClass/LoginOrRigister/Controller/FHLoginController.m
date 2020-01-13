@@ -32,6 +32,8 @@
 /** 登录视图 */
 @property (nonatomic, strong) LoginView      *login;
 
+@property (nonatomic, strong) MBProgressHUD *lodingHud;
+
 @end
 
 @implementation FHLoginController
@@ -253,12 +255,15 @@
             [self.view makeToast:@"亲，未填写密码"];
             return;
         }
+        [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"username"] = self.phoneNumnTF.text;
         params[@"password"] = self.passwordTF.text;
         
         [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
+                [self.lodingHud hideAnimated:YES];
+                self.lodingHud = nil;
                 /** 保存用户信息 */
                 Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
                 [AccountStorage saveAccount:account];
@@ -282,11 +287,15 @@
                 [self.view makeToast:msg];
                 [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
             } else {
+                [self.lodingHud hideAnimated:YES];
+                self.lodingHud = nil;
                 NSString *msg = responseObj[@"msg"];
                 [self.view makeToast:msg];
             }
         } failure:^(NSError *error) {
-            
+            [self.lodingHud hideAnimated:YES];
+            self.lodingHud = nil;
+            [self.view makeToast:@"登录失败,请稍后重试"];
         }];
     } else if ([name isEqualToString:@"注册"]) {
         [self viewControllerPushOther:@"FHRigisterController"];
@@ -421,6 +430,17 @@
         [_passwordRightBtn addTarget:self action:@selector(eyesTouchOn:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _passwordRightBtn;
+}
+
+- (MBProgressHUD *)lodingHud{
+    if (_lodingHud == nil) {
+        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+        _lodingHud.removeFromSuperViewOnHide = YES;
+        _lodingHud.label.text = @"登录中...请稍后";
+        [_lodingHud showAnimated:YES];
+    }
+    return _lodingHud;
 }
 
 - (void)dealloc {

@@ -86,7 +86,7 @@
     
     if (_model.like_status == 2) {
         [self.upBtn setImage:[UIImage imageNamed:@"1点赞"] forState:UIControlStateNormal];
-//        [self.upBtn addTarget:self action:@selector(upBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        [self.upBtn addTarget:self action:@selector(upBtnClick) forControlEvents:UIControlEventTouchUpInside];
         self.upBtn.enabled = YES;
     } else if (_model.like_status == 1) {
         self.upBtn.enabled = YES;
@@ -173,6 +173,10 @@
         self.lightGrayView = [[UIView alloc] init];
         self.lightGrayView.backgroundColor = HEX_COLOR(0xF2F2F2);
         [self.contentView addSubview:self.lightGrayView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(articleOrVideoClick)];
+        self.lightGrayView.userInteractionEnabled = YES;
+        [self.lightGrayView addGestureRecognizer:tap];
     }
     
     if (!self.corverImg) {
@@ -273,17 +277,31 @@
     return btn;
 }
 
-//- (void)avatarClick {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJNoHavePhotoCellSelectModel:)]) {
-//        [_delegate fh_ZJNoHavePhotoCellSelectModel:self.model];
-//    }
-//}
-//
-//- (void)upBtnClick {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJNoHavePhotoCellSelecLiketModel:)]) {
-//        [_delegate fh_ZJNoHavePhotoCellSelecLiketModel:self.model];
-//    }
-//}
+- (void)avatarClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(artileOrVideoShareAvaterClickWithModel:)]) {
+        [_delegate artileOrVideoShareAvaterClickWithModel:self.model];
+    }
+}
+
+- (void)upBtnClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(artileOrVideoShareLikeClickWithModel:)]) {
+        [_delegate artileOrVideoShareLikeClickWithModel:self.model];
+    }
+}
+
+- (void)articleOrVideoClick {
+    if ([self.model.type integerValue] == 3) {
+        /** 点击查看文章 */
+        if (_delegate != nil && [_delegate respondsToSelector:@selector(artileOrVideoShareInfoDetailCLickWithModel:type:)]) {
+            [_delegate artileOrVideoShareInfoDetailCLickWithModel:self.model type:3];
+        }
+    } else if ([self.model.type integerValue] == 4) {
+        /** 查看视频 */
+        if (_delegate != nil && [_delegate respondsToSelector:@selector(artileOrVideoShareInfoDetailCLickWithModel:type:)]) {
+            [_delegate artileOrVideoShareInfoDetailCLickWithModel:self.model type:4];
+        }
+    }
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

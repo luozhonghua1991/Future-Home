@@ -33,6 +33,16 @@
     self.navigationController.navigationBar.hidden = NO;
 }
 
+- (void)phoneClick {
+    /** 拨打电话 */
+    NSMutableString * string = [[NSMutableString alloc] initWithFormat:@"tel:%@",self.shopMobieString];
+    UIWebView * callWebview = [[UIWebView alloc] init];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:string]]];
+    [self.view addSubview:callWebview];
+}
+
+
+#pragma mark — setter && getter
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainSizeHeight + 80, SCREEN_WIDTH, 45)];
@@ -41,8 +51,17 @@
         _titleLabel.backgroundColor = [UIColor whiteColor];
         NSString *titleString = [NSString stringWithFormat:@"商家客服电话: %@",self.shopMobieString] ;
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
-        [attributedTitle changeColor:[UIColor blueColor] rang:[attributedTitle changeSystemFontFloat:15 from:8 legth:self.shopMobieString.length]];
-        _titleLabel.attributedText = attributedTitle;
+//        if (self.shopMobieString.length <= 0) {
+////            [attributedTitle changeColor:[UIColor blueColor] rang:[attributedTitle changeSystemFontFloat:15 from:8 legth:0]];
+//            _titleLabel.attributedText = titleString;
+//        } else {
+            [attributedTitle changeColor:[UIColor blueColor] rang:[attributedTitle changeSystemFontFloat:15 from:8 legth:self.shopMobieString.length]];
+            _titleLabel.attributedText = attributedTitle;
+//        }
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(phoneClick)];
+        _titleLabel.userInteractionEnabled = YES;
+        [_titleLabel addGestureRecognizer:tap];
     }
     return _titleLabel;
 }

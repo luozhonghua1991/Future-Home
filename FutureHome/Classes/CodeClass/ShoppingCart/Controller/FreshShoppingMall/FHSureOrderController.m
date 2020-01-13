@@ -170,22 +170,26 @@
     
     [AFNetWorkTool post:@"shop/downOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            if (weakSelf.payType == 1) {
-                /** 支付宝支付 */
-                LeoPayManager *manager = [LeoPayManager getInstance];
-                [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
-                    if (respCode == 0) {
-                        /** 支付成功 */
-                        WS(weakSelf);
-                        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"购买成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-                            if (buttonIndex == 0) {
-                                [weakSelf.navigationController popViewControllerAnimated:YES];
-                            }
-                        }];
-                    } else if (respCode == -2) {
-                        [self.view makeToast:respMsg];
-                    }
-                }];
+            if ([responseObj[@"data"][@"code"] integerValue] == 1) {
+                if (weakSelf.payType == 1) {
+                    /** 支付宝支付 */
+                    LeoPayManager *manager = [LeoPayManager getInstance];
+                    [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                        if (respCode == 0) {
+                            /** 支付成功 */
+                            WS(weakSelf);
+                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"购买成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                if (buttonIndex == 0) {
+                                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                                }
+                            }];
+                        } else if (respCode == -2) {
+                            [self.view makeToast:respMsg];
+                        }
+                    }];
+                }
+            } else {
+                [self.view makeToast:responseObj[@"data"][@"msg"]];
             }
             /** 账户资料传给后台成功 */
             /** 选择支付方式 */

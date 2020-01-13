@@ -16,13 +16,16 @@
 #import "ZJNoHavePhotoCell.h"
 #import "FHZJHaveMoveCell.h"
 #import "FHPersonTrendsController.h"
+#import "FHArticleOrVideoShareCell.h"
+#import "ZFDouYinViewController.h"
+#import "FHWebViewController.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
 /** 有图片的 */
 #define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate>
+@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate,FHArticleOrVideoShareCellDelegate>
 @property(nonatomic ,strong) UITableView *mainTable;
 
 @property(nonatomic ,strong) NSMutableArray *dataArray;
@@ -240,6 +243,7 @@
     [self.mainTable registerClass:[FHCommitDetaolCell class] forCellReuseIdentifier:NSStringFromClass([FHCommitDetaolCell class])];
     if (self.type == 3) {
         [self.mainTable registerClass:[FHZJHaveMoveCell class] forCellReuseIdentifier:NSStringFromClass([FHZJHaveMoveCell class])];
+        [self.mainTable registerClass:[FHArticleOrVideoShareCell class] forCellReuseIdentifier:NSStringFromClass([FHArticleOrVideoShareCell class])];
     }
     [self.view addSubview:self.mainTable];
 }
@@ -277,6 +281,13 @@
                     cell.delegate = self;
                     [self configureCell:cell atIndexPath:indexPath];
                     
+                    return cell;
+                }  else if ([dic[@"type"] integerValue]== 3 || [dic[@"type"] integerValue]== 4) {
+                    /** 转发文章或者视频 */
+                    FHArticleOrVideoShareCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHArticleOrVideoShareCell class])];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.model = self.dataArray[indexPath.row];
+                    cell.delegate = self;
                     return cell;
                 }
             }
@@ -324,6 +335,8 @@
                     return [SingleManager shareManager].cellVideoHeight;
                 } else if ([dic[@"type"] integerValue]== 1) {
                     return [SingleManager shareManager].cellPicHeight;
+                } else if ([dic[@"type"] integerValue]== 3 || [dic[@"type"] integerValue]== 4) {
+                    return  [SingleManager shareManager].cellArtileOrVideoHeight;
                 }
             }
             return [SingleManager shareManager].cellNoPicHeight;
@@ -424,6 +437,33 @@
 
 - (void)fh_ZJHaveMoveCellDelagateSelectModel:(ZJCommit *)Model {
     [self pushVCWithModel:Model];
+}
+
+- (void)artileOrVideoShareAvaterClickWithModel:(ZJCommit *)model {
+    [self pushVCWithModel:model];
+}
+
+- (void)artileOrVideoShareInfoDetailCLickWithModel:(ZJCommit *)model type:(NSInteger)type {
+    if (type == 3) {
+        /** 跳转到文档详情 */
+        FHWebViewController *web = [[FHWebViewController alloc] init];
+        web.urlString = model.path;
+        web.titleString = model.videoname;
+        web.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:web animated:YES];
+    } else {
+        /** 跳转到视频 */
+        NSMutableArray *videoArr = [[NSMutableArray alloc] init];
+        NSDictionary *dic = model.medias[0];
+        [videoArr addObject:dic];
+        ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
+        /** 朋友圈视频 */
+        douyin.type = @"2";
+        douyin.videoListDataArrs = videoArr;
+        [douyin playTheIndex:0];
+        douyin.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:douyin animated:YES];
+    }
 }
 
 - (void)pushVCWithModel:(ZJCommit *)model {

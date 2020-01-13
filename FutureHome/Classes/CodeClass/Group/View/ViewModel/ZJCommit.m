@@ -64,7 +64,7 @@
         for (NSDictionary *dic in arr) {
             [imageArrs addObject:dic[@"path"]];
         }
-        if ([dict[@"type"] integerValue] == 3 || [dict[@"type"] integerValue] == 4) {
+        if ([dict[@"type"] integerValue] == 3 ||  [dict[@"type"] integerValue] == 4) {
             /** 分享公告的界面 */
             NSArray *arr = dict[@"medias"];
             NSDictionary *dic = arr[0];

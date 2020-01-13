@@ -56,19 +56,25 @@
                                       @(self.property_id),@"property_id",nil];
     /**车库管理费用 */
     [AFNetWorkTool get:@"property/carage" params:paramsDictionary success:^(id responseObj) {
-        [self endRefreshAction];
-        self.headerView.leftNameArrs = [[NSMutableArray alloc] init];
-        self.headerView.rightNameArrs = [[NSMutableArray alloc] init];
-        NSArray *arr = responseObj[@"data"];
-        for (NSDictionary * dic in arr) {
-            [self.headerView.leftNameArrs addObject:dic[@"key1"]];
-            [self.headerView.leftNameArrs addObject:dic[@"key2"]];
-            [self.headerView.rightNameArrs addObject:dic[@"val1"]];
-            [self.headerView.rightNameArrs addObject:dic[@"val2"]];
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [self endRefreshAction];
+            self.headerView.leftNameArrs = [[NSMutableArray alloc] init];
+            self.headerView.rightNameArrs = [[NSMutableArray alloc] init];
+            NSArray *arr = responseObj[@"data"];
+            if (arr.count > 0) {
+                for (NSDictionary * dic in arr) {
+                    [self.headerView.leftNameArrs addObject:dic[@"key1"]];
+                    [self.headerView.leftNameArrs addObject:dic[@"key2"]];
+                    [self.headerView.rightNameArrs addObject:dic[@"val1"]];
+                    [self.headerView.rightNameArrs addObject:dic[@"val2"]];
+                }
+                self.listTable.tableHeaderView = self.headerView;
+                self.listTable.tableHeaderView.height = self.headerView.height;
+                [weakSelf.listTable reloadData];
+            }
+        } else {
+            [self.view makeToast:responseObj[@"msg"]];
         }
-        self.listTable.tableHeaderView = self.headerView;
-        self.listTable.tableHeaderView.height = self.headerView.height;
-        [weakSelf.listTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.listTable reloadData];
     }];
@@ -154,6 +160,19 @@
     [self.navigationController pushViewController:web animated:YES];
 }
 
+#pragma mark - DZNEmptyDataSetDelegate
+- (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
+{
+    NSString *title = @"暂无相关数据哦~";
+    NSDictionary *attributes = @{
+                                 NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
+                                 NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
+                                 };
+    
+    return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+
 #pragma mark — setter & getter
 - (UITableView *)listTable {
     if (_listTable == nil) {
@@ -162,6 +181,8 @@
         _listTable.delegate = self;
         _listTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _listTable.showsVerticalScrollIndicator = NO;
+        _listTable.emptyDataSetSource = self;
+        _listTable.emptyDataSetDelegate = self;
         _listTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(fh_facthRequest)];
         if (@available (iOS 11.0, *)) {
             _listTable.estimatedSectionHeaderHeight = 0.01;
