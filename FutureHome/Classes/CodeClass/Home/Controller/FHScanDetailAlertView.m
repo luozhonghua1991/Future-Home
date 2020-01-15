@@ -90,10 +90,16 @@
 
 - (void)setDataDetaildic:(NSDictionary *)dataDetaildic {
     _dataDetaildic = dataDetaildic;
+//    self.codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:@"1-2-3" size:150];
     self.codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:_dataDetaildic] size:150];
     self.titleLabel.text = [NSString stringWithFormat:@"社云账号:%@",_dataDetaildic[@"username"]];
     self.topLabel.text = _dataDetaildic[@"name"];
     
+}
+
+- (void)setScanCodeDic:(NSDictionary *)scanCodeDic {
+    _scanCodeDic = scanCodeDic;
+     self.codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:_scanCodeDic] size:150];
 }
 
 #pragma mark - 得到jsonString
@@ -107,6 +113,7 @@
         jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     }
     return jsonString;
+    
 }
 
 #pragma mark -- setter getter

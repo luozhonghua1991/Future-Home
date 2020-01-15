@@ -263,6 +263,7 @@ static NSString *kIdentifier = @"kIdentifier";
                                    @"2",@"type",
                                    data.dataID,@"document",
                                    self.shopID,@"shop_id",
+                                   [SingleManager shareManager].ordertype,@"ordertype",
                                    nil];
         [AFNetWorkTool post:@"shop/giveLike" params:paramsDic success:^(id responseObj) {
             NSInteger count = [label.text integerValue];
@@ -329,7 +330,9 @@ static NSString *kIdentifier = @"kIdentifier";
                                @(account.user_id),@"user_id",
                                data.dataID,@"id",
                                @(1),@"page",
-                               @(2),@"type", nil];
+                               @(2),@"type",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     
     [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {

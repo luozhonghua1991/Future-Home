@@ -83,7 +83,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.goodsModel.goodsID,@"good_id", nil];
+                               self.goodsModel.goodsID,@"good_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     [AFNetWorkTool get:@"shop/getSinggoodInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];

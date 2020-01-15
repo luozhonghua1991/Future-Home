@@ -96,6 +96,7 @@
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     /** 获取banner数据 */
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fefreshBanner) name:@"fefreshBanner" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCity) name:@"UPDATECITY" object:nil];
     [self fefreshBanner];
 }
 
@@ -127,6 +128,7 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     [AFNetWorkTool get:@"shop/getUserCollect" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
@@ -151,12 +153,16 @@
 
 - (void)fh_creatLocationView {
     self.locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.locationBtn.frame = CGRectMake(15, MainStatusBarHeight + 5, 50, 25);
-    [self.locationBtn setTitle:@"重庆" forState:UIControlStateNormal];
+    self.locationBtn.frame = CGRectMake(0, MainStatusBarHeight + 5, 100, 25);
+    [self.locationBtn setTitle:@"定位中..." forState:UIControlStateNormal];
     [self.locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.locationBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [self.locationBtn setImage:[UIImage imageNamed:@"chengshidingweiicon"] forState:UIControlStateNormal];
     [self.navgationView addSubview:self.locationBtn];
+}
+
+- (void)updateCity {
+    [self.locationBtn setTitle:[SingleManager shareManager].currentCity forState:UIControlStateNormal];
 }
 
 - (void)fh_creatSerchView {

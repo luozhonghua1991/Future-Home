@@ -76,6 +76,7 @@
                                self.experience,@"experience",
                                @"20",@"limit",
                                @(curPage),@"page",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     [AFNetWorkTool get:@"shop/getOrderComment" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {

@@ -268,23 +268,23 @@
             goodList.hidesBottomBarWhenPushed = YES;
             goodList.titleString = @"生鲜商城";
             goodList.shopID = resultDic[@"id"];
-//            goodList.isCollect = followModel.is_collect;
             [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
         } else if (type == 4) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;
             goodList.titleString = @"商业商城";
             goodList.shopID = resultDic[@"id"];
-//            goodList.isCollect = followModel.is_collect;
             [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
         } else if (type == 5) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;
             goodList.titleString = @"医药商城";
             goodList.shopID = resultDic[@"id"];
-//            goodList.isCollect = followModel.is_collect;
             [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
         }
+    } else {
+        [self.view makeToast:@"无法识别该二维码"];
+//        [self.navigationController popViewControllerAnimated:YES];
     }
 //    NSArray *array = [strResult.strScanned componentsSeparatedByString:@"goods-"];
 //    if (array.count == 2) {
@@ -312,6 +312,8 @@
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
     if(err) {
         NSLog(@"json解析失败：%@",err);
+        [self.view makeToast:@"无法识别该二维码"];
+//        [self.navigationController popViewControllerAnimated:YES];
         return nil;
     }
     return dic;

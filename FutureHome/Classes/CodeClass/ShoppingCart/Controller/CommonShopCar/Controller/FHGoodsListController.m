@@ -75,7 +75,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.shopID,@"shopid", nil];
+                               self.shopID,@"shopid",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     
     /** 购物车的数据 */
     [AFNetWorkTool get:@"shop/getAppledataByShopid" params:paramsDic success:^(id responseObj) {

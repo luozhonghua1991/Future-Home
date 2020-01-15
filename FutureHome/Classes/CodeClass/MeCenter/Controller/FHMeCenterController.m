@@ -294,13 +294,14 @@
                                    account.nickname,@"name",
                                    account.username,@"username",
                                    @"0",@"type",
-                                   /** 下面的用不到 没啥用 */
-                                   //                                   @"false",@"is_collect",
-                                   //                                   @"0",@"slat",
-                                   //                                   @"0",@"slng",
-                                   //                                   @"",@"address",
+                                   nil];
+        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(account.user_id),@"id",
+                                   @"0",@"type",
                                    nil];
         _codeDetailView.dataDetaildic = paramsDic;
+        _codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
 }

@@ -7,7 +7,7 @@
 //  个人中心 个人信息View
 
 #import "FHMeCenterUserInfoView.h"
-
+#import "FHImageToolMethod.h"
 
 @interface FHMeCenterUserInfoView ()
 /** 上面的线 */
@@ -79,6 +79,10 @@
 //    [[UIApplication sharedApplication].keyWindow addSubview:self.codeDetailView];
 }
 
+- (void)headerImgClick {
+    [FHImageToolMethod showImage:self.userHeaderImgView];
+}
+
 #pragma mark - 懒加载
 - (UIView *)topContentView {
     if (!_topContentView) {
@@ -101,6 +105,10 @@
         _userHeaderImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 65, 65)];
 //        _userHeaderImgView.image = ;
         [_userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImgClick)];
+        _userHeaderImgView.userInteractionEnabled = YES;
+        [_userHeaderImgView addGestureRecognizer:tap];
     }
     return _userHeaderImgView;
 }
@@ -132,13 +140,13 @@
         _codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75, 5, 65, 65)];
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"",@"address",
+//                                   @"",@"address",
                                    @"com.sheyun",@"app_key",
                                    @(account.user_id),@"id",
-                                   @"false",@"is_collect",
+//                                   @"false",@"is_collect",
                                    account.nickname,@"name",
-                                   @"0",@"slat",
-                                   @"0",@"slng",
+//                                   @"0",@"slat",
+//                                   @"0",@"slng",
                                    @"1",@"type",
                                    nil];
         _codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:paramsDic] size:65.0];
@@ -239,13 +247,14 @@
                                    account.nickname,@"name",
                                    account.username,@"username",
                                    @"0",@"type",
-                                   /** 下面的用不到 没啥用 */
-//                                   @"false",@"is_collect",
-//                                   @"0",@"slat",
-//                                   @"0",@"slng",
-//                                   @"",@"address",
+                                   nil];
+        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(account.user_id),@"id",
+                                   @"0",@"type",
                                    nil];
         _codeDetailView.dataDetaildic = paramsDic;
+        _codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
 }

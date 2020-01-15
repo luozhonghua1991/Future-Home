@@ -73,37 +73,46 @@
 
 /** 提交投诉建议 */
 - (void)addInvoiceBtnClick {
+    if (self.suggestionsTextView.text.length <= 0) {
+        [self.view makeToast:@"请输入投诉或意见内容"];
+        return;
+    }
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
-    self.selectImgArrays = [[NSMutableArray alloc] init];
-    /** 先上传多张图片*/
-    Account *account = [AccountStorage readAccount];
-    NSString *string = [self getCurrentTimes];
-    NSArray *arr = @[string];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @"property",@"path",
-                               arr,@"file[]",
-                               nil];
-    for (int i = 0; i< self.imgSelectArrs.count; i++) {
-        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
-        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-            NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
-            [self.selectImgArrays addObject:imgID];
-            if (self.selectImgArrays.count == self.imgSelectArrs.count) {
-                /** 图片获取完毕 */
-                [self commitInfo];
-            }
-        } failure:^(NSError *error) {
-            
-        }];
+    if (self.imgSelectArrs.count <= 0) {
+        [self commitInfo];
+    } else {
+        self.selectImgArrays = [[NSMutableArray alloc] init];
+        /** 先上传多张图片*/
+        Account *account = [AccountStorage readAccount];
+        NSString *string = [self getCurrentTimes];
+        NSArray *arr = @[string];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @"property",@"path",
+                                   arr,@"file[]",
+                                   nil];
+        for (int i = 0; i< self.imgSelectArrs.count; i++) {
+            NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
+            [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+                NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
+                [self.selectImgArrays addObject:imgID];
+                if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                    /** 图片获取完毕 */
+                    [self commitInfo];
+                }
+            } failure:^(NSError *error) {
+                
+            }];
+        }
     }
 }
 
 /** 提交信息 */
 - (void)commitInfo {
     WS(weakSelf);
+    [ZHProgressHUD showMessage:@"加载中..." inView:[UIApplication sharedApplication].delegate.window];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -117,14 +126,17 @@
     [AFNetWorkTool post:@"public/complaint" params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
+            [ZHProgressHUD hide];
             [weakSelf.view makeToast:@"发布投诉建议成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [ZHProgressHUD hide];
             [self.view makeToast:@"所填信息有误"];
         }
     } failure:^(NSError *error) {
+        [ZHProgressHUD hide];
         [self.view makeToast:@"所填信息有误"];
     }];
 }

@@ -65,7 +65,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.order_id,@"order_id", nil];
+                               self.order_id,@"order_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     [AFNetWorkTool get:@"shop/getSingOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             weakSelf.orderCodeString = responseObj[@"data"][@"order_number"];
@@ -195,7 +197,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.listModel.id,@"order_id", nil];
+                               self.listModel.id,@"order_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     [AFNetWorkTool post:@"shop/cancelOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"取消订单成功"];
@@ -221,7 +225,8 @@
                 Account *account = [AccountStorage readAccount];
                 NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                            @(account.user_id),@"user_id",
-                                           weakSelf.listModel.id,@"order_id", nil];
+                                           weakSelf.listModel.id,@"order_id",
+                                           [SingleManager shareManager].ordertype,@"ordertype",nil];
                 [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.navigationController popToRootViewControllerAnimated:YES];

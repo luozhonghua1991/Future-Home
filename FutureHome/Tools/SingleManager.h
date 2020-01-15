@@ -101,6 +101,15 @@
 @property (nonatomic, assign) CGFloat goodsDetailHeight;
 /** 是否滚动状态 */
 @property (nonatomic, assign) BOOL scrolling;
+/** 生鲜 商业 医药相关的ordertype 3生鲜 4商业 5医药 */
+@property (nonatomic, copy) NSString *ordertype;
+/** 经度 */
+@property (nonatomic, copy) NSString *strlatitude;
+/** 纬度 */
+@property (nonatomic, copy) NSString *strlongitude;
+/** 当前城市 */
+@property (nonatomic, copy) NSString *currentCity;
+
 
 
 

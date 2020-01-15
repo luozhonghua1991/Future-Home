@@ -224,7 +224,9 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                self.shopID,@"shop_id",
-                               classID,@"variety", nil];
+                               classID,@"variety",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     
     [AFNetWorkTool get:@"shop/getShopsByVariety" params:paramsDic success:^(id responseObj) {
         NSArray *list = responseObj[@"data"];

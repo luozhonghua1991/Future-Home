@@ -124,6 +124,10 @@
     //显示加载视图
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    if (self.imgSelectArrs.count <= 0) {
+        [self.view makeToast:@"请加入退货图片证明"];
+        return;
+    }
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -133,6 +137,7 @@
                                @(self.type),@"type",
                                self.imgSelectArrs,@"file[]",
                                self.businessDescriptionTextView.text,@"reason",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool uploadImagesWithUrl:@"shop/returnsales" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {

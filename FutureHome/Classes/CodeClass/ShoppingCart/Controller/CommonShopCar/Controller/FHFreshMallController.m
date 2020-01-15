@@ -74,6 +74,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fh_creatUI];
+    [self getRequest];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,25 +82,23 @@
 }
 
 - (void)getRequest {
-    WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
-    self.videosListArrs = [[NSMutableArray alloc] init];
-    /** 获取视频列表 */
-    NSDictionary *paramsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      @(account.user_id),@"user_id",
-                                      self.shopID,@"shop_id",
-                                      @"1",@"page",
-                                      @"100000",@"limit",
-                                      nil];
-    
-    [AFNetWorkTool get:@"shop/getUserVideo" params:paramsDictionary success:^(id responseObj) {
-        if ([responseObj[@"code"] integerValue] == 1) {
-            weakSelf.videosListArrs = responseObj[@"data"][@"list"];
-        } else {
-            [self.view makeToast:responseObj[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-    }];
+//    WS(weakSelf);
+//    Account *account = [AccountStorage readAccount];
+//    /** 判断商铺是否打烊 */
+//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                            @(account.user_id),@"user_id",
+//                            self.shopID,@"shop_id",
+//                            nil];
+//
+//    [AFNetWorkTool post:@"shop/isclose" params:params success:^(id responseObj) {
+//        if ([responseObj[@"code"] integerValue] == 1) {
+//
+//        } else {
+//            [weakSelf.view makeToast:responseObj[@"msg"]];
+//        }
+//    } failure:^(NSError *error) {
+//
+//    }];
 }
 
 - (void)fh_creatUI {
@@ -171,6 +170,14 @@
 
 /** 标题View */
 - (void)fh_creatTitleView {
+    if ([self.titleString isEqualToString:@"生鲜商城"]) {
+        [SingleManager shareManager].ordertype = @"3";
+    } else if ([self.titleString isEqualToString:@"商业商城"]) {
+        [SingleManager shareManager].ordertype = @"4";
+    } else if ([self.titleString isEqualToString:@"医药商城"]) {
+        [SingleManager shareManager].ordertype = @"5";
+    }
+    
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 42)];
     titleView.userInteractionEnabled = YES;
     
@@ -193,7 +200,10 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.shopID,@"shop_id", nil];
+                               self.shopID,@"shop_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
+    
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
@@ -528,13 +538,14 @@
                                    self.locationLabel.text,@"name",
                                    self.username,@"username",
                                    type,@"type",
-                                   /** 下面的用不到 没啥用 */
-//                                   @"false",@"is_collect",
-//                                   @"0",@"slat",
-//                                   @"0",@"slng",
-//                                   @"",@"address",
+                                   nil];
+        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   self.shopID,@"id",
+                                   type,@"type",
                                    nil];
         _codeDetailView.dataDetaildic = paramsDic;
+        _codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
 }

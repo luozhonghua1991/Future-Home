@@ -166,6 +166,7 @@
                                @"0",@"order_id",
                                /** 种类个数 */
                                @([SingleManager shareManager].goodsArrs.count),@"number",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool post:@"shop/downOrder" params:paramsDic success:^(id responseObj) {

@@ -90,9 +90,11 @@
                                @"20",@"limit",
                                @(curPage),@"page",
                                self.order_type,@"order_type",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool get:@"shop/getOrderList" params:paramsDic success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
                 [weakSelf.dataListArrs removeAllObjects];
@@ -208,7 +210,8 @@
                 Account *account = [AccountStorage readAccount];
                 NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                            @(account.user_id),@"user_id",
-                                           listModel.id,@"order_id", nil];
+                                           listModel.id,@"order_id",
+                                           [SingleManager shareManager].ordertype,@"ordertype",nil];
                 [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.view makeToast:@"确认收货成功"];
@@ -271,7 +274,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               listModel.id,@"order_id", nil];
+                               listModel.id,@"order_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     [AFNetWorkTool post:@"shop/cancelOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"取消订单成功"];

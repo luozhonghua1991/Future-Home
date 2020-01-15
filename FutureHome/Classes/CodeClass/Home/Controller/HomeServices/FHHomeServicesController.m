@@ -541,16 +541,22 @@
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",
                                    @(property_id),@"id",
+                                   @"1",@"type",
                                    self.realSstateSNameLabel.text,@"name",
                                    self.userName,@"username",
-                                   @"1",@"type",
                                    /** 下面的用不到 没啥用 */
 //                                   @"false",@"is_collect",
 //                                   @"0",@"slat",
 //                                   @"0",@"slng",
 //                                   @"",@"address",
                                    nil];
+        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @"com.sheyun",@"app_key",
+                                   @(property_id),@"id",
+                                   @"1",@"type",
+                                   nil];
         _codeDetailView.dataDetaildic = paramsDic;
+        _codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
 }

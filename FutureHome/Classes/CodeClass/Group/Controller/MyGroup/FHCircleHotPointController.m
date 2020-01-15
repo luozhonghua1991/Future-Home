@@ -17,6 +17,7 @@
 #import "FHFriendMessageController.h"
 #import "FHArticleOrVideoShareCell.h"
 #import "FHWebViewController.h"
+#import "FHImageToolMethod.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
@@ -585,6 +586,9 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)avaterClick {
+    [FHImageToolMethod showImage:self.personHeaderImgView];
+}
 
 #pragma mark — setter && getter
 - (NSMutableArray *)dataArray{
@@ -701,6 +705,10 @@
         _personHeaderImgView.layer.cornerRadius = 5;
         _personHeaderImgView.layer.masksToBounds = YES;
         _personHeaderImgView.clipsToBounds = YES;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avaterClick)];
+        _personHeaderImgView.userInteractionEnabled = YES;
+        [_personHeaderImgView addGestureRecognizer:tap];
     }
     return _personHeaderImgView;
 }

@@ -151,7 +151,9 @@
                                        @(account.user_id),@"user_id",
                                        self.videoTopicId,@"id",
                                        @(1),@"page",
-                                       @(2),@"type", nil];
+                                       @(2),@"type",
+                                       [SingleManager shareManager].ordertype,@"ordertype",
+                                       nil];
             
             [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
                 if ([responseObj[@"code"] integerValue] == 1) {

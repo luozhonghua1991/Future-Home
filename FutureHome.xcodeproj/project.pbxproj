@@ -927,6 +927,7 @@
 		4AF51B5F22D07ECA00AA04EC /* GNRShoppingBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B5C22D07ECA00AA04EC /* GNRShoppingBarView.m */; };
 		4AF51B6022D07ECA00AA04EC /* GNRShoppingBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */; };
 		4AF51B6322D0800C00AA04EC /* UINavigationBar+Awesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */; };
+		4AFA588B23CDC79B005E7790 /* FHImageToolMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFA588A23CDC79B005E7790 /* FHImageToolMethod.m */; };
 		4AFBC2F1230E8C2E00EF7C8E /* LGJCategoryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFBC2EE230E8C2E00EF7C8E /* LGJCategoryVC.m */; };
 		4AFBC2F2230E8C2E00EF7C8E /* LGJProductsVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFBC2EF230E8C2E00EF7C8E /* LGJProductsVC.m */; };
 		4AFBC2F5230EA20100EF7C8E /* FHMentalHealthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFBC2F4230EA20100EF7C8E /* FHMentalHealthController.m */; };
@@ -2840,6 +2841,8 @@
 		4AF51B5D22D07ECA00AA04EC /* GNRShoppingBarView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GNRShoppingBarView.xib; sourceTree = "<group>"; };
 		4AF51B6122D0800C00AA04EC /* UINavigationBar+Awesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+Awesome.h"; sourceTree = "<group>"; };
 		4AF51B6222D0800C00AA04EC /* UINavigationBar+Awesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+Awesome.m"; sourceTree = "<group>"; };
+		4AFA588923CDC79B005E7790 /* FHImageToolMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHImageToolMethod.h; sourceTree = "<group>"; };
+		4AFA588A23CDC79B005E7790 /* FHImageToolMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHImageToolMethod.m; sourceTree = "<group>"; };
 		4AFBC2ED230E8C2E00EF7C8E /* LGJProductsVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGJProductsVC.h; sourceTree = "<group>"; };
 		4AFBC2EE230E8C2E00EF7C8E /* LGJCategoryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGJCategoryVC.m; sourceTree = "<group>"; };
 		4AFBC2EF230E8C2E00EF7C8E /* LGJProductsVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGJProductsVC.m; sourceTree = "<group>"; };
@@ -3821,6 +3824,8 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4AFA588923CDC79B005E7790 /* FHImageToolMethod.h */,
+				4AFA588A23CDC79B005E7790 /* FHImageToolMethod.m */,
 				4AAB02F3239276DA0016D95A /* 地图导航 */,
 				4A852F0B237F90500058D812 /* LeoPayManager.h */,
 				4A852F0C237F90500058D812 /* LeoPayManager.m */,
@@ -7510,6 +7515,7 @@
 				4AF51B5722D07E6A00AA04EC /* GNRCartHeader.m in Sources */,
 				4AB203EB22F2DD7300111AC4 /* ZXPDF417ResultMetadata.m in Sources */,
 				4AB203A422F2DD7300111AC4 /* ZXQRCode.m in Sources */,
+				4AFA588B23CDC79B005E7790 /* FHImageToolMethod.m in Sources */,
 				4AF51B3A22D07DEB00AA04EC /* GNRGoodsListModel.m in Sources */,
 				4A9CB2C5230C002C004A3763 /* FHBaseHaveNavTabberController.m in Sources */,
 				4A6DA9C522C05C6F00F29455 /* FHAppDelegate.mm in Sources */,

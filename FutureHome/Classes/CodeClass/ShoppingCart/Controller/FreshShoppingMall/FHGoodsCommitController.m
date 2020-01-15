@@ -150,6 +150,7 @@
                                @(self.type),@"experience",
                                self.imgSelectArrs,@"file[]",
                                self.businessDescriptionTextView.text,@"content",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool uploadImagesWithUrl:@"shop/orderComment" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {

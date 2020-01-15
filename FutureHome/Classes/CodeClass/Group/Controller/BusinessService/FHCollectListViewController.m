@@ -110,8 +110,8 @@ FHSearchResultCellDelegate
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
                                    @(curPage),@"page",
-                                   @"106.311932",@"slng",
-                                   @"29.586336",@"slat",
+                                   [SingleManager shareManager].strlongitude,@"slng",
+                                   [SingleManager shareManager].strlatitude,@"slat",
                                    nil];
         [AFNetWorkTool get:@"sheyun/searchNearby" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {

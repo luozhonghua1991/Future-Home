@@ -259,7 +259,6 @@
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"username"] = self.phoneNumnTF.text;
         params[@"password"] = self.passwordTF.text;
-        
         [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 [self.lodingHud hideAnimated:YES];
