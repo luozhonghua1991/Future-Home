@@ -847,6 +847,7 @@
 		4AD8916D22E9B6D1000FB415 /* FHPrivacySettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD8916C22E9B6D1000FB415 /* FHPrivacySettingsController.m */; };
 		4ADCE0F7233391C5008A12C4 /* FHCommitDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCE0F6233391C5008A12C4 /* FHCommitDetailController.m */; };
 		4ADF1D1E23C4A03300A5740B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */; };
+		4AE0F30423D15AC900C6CF20 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE0F30323D15AC900C6CF20 /* Security.framework */; };
 		4AE7A81B22F7CA4100910C08 /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A80F22F7CA4000910C08 /* UIView+PYExtension.m */; };
 		4AE7A81C22F7CA4100910C08 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A81022F7CA4000910C08 /* PYSearchViewController.m */; };
 		4AE7A81D22F7CA4100910C08 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A81122F7CA4000910C08 /* PYSearchSuggestionViewController.m */; };
@@ -2702,6 +2703,7 @@
 		4ADCE0F5233391C5008A12C4 /* FHCommitDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommitDetailController.h; sourceTree = "<group>"; };
 		4ADCE0F6233391C5008A12C4 /* FHCommitDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommitDetailController.m; sourceTree = "<group>"; };
 		4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		4AE0F30323D15AC900C6CF20 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4AE7A80F22F7CA4000910C08 /* UIView+PYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYExtension.m"; sourceTree = "<group>"; };
 		4AE7A81022F7CA4000910C08 /* PYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchViewController.m; sourceTree = "<group>"; };
 		4AE7A81122F7CA4000910C08 /* PYSearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchSuggestionViewController.m; sourceTree = "<group>"; };
@@ -2872,12 +2874,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A25D32E237A969D0036CD8D /* UIKit.framework in Frameworks */,
+				4A25D332237A96AC0036CD8D /* CFNetwork.framework in Frameworks */,
+				4AE0F30423D15AC900C6CF20 /* Security.framework in Frameworks */,
 				4ADF1D1E23C4A03300A5740B /* JavaScriptCore.framework in Frameworks */,
 				4A140AE9239E499400130CC9 /* CoreMedia.framework in Frameworks */,
 				4A25D334237A96B30036CD8D /* CoreMotion.framework in Frameworks */,
 				4A140AFB239E4E2300130CC9 /* SafariServices.framework in Frameworks */,
 				4A140AF9239E4E1C00130CC9 /* Photos.framework in Frameworks */,
-				4A25D32E237A969D0036CD8D /* UIKit.framework in Frameworks */,
 				4A25D324237A612B0036CD8D /* SystemConfiguration.framework in Frameworks */,
 				4A209EAF23A09AE500C40100 /* libvo-amrwbenc.a in Frameworks */,
 				4A140AEF239E49C300130CC9 /* libc++abi.tbd in Frameworks */,
@@ -2897,7 +2901,6 @@
 				4A25D32C237A96980036CD8D /* CoreGraphics.framework in Frameworks */,
 				4A140AE5239E497700130CC9 /* CoreAudio.framework in Frameworks */,
 				4A209EA923A09AE500C40100 /* RongIMKit.framework in Frameworks */,
-				4A25D332237A96AC0036CD8D /* CFNetwork.framework in Frameworks */,
 				4A140AE3239E45B700130CC9 /* AVFoundation.framework in Frameworks */,
 				4A140AE1239E44F500130CC9 /* AudioToolbox.framework in Frameworks */,
 				4A140ADF239E44A900130CC9 /* AssetsLibrary.framework in Frameworks */,
@@ -3070,6 +3073,7 @@
 		4A25D31E237A605A0036CD8D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4AE0F30323D15AC900C6CF20 /* Security.framework */,
 				4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */,
 				4A140AFC239E500B00130CC9 /* libstdc++.tbd */,
 				4A140AFA239E4E2200130CC9 /* SafariServices.framework */,

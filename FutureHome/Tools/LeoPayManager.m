@@ -154,8 +154,8 @@
 }
 + (BOOL)wechatRegisterAppWithAppId:(NSString *)appId description:(NSString *)description;
 {
-//    return [WXApi registerApp:appId withDescription:description];
-    return YES;
+    BOOL isSuccess = [WXApi registerApp:appId universalLink:description];
+    return isSuccess;
 }
 + (BOOL)wechatHandleOpenURL:(NSURL *)url
 {
@@ -164,7 +164,6 @@
 - (void)wechatPayWithAppId:(NSString *)appId partnerId:(NSString *)partnerId prepayId:(NSString *)prepayId package:(NSString *)package nonceStr:(NSString *)nonceStr timeStamp:(NSString *)timeStamp sign:(NSString *)sign respBlock:(LeoPayManagerRespBlock)block
 {
     self.wechatRespBlock = block;
-    
     if([WXApi isWXAppInstalled])
     {
         PayReq *req = [[PayReq alloc] init];
@@ -175,12 +174,11 @@
         req.nonceStr = nonceStr;
         req.timeStamp = (UInt32)timeStamp.integerValue;
         req.sign = sign;
+        
         [WXApi sendReq:req completion:^(BOOL success) {
-            
+            NSLog(@"唤起微信:%@", success ? @"成功" : @"失败");
         }];
-    }
-    else
-    {
+    } else {
         if(self.wechatRespBlock)
         {
             self.wechatRespBlock(-3, @"未安装微信");

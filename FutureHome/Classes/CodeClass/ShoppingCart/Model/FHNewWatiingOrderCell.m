@@ -58,10 +58,10 @@
     [self.whiteBgView addSubview:self.bottomLineView];
     [self.whiteBgView addSubview:self.statueBtn];
     [self.whiteBgView addSubview:self.typeBtn];
+    [self fh_layoutUI];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
+- (void)fh_layoutUI {
     self.whiteBgView.frame = CGRectMake(0, 0, SCREEN_WIDTH , 260);
     self.titleLabel.frame = CGRectMake(0, 0, SCREEN_WIDTH , 50);
     self.orderTimeLabel.frame = CGRectMake(15, MaxY(self.titleLabel) + 17, SCREEN_WIDTH , 14);
@@ -73,6 +73,10 @@
     self.bottomLineView.frame = CGRectMake(15, MaxY(self.topLineView) + 100, SCREEN_WIDTH - 15 , 0.5);
     self.statueBtn.frame = CGRectMake(SCREEN_WIDTH - 170, MaxY(self.bottomLineView) + 18, 70, 30);
     self.typeBtn.frame = CGRectMake(SCREEN_WIDTH - 85, MaxY(self.bottomLineView) + 18, 70, 30);
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
 }
 
 - (void)setListModel:(FHGoodsListModel *)listModel {
@@ -126,9 +130,10 @@
         _titleLabel = [[UILabel alloc] init];
         _titleLabel.font = [UIFont systemFontOfSize:16];
         _titleLabel.text = @"   台北城一期";
-        _titleLabel.textColor = [UIColor whiteColor];
+        _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
-        _titleLabel.backgroundColor = RGBACOLOR(0, 174, 173, 1);
+//        _titleLabel.backgroundColor = RGBACOLOR(0, 174, 173, 1);
+        _titleLabel.backgroundColor = HEX_COLOR(0xB6F1F7);
     }
     return _titleLabel;
 }
@@ -149,7 +154,8 @@
         _orderTypeLabel = [[UILabel alloc] init];
         _orderTypeLabel.font = [UIFont systemFontOfSize:14];
         _orderTypeLabel.text = @"";
-        _orderTypeLabel.textColor = HEX_COLOR(0x1296db);
+//        _orderTypeLabel.textColor = HEX_COLOR(0x1296db);
+        _orderTypeLabel.textColor = [UIColor blueColor];
         _orderTypeLabel.textAlignment = NSTextAlignmentRight;
     }
     return _orderTypeLabel;

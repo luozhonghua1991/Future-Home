@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol FHCommonVideosCollectionCellDelegate <NSObject>
 
 @optional // 可选实现的方法
+- (void)refreshData;
+
 - (void)FHCommonVideosCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex;
 
 - (void)fh_collectionCancleVideoSelectIndex:(NSIndexPath *)selectIndex model:(FHVideosListModel *)model;
@@ -33,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger type;
 /** 标头数据 */
 @property (nonatomic, strong) FHServiceCommonHeaderView *tableHeaderView;
+/** 视频列表collection */
+@property (nonatomic, strong) UICollectionView *videoCollectionView;
 
 @end
 

@@ -57,7 +57,7 @@
     _model = model;
     [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     
-    self.nameLab.text = _model.nickname;
+    self.nameLab.text = [self tranlateStrWithString:_model.nickname];
     
     self.timeLab.text = _model.add_time;
     self.contentLab.text = _model.content;
@@ -88,6 +88,18 @@
     
 }
 
+- (NSString *)tranlateStrWithString:(NSString *)str {
+    
+    NSMutableString * newStr = [NSMutableString stringWithString:str];
+    for(int i = 0; i < str.length; i++){
+        if (i > 0) {
+            [newStr replaceCharactersInRange:NSMakeRange(i, 1) withString:@"*"];
+        }
+    }
+    
+    return newStr;
+    
+}
 
 // 添加所子控件
 - (void)setUpAllView {

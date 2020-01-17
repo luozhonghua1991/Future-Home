@@ -53,17 +53,33 @@
 
     [AFNetWorkTool get:@"shop/getUserVideo" params:paramsDictionary success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [self endRefreshAction];
             self.videoListArrs = [[NSMutableArray alloc] init];
             weakSelf.videoListDataArrs = responseObj[@"data"][@"list"];
             self.videoListArrs = [FHVideosListModel mj_objectArrayWithKeyValuesArray:weakSelf.videoListDataArrs];
             [weakSelf.homeTable reloadData];
         } else {
+            [self endRefreshAction];
             [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [self endRefreshAction];
         [weakSelf.homeTable reloadData];
     }];
 }
+
+- (void)endRefreshAction {
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 
 #pragma mark — event
 /** 用户评论 */
@@ -106,6 +122,10 @@
     return cell;
 }
 
+//- (void)refreshData {
+//    [self getRequest];
+//}
+
 - (void)FHCommonVideosCollectionCellDelegateSelectIndex:(NSIndexPath *)selectIndex {
     ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
     douyin.videoListDataArrs = self.videoListDataArrs;
@@ -124,7 +144,8 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homeTable.showsVerticalScrollIndicator = NO;
-        _homeTable.scrollEnabled = NO;
+        _homeTable.scrollEnabled = YES;
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getRequest)];
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

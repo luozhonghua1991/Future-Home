@@ -610,7 +610,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                self.managerNameView.contentTF.text,@"applyname",
                                self.managerCardView.contentTF.text,@"idcard",
                                self.province_id,@"province_id",
-//                               self.city_id,@"city_id",
+                               self.city_id,@"city_id",
                                self.area_id,@"area_id",
                                self.addressView.contentTF.text,@"detailedaddress",
                                self.phoneView.contentTF.text,@"phone",
@@ -619,13 +619,13 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                @(self.payType),@"type",
                                @"2",@"ordertype",
                                self.selectIDCardsImgArrs,@"file[]",
-                               person_name,@"person_name",
-                               id_number,@"id_number",
-                               person_mobile,@"person_mobile",
-                               house_num,@"house_num",
+                               @[person_name],@"person_name",
+                               @[id_number],@"id_number",
+                               @[person_mobile],@"person_mobile",
+                               @[house_num],@"house_num",
                                nil];
     
-    [AFNetWorkTool uploadImagesWithUrl:@"owner/applyAccount" parameters:paramsDic image:self.selectIDCardsImgArrs otherImage:[NSArray new] success:^(id responseObj) {
+    [AFNetWorkTool uploadImagesWithUrl:@"owner/applyAccount" parameters:paramsDic image:self.selectIDCardsImgArrs success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             /** 账户资料传给后台成功 */
             

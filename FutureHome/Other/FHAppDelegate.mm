@@ -53,7 +53,7 @@ CLLocationManagerDelegate
     [self.window makeKeyAndVisible];
     pSelf = self;
     self.allFriendArrs = [[NSMutableArray alloc] init];
-    [WXApi registerApp:@"wx73519589eb9e4996" universalLink:@""];
+    [LeoPayManager wechatRegisterAppWithAppId:@"wx73519589eb9e4996" description:@"https://sheyunlife.com/"];
     
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUDAPPKEY];
     [RCIM sharedRCIM].connectionStatusDelegate = self;
@@ -83,6 +83,12 @@ CLLocationManagerDelegate
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
+    //自己的实现代码
+    
+    return [WXApi handleOpenUniversalLink:userActivity delegate:self];
+}
+
 #pragma mark - 定位
 //开始定位
 -(void) startLocation
@@ -101,19 +107,19 @@ CLLocationManagerDelegate
     }
 }
 
-#pragma mark CoreLocation delegate (定位失败)
-//定位失败后调用此代理方法
--(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-{
-    //设置提示提醒用户打开定位服务
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"允许定位提示" message:@"请在设置中打开定位" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"打开定位" style:UIAlertActionStyleDefault handler:nil];
-    
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:okAction];
-    [alert addAction:cancelAction];
-    [[CurrentViewController topViewController] presentViewController:alert animated:YES completion:nil];
-}
+//#pragma mark CoreLocation delegate (定位失败)
+////定位失败后调用此代理方法
+//-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+//{
+//    //设置提示提醒用户打开定位服务
+//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"允许定位提示" message:@"请在设置中打开定位" preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"打开定位" style:UIAlertActionStyleDefault handler:nil];
+//    
+//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//    [alert addAction:okAction];
+//    [alert addAction:cancelAction];
+//    [[CurrentViewController topViewController] presentViewController:alert animated:YES completion:nil];
+//}
 
 
 #pragma mark 定位成功后则执行此代理方法

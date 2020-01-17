@@ -118,9 +118,9 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(weakSelf.property_id),@"property_id",
-                               imgArrsString,@"img_ids",
                                self.suggestionsTextView.text,@"content",
                                @(self.type),@"type",
+                               imgArrsString,@"img_ids",
                                nil];
     
     [AFNetWorkTool post:@"public/complaint" params:paramsDic success:^(id responseObj) {

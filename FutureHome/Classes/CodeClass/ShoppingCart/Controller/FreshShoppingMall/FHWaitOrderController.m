@@ -157,23 +157,29 @@
                 typeString = @"已评价";
             }
         } else if (self.status == 4) {
-            if ([listModel.status integerValue] >= 2) {
+            cell.typeBtn.x = SCREEN_WIDTH - 15 - (70 * 3);
+            cell.typeBtn.width = 70 * 3;
+            if ([listModel.status integerValue] >= 3) {
                 if ([listModel.status integerValue] == 6) {
-                    typeString = @"退款成功";
+                    typeString = @"退款成功，款项已原路退回";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 } else if ([listModel.status integerValue] == 7) {
-                    typeString = @"拒绝退款";
+                    typeString = @"退款失败，原因证据理由不合理";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 } else if ([listModel.status integerValue] == 4) {
-                    typeString = @"已完成";
+                    typeString = @"订单已完成";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 } else if ([listModel.status integerValue] == 5) {
-                    typeString = @"退款中";
+                    typeString = @"退款申请中，待商家确认";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 } else {
-                    typeString = @"退货退款";
-                    [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
+                    typeString = @"申请退款";
+                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+//                    [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
                 }
+            } else {
+                typeString = @"申请退款";
+                [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
             }
         }
         [cell.typeBtn setTitle:typeString forState:UIControlStateNormal];
@@ -238,12 +244,15 @@
         }
     } else if (self.status == 4){
         /** 退货相关的 */
-        if ([listModel.status integerValue] >= 2) {
+        if ([listModel.status integerValue] >= 3) {
             if ([listModel.status isEqualToString:@"6"]||
                 [listModel.status isEqualToString:@"7"]||
                 [listModel.status isEqualToString:@"4"]||
-                [listModel.status isEqualToString:@"5"]) {
-            } else {
+                [listModel.status isEqualToString:@"5"]){
+                
+            }
+            
+        } else {
                /** 退货退款操作 */
                 FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
@@ -251,7 +260,7 @@
                 vc.totolePrice = [NSString stringWithFormat:@"￥%.2f",[listModel.pay_money floatValue]];
                 [self.navigationController pushViewController:vc animated:YES];
             }
-        }
+        
     }
 }
 

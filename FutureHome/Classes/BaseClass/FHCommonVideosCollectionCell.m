@@ -17,9 +17,6 @@ UICollectionViewDelegate,
 DZNEmptyDataSetSource,
 DZNEmptyDataSetDelegate
 >
-/** 视频列表collection */
-@property (nonatomic, strong) UICollectionView *videoCollectionView;
-
 
 @end
 
@@ -132,6 +129,12 @@ DZNEmptyDataSetDelegate
                                  };
     
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
+}
+
+- (void)getRequest {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(refreshData)]) {
+        [_delegate refreshData];
+    }
 }
 
 

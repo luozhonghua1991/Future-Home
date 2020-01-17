@@ -139,21 +139,23 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ZJCommit *commit = self.dataArray[indexPath.row];
-    //图片
-    if (commit.pic_urls.count > 0) {
-        FHPersonCommitListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FHPersonCommitListCell"];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.weakSelf = self;
-        cell.model = self.dataArray[indexPath.row];
-        return cell;
-    }
-    /** 纯文字Cell */
-    FHNoPicPersonCommitsCell *photoCell = [tableView dequeueReusableCellWithIdentifier:@"FHNoPicPersonCommitsCell"];
-    photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
-    photoCell.model = self.dataArray[indexPath.row];
-    return photoCell;
-
+//    if (self.dataArray.count >= indexPath.row) {
+        ZJCommit *commit = self.dataArray[indexPath.row];
+        //图片
+        if (commit.pic_urls.count > 0) {
+            FHPersonCommitListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"FHPersonCommitListCell"];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.weakSelf = self;
+            cell.model = self.dataArray[indexPath.row];
+            return cell;
+        }
+        /** 纯文字Cell */
+        FHNoPicPersonCommitsCell *photoCell = [tableView dequeueReusableCellWithIdentifier:@"FHNoPicPersonCommitsCell"];
+        photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        photoCell.model = self.dataArray[indexPath.row];
+        return photoCell;
+//    }
+//    return nil;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

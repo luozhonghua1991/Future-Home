@@ -153,10 +153,11 @@
 
 - (void)fh_creatLocationView {
     self.locationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.locationBtn.frame = CGRectMake(0, MainStatusBarHeight + 5, 100, 25);
-    [self.locationBtn setTitle:@"定位中..." forState:UIControlStateNormal];
+    self.locationBtn.frame = CGRectMake(0, MainStatusBarHeight + 5, 65, 25);
+//    self.locationBtn.backgroundColor = [UIColor redColor];
+    [self.locationBtn setTitle:@"定位中" forState:UIControlStateNormal];
     [self.locationBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    self.locationBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+    self.locationBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.locationBtn setImage:[UIImage imageNamed:@"chengshidingweiicon"] forState:UIControlStateNormal];
     [self.navgationView addSubview:self.locationBtn];
 }

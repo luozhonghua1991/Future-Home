@@ -171,11 +171,35 @@
     
     [AFNetWorkTool post:@"shop/downOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            if ([responseObj[@"data"][@"code"] integerValue] == 1) {
-                if (weakSelf.payType == 1) {
-                    /** 支付宝支付 */
+            if ([responseObj[@"data"][@"type"] integerValue] == 1) {
+                /** 支付宝支付 */
+                if ([responseObj[@"data"][@"code"] integerValue] == 1) {
+                    if (weakSelf.payType == 1) {
+                        /** 支付宝支付 */
+                        LeoPayManager *manager = [LeoPayManager getInstance];
+                        [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                            if (respCode == 0) {
+                                /** 支付成功 */
+                                WS(weakSelf);
+                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"购买成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                    if (buttonIndex == 0) {
+                                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                                    }
+                                }];
+                            } else {
+                                [self.view makeToast:respMsg];
+                            }
+                        }];
+                    }
+                } else {
+                    [self.view makeToast:responseObj[@"data"][@"msg"]];
+                }
+            } else if ([responseObj[@"data"][@"type"] integerValue] == 2) {
+                /** 微信支付 */
+                if ([responseObj[@"data"][@"code"] integerValue] == 1) {
                     LeoPayManager *manager = [LeoPayManager getInstance];
-                    [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                    [manager wechatPayWithAppId:responseObj[@"data"][@"weixin"][@"appid"] partnerId:responseObj[@"data"][@"weixin"][@"partnerid"] prepayId:responseObj[@"data"][@"weixin"][@"prepay_id"] package:responseObj[@"data"][@"weixin"][@"package"] nonceStr:responseObj[@"data"][@"weixin"][@"nonce_str"] timeStamp:responseObj[@"data"][@"weixin"][@"timestamp"] sign:responseObj[@"data"][@"weixin"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
+                        //处理支付结果
                         if (respCode == 0) {
                             /** 支付成功 */
                             WS(weakSelf);
@@ -184,30 +208,17 @@
                                     [weakSelf.navigationController popViewControllerAnimated:YES];
                                 }
                             }];
-                        } else if (respCode == -2) {
+                        } else {
                             [self.view makeToast:respMsg];
                         }
                     }];
+                } else {
+                    [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
-            } else {
-                [self.view makeToast:responseObj[@"data"][@"msg"]];
             }
-            /** 账户资料传给后台成功 */
-            /** 选择支付方式 */
-            //            [WXApi sendReq:[PayReq new] completion:^(BOOL success) {
-            //
-            //            }];
-            //            // 判断手机有没有微信
-            //            if ([WXApi isWXAppInstalled]) {
-            //                //                wechatButton.hidden = NO;
-            //            }else{
-            //                //                wechatButton.hidden = YES;
-            //            }
-            
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
-        
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
     }];

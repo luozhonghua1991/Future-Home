@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleDisplayName</key>
-	<string>FutureHome</string>
+	<string>社云</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -42,9 +42,11 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>20200111</string>
+	<string>20200115</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>weixin</string>
+		<string>weixinULAPI</string>
 		<string>iosamap</string>
 		<string>baidumap</string>
 	</array>
