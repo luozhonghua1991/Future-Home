@@ -437,6 +437,7 @@
     self.conversationVC.targetId = self.username;
     self.conversationVC.yp_tabItemTitle = @"对话记录";
     self.conversationVC.shopMobieString = self.shopMobie;
+    self.conversationVC.type = @"custom";
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,self.conversationVC, nil];
     
 //    Account *account = [AccountStorage readAccount];
@@ -545,7 +546,7 @@
                                    type,@"type",
                                    nil];
         _codeDetailView.dataDetaildic = paramsDic;
-        _codeDetailView.scanCodeDic = codeDic;
+        //_codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
 }

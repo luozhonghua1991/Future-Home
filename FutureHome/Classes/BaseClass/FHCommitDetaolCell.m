@@ -76,7 +76,7 @@
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textAlignment = NSTextAlignmentLeft;
         _contentLabel.font = [UIFont systemFontOfSize:13];
-        _contentLabel.textColor = [UIColor lightGrayColor];
+        _contentLabel.textColor = [UIColor blackColor];
         _contentLabel.numberOfLines = 1;
 #warning message
         _contentLabel.text = @"物业服务业服务业服务业服务业服务业服务业服务业服务业服务业服务业服务业服务";

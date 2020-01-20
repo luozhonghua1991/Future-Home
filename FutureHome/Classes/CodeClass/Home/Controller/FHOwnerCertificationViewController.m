@@ -326,7 +326,7 @@
                                self.areaNameView.contentTF.text,@"cell_name",
                                self.houseNumberView.contentTF.text,@"room_num",
                                self.houseAreaView.contentTF.text,@"area",
-                               self.louNumberView.contentTF.text,@"build_num",
+//                               self.louNumberView.contentTF.text,@"build_num",
                                imgArrsString,@"img_ids",
                                nil];
     NSString *url;

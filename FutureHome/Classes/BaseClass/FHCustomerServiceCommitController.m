@@ -18,19 +18,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.view addSubview:self.titleLabel];
-    self.conversationMessageCollectionView.frame = CGRectMake(0, MainSizeHeight + 135, SCREEN_WIDTH, SCREEN_HEIGHT - 135 - MainSizeHeight);
+    [self.chatSessionInputBarControl.pluginBoardView removeItemAtIndex:2];
+    if ([self.type isEqualToString:@"custom"]) {
+        [self.view addSubview:self.titleLabel];
+        self.conversationMessageCollectionView.frame = CGRectMake(0, MainSizeHeight + 135, SCREEN_WIDTH, SCREEN_HEIGHT - 135 - MainSizeHeight);
+    }
 }
 
 ////隐藏导航栏
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
+    if ([self.type isEqualToString:@"custom"]) {
+        self.navigationController.navigationBar.hidden = YES;
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+    if ([self.type isEqualToString:@"custom"]) {
+        self.navigationController.navigationBar.hidden = NO;
+    }
 }
 
 - (void)phoneClick {

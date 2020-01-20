@@ -109,6 +109,8 @@
 @property (nonatomic, copy) NSString *strlongitude;
 /** 当前城市 */
 @property (nonatomic, copy) NSString *currentCity;
+/** 用户评论 */
+@property (nonatomic, assign) BOOL isPersonCommits;
 
 
 

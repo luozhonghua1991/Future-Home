@@ -13,6 +13,7 @@
 #import <JhtMarquee/JhtHorizontalMarquee.h>
 #import <JhtMarquee/JhtVerticalMarquee.h>
 #import "FHScrollNewsController.h"
+#import "FHCustomerServiceCommitController.h"
 
 @interface FHCustomerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -340,7 +341,7 @@
     [AFNetWorkTool get:@"service/index" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                RCConversationViewController *conversationVC = [[RCConversationViewController alloc] init];
+                FHCustomerServiceCommitController *conversationVC = [[FHCustomerServiceCommitController alloc] init];
                 conversationVC.conversationType = ConversationType_PRIVATE;
                 conversationVC.targetId = responseObj[@"data"][@"username"];
                 conversationVC.title = responseObj[@"data"][@"nickname"];

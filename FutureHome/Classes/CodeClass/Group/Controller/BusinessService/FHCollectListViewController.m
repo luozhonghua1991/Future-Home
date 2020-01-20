@@ -114,6 +114,7 @@ FHSearchResultCellDelegate
                                    [SingleManager shareManager].strlatitude,@"slat",
                                    nil];
         [AFNetWorkTool get:@"sheyun/searchNearby" params:paramsDic success:^(id responseObj) {
+            
             if ([responseObj[@"code"] integerValue] == 1) {
                 if (isHead) {
                     [self.dataArrs removeAllObjects];

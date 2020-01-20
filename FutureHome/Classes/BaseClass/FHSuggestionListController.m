@@ -37,7 +37,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getCommitsData];
+//    [self getCommitsData];
 }
 
 - (void)getCommitsData {

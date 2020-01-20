@@ -436,31 +436,51 @@ FHCommonPaySelectViewDelegate
     
     [AFNetWorkTool uploadImagesWithUrl:@"shop/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            /** 账户资料传给后台成功 */
-            
-            /** 选择支付方式 */
-            //            [WXApi sendReq:[PayReq new] completion:^(BOOL success) {
-            //
-            //            }];
-            //            // 判断手机有没有微信
-            //            if ([WXApi isWXAppInstalled]) {
-            //                //                wechatButton.hidden = NO;
-            //            }else{
-            //                //                wechatButton.hidden = YES;
-            //            }
-            
-            LeoPayManager *manager = [LeoPayManager getInstance];
-            [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
-                if (respCode == 0) {
-                    /** 支付成功 */
-                    WS(weakSelf);
-                    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账户信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-                        if (buttonIndex == 0) {
-                            [weakSelf.navigationController popViewControllerAnimated:YES];
+            if (weakSelf.payType == 1) {
+                /** 支付宝支付 */
+                if ([responseObj[@"code"] integerValue] == 1) {
+                    if (weakSelf.payType == 1) {
+                        /** 支付宝支付 */
+                        LeoPayManager *manager = [LeoPayManager getInstance];
+                        [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                            if (respCode == 0) {
+                                /** 支付成功 */
+                                WS(weakSelf);
+                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账号信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                    if (buttonIndex == 0) {
+                                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                                    }
+                                }];
+                            } else {
+                                [self.view makeToast:respMsg];
+                            }
+                        }];
+                    }
+                } else {
+                    [self.view makeToast:responseObj[@"data"][@"msg"]];
+                }
+            } else if (weakSelf.payType == 2) {
+                /** 微信支付 */
+                if ([responseObj[@"code"] integerValue] == 1) {
+                    LeoPayManager *manager = [LeoPayManager getInstance];
+                    [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
+                        //处理支付结果
+                        if (respCode == 0) {
+                            /** 支付成功 */
+                            WS(weakSelf);
+                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账号信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                if (buttonIndex == 0) {
+                                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                                }
+                            }];
+                        } else {
+                            [self.view makeToast:respMsg];
                         }
                     }];
+                } else {
+                    [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
-            }];
+            }
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }

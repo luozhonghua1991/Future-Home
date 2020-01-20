@@ -93,8 +93,8 @@
                                self.type,@"type",
                                title ? title : @"",@"title",
                                /** 经纬度 */
-                               @"106.311932",@"slng",
-                               @"29.586336",@"slat",
+                               [SingleManager shareManager].strlongitude,@"slng",
+                               [SingleManager shareManager].strlatitude,@"slat",
                                nil];
     
     [AFNetWorkTool get:@"public/search" params:paramsDic success:^(id responseObj) {
@@ -286,6 +286,7 @@
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [weakSelf.view makeToast:@"服务器加载异常"];
         [weakSelf.homeTable reloadData];
     }];
 }

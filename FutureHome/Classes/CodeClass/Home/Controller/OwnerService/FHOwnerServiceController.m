@@ -545,7 +545,7 @@
                                    @"2",@"type",
                                    nil];
         _codeDetailView.dataDetaildic = paramsDic;
-        _codeDetailView.scanCodeDic = codeDic;
+        //_codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
 }

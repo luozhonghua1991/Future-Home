@@ -310,25 +310,53 @@
     
     [AFNetWorkTool post:@"shop/orderPaid" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            if (weakSelf.payType == 1) {
+            if ([responseObj[@"data"][@"type"] integerValue] == 1) {
                 /** 支付宝支付 */
-                LeoPayManager *manager = [LeoPayManager getInstance];
-                [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
-                    if (respCode == 0) {
-                        /** 支付成功 */
-                        WS(weakSelf);
-                        [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"付款成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-                            if (buttonIndex == 0) {
-                                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                if ([responseObj[@"data"][@"code"] integerValue] == 1) {
+                    if (weakSelf.payType == 1) {
+                        /** 支付宝支付 */
+                        LeoPayManager *manager = [LeoPayManager getInstance];
+                        [manager aliPayOrder: responseObj[@"data"][@"alipay"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                            if (respCode == 0) {
+                                /** 支付成功 */
+                                WS(weakSelf);
+                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"购买成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                    if (buttonIndex == 0) {
+                                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                                    }
+                                }];
+                            } else {
+                                [self.view makeToast:respMsg];
                             }
                         }];
-                    } else if (respCode == -2) {
-                        [self.view makeToast:respMsg];
                     }
-                }];
+                } else {
+                    [self.view makeToast:responseObj[@"data"][@"msg"]];
+                }
+            } else if ([responseObj[@"data"][@"type"] integerValue] == 2) {
+                /** 微信支付 */
+                if ([responseObj[@"data"][@"code"] integerValue] == 1) {
+                    LeoPayManager *manager = [LeoPayManager getInstance];
+                    [manager wechatPayWithAppId:responseObj[@"data"][@"weixin"][@"appid"] partnerId:responseObj[@"data"][@"weixin"][@"partnerid"] prepayId:responseObj[@"data"][@"weixin"][@"prepay_id"] package:responseObj[@"data"][@"weixin"][@"package"] nonceStr:responseObj[@"data"][@"weixin"][@"nonce_str"] timeStamp:responseObj[@"data"][@"weixin"][@"timestamp"] sign:responseObj[@"data"][@"weixin"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
+                        //处理支付结果
+                        if (respCode == 0) {
+                            /** 支付成功 */
+                            WS(weakSelf);
+                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"购买成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                if (buttonIndex == 0) {
+                                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                                }
+                            }];
+                        } else {
+                            [self.view makeToast:respMsg];
+                        }
+                    }];
+                } else {
+                    [self.view makeToast:responseObj[@"data"][@"msg"]];
+                }
             }
         } else {
-            [self.view makeToast:responseObj[@"msg"]];
+            [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];

@@ -50,16 +50,16 @@
     if (self.type == 3) {
         //    /** 动态详情数据 */
         [self requestWithDic:self.dongTaiDataDic];
+        [self fh_creatBottomInputView];
     } else {
         //    /** 评论详情数据 */
         [self requestWithDic:self.dataDic];
+        if (self.isCanCommit) {
+            [self fh_creatBottomInputView];
+        }
     }
     /** 评论数据 */
     [self getCommitsData];
-    
-    if (!self.isCanCommit) {
-        [self fh_creatBottomInputView];
-    }
 }
 
 
@@ -541,23 +541,52 @@
 }
 
 - (void)updateCommitWithContent:(NSString *)text {
-    WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
-    NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                @(account.user_id),@"user_id",
-                                @"0",@"to_id",
-                                @"1",@"type",
-                                self.ID,@"pid",
-                                text,@"content",
-                                nil];
-    
-    self.commitDataArrs = [[NSMutableArray alloc] init];
-    [AFNetWorkTool post:@"sheyun/circleComment" params:paramsDic success:^(id responseObj) {
-        self.firstLook = NO;
-        [weakSelf getCommitsData];
-    } failure:^(NSError *error) {
+    if (self.type == 3) {
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    @(account.user_id),@"user_id",
+                                    @"0",@"to_id",
+                                    @"1",@"type",
+                                    self.ID,@"pid",
+                                    text,@"content",
+                                    nil];
         
-    }];
+        self.commitDataArrs = [[NSMutableArray alloc] init];
+        [AFNetWorkTool post:@"sheyun/circleComment" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [self.view makeToast:@"评论成功"];
+                self.firstLook = NO;
+                [weakSelf getCommitsData];
+            } else {
+                [self.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    } else {
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary * paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    @(account.user_id),@"user_id",
+                                    @(self.property_id),@"property_id",
+                                    @(self.type),@"type",
+                                    self.ID,@"id",
+                                    text,@"content",
+                                    nil];
+        self.commitDataArrs = [[NSMutableArray alloc] init];
+        [AFNetWorkTool post:@"public/feedComplaints" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [self.view makeToast:@"评论成功"];
+                self.firstLook = NO;
+                [weakSelf getCommitsData];
+            } else {
+                [self.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 #pragma mark — setter && getter

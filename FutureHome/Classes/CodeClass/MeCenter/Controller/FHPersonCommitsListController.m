@@ -28,6 +28,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [SingleManager shareManager].isPersonCommits = YES;
+    self.dataArray = [[NSMutableArray alloc] init];
     [self setUpAllView];
     [self loadInit];
 }
@@ -36,6 +38,9 @@
     [super viewWillAppear:animated];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [SingleManager shareManager].isPersonCommits = NO;
+}
 
 #pragma mark -- MJrefresh
 - (void)headerReload {
@@ -105,7 +110,8 @@
             ZJCommit *commit = [ZJCommit commitWithGoodsCommitDict:dictDict];
             [arrM addObject:commit];
         }
-        self.dataArray = arrM;
+        [self.dataArray addObjectsFromArray:arrM];
+        
         WS(weakSelf);
         dispatch_async(dispatch_get_main_queue(), ^{
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -139,7 +145,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    if (self.dataArray.count >= indexPath.row) {
+//    if (self.dataArray.count > indexPath.row) {
         ZJCommit *commit = self.dataArray[indexPath.row];
         //图片
         if (commit.pic_urls.count > 0) {
@@ -155,7 +161,7 @@
         photoCell.model = self.dataArray[indexPath.row];
         return photoCell;
 //    }
-//    return nil;
+    
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
