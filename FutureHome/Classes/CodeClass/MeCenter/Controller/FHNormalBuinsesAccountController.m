@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/7/22.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  普通商业账号申请
+//  开通商业服务平台账户
 
 #import "FHNormalBuinsesAccountController.h"
 #import "FHAccountApplicationTFView.h"
@@ -374,6 +374,7 @@ FHCommonPaySelectViewDelegate
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = self.protocol;
+    web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
 }
@@ -394,7 +395,7 @@ FHCommonPaySelectViewDelegate
 //        [self.view makeToast:@"身份认证信息认证不能为空"];
 //        return;
 //    }
-    if (self.selectCount % 2 != 0) {
+    if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
@@ -411,6 +412,7 @@ FHCommonPaySelectViewDelegate
 
 - (void)commitAccountDataRequest {
     WS(weakSelf);
+    [ZHProgressHUD showMessage:@"提交资料中..." inView:self.view];
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -433,12 +435,14 @@ FHCommonPaySelectViewDelegate
                                nil];
     
     [AFNetWorkTool uploadImagesWithUrl:@"shop/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             if (weakSelf.payType == 1) {
                 /** 支付宝支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
                     if (weakSelf.payType == 1) {
                         /** 支付宝支付 */
+                        [ZHProgressHUD hide];
                         LeoPayManager *manager = [LeoPayManager getInstance];
                         [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
                             if (respCode == 0) {
@@ -460,6 +464,7 @@ FHCommonPaySelectViewDelegate
             } else if (weakSelf.payType == 2) {
                 /** 微信支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
+                    [ZHProgressHUD hide];
                     LeoPayManager *manager = [LeoPayManager getInstance];
                     [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
                         //处理支付结果

@@ -419,7 +419,7 @@
                                self.selectIDCardsImgArrs,@"idCardFile[]",
                                [self getSmallImageArray],@"file[]",
                                nil];
-    [ZHProgressHUD showMessage:@"支付中请稍后..." inView:self.view];
+    [ZHProgressHUD showMessage:@"提交资料中..." inView:self.view];
     [AFNetWorkTool uploadImagesWithUrl:@"property/applyAccount" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             if (self.payType == 1) {

@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/7/22.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  生鲜服务账号平台申请
+//  开通生鲜服务平台账户
 
 #import "FHFreshServiceAccountController.h"
 #import "FHAccountApplicationTFView.h"
@@ -372,6 +372,7 @@ FHCommonPaySelectViewDelegate
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = self.protocol;
+    web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
 }
@@ -410,6 +411,7 @@ FHCommonPaySelectViewDelegate
 
 - (void)commitAccountDataRequest {
     WS(weakSelf);
+    [ZHProgressHUD showMessage:@"资料提交中..." inView:[UIApplication  sharedApplication].delegate.window];
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -439,6 +441,7 @@ FHCommonPaySelectViewDelegate
                 if ([responseObj[@"code"] integerValue] == 1) {
                     if (weakSelf.payType == 1) {
                         /** 支付宝支付 */
+                        [ZHProgressHUD hide];
                         LeoPayManager *manager = [LeoPayManager getInstance];
                         [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
                             if (respCode == 0) {
@@ -460,6 +463,7 @@ FHCommonPaySelectViewDelegate
             } else if (self.payType == 2) {
                 /** 微信支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
+                    [ZHProgressHUD hide];
                     LeoPayManager *manager = [LeoPayManager getInstance];
                     [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
                         //处理支付结果

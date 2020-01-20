@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/7/20.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  业主账户界面
+//  联合开通业主服务/物业服务平台账户界面
 
 #import "FHProprietaryAccountController.h"
 #import "FHAccountApplicationTFView.h"
@@ -381,34 +381,34 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    if (textField == self.person1NameView.contentTF) {
-        [self.personNameArrs addObject:self.person1NameView.contentTF.text];
-    } else if (textField == self.person2NameView.contentTF) {
-        [self.personNameArrs addObject:self.person2NameView.contentTF.text];
-    }else if (textField == self.person3NameView.contentTF) {
-        [self.personNameArrs addObject:self.person3NameView.contentTF.text];
-    }
-    if (textField == self.person1CodeView.contentTF) {
-        [self.idNumberArrs addObject:self.person1CodeView.contentTF.text];
-    } else if (textField == self.person2CodeView.contentTF) {
-        [self.idNumberArrs addObject:self.person2CodeView.contentTF.text];
-    }else if (textField == self.person3CodeView.contentTF) {
-        [self.idNumberArrs addObject:self.person3CodeView.contentTF.text];
-    }
-    if (textField == self.person1PhoneView.contentTF) {
-        [self.phoneNumberArrs addObject:self.person1PhoneView.contentTF.text];
-    } else if (textField == self.person2PhoneView.contentTF) {
-        [self.phoneNumberArrs addObject:self.person2PhoneView.contentTF.text];
-    }else if (textField == self.person3PhoneView.contentTF) {
-        [self.phoneNumberArrs addObject:self.person3PhoneView.contentTF.text];
-    }
-    if (textField == self.person1HourseNumberView.contentTF) {
-        [self.houseNumberArrs addObject:self.person1HourseNumberView.contentTF.text];
-    } else if (textField == self.person2HourseNumberView.contentTF) {
-        [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
-    }else if (textField == self.person3HourseNumberView.contentTF) {
-        [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
-    }
+//    if (textField == self.person1NameView.contentTF) {
+//        [self.personNameArrs addObject:self.person1NameView.contentTF.text];
+//    } else if (textField == self.person2NameView.contentTF) {
+//        [self.personNameArrs addObject:self.person2NameView.contentTF.text];
+//    }else if (textField == self.person3NameView.contentTF) {
+//        [self.personNameArrs addObject:self.person3NameView.contentTF.text];
+//    }
+//    if (textField == self.person1CodeView.contentTF) {
+//        [self.idNumberArrs addObject:self.person1CodeView.contentTF.text];
+//    } else if (textField == self.person2CodeView.contentTF) {
+//        [self.idNumberArrs addObject:self.person2CodeView.contentTF.text];
+//    }else if (textField == self.person3CodeView.contentTF) {
+//        [self.idNumberArrs addObject:self.person3CodeView.contentTF.text];
+//    }
+//    if (textField == self.person1PhoneView.contentTF) {
+//        [self.phoneNumberArrs addObject:self.person1PhoneView.contentTF.text];
+//    } else if (textField == self.person2PhoneView.contentTF) {
+//        [self.phoneNumberArrs addObject:self.person2PhoneView.contentTF.text];
+//    }else if (textField == self.person3PhoneView.contentTF) {
+//        [self.phoneNumberArrs addObject:self.person3PhoneView.contentTF.text];
+//    }
+//    if (textField == self.person1HourseNumberView.contentTF) {
+//        [self.houseNumberArrs addObject:self.person1HourseNumberView.contentTF.text];
+//    } else if (textField == self.person2HourseNumberView.contentTF) {
+//        [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
+//    }else if (textField == self.person3HourseNumberView.contentTF) {
+//        [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
+//    }
 }
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index view:(nonnull UIView *)view {
@@ -563,6 +563,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = self.protocol;
+    web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
 }
@@ -598,10 +599,26 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (void)commitAccountDataRequest {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    NSString *person_name = [self.personNameArrs componentsJoinedByString:@","];
-    NSString *id_number = [self.idNumberArrs componentsJoinedByString:@","];
-    NSString *person_mobile = [self.phoneNumberArrs componentsJoinedByString:@","];
-    NSString *house_num = [self.houseNumberArrs componentsJoinedByString:@","];
+    [ZHProgressHUD showMessage:@"资料提交中..." inView:[UIApplication  sharedApplication].delegate.window];
+    [self.personNameArrs addObject:self.person1NameView.contentTF.text];
+    [self.personNameArrs addObject:self.person2NameView.contentTF.text];
+    [self.personNameArrs addObject:self.person3NameView.contentTF.text];
+    
+    [self.idNumberArrs addObject:self.person1CodeView.contentTF.text];
+    [self.idNumberArrs addObject:self.person2CodeView.contentTF.text];
+    [self.idNumberArrs addObject:self.person3CodeView.contentTF.text];
+    
+    [self.phoneNumberArrs addObject:self.person1PhoneView.contentTF.text];
+    [self.phoneNumberArrs addObject:self.person2PhoneView.contentTF.text];
+    [self.phoneNumberArrs addObject:self.person3PhoneView.contentTF.text];
+    
+    [self.houseNumberArrs addObject:self.person1HourseNumberView.contentTF.text];
+    [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
+    [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
+//    NSString *person_name = [self.personNameArrs componentsJoinedByString:@","];
+//    NSString *id_number = [self.idNumberArrs componentsJoinedByString:@","];
+//    NSString *person_mobile = [self.phoneNumberArrs componentsJoinedByString:@","];
+//    NSString *house_num = [self.houseNumberArrs componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                self.personServiceDeskView.contentTF.text,@"property_name",
@@ -619,10 +636,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                @(self.payType),@"type",
                                @"2",@"ordertype",
                                self.selectIDCardsImgArrs,@"file[]",
-                               @[person_name],@"person_name",
-                               @[id_number],@"id_number",
-                               @[person_mobile],@"person_mobile",
-                               @[house_num],@"house_num",
+                                [NSJSONSerialization dataWithJSONObject:self.personNameArrs options:0 error:NULL],@"person_name",
+                                [NSJSONSerialization dataWithJSONObject:self.idNumberArrs options:0 error:NULL],@"id_number",
+                                [NSJSONSerialization dataWithJSONObject:self.phoneNumberArrs options:0 error:NULL],@"person_mobile",
+                                [NSJSONSerialization dataWithJSONObject:self.houseNumberArrs options:0 error:NULL],@"house_num",
                                nil];
     
     [AFNetWorkTool uploadImagesWithUrl:@"owner/applyAccount" parameters:paramsDic image:self.selectIDCardsImgArrs success:^(id responseObj) {
@@ -632,6 +649,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                 if ([responseObj[@"code"] integerValue] == 1) {
                     if (weakSelf.payType == 1) {
                         /** 支付宝支付 */
+                        [ZHProgressHUD hide];
                         LeoPayManager *manager = [LeoPayManager getInstance];
                         [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
                             if (respCode == 0) {
@@ -653,6 +671,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
             } else if (self.payType == 2) {
                 /** 微信支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
+                    [ZHProgressHUD hide];
                     LeoPayManager *manager = [LeoPayManager getInstance];
                     [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
                         //处理支付结果
@@ -676,7 +695,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        
+        [self.view makeToast:@"提交资料失败,请稍后重试"];
     }];
 }
 

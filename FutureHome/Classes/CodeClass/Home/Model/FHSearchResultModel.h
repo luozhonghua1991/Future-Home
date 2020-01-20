@@ -18,9 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 距离 */
 @property (nonatomic, copy) NSString *distance;
 /** 粉丝数 */
-@property (nonatomic, copy) NSString *fans_num;
+@property (nonatomic, assign) NSInteger fans_num;
 /** 关注数 */
-@property (nonatomic, copy) NSString *follow_num;
+@property (nonatomic, assign) NSInteger follow_num;
 /** id */
 @property (nonatomic, copy) NSString *id;
 /** 是否收藏 0未收藏 1已收藏 */

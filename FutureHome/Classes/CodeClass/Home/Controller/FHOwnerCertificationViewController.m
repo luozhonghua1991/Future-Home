@@ -313,31 +313,47 @@
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrs componentsJoinedByString:@","];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @(weakSelf.property_id),@"owner_id",
-                               self.ownerNameView.contentTF.text,@"name",
-                               self.phoneNumberView.contentTF.text,@"mobile",
-                               self.ownerCodeView.contentTF.text,@"id_num",
-                               self.province_id,@"province_id",
-                               self.city_id,@"city_id",
-                               self.area_id,@"area_id",
-                               self.addressView.contentTF.text,@"street_name",
-                               self.areaNameView.contentTF.text,@"cell_name",
-                               self.houseNumberView.contentTF.text,@"room_num",
-                               self.houseAreaView.contentTF.text,@"area",
-//                               self.louNumberView.contentTF.text,@"build_num",
-                               imgArrsString,@"img_ids",
-                               nil];
+    NSDictionary *paramsDic;
     NSString *url;
     if ([self.path isEqualToString:@"owner"]) {
         /** 业委认证 */
         url = @"owner/authInfo";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     @(weakSelf.property_id),@"owner_id",
+                     self.ownerNameView.contentTF.text,@"name",
+                     self.phoneNumberView.contentTF.text,@"mobile",
+                     self.ownerCodeView.contentTF.text,@"id_num",
+                     self.province_id,@"province_id",
+                     self.city_id,@"city_id",
+                     self.area_id,@"area_id",
+                     self.addressView.contentTF.text,@"street_name",
+                     self.areaNameView.contentTF.text,@"cell_name",
+                     self.houseNumberView.contentTF.text,@"room_num",
+                     self.houseAreaView.contentTF.text,@"area",
+                     self.louNumberView.contentTF.text,@"build_num",
+                     imgArrsString,@"img_ids",
+                     nil];
     } else {
         /** 房产认证 */
         url = @"property/houseAuth";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     @(weakSelf.property_id),@"property_id",
+                     self.ownerNameView.contentTF.text,@"name",
+                     self.phoneNumberView.contentTF.text,@"mobile",
+                     self.ownerCodeView.contentTF.text,@"id_num",
+                     self.province_id,@"province_id",
+                     self.city_id,@"city_id",
+                     self.area_id,@"area_id",
+                     self.addressView.contentTF.text,@"street_name",
+                     self.areaNameView.contentTF.text,@"cell_name",
+                     self.houseNumberView.contentTF.text,@"room_num",
+                     self.houseAreaView.contentTF.text,@"area",
+                     self.louNumberView.contentTF.text,@"build_num",
+                     imgArrsString,@"img_ids",
+                     nil];
     }
-    
     [AFNetWorkTool post:url params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {

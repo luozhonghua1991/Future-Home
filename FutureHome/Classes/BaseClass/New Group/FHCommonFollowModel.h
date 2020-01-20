@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 粉丝数 */
 @property (nonatomic, copy) NSString *fans_num;
 /** 粉丝数 */
-@property (nonatomic, copy) NSString *follow_num;
+@property (nonatomic, assign) NSInteger follow_num;
 /** id */
 @property (nonatomic, copy) NSString *id;
 /** 收藏的主键 */

@@ -25,22 +25,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Tools/DouyinVideoPlayer/Other/ZFTableViewCellLayout.m"
-            timestampString = "599833052.3411421"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
-            landmarkName = "-videoHeight"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FutureHome/Tools/NetWork/AFNetWorkTool.m"
             timestampString = "601109524.663976"
             startingColumnNumber = "9223372036854775807"
@@ -67,108 +51,44 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHFreshServiceAccountController.m"
-            timestampString = "601040647.675693"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHNormalBuinsesAccountController.m"
+            timestampString = "601196622.8331341"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "435"
-            endingLineNumber = "435"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
             landmarkName = "-commitAccountDataRequest"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Group/Controller/BusinessService/FHCollectListViewController.m"
-            timestampString = "601040647.675779"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "-getRequestDataLoadHead:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-            timestampString = "601109259.2555799"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "-addPhotoClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-            timestampString = "601109259.2558891"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
-            landmarkName = "-addPhotoClick"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-            timestampString = "601109259.2560771"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "340"
-            endingLineNumber = "340"
-            landmarkName = "-sureBtnClick"
             landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "-[FHOwnerCertificationViewController sureBtnClick]"
+                  symbolName = "-[FHNormalBuinsesAccountController commitAccountDataRequest]"
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-                  timestampString = "601115254.253726"
+                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/MeCenter/Controller/FHNormalBuinsesAccountController.m"
+                  timestampString = "601193971.262948"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "341"
-                  endingLineNumber = "341"
-                  offsetFromSymbolStart = "2749">
+                  startingLineNumber = "435"
+                  endingLineNumber = "435"
+                  offsetFromSymbolStart = "2779">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "__50-[FHOwnerCertificationViewController sureBtnClick]_block_invoke"
+                  symbolName = "__60-[FHNormalBuinsesAccountController commitAccountDataRequest]_block_invoke"
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-                  timestampString = "601115254.2551529"
+                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/CodeClass/MeCenter/Controller/FHNormalBuinsesAccountController.m"
+                  timestampString = "601193971.26548"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "342"
-                  endingLineNumber = "342"
-                  offsetFromSymbolStart = "54">
+                  startingLineNumber = "437"
+                  endingLineNumber = "437"
+                  offsetFromSymbolStart = "63">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -179,13 +99,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-            timestampString = "601109259.2562571"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHNormalBuinsesAccountController.m"
+            timestampString = "601196622.833293"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "344"
-            endingLineNumber = "344"
-            landmarkName = "-sureBtnClick"
+            startingLineNumber = "438"
+            endingLineNumber = "438"
+            landmarkName = "-commitAccountDataRequest"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -195,13 +115,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/CodeClass/Home/Controller/FHOwnerCertificationViewController.m"
-            timestampString = "601109259.2565809"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHNormalBuinsesAccountController.m"
+            timestampString = "601196622.833371"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "349"
-            endingLineNumber = "349"
-            landmarkName = "-sureBtnClick"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
+            landmarkName = "-submitBtnClick"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Classes/CodeClass/MeCenter/Controller/FHNormalBuinsesAccountController.m"
+            timestampString = "601196622.833479"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "400"
+            endingLineNumber = "400"
+            landmarkName = "-submitBtnClick"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

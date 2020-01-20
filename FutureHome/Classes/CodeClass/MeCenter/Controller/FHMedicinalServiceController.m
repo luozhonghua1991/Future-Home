@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/7/22.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//
+//  开通医药药品服务平台账户
 
 #import "FHMedicinalServiceController.h"
 #import "FHAccountApplicationTFView.h"
@@ -376,6 +376,7 @@ FHCommonPaySelectViewDelegate
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = self.protocol;
+    web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
 }
@@ -396,7 +397,7 @@ FHCommonPaySelectViewDelegate
 //        [self.view makeToast:@"身份认证信息认证不能为空"];
 //        return;
 //    }
-    if (self.selectCount % 2 != 0) {
+    if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
@@ -413,6 +414,7 @@ FHCommonPaySelectViewDelegate
 
 - (void)commitAccountDataRequest {
     WS(weakSelf);
+    [ZHProgressHUD showMessage:@"提交资料中..." inView:self.view];
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -441,12 +443,13 @@ FHCommonPaySelectViewDelegate
                 if ([responseObj[@"code"] integerValue] == 1) {
                     if (weakSelf.payType == 1) {
                         /** 支付宝支付 */
+                        [ZHProgressHUD hide];
                         LeoPayManager *manager = [LeoPayManager getInstance];
                         [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
                             if (respCode == 0) {
                                 /** 支付成功 */
                                 WS(weakSelf);
-                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账号信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                                     if (buttonIndex == 0) {
                                         [weakSelf.navigationController popViewControllerAnimated:YES];
                                     }
@@ -462,13 +465,14 @@ FHCommonPaySelectViewDelegate
             } else if (weakSelf.payType == 2) {
                 /** 微信支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
+                    [ZHProgressHUD hide];
                     LeoPayManager *manager = [LeoPayManager getInstance];
                     [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
                         //处理支付结果
                         if (respCode == 0) {
                             /** 支付成功 */
                             WS(weakSelf);
-                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"账号信息已经提交成功" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                                 if (buttonIndex == 0) {
                                     [weakSelf.navigationController popViewControllerAnimated:YES];
                                 }

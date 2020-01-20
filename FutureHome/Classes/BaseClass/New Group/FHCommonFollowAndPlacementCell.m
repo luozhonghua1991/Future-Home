@@ -49,7 +49,7 @@
     _followModel = followModel;
     [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_followModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.nameLabel.text = _followModel.name;
-    self.fnansLabel.text = [NSString stringWithFormat:@"粉丝 : %@",_followModel.follow_num];
+    self.fnansLabel.text = [NSString stringWithFormat:@"粉丝 : %ld",(long)_followModel.follow_num];
 }
 
 
