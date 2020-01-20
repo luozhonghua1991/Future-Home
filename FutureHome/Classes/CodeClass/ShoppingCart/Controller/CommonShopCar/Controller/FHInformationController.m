@@ -47,7 +47,10 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.shopID,@"shop_id", nil];
+                               self.shopID,@"shop_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
+    
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
@@ -73,6 +76,7 @@
                                       self.shopID,@"shop_id",
                                       @"1",@"page",
                                       @"100000",@"limit",
+                                      [SingleManager shareManager].ordertype,@"ordertype",
                                       nil];
     
     [AFNetWorkTool get:@"shop/getUserArticle" params:paramsDictionary success:^(id responseObj) {

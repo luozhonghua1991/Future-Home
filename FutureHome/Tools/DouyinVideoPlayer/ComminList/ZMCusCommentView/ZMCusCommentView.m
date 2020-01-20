@@ -137,6 +137,7 @@
                                @"2",@"topic_type",
                                self.videoTopicId,@"topic_id",
                                content,@"content",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool post:@"shop/addComment" params:paramsDic success:^(id responseObj) {

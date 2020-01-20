@@ -599,7 +599,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (void)commitAccountDataRequest {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    [ZHProgressHUD showMessage:@"资料提交中..." inView:[UIApplication  sharedApplication].delegate.window];
+    [ZHProgressHUD showMessage:@"资料提交中..." inView:self.view];
     [self.personNameArrs addObject:self.person1NameView.contentTF.text];
     [self.personNameArrs addObject:self.person2NameView.contentTF.text];
     [self.personNameArrs addObject:self.person3NameView.contentTF.text];
@@ -649,9 +649,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                 if ([responseObj[@"code"] integerValue] == 1) {
                     if (weakSelf.payType == 1) {
                         /** 支付宝支付 */
-                        [ZHProgressHUD hide];
                         LeoPayManager *manager = [LeoPayManager getInstance];
                         [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                            [ZHProgressHUD hide];
                             if (respCode == 0) {
                                 /** 支付成功 */
                                 WS(weakSelf);
@@ -671,9 +671,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
             } else if (self.payType == 2) {
                 /** 微信支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
-                    [ZHProgressHUD hide];
                     LeoPayManager *manager = [LeoPayManager getInstance];
                     [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
+                        [ZHProgressHUD hide];
                         //处理支付结果
                         if (respCode == 0) {
                             /** 支付成功 */

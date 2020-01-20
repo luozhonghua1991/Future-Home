@@ -60,6 +60,10 @@
 /**是否需要展示活动图 */
 @property (nonatomic,assign) BOOL isShowActivityView;
 
+
+
+
+
 /** 是否选择用户头像 */
 @property (nonatomic, assign) BOOL isSelectPerson;
 
@@ -109,10 +113,10 @@
 @property (nonatomic, copy) NSString *strlongitude;
 /** 当前城市 */
 @property (nonatomic, copy) NSString *currentCity;
-/** 用户评论 */
+/** 用户评论状态 */
 @property (nonatomic, assign) BOOL isPersonCommits;
-
-
+/** 搜索结果状态 */
+@property (nonatomic, assign) BOOL isSearchStatues;
 
 
 /**

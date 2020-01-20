@@ -124,6 +124,7 @@
                                    strArea,@"area_id",
                                    detailAddressTextView.text,@"address",
                                    @"0",@"id",
+                                   [SingleManager shareManager].ordertype,@"ordertype",
                                    nil];
         //POST请求 新增用户地址信息
         __weak typeof(self)weakSelf = self;
@@ -155,6 +156,7 @@
                                    strArea,@"area_id",
                                    detailAddressTextView.text,@"address",
                                    @(self.addressID),@"id",
+                                   [SingleManager shareManager].ordertype,@"ordertype",
                                    nil];
         
         __weak typeof(self)weakSelf = self;

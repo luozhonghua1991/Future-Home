@@ -27,7 +27,9 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.shopID,@"shop_id", nil];
+                               self.shopID,@"shop_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
+                               nil];
     [AFNetWorkTool get:@"shop/getCommentVillegas" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSArray *arr = responseObj[@"data"];

@@ -49,6 +49,7 @@
                                       self.shopID,@"shop_id",
                                       @"1",@"page",
                                       @"100000",@"limit",
+                                      [SingleManager shareManager].ordertype,@"ordertype",
                                       nil];
 
     [AFNetWorkTool get:@"shop/getUserVideo" params:paramsDictionary success:^(id responseObj) {

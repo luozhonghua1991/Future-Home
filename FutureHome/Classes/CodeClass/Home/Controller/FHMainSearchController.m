@@ -21,8 +21,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [SingleManager shareManager].isSearchStatues = YES;
     self.titleLabel.hidden = YES;
     [self setUpUI];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [SingleManager shareManager].isSearchStatues = NO;
 }
 
 - (void)setUpUI {

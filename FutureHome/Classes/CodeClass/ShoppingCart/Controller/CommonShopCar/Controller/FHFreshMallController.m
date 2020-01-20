@@ -218,6 +218,7 @@
             [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        
     }];
 //    /** 获取商家详情 */
  

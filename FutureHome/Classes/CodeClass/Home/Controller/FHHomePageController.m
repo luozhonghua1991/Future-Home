@@ -124,6 +124,7 @@
 
 - (void)fh_getShopFollowList {
     /** 获取用户收藏的商店列表 */
+    [SingleManager shareManager].ordertype = @"3";
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -136,8 +137,10 @@
             NSDictionary *dic = arr[0];
             /** 商铺ID */
             weakSelf.shopID = dic[@"property_id"];
+            
         }
     } failure:^(NSError *error) {
+        
     }];
 }
 

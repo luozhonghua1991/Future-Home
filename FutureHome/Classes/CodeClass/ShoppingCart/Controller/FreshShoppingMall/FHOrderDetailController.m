@@ -306,6 +306,7 @@
                                @(account.user_id),@"user_id",
                                self.listModel.id,@"order_id",
                                @(self.payType),@"pay_way",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool post:@"shop/orderPaid" params:paramsDic success:^(id responseObj) {

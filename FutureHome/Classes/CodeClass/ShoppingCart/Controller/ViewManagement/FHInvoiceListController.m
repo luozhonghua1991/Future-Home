@@ -106,7 +106,8 @@
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",nil];
+                               @(account.user_id),@"user_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",nil];
     
     [AFNetWorkTool get:@"shop/getUserinvoices" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
@@ -246,7 +247,8 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               model.id,@"id", nil];
+                               model.id,@"id",
+                               [SingleManager shareManager].ordertype,@"ordertype",nil];
     [AFNetWorkTool post:@"shop/removeUserInvoice" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [self.view makeToast:@"操作成功"];

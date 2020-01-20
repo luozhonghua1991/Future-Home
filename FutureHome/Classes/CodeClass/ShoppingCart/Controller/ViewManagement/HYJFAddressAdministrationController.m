@@ -142,6 +142,7 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
+                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     //get请求 获取所有地址信息
     __weak typeof(self)weakSelf = self;
@@ -289,7 +290,8 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @(addressModel.id),@"id", nil];
+                               @(addressModel.id),@"id",
+                               [SingleManager shareManager].ordertype,@"ordertype",nil];
     [AFNetWorkTool post:@"shop/removeaddress" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"删除地址成功"];
