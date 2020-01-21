@@ -34,10 +34,10 @@
     [self.contentView addSubview:self.headerImgView];
     self.nickNameLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, 15.5, SCREEN_WIDTH - 150, 15);
     [self.contentView addSubview:self.nickNameLabel];
-    self.contentLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, MaxY(self.nickNameLabel) + 10, SCREEN_WIDTH - 100, 13);
-    [self.contentView addSubview:self.contentLabel];
     self.timeLabel.frame = CGRectMake(0, 15.5, SCREEN_WIDTH - 20, 13);
     [self.contentView addSubview:self.timeLabel];
+    self.contentLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, MaxY(self.nickNameLabel) + 10, SCREEN_WIDTH - 100, 13);
+    [self.contentView addSubview:self.contentLabel];
 }
 
 
@@ -47,6 +47,9 @@
     self.nickNameLabel.text = _commitModel.nickname;
     self.timeLabel.text = _commitModel.create_time;
     self.contentLabel.text = _commitModel.content;
+    CGSize size = [UIlabelTool sizeWithString:self.contentLabel.text font:self.contentLabel.font width:SCREEN_WIDTH - 100];
+    self.contentLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, MaxY(self.nickNameLabel) + 10, SCREEN_WIDTH - 100, size.height);
+    [SingleManager shareManager].commonCommitCellHeight = MaxY(self.contentLabel) + 15.5;
 }
 
 #pragma mark — setter && getter
@@ -77,7 +80,7 @@
         _contentLabel.textAlignment = NSTextAlignmentLeft;
         _contentLabel.font = [UIFont systemFontOfSize:13];
         _contentLabel.textColor = [UIColor blackColor];
-        _contentLabel.numberOfLines = 1;
+        _contentLabel.numberOfLines = 0;
 #warning message
         _contentLabel.text = @"物业服务业服务业服务业服务业服务业服务业服务业服务业服务业服务业服务业服务";
     }

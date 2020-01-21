@@ -13,6 +13,7 @@
 #import "FHCommonFollowAndPlacementCell.h"
 #import "FHCommonFollowModel.h"
 #import "FHFreshMallController.h"
+#import "FHHomeServicesController.h"
 
 @interface FHFollowListViewController ()
 <
@@ -135,15 +136,15 @@ FDActionSheetDelegate
     [SingleManager shareManager].selectType = @"MeCenter";
     FHCommonFollowModel*model = self.dataArrs[indexPath.row];
     if ([self.type isEqualToString:@"1"]) {
-        /** 搜索用户 跳到用户的动态 */
-        /** 去用户的动态 */
-//        FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
-//        vc.titleString = model.name;
-//        [SingleManager shareManager].isSelectPerson = YES;
-//        vc.hidesBottomBarWhenPushed = YES;
-//        vc.user_id = model.id;
-//        vc.personType = 0;
-//        [self.navigationController pushViewController:vc animated:YES];
+        /** 物业 */
+        FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
+        home.model = model;
+        [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
+        home.hidesBottomBarWhenPushed = NO;
+        [self.navigationController pushViewController:home animated:YES];
+    } else if ([self.type isEqualToString:@"2"]) {
+        /** 业委 */
+        
     } else if ([self.type isEqualToString:@"3"]) {
         /** 生鲜 */
         /** 生鲜商城 */

@@ -29,7 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *name;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *type;
-
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *username;
 
 @end
 

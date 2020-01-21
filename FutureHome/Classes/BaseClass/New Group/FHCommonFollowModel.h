@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *is_collect;
 /** 名字 */
 @property (nonatomic, copy) NSString *name;
+/** 社云账号 */
+@property (nonatomic, copy) NSString *username;
 
 @end
 

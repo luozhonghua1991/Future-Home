@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** 产地 */
 @property (nonatomic, strong)NSString * Place;
 /** 商品原价 */
-@property (nonatomic, copy) NSString *origin_price;
+@property (nonatomic, assign) CGFloat origin_price;
 /** 商品现价 */
 @property (nonatomic, copy) NSString *sell_price;
 /** 库存 */
@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *desc;
 /** 每日限购 */
 @property (nonatomic, copy) NSString *limit_num;
+/** 0不限购 1限购 */
+@property (nonatomic, assign) NSInteger Isrestrictions;
 
 @end
 

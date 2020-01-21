@@ -533,7 +533,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
         self.tapToDismissEnabled = YES;
         self.queueEnabled = NO;
-        self.defaultDuration = 1.0;
+        self.defaultDuration = 2.0;
         self.defaultPosition = CSToastPositionCenter;
     }
     return self;

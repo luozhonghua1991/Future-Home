@@ -38,12 +38,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fh_creatNav];
+    [self getGoodsDetailRequest];
     [self.view addSubview:self.homeTable];
     self.homeTable.tableHeaderView = self.headerView;
     self.homeTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
     [self.homeTable registerClass:[FHGoodsDetailCell class] forCellReuseIdentifier:NSStringFromClass([FHGoodsDetailCell class])];
     [self.view addSubview:self.shoppingBar];
-    [self getGoodsDetailRequest];
     [self.view addSubview:[SingleManager shareManager].shoppingBar];
 }
 
@@ -80,6 +80,7 @@
 
 - (void)getGoodsDetailRequest {
     WS(weakSelf);
+    [ZHProgressHUD showProgress:@"加载中..." inView:self.view];
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -88,17 +89,21 @@
                                nil];
     [AFNetWorkTool get:@"shop/getSinggoodInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [ZHProgressHUD hide];
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.urlArrays = dic[@"img_ids"];
             self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.urlArrays scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
             [self.headerView addSubview:self.topScrollView];
             self.goodsDetailModel = [FHGoodsDetailModel mj_objectWithKeyValues:dic];
+            self.goodsDetailModel.Isrestrictions = self.goodsModel.Isrestrictions;
             self.goodsDetailModel.sell_price = [NSString stringWithFormat:@"%.2f",[[dic objectForKey:@"sell_price"] floatValue]];
             [weakSelf.homeTable reloadData];
         } else {
+            [ZHProgressHUD hide];
             [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [ZHProgressHUD hide];
         [weakSelf.homeTable reloadData];
     }];
 }

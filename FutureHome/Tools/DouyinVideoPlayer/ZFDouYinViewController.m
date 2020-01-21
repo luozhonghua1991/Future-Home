@@ -338,7 +338,6 @@ static NSString *kIdentifier = @"kIdentifier";
         if ([responseObj[@"code"] integerValue] == 1) {
             weakSelf.commentListArrs = [[NSMutableArray alloc] init];
             NSArray *arr = responseObj[@"data"][@"list"];
-//            weakSelf.commentListArrs = [FHCommentListModel mj_objectArrayWithKeyValuesArray:arr];
             [weakSelf.commentListArrs addObjectsFromArray:arr];
             /** 展示评论列表 */
             [[ZMCusCommentManager shareManager] showCommentWithSourceId:@"" dataArrs:weakSelf.commentListArrs tableData:data];

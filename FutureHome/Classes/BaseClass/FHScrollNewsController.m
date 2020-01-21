@@ -134,6 +134,7 @@
     Account *account = [AccountStorage readAccount];
     web.urlString = [NSString stringWithFormat:@"%@?id=%@&userid=%ld",newsModel.singpage,newsModel.id,(long)account.user_id];
     web.titleString = newsModel.title;
+    web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
     [self.navigationController pushViewController:web animated:YES];

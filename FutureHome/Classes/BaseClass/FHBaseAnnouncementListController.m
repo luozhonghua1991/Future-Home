@@ -46,7 +46,7 @@
     self.clickButton.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, 60);
     [self.clickButton addTarget:self action:@selector(buttonClick) forControlEvents:UIControlEventTouchUpInside];
     self.clickButton.layer.borderWidth = 1;
-    self.clickButton.titleLabel.font = [UIFont systemFontOfSize:13];
+    self.clickButton.titleLabel.font = [UIFont boldSystemFontOfSize:16];
     self.clickButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.clickButton.titleLabel.numberOfLines = 2;
     self.clickButton.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -98,7 +98,7 @@
         self.noticeListArrs = [FHNoticeListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
         [self endRefreshAction];
         if (self.noticeListArrs.count == 0) {
-            [self.clickButton setTitle:@"申请招标服务" forState:UIControlStateNormal];
+//            [self.clickButton setTitle:@"通道尚未开启" forState:UIControlStateNormal];
             [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             self.clickButton.enabled = NO;
         }
@@ -236,6 +236,7 @@
     FHNoticeListModel *model = self.noticeListArrs[indexPath.row];
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = model.singpage;
+    
 //    if (self.ID == 1) {
 //        self.titleString = @"";
 //    } else if (self.ID == 2) {

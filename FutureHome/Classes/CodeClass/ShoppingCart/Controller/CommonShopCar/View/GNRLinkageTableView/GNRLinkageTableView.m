@@ -240,6 +240,9 @@
             goods.goodsUnitAtr = [obj objectForKey:@"UnitAtr"];
             goods.goodsID = [obj objectForKey:@"id"];
             goods.goodsSafetStock = [obj objectForKey:@"SafetStock"];
+            goods.Isrestrictions = [[obj objectForKey:@"Isrestrictions"] integerValue];
+            goods.buyNum = [[obj objectForKey:@"buyNum"] integerValue];
+            goods.limit_num = [[obj objectForKey:@"limit_num"] integerValue];
             //                [goodsGroup.goodsList addObject:goods];
             [weakSelf.goodsListArrs addObject:goods];
             

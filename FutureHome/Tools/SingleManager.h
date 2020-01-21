@@ -117,7 +117,8 @@
 @property (nonatomic, assign) BOOL isPersonCommits;
 /** 搜索结果状态 */
 @property (nonatomic, assign) BOOL isSearchStatues;
-
+/** 评论Cell的高度 */
+@property (nonatomic, assign) CGFloat commonCommitCellHeight;
 
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串

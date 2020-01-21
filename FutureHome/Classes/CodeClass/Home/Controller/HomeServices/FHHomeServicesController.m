@@ -126,6 +126,7 @@
         homeServerName:(NSString *)homeServerName {
     property_id = HomeSeverID;
     self.homeServiceName = homeServerName;
+    self.userName = self.model.username;
     /** 获取banner数据 */
     [self fh_refreshBannerData];
 }
@@ -550,11 +551,11 @@
 //                                   @"0",@"slng",
 //                                   @"",@"address",
                                    nil];
-        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"com.sheyun",@"app_key",
-                                   @(property_id),@"id",
-                                   @"1",@"type",
-                                   nil];
+//        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                   @"com.sheyun",@"app_key",
+//                                   @(property_id),@"id",
+//                                   @"1",@"type",
+//                                   nil];
         _codeDetailView.dataDetaildic = paramsDic;
         //_codeDetailView.scanCodeDic = codeDic;
     }

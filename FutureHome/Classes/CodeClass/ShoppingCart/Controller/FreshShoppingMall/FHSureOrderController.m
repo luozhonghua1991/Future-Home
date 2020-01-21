@@ -218,6 +218,7 @@
             }
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
+         
         }
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];

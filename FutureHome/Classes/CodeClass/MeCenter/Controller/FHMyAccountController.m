@@ -281,11 +281,11 @@
                                    self.account.username,@"username",
                                    @"0",@"type",
                                    nil];
-        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @"com.sheyun",@"app_key",
-                                   @(self.account.user_id),@"id",
-                                   @"0",@"type",
-                                   nil];
+//        NSDictionary *codeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                   @"com.sheyun",@"app_key",
+//                                   @(self.account.user_id),@"id",
+//                                   @"0",@"type",
+//                                   nil];
         _codeDetailView.dataDetaildic = paramsDic;
         //_codeDetailView.scanCodeDic = codeDic;
     }

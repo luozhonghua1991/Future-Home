@@ -348,7 +348,7 @@
             }
         }
     }
-    return 70.0f;
+    return [SingleManager shareManager].commonCommitCellHeight;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

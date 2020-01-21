@@ -27,5 +27,11 @@
 @property (nonatomic, assign)float shouldPayMoney;
 /** 购买个数 */
 @property (nonatomic, strong)NSNumber * number;//购买个数
+/** 0不限购 1限购 */
+@property (nonatomic, assign) NSInteger Isrestrictions;
+/** 当前用户总共购买的数量 */
+@property (nonatomic, assign) NSInteger buyNum;
+/** 限购的数量 */
+@property (nonatomic, assign) NSInteger limit_num;
 
 @end

@@ -71,10 +71,17 @@
 
 - (void)setGoodsDetailModel:(FHGoodsDetailModel *)goodsDetailModel {
     _goodsDetailModel = goodsDetailModel;
+    if (_goodsDetailModel == nil) {
+        return;
+    }
     self.titleNameLabel.text = _goodsDetailModel.title;
     self.producingAreaLabel.text = [NSString stringWithFormat:@"产地:%@",_goodsDetailModel.Place];
-    self.oldPriceLabel.text = [NSString stringWithFormat:@"商品原价:%@元",_goodsDetailModel.origin_price];
-    self.dayCountLabel.text = [NSString stringWithFormat:@"每日限购:%@",_goodsDetailModel.limit_num];
+    self.oldPriceLabel.text = [NSString stringWithFormat:@"商品原价:%.2f元",_goodsDetailModel.origin_price];
+    if (_goodsDetailModel.Isrestrictions == 0) {
+        self.dayCountLabel.text = [NSString stringWithFormat:@"是否限购:不限"];
+    } else if (_goodsDetailModel.Isrestrictions == 1) {
+        self.dayCountLabel.text = [NSString stringWithFormat:@"是否限购:限购%@",_goodsDetailModel.limit_num];
+    }
     self.typeLabel.text = [NSString stringWithFormat:@"规格:%@",_goodsDetailModel.UnitAtr];
     self.priceLabel.text = [NSString stringWithFormat:@"售价:%@元",_goodsDetailModel.sell_price];
     self.allCountLabel.text = [NSString stringWithFormat:@"库存:%@",_goodsDetailModel.SafetStock];
@@ -118,7 +125,7 @@
     if (!_producingAreaLabel) {
         _producingAreaLabel = [[UILabel alloc] init];
         _producingAreaLabel.font = [UIFont systemFontOfSize:14];
-        _producingAreaLabel.text = @"产地: 越南河内";
+        _producingAreaLabel.text = @"产地:";
         _producingAreaLabel.textColor = [UIColor blackColor];
         _producingAreaLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -129,7 +136,7 @@
     if (!_oldPriceLabel) {
         _oldPriceLabel = [[UILabel alloc] init];
         _oldPriceLabel.font = [UIFont systemFontOfSize:14];
-        _oldPriceLabel.text = @"商品原价: 2015.9元";
+        _oldPriceLabel.text = @"商品原价:";
         _oldPriceLabel.textColor = [UIColor blackColor];
         _oldPriceLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -140,7 +147,7 @@
     if (!_dayCountLabel) {
         _dayCountLabel = [[UILabel alloc] init];
         _dayCountLabel.font = [UIFont systemFontOfSize:14];
-        _dayCountLabel.text = @"每日限购: 2份";
+        _dayCountLabel.text = @"每日限购:";
         _dayCountLabel.textColor = [UIColor blackColor];
         _dayCountLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -151,7 +158,7 @@
     if (!_goodsInfoLabel) {
         _goodsInfoLabel = [[UILabel alloc] init];
         _goodsInfoLabel.font = [UIFont systemFontOfSize:14];
-        _goodsInfoLabel.text = @"商品描述:\n\n       好的很，霸气侧漏好的很，霸气侧漏好的很，霸气侧漏好的很";
+        _goodsInfoLabel.text = @"商品描述:";
         _goodsInfoLabel.textColor = [UIColor blackColor];
         _goodsInfoLabel.numberOfLines = 0;
         _goodsInfoLabel.textAlignment = NSTextAlignmentLeft;
@@ -163,7 +170,7 @@
     if (!_typeLabel) {
         _typeLabel = [[UILabel alloc] init];
         _typeLabel.font = [UIFont systemFontOfSize:14];
-        _typeLabel.text = @"规格: 700-800/份";
+        _typeLabel.text = @"规格:";
         _typeLabel.textColor = [UIColor blackColor];
         _typeLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -174,7 +181,7 @@
     if (!_priceLabel) {
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.font = [UIFont systemFontOfSize:14];
-        _priceLabel.text = @"售价: 12.8元";
+        _priceLabel.text = @"售价:";
         _priceLabel.textColor = [UIColor blackColor];
         _priceLabel.textAlignment = NSTextAlignmentLeft;
     }
@@ -185,7 +192,7 @@
     if (!_allCountLabel) {
         _allCountLabel = [[UILabel alloc] init];
         _allCountLabel.font = [UIFont systemFontOfSize:14];
-        _allCountLabel.text = @"库存: 200份";
+        _allCountLabel.text = @"库存:";
         _allCountLabel.textColor = [UIColor blackColor];
         _allCountLabel.textAlignment = NSTextAlignmentLeft;
     }
