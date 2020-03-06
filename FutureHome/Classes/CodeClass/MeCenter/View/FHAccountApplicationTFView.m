@@ -62,7 +62,7 @@
         _contentTF.textAlignment = NSTextAlignmentRight;
         _contentTF.font = [UIFont systemFontOfSize:15];
         _contentTF.returnKeyType = UIReturnKeyDone;
-        _contentTF.delegate = self;
+//        _contentTF.delegate = self;
 //        _contentTF.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _contentTF;

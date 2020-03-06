@@ -60,24 +60,37 @@
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
 
+
+@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 /** 省的ID */
 @property (nonatomic, copy) NSString *province_id;
 /** 市的ID */
 @property (nonatomic, copy) NSString *city_id;
 /** 区的ID */
 @property (nonatomic, copy) NSString *area_id;
+
+/** 代理区域的地址选择 */
+//@property (nonatomic, strong) FHAddressPickerView *delegateAddressPickerView;
+/** 代理省的ID */
+@property (nonatomic, copy) NSString *delegateProvince_id;
+/** 代理市的ID */
+@property (nonatomic, copy) NSString *delegateCity_id;
+/** 代理区的ID */
+@property (nonatomic, copy) NSString *delegateArea_id;
+
 /** 选择的是第几个 */
 @property (nonatomic, assign) NSInteger selectIndex;
 /** 选择的ID cards 图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectIDCardsImgArrs;
-
-@property (nonatomic, strong) FHAddressPickerView *addressPickerView;
 
 @property (nonatomic, strong) FHCommonPaySelectView *payView;
 /** 1支付宝  2 微信 */
 @property (nonatomic, assign) NSInteger payType;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger selectCount;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isSelectDelegateAddress;
+
 
 @end
 
@@ -86,6 +99,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.selectCount = 0;
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -171,17 +185,69 @@
     /** 确认并提交按钮 */
     [self.scrollView addSubview:self.submitBtn];
     
-//    @weakify(self)
+    [self creatAddressPickerView];
+}
+
+- (void)creatAddressPickerView {
+    @weakify(self)
+    //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
+    _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+    //默认为NO
+    //_addressPickerView.showLastSelect = YES;
+    _addressPickerView.cancelBtnBlock = ^() {
+        @strongify(self)
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+    };
+    
+    _addressPickerView.sureBtnBlock = ^(NSString *province,
+                                        NSString *city,
+                                        NSString *district,
+                                        NSString *addressCode,
+                                        NSString *parentCode,
+                                        NSString *provienceCode) {
+        //返回过来的信息在后面的这四个参数中,使用的时候要做非空判断,(province和addressCode为必返回参数,可以不做非空判断)
+        @strongify(self)
+        NSString *showString;
+        if (city != nil) {
+            showString = [NSString stringWithFormat:@"%@",city];
+        }else{
+            showString = province;
+        }
+        
+        if (district != nil) {
+            showString = [NSString stringWithFormat:@"%@%@", showString, district];
+        }
+        if (self.isSelectDelegateAddress) {
+            self.delegateWhereView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
+            self.delegateProvince_id = provienceCode;
+            self.delegateCity_id = parentCode;
+            self.delegateArea_id = addressCode;
+        } else {
+            self.detailAddressView.leftProvinceDataLabel.text = province;
+            self.detailAddressView.centerProvinceDataLabel.text = city;
+            self.detailAddressView.rightProvinceDataLabel.text = district;
+            self.province_id = provienceCode;
+            self.city_id = parentCode;
+            self.area_id = addressCode;
+        }
+        //移除掉地址选择器
+        [self.addressPickerView hiddenInView];
+        
+    };
+    
+////    @weakify(self)
 //    //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
-//    _addressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
+//    _delegateAddressPickerView = [[FHAddressPickerView alloc] initWithkAddressPickerViewModel:kAddressPickerViewModelAll];
 //    //默认为NO
 //    //_addressPickerView.showLastSelect = YES;
-//    _addressPickerView.cancelBtnBlock = ^() {
+//    _delegateAddressPickerView.cancelBtnBlock = ^() {
 //        @strongify(self)
 //        //移除掉地址选择器
-//        [self.addressPickerView hiddenInView];
+//        [self.delegateAddressPickerView hiddenInView];
 //    };
-//    _addressPickerView.sureBtnBlock = ^(NSString *province,
+//
+//    _delegateAddressPickerView.sureBtnBlock = ^(NSString *province,
 //                                        NSString *city,
 //                                        NSString *district,
 //                                        NSString *addressCode,
@@ -199,15 +265,12 @@
 //        if (district != nil) {
 //            showString = [NSString stringWithFormat:@"%@%@", showString, district];
 //        }
-//
-//        self.detailAddressView.leftProvinceDataLabel.text = province;
-//        self.detailAddressView.centerProvinceDataLabel.text = city;
-//        self.detailAddressView.rightProvinceDataLabel.text = district;
-//        self.province_id = provienceCode;
-//        self.city_id = parentCode;
-//        self.area_id = addressCode;
+//         self.delegateWhereView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
+//        self.delegateProvince_id = provienceCode;
+//        self.delegateCity_id = parentCode;
+//        self.delegateArea_id = addressCode;
 //        //移除掉地址选择器
-//        [self.addressPickerView hiddenInView];
+//        [self.delegateAddressPickerView hiddenInView];
 //
 //    };
 }
@@ -259,7 +322,8 @@
 #pragma mark — event
 /** 地址选择 */
 - (void)addressClick {
-//    [self.addressPickerView showInView:self.view];
+    self.isSelectDelegateAddress = NO;
+    [self.addressPickerView showInView:self.view];
 }
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
@@ -365,9 +429,27 @@
     scrollView.contentOffset = point;
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
+}
+
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+//    web.urlString = self.protocol;
+    web.typeString = @"information";
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
 }
 
 - (void)submitBtnClick {
@@ -390,6 +472,14 @@
             //            [weakSelf showPayView];
         }
     }];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.delegateWhereView.contentTF) {
+        [self.delegateWhereView.contentTF resignFirstResponder];
+        self.isSelectDelegateAddress = YES;
+        [self.addressPickerView showInView:self.view];
+    }
 }
 
 

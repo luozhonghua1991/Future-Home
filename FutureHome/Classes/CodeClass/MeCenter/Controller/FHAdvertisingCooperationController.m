@@ -20,12 +20,15 @@
 #import "FHAppDelegate.h"
 #import "FHWebViewController.h"
 #import "LeoPayManager.h"
+#import "FHSelectWhereCollectionCell.h"
 
 @interface FHAdvertisingCooperationController ()
 <UITextFieldDelegate,
 UIScrollViewDelegate,
 FHUserAgreementViewDelegate,
-FHCommonPaySelectViewDelegate>
+FHCommonPaySelectViewDelegate,
+UICollectionViewDelegate,
+UICollectionViewDataSource>
 /** 大的滚动视图 */
 @property (nonatomic, strong) UIScrollView *scrollView;
 /** 单位名称View */
@@ -50,6 +53,8 @@ FHCommonPaySelectViewDelegate>
 @property (nonatomic, strong) FHAccountApplicationTFView *showDayView;
 /** 投放时长 */
 @property (nonatomic, strong) FHAccountApplicationTFView *showTimeView;
+/** 请选择投放位置 */
+@property (nonatomic, strong) FHAccountApplicationTFView *selectWhereTF;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) UIView *selectWhereView;
 /** 投放说明 */
@@ -73,6 +78,20 @@ FHCommonPaySelectViewDelegate>
 @property (nonatomic, strong) FHUserAgreementView *agreementView;
 /** 确认并提交 */
 @property (nonatomic, strong) UIButton *submitBtn;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectCount;
+
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UICollectionView *selectWhereCollection;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSArray *selectWhereArrs;
+
+@property (nonatomic, strong) UIButton * oldSelectBtn;
+/** 选择投放的位置 */
+@property (nonatomic, assign) NSInteger selectWhereType;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL selectBottomAdderss;
+
 
 @end
 
@@ -81,6 +100,19 @@ FHCommonPaySelectViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.selectWhereArrs = @[@"社云主⻚广告A1 (上)",
+                                 @"健康服务广告B1 (上)",
+                                 @"社云主页广告A2 (下)",
+                                 @"健康服务广告B2 (下)",
+                                 @"理财服务广告C1 (上)",
+                                 @"客服服务广告D1 (上)",
+                                 @"理财服务广告C2 (下)",
+                                 @"客服服务广告D2 (下)",
+                                 @"物业服务广告W1 (上)",
+                                 @"业主服务广告Y1 (上)",
+                                 @"物业服务广告W2 (下)",
+                                 @"业主服务广告Y2 (下)"];
+    self.selectCount = 0;
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -138,7 +170,6 @@ FHCommonPaySelectViewDelegate>
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
     [self.scrollView addSubview:self.applicantNameView];
-    
     [self fh_creatDetailAddressView];
     [self.scrollView addSubview:self.addressView];
     [self.scrollView addSubview:self.personNameView];
@@ -149,6 +180,7 @@ FHCommonPaySelectViewDelegate>
     [self.scrollView addSubview:self.adverTypeView];
     [self.scrollView addSubview:self.showDayView];
     [self.scrollView addSubview:self.showTimeView];
+    [self.scrollView addSubview:self.selectWhereTF];
     [self.scrollView addSubview:self.selectWhereView];
     [self.scrollView addSubview:self.showLogView];
     [self.scrollView addSubview:self.showWhereView];
@@ -157,6 +189,10 @@ FHCommonPaySelectViewDelegate>
     [self.scrollView addSubview:self.agreementView];
     /** 确认并提交按钮 */
     [self.scrollView addSubview:self.submitBtn];
+    
+    self.showLogView.contentTF.userInteractionEnabled = NO;
+    self.showWhereView.contentTF.userInteractionEnabled = NO;
+    self.showNumberView.contentTF.userInteractionEnabled = NO;
     
     @weakify(self)
     //调用方法(核心)根据后面的枚举,传入不同的枚举,展示不同的模式
@@ -186,13 +222,16 @@ FHCommonPaySelectViewDelegate>
         if (district != nil) {
             showString = [NSString stringWithFormat:@"%@%@", showString, district];
         }
-        
-        self.detailAddressView.leftProvinceDataLabel.text = province;
-        self.detailAddressView.centerProvinceDataLabel.text = city;
-        self.detailAddressView.rightProvinceDataLabel.text = district;
-        self.province_id = provienceCode;
-        self.city_id = parentCode;
-        self.area_id = addressCode;
+        if (self.selectBottomAdderss) {
+            self.showWhereView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
+        } else {
+            self.detailAddressView.leftProvinceDataLabel.text = province;
+            self.detailAddressView.centerProvinceDataLabel.text = city;
+            self.detailAddressView.rightProvinceDataLabel.text = district;
+            self.province_id = provienceCode;
+            self.city_id = parentCode;
+            self.area_id = addressCode;
+        }
         //移除掉地址选择器
         [self.addressPickerView hiddenInView];
         
@@ -212,9 +251,10 @@ FHCommonPaySelectViewDelegate>
     self.adverTypeView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
     self.showDayView.frame = CGRectMake(0, CGRectGetMaxY(self.adverTypeView.frame), SCREEN_WIDTH, 50);
     self.showTimeView.frame = CGRectMake(0, CGRectGetMaxY(self.showDayView.frame), SCREEN_WIDTH, 50);
-    self.selectWhereView.frame = CGRectMake(0, CGRectGetMaxY(self.showTimeView.frame), SCREEN_WIDTH, 200);
+    self.selectWhereTF.frame = CGRectMake(0, CGRectGetMaxY(self.showTimeView.frame), SCREEN_WIDTH, 50);
+    self.selectWhereView.frame = CGRectMake(0, CGRectGetMaxY(self.selectWhereTF.frame), SCREEN_WIDTH, 200);
+    [self.selectWhereView addSubview:self.selectWhereCollection];
     self.showLogView.frame = CGRectMake(0, CGRectGetMaxY(self.selectWhereView.frame), SCREEN_WIDTH, 50);
-    
     self.showWhereView.frame = CGRectMake(0, CGRectGetMaxY(self.showLogView.frame), SCREEN_WIDTH, 50);
     self.showNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.showWhereView.frame), SCREEN_WIDTH, 50);
     self.agreementView.frame = CGRectMake(0, CGRectGetMaxY(self.showNumberView.frame) + 100, SCREEN_WIDTH, 15);
@@ -243,6 +283,7 @@ FHCommonPaySelectViewDelegate>
 #pragma mark — event
 /** 地址选择 */
 - (void)addressClick {
+    self.selectBottomAdderss = NO;
     [self.addressPickerView showInView:self.view];
 }
 
@@ -258,16 +299,74 @@ FHCommonPaySelectViewDelegate>
     [self.view endEditing:YES];
 }
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.adverTypeView.contentTF) {
+        [self.adverTypeView.contentTF resignFirstResponder];
+        /** 选择广告类型 */
+        [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择广告类型" dataSource:@[@"1图片广告类型(制作成本较低)",@"2图片+电商链接类型(制作 成本较低)",@"3视频图片广告类型(制作成本较高)",@"4视频图片+电商链接类型(制作 成本较高)"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+            NSLog(@"index---%ld",index);
+//            if (index == 0) {
+//            } else if (index == 1) {
+//            }
+            self.adverTypeView.contentTF.text = selectValue;
+        } cancelBlock:^{
+            
+        }];
+    } else if (textField == self.showWhereView.contentTF) {
+        /** 投放区域 */
+        [self.showWhereView.contentTF resignFirstResponder];
+        self.selectBottomAdderss = YES;
+        [self.addressPickerView showInView:self.view];
+    } else if (textField == self.showTimeView.contentTF) {
+        [self.showTimeView.contentTF resignFirstResponder];
+        /** 选择投放天数 */
+        [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择广告投放天数" dataSource:@[@"1天",@"2天",@"30天"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+            NSLog(@"index---%ld",index);
+            //            if (index == 0) {
+            //            } else if (index == 1) {
+            //            }
+            self.showTimeView.contentTF.text = selectValue;
+        } cancelBlock:^{
+            
+        }];
+    } else if (textField == self.showDayView.contentTF) {
+        [self.showDayView.contentTF resignFirstResponder];
+        /** 选择具体投放时间 */
+        [ZJDatePickerView zj_showDatePickerWithTitle:@"选择具体投放时间" dateType:ZJDatePickerModeYMDHM defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+            self.showDayView.contentTF.text = selectValue;
+        } ];
+    }
+}
+
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+//    web.urlString = self.protocol;
+    web.typeString = @"information";
+    web.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:web animated:YES];
+}
+
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
+}
+
 - (void)submitBtnClick {
     /** 确认并提交 */
     //    if (self.selectIDCardsImgArrs.count != 3) {
     //        [self.view makeToast:@"身份证信息认证不能为空"];
     //        return;
     //    }
-//    if (self.selectCount % 2 == 0) {
-//        [self.view makeToast:@"请同意用户信息授权协议"];
-//        return;
-//    }
+    if (self.selectCount % 2 == 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
+        return;
+    }
     
     /** 先加一个弹框提示 */
     WS(weakSelf);
@@ -279,6 +378,59 @@ FHCommonPaySelectViewDelegate>
         }
     }];
 }
+
+#pragma mark — collectionViewDelagate
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return self.selectWhereArrs.count;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    FHSelectWhereCollectionCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([FHSelectWhereCollectionCell class]) forIndexPath:indexPath];
+    [cell.selectBtn setTitle:[NSString stringWithFormat:@"%@",self.selectWhereArrs[indexPath.item]] forState:UIControlStateNormal];
+    cell.selectBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    [cell.selectBtn setImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    [cell.selectBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -5, 0, 0)];
+    [cell.selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    cell.selectBtn.tag = indexPath.item + 1;
+    if (indexPath.item > 7) {
+        [cell.selectBtn setTitleColor:HEX_COLOR(0x008b8b) forState:UIControlStateNormal];
+    } else {
+        [cell.selectBtn setTitleColor:HEX_COLOR(0x1c86ee) forState:UIControlStateNormal];
+    }
+    return cell;
+}
+
+#pragma mark -tableView代理方法
+- (void)selectBtnClick:(UIButton *)btn {
+    if (self.oldSelectBtn == btn) {
+    } else {
+        [btn setImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+        [self.oldSelectBtn setImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.oldSelectBtn = btn;
+    self.selectWhereType = btn.tag;
+    if (self.selectWhereType >=0 && self.selectWhereType <=8) {
+        /** 选择A1-D2的位
+         置，物业/业主服务 ⼴广告选择精确投放位 置，将保持灰度显示 锁定不不能选择和填写 */
+        self.showLogView.contentTF.userInteractionEnabled = NO;
+        self.showWhereView.contentTF.userInteractionEnabled = NO;
+        self.showNumberView.contentTF.userInteractionEnabled = NO;
+        self.showLogView.titleLabel.textColor = HEX_COLOR(0x878787);
+        self.showWhereView.titleLabel.textColor = HEX_COLOR(0x878787);
+        self.showNumberView.titleLabel.textColor = HEX_COLOR(0x878787);
+    } else {
+        /** 选择W1-W2;Y1-
+         Y2的位置，蓝⾊色⾼高亮 显示物业/业主服务 ⼴广告选择精确投放位 置，将并选择填写， 账号位数检验 */
+        self.showLogView.contentTF.userInteractionEnabled = YES;
+        self.showWhereView.contentTF.userInteractionEnabled = YES;
+        self.showNumberView.contentTF.userInteractionEnabled = YES;
+        self.showLogView.titleLabel.textColor = [UIColor blueColor];
+        self.showWhereView.titleLabel.textColor = [UIColor blueColor];
+        self.showNumberView.titleLabel.textColor = [UIColor blueColor];
+
+    }
+}
+
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
@@ -388,13 +540,42 @@ FHCommonPaySelectViewDelegate>
     return _showTimeView;
 }
 
+- (FHAccountApplicationTFView *)selectWhereTF {
+    if (!_selectWhereTF) {
+        _selectWhereTF = [[FHAccountApplicationTFView alloc] init];
+        _selectWhereTF.bottomLineView.hidden = YES;
+        _selectWhereTF.titleLabel.textColor = [UIColor blackColor];
+        _selectWhereTF.titleLabel.text = @"请选择投放位置";
+    }
+    return _selectWhereTF;
+}
+
 - (UIView *)selectWhereView {
     if (!_selectWhereView) {
         _selectWhereView = [[UIView alloc] init];
-        _selectWhereView.backgroundColor = [UIColor lightGrayColor];
+        _selectWhereView.backgroundColor = [UIColor whiteColor];
         
     }
     return _selectWhereView;
+}
+
+- (UICollectionView *)selectWhereCollection {
+    if (!_selectWhereCollection) {
+        UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+        flowLayout.minimumLineSpacing = 0;
+        flowLayout.minimumInteritemSpacing = 0;
+        flowLayout.itemSize = CGSizeMake(SCREEN_WIDTH / 2, 200 / 6);
+        
+        _selectWhereCollection = [[UICollectionView alloc]initWithFrame:self.selectWhereView.bounds collectionViewLayout:flowLayout];
+        _selectWhereCollection.showsHorizontalScrollIndicator = NO;
+        _selectWhereCollection.showsVerticalScrollIndicator = NO;
+        _selectWhereCollection.backgroundColor = [UIColor clearColor];
+        [_selectWhereCollection registerClass:[FHSelectWhereCollectionCell class] forCellWithReuseIdentifier:NSStringFromClass([FHSelectWhereCollectionCell class])];
+        _selectWhereCollection.dataSource = self;
+        _selectWhereCollection.delegate = self;
+        
+    }
+    return _selectWhereCollection;
 }
 
 - (FHAccountApplicationTFView *)showLogView {

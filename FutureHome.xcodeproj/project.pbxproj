@@ -317,6 +317,7 @@
 		4A70D54B22EE9E7B007AABDC /* ClearCaChe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A70D54722EE9E7A007AABDC /* ClearCaChe.m */; };
 		4A70D54C22EE9E7B007AABDC /* SingleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A70D54922EE9E7A007AABDC /* SingleManager.m */; };
 		4A71AA53234C9C77000C9BA9 /* FHVideosListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A71AA52234C9C77000C9BA9 /* FHVideosListModel.m */; };
+		4A727A092412515B0069B272 /* FHSelectWhereCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A727A082412515B0069B272 /* FHSelectWhereCollectionCell.m */; };
 		4A793D35231F666F00893255 /* FHRentalAndSaleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D34231F666F00893255 /* FHRentalAndSaleController.m */; };
 		4A793D38231F88E600893255 /* FHHouseSaleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D37231F88E600893255 /* FHHouseSaleController.m */; };
 		4A793D3B231F8FBB00893255 /* FHOwnerCertificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3A231F8FBB00893255 /* FHOwnerCertificationController.m */; };
@@ -1623,6 +1624,8 @@
 		4A70D54A22EE9E7B007AABDC /* SingleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleManager.h; sourceTree = "<group>"; };
 		4A71AA51234C9C77000C9BA9 /* FHVideosListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHVideosListModel.h; sourceTree = "<group>"; };
 		4A71AA52234C9C77000C9BA9 /* FHVideosListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHVideosListModel.m; sourceTree = "<group>"; };
+		4A727A072412515B0069B272 /* FHSelectWhereCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSelectWhereCollectionCell.h; sourceTree = "<group>"; };
+		4A727A082412515B0069B272 /* FHSelectWhereCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSelectWhereCollectionCell.m; sourceTree = "<group>"; };
 		4A793D33231F666F00893255 /* FHRentalAndSaleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHRentalAndSaleController.h; sourceTree = "<group>"; };
 		4A793D34231F666F00893255 /* FHRentalAndSaleController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHRentalAndSaleController.m; sourceTree = "<group>"; };
 		4A793D36231F88E600893255 /* FHHouseSaleController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHHouseSaleController.h; sourceTree = "<group>"; };
@@ -4125,6 +4128,8 @@
 				4A840947240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m */,
 				4A8409492410E558004F25B7 /* FHAdvertisingCooperationController.h */,
 				4A84094A2410E558004F25B7 /* FHAdvertisingCooperationController.m */,
+				4A727A072412515B0069B272 /* FHSelectWhereCollectionCell.h */,
+				4A727A082412515B0069B272 /* FHSelectWhereCollectionCell.m */,
 				4A84094C24110642004F25B7 /* FHServiceProviderCooperationController.h */,
 				4A84094D24110642004F25B7 /* FHServiceProviderCooperationController.m */,
 			);
@@ -7213,6 +7218,7 @@
 				4A9E84E02323561D0070CE4A /* FLAnimatedImageView.m in Sources */,
 				4AE8495322E30727009E165B /* MImaCell.m in Sources */,
 				4A68BB40236D61F800478B17 /* FHZJHaveMoveCell.m in Sources */,
+				4A727A092412515B0069B272 /* FHSelectWhereCollectionCell.m in Sources */,
 				4A8E0D5A22DEBD2200F814F7 /* FHCertificationController.m in Sources */,
 				4AB203CB22F2DD7300111AC4 /* ZXBitMatrix.m in Sources */,
 				4A5EB856230D15C800F90FF6 /* ZFPlayerGestureControl.m in Sources */,
