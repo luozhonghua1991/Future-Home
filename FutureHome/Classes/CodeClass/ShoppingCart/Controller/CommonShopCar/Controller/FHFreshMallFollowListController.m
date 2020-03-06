@@ -44,6 +44,11 @@ FDActionSheetDelegate
     [self loadInit];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 
 #pragma mark -- MJrefresh
 - (void)headerReload {
@@ -180,14 +185,19 @@ FDActionSheetDelegate
         /** 物业 */
         FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
         home.model = model;
+        home.isFollow = YES;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
-        home.hidesBottomBarWhenPushed = NO;
+//        home.hidesBottomBarWhenPushed = NO;
+        self.tabBarController.tabBar.hidden = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"2"]) {
         /** 业委 */
         FHOwnerServiceController *home = [[FHOwnerServiceController alloc]init];
-//        home.model = model;
-        home.hidesBottomBarWhenPushed = NO;
+        home.model = model;
+        home.isFollow = YES;
+        [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
+//        home.hidesBottomBarWhenPushed = NO;
+        self.tabBarController.tabBar.hidden = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];

@@ -114,13 +114,10 @@
     }];
 }
 
-//- (void)setModel:(FHCommonFollowModel *)model {
-//    _model = model;
-//    property_id = [_model.id integerValue];
-//    self.homeServiceName = model.name;
-//    /** 获取banner数据 */
-//    [self fh_refreshBannerData];
-//}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+}
 
 - (void)setHomeSeverID:(NSInteger )HomeSeverID
         homeServerName:(NSString *)homeServerName {
@@ -168,7 +165,12 @@
     
     self.followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
-    [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+//    [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    if (!self.isFollow) {
+        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    } else {
+        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+    }
     [self.followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:self.followBtn];
     
@@ -184,13 +186,19 @@
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
         if([obj isKindOfClass:[FHHomePageController class]]) {
             meVC = (FHHomePageController *)obj;
+            [self.navigationController popToViewController:meVC animated:YES];
+        } else {
+             [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }];
-    [self.navigationController popToViewController:meVC animated:YES];
 }
 
 /** 收藏物业 */
 - (void)followBtnClick {
+    if (self.is_collect == 1 || self.isFollow) {
+        [self.view makeToast:@"您已经收藏,请勿重复操作"];
+        return;
+    }
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSString *urlString;
@@ -217,7 +225,9 @@
 - (void)menuBtnClick {
     /** 去到收藏列表 */
     FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
-    listVC.hidesBottomBarWhenPushed = YES;
+//    listVC.hidesBottomBarWhenPushed = YES;
+    self.tabBarController.tabBar.hidden = YES;
+//    listVC.hidesBottomBarWhenPushed = NO;
     listVC.titleString = @"物业收藏";
     listVC.type = @"1";
     [self.navigationController pushViewController:listVC animated:YES];

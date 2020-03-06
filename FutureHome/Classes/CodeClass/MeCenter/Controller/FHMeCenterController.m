@@ -38,6 +38,7 @@
                       @"实名认证",
                       @"隐私设置",
                       @"开通账户",
+                      @"广告合作",
                       @"关于社云"];
     [self.view addSubview:self.meCenterTable];
     self.meCenterTable.tableFooterView = self.meCenterFooterView;
@@ -143,7 +144,7 @@
         cell.textLabel.text = [NSString stringWithFormat:@"%@",self.logoArrs[indexPath.row]];
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        if (indexPath.row == 5) {
+        if (indexPath.row == 6) {
             cell.detailTextLabel.text = @"版本号1.0.1";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         } else if (indexPath.row == 2) {
@@ -189,6 +190,9 @@
             /** 开通账户 */
             [self viewControllerPushOther:@"FHAccountApplyController"];
         } else if (indexPath.row == 5) {
+            /** 广告合作界面 */
+            [self viewControllerPushOther:@"FHAdvertOrBusinessCooperationController"];
+        } else if (indexPath.row == 6) {
             /** 关于未来家园 */
             [self viewControllerPushOther:@"FHAboutFutureHomeController"];
         }

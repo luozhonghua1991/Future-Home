@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 //@property (nonatomic, assign) NSInteger homeServices_ID;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHCommonFollowModel *model;
+/** 是否收藏 */
+@property (nonatomic, assign) BOOL isFollow;
+
 
 - (void)setHomeSeverID:(NSInteger )HomeSeverID
         homeServerName:(NSString *)homeServerName;

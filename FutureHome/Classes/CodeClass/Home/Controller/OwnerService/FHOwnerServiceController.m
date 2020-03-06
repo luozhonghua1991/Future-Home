@@ -81,6 +81,11 @@
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHCommonCollectionViewCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonCollectionViewCell class])];
     
+    
+    if (self.model) {
+        return;
+    }
+    
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -99,6 +104,24 @@
     }];
 }
 
+- (void)setHomeSeverID:(NSInteger )HomeSeverID
+        homeServerName:(NSString *)homeServerName {
+    property_id = HomeSeverID;
+    self.name = homeServerName;
+    self.userName = self.model.username;
+//    if (!self.isFollow) {
+//        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+//    } else {
+//        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+//    }
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = NO;
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -152,9 +175,11 @@
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
         if([obj isKindOfClass:[FHHomePageController class]]) {
             meVC = (FHHomePageController *)obj;
+            [self.navigationController popToViewController:meVC animated:YES];
+        } else {
+            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }];
-    [self.navigationController popToViewController:meVC animated:YES];
 }
 
 
@@ -225,7 +250,9 @@
 - (void)menuBtnClick {
     /** 去到收藏列表 */
     FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
-    listVC.hidesBottomBarWhenPushed = YES;
+//    listVC.hidesBottomBarWhenPushed = YES;
+//    listVC.hidesBottomBarWhenPushed = NO;
+    self.tabBarController.tabBar.hidden = YES;
     listVC.titleString = @"业委收藏";
     listVC.type = @"2";
     [self.navigationController pushViewController:listVC animated:YES];

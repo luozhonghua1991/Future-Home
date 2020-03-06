@@ -322,6 +322,9 @@
 		4A793D3B231F8FBB00893255 /* FHOwnerCertificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3A231F8FBB00893255 /* FHOwnerCertificationController.m */; };
 		4A793D3E231F917C00893255 /* FHOwnerCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3D231F917C00893255 /* FHOwnerCertificationViewController.m */; };
 		4A809C11236C43BA00DE63FD /* ZJNoHavePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A809C0F236C43BA00DE63FD /* ZJNoHavePhotoCell.m */; };
+		4A840948240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A840947240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m */; };
+		4A84094B2410E558004F25B7 /* FHAdvertisingCooperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A84094A2410E558004F25B7 /* FHAdvertisingCooperationController.m */; };
+		4A84094E24110642004F25B7 /* FHServiceProviderCooperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A84094D24110642004F25B7 /* FHServiceProviderCooperationController.m */; };
 		4A852F0D237F90510058D812 /* LeoPayManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A852F0C237F90500058D812 /* LeoPayManager.m */; };
 		4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6522C210D90083E00C /* FHMenuListCell.m */; };
 		4A8D8C6922C21B900083E00C /* FHMenuListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8D8C6822C21B900083E00C /* FHMenuListCollectionCell.m */; };
@@ -1630,6 +1633,12 @@
 		4A793D3D231F917C00893255 /* FHOwnerCertificationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOwnerCertificationViewController.m; sourceTree = "<group>"; };
 		4A809C0F236C43BA00DE63FD /* ZJNoHavePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJNoHavePhotoCell.m; sourceTree = "<group>"; };
 		4A809C10236C43BA00DE63FD /* ZJNoHavePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJNoHavePhotoCell.h; sourceTree = "<group>"; };
+		4A840946240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAdvertOrBusinessCooperationController.h; sourceTree = "<group>"; };
+		4A840947240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAdvertOrBusinessCooperationController.m; sourceTree = "<group>"; };
+		4A8409492410E558004F25B7 /* FHAdvertisingCooperationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAdvertisingCooperationController.h; sourceTree = "<group>"; };
+		4A84094A2410E558004F25B7 /* FHAdvertisingCooperationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAdvertisingCooperationController.m; sourceTree = "<group>"; };
+		4A84094C24110642004F25B7 /* FHServiceProviderCooperationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHServiceProviderCooperationController.h; sourceTree = "<group>"; };
+		4A84094D24110642004F25B7 /* FHServiceProviderCooperationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHServiceProviderCooperationController.m; sourceTree = "<group>"; };
 		4A852F0B237F90500058D812 /* LeoPayManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeoPayManager.h; sourceTree = "<group>"; };
 		4A852F0C237F90500058D812 /* LeoPayManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeoPayManager.m; sourceTree = "<group>"; };
 		4A8D8C6422C210D90083E00C /* FHMenuListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMenuListCell.h; sourceTree = "<group>"; };
@@ -4112,6 +4121,12 @@
 				4AAB02F923927E140016D95A /* FHPersonCommitsMainController.m */,
 				4AAB02FB2392804D0016D95A /* FHPersonCommitsListController.h */,
 				4AAB02FC2392804D0016D95A /* FHPersonCommitsListController.m */,
+				4A840946240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.h */,
+				4A840947240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m */,
+				4A8409492410E558004F25B7 /* FHAdvertisingCooperationController.h */,
+				4A84094A2410E558004F25B7 /* FHAdvertisingCooperationController.m */,
+				4A84094C24110642004F25B7 /* FHServiceProviderCooperationController.h */,
+				4A84094D24110642004F25B7 /* FHServiceProviderCooperationController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -6845,6 +6860,7 @@
 				4AB203AB22F2DD7300111AC4 /* ZXQRCodeDecoderMetaData.m in Sources */,
 				4AB2046C22F2DD7300111AC4 /* ZXingWrapper.m in Sources */,
 				4A68D2E723587846003A3CB6 /* DPPhotoBrowserEditor.m in Sources */,
+				4A84094B2410E558004F25B7 /* FHAdvertisingCooperationController.m in Sources */,
 				4AB2043922F2DD7300111AC4 /* ZXEAN13Writer.m in Sources */,
 				4AE8497322E3076A009E165B /* HWImagePickerSheet.m in Sources */,
 				4AA9AF562302600C00D28638 /* HYJFAddOrEditAddressController.m in Sources */,
@@ -6917,6 +6933,7 @@
 				4A6E5A8723703B220098DB67 /* MJRefreshBackNormalFooter.m in Sources */,
 				4AB203EE22F2DD7300111AC4 /* ZXDataMatrixEdifactEncoder.m in Sources */,
 				4AB2011E22F284D800111AC4 /* WMPlayer.m in Sources */,
+				4A840948240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m in Sources */,
 				4AA7B38822CC7CD600462389 /* TPKeyboardAvoidingCollectionView.m in Sources */,
 				4A153E86237270B800CFE6B6 /* FHSearchResultCell.m in Sources */,
 				4A5EB857230D15C800F90FF6 /* ZFPlayerController.m in Sources */,
@@ -7350,6 +7367,7 @@
 				4AB203F522F2DD7300111AC4 /* ZXDataMatrixSymbolInfo.m in Sources */,
 				4A5EB86A230D15C800F90FF6 /* ZFPlayerControlView.m in Sources */,
 				4A1351AA22F9295400CDDBB5 /* DXChatBarMoreView.m in Sources */,
+				4A84094E24110642004F25B7 /* FHServiceProviderCooperationController.m in Sources */,
 				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
 				4AB2039422F2DD7300111AC4 /* ZXGenericMultipleBarcodeReader.m in Sources */,
 				4AB2043A22F2DD7300111AC4 /* ZXUPCEANExtensionSupport.m in Sources */,

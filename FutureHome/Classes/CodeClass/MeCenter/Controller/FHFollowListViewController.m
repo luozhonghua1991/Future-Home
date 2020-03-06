@@ -14,6 +14,7 @@
 #import "FHCommonFollowModel.h"
 #import "FHFreshMallController.h"
 #import "FHHomeServicesController.h"
+#import "FHOwnerServiceController.h"
 
 @interface FHFollowListViewController ()
 <
@@ -139,12 +140,18 @@ FDActionSheetDelegate
         /** 物业 */
         FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
         home.model = model;
+        home.isFollow = YES;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
         home.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"2"]) {
         /** 业委 */
-        
+        FHOwnerServiceController *home = [[FHOwnerServiceController alloc]init];
+        home.model = model;
+        home.isFollow = YES;
+        [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
+        home.hidesBottomBarWhenPushed = NO;
+        [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {
         /** 生鲜 */
         /** 生鲜商城 */

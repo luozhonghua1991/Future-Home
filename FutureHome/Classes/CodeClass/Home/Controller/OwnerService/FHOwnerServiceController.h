@@ -7,10 +7,19 @@
 //
 
 #import "BaseViewController.h"
-
+#import "FHCommonFollowModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHOwnerServiceController : BaseViewController
+
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHCommonFollowModel *model;
+
+- (void)setHomeSeverID:(NSInteger )HomeSeverID
+        homeServerName:(NSString *)homeServerName;
+
+/** 是否收藏 */
+@property (nonatomic, assign) BOOL isFollow;
 
 @end
 

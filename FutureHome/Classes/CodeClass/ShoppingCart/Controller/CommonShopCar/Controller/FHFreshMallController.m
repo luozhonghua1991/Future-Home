@@ -320,7 +320,9 @@
         listVC.titleString = @"医药收藏";
         listVC.type = @"5";
     }
-    listVC.hidesBottomBarWhenPushed = YES;
+//    listVC.hidesBottomBarWhenPushed = YES;
+//    listVC.hidesBottomBarWhenPushed = NO;
+    self.tabBarController.tabBar.hidden = YES;
     [self.navigationController pushViewController:listVC animated:YES];
 }
 

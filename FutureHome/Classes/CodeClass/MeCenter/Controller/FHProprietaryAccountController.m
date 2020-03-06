@@ -141,6 +141,8 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 /** 房间号 */
 @property (nonatomic, strong) NSMutableArray *houseNumberArrs;
 
+@property (nonatomic, strong) MBProgressHUD *lodingHud;
+
 @end
 
 @implementation FHProprietaryAccountController
@@ -599,7 +601,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (void)commitAccountDataRequest {
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
-    [ZHProgressHUD showMessage:@"资料提交中..." inView:self.view];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     [self.personNameArrs addObject:self.person1NameView.contentTF.text];
     [self.personNameArrs addObject:self.person2NameView.contentTF.text];
     [self.personNameArrs addObject:self.person3NameView.contentTF.text];
@@ -650,8 +652,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                     if (weakSelf.payType == 1) {
                         /** 支付宝支付 */
                         LeoPayManager *manager = [LeoPayManager getInstance];
+                        WS(weakSelf);
                         [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
-                            [ZHProgressHUD hide];
+                            [weakSelf.lodingHud hideAnimated:YES];
+                            weakSelf.lodingHud = nil;
                             if (respCode == 0) {
                                 /** 支付成功 */
                                 WS(weakSelf);
@@ -672,8 +676,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                 /** 微信支付 */
                 if ([responseObj[@"code"] integerValue] == 1) {
                     LeoPayManager *manager = [LeoPayManager getInstance];
+                    WS(weakSelf);
                     [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
-                        [ZHProgressHUD hide];
+                        [weakSelf.lodingHud hideAnimated:YES];
+                        weakSelf.lodingHud = nil;
                         //处理支付结果
                         if (respCode == 0) {
                             /** 支付成功 */
@@ -1047,5 +1053,16 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     return _payView;
 }
 
+
+- (MBProgressHUD *)lodingHud{
+    if (_lodingHud == nil) {
+        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+        _lodingHud.removeFromSuperViewOnHide = YES;
+        _lodingHud.label.text = @"资料提交中...";
+        [_lodingHud showAnimated:YES];
+    }
+    return _lodingHud;
+}
 
 @end
