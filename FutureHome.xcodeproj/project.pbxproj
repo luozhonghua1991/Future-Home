@@ -207,6 +207,7 @@
 		4A5EB882230D182100F90FF6 /* ZFDouYinCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB881230D182100F90FF6 /* ZFDouYinCell.m */; };
 		4A5EB888230D189000F90FF6 /* ZFDouYinControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB887230D189000F90FF6 /* ZFDouYinControlView.m */; };
 		4A5EB88C230D1A2900F90FF6 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB88B230D1A2900F90FF6 /* UINavigationController+FDFullscreenPopGesture.m */; };
+		4A6015C72415F607006CF503 /* FHAdverBussinessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A6015C62415F607006CF503 /* FHAdverBussinessController.m */; };
 		4A662BAD2330E580006DF372 /* FHHouseListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A662BAC2330E580006DF372 /* FHHouseListModel.m */; };
 		4A662BB02330EB1A006DF372 /* FHListDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A662BAF2330EB1A006DF372 /* FHListDetailModel.m */; };
 		4A68BB40236D61F800478B17 /* FHZJHaveMoveCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A68BB3F236D61F800478B17 /* FHZJHaveMoveCell.m */; };
@@ -1404,6 +1405,8 @@
 		4A5EB887230D189000F90FF6 /* ZFDouYinControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFDouYinControlView.m; sourceTree = "<group>"; };
 		4A5EB88A230D1A2900F90FF6 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		4A5EB88B230D1A2900F90FF6 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
+		4A6015C52415F607006CF503 /* FHAdverBussinessController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAdverBussinessController.h; sourceTree = "<group>"; };
+		4A6015C62415F607006CF503 /* FHAdverBussinessController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAdverBussinessController.m; sourceTree = "<group>"; };
 		4A662BAB2330E580006DF372 /* FHHouseListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHHouseListModel.h; sourceTree = "<group>"; };
 		4A662BAC2330E580006DF372 /* FHHouseListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHHouseListModel.m; sourceTree = "<group>"; };
 		4A662BAE2330EB19006DF372 /* FHListDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHListDetailModel.h; sourceTree = "<group>"; };
@@ -4126,6 +4129,8 @@
 				4AAB02FC2392804D0016D95A /* FHPersonCommitsListController.m */,
 				4A840946240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.h */,
 				4A840947240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m */,
+				4A6015C52415F607006CF503 /* FHAdverBussinessController.h */,
+				4A6015C62415F607006CF503 /* FHAdverBussinessController.m */,
 				4A8409492410E558004F25B7 /* FHAdvertisingCooperationController.h */,
 				4A84094A2410E558004F25B7 /* FHAdvertisingCooperationController.m */,
 				4A727A072412515B0069B272 /* FHSelectWhereCollectionCell.h */,
@@ -7317,6 +7322,7 @@
 				4A448CD622C5B797003D0712 /* FHFinancialServiceController.m in Sources */,
 				4AC67DE522C8481200842C0D /* FHMessageController.m in Sources */,
 				4A1351AB22F9295400CDDBB5 /* XHMessageTextView.m in Sources */,
+				4A6015C72415F607006CF503 /* FHAdverBussinessController.m in Sources */,
 				4AB2041322F2DD7300111AC4 /* ZXAI013x0x1xDecoder.m in Sources */,
 				4AB2043F22F2DD7300111AC4 /* ZXVCardResultParser.m in Sources */,
 				4AC67E3222C8B06A00842C0D /* FHAddressManagerController.m in Sources */,

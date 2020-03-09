@@ -358,6 +358,9 @@ UICollectionViewDataSource>
 }
 
 - (void)submitBtnClick {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
+    [self.navigationController popViewControllerAnimated:YES];
+    
     /** 确认并提交 */
     //    if (self.selectIDCardsImgArrs.count != 3) {
     //        [self.view makeToast:@"身份证信息认证不能为空"];
