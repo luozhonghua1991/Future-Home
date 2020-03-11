@@ -89,7 +89,7 @@
                                @(self.status),@"status",
                                @"20",@"limit",
                                @(curPage),@"page",
-                               self.order_type,@"order_type",
+                               self.order_type,@"ordertype",
                                [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     

@@ -65,12 +65,13 @@
     if (!_selectBtn) {
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _selectBtn.frame = CGRectMake((SCREEN_WIDTH - 200) / 2, SCREEN_HEIGHT / 2 - 100, 200, 50);
-        [_selectBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_selectBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _selectBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-        [_selectBtn setBackgroundColor:[UIColor lightGrayColor]];
-        _selectBtn.layer.borderWidth = 1;
-        _selectBtn.layer.borderColor = [UIColor blackColor].CGColor;
+        [_selectBtn setBackgroundColor:HEX_COLOR(0x1296db)];
+        _selectBtn.layer.cornerRadius = 5;
+//        _selectBtn.layer.borderColor = [UIColor blackColor].CGColor;
         _selectBtn.clipsToBounds = YES;
+        _selectBtn.layer.masksToBounds = YES;
         [_selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _selectBtn;
@@ -78,13 +79,13 @@
 
 - (UILabel *)logLabel {
     if (!_logLabel) {
-        _logLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, MaxY(_selectBtn) + 100, SCREEN_WIDTH - 80, 90)];
+        _logLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, MaxY(_selectBtn) + 200, SCREEN_WIDTH - 80, 90)];
         _logLabel.font = [UIFont systemFontOfSize:13];
         _logLabel.textColor = [UIColor blackColor];
         _logLabel.textAlignment = NSTextAlignmentLeft;
         _logLabel.backgroundColor = [UIColor whiteColor];
-        _logLabel.layer.borderColor = [UIColor blackColor].CGColor;
-        _logLabel.layer.borderWidth = 1;
+//        _logLabel.layer.borderColor = [UIColor blackColor].CGColor;
+//        _logLabel.layer.borderWidth = 1;
         _logLabel.numberOfLines = 0;
     }
     return _logLabel;

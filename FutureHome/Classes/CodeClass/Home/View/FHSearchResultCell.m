@@ -97,7 +97,7 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        _nameLabel.font = [UIFont systemFontOfSize:13];
+        _nameLabel.font = [UIFont systemFontOfSize:15];
         _nameLabel.textColor = [UIColor blueColor];
         _nameLabel.numberOfLines = 1;
 #warning message

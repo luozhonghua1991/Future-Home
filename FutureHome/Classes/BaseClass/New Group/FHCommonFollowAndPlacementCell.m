@@ -83,7 +83,7 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        _nameLabel.font = [UIFont systemFontOfSize:13];
+        _nameLabel.font = [UIFont systemFontOfSize:15];
         _nameLabel.textColor = [UIColor blueColor];
         _nameLabel.numberOfLines = 1;
 #warning message
@@ -97,7 +97,7 @@
         _fnansLabel = [[UILabel alloc] init];
         _fnansLabel.textAlignment = NSTextAlignmentLeft;
         _fnansLabel.font = [UIFont systemFontOfSize:13];
-        _fnansLabel.textColor = [UIColor lightGrayColor];
+        _fnansLabel.textColor = [UIColor blackColor];
         _fnansLabel.numberOfLines = 1;
 #warning message
         _fnansLabel.text = @"未来生鲜龙湖U城店，后天将会到达烟台顶级樱桃，价格还不贵哦，共计500份，赶紧预定抢购";

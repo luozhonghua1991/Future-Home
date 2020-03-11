@@ -91,7 +91,17 @@ UICollectionViewDataSource>
 @property (nonatomic, assign) NSInteger selectWhereType;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) BOOL selectBottomAdderss;
+/** 广告类型 1纯图片 2图片+电商链接 3图片+视频 4 图片+视频+电商链接 */
+@property (nonatomic, assign) NSInteger adventtype;
+/** 投放广告的所在位置 */
+@property (nonatomic, copy) NSString *adventString;
 
+/** 投放区域省的ID */
+@property (nonatomic, copy) NSString *bottom_province_id;
+/** 投放区域市的ID */
+@property (nonatomic, copy) NSString *bottom_city_id;
+/** 投放区域区的ID */
+@property (nonatomic, copy) NSString *bottom_area_id;
 
 @end
 
@@ -118,6 +128,7 @@ UICollectionViewDataSource>
     [self fh_layoutSubViews];
     [self creatAleat];
 }
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
@@ -173,7 +184,7 @@ UICollectionViewDataSource>
     [self fh_creatDetailAddressView];
     [self.scrollView addSubview:self.addressView];
     [self.scrollView addSubview:self.personNameView];
-    [self.scrollView addSubview:self.applicantCardView];
+//    [self.scrollView addSubview:self.applicantCardView];
     [self.scrollView addSubview:self.phoneNumberView];
     [self.scrollView addSubview:self.phoneView];
     [self.scrollView addSubview:self.mailView];
@@ -224,6 +235,9 @@ UICollectionViewDataSource>
         }
         if (self.selectBottomAdderss) {
             self.showWhereView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
+            self.bottom_province_id = provienceCode;
+            self.bottom_city_id = parentCode;
+            self.bottom_area_id = addressCode;
         } else {
             self.detailAddressView.leftProvinceDataLabel.text = province;
             self.detailAddressView.centerProvinceDataLabel.text = city;
@@ -244,8 +258,8 @@ UICollectionViewDataSource>
     self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantNameView.frame), SCREEN_WIDTH, 50);
     self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, 50);
     self.personNameView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame), SCREEN_WIDTH, 50);
-    self.applicantCardView.frame = CGRectMake(0, CGRectGetMaxY(self.personNameView.frame), SCREEN_WIDTH, 50);
-    self.phoneNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantCardView.frame), SCREEN_WIDTH, 50);
+//    self.applicantCardView.frame = CGRectMake(0, CGRectGetMaxY(self.personNameView.frame), SCREEN_WIDTH, 50);
+    self.phoneNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.personNameView.frame), SCREEN_WIDTH, 50);
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneNumberView.frame), SCREEN_WIDTH, 50);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, 50);
     self.adverTypeView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
@@ -305,9 +319,7 @@ UICollectionViewDataSource>
         /** 选择广告类型 */
         [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择广告类型" dataSource:@[@"1图片广告类型(制作成本较低)",@"2图片+电商链接类型(制作 成本较低)",@"3视频图片广告类型(制作成本较高)",@"4视频图片+电商链接类型(制作 成本较高)"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
             NSLog(@"index---%ld",index);
-//            if (index == 0) {
-//            } else if (index == 1) {
-//            }
+            self.adventtype = index + 1;
             self.adverTypeView.contentTF.text = selectValue;
         } cancelBlock:^{
             
@@ -319,20 +331,33 @@ UICollectionViewDataSource>
         [self.addressPickerView showInView:self.view];
     } else if (textField == self.showTimeView.contentTF) {
         [self.showTimeView.contentTF resignFirstResponder];
-        /** 选择投放天数 */
-        [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择广告投放天数" dataSource:@[@"1天",@"2天",@"30天"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
-            NSLog(@"index---%ld",index);
-            //            if (index == 0) {
-            //            } else if (index == 1) {
-            //            }
-            self.showTimeView.contentTF.text = selectValue;
-        } cancelBlock:^{
+        /** 选择结束投放时间 */
+        [ZJDatePickerView zj_showDatePickerWithTitle:@"选择结束投放时间" dateType:ZJDatePickerModeYMD defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+            NSString *starTimer = self.showDayView.contentTF.text;
+            NSString *finishTimer = self.showTimeView.contentTF.text;
+            BOOL result = [starTimer compare:finishTimer] == NSOrderedSame;
+            NSLog(@"result:%d",result);
+            if (result == 1) {
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"开始时间和结束时间相等" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                [alert show];
+                self.showTimeView.contentTF.text = @"请重新选择结束时间";
+                return;
+            }
             
-        }];
+            BOOL result1 = [starTimer compare:finishTimer]==NSOrderedDescending;
+            NSLog(@"result1:%d",result1);
+            if (result1 == 1) {
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:nil message:@"结束时间不能早于开始时间" delegate:self cancelButtonTitle:@"知道了" otherButtonTitles:nil, nil];
+                [alert show];
+                self.showTimeView.contentTF.text = @"请重新选择结束时间";
+                return;
+            }
+            self.showTimeView.contentTF.text = selectValue;
+        } ];
     } else if (textField == self.showDayView.contentTF) {
         [self.showDayView.contentTF resignFirstResponder];
         /** 选择具体投放时间 */
-        [ZJDatePickerView zj_showDatePickerWithTitle:@"选择具体投放时间" dateType:ZJDatePickerModeYMDHM defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+        [ZJDatePickerView zj_showDatePickerWithTitle:@"选择开始投放时间" dateType:ZJDatePickerModeYMD defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
             self.showDayView.contentTF.text = selectValue;
         } ];
     }
@@ -358,29 +383,52 @@ UICollectionViewDataSource>
 }
 
 - (void)submitBtnClick {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
-    
-    /** 确认并提交 */
-    //    if (self.selectIDCardsImgArrs.count != 3) {
-    //        [self.view makeToast:@"身份证信息认证不能为空"];
-    //        return;
-    //    }
     if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
-    
-    /** 先加一个弹框提示 */
+    /** 直接提交操作就行 */
     WS(weakSelf);
-    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-        if (buttonIndex == 1) {
-//            [weakSelf payView];
-            weakSelf.submitBtn.userInteractionEnabled = NO;
-//            [weakSelf showPayView];
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.applicantNameView.contentTF.text,@"unitname",
+                               self.addressView.contentTF.text,@"unitaddress",
+                               self.personNameView.contentTF.text,@"contactname",
+//                               self.applicantCardView.contentTF.text,@"idcard",
+                               self.phoneNumberView.contentTF.text,@"phone",
+                               self.phoneView.contentTF.text,@"mobile",
+                               self.mailView.contentTF.text,@"email",
+                               @(self.adventtype),@"adventtype",
+                               self.adventString,@"putpositive",
+                               /** 投放区域的id参数 */
+                               self.bottom_province_id,@"province_id",
+                               self.bottom_city_id,@"city_id",
+                               self.bottom_area_id,@"area_id",
+                               self.showNumberView.contentTF.text,@"dropaccount",
+                               self.showDayView.contentTF.text,@"putinstarttime",
+                               self.showTimeView.contentTF.text,@"putinendttime",
+                               self.province_id,@"unitprovince",
+                               self.city_id,@"unitarea",
+                               self.area_id,@"unitcity",
+                               nil];
+    [AFNetWorkTool post:@"advent/saveinfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"广告合作申请提交成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                /** 确定 */
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
+                [self.navigationController popViewControllerAnimated:YES];
+            });
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
         }
+    } failure:^(NSError *error) {
     }];
+    
 }
+
 
 #pragma mark — collectionViewDelagate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -403,8 +451,14 @@ UICollectionViewDataSource>
     return cell;
 }
 
+
 #pragma mark -tableView代理方法
 - (void)selectBtnClick:(UIButton *)btn {
+    
+    
+    
+    
+    
     if (self.oldSelectBtn == btn) {
     } else {
         [btn setImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
@@ -412,6 +466,7 @@ UICollectionViewDataSource>
     }
     self.oldSelectBtn = btn;
     self.selectWhereType = btn.tag;
+    self.adventString = [self.oldSelectBtn.currentTitle substringWithRange:NSMakeRange(6, 2)];
     if (self.selectWhereType >=0 && self.selectWhereType <=8) {
         /** 选择A1-D2的位
          置，物业/业主服务 ⼴广告选择精确投放位 置，将保持灰度显示 锁定不不能选择和填写 */
@@ -526,9 +581,9 @@ UICollectionViewDataSource>
 - (FHAccountApplicationTFView *)showDayView {
     if (!_showDayView) {
         _showDayView = [[FHAccountApplicationTFView alloc] init];
-        _showDayView.titleLabel.text = @"投放时间";
+        _showDayView.titleLabel.text = @"预计开始投放时间";
         _showDayView.contentTF.delegate = self;
-        _showDayView.contentTF.placeholder = @"请选择投放时间 >";
+        _showDayView.contentTF.placeholder = @"请选择开始投放时间 >";
     }
     return _showDayView;
 }
@@ -536,9 +591,9 @@ UICollectionViewDataSource>
 - (FHAccountApplicationTFView *)showTimeView {
     if (!_showTimeView) {
         _showTimeView = [[FHAccountApplicationTFView alloc] init];
-        _showTimeView.titleLabel.text = @"投放天数";
+        _showTimeView.titleLabel.text = @"预计投放结束时间";
         _showTimeView.contentTF.delegate = self;
-        _showTimeView.contentTF.placeholder = @"请选择投放天数 >";
+        _showTimeView.contentTF.placeholder = @"请选择投放结束时间 >";
     }
     return _showTimeView;
 }

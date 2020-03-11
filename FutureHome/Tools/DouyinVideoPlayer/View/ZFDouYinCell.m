@@ -100,7 +100,7 @@
     min_h = 20;
     min_y = min_view_h - min_h - 50;
     min_w = self.likeBtn.zf_left - margin;
-    self.titleLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
+    self.titleLabel.frame = CGRectMake(min_x, min_y, min_w, min_h *2);
     
     self.headerImgView.frame = CGRectMake(SCREEN_WIDTH - 67, self.likeBtn.frame.origin.y - 100, 50, 50);
     
@@ -143,6 +143,7 @@
         _titleLabel = [UILabel new];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.font = [UIFont systemFontOfSize:15];
+        _titleLabel.numberOfLines = 2;
     }
     return _titleLabel;
 }

@@ -78,6 +78,7 @@
     }];
 }
 
+
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.blackListArrs.count;
@@ -160,6 +161,7 @@
     
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
+
 
 #pragma mark — setter & getter
 - (UITableView *)homeTable {

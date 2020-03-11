@@ -617,10 +617,12 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.houseNumberArrs addObject:self.person1HourseNumberView.contentTF.text];
     [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
     [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
+    
 //    NSString *person_name = [self.personNameArrs componentsJoinedByString:@","];
 //    NSString *id_number = [self.idNumberArrs componentsJoinedByString:@","];
 //    NSString *person_mobile = [self.phoneNumberArrs componentsJoinedByString:@","];
 //    NSString *house_num = [self.houseNumberArrs componentsJoinedByString:@","];
+    
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                self.personServiceDeskView.contentTF.text,@"property_name",
