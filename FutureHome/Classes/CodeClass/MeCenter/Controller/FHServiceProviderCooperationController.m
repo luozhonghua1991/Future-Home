@@ -436,7 +436,7 @@
 /** 跳转协议 */
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
-//    web.urlString = self.protocol;
+    web.urlString = self.protocol;
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
@@ -456,23 +456,35 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
     [self.navigationController popViewControllerAnimated:YES];
     /** 确认并提交 */
-    //    if (self.selectIDCardsImgArrs.count != 3) {
-    //        [self.view makeToast:@"身份证信息认证不能为空"];
-    //        return;
-    //    }
-    //    if (self.selectCount % 2 == 0) {
-    //        [self.view makeToast:@"请同意用户信息授权协议"];
-    //        return;
-    //    }
+//    if (self.selectIDCardsImgArrs.count != 3) {
+//        [self.view makeToast:@"身份证信息认证不能为空"];
+//        return;
+//    }
+    if (self.selectCount % 2 == 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
+        return;
+    }
     
     /** 先加一个弹框提示 */
     WS(weakSelf);
     [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         if (buttonIndex == 1) {
-            //            [weakSelf payView];
+            [weakSelf payView];
             weakSelf.submitBtn.userInteractionEnabled = NO;
-            //            [weakSelf showPayView];
+            [weakSelf showPayView];
         }
+    }];
+}
+
+#pragma mark - 显示支付弹窗
+- (void)showPayView{
+    __weak FHServiceProviderCooperationController *weakSelf = self;
+    self.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    [UIView animateWithDuration:0.5 animations:^{
+        [weakSelf.payView setFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    } completion:^(BOOL finished) {
+        weakSelf.payView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.4];
+        self.submitBtn.userInteractionEnabled = YES;
     }];
 }
 
@@ -631,6 +643,17 @@
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
+}
+
+- (FHCommonPaySelectView *)payView {
+    if (!_payView) {
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.price]];
+        _payView.delegate = self;
+    }
+    FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:_payView];
+    
+    return _payView;
 }
 
 

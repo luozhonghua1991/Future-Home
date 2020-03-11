@@ -165,7 +165,7 @@ UICollectionViewDataSource>
     
     [UIAlertController ba_alertShowInViewController:self
                                               title:@"温馨提示"
-                                            message:@"提示正文(没有支付功能)"
+                                            message:self.tips2
                                    buttonTitleArray:@[@"取 消", @"确 定"]
                               buttonTitleColorArray:buttonTitleColorArray
                                               block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -366,7 +366,7 @@ UICollectionViewDataSource>
 /** 跳转协议 */
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
-//    web.urlString = self.protocol;
+    web.urlString = self.protocol;
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:web animated:YES];
@@ -395,7 +395,6 @@ UICollectionViewDataSource>
                                self.applicantNameView.contentTF.text,@"unitname",
                                self.addressView.contentTF.text,@"unitaddress",
                                self.personNameView.contentTF.text,@"contactname",
-//                               self.applicantCardView.contentTF.text,@"idcard",
                                self.phoneNumberView.contentTF.text,@"phone",
                                self.phoneView.contentTF.text,@"mobile",
                                self.mailView.contentTF.text,@"email",
@@ -454,11 +453,6 @@ UICollectionViewDataSource>
 
 #pragma mark -tableView代理方法
 - (void)selectBtnClick:(UIButton *)btn {
-    
-    
-    
-    
-    
     if (self.oldSelectBtn == btn) {
     } else {
         [btn setImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];

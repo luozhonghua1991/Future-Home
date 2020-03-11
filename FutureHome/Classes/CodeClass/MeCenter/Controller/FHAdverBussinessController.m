@@ -7,6 +7,9 @@
 //
 
 #import "FHAdverBussinessController.h"
+#import "FHLosProtocolModel.h"
+#import "FHAdvertisingCooperationController.h"
+#import "FHServiceProviderCooperationController.h"
 
 @interface FHAdverBussinessController ()
 /** 选择按钮 */
@@ -17,6 +20,19 @@
 @property (nonatomic, strong) UILabel *successLabel;
 /** 成功提交按钮 */
 @property (nonatomic, strong) UIButton *successBtn;
+/** 提示数组 */
+@property (nonatomic, strong) NSMutableArray *tipsArrs;
+
+/** 里面的注释 */
+@property (nonatomic, copy) NSString *tips2;
+/** 跳转的链接 */
+@property (nonatomic, copy) NSString *protocol;
+/** 折扣率 */
+@property (nonatomic, copy) NSString *discount;
+/** 开通物业费价格 */
+@property (nonatomic, copy) NSString *open;
+/** 折扣价 */
+@property (nonatomic, copy) NSString *price;
 
 @end
 
@@ -25,27 +41,77 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    [self getAgreementTip];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(buySuccess) name:@"BUYSUCCESS" object:nil];
-    [self.view addSubview:self.selectBtn];
-    [self.view addSubview:self.logLabel];
+}
+
+- (void)getAgreementTip {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",nil];
+    
+    [AFNetWorkTool get:@"future/getIosAdvent" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 广告合作 和 商务服务 */
+            weakSelf.tipsArrs = [[NSMutableArray alloc] init];
+            weakSelf.tipsArrs = [FHLosProtocolModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"]];
+            [weakSelf setDataWithArr:self.tipsArrs];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
+
+- (void)setDataWithArr:(NSArray *)arr {
+    FHLosProtocolModel *protocolModel;
     if (self.type == 1) {
         [self.selectBtn setTitle:@"开始广告合作" forState:UIControlStateNormal];
-        self.logLabel.text = @"温馨提示:想了解更多广告信息，请访问http:/ /tongximedia.com";
-        
+        protocolModel = arr[0];
+        [self setDataWithModel:protocolModel];
     } else {
         [self.selectBtn setTitle:@"申请服务商合作" forState:UIControlStateNormal];
-        self.logLabel.text = @"温馨提示:申请服务商平台合作，需要支付授权牌照制作及审核服务费Y2000元，此外无其他任何费用。未能成功签订服务商合作协议，费用将全部立即退还，";
+        protocolModel = arr[1];
+        [self setDataWithModel:protocolModel];
     }
+    [self.view addSubview:self.selectBtn];
+    [self.view addSubview:self.logLabel];
+}
+
+- (void)setDataWithModel:(FHLosProtocolModel *)protocolModel {
+    self.logLabel.attributedText = [UIlabelTool willChangeHtmlString:protocolModel.tip1];
+    self.tips2 = protocolModel.tip2;
+    self.protocol = protocolModel.protocol;
+    self.discount = protocolModel.discount;
+    self.open = protocolModel.open;
+    self.price = protocolModel.price;
 }
 
 
 - (void)selectBtnClick:(UIButton *)btn {
     if ([btn.currentTitle isEqualToString:@"开始广告合作"]) {
         //开始广告合作
-        [self viewControllerPushOther:@"FHAdvertisingCooperationController"];
+//        [self viewControllerPushOther:@"FHAdvertisingCooperationController"];
+        FHAdvertisingCooperationController *vc = [[FHAdvertisingCooperationController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.tips2 = self.tips2;
+        vc.protocol = self.protocol;
+        vc.discount = self.discount;
+        vc.open = self.open;
+        vc.price = self.price;
+        [self.navigationController pushViewController:vc animated:YES];
     } else {
         //开始商务合作
-        [self viewControllerPushOther:@"FHServiceProviderCooperationController"];
+//        [self viewControllerPushOther:@"FHServiceProviderCooperationController"];
+        FHServiceProviderCooperationController *vc = [[FHServiceProviderCooperationController alloc] init];
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.tips2 = self.tips2;
+        vc.protocol = self.protocol;
+        vc.discount = self.discount;
+        vc.open = self.open;
+        vc.price = self.price;
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
