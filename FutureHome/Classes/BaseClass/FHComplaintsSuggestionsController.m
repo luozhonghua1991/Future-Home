@@ -90,7 +90,7 @@
         NSArray *arr = @[string];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
-                                   @"property",@"path",
+                                   @(self.type),@"path",
                                    arr,@"file[]",
                                    nil];
         for (int i = 0; i< self.imgSelectArrs.count; i++) {

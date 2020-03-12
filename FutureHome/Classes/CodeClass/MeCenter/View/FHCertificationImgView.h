@@ -27,6 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** <#strong属性注释#> */
 @property (nonatomic, strong) UIImageView *rightImgView;
 
+/** 修改名字的label */
+@property (nonatomic, strong) UILabel *changeTitleLabel;
+
+
 @property(nonatomic, weak) id<FHCertificationImgViewDelegate> delegate;
 
 @end

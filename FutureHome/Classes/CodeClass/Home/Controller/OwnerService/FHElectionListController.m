@@ -158,7 +158,7 @@
 - (void)pushBtnClick {
     //在此添加你想要完成的功能
     WS(weakSelf);
-    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"每人只有一次偷拍机会,确定是否提交?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"每人只有一次投票机会,确定是否提交?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         if (buttonIndex == 1) {
             /** 提交选举的人的资料 */
             NSString *selectIDString = [weakSelf.selectModelArrs componentsJoinedByString:@","];

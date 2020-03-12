@@ -39,12 +39,12 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     CGSize size = [UIlabelTool sizeWithString:@"点击按钮即表示您同意《用户信息授权协议》，并确认授权" font:[UIFont systemFontOfSize:13] width:SCREEN_WIDTH];
-    self.contentView.width = size.width + 15;
+    self.contentView.width = size.width + 25;
     self.contentView.height = 15;
     self.contentView.centerX = self.width / 2;
     
-    self.agrmmmentLabel.frame = CGRectMake(17, 0, size.width,
-                                           15);
+    self.agrmmmentLabel.frame = CGRectMake(25, 0, size.width,
+                                           25);
 }
 
 - (void)tapClick {
@@ -73,7 +73,7 @@
 - (UIButton *)selectBtn {
     if (!_selectBtn) {
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _selectBtn.frame = CGRectMake(0, 0, 15, 15);
+        _selectBtn.frame = CGRectMake(0, 0, 25, 25);
         [_selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
         [_selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }

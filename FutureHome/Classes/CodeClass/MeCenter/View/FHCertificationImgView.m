@@ -54,8 +54,8 @@
     label.text = name;
     label.textColor = [UIColor blackColor];
     label.textAlignment = NSTextAlignmentCenter;
-    
     [view addSubview:label];
+    self.changeTitleLabel = label;
     
     view.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick:)];

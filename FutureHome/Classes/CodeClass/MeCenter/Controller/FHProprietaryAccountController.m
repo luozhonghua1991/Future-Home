@@ -235,6 +235,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.person1CertificationView.delegate = self;
     self.person1CertificationView.tag = 1;
     [self.person1ApplicationCodeView addSubview:self.person1CertificationView];
+    self.person1CertificationView.changeTitleLabel.text = @"房产证信息页";
     [self.scrollView addSubview:self.person1ApplicationCodeView];
     
     [self.scrollView addSubview:self.centerGreenBtn];
@@ -247,6 +248,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.person2CertificationView.delegate = self;
     self.person2CertificationView.tag = 2;
     [self.person2ApplicationCodeView addSubview:self.person2CertificationView];
+    self.person2CertificationView.changeTitleLabel.text = @"房产证信息页";
     [self.scrollView addSubview:self.person2ApplicationCodeView];
     
     [self.scrollView addSubview:self.bottomGreenBtn];
@@ -259,6 +261,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.person3CertificationView.delegate = self;
     self.person3CertificationView.tag = 3;
     [self.person3ApplicationCodeView addSubview:self.person3CertificationView];
+    self.person3CertificationView.changeTitleLabel.text = @"房产证信息页";
     [self.scrollView addSubview:self.person3ApplicationCodeView];
 //    /** 确定授权View */
     [self.scrollView addSubview:self.agreementView];
@@ -318,12 +321,13 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.cellNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, commonCellHeight);
     self.managerNameView.frame = CGRectMake(0, CGRectGetMaxY(self.cellNameView.frame), SCREEN_WIDTH, commonCellHeight);
     self.managerCardView.frame = CGRectMake(0, CGRectGetMaxY(self.managerNameView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.managerCardView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.managerCardView.frame), SCREEN_WIDTH, commonCellHeight);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, commonCellHeight);
     
-    self.topGreenBtn.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame) + 20, SCREEN_WIDTH, commonCellHeight - 5);
+    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, commonCellHeight);
+    
+    self.topGreenBtn.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame) + 20, SCREEN_WIDTH, commonCellHeight - 5);
     self.person1NameView.frame = CGRectMake(0, CGRectGetMaxY(self.topGreenBtn.frame), SCREEN_WIDTH, commonCellHeight);
     self.person1CodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person1NameView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person1PhoneView.frame = CGRectMake(0, CGRectGetMaxY(self.person1CodeView.frame), SCREEN_WIDTH, commonCellHeight);

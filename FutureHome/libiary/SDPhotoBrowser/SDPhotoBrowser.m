@@ -81,7 +81,7 @@
     saveButton.clipsToBounds = YES;
     [saveButton addTarget:self action:@selector(saveImage) forControlEvents:UIControlEventTouchUpInside];
     _saveButton = saveButton;
-    [self addSubview:saveButton];
+//    [self addSubview:saveButton];
 }
 
 - (void)saveImage
