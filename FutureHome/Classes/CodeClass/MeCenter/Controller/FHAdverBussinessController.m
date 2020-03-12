@@ -164,7 +164,7 @@
         _successLabel.font = [UIFont systemFontOfSize:15];
         _successLabel.textColor = [UIColor blackColor];
         _successLabel.textAlignment = NSTextAlignmentLeft;
-        _successLabel.backgroundColor = [UIColor greenColor];
+        _successLabel.backgroundColor = HEX_COLOR(0x1296db);
         _successLabel.layer.cornerRadius = 2;
         _successLabel.numberOfLines = 0;
     }
@@ -178,7 +178,7 @@
         [_successBtn setTitle:@"确认完成" forState:UIControlStateNormal];
         [_successBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         _successBtn.titleLabel.font = [UIFont boldSystemFontOfSize:25];
-        [_successBtn setBackgroundColor:[UIColor greenColor]];
+        [_successBtn setBackgroundColor:HEX_COLOR(0x1296db)];
         [_successBtn addTarget:self action:@selector(successBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _successBtn;

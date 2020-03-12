@@ -98,6 +98,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
     self.selectCount = 0;
     [self fh_creatNav];
@@ -141,7 +142,7 @@
     
     [UIAlertController ba_alertShowInViewController:self
                                               title:@"温馨提示"
-                                            message:@"成为服务商需要支付2000元;这里和生鲜账户开通一样需要有支付功能"
+                                            message:self.tips2
                                    buttonTitleArray:@[@"取 消", @"确 定"]
                               buttonTitleColorArray:buttonTitleColorArray
                                               block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -453,8 +454,6 @@
 }
 
 - (void)submitBtnClick {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
-    [self.navigationController popViewControllerAnimated:YES];
     /** 确认并提交 */
 //    if (self.selectIDCardsImgArrs.count != 3) {
 //        [self.view makeToast:@"身份证信息认证不能为空"];
@@ -474,6 +473,99 @@
             [weakSelf showPayView];
         }
     }];
+}
+
+
+- (void)commitAccountDataRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.delegateProvince_id,@"province_id",
+                               self.delegateCity_id,@"city_id",
+                               self.delegateArea_id,@"area_id",
+                               self.applicantNameView.contentTF.text,@"unitname",
+                               self.personNameView.contentTF.text,@"contactname",
+                               self.applicantCardView.contentTF.text,@"idcard",
+                               self.phoneNumberView.contentTF.text,@"phone",
+                               self.phoneView.contentTF.text,@"landline",
+                               self.mailView.contentTF.text,@"email",
+                               self.province_id,@"unitprovince",
+                               self.city_id,@"unitcity",
+                               self.area_id,@"unitarea",
+                               self.addressView.contentTF.text,@"companyaddress",
+                               self.price,@"total",
+                               @(self.payType),@"type",
+                               @"6",@"ordertype",
+                               self.selectIDCardsImgArrs,@"idCardFile[]",
+                               [self getSmallImageArray],@"businesslicense[]",
+                               nil];
+    [ZHProgressHUD showMessage:@"提交资料中..." inView:self.view];
+    [AFNetWorkTool openBussinessUploadImagesWithUrl:@"provider/cooperation" parameters:paramsDic image:[self getSmallImageArray] otherImage:self.selectIDCardsImgArrs success:^(id responseObj) {
+        
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (self.payType == 1) {
+                /** 支付宝支付 */
+                if ([responseObj[@"code"] integerValue] == 1) {
+                    if (weakSelf.payType == 1) {
+                        /** 支付宝支付 */
+                        [ZHProgressHUD hide];
+                        LeoPayManager *manager = [LeoPayManager getInstance];
+                        [manager aliPayOrder: responseObj[@"data"] scheme:@"alisdkdemo" respBlock:^(NSInteger respCode, NSString *respMsg) {
+                            if (respCode == 0) {
+                                /** 支付成功 */
+                                WS(weakSelf);
+                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                    if (buttonIndex == 0) {
+                                        [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
+                                        [weakSelf.navigationController popViewControllerAnimated:YES];
+                                    }
+                                }];
+                            } else {
+                                [weakSelf.view makeToast:respMsg];
+                            }
+                        }];
+                    }
+                } else {
+                    [weakSelf.view makeToast:responseObj[@"data"][@"msg"]];
+                }
+            } else if (self.payType == 2) {
+                /** 微信支付 */
+                if ([responseObj[@"code"] integerValue] == 1) {
+                    [ZHProgressHUD hide];
+                    LeoPayManager *manager = [LeoPayManager getInstance];
+                    [manager wechatPayWithAppId:responseObj[@"data"][@"appid"] partnerId:responseObj[@"data"][@"partnerid"] prepayId:responseObj[@"data"][@"prepay_id"] package:responseObj[@"data"][@"package"] nonceStr:responseObj[@"data"][@"nonce_str"] timeStamp:responseObj[@"data"][@"timestamp"] sign:responseObj[@"data"][@"sign"] respBlock:^(NSInteger respCode, NSString *respMsg) {
+                        //处理支付结果
+                        if (respCode == 0) {
+                            /** 支付成功 */
+                            WS(weakSelf);
+                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                if (buttonIndex == 0) {
+                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
+                                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                                }
+                            }];
+                        } else {
+                            [weakSelf.view makeToast:respMsg];
+                        }
+                    }];
+                } else {
+                    [weakSelf.view makeToast:responseObj[@"data"][@"msg"]];
+                }
+            }
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+
+- (void)fh_selectPayTypeWIthTag:(NSInteger)selectType {
+    /** 请求支付宝签名 */
+    self.payType = selectType;
+    [self commitAccountDataRequest];
 }
 
 #pragma mark - 显示支付弹窗
