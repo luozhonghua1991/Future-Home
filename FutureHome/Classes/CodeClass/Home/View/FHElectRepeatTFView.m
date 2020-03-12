@@ -28,7 +28,7 @@
 #pragma mark - 懒加载
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 17 / 2, 120, 13)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 27 / 2, 120, 13)];
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.font = [UIFont systemFontOfSize:15];
@@ -38,7 +38,7 @@
 
 - (UIView *)lineView {
     if (!_lineView) {
-        _lineView = [[UIView alloc] initWithFrame:CGRectMake(97.5, 0, 0.5, 30)];
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(97.5, 0, 0.5, 40)];
         _lineView.backgroundColor = [UIColor lightGrayColor];
     }
     return _lineView;
@@ -46,7 +46,7 @@
 
 - (UITextField *)contentTF {
     if (!_contentTF) {
-        _contentTF = [[UITextField alloc] initWithFrame:CGRectMake(100, 17 / 2 , 260, 13)];
+        _contentTF = [[UITextField alloc] initWithFrame:CGRectMake(100, 27 / 2 , 260, 13)];
         _contentTF.textAlignment = NSTextAlignmentLeft;
         _contentTF.font = [UIFont systemFontOfSize:13];
     }

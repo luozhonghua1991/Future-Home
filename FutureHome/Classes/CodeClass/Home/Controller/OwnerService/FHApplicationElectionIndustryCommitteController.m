@@ -50,6 +50,9 @@
 @property (nonatomic, strong) NSMutableArray *selectImgArrs;
 /** imgID */
 @property (nonatomic, copy) NSString *imgID;
+/** 确认按钮 */
+@property (nonatomic, strong) UIButton *sureBtn;
+
 
 @end
 
@@ -122,7 +125,7 @@
 
 #pragma mark -- layout
 - (void)fh_layoutSubViews {
-    CGFloat commonCellHeight = 30.0f;
+    CGFloat commonCellHeight = 40.0f;
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50));
     self.nameView.frame = CGRectMake(10, 10, SCREEN_WIDTH - 20, commonCellHeight);
     self.ageView.frame = CGRectMake(10, MaxY(self.nameView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
@@ -138,13 +141,12 @@
 }
 
 - (void)creatBottomBtn{
-    UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    sureBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
-    sureBtn.backgroundColor = HEX_COLOR(0x1296db);
-    [sureBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
-    [sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [sureBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:sureBtn];
+    self.sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.sureBtn.frame = CGRectMake(0,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(50));
+    self.sureBtn.backgroundColor = HEX_COLOR(0x1296db);
+    [self.sureBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.sureBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.sureBtn];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -179,18 +181,25 @@
 
 - (void)setDataWithModel:(FHCandidateListModel *)personModel {
     /** 数据赋值 */
-    self.nameView.contentTF.text = personModel.name;
+    _personModel = personModel;
+    self.nameView.contentTF.text = _personModel.name;
     self.ageView.contentTF.text = [NSString stringWithFormat:@"%ld",(long)personModel.age];
-    self.sexView.contentTF.text = personModel.getSex;
-    self.xueliView.contentTF.text = personModel.education;
-    self.phoneView.contentTF.text = personModel.mobile;
-    self.faceView.contentTF.text = personModel.polity;
-    self.addressView.contentTF.text = personModel.home_num;
-    self.typeView.contentTF.text = personModel.getFull;
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:personModel.avatar]];
-    self.numberLabel.text = [NSString stringWithFormat:@"参选号: %@",personModel.number];
-    self.contentTF.text = [NSString stringWithFormat:@"   %@",personModel.intro];
-    self.businessDescriptionTextView.text = personModel.describe;
+    self.sexView.contentTF.text = _personModel.getSex;
+    self.xueliView.contentTF.text = _personModel.education;
+    self.phoneView.contentTF.text = _personModel.mobile;
+    if ([self.phoneView.contentTF.text isEqualToString:@""]) {
+         [self.sureBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
+    } else {
+         [self.sureBtn setTitle:@"编辑并提交" forState:UIControlStateNormal];
+    }
+    self.faceView.contentTF.text = _personModel.polity;
+    self.addressView.contentTF.text = _personModel.home_num;
+    self.typeView.contentTF.text = _personModel.getFull;
+    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:_personModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+    self.numberLabel.text = [NSString stringWithFormat:@"参选号: %@",_personModel.number];
+    self.contentTF.text = [NSString stringWithFormat:@"   %@",_personModel.intro];
+    self.businessDescriptionTextView.text = _personModel.describe;
+    self.imgID = _personModel.img_ids;
     if ([self.titleString isEqualToString:@"选举人资料"]) {
         self.scrollView.userInteractionEnabled = NO;
     }
@@ -199,7 +208,6 @@
 - (void)sureBtnClick {
     /** 选举申请 */
     WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
     NSInteger sexType;
     if ([self.sexView.contentTF.text isEqualToString:@"男"]) {
         sexType = 1;
@@ -219,6 +227,17 @@
         return;
     }
     
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequestWithSexType:sexType fullType:fullType];
+        }
+    }];
+}
+
+- (void)commitRequestWithSexType:(NSInteger )sexType
+                        fullType:(NSInteger )fullType {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(self.property_id),@"owner_id",
@@ -248,9 +267,9 @@
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
+        
     }];
 }
-
 
 - (void)imgViewClick {
     /** 选取图片 */

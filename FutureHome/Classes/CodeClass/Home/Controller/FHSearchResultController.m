@@ -12,6 +12,7 @@
 #import "FHPersonTrendsController.h"
 #import "FHFreshMallController.h"
 #import "FHHomeServicesController.h"
+#import "FHOwnerServiceController.h"
 
 @interface FHSearchResultController () <UITableViewDelegate,UITableViewDataSource,FHSearchResultCellDelegate>
 {
@@ -215,7 +216,7 @@
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"2"]) {
         /** 业主 */
-        FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
+        FHOwnerServiceController*home = [[FHOwnerServiceController alloc]init];
         home.model = (FHCommonFollowModel *)model;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
         home.hidesBottomBarWhenPushed = NO;

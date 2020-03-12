@@ -97,11 +97,11 @@
         NSDictionary *dic = responseObj[@"data"];
         self.noticeListArrs = [FHNoticeListModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
         [self endRefreshAction];
-        if (self.noticeListArrs.count == 0) {
-//            [self.clickButton setTitle:@"通道尚未开启" forState:UIControlStateNormal];
-            [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-            self.clickButton.enabled = NO;
-        }
+//        if (self.noticeListArrs.count == 0) {
+////            [self.clickButton setTitle:@"通道尚未开启" forState:UIControlStateNormal];
+//            [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+//            self.clickButton.enabled = NO;
+//        }
         [weakSelf.listTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.listTable reloadData];
@@ -249,6 +249,7 @@
 }
 
 - (void)buttonClick {
+    
     if ([self.yp_tabItemTitle isEqualToString:@"申请通道"]) {
 //        [self viewControllerPushOther:@"FHApplicationElectionIndustryCommitteController"];
         FHApplicationElectionIndustryCommitteController *vc = [[FHApplicationElectionIndustryCommitteController alloc] init];
