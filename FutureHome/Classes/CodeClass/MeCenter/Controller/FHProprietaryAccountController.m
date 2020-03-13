@@ -149,10 +149,6 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.personNameArrs = [[NSMutableArray alloc] init];
-    self.idNumberArrs = [[NSMutableArray alloc] init];
-    self.phoneNumberArrs = [[NSMutableArray alloc] init];
-    self.houseNumberArrs = [[NSMutableArray alloc] init];
     self.selectCount = 0;
     self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
@@ -387,34 +383,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-//    if (textField == self.person1NameView.contentTF) {
-//        [self.personNameArrs addObject:self.person1NameView.contentTF.text];
-//    } else if (textField == self.person2NameView.contentTF) {
-//        [self.personNameArrs addObject:self.person2NameView.contentTF.text];
-//    }else if (textField == self.person3NameView.contentTF) {
-//        [self.personNameArrs addObject:self.person3NameView.contentTF.text];
-//    }
-//    if (textField == self.person1CodeView.contentTF) {
-//        [self.idNumberArrs addObject:self.person1CodeView.contentTF.text];
-//    } else if (textField == self.person2CodeView.contentTF) {
-//        [self.idNumberArrs addObject:self.person2CodeView.contentTF.text];
-//    }else if (textField == self.person3CodeView.contentTF) {
-//        [self.idNumberArrs addObject:self.person3CodeView.contentTF.text];
-//    }
-//    if (textField == self.person1PhoneView.contentTF) {
-//        [self.phoneNumberArrs addObject:self.person1PhoneView.contentTF.text];
-//    } else if (textField == self.person2PhoneView.contentTF) {
-//        [self.phoneNumberArrs addObject:self.person2PhoneView.contentTF.text];
-//    }else if (textField == self.person3PhoneView.contentTF) {
-//        [self.phoneNumberArrs addObject:self.person3PhoneView.contentTF.text];
-//    }
-//    if (textField == self.person1HourseNumberView.contentTF) {
-//        [self.houseNumberArrs addObject:self.person1HourseNumberView.contentTF.text];
-//    } else if (textField == self.person2HourseNumberView.contentTF) {
-//        [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
-//    }else if (textField == self.person3HourseNumberView.contentTF) {
-//        [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
-//    }
+
 }
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index view:(nonnull UIView *)view {
@@ -604,6 +573,11 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 
 - (void)commitAccountDataRequest {
     WS(weakSelf);
+    self.personNameArrs = [[NSMutableArray alloc] init];
+    self.idNumberArrs = [[NSMutableArray alloc] init];
+    self.phoneNumberArrs = [[NSMutableArray alloc] init];
+    self.houseNumberArrs = [[NSMutableArray alloc] init];
+    
     Account *account = [AccountStorage readAccount];
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     [self.personNameArrs addObject:self.person1NameView.contentTF.text];
@@ -622,15 +596,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.houseNumberArrs addObject:self.person2HourseNumberView.contentTF.text];
     [self.houseNumberArrs addObject:self.person3HourseNumberView.contentTF.text];
     
-//    NSString *person_name = [self.personNameArrs componentsJoinedByString:@","];
-//    NSString *id_number = [self.idNumberArrs componentsJoinedByString:@","];
-//    NSString *person_mobile = [self.phoneNumberArrs componentsJoinedByString:@","];
-//    NSString *house_num = [self.houseNumberArrs componentsJoinedByString:@","];
-    
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               self.personServiceDeskView.contentTF.text,@"property_name",
-                               self.serviceDeskNameTF.text,@"owner_name",
+                               self.personServiceDeskView.contentTF.text,@"owner_name",
+                               self.serviceDeskNameTF.text,@"property_name",
                                self.cellNameView.contentTF.text,@"cell_name",
                                self.managerNameView.contentTF.text,@"applyname",
                                self.managerCardView.contentTF.text,@"idcard",
@@ -651,6 +620,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                nil];
     
     [AFNetWorkTool uploadImagesWithUrl:@"owner/applyAccount" parameters:paramsDic image:self.selectIDCardsImgArrs success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             if (self.payType == 1) {
                 /** 支付宝支付 */
@@ -704,9 +674,13 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                 }
             }
         } else {
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [weakSelf.lodingHud hideAnimated:YES];
+        weakSelf.lodingHud = nil;
         [self.view makeToast:@"提交资料失败,请稍后重试"];
     }];
 }
@@ -941,7 +915,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2CodeView {
     if (!_person2CodeView) {
         _person2CodeView = [[FHAccountApplicationTFView alloc] init];
-        _person2CodeView.titleLabel.text = @"身份证a号";
+        _person2CodeView.titleLabel.text = @"身份证号";
         _person2CodeView.contentTF.delegate = self;
         _person2CodeView.contentTF.placeholder = @"请输入身份证号";
     }

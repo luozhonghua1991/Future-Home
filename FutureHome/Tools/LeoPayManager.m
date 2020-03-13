@@ -238,10 +238,6 @@
 //微信
 
 
-
-
-
-
 //支付宝
 + (BOOL)alipayHandleOpenURL:(NSURL *)url {
     [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
@@ -282,6 +278,7 @@
     
     return YES;
 }
+
 - (void)aliPayOrder:(NSString *)order scheme:(NSString *)scheme respBlock:(LeoPayManagerRespBlock)block
 {
     self.alipayRespBlock = block;

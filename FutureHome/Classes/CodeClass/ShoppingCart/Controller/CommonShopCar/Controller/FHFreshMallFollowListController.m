@@ -187,7 +187,6 @@ FDActionSheetDelegate
         home.model = model;
         home.isFollow = YES;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
-//        home.hidesBottomBarWhenPushed = NO;
         self.tabBarController.tabBar.hidden = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"2"]) {
@@ -196,7 +195,6 @@ FDActionSheetDelegate
         home.model = model;
         home.isFollow = YES;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
-//        home.hidesBottomBarWhenPushed = NO;
         self.tabBarController.tabBar.hidden = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {
