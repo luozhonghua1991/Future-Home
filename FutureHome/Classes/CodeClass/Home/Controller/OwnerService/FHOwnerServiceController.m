@@ -50,6 +50,12 @@
 @property (nonatomic, copy) NSString *userName;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *name;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) CGFloat lat;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) CGFloat lng;
+/** 导航label */
+@property (nonatomic, strong) UILabel *navigationLabel;
 
 @end
 
@@ -305,15 +311,21 @@
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
         [locationView addSubview:self.realSstateSNameLabel];
         
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
         self.codeImgView.contentMode = UIViewContentModeScaleAspectFit;
         self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
         self.codeImgView.userInteractionEnabled = YES;
         [self.codeImgView addGestureRecognizer:tap];
-        
         [locationView addSubview:self.codeImgView];
+        
+        self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 65, 12, 50, 12);
+        self.navigationLabel.centerY = locationView.height / 2;
+        UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(navigationLabelClick)];
+        self.navigationLabel.userInteractionEnabled = YES;
+        [self.navigationLabel addGestureRecognizer:tap1];
+        [locationView addSubview:self.navigationLabel];
         
         [cell addSubview:locationView];
         return cell;
@@ -366,6 +378,11 @@
         [cell addSubview:self.topScrollView];
         return cell;
     }
+}
+
+- (void)navigationLabelClick {
+    /** y一键导航事件 */
+//    [CQRouteManager presentRouteNaviMenuOnController:self withCoordate:CLLocationCoordinate2DMake(self.lat, self.lng) destination:self.realSstateSNameLabel.text];
 }
 
 - (void)tapClick {
@@ -575,6 +592,17 @@
         //_codeDetailView.scanCodeDic = codeDic;
     }
     return _codeDetailView;
+}
+
+- (UILabel  *)navigationLabel{
+    if (!_navigationLabel) {
+        _navigationLabel =  [[UILabel alloc] init];
+        _navigationLabel.text = @"一键导航";
+        _navigationLabel.textColor = [UIColor blueColor];
+        _navigationLabel.font = [UIFont systemFontOfSize:12];
+        _navigationLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _navigationLabel;
 }
 
 @end

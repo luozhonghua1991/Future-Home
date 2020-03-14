@@ -22,6 +22,7 @@
 #import "HZPhotoBrowser.h"
 #import "MSImagePickerController.h"
 #import "TZImagePickerController.h"
+#import "CQRouteManager.h"
 
 //#define TableViewRegisterClassCell(Instance,ClassName) \
 //[Instance registerClass:[ClassName class] forCellReuseIdentifier:[NSStringFromClass([ClassName class])]]

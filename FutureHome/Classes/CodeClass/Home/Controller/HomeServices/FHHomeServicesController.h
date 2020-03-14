@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FHHomeServicesController : BaseViewController
 ///** 物业的ID */
-//@property (nonatomic, assign) NSInteger homeServices_ID;
+@property (nonatomic, assign) NSInteger homeServices_ID;
+
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHCommonFollowModel *model;
 /** 是否收藏 */
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setHomeSeverID:(NSInteger )HomeSeverID
         homeServerName:(NSString *)homeServerName;
+
 
 @end
 

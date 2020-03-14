@@ -17,7 +17,6 @@
 #import "FHHomePageController.h"
 #import "FHMeCenterController.h"
 #import "FHGroupController.h"
-#import "CQRouteManager.h"
 #import "FHScanDetailAlertView.h"
 #import "FHCustomerServiceCommitController.h"
 

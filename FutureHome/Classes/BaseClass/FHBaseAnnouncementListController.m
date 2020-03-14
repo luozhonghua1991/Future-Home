@@ -85,8 +85,42 @@
 
 - (void)fh_getRequest {
     WS(weakSelf);
-    self.noticeListArrs = [[NSMutableArray alloc] init];
     Account *account = [AccountStorage readAccount];
+    if (self.ID == 10) {
+        /** 投标服务判断 */
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @(account.user_id),@"user_id",
+                                @(self.property_id),@"owner_id",
+                                nil];
+        [AFNetWorkTool get:@"owner/tenderPass" params:params success:^(id responseObj) {
+            NSDictionary *dic = responseObj[@"data"];
+            if ([responseObj[@"code"] integerValue] == 1) {
+                /** 请求成功 */
+                if ([dic[@"status"] integerValue] == 0) {
+                    self.clickButton.hidden = YES;
+                    self.clickButton = nil;
+                } else {
+                    self.clickButton.hidden = NO;
+                    if ([dic[@"status"] integerValue] == 1) {
+                        [self.clickButton setTitle:dic[@"title"] forState:UIControlStateNormal];
+                        [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                        self.clickButton.enabled = YES;
+                    } else {
+                        [self.clickButton setTitle:dic[@"title"] forState:UIControlStateNormal];
+                        [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                        self.clickButton.enabled = NO;
+                    }
+                }
+            } else {
+                
+            }
+            [weakSelf.listTable reloadData];
+        } failure:^(NSError *error) {
+            [weakSelf.listTable reloadData];
+        }];
+    }
+    
+    self.noticeListArrs = [[NSMutableArray alloc] init];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(self.property_id),@"property_id",
