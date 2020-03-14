@@ -292,7 +292,7 @@
     if (!_codeDetailView) {
         _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
         Account *account = [AccountStorage readAccount];
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",
                                    @(account.user_id),@"id",
                                    account.nickname,@"name",

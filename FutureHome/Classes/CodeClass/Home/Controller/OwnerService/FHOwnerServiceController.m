@@ -48,6 +48,10 @@
 @property (nonatomic, strong) FHScanDetailAlertView *codeDetailView;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *userName;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger is_collect;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIButton *followBtn;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *name;
 /** <#assign属性注释#> */
@@ -99,9 +103,17 @@
     [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
         NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
+        self.is_collect = [dic[@"is_collect"] integerValue];
         self->property_id = [dic[@"id"] integerValue];
         self.userName = dic[@"username"];
         self.name = dic[@"name"];
+        self.lat = [dic[@"lat"] floatValue];
+        self.lng = [dic[@"lng"] floatValue];
+        if (self.is_collect == 0) {
+            [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+        } else {
+            [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+        }
         /** 获取banner数据 */
         [self fh_refreshBannerData];
     } failure:^(NSError *error) {
@@ -112,16 +124,38 @@
 
 - (void)setHomeSeverID:(NSInteger )HomeSeverID
         homeServerName:(NSString *)homeServerName {
-    property_id = HomeSeverID;
-    self.name = homeServerName;
-    self.userName = self.model.username;
-//    if (!self.isFollow) {
-//        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
-//    } else {
-//        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
-//    }
+//    property_id = HomeSeverID;
+//    self.name = homeServerName;
+//    self.userName = self.model.username;
     /** 获取banner数据 */
-    [self fh_refreshBannerData];
+//    [self fh_refreshBannerData];
+    
+    property_id = HomeSeverID;
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @(HomeSeverID),@"id",
+                               @(2),@"type", nil];
+    [AFNetWorkTool get:@"future/getEntityById" params:paramsDic success:^(id responseObj) {
+        NSDictionary *dic = responseObj[@"data"];
+        weakSelf.is_collect = [dic[@"iscollection"] integerValue];
+        weakSelf.name = dic[@"name"];
+        weakSelf.userName = dic[@"login"];
+        weakSelf.lat = [dic[@"lat"] floatValue];
+        weakSelf.lng = [dic[@"lng"] floatValue];
+        if (self.is_collect == 0) {
+            [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+        } else {
+            [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+        }
+        /** 获取banner数据 */
+        [self fh_refreshBannerData];
+    } failure:^(NSError *error) {
+        /** 获取banner数据 */
+        [self fh_refreshBannerData];
+    }];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -163,11 +197,15 @@
 //    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [self.navgationView addSubview:shareBtn];
     
-    UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
-    [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
-    [followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:followBtn];
+    self.followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
+    if (!self.isFollow) {
+        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+    } else {
+        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+    }
+    [self.followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:self.followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     menuBtn.frame = CGRectMake(SCREEN_WIDTH - 33, MainStatusBarHeight +5, 28, 28);
@@ -243,8 +281,31 @@
 #pragma mark — event
 /** 收藏按钮 */
 - (void)followBtnClick {
-    //    [self.followDownMenu showMenu];
-    [self.view makeToast:@"添加收藏成功"];
+    if (self.is_collect == 1 || self.isFollow) {
+        [self.view makeToast:@"您已经收藏,请勿重复操作"];
+        return;
+    }
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSString *urlString;
+    NSDictionary *paramsDic;
+    urlString = @"public/collect";
+    paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                 @(account.user_id),@"user_id",
+                 @(property_id),@"id",
+                 @"2",@"type",nil];
+    [AFNetWorkTool post:urlString params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:@"收藏成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+            });
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf.homeTable reloadData];
+    }];
 }
 
 /** 搜索事件 */
@@ -382,7 +443,7 @@
 
 - (void)navigationLabelClick {
     /** y一键导航事件 */
-//    [CQRouteManager presentRouteNaviMenuOnController:self withCoordate:CLLocationCoordinate2DMake(self.lat, self.lng) destination:self.realSstateSNameLabel.text];
+    [CQRouteManager presentRouteNaviMenuOnController:self withCoordate:CLLocationCoordinate2DMake(self.lat, self.lng) destination:self.realSstateSNameLabel.text];
 }
 
 - (void)tapClick {
@@ -576,7 +637,7 @@
 - (FHScanDetailAlertView *)codeDetailView {
     if (!_codeDetailView) {
         _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",
                                    @(property_id),@"id",
                                    self.realSstateSNameLabel.text,@"name",

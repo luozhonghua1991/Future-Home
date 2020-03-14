@@ -246,23 +246,37 @@
         NSInteger type = [resultDic[@"type"] integerValue];
         if (type == 0) {
             /** 用户 */
-            FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
-            vc.titleString = resultDic[@"name"];
-            [SingleManager shareManager].isSelectPerson = YES;
-            vc.hidesBottomBarWhenPushed = YES;
-            vc.user_id = resultDic[@"id"];
-            vc.personType = 0;
-            [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
+            Account *account = [AccountStorage readAccount];
+            NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       @(account.user_id),@"user_id",
+                                       resultDic[@"id"],@"id",
+                                       @(type),@"type", nil];
+            [AFNetWorkTool get:@"future/getEntityById" params:paramsDic success:^(id responseObj) {
+                NSDictionary *dic = responseObj[@"data"];
+                FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+                vc.titleString = dic[@"name"];
+                [SingleManager shareManager].isSelectPerson = YES;
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.user_id = resultDic[@"id"];
+                vc.personType = 0;
+                [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
+              
+            } failure:^(NSError *error) {
+            }];
         } else if (type == 1) {
             /** 物业 */
             FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
             home.model = [FHCommonFollowModel new];
-            [home setHomeSeverID:[resultDic[@"id"] integerValue] homeServerName:resultDic[@"name"]];
+            [home setHomeSeverID:[resultDic[@"id"] integerValue] homeServerName:@""];
             home.hidesBottomBarWhenPushed = NO;
             [self.navigationController pushViewController:home animated:YES];
         } else if (type == 2) {
             /** 业委 */
-            
+            FHOwnerServiceController *home = [[FHOwnerServiceController alloc]init];
+            home.model = [FHCommonFollowModel new];
+            [home setHomeSeverID:[resultDic[@"id"] integerValue] homeServerName:@""];
+            home.hidesBottomBarWhenPushed = NO;
+            [self.navigationController pushViewController:home animated:YES];
         } else if (type == 3) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;

@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FHScanDetailAlertView : UIView
 /** 数据字典 */
-@property (nonatomic, strong) NSDictionary *dataDetaildic;
+@property (nonatomic, strong) NSMutableDictionary *dataDetaildic;
 /** 二维码字典 */
 @property (nonatomic, strong) NSDictionary *scanCodeDic;
 /**白色背景View*/

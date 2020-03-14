@@ -274,7 +274,7 @@
 - (FHScanDetailAlertView *)codeDetailView {
     if (!_codeDetailView) {
         _codeDetailView = [[FHScanDetailAlertView alloc]initWithFrame:[UIApplication sharedApplication].keyWindow.bounds];
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",
                                    @(self.account.user_id),@"id",
                                    self.account.nickname,@"name",

@@ -533,7 +533,7 @@
         } else if ([self.titleString isEqualToString:@"医药商城"]) {
             type = @"5";
         }
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+        NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    @"com.sheyun",@"app_key",
                                    self.shopID,@"id",
                                    self.locationLabel.text,@"name",

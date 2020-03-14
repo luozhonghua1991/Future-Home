@@ -88,11 +88,14 @@
 }
 
 
-- (void)setDataDetaildic:(NSDictionary *)dataDetaildic {
+- (void)setDataDetaildic:(NSMutableDictionary *)dataDetaildic {
     _dataDetaildic = dataDetaildic;
-    self.codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:_dataDetaildic] size:150];
     self.titleLabel.text = [NSString stringWithFormat:@"社云账号:%@",_dataDetaildic[@"username"]];
     self.topLabel.text = _dataDetaildic[@"name"];
+    [_dataDetaildic removeObjectForKey:@"name"];
+    [_dataDetaildic removeObjectForKey:@"username"];
+    
+    self.codeImgView.image = [SGQRCodeObtain generateQRCodeWithData:[self DataTOjsonString:_dataDetaildic] size:150];
     
 }
 
