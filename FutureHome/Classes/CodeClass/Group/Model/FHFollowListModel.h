@@ -25,6 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *username;
 /** 关注 */
 @property (nonatomic, copy) NSString *follower;
+/** id */
+@property (nonatomic, copy) NSString *id;
+
 
 @end
 

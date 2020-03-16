@@ -18,6 +18,11 @@
 @property (nonatomic, strong) NSMutableArray *followListDataArrs;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *follow_id;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger type;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *id;
+
 
 @end
 
@@ -136,37 +141,60 @@
     /** 如果是关注状态 取消关注 未关注状态 就关注 */
     NSString *titleStr;
     FHFollowListModel *followListModel = self.followListDataArrs[sender.tag];
+    self.id = followListModel.id;
     if ([self.yp_tabItemTitle isEqualToString:@"粉丝"]) {
         self.follow_id = followListModel.follower;
+        self.type = 2;
     } else {
         self.follow_id = followListModel.follow_id;
+        self.type = 1;
     }
     if ([followListModel.follow_msg isEqualToString:@"互为关注"] || [followListModel.follow_msg isEqualToString:@"已关注"]) {
-        titleStr = @"确定不再关注?";
+        titleStr = @"取消关注";
     } else {
-        titleStr = @"确定关注?";
+        titleStr = @"添加关注";
     }
-    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:titleStr delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    FDActionSheet *actionSheet = [[FDActionSheet alloc] initWithTitle:@"请按照您的需要选择功能" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"置顶此人",titleStr, nil];
     [actionSheet setTitleColor:COLOR_1 fontSize:SCREEN_HEIGHT/667 *13];
     [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *13];
     [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *13 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *13 atIndex:1];
     [actionSheet addAnimation];
     [actionSheet show];
 }
 
 - (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
+    if (buttonIndex == 1) {
         /** 取消关注或者关注 */
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
-//                                   @(32),@"user_id",
                                    self.follow_id,@"follow_id", nil];
         
         [AFNetWorkTool post:@"sheyun/doFollow" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 [weakSelf.view makeToast:@"操作成功"];
+                [weakSelf fh_getRequest];
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            [weakSelf.homeTable reloadData];
+        }];
+    } else {
+        /** 置顶此人 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   self.id,@"id",
+                                   @(self.type),@"type",
+                                   nil];
+        
+        [AFNetWorkTool post:@"sheyun/topFansFollow" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"置顶成功!"];
                 [weakSelf fh_getRequest];
             } else {
                 [weakSelf.view makeToast:responseObj[@"msg"]];

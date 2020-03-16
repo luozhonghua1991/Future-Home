@@ -10,6 +10,10 @@
 #import "NJKWebViewProgressView.h"
 #import "NJKWebViewProgress.h"
 #import "FHSharingDynamicsController.h"
+#import "FHHomeServicesController.h"
+#import "FHOwnerServiceController.h"
+#import "FHPersonTrendsController.h"
+#import "FHFreshMallController.h"
 
 @interface FHWebViewController ()
 <
@@ -80,23 +84,12 @@ XYSJSExport
     }];
 }
 
-//#pragma mark - NJKWebViewProgressDelegate
-//-(void)webViewProgress:(NJKWebViewProgress *)webViewProgress updateProgress:(float)progress
-//{
-//    [_webViewProgressView setProgress:progress animated:YES];
-//    self.title = [_webView stringByEvaluatingJavaScriptFromString:@"document.title"];
-//}
-
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.getElementsByClassName('sn-ibar-toggle')[0].style.display = 'none'"];
-//    [webView stringByEvaluatingJavaScriptFromString:@"document.documentElement.getElementsByClassName('sn-ibar-toggle').style.display = 'none'"];
     
     __weak typeof (self) weakSelf = self;
     self.context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     self.context[@"ios"] = weakSelf;
-    
-//    [self removeHTMLTtitle];
 }
 
 - (void)removeHTMLTtitle
@@ -171,6 +164,66 @@ XYSJSExport
         vc.dataDic = dic;
         vc.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:vc animated:YES];
+    });
+}
+
+- (void)AdventLinkWithPerson :(NSString *)person {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSDictionary *dic = [self dictionaryWithJsonString:person];
+        /** 社云相关的二维码 */
+        NSInteger type = [dic[@"type"] integerValue];
+        if (type == 0) {
+            /** 用户 */
+            Account *account = [AccountStorage readAccount];
+            NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                       @(account.user_id),@"user_id",
+                                       dic[@"businessId"],@"id",
+                                       @(type),@"type", nil];
+            [AFNetWorkTool get:@"future/getEntityById" params:paramsDic success:^(id responseObj) {
+                NSDictionary *dic = responseObj[@"data"];
+                FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+                vc.titleString = dic[@"name"];
+                [SingleManager shareManager].isSelectPerson = YES;
+                vc.hidesBottomBarWhenPushed = YES;
+                vc.user_id = dic[@"businessId"];
+                vc.personType = 0;
+                [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
+                
+            } failure:^(NSError *error) {
+            }];
+        } else if (type == 1) {
+            /** 物业 */
+            FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
+            home.model = [FHCommonFollowModel new];
+            [home setHomeSeverID:[dic[@"businessId"] integerValue] homeServerName:@""];
+            home.hidesBottomBarWhenPushed = NO;
+            [self.navigationController pushViewController:home animated:YES];
+        } else if (type == 2) {
+            /** 业委 */
+            FHOwnerServiceController *home = [[FHOwnerServiceController alloc]init];
+            home.model = [FHCommonFollowModel new];
+            [home setHomeSeverID:[dic[@"businessId"] integerValue] homeServerName:@""];
+            home.hidesBottomBarWhenPushed = NO;
+            [self.navigationController pushViewController:home animated:YES];
+        } else if (type == 3) {
+            FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+            goodList.hidesBottomBarWhenPushed = YES;
+            goodList.titleString = @"生鲜商城";
+            goodList.shopID = dic[@"businessId"];
+            [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
+        } else if (type == 4) {
+            FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+            goodList.hidesBottomBarWhenPushed = YES;
+            goodList.titleString = @"商业商城";
+            goodList.shopID = dic[@"businessId"];
+            [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
+        } else if (type == 5) {
+            FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
+            goodList.hidesBottomBarWhenPushed = YES;
+            goodList.titleString = @"医药商城";
+            goodList.shopID = dic[@"businessId"];
+            [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
+        }
     });
 }
 

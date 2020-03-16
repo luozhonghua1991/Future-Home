@@ -10,7 +10,10 @@
 #import <JavaScriptCore/JavaScriptCore.h>
 
 @protocol XYSJSExport <JSExport>
+
 JSExportAs(doshare, - (void)doShareWithPerson :(NSString *)person);
+JSExportAs(AdventLink, - (void)AdventLinkWithPerson :(NSString *)person);
+
 @end
 
 @interface FHWebViewController : BaseViewController

@@ -195,6 +195,7 @@
     self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
+    
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
