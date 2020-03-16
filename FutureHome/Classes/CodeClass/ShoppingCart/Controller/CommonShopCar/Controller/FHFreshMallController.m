@@ -144,7 +144,7 @@
     UIButton *shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     shareBtn.frame = CGRectMake(SCREEN_WIDTH - 35 * 3 - 15, MainStatusBarHeight, 35, 35);
     [shareBtn setImage:[UIImage imageNamed:@"fenxiang"] forState:UIControlStateNormal];
-    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [self.navgationView addSubview:shareBtn];
     
     UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];

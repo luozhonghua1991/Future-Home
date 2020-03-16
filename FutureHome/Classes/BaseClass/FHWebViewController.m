@@ -171,6 +171,11 @@ XYSJSExport
     dispatch_async(dispatch_get_main_queue(), ^{
         NSDictionary *dic = [self dictionaryWithJsonString:person];
         /** 社云相关的二维码 */
+        NSString *str = dic[@"type"];
+        if (IsStringEmpty(str)) {
+            [self.view makeToast:@"参数错误"];
+            return;
+        }
         NSInteger type = [dic[@"type"] integerValue];
         if (type == 0) {
             /** 用户 */
