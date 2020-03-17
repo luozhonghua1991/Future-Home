@@ -14,6 +14,7 @@
 #import "FHOwnerServiceController.h"
 #import "FHPersonTrendsController.h"
 #import "FHFreshMallController.h"
+#import "UIView+ZFFrame.h"
 
 @interface FHWebViewController ()
 <
@@ -27,6 +28,19 @@ XYSJSExport
 @property (nonatomic, strong) NJKWebViewProgress *webViewProgress;
 
 @property (nonatomic, strong) UIWebView *webView;
+
+@property (nonatomic, strong) UIButton *likeBtn;
+/** 点赞数 */
+@property (nonatomic, strong) UILabel *likeCountLabel;
+
+@property (nonatomic, strong) UIButton *followBtn;
+
+@property (nonatomic, strong) UIButton *commentBtn;
+/** 评论数 */
+@property (nonatomic, strong) UILabel *commentCountLabel;
+
+@property (nonatomic, strong) UIButton *shareBtn;
+
 @end
 
 @implementation FHWebViewController
@@ -41,6 +55,60 @@ XYSJSExport
     [super viewDidLoad];
     [self initSubViews];
     [self fetchNetworkData];
+    if ([self.type isEqualToString:@"noShow"]) {
+        /** 不展示评论列表 */
+    } else {
+        /** 展示评论列表 */
+        [self fh_creatCommentView];
+        [self fh_layoutSubView];
+    }
+}
+
+- (void)fh_creatCommentView {
+    [self.view addSubview:self.likeBtn];
+    [self.view addSubview:self.likeCountLabel];
+    [self.view addSubview:self.commentBtn];
+    [self.view addSubview:self.commentCountLabel];
+    [self.view addSubview:self.followBtn];
+    [self.view addSubview:self.shareBtn];
+}
+
+- (void)fh_layoutSubView {
+    CGFloat min_x = 0;
+    CGFloat min_y = 0;
+    CGFloat min_w = 0;
+    CGFloat min_h = 0;
+    CGFloat min_view_w = self.view.zf_width;
+    CGFloat min_view_h = self.view.zf_height;
+    CGFloat margin = 30;
+    
+    min_w = 40;
+    min_h = min_w;
+    min_x = min_view_w - min_w - 20;
+    min_y = min_view_h - min_h - 80;
+    self.shareBtn.frame = CGRectMake(min_x, min_y - 120, min_w, min_h);
+    
+    min_w = 40;
+    min_h = min_w;
+    min_x = min_view_w - min_w - 20;
+    min_y = min_view_h - min_h - 80;
+    self.followBtn.frame = CGRectMake(min_x, min_y - 180, min_w, min_h);
+    
+    min_w = CGRectGetWidth(self.followBtn.frame);
+    min_h = min_w;
+    min_x = CGRectGetMinX(self.followBtn.frame);
+    min_y = CGRectGetMinY(self.followBtn.frame) - min_h - margin;
+    self.commentBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
+    
+    min_w = CGRectGetWidth(self.followBtn.frame);
+    min_h = min_w;
+    min_x = CGRectGetMinX(self.commentBtn.frame);
+    min_y = CGRectGetMinY(self.commentBtn.frame) - min_h - margin;
+    self.likeBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
+    
+    
+    self.likeCountLabel.frame = CGRectMake(MinX(self.likeBtn), MaxY(self.likeBtn) + 8, self.likeBtn.frame.size.width, 15);
+    self.commentCountLabel.frame = CGRectMake(MinX(self.commentBtn), MaxY(self.commentBtn) + 8, self.commentBtn.frame.size.width, 15);
 }
 
 - (void)initSubViews {
@@ -267,8 +335,38 @@ XYSJSExport
     [cache setMemoryCapacity:0];
 }
 
-#pragma mark - Getters and Setters
 
+#pragma mark — event
+/** 评论 */
+- (void)commentBtnClick {
+//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateSelectCommontent:)]) {
+//        [_delegate fh_FHWebViewControllerDelegateSelectCommontent:self.data];
+//    }
+}
+
+/** 点赞 */
+- (void)likeBtnClick:(UIButton *)likeBtn {
+//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateSelectLikeClicck:withBtn:withCountLabel:)]) {
+//        [_delegate fh_FHWebViewControllerDelegateSelectLikeClicck:self.data withBtn:likeBtn withCountLabel:self.likeCountLabel];
+//    }
+}
+
+/** 公告收藏 */
+- (void)followBtnClick:(UIButton *)followBtn {
+//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateSelectFollowClick:withBtn:)]) {
+//        [_delegate fh_FHWebViewControllerDelegateSelectFollowClick:self.data withBtn:followBtn];
+//    }
+}
+
+/** 公告转发 */
+- (void)shareBtnClick {
+//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateShareClick:)]) {
+//        [_delegate fh_FHWebViewControllerDelegateShareClick:self.data];
+//    }
+}
+
+
+#pragma mark - Getters and Setters
 - (UIWebView *)webView {
     if (_webView == nil) {
         _webView = [[UIWebView alloc] init];
@@ -276,6 +374,65 @@ XYSJSExport
         _webView.delegate = self;
     }
     return _webView;
+}
+
+- (UIButton *)likeBtn {
+    if (!_likeBtn) {
+        _likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_likeBtn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
+        [_likeBtn addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+    }
+    return _likeBtn;
+}
+
+- (UILabel *)likeCountLabel {
+    if (!_likeCountLabel) {
+        _likeCountLabel = [[UILabel alloc] init];
+        _likeCountLabel.font = [UIFont boldSystemFontOfSize:15];
+        _likeCountLabel.text = @"1";
+        _likeCountLabel.textColor = [UIColor whiteColor];
+        _likeCountLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _likeCountLabel;
+}
+
+- (UIButton *)commentBtn {
+    if (!_commentBtn) {
+        _commentBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_commentBtn setImage:[UIImage imageNamed:@"评论"] forState:UIControlStateNormal];
+        [_commentBtn addTarget:self action:@selector(commentBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _commentBtn;
+}
+
+- (UILabel *)commentCountLabel {
+    if (!_commentCountLabel) {
+        _commentCountLabel = [[UILabel alloc] init];
+        _commentCountLabel.font = [UIFont boldSystemFontOfSize:15];
+        _commentCountLabel.text = @"1";
+        _commentCountLabel.textColor = [UIColor whiteColor];
+        _commentCountLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _commentCountLabel;
+}
+
+- (UIButton *)followBtn {
+    if (!_followBtn) {
+        _followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+        [_followBtn addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _followBtn;
+}
+
+- (UIButton *)shareBtn {
+    if (!_shareBtn) {
+        _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_shareBtn setImage:[UIImage imageNamed:@"转发"] forState:UIControlStateNormal];
+        [_shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _shareBtn;
 }
 
 @end

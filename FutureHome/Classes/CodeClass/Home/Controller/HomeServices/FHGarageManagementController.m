@@ -157,6 +157,7 @@
     web.titleString = @"车库管理";
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
+    web.type = @"noShow";
     [self.navigationController pushViewController:web animated:YES];
 }
 

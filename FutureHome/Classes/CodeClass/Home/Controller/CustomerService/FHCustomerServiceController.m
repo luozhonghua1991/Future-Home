@@ -406,6 +406,7 @@
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = url;
     web.hidesBottomBarWhenPushed = YES;
+    web.type = @"noShow";
     [self.navigationController pushViewController:web animated:YES];
 }
 

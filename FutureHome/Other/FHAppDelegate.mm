@@ -22,6 +22,8 @@
 #import "AFNetworkReachabilityManager.h"
 #import "CoreLocation/CoreLocation.h"
 #import "SingleManager.h"
+#import "SDAdImageView.h"
+#import "SDLaunchImageTool.h"
 
 static FHAppDelegate* pSelf = nil;
 
@@ -77,9 +79,20 @@ CLLocationManagerDelegate
     } else {
         [FHLoginTool fh_makePersonToLoging];
     }
-    [self setTabBarController];
     [self checkNetWork];
     [self startLocation];
+    [self setTabBarController];
+    
+    if ([SDLaunchImageTool isAdImageExist]) {
+        SDAdImageView *adImageView = [[SDAdImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
+        adImageView.delaySeconds = 2.0f;
+        adImageView.aspectRadio = 1;
+        [adImageView show];
+        adImageView.tapActionBlock = ^(SDAdImageView *adImageView ,NSString *destUrl) {
+            if (!destUrl.length) return YES;
+            return YES;
+        };
+    }
     return YES;
 }
 

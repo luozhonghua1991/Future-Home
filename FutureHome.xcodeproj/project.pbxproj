@@ -49,6 +49,7 @@
 		4A153E8C23729FE500CFE6B6 /* FHHealthHistoryModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A153E8823729FE500CFE6B6 /* FHHealthHistoryModel.m */; };
 		4A153E8D23729FE500CFE6B6 /* FHHealthMemberModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A153E8A23729FE500CFE6B6 /* FHHealthMemberModel.m */; };
 		4A153E902372CAB800CFE6B6 /* FHSearchResultModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A153E8F2372CAB800CFE6B6 /* FHSearchResultModel.m */; };
+		4A1D2C51241F7FB200E8D98E /* FHTableData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A1D2C50241F7FB200E8D98E /* FHTableData.m */; };
 		4A200296234B15CB00B277A3 /* FHGoodsDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A200295234B15CB00B277A3 /* FHGoodsDetailModel.m */; };
 		4A200299234B38C500B277A3 /* FHInformationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A200298234B38C500B277A3 /* FHInformationModel.m */; };
 		4A209EA723A09AE500C40100 /* RCColor.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A209E9A23A09AE400C40100 /* RCColor.plist */; };
@@ -151,6 +152,8 @@
 		4A4BEF1A22CE011000FD00DE /* FHEntryVerificationCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1822CE011000FD00DE /* FHEntryVerificationCodeController.m */; };
 		4A4BEF1D22CE031600FD00DE /* FHVerificationCodeLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1C22CE031600FD00DE /* FHVerificationCodeLoginController.m */; };
 		4A4BEF2022CE078B00FD00DE /* FHSetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1E22CE078B00FD00DE /* FHSetPasswordController.m */; };
+		4A4CDF8B2420AEB100582A14 /* SDAdImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CDF892420AEB100582A14 /* SDAdImageView.m */; };
+		4A4CDF8C2420AEB100582A14 /* SDLaunchImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CDF8A2420AEB100582A14 /* SDLaunchImageTool.m */; };
 		4A4CE93222D87A7C0002D360 /* FHMyAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */; };
 		4A4CE93522D88FF00002D360 /* FHMyAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CE93422D88FF00002D360 /* FHMyAccountCell.m */; };
 		4A51D98423079AEE00A5313E /* FHOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A51D98323079AEE00A5313E /* FHOrderDetailController.m */; };
@@ -1036,6 +1039,8 @@
 		4A153E8B23729FE500CFE6B6 /* FHHealthMemberModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHHealthMemberModel.h; sourceTree = "<group>"; };
 		4A153E8E2372CAB800CFE6B6 /* FHSearchResultModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSearchResultModel.h; sourceTree = "<group>"; };
 		4A153E8F2372CAB800CFE6B6 /* FHSearchResultModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSearchResultModel.m; sourceTree = "<group>"; };
+		4A1D2C4F241F7FB200E8D98E /* FHTableData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTableData.h; sourceTree = "<group>"; };
+		4A1D2C50241F7FB200E8D98E /* FHTableData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTableData.m; sourceTree = "<group>"; };
 		4A200294234B15CB00B277A3 /* FHGoodsDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHGoodsDetailModel.h; sourceTree = "<group>"; };
 		4A200295234B15CB00B277A3 /* FHGoodsDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHGoodsDetailModel.m; sourceTree = "<group>"; };
 		4A200297234B38C500B277A3 /* FHInformationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHInformationModel.h; sourceTree = "<group>"; };
@@ -1290,6 +1295,10 @@
 		4A4BEF1C22CE031600FD00DE /* FHVerificationCodeLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHVerificationCodeLoginController.m; sourceTree = "<group>"; };
 		4A4BEF1E22CE078B00FD00DE /* FHSetPasswordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHSetPasswordController.m; sourceTree = "<group>"; };
 		4A4BEF1F22CE078B00FD00DE /* FHSetPasswordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHSetPasswordController.h; sourceTree = "<group>"; };
+		4A4CDF872420AEB100582A14 /* SDAdImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAdImageView.h; sourceTree = "<group>"; };
+		4A4CDF882420AEB100582A14 /* SDLaunchImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLaunchImageTool.h; sourceTree = "<group>"; };
+		4A4CDF892420AEB100582A14 /* SDAdImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAdImageView.m; sourceTree = "<group>"; };
+		4A4CDF8A2420AEB100582A14 /* SDLaunchImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLaunchImageTool.m; sourceTree = "<group>"; };
 		4A4CE93022D87A7C0002D360 /* FHMyAccountController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyAccountController.h; sourceTree = "<group>"; };
 		4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyAccountController.m; sourceTree = "<group>"; };
 		4A4CE93322D88FF00002D360 /* FHMyAccountCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyAccountCell.h; sourceTree = "<group>"; };
@@ -3358,6 +3367,17 @@
 			path = Toast;
 			sourceTree = "<group>";
 		};
+		4A4CDF862420AEB100582A14 /* SDLaunchImage */ = {
+			isa = PBXGroup;
+			children = (
+				4A4CDF872420AEB100582A14 /* SDAdImageView.h */,
+				4A4CDF882420AEB100582A14 /* SDLaunchImageTool.h */,
+				4A4CDF892420AEB100582A14 /* SDAdImageView.m */,
+				4A4CDF8A2420AEB100582A14 /* SDLaunchImageTool.m */,
+			);
+			path = SDLaunchImage;
+			sourceTree = "<group>";
+		};
 		4A59F95822C0B3DF00867031 /* Macro */ = {
 			isa = PBXGroup;
 			children = (
@@ -3529,6 +3549,8 @@
 				4A5EB87D230D180A00F90FF6 /* data.json */,
 				4A5EB87C230D180A00F90FF6 /* ZFTableData.h */,
 				4A5EB87B230D180A00F90FF6 /* ZFTableData.m */,
+				4A1D2C4F241F7FB200E8D98E /* FHTableData.h */,
+				4A1D2C50241F7FB200E8D98E /* FHTableData.m */,
 			);
 			path = Mdeol;
 			sourceTree = "<group>";
@@ -3843,6 +3865,7 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4A4CDF862420AEB100582A14 /* SDLaunchImage */,
 				4AFA588923CDC79B005E7790 /* FHImageToolMethod.h */,
 				4AFA588A23CDC79B005E7790 /* FHImageToolMethod.m */,
 				4AAB02F3239276DA0016D95A /* 地图导航 */,
@@ -6764,6 +6787,7 @@
 				4A51D98A2307FC5200A5313E /* FHSureOrderController.m in Sources */,
 				4AB0168A22CB4A60001D6995 /* FHUserInfoHeaderBaseView.m in Sources */,
 				4AAE66E123A21EB000CD65EE /* FHPersonDetailController.m in Sources */,
+				4A1D2C51241F7FB200E8D98E /* FHTableData.m in Sources */,
 				4AB203B122F2DD7300111AC4 /* ZXQRCodeMode.m in Sources */,
 				4A6DAA9A22C0AD7C00F29455 /* LCTabBarController.m in Sources */,
 				4AE8464F22E2B940009E165B /* FHProofOfOwnershipView.m in Sources */,
@@ -7290,6 +7314,7 @@
 				4A48AB7123AA1EC100AEC284 /* SGQRCodeObtain.m in Sources */,
 				4A97078E22DC70EA00FD18EC /* FHAccountApplicationTFView.m in Sources */,
 				4AB2045F22F2DD7300111AC4 /* ZXImage.m in Sources */,
+				4A4CDF8C2420AEB100582A14 /* SDLaunchImageTool.m in Sources */,
 				4AB2039222F2DD7300111AC4 /* ZXBinaryBitmap.m in Sources */,
 				4ABA6F4323992EC50033E71A /* FHGoodsCommitController.m in Sources */,
 				4AB203C822F2DD7300111AC4 /* ZXPerspectiveTransform.m in Sources */,
@@ -7383,6 +7408,7 @@
 				4AC67E1322C892A300842C0D /* FHMessageHistoryController.m in Sources */,
 				4AB2039422F2DD7300111AC4 /* ZXGenericMultipleBarcodeReader.m in Sources */,
 				4AB2043A22F2DD7300111AC4 /* ZXUPCEANExtensionSupport.m in Sources */,
+				4A4CDF8B2420AEB100582A14 /* SDAdImageView.m in Sources */,
 				4A6DAB5822C0ADAF00F29455 /* MBProgressHUD.m in Sources */,
 				4AB203FD22F2DD7300111AC4 /* ZXDataMatrixVersion.m in Sources */,
 				4AB2045C22F2DD7300111AC4 /* ZXCalendarParsedResult.m in Sources */,

@@ -365,6 +365,7 @@
     web.urlString = self.protocol;
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
+    web.type = @"noShow";
     [self.navigationController pushViewController:web animated:YES];
 }
 

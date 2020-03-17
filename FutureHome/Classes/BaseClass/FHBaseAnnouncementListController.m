@@ -276,14 +276,16 @@
 //    } else if (self.ID == 2) {
 //        self.titleString = @"";
 //    }
+    
     web.titleString = self.webTitleString;
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
+    web.article_type = model.type;
+    web.article_id = model.id;
     [self.navigationController pushViewController:web animated:YES];
 }
 
 - (void)buttonClick {
-    
     if ([self.yp_tabItemTitle isEqualToString:@"申请通道"]) {
 //        [self viewControllerPushOther:@"FHApplicationElectionIndustryCommitteController"];
         FHApplicationElectionIndustryCommitteController *vc = [[FHApplicationElectionIndustryCommitteController alloc] init];
