@@ -104,7 +104,7 @@ CLLocationManagerDelegate
 
 #pragma mark - 定位
 //开始定位
--(void) startLocation
+-(void)startLocation
 {
     //判断定位功能是否打开
     if ([CLLocationManager locationServicesEnabled]) {
@@ -112,10 +112,12 @@ CLLocationManagerDelegate
         locationmanager.delegate = self;
         [locationmanager requestAlwaysAuthorization];
         [locationmanager requestWhenInUseAuthorization];
-        
+        [locationmanager setAllowsBackgroundLocationUpdates:YES];
         //设置寻址精度
         locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
-        locationmanager.distanceFilter = 5.0;
+        locationmanager.pausesLocationUpdatesAutomatically = NO;
+        locationmanager.distanceFilter = kCLDistanceFilterNone;
+        
         [locationmanager startUpdatingLocation];
     }
 }
@@ -136,14 +138,13 @@ CLLocationManagerDelegate
 
 
 #pragma mark 定位成功后则执行此代理方法
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
-{
-    [locationmanager stopUpdatingHeading];
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+//    [locationmanager stopUpdatingHeading];
     //旧址
     CLLocation *currentLocation = [locations lastObject];
     CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
     //打印当前的经度与纬度
-    NSLog(@"%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+    NSLog(@"更新的坐标------%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
     [SingleManager shareManager].strlatitude = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
     [SingleManager shareManager].strlongitude = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
     

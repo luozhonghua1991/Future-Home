@@ -253,7 +253,7 @@
         /** 未收藏 */
         [self.followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
         self.followBtn.tag = 0;
-    } else if (_data.islike == 1) {
+    } else if (_data.isconnection == 1) {
         /** 已收藏 */
         [self.followBtn setImage:[UIImage imageNamed:@"收藏后"] forState:UIControlStateNormal];
         self.followBtn.tag = 1;

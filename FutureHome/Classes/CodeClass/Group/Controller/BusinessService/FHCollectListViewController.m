@@ -44,6 +44,11 @@ FHSearchResultCellDelegate
     [self.homeTable registerClass:[FHCommonFollowAndPlacementCell class] forCellReuseIdentifier:NSStringFromClass([FHCommonFollowAndPlacementCell class])];
     [self.homeTable registerClass:[FHSearchResultCell class] forCellReuseIdentifier:NSStringFromClass([FHSearchResultCell class])];
     [self.view addSubview:self.homeTable];
+//    [self loadInit];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self loadInit];
 }
 
@@ -105,6 +110,8 @@ FHSearchResultCellDelegate
         }];
     } else {
         /** 附近的人 专门写的 */
+        /** 每次进来先获取当前位置的经纬度 */
+        
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:

@@ -9,6 +9,7 @@
 #import "FHApplicationElectionIndustryCommitteController.h"
 #import "FHElectRepeatTFView.h"
 #import "BRPlaceholderTextView.h"
+#import "FHImageToolMethod.h"
 
 @interface FHApplicationElectionIndustryCommitteController () <UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate>
 /** 大的滚动视图 */
@@ -182,26 +183,34 @@
 - (void)setDataWithModel:(FHCandidateListModel *)personModel {
     /** 数据赋值 */
     _personModel = personModel;
-    self.nameView.contentTF.text = _personModel.name;
-    self.ageView.contentTF.text = [NSString stringWithFormat:@"%ld",(long)personModel.age];
-    self.sexView.contentTF.text = _personModel.getSex;
-    self.xueliView.contentTF.text = _personModel.education;
     self.phoneView.contentTF.text = _personModel.mobile;
     if ([self.phoneView.contentTF.text isEqualToString:@""]) {
-         [self.sureBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
+        [self.sureBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
     } else {
-         [self.sureBtn setTitle:@"编辑并提交" forState:UIControlStateNormal];
+        [self.sureBtn setTitle:@"编辑并提交" forState:UIControlStateNormal];
+        self.nameView.contentTF.text = _personModel.name;
+        self.ageView.contentTF.text = [NSString stringWithFormat:@"%ld",(long)personModel.age];
+        self.sexView.contentTF.text = _personModel.getSex;
+        self.xueliView.contentTF.text = _personModel.education;
+        self.faceView.contentTF.text = _personModel.polity;
+        self.addressView.contentTF.text = _personModel.home_num;
+        self.typeView.contentTF.text = _personModel.getFull;
+        [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:_personModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+        self.numberLabel.text = [NSString stringWithFormat:@"参选号: %@",_personModel.number];
+        self.contentTF.text = [NSString stringWithFormat:@"   %@",_personModel.intro];
+        self.businessDescriptionTextView.text = _personModel.describe;
+        self.imgID = _personModel.img_ids;
     }
-    self.faceView.contentTF.text = _personModel.polity;
-    self.addressView.contentTF.text = _personModel.home_num;
-    self.typeView.contentTF.text = _personModel.getFull;
-    [self.headerImageView sd_setImageWithURL:[NSURL URLWithString:_personModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
-    self.numberLabel.text = [NSString stringWithFormat:@"参选号: %@",_personModel.number];
-    self.contentTF.text = [NSString stringWithFormat:@"   %@",_personModel.intro];
-    self.businessDescriptionTextView.text = _personModel.describe;
-    self.imgID = _personModel.img_ids;
+    
     if ([self.titleString isEqualToString:@"选举人资料"]) {
-        self.scrollView.userInteractionEnabled = NO;
+        CGSize size = [UIlabelTool sizeWithString:_personModel.describe font:[UIFont systemFontOfSize:13] width:SCREEN_WIDTH - 20 - 98];
+        CGFloat updateHeight = size.height + 50;
+        self.businessDescriptionTextView.height = updateHeight;
+        self.bigLineView.height = updateHeight;
+        self.bigBottomView.frame = CGRectMake(10, MaxY(self.contentTF) - 1, SCREEN_WIDTH - 20, updateHeight);
+        self.normalLabel.height = updateHeight;
+        self.businessDescriptionTextView.scrollEnabled = NO;
+        self.scrollView.contentSize = CGSizeMake(0, MaxY(self.bigBottomView) + MainSizeHeight + 20);
     }
 }
 
@@ -272,13 +281,17 @@
 }
 
 - (void)imgViewClick {
-    /** 选取图片 */
-    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
-    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
-    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
-    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
-    [actionSheet addAnimation];
-    [actionSheet show];
+    if ([self.titleString isEqualToString:@"选举人资料"]) {
+        [FHImageToolMethod showImage:self.headerImageView];
+    } else {
+        /** 选取图片 */
+        FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
+        [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+        [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+        [actionSheet addAnimation];
+        [actionSheet show];
+    }
 }
 
 
@@ -474,7 +487,7 @@
 
 - (UIView *)lineView {
     if (!_lineView) {
-        _lineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 10 - 117, MaxY(self.headerImageView),0.5, 30)];
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 10 - 117, MaxY(self.headerImageView),0.5, 40)];
         _lineView.backgroundColor = [UIColor lightGrayColor];
         if ([self.titleString isEqualToString:@"选举服务申请"]) {
             _lineView.hidden = YES;
@@ -487,7 +500,7 @@
 
 - (UILabel *)numberLabel {
     if (!_numberLabel) {
-        _numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 10 - 117, MaxY(self.headerImageView),118, 30)];
+        _numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 10 - 117, MaxY(self.headerImageView),118, 40)];
         _numberLabel.textColor = [UIColor redColor];
         _numberLabel.textAlignment = NSTextAlignmentCenter;
         _numberLabel.font = [UIFont systemFontOfSize:13];
@@ -528,7 +541,7 @@
 
 - (UILabel *)normalLabel {
     if (!_normalLabel) {
-        _normalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,97.5, 400)];
+        _normalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,97, 400)];
         _normalLabel.textColor = [UIColor blackColor];
         _normalLabel.textAlignment = NSTextAlignmentCenter;
         _normalLabel.font = [UIFont systemFontOfSize:13];
@@ -539,7 +552,7 @@
 
 - (BRPlaceholderTextView *)businessDescriptionTextView {
     if (!_businessDescriptionTextView) {
-        _businessDescriptionTextView = [[BRPlaceholderTextView alloc] initWithFrame:CGRectMake(97.5, 0, SCREEN_WIDTH - 20 - 97.5, 400)];
+        _businessDescriptionTextView = [[BRPlaceholderTextView alloc] initWithFrame:CGRectMake(98, 0, SCREEN_WIDTH - 20 - 98, 400)];
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:13];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
         NSString *titleString = @" \n\n\n\n 请输入个人基本情况";

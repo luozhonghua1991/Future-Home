@@ -30,7 +30,7 @@
 
 - (id) initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        self.font = [UIFont systemFontOfSize:15];
+        self.font = [UIFont systemFontOfSize:13];
         [self awakeFromNib];
     }
     return self;
@@ -92,7 +92,7 @@
 {
     self.placeholder_color = [UIColor lightGrayColor];
     self.placeholder_font  = [UIFont systemFontOfSize:14];
-    self.maxTextLength=1000;
+    self.maxTextLength=MAXFLOAT;
     self.layoutManager.allowsNonContiguousLayout=NO;
 
 

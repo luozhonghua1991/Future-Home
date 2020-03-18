@@ -154,6 +154,7 @@
 		4A4BEF2022CE078B00FD00DE /* FHSetPasswordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1E22CE078B00FD00DE /* FHSetPasswordController.m */; };
 		4A4CDF8B2420AEB100582A14 /* SDAdImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CDF892420AEB100582A14 /* SDAdImageView.m */; };
 		4A4CDF8C2420AEB100582A14 /* SDLaunchImageTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CDF8A2420AEB100582A14 /* SDLaunchImageTool.m */; };
+		4A4CDF922420DE2000582A14 /* FHArticleDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CDF912420DE2000582A14 /* FHArticleDetailModel.m */; };
 		4A4CE93222D87A7C0002D360 /* FHMyAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */; };
 		4A4CE93522D88FF00002D360 /* FHMyAccountCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4CE93422D88FF00002D360 /* FHMyAccountCell.m */; };
 		4A51D98423079AEE00A5313E /* FHOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A51D98323079AEE00A5313E /* FHOrderDetailController.m */; };
@@ -1299,6 +1300,8 @@
 		4A4CDF882420AEB100582A14 /* SDLaunchImageTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLaunchImageTool.h; sourceTree = "<group>"; };
 		4A4CDF892420AEB100582A14 /* SDAdImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDAdImageView.m; sourceTree = "<group>"; };
 		4A4CDF8A2420AEB100582A14 /* SDLaunchImageTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLaunchImageTool.m; sourceTree = "<group>"; };
+		4A4CDF902420DE2000582A14 /* FHArticleDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHArticleDetailModel.h; sourceTree = "<group>"; };
+		4A4CDF912420DE2000582A14 /* FHArticleDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHArticleDetailModel.m; sourceTree = "<group>"; };
 		4A4CE93022D87A7C0002D360 /* FHMyAccountController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyAccountController.h; sourceTree = "<group>"; };
 		4A4CE93122D87A7C0002D360 /* FHMyAccountController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMyAccountController.m; sourceTree = "<group>"; };
 		4A4CE93322D88FF00002D360 /* FHMyAccountCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMyAccountCell.h; sourceTree = "<group>"; };
@@ -6409,6 +6412,8 @@
 				4A920732237408310091847E /* FHCommonFollowAndPlacementCell.m */,
 				4AB8CF0123C5D5E50043F65D /* FHSharingDynamicsController.h */,
 				4AB8CF0223C5D5E50043F65D /* FHSharingDynamicsController.m */,
+				4A4CDF902420DE2000582A14 /* FHArticleDetailModel.h */,
+				4A4CDF912420DE2000582A14 /* FHArticleDetailModel.m */,
 			);
 			path = "New Group";
 			sourceTree = "<group>";
@@ -6644,6 +6649,9 @@
 					4A6DA9BF22C05C6F00F29455 = {
 						CreatedOnToolsVersion = 10.2.1;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.SafariKeychain = {
 								enabled = 1;
 							};
@@ -7410,6 +7418,7 @@
 				4AB2043A22F2DD7300111AC4 /* ZXUPCEANExtensionSupport.m in Sources */,
 				4A4CDF8B2420AEB100582A14 /* SDAdImageView.m in Sources */,
 				4A6DAB5822C0ADAF00F29455 /* MBProgressHUD.m in Sources */,
+				4A4CDF922420DE2000582A14 /* FHArticleDetailModel.m in Sources */,
 				4AB203FD22F2DD7300111AC4 /* ZXDataMatrixVersion.m in Sources */,
 				4AB2045C22F2DD7300111AC4 /* ZXCalendarParsedResult.m in Sources */,
 				4ACAD07E23192E0F0064BA95 /* FHMyIndustryCommitteeController.m in Sources */,

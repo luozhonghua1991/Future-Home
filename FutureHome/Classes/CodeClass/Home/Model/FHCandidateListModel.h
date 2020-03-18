@@ -58,7 +58,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 图片id */
 @property (nonatomic, copy) NSString *img_ids;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

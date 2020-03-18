@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/9/7.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  选举列表界面
+//  选举列表界面  业委海选界面
 
 #import "FHElectionListController.h"
 #import "FHElectionListCell.h"
@@ -152,7 +152,8 @@
         [self commitRequestWithStrings:modelID];
     }
     [self.selectModelArrs addObject:modelID];
-    cell.selectLabel.text = @"⊙选他";
+    [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+//    cell.selectLabel.text = @"⊙选他";
 }
 
 - (void)pushBtnClick {
@@ -169,7 +170,6 @@
 }
 
 - (void)commitRequestWithStrings:(NSString *)string {
-    /** 添加成员接口 */
     WS(weakSelf);
     NSString *status;
     if ([self.titleString isEqualToString:@"业委海选"]) {

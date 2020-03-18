@@ -15,6 +15,7 @@
 #import "FHPersonTrendsController.h"
 #import "FHFreshMallController.h"
 #import "UIView+ZFFrame.h"
+#import "FHArticleDetailModel.h"
 
 @interface FHWebViewController ()
 <
@@ -40,6 +41,8 @@ XYSJSExport
 @property (nonatomic, strong) UILabel *commentCountLabel;
 
 @property (nonatomic, strong) UIButton *shareBtn;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) FHArticleDetailModel *articleModel;
 
 @end
 
@@ -61,6 +64,51 @@ XYSJSExport
         /** 展示评论列表 */
         [self fh_creatCommentView];
         [self fh_layoutSubView];
+        /** 获取文章详情 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   self.article_type,@"type",
+                                   self.article_id,@"article_id",
+                                   nil];
+        
+        [AFNetWorkTool get:@"Article/getSingInfo" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                weakSelf.articleModel = [FHArticleDetailModel mj_objectWithKeyValues:responseObj[@"data"]];
+                [weakSelf updateArticleDataWithModel:weakSelf.articleModel];
+            } else {
+                NSString *msg = responseObj[@"msg"];
+                [weakSelf.view makeToast:msg];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+}
+
+/** 更新文章详情数据 */
+- (void)updateArticleDataWithModel:(FHArticleDetailModel *)articleModel {
+    self.commentCountLabel.text = articleModel.comment_num;
+    self.likeCountLabel.text = articleModel.like_num;
+    if (articleModel.islike == 0) {
+        /** 未点赞 */
+        [self.likeBtn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
+        self.likeBtn.tag = 0;
+    } else if (articleModel.islike == 1) {
+        /** 已经点赞 */
+        [self.likeBtn setImage:[UIImage imageNamed:@"评论点赞后"] forState:UIControlStateNormal];
+        self.likeBtn.tag = 1;
+    }
+    //是否收藏
+    if (articleModel.iscollection == 0) {
+        /** 未收藏 */
+        [self.followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+        self.followBtn.tag = 0;
+    } else if (articleModel.iscollection == 1) {
+        /** 已收藏 */
+        [self.followBtn setImage:[UIImage imageNamed:@"收藏后"] forState:UIControlStateNormal];
+        self.followBtn.tag = 1;
     }
 }
 
@@ -105,7 +153,6 @@ XYSJSExport
     min_x = CGRectGetMinX(self.commentBtn.frame);
     min_y = CGRectGetMinY(self.commentBtn.frame) - min_h - margin;
     self.likeBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
     
     self.likeCountLabel.frame = CGRectMake(MinX(self.likeBtn), MaxY(self.likeBtn) + 8, self.likeBtn.frame.size.width, 15);
     self.commentCountLabel.frame = CGRectMake(MinX(self.commentBtn), MaxY(self.commentBtn) + 8, self.commentBtn.frame.size.width, 15);
@@ -224,15 +271,7 @@ XYSJSExport
 
 
 - (void)doShareWithPerson:(NSString *)person {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        NSDictionary *dic = [self dictionaryWithJsonString:person];
-        /** 文章转发 */
-        FHSharingDynamicsController *vc = [[FHSharingDynamicsController alloc] init];
-        vc.type = @"文章";
-        vc.dataDic = dic;
-        vc.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:vc animated:YES];
-    });
+    
 }
 
 - (void)AdventLinkWithPerson :(NSString *)person {
@@ -346,23 +385,76 @@ XYSJSExport
 
 /** 点赞 */
 - (void)likeBtnClick:(UIButton *)likeBtn {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateSelectLikeClicck:withBtn:withCountLabel:)]) {
-//        [_delegate fh_FHWebViewControllerDelegateSelectLikeClicck:self.data withBtn:likeBtn withCountLabel:self.likeCountLabel];
-//    }
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.article_type,@"type",
+                               self.article_id,@"id",
+                               nil];
+    [AFNetWorkTool post:@"Article/doLike" params:paramsDic success:^(id responseObj) {
+        NSInteger count = [self.likeCountLabel.text integerValue];
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (self.likeBtn.tag == 0) {
+                /** 未点赞 */
+                [self.likeBtn setImage:[UIImage imageNamed:@"评论点赞后"] forState:UIControlStateNormal];
+                self.likeBtn.tag = 1;
+                count ++;
+                self.likeCountLabel.text = [NSString stringWithFormat:@"%ld",(long)count];
+            } else if (self.likeBtn.tag == 1) {
+                /** 已经点赞 */
+                [self.likeBtn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
+                self.likeBtn.tag = 0;
+                count --;
+                self.likeCountLabel.text = [NSString stringWithFormat:@"%ld",(long)count];
+            }
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 /** 公告收藏 */
 - (void)followBtnClick:(UIButton *)followBtn {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateSelectFollowClick:withBtn:)]) {
-//        [_delegate fh_FHWebViewControllerDelegateSelectFollowClick:self.data withBtn:followBtn];
-//    }
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.article_type,@"type",
+                               self.article_id,@"id",
+                               nil];
+    [AFNetWorkTool post:@"public/articleCollect" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (self.followBtn.tag == 0) {
+                /** 未收藏 */
+                [self.followBtn setImage:[UIImage imageNamed:@"收藏后"] forState:UIControlStateNormal];
+                self.followBtn.tag = 1;
+            } else if (self.followBtn.tag == 1) {
+                /** 已经收藏 */
+                [self.followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+                self.followBtn.tag = 0;
+            }
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
 
 /** 公告转发 */
 - (void)shareBtnClick {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateShareClick:)]) {
-//        [_delegate fh_FHWebViewControllerDelegateShareClick:self.data];
-//    }
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:
+                         self.articleModel.cover,@"cover",
+                         self.articleModel.title,@"title",
+                         self.articleModel.path,@"path",
+                         self.articleModel.writer,@"forwarder",
+                         nil];
+    FHSharingDynamicsController *vc = [[FHSharingDynamicsController alloc] init];
+    vc.type = @"文章";
+    vc.dataDic = dic;
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

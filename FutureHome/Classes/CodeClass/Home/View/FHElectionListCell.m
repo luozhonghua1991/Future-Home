@@ -42,7 +42,6 @@
 /** 兼职 */
 @property (nonatomic, strong) UILabel *typeLabel;
 
-
 @end
 
 @implementation FHElectionListCell
@@ -71,6 +70,7 @@
     
     [self.contentBgView addSubview:self.numberLabel];
     [self.contentBgView addSubview:self.countLabel];
+    [self.contentBgView addSubview:self.selectBtn];
     [self.contentBgView addSubview:self.selectLabel];
     
     [self.contentView addSubview:self.bottomLabel];
@@ -94,10 +94,12 @@
     self.xueLiLabel.text = [NSString stringWithFormat:@"学历: %@",_candidateListModel.education];
     self.faceLabel.text = [NSString stringWithFormat:@"政治面貌: %@",_candidateListModel.polity];
     self.typeLabel.text = [NSString stringWithFormat:@"全职/兼职: %@",_candidateListModel.getFull];
+    
+    
     if (_candidateListModel.select == 0) {
-        self.selectLabel.text = @"○选他";
+        [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
     } else if (_candidateListModel.select == 1) {
-        self.selectLabel.text = @"⊙选他";
+        [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
     }
 }
 
@@ -189,12 +191,24 @@
     return _countLabel;
 }
 
+- (UIButton *)selectBtn {
+    if (!_selectBtn) {
+        _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _selectBtn.frame = CGRectMake(MaxX(self.shuLineView) + 23.5, MaxY(self.countLabel) + 25 / 2 , 25, 25);
+        [_selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+        _selectBtn.userInteractionEnabled = NO;
+//        [_selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _selectBtn;
+}
+
 - (UILabel *)selectLabel {
     if (!_selectLabel) {
-        _selectLabel = [[UILabel alloc] initWithFrame:CGRectMake(MaxX(self.shuLineView), MaxY(self.countLabel), 100, 50)];
+        _selectLabel = [[UILabel alloc] initWithFrame:CGRectMake(MaxX(self.selectBtn), MaxY(self.countLabel), 28, 50)];
         _selectLabel.font = [UIFont systemFontOfSize:13];
-        _selectLabel.text = @"○选他";
+        _selectLabel.text = @"选他";
         _selectLabel.textColor = [UIColor blackColor];
+//        _selectLabel.backgroundColor = [UIColor redColor];
         _selectLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _selectLabel;

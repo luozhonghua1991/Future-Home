@@ -344,6 +344,9 @@
         /** 跳转到文档详情 */
         FHWebViewController *web = [[FHWebViewController alloc] init];
         web.urlString = model.path;
+        NSArray *arr = [model.path componentsSeparatedByString:@"/"];
+        web.article_type = arr[arr.count - 2];
+        web.article_id = arr[arr.count - 4];
         web.titleString = model.videoname;
         web.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:web animated:YES];

@@ -93,6 +93,7 @@
                                    @(self.type),@"path",
                                    arr,@"file[]",
                                    nil];
+        
         for (int i = 0; i< self.imgSelectArrs.count; i++) {
             NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
             [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {

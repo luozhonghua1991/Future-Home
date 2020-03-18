@@ -40,7 +40,7 @@
 
 - (void)backToHomePage {
     if (self.navigationController) {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

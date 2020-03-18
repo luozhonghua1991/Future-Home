@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHElectionListCell : UITableViewCell
 /** 选择 */
 @property (nonatomic, strong) UILabel *selectLabel;
+/** 选择按钮 */
+@property (nonatomic, strong) UIButton *selectBtn;
 /** 选举列表数据 */
 @property (nonatomic, strong) FHCandidateListModel *candidateListModel;
 
