@@ -14,7 +14,7 @@
 
 /** 保存账户 */
 + (BOOL)saveAccount:(Account *)account{
-    
+    [SingleManager shareManager].isFirstPushLogin = NO;
     NSFileManager *mgr = [NSFileManager defaultManager];
     
     if (![self isFileExistsAtPath]) {

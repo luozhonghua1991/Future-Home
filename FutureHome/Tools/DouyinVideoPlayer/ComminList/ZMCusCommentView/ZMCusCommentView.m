@@ -267,6 +267,7 @@
     view.commentListView.headerView.commmentCount = [data.comment intValue];
     view.commentListView.videoTopicId = data.dataID;
     view.videoTopicId = data.dataID;
+    
     FHAppDelegate *delegate = (FHAppDelegate*)[UIApplication sharedApplication].delegate;
     [delegate.window addSubview:view];
     [view showView];

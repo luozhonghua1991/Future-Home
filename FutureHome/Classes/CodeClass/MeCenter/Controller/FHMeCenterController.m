@@ -148,7 +148,7 @@
             cell.detailTextLabel.text = @"版本号1.0.1";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         } else if (indexPath.row == 2) {
-            cell.detailTextLabel.text = self.isReainame;
+//            cell.detailTextLabel.text = self.isReainame;
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         } else {
             
@@ -179,10 +179,10 @@
             /** 我的收藏 */
             [self viewControllerPushOther:@"FHMyFollowListController"];
         } else if (indexPath.row == 2) {
-            /** 实名认证 */
-            if ([self.isReainame isEqualToString:@"未实名认证！"]) {
+            /** 实名认证状态显示界面 */
+//            if ([self.isReainame isEqualToString:@"未实名认证！"]) {
                 [self viewControllerPushOther:@"FHCertificationController"];
-            }
+//            }
         } else if (indexPath.row == 3) {
             /** 隐私设置 */
             [self viewControllerPushOther:@"FHPrivacySettingsController"];

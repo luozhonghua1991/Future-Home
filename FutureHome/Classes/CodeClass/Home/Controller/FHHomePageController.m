@@ -114,8 +114,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    /** 获取banner数据 */
-    [self fh_getShopFollowList];
 }
 
 - (void)fefreshBanner {
@@ -232,8 +230,6 @@
 #pragma mark — request
 - (void)fh_refreshBannerData {
     [self fh_getTopBanner];
-    [self fh_bottomTopBanner];
-    [self getListInfo];
 }
 
 - (void)fh_getTopBanner {
@@ -254,15 +250,22 @@
                                @(1),@"type", nil];
     
     [AFNetWorkTool get:@"future/advent" params:paramsDic success:^(id responseObj) {
-        NSDictionary *Dic = responseObj[@"data"];
-        NSArray *upDicArr = Dic[@"uplist"];
-        [self endRefreshAction];
-        for (NSDictionary *dic in upDicArr) {
-            [self->topBannerArrays addObject:dic[@"path"]];
-            [self->topUrlArrays addObject:dic[@"url"]];
+        if ([responseObj[@"code"] integerValue] == 1) {
+            /** 请求成功 */
+            NSDictionary *Dic = responseObj[@"data"];
+            NSArray *upDicArr = Dic[@"uplist"];
+            [self endRefreshAction];
+            for (NSDictionary *dic in upDicArr) {
+                [self->topBannerArrays addObject:dic[@"path"]];
+                [self->topUrlArrays addObject:dic[@"url"]];
+            }
+            
+            [weakSelf.homeTable reloadData];
+            [self fh_bottomTopBanner];
+            [self getListInfo];
+            /** 获取banner数据 */
+            [self fh_getShopFollowList];
         }
-        
-        [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [self endRefreshAction];
         [weakSelf.homeTable reloadData];

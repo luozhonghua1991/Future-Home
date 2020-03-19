@@ -154,57 +154,59 @@
     }];
     
     
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @(self.property_id),@"owner_id",
-                               nil];
-    /** 判断业委投票通道是否关闭 */
-    [AFNetWorkTool get:@"owner/voteIsClosed" params:params success:^(id responseObj) {
-        NSDictionary *dic = responseObj[@"data"];
-        NSInteger status = [dic[@"status"] integerValue];
-        self.pid = dic[@"id"];
-        
-        if (self.ID == 6) {
-            NSString *title = dic[@"apply_title"];
-            /** 申请通道 */
-            if (status == 1) {
-                [self.clickButton setTitle:title forState:UIControlStateNormal];
-                [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
-                self.clickButton.enabled = YES;
-            } else {
-                [self.clickButton setTitle:title forState:UIControlStateNormal];
-                [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-                self.clickButton.enabled = NO;
+    if (self.ID == 6 || self.ID == 7 || self.ID == 8) {
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                @(account.user_id),@"user_id",
+                                @(self.property_id),@"owner_id",
+                                nil];
+        /** 判断业委投票通道是否关闭 */
+        [AFNetWorkTool get:@"owner/voteIsClosed" params:params success:^(id responseObj) {
+            NSDictionary *dic = responseObj[@"data"];
+            NSInteger status = [dic[@"status"] integerValue];
+            self.pid = dic[@"id"];
+            
+            if (self.ID == 6) {
+                NSString *title = dic[@"apply_title"];
+                /** 申请通道 */
+                if (status == 1) {
+                    [self.clickButton setTitle:title forState:UIControlStateNormal];
+                    [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                    self.clickButton.enabled = YES;
+                } else {
+                    [self.clickButton setTitle:title forState:UIControlStateNormal];
+                    [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                    self.clickButton.enabled = NO;
+                }
+            } else if (self.ID == 7) {
+                /** 业委海选 */
+                NSString *title = dic[@"candidate_title"];
+                if (status == 3) {
+                    [self.clickButton setTitle:title forState:UIControlStateNormal];
+                    [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                    self.clickButton.enabled = YES;
+                } else {
+                    [self.clickButton setTitle:title forState:UIControlStateNormal];
+                    [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                    self.clickButton.enabled = NO;
+                }
+            } else if (self.ID == 8) {
+                /** 岗位选举 */
+                NSString *title = dic[@"candidate_title"];
+                if (status == 5) {
+                    [self.clickButton setTitle:title forState:UIControlStateNormal];
+                    [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
+                    self.clickButton.enabled = YES;
+                } else {
+                    [self.clickButton setTitle:title forState:UIControlStateNormal];
+                    [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+                    self.clickButton.enabled = NO;
+                }
             }
-        } else if (self.ID == 7) {
-            /** 业委海选 */
-            NSString *title = dic[@"candidate_title"];
-            if (status == 3) {
-                [self.clickButton setTitle:title forState:UIControlStateNormal];
-                [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
-                self.clickButton.enabled = YES;
-            } else {
-                [self.clickButton setTitle:title forState:UIControlStateNormal];
-                [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-                self.clickButton.enabled = NO;
-            }
-        } else if (self.ID == 8) {
-            /** 岗位选举 */
-            NSString *title = dic[@"candidate_title"];
-            if (status == 5) {
-                [self.clickButton setTitle:title forState:UIControlStateNormal];
-                [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
-                self.clickButton.enabled = YES;
-            } else {
-                [self.clickButton setTitle:title forState:UIControlStateNormal];
-                [self.clickButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-                self.clickButton.enabled = NO;
-            }
-        }
-        [weakSelf.listTable reloadData];
-    } failure:^(NSError *error) {
-        [weakSelf.listTable reloadData];
-    }];
+            [weakSelf.listTable reloadData];
+        } failure:^(NSError *error) {
+            [weakSelf.listTable reloadData];
+        }];
+    }
 }
 
 - (void)endRefreshAction

@@ -16,6 +16,7 @@
     FHLoginController *login = [[FHLoginController alloc]init];
     login.hidesBottomBarWhenPushed = YES;
     [[CurrentViewController topViewController].navigationController pushViewController:login animated:YES];
+    [SingleManager shareManager].isFirstPushLogin = YES;
 }
 
  

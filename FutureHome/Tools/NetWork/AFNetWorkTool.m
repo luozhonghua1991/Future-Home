@@ -13,6 +13,9 @@
 //#import "GTMBase64.h"
 
 #import "FHAppDelegate.h"
+@interface AFNetWorkTool ()
+
+@end
 
 @implementation AFNetWorkTool
 
@@ -90,7 +93,6 @@
     //发送get请求
     [session GET:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
-
         if (success) {
             success(responseObject);
         }

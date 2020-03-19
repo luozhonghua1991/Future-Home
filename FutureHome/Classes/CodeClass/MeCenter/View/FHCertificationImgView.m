@@ -54,6 +54,7 @@
     label.text = name;
     label.textColor = [UIColor blackColor];
     label.textAlignment = NSTextAlignmentCenter;
+    label.numberOfLines = 0;
     [view addSubview:label];
     self.changeTitleLabel = label;
     

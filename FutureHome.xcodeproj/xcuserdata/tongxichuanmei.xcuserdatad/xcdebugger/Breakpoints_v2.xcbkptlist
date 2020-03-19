@@ -84,12 +84,12 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606217883.2610821"
+                  timestampString = "606299569.75521"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
                   endingLineNumber = "127"
-                  offsetFromSymbolStart = "960">
+                  offsetFromSymbolStart = "1267">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -99,12 +99,12 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606217883.263563"
+                  timestampString = "606299569.756551"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "128"
                   endingLineNumber = "128"
-                  offsetFromSymbolStart = "64">
+                  offsetFromSymbolStart = "54">
                </Location>
             </Locations>
          </BreakpointContent>

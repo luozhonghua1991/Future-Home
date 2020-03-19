@@ -305,7 +305,7 @@
 
 - (void)popVC {
     self.tabBarController.selectedIndex = 0;
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 /**
@@ -316,7 +316,7 @@
  */
 - (void)viewControllerPushOther:(nonnull NSString *)nameVC {
     UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];
-    [self.navigationController pushViewController:vc animated:NO];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Getters and Setters

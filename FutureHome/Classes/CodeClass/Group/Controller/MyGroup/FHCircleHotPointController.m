@@ -116,7 +116,11 @@
         self.headerParamsDic = headerParamsDic;
         self.relationBtn.frame = CGRectMake(15, MaxY(self.updateLabel) + 18, 70, 32);
         self.updateBtn.hidden = YES;
-        self.relationBtn.hidden = NO;
+        if ([self.personID integerValue] == account.user_id) {
+            self.relationBtn.hidden = YES;
+        } else {
+            self.relationBtn.hidden = NO;
+        }
     } else {
         paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",

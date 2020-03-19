@@ -112,7 +112,7 @@ CLLocationManagerDelegate
         locationmanager.delegate = self;
         [locationmanager requestAlwaysAuthorization];
         [locationmanager requestWhenInUseAuthorization];
-        [locationmanager setAllowsBackgroundLocationUpdates:YES];
+//        [locationmanager setAllowsBackgroundLocationUpdates:YES];
         //设置寻址精度
         locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
         locationmanager.pausesLocationUpdatesAutomatically = NO;
@@ -168,6 +168,12 @@ CLLocationManagerDelegate
 
 #pragma mark  -- 设置tabbar
 - (void)setTabBarController {
+//    /** 判断用户是否登录过 没登录去登录 */
+//    if (![AccountStorage isExistsToKen]) {
+//        [FHLoginTool fh_makePersonToLoging];
+//        return;
+//    }
+    
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];
     vc1.title = @"首页";
     vc1.tabBarItem.image = [UIImage imageNamed:@"zhuye-2"];
@@ -208,12 +214,6 @@ CLLocationManagerDelegate
     [tabBarC addChildViewController:navC4];
     [tabBarC addChildViewController:navC5];
     self.window.rootViewController = tabBarC;
-    
-    /** 判断用户是否登录过 没登录去登录 */
-    if (![AccountStorage isExistsToKen]) {
-        [FHLoginTool fh_makePersonToLoging];
-        return;
-    }
 }
 
 

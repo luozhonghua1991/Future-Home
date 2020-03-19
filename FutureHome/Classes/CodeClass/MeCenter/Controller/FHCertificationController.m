@@ -71,6 +71,8 @@
     [self.view addSubview:self.trueNameView];
     [self.view addSubview:self.personCodeView];
     [self.view addSubview:self.imgView];
+    self.imgView.changeTitleLabel.text = @"手持证件合影照/单位营业执照";
+    self.imgView.changeTitleLabel.height = 35;
     [self.view addSubview:self.agreementView];
     self.submitBtn.centerX = self.view.width / 2;
     [self.view addSubview:self.submitBtn];
@@ -102,20 +104,23 @@
 #pragma mark — setter && getter
 - (UILabel *)topLabel {
     if (!_topLabel) {
-        _topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainSizeHeight + 3, SCREEN_WIDTH, 13)];
+        _topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainSizeHeight + 3, SCREEN_WIDTH, 35)];
         _topLabel.textAlignment = NSTextAlignmentCenter;
         _topLabel.textColor = [UIColor lightGrayColor];
-        _topLabel.font = [UIFont systemFontOfSize:13];
-        _topLabel.text = @"按照工信部的要求，保障用户的权益和利益请进行实名认证";
+        _topLabel.font = [UIFont systemFontOfSize:11];
+        _topLabel.numberOfLines = 0;
+        _topLabel.text = @"个人实名认证：个人请上传身份证正面/背面/手持身份证的合影照；\n 单位实名认证：请上传认证负责人身份证正面/反面/单位营业执照，";
     }
     return _topLabel;
 }
 
 - (FHCertificationView *)trueNameView {
     if (!_trueNameView) {
-        _trueNameView = [[FHCertificationView  alloc] initWithFrame:CGRectMake(3, CGRectGetMaxY(self.topLabel.frame) + 25, SCREEN_WIDTH - 6, 60)];
+        _trueNameView = [[FHCertificationView  alloc] initWithFrame:CGRectMake(3, CGRectGetMaxY(self.topLabel.frame) + 10, SCREEN_WIDTH - 6, 60)];
         _trueNameView.contentTF.delegate = self;
-        _trueNameView.logoLabel.text = @"真实姓名:";
+        _trueNameView.contentTF.placeholder = @"个人姓名/单位名称";
+        _trueNameView.logoLabel.width = 0;
+        _trueNameView.contentTF.x = 0;
     }
     return _trueNameView;
 }
@@ -124,14 +129,16 @@
     if (!_personCodeView) {
         _personCodeView = [[FHCertificationView  alloc] initWithFrame:CGRectMake(3, CGRectGetMaxY(self.trueNameView.frame) + 25, SCREEN_WIDTH - 6, 60)];
         _personCodeView.contentTF.delegate = self;
-        _personCodeView.logoLabel.text = @"身份证件号:";
+        _personCodeView.contentTF.placeholder = @"身份证件号/信用代码：";
+        _personCodeView.logoLabel.width = 0;
+        _personCodeView.contentTF.x = 0;
     }
     return _personCodeView;
 }
 
 - (FHCertificationImgView *)imgView {
     if (!_imgView) {
-        _imgView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame) + 100 , SCREEN_WIDTH, 100)];
+        _imgView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame) + 100 , SCREEN_WIDTH, 120)];
         _imgView.delegate = self;
     }
     return _imgView;
@@ -139,7 +146,7 @@
 
 - (FHUserAgreementView *)agreementView {
     if (!_agreementView) {
-        _agreementView = [[FHUserAgreementView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imgView.frame) + 150 , SCREEN_WIDTH, 15)];
+        _agreementView = [[FHUserAgreementView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imgView.frame) + 120 , SCREEN_WIDTH, 15)];
         _agreementView.delegate = self;
     }
     return _agreementView;
@@ -148,7 +155,7 @@
 - (UIButton *)submitBtn {
     if (!_submitBtn) {
         _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _submitBtn.frame = CGRectMake(0, CGRectGetMaxY(self.agreementView.frame) + 120, 160, 55);
+        _submitBtn.frame = CGRectMake(0, CGRectGetMaxY(self.agreementView.frame) + 100, 160, 55);
         _submitBtn.backgroundColor = [UIColor lightGrayColor];
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
         [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
