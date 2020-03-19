@@ -168,12 +168,12 @@ CLLocationManagerDelegate
 
 #pragma mark  -- 设置tabbar
 - (void)setTabBarController {
-//    /** 判断用户是否登录过 没登录去登录 */
-//    if (![AccountStorage isExistsToKen]) {
-//        [FHLoginTool fh_makePersonToLoging];
-//        return;
-//    }
-    
+    /** 判断用户是否登录过 没登录去登录 */
+    if (![AccountStorage isExistsToKen]) {
+        [FHLoginTool fh_makePersonToLoging];
+        return;
+    }
+
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];
     vc1.title = @"首页";
     vc1.tabBarItem.image = [UIImage imageNamed:@"zhuye-2"];
