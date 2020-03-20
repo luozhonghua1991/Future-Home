@@ -273,6 +273,7 @@
                                          failure:(void (^)(NSURLSessionDataTask *, NSError *))failure
 {
     NSError *serializationError = nil;
+    ZHLog(@"----------------------链接为%@",URLString);
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:&serializationError];
     if (serializationError) {
         if (failure) {
@@ -297,6 +298,7 @@
                 if (errorCode == -1016) {
                     if ([SingleManager shareManager].isFirstPushLogin == NO) {
                         [FHLoginTool fh_makePersonToLoging];
+                        return;
                     }
                     ZHLog(@"token不匹配");
                     return ;

@@ -123,6 +123,12 @@
 /** 是否是第一次去登录界面*/
 @property (nonatomic, assign) BOOL isFirstPushLogin;
 
+/** 主要的tabbarVC */
+@property (nonatomic, strong) UITabBarController *mainTabbarController;
+/** 当前选中的是第几个tabbar */
+@property (nonatomic, assign) NSInteger currentSelectIndex;
+
+
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串
  *

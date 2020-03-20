@@ -83,8 +83,8 @@
                   symbolName = "-[FHComplaintsSuggestionsController commitInfo]"
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/Future-Home/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606306837.584173"
+                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
+                  timestampString = "606382018.479719"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -98,8 +98,8 @@
                   symbolName = "__47-[FHComplaintsSuggestionsController commitInfo]_block_invoke"
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/Future-Home/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606306837.592276"
+                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
+                  timestampString = "606382018.482029"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "128"
@@ -107,6 +107,22 @@
                   offsetFromSymbolStart = "54">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Other/FHAppDelegate.mm"
+            timestampString = "606382018.405643"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
+            landmarkName = "@implementation FHAppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

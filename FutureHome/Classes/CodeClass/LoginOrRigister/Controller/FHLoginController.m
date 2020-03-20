@@ -11,6 +11,9 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
 #import "LoginView.h"
+#import "FHTabbarController.h"
+#import "FHAppDelegate.h"
+#import "FHTabBarController.h"
 
 @interface FHLoginController () <UITextFieldDelegate,LoginViewDelegate>
 /** <#Description#> */
@@ -265,7 +268,7 @@
                 self.lodingHud = nil;
                 /** 保存用户信息 */
                 Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
-                [AccountStorage saveAccount:account];
+                
                 //登录融云服务器,开始阶段可以先从融云API调试网站获取，之后token需要通过服务器到融云服务器取。
                 NSString*token=account.rong_token;
                 
@@ -281,10 +284,19 @@
                 } tokenIncorrect:^{
                     NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
                 }];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"fefreshBanner" object:nil];
                 NSString *msg = responseObj[@"msg"];
                 [self.view makeToast:msg];
-                [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
+                NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+//                if (![useDef boolForKey:@"notFirst"] || ![AccountStorage isExistsToKen]) {
+                    // 如果是第一次进入引导页
+                    [useDef setBool:YES forKey:@"notFirst"];
+                    [AccountStorage saveAccount:account];
+                    self.view.window.rootViewController = [[FHTabbarController alloc] init];
+//                }
+//                else {
+//                    [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
+//                    [AccountStorage saveAccount:account];
+//                }
             } else {
                 [self.lodingHud hideAnimated:YES];
                 self.lodingHud = nil;

@@ -7,13 +7,16 @@
 //
 
 #import "AccountStorage.h"
+#import "FHTabbarController.h"
 
 #define kAccountPath    @"/account.data"
 
 @implementation AccountStorage
 
 /** 保存账户 */
-+ (BOOL)saveAccount:(Account *)account{
++ (BOOL)saveAccount:(Account *)account {
+//    NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+    
     [SingleManager shareManager].isFirstPushLogin = NO;
     NSFileManager *mgr = [NSFileManager defaultManager];
     

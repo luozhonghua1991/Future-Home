@@ -24,6 +24,9 @@
 #import "SingleManager.h"
 #import "SDAdImageView.h"
 #import "SDLaunchImageTool.h"
+#import "FHLoginController.h"
+#import "FHTabbarController.h"
+#import "FHAppDelegate.mm"
 
 static FHAppDelegate* pSelf = nil;
 
@@ -31,16 +34,8 @@ static FHAppDelegate* pSelf = nil;
 WXApiDelegate,
 RCIMUserInfoDataSource,
 RCIMConnectionStatusDelegate,
-RCIMGroupInfoDataSource,
-CLLocationManagerDelegate
+RCIMGroupInfoDataSource
 >
-{
-    CLLocationManager*locationmanager;//定位服务
-    
-    NSString*strlatitude;//经度
-    
-    NSString*strlongitude;//纬度
-}
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *allFriendArrs;
 
@@ -63,6 +58,7 @@ CLLocationManagerDelegate
     [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     /** 与融云服务器建立连接 */
     Account *account = [AccountStorage readAccount];
+    
     if (account.rong_token) {
         [[RCIM sharedRCIM] connectWithToken:account.rong_token success:^(NSString *userId) {
             //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
@@ -77,12 +73,20 @@ CLLocationManagerDelegate
             NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
         }];
     } else {
-        [FHLoginTool fh_makePersonToLoging];
+        
     }
     [self checkNetWork];
-    [self startLocation];
-    [self setTabBarController];
     
+    NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+    //    // 使用 NSUserDefaults 读取用户数据
+    if (![useDef boolForKey:@"notFirst"] || ![AccountStorage isExistsToKen]) {
+        //        // 如果是第一次进入引导页
+        self.window.rootViewController = [[FHLoginController alloc] init];
+    } else {
+        //        // 否则直接进入应用
+        self.window.rootViewController = [[FHTabbarController alloc] init];
+    }
+
     if ([SDLaunchImageTool isAdImageExist]) {
         SDAdImageView *adImageView = [[SDAdImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
         adImageView.delaySeconds = 2.0f;
@@ -93,6 +97,9 @@ CLLocationManagerDelegate
             return YES;
         };
     }
+    
+    
+    
     return YES;
 }
 
@@ -100,26 +107,6 @@ CLLocationManagerDelegate
     //自己的实现代码
     
     return [WXApi handleOpenUniversalLink:userActivity delegate:self];
-}
-
-#pragma mark - 定位
-//开始定位
--(void)startLocation
-{
-    //判断定位功能是否打开
-    if ([CLLocationManager locationServicesEnabled]) {
-        locationmanager = [[CLLocationManager alloc]init];
-        locationmanager.delegate = self;
-        [locationmanager requestAlwaysAuthorization];
-        [locationmanager requestWhenInUseAuthorization];
-//        [locationmanager setAllowsBackgroundLocationUpdates:YES];
-        //设置寻址精度
-        locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
-        locationmanager.pausesLocationUpdatesAutomatically = NO;
-        locationmanager.distanceFilter = kCLDistanceFilterNone;
-        
-        [locationmanager startUpdatingLocation];
-    }
 }
 
 //#pragma mark CoreLocation delegate (定位失败)
@@ -136,44 +123,7 @@ CLLocationManagerDelegate
 //    [[CurrentViewController topViewController] presentViewController:alert animated:YES completion:nil];
 //}
 
-
-#pragma mark 定位成功后则执行此代理方法
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-//    [locationmanager stopUpdatingHeading];
-    //旧址
-    CLLocation *currentLocation = [locations lastObject];
-    CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
-    //打印当前的经度与纬度
-    NSLog(@"更新的坐标------%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
-    [SingleManager shareManager].strlatitude = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
-    [SingleManager shareManager].strlongitude = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
-    
-    //反地理编码
-    [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error)
-     {
-         NSLog(@"反地理编码");
-         NSLog(@"反地理编码%ld",placemarks.count);
-         if (placemarks.count > 0) {
-             CLPlacemark *placeMark = placemarks[0];
-             [SingleManager shareManager].currentCity = placeMark.locality;
-             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATECITY" object:nil];
-//             if (!self.label_city.text) {
-//                 self.label_city.text = @"无法定位当前城市";
-//             }
-//             NSLog(@"城市%@",self.label_city.text);//当前的城市
-         }
-     }];
-    
-}
-
-#pragma mark  -- 设置tabbar
 - (void)setTabBarController {
-    /** 判断用户是否登录过 没登录去登录 */
-    if (![AccountStorage isExistsToKen]) {
-        [FHLoginTool fh_makePersonToLoging];
-        return;
-    }
-
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];
     vc1.title = @"首页";
     vc1.tabBarItem.image = [UIImage imageNamed:@"zhuye-2"];
@@ -213,8 +163,23 @@ CLLocationManagerDelegate
     [tabBarC addChildViewController:navC3];
     [tabBarC addChildViewController:navC4];
     [tabBarC addChildViewController:navC5];
+    
     self.window.rootViewController = tabBarC;
+    
+    /** 判断用户是否登录过 没登录去登录 */
+    if (![AccountStorage isExistsToKen]) {
+        tabBarC.selectedIndex = 4;
+        [FHLoginTool fh_makePersonToLoging];
+        return;
+    }
+    
+    
 }
+
+//#pragma mark  -- 设置tabbar
+//+ (void)setTabBarController {
+//    [[self alloc] setTabBarController];
+//}
 
 
 #pragma mark  -- 返回AppDelegate本身

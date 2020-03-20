@@ -31,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.isHaveNavgationView = YES;
     [self fh_creatNav];
     self.logoArrs = @[@"账户信息",

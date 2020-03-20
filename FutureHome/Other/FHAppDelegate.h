@@ -12,5 +12,9 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
++ (FHAppDelegate *)getAppDelegate;
+
+//+ (void)setTabBarController;
+
 @end
 

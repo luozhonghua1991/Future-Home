@@ -35,7 +35,7 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     self.navigationController.navigationBar.hidden = NO;
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"GoHomePageController" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GoHomePageController" object:nil];
 }
 
 - (void)backToHomePage {

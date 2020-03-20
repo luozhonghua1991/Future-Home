@@ -101,6 +101,7 @@
 		4A25D47E237ABFBB0036CD8D /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A25D430237ABFBB0036CD8D /* libssl.a */; };
 		4A25D47F237ABFBB0036CD8D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A25D47D237ABFBB0036CD8D /* libcrypto.a */; };
 		4A25D485237AC9220036CD8D /* FHCommonALiPayTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A25D484237AC9220036CD8D /* FHCommonALiPayTool.m */; };
+		4A26A275242462CA00FE4D8A /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A26A273242462CA00FE4D8A /* BaseNavigationController.m */; };
 		4A2C0D302388CAC400CED425 /* FHNewWatiingOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */; };
 		4A2C0D362389163100CED425 /* FHGoodListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D352389163100CED425 /* FHGoodListCollectionCell.m */; };
 		4A2C0D39238945FA00CED425 /* FHGoodsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D38238945FA00CED425 /* FHGoodsListModel.m */; };
@@ -949,6 +950,7 @@
 		4AFC0DC622D4279E004E28CE /* FHInformationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DC522D4279E004E28CE /* FHInformationController.m */; };
 		4AFC0DC922D427CC004E28CE /* FHVideosPublishingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DC822D427CC004E28CE /* FHVideosPublishingController.m */; };
 		4AFC0DCC22D42802004E28CE /* FHDialogueRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */; };
+		4AFC6962242376EA0050CBC2 /* FHTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC6961242376EA0050CBC2 /* FHTabbarController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1194,6 +1196,8 @@
 		4A25D47D237ABFBB0036CD8D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		4A25D483237AC9220036CD8D /* FHCommonALiPayTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonALiPayTool.h; sourceTree = "<group>"; };
 		4A25D484237AC9220036CD8D /* FHCommonALiPayTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonALiPayTool.m; sourceTree = "<group>"; };
+		4A26A273242462CA00FE4D8A /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
+		4A26A274242462CA00FE4D8A /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
 		4A2C0D2E2388CAC400CED425 /* FHNewWatiingOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHNewWatiingOrderCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHNewWatiingOrderCell.h; sourceTree = SOURCE_ROOT; };
 		4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FHNewWatiingOrderCell.m; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHNewWatiingOrderCell.m; sourceTree = SOURCE_ROOT; };
 		4A2C0D342389163100CED425 /* FHGoodListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHGoodListCollectionCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHGoodListCollectionCell.h; sourceTree = SOURCE_ROOT; };
@@ -2894,6 +2898,8 @@
 		4AFC0DC822D427CC004E28CE /* FHVideosPublishingController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHVideosPublishingController.m; sourceTree = "<group>"; };
 		4AFC0DCA22D42802004E28CE /* FHDialogueRecordController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHDialogueRecordController.h; sourceTree = "<group>"; };
 		4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHDialogueRecordController.m; sourceTree = "<group>"; };
+		4AFC6960242376EA0050CBC2 /* FHTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTabbarController.h; sourceTree = "<group>"; };
+		4AFC6961242376EA0050CBC2 /* FHTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTabbarController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6400,6 +6406,10 @@
 		4AEDF8E7232A4CA200C0547D /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				4A26A274242462CA00FE4D8A /* BaseNavigationController.h */,
+				4A26A273242462CA00FE4D8A /* BaseNavigationController.m */,
+				4AFC6960242376EA0050CBC2 /* FHTabbarController.h */,
+				4AFC6961242376EA0050CBC2 /* FHTabbarController.m */,
 				4AEDF8E8232A4CBB00C0547D /* FHNoticeListModel.h */,
 				4AEDF8E9232A4CBB00C0547D /* FHNoticeListModel.m */,
 				4AC30AA02334D81200776752 /* FHCommitModel.h */,
@@ -7375,6 +7385,7 @@
 				4AB2046822F2DD7300111AC4 /* LBXScanViewStyle.m in Sources */,
 				4A3DD954234C35AE004E278D /* ZMCusCommentListView.m in Sources */,
 				4A9CB285230BCC81004A3763 /* UIDevice+ZJHelperKitUIKit.m in Sources */,
+				4AFC6962242376EA0050CBC2 /* FHTabbarController.m in Sources */,
 				4AB203C922F2DD7300111AC4 /* ZXDefaultGridSampler.m in Sources */,
 				4AB2044722F2DD7300111AC4 /* ZXURLTOResultParser.m in Sources */,
 				4A9CB22F230BCA63004A3763 /* UITableView+FDKeyedHeightCache.m in Sources */,
@@ -7393,6 +7404,7 @@
 				4A6DAB6222C0ADAF00F29455 /* MJFoundation.m in Sources */,
 				4A97EAB7235EA52A00F98175 /* FHFollowListModel.m in Sources */,
 				4AB203F222F2DD7300111AC4 /* ZXDataMatrixSymbolInfo144.m in Sources */,
+				4A26A275242462CA00FE4D8A /* BaseNavigationController.m in Sources */,
 				4AA9AF592302605000D28638 /* HYJFAllAddressModel.m in Sources */,
 				4A448CD922C5B88A003D0712 /* FHCustomerServiceController.m in Sources */,
 				4A9E84DE2323561D0070CE4A /* FLAnimatedImageView+WebCache.m in Sources */,

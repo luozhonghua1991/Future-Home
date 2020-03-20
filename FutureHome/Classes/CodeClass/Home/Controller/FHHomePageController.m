@@ -28,13 +28,20 @@
 #import "FHScrollNewsController.h"
 #import "FHMainSearchController.h"
 
-@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate,PYSearchViewControllerDelegate>
+@interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate,PYSearchViewControllerDelegate,CLLocationManagerDelegate>
 {
     NSMutableArray *topBannerArrays;
     NSMutableArray *bottomBannerArrays;
     NSMutableArray *topUrlArrays;
     NSMutableArray *bottomUrlArrays;
     NSMutableArray *hotSeaches;
+    
+    CLLocationManager*locationmanager;//定位服务
+    
+    NSString*strlatitude;//经度
+    
+    NSString*strlongitude;//纬度
+    
 }
 /** 导航View视图 */
 @property (nonatomic, strong) FHCommonNavView *navView;
@@ -73,6 +80,7 @@
 #pragma mark — privite
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self startLocation];
     self.topLogoNameArrs = @[@"扫一扫",
                              @"付款",
                              @"收款",
@@ -95,10 +103,62 @@
     [self.homeTable registerClass:[FHMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHMenuListCell class])];
     [self.homeTable registerClass:[FHLittleMenuListCell class] forCellReuseIdentifier:NSStringFromClass([FHLittleMenuListCell class])];
     /** 获取banner数据 */
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fefreshBanner) name:@"fefreshBanner" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCity) name:@"UPDATECITY" object:nil];
-    [self fefreshBanner];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fefreshBanner) name:@"fefreshBanner" object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCity) name:@"UPDATECITY" object:nil];
+    
+     [self fefreshBanner];
 }
+
+
+#pragma mark - 定位
+//开始定位
+-(void)startLocation
+{
+    //判断定位功能是否打开
+    if ([CLLocationManager locationServicesEnabled]) {
+        locationmanager = [[CLLocationManager alloc]init];
+        locationmanager.delegate = self;
+        [locationmanager requestAlwaysAuthorization];
+        [locationmanager requestWhenInUseAuthorization];
+        //        [locationmanager setAllowsBackgroundLocationUpdates:YES];
+        //设置寻址精度
+        locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
+        locationmanager.pausesLocationUpdatesAutomatically = NO;
+        locationmanager.distanceFilter = kCLDistanceFilterNone;
+        
+        [locationmanager startUpdatingLocation];
+    }
+}
+
+#pragma mark 定位成功后则执行此代理方法
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    //    [locationmanager stopUpdatingHeading];
+    //旧址
+    CLLocation *currentLocation = [locations lastObject];
+    CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
+    //打印当前的经度与纬度
+    NSLog(@"更新的坐标------%f,%f",currentLocation.coordinate.latitude,currentLocation.coordinate.longitude);
+    [SingleManager shareManager].strlatitude = [NSString stringWithFormat:@"%f",currentLocation.coordinate.latitude];
+    [SingleManager shareManager].strlongitude = [NSString stringWithFormat:@"%f",currentLocation.coordinate.longitude];
+    
+    //反地理编码
+    [geoCoder reverseGeocodeLocation:currentLocation completionHandler:^(NSArray<CLPlacemark *> * _Nullable placemarks, NSError * _Nullable error) {
+         NSLog(@"反地理编码");
+         NSLog(@"反地理编码%ld",placemarks.count);
+         if (placemarks.count > 0) {
+             CLPlacemark *placeMark = placemarks[0];
+             [SingleManager shareManager].currentCity = placeMark.locality;
+             [self.locationBtn setTitle:[SingleManager shareManager].currentCity forState:UIControlStateNormal];
+//             [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATECITY" object:nil];
+             //             if (!self.label_city.text) {
+             //                 self.label_city.text = @"无法定位当前城市";
+             //             }
+             //             NSLog(@"城市%@",self.label_city.text);//当前的城市
+         }
+     }];
+    
+}
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -114,6 +174,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+//    [self fefreshBanner];
 }
 
 - (void)fefreshBanner {
@@ -163,9 +224,9 @@
     [self.navgationView addSubview:self.locationBtn];
 }
 
-- (void)updateCity {
-    [self.locationBtn setTitle:[SingleManager shareManager].currentCity forState:UIControlStateNormal];
-}
+//- (void)updateCity {
+//    [self.locationBtn setTitle:[SingleManager shareManager].currentCity forState:UIControlStateNormal];
+//}
 
 - (void)fh_creatSerchView {
     UIView *searchView = [[UIView alloc] initWithFrame:CGRectMake(MaxX(self.locationBtn) + 10, MainStatusBarHeight, SCREEN_WIDTH - 130, 35)];
