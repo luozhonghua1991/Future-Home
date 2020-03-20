@@ -176,8 +176,11 @@
     FHWebViewController *web = [[FHWebViewController alloc] init];
     Account *account = [AccountStorage readAccount];
     web.urlString = [NSString stringWithFormat:@"%@?id=%@&userid=%ld",infoModel.singpage,infoModel.id,(long)account.user_id];
+    NSArray *arr = [infoModel.singpage componentsSeparatedByString:@"/"];
+    web.article_type = arr[arr.count - 1];
+    web.article_id = arr[arr.count - 3];
     web.hidesBottomBarWhenPushed = YES;
-    web.titleString = infoModel.title;
+    web.titleString = @"文档收藏";
     web.typeString = @"information";
     web.isHaveProgress = YES;
     [self.navigationController pushViewController:web animated:YES];

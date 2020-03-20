@@ -214,6 +214,38 @@
             weakSelf.shopMobie = dic[@"shopmobile"];
             [SingleManager shareManager].shopName = dic[@"shopname"];
             [self initViewControllers];
+            
+            if ([dic[@"Ispass"] integerValue] == 3) {
+                /** 店铺冻结 */
+                NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
+                [UIAlertController ba_alertShowInViewController:self
+                                                          title:@"温馨提示"
+                                                        message:@"该店铺已经冻结"
+                                               buttonTitleArray:@[@"确 定"]
+                                          buttonTitleColorArray:buttonTitleColorArray
+                                                          block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                              if (buttonIndex == 0) {
+                                                                  [self.navigationController popViewControllerAnimated:YES];
+                                                              }
+                                                              
+                                                          }];
+            }
+            if ([dic[@"status"] integerValue] == 1) {
+                /** 店铺打样 */
+                NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
+                [UIAlertController ba_alertShowInViewController:self
+                                                          title:@"温馨提示"
+                                                        message:@"该店铺已经打样"
+                                               buttonTitleArray:@[@"确 定"]
+                                          buttonTitleColorArray:buttonTitleColorArray
+                                                          block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                              if (buttonIndex == 0) {
+                                                                  [self.navigationController popViewControllerAnimated:YES];
+                                                              }
+                                                              
+                                                          }];
+            }
+            
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
