@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UILabel *logoLabel;
 /** 内容TF */
 @property (nonatomic, strong) UITextField *contentTF;
+/** 底部的线 */
+@property (nonatomic, strong) UIView *bottomLineView;
+
 
 @end
 

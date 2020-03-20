@@ -102,6 +102,7 @@
 		4A25D47F237ABFBB0036CD8D /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A25D47D237ABFBB0036CD8D /* libcrypto.a */; };
 		4A25D485237AC9220036CD8D /* FHCommonALiPayTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A25D484237AC9220036CD8D /* FHCommonALiPayTool.m */; };
 		4A26A275242462CA00FE4D8A /* BaseNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A26A273242462CA00FE4D8A /* BaseNavigationController.m */; };
+		4A26A2782424B32900FE4D8A /* FHMainCertificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A26A2772424B32900FE4D8A /* FHMainCertificationController.m */; };
 		4A2C0D302388CAC400CED425 /* FHNewWatiingOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */; };
 		4A2C0D362389163100CED425 /* FHGoodListCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D352389163100CED425 /* FHGoodListCollectionCell.m */; };
 		4A2C0D39238945FA00CED425 /* FHGoodsListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2C0D38238945FA00CED425 /* FHGoodsListModel.m */; };
@@ -1198,6 +1199,8 @@
 		4A25D484237AC9220036CD8D /* FHCommonALiPayTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonALiPayTool.m; sourceTree = "<group>"; };
 		4A26A273242462CA00FE4D8A /* BaseNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseNavigationController.m; sourceTree = "<group>"; };
 		4A26A274242462CA00FE4D8A /* BaseNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseNavigationController.h; sourceTree = "<group>"; };
+		4A26A2762424B32900FE4D8A /* FHMainCertificationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMainCertificationController.h; sourceTree = "<group>"; };
+		4A26A2772424B32900FE4D8A /* FHMainCertificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMainCertificationController.m; sourceTree = "<group>"; };
 		4A2C0D2E2388CAC400CED425 /* FHNewWatiingOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHNewWatiingOrderCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHNewWatiingOrderCell.h; sourceTree = SOURCE_ROOT; };
 		4A2C0D2F2388CAC400CED425 /* FHNewWatiingOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FHNewWatiingOrderCell.m; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHNewWatiingOrderCell.m; sourceTree = SOURCE_ROOT; };
 		4A2C0D342389163100CED425 /* FHGoodListCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FHGoodListCollectionCell.h; path = FutureHome/Classes/CodeClass/ShoppingCart/Model/FHGoodListCollectionCell.h; sourceTree = SOURCE_ROOT; };
@@ -4123,6 +4126,8 @@
 				4AE8497022E3076A009E165B /* HWPublishBaseController.m */,
 				4A59F97922C0BA7700867031 /* FHMeCenterController.h */,
 				4A59F97A22C0BA7700867031 /* FHMeCenterController.m */,
+				4A26A2762424B32900FE4D8A /* FHMainCertificationController.h */,
+				4A26A2772424B32900FE4D8A /* FHMainCertificationController.m */,
 				4A8E0D5822DEBD2200F814F7 /* FHCertificationController.h */,
 				4A8E0D5922DEBD2200F814F7 /* FHCertificationController.m */,
 				4A4CE93022D87A7C0002D360 /* FHMyAccountController.h */,
@@ -6904,6 +6909,7 @@
 				4A3DD953234C35AE004E278D /* ZMCusCommentBottomView.m in Sources */,
 				4AB203FF22F2DD7300111AC4 /* ZXDataMatrixWriter.m in Sources */,
 				4AE7A82722F7CB6300910C08 /* myButton.m in Sources */,
+				4A26A2782424B32900FE4D8A /* FHMainCertificationController.m in Sources */,
 				4AB2041B22F2DD7300111AC4 /* ZXAI01320xDecoder.m in Sources */,
 				4AB203E022F2DD7300111AC4 /* ZXPDF417BoundingBox.m in Sources */,
 				4A9CB2AD230BCD23004A3763 /* ZJKitMasonryTool.m in Sources */,

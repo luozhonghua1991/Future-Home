@@ -22,31 +22,31 @@ UINavigationControllerDelegate
 
 + (void)initialize
 {
-    // 1.设置导航栏颜色
-    UINavigationBar *navBar = [UINavigationBar appearance];
-    //    navBar.barTintColor = [UIColor blackColor];
-    navBar.translucent = NO;
-//    navBar.barStyle = UIBarStyleBlack;
-    
-    // 隐藏 uinavigationbar bottom line
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
-                                      forBarPosition:UIBarPositionAny
-                                          barMetrics:UIBarMetricsDefault];
-    
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
-    
-    // 2.设置 title 颜色
-    NSMutableDictionary * navAttrs = [NSMutableDictionary dictionary];
-    navAttrs[NSForegroundColorAttributeName] = [UIColor blackColor];
-    navAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:17];
-    navBar.titleTextAttributes = navAttrs;
-    
-    // 3.设置 BarButtonItem 颜色
-    UIBarButtonItem *barBtn = [UIBarButtonItem appearance];
-    NSMutableDictionary *itemAttrs = [NSMutableDictionary dictionary];
-//    itemAttrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    itemAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:15];
-    [barBtn setTitleTextAttributes:itemAttrs forState:UIControlStateNormal];
+//    // 1.设置导航栏颜色
+//    UINavigationBar *navBar = [UINavigationBar appearance];
+//    //    navBar.barTintColor = [UIColor blackColor];
+//    navBar.translucent = NO;
+////    navBar.barStyle = UIBarStyleBlack;
+//
+//    // 隐藏 uinavigationbar bottom line
+//    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
+//                                      forBarPosition:UIBarPositionAny
+//                                          barMetrics:UIBarMetricsDefault];
+//
+//    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+//
+//    // 2.设置 title 颜色
+//    NSMutableDictionary * navAttrs = [NSMutableDictionary dictionary];
+//    navAttrs[NSForegroundColorAttributeName] = [UIColor blackColor];
+//    navAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:17];
+//    navBar.titleTextAttributes = navAttrs;
+//
+//    // 3.设置 BarButtonItem 颜色
+//    UIBarButtonItem *barBtn = [UIBarButtonItem appearance];
+//    NSMutableDictionary *itemAttrs = [NSMutableDictionary dictionary];
+////    itemAttrs[NSForegroundColorAttributeName] = [UIColor whiteColor];
+//    itemAttrs[NSFontAttributeName] = [UIFont systemFontOfSize:15];
+//    [barBtn setTitleTextAttributes:itemAttrs forState:UIControlStateNormal];
 }
 
 - (id)initWithRootViewController:(UIViewController *)rootViewController {

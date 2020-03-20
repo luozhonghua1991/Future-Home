@@ -182,7 +182,7 @@
         } else if (indexPath.row == 2) {
             /** 实名认证状态显示界面 */
 //            if ([self.isReainame isEqualToString:@"未实名认证！"]) {
-                [self viewControllerPushOther:@"FHCertificationController"];
+                [self viewControllerPushOther:@"FHMainCertificationController"];
 //            }
         } else if (indexPath.row == 3) {
             /** 隐私设置 */
