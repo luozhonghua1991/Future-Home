@@ -137,6 +137,7 @@
     //如果你需要做成多级回复的话，可以改一下tableview为section 的形式去做
 //    FHCommentListModel *model = self.commentListDataArrs[indexPath.row];
 //    if (IS_NULL_ARRAY(model.child)) {
+    
     ZMCusCommentListContentCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([ZMCusCommentListContentCell class]) forIndexPath:indexPath];
     FHCommentListModel *model = self.commentListDataArrs[indexPath.row];
     //    FHCommentListModel *model = self.commentListDataArrs[indexPath.section];

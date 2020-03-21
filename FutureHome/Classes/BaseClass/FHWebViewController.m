@@ -16,6 +16,8 @@
 #import "FHFreshMallController.h"
 #import "UIView+ZFFrame.h"
 #import "FHArticleDetailModel.h"
+#import "ZMCusCommentView.h"
+#import "ZFTableData.h"
 
 @interface FHWebViewController ()
 <
@@ -43,6 +45,8 @@ XYSJSExport
 @property (nonatomic, strong) UIButton *shareBtn;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHArticleDetailModel *articleModel;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) NSMutableArray *commentListArrs;
 
 @end
 
@@ -378,9 +382,30 @@ XYSJSExport
 #pragma mark — event
 /** 评论 */
 - (void)commentBtnClick {
-//    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHWebViewControllerDelegateSelectCommontent:)]) {
-//        [_delegate fh_FHWebViewControllerDelegateSelectCommontent:self.data];
-//    }
+    /** 评论列表 */
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.article_id,@"article_id",
+                               self.article_type,@"type",
+                               @(1),@"page",
+                               @"20",@"limit",
+                               nil];
+    
+    [AFNetWorkTool get:@"Article/getCommentlist" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.commentListArrs = [[NSMutableArray alloc] init];
+            NSArray *arr = responseObj[@"data"][@"list"];
+            [weakSelf.commentListArrs addObjectsFromArray:arr];
+            /** 展示评论列表 */
+            [[ZMCusCommentManager shareManager] showCommentWithArticleid:weakSelf.article_id dataArrs:weakSelf.commentListArrs articleType:weakSelf.article_type tpye:weakSelf.commentCountLabel.text];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
 }
 
 /** 点赞 */

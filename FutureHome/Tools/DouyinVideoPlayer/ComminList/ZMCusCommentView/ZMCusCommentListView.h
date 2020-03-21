@@ -36,6 +36,8 @@
 @property (nonatomic, assign) NSInteger commmentCount;
 /** 视频TopicID */
 @property (nonatomic, copy) NSString *videoTopicId;
+/** 文章id */
+@property (nonatomic, copy) NSString *article_id;
 
 @property(nonatomic, weak) id<ZMCusCommentListViewDelegate> delegate;
 

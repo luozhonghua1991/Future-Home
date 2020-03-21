@@ -64,7 +64,10 @@
 @property (nonatomic, strong) FHCustomerServiceCommitController *conversationVC;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *shopMobie;
-
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIButton *followBtn;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger is_collect;
 
 @end
 
@@ -147,18 +150,18 @@
 //    [shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
 //    [self.navgationView addSubview:shareBtn];
     
-    UIButton *followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
+    self.followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
     if ([self.isCollect isEqualToString:@"0"]) {
-        [followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     } else if ([self.isCollect isEqualToString:@"1"]) {
-        [followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
     } else {
-        [followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
     }
     
-    [followBtn addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:followBtn];
+    [self.followBtn addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.navgationView addSubview:self.followBtn];
     
     UIButton *menuBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     menuBtn.frame = CGRectMake(SCREEN_WIDTH - 33, MainStatusBarHeight +5, 28, 28);
@@ -207,6 +210,12 @@
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
+            self.is_collect = [dic[@"iscollection"] integerValue];
+            if (self.is_collect == 0) {
+                [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+            } else {
+                [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+            }
             weakSelf.locationLabel.text = dic[@"shopname"];
             weakSelf.username = dic[@"username"];
             weakSelf.lat = [dic[@"lat"] floatValue];
@@ -307,7 +316,7 @@
 
 - (void)followBtnClick:(UIButton *)sender {
     /** <#属性注释#> */
-    if ([self.isCollect isEqualToString:@"0"]) {
+    if ([self.isCollect isEqualToString:@"0"] || self.is_collect == 0) {
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSString *urlString;
@@ -329,7 +338,7 @@
         } failure:^(NSError *error) {
             
         }];
-    } else if ([self.isCollect isEqualToString:@"1"]) {
+    } else if ([self.isCollect isEqualToString:@"1"] || self.is_collect == 1) {
         [self.view makeToast:@"已经收藏过该店铺"];
         return;
     } else {

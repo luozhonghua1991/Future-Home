@@ -26,9 +26,9 @@
 
 - (void)setModel:(FHHealthMemberModel *)model {
     _model = model;
-    self.nameLabel.text = [NSString stringWithFormat:@"%@ %@",_model.name,_model.getSex];
-    self.phoneNumberLabel.text = _model.mobile;
-    self.personCodeLabel.text = [NSString stringWithFormat:@"身份证号: %@",_model.id_number];
+    self.nameLabel.text = [NSString stringWithFormat:@"姓        名: %@",_model.name];
+    self.phoneNumberLabel.text = @"";
+    self.personCodeLabel.text = [NSString stringWithFormat:@"手机号码: %@",_model.mobile];
     self.codeLabel.text = [NSString stringWithFormat:@"社保卡号: %@",_model.social_number];
 }
 
@@ -37,7 +37,7 @@
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.width, 13)];
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        _nameLabel.font = [UIFont systemFontOfSize:13];
+        _nameLabel.font = [UIFont boldSystemFontOfSize:13];
         _nameLabel.textColor = [UIColor blackColor];
 #warning message
         _nameLabel.text = @"许大宝 女";

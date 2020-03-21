@@ -84,7 +84,7 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606394554.5380059"
+                  timestampString = "606465501.749835"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "127"
@@ -99,7 +99,7 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606394554.539354"
+                  timestampString = "606465501.751166"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "128"
@@ -116,13 +116,29 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Other/FHAppDelegate.mm"
-            timestampString = "606394554.288455"
+            timestampString = "606395197.9687901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "125"
             endingLineNumber = "125"
             landmarkName = "@implementation FHAppDelegate"
             landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Tools/DouyinVideoPlayer/ComminList/ZMCusCommentView/ZMCusCommentView.m"
+            timestampString = "606465501.4987791"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "220"
+            endingLineNumber = "220"
+            landmarkName = "-addCommentWithContent:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

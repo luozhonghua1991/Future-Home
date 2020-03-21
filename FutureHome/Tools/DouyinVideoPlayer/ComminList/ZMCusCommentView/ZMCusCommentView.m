@@ -128,51 +128,98 @@
 
 /** 给视频添加评论 */
 - (void)addCommentWithContent:(NSString *)content {
-    /** 添加视频评论 */
-    WS(weakSelf);
-    Account *account = [AccountStorage readAccount];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @(account.user_id),@"from_uid",
-                               @"2",@"topic_type",
-                               self.videoTopicId,@"topic_id",
-                               content,@"content",
-                               [SingleManager shareManager].ordertype,@"ordertype",
-                               nil];
-    
-    [AFNetWorkTool post:@"shop/addComment" params:paramsDic success:^(id responseObj) {
-        if ([responseObj[@"code"] integerValue] == 1) {
-            weakSelf.commentListView.commmentCount = [responseObj[@"data"] integerValue];
-            weakSelf.historyText = @"";
-            [weakSelf hideCommentToolView];
-            /** 刷新评论列表 */
-            WS(weakSelf);
-            Account *account = [AccountStorage readAccount];
-            NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       @(account.user_id),@"user_id",
-                                       self.videoTopicId,@"id",
-                                       @(1),@"page",
-                                       @(2),@"type",
-                                       [SingleManager shareManager].ordertype,@"ordertype",
-                                       nil];
-            
-            [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
-                if ([responseObj[@"code"] integerValue] == 1) {
-                    weakSelf.commentListArrs = [[NSMutableArray alloc] init];
-                    NSArray *arr = responseObj[@"data"][@"list"];
-                    weakSelf.commentListView.commentListDataArrs = [FHCommentListModel mj_objectArrayWithKeyValuesArray:arr];
-                } else {
-                    
-                }
-            } failure:^(NSError *error) {
-                
-            }];
-        } else {
-            
-        }
-    } failure:^(NSError *error) {
+    if ([self.type isEqualToString:@"video"]) {
+        /** 添加视频评论 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @(account.user_id),@"from_uid",
+                                   @"2",@"topic_type",
+                                   self.videoTopicId,@"topic_id",
+                                   content,@"content",
+                                   [SingleManager shareManager].ordertype,@"ordertype",
+                                   nil];
         
-    }];
+        [AFNetWorkTool post:@"shop/addComment" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                weakSelf.commentListView.commmentCount = [responseObj[@"data"] integerValue];
+                weakSelf.historyText = @"";
+                [weakSelf hideCommentToolView];
+                /** 刷新评论列表 */
+                WS(weakSelf);
+                Account *account = [AccountStorage readAccount];
+                NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           @(account.user_id),@"user_id",
+                                           self.videoTopicId,@"id",
+                                           @(1),@"page",
+                                           @(2),@"type",
+                                           [SingleManager shareManager].ordertype,@"ordertype",
+                                           nil];
+                
+                [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
+                    if ([responseObj[@"code"] integerValue] == 1) {
+                        weakSelf.commentListArrs = [[NSMutableArray alloc] init];
+                        NSArray *arr = responseObj[@"data"][@"list"];
+                        weakSelf.commentListView.commentListDataArrs = [FHCommentListModel mj_objectArrayWithKeyValuesArray:arr];
+                    } else {
+                        
+                    }
+                } failure:^(NSError *error) {
+                    
+                }];
+            } else {
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    } else {
+        /** 文章评论 */
+        /** 添加文章评论 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   self.article_id,@"article_id",
+                                   self.article_type,@"type",
+                                   content,@"content",
+                                   nil];
+        
+        [AFNetWorkTool post:@"Article/insertComment" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                weakSelf.commentListView.commmentCount = [responseObj[@"data"] integerValue];
+                weakSelf.historyText = @"";
+                [weakSelf hideCommentToolView];
+                /** 刷新评论列表 */
+                WS(weakSelf);
+                Account *account = [AccountStorage readAccount];
+                NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           @(account.user_id),@"user_id",
+                                           self.article_id,@"article_id",
+                                           self.article_type,@"type",
+                                           @(1),@"page",
+                                           @"20",@"limit",
+                                           nil];
+                
+                [AFNetWorkTool get:@"Article/getCommentlist" params:paramsDic success:^(id responseObj) {
+                    if ([responseObj[@"code"] integerValue] == 1) {
+                        weakSelf.commentListArrs = [[NSMutableArray alloc] init];
+                        NSArray *arr = responseObj[@"data"][@"list"];
+                        weakSelf.commentListView.commentListDataArrs = [FHCommentListModel mj_objectArrayWithKeyValuesArray:arr];
+                    } else {
+                        
+                    }
+                } failure:^(NSError *error) {
+                    
+                }];
+            } else {
+                
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
 }
 
 - (void)showCommentToolView {
@@ -261,12 +308,33 @@
 
 - (void)showCommentWithSourceId:(NSString *)sourceId
                        dataArrs:(NSMutableArray *)commentListArrs
-                   tableData:(ZFTableData *)data {
+                      tableData:(ZFTableData *)data
+                           tpye:(NSString *)commentType {
+    /** 视频的评论列表 */
     ZMCusCommentView *view = [[ZMCusCommentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-    view.commentListView.commentListDataArrs = commentListArrs;
+    view.type = commentType;
     view.commentListView.headerView.commmentCount = [data.comment intValue];
     view.commentListView.videoTopicId = data.dataID;
     view.videoTopicId = data.dataID;
+    view.commentListView.commentListDataArrs = commentListArrs;
+    
+    FHAppDelegate *delegate = (FHAppDelegate*)[UIApplication sharedApplication].delegate;
+    [delegate.window addSubview:view];
+    [view showView];
+}
+
+
+- (void)showCommentWithArticleid:(NSString *)articleid
+                        dataArrs:(NSMutableArray *)commentListArrs
+                     articleType:(NSString *)articleType
+                            tpye:(NSString *)commentType {
+    /** 文章的评论列表 */
+    ZMCusCommentView *view = [[ZMCusCommentView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    view.type = commentType;
+    view.commentListView.headerView.commmentCount = [commentType intValue];
+    view.article_id = articleid;
+    view.article_type = articleType;
+    view.commentListView.commentListDataArrs = commentListArrs;
     
     FHAppDelegate *delegate = (FHAppDelegate*)[UIApplication sharedApplication].delegate;
     [delegate.window addSubview:view];

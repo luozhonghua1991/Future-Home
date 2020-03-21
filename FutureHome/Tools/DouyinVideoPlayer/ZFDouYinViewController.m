@@ -340,7 +340,7 @@ static NSString *kIdentifier = @"kIdentifier";
             NSArray *arr = responseObj[@"data"][@"list"];
             [weakSelf.commentListArrs addObjectsFromArray:arr];
             /** 展示评论列表 */
-            [[ZMCusCommentManager shareManager] showCommentWithSourceId:@"" dataArrs:weakSelf.commentListArrs tableData:data];
+            [[ZMCusCommentManager shareManager] showCommentWithSourceId:@"" dataArrs:weakSelf.commentListArrs tableData:data tpye:@"video"];
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }

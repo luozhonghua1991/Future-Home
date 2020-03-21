@@ -14,6 +14,12 @@
 @interface ZMCusCommentView : UIView
 /** 视频TopicID */
 @property (nonatomic, copy) NSString *videoTopicId;
+/** 文章id */
+@property (nonatomic, copy) NSString *article_id;
+/** 文章类型 */
+@property (nonatomic, copy) NSString *article_type;
+/** video视频 其他都是文章类型*/
+@property (nonatomic, copy) NSString *type;
 
 @property (nonatomic, strong) ZMCusCommentListView *commentListView;
 
@@ -29,5 +35,12 @@
 
 - (void)showCommentWithSourceId:(NSString *)sourceId
                        dataArrs:(NSMutableArray *)commentListArrs
-                      tableData:(ZFTableData *)data;
+                      tableData:(ZFTableData *)data
+                           tpye:(NSString *)commentType;
+
+- (void)showCommentWithArticleid:(NSString *)articleid
+                        dataArrs:(NSMutableArray *)commentListArrs
+                     articleType:(NSString *)articleType
+                            tpye:(NSString *)commentType;
+
 @end
