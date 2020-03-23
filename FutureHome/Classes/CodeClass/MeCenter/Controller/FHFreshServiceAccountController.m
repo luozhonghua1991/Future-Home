@@ -550,7 +550,7 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)serviceDeskView {
     if (!_serviceDeskView) {
         _serviceDeskView = [[FHAccountApplicationTFView alloc] init];
-        _serviceDeskView.titleLabel.text = @"生鲜服务平台名称";
+        _serviceDeskView.titleLabel.text = @"生鲜服务账号名称";
         [_serviceDeskView.contentTF removeFromSuperview];
     }
     return _serviceDeskView;
@@ -562,7 +562,7 @@ FHCommonPaySelectViewDelegate
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"请输入生鲜服务平台名称(限12字)";
+        _serviceDeskNameTF.placeholder = @"请输入生鲜服务账号名称(限16字)";
     }
     return _serviceDeskNameTF;
 }
@@ -590,7 +590,7 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)phoneNumberView {
     if (!_phoneNumberView) {
         _phoneNumberView = [[FHAccountApplicationTFView alloc] init];
-        _phoneNumberView.titleLabel.text = @"手机号码";
+        _phoneNumberView.titleLabel.text = @"手机号码(接收账号密码)";
         _phoneNumberView.contentTF.delegate = self;
         _phoneNumberView.contentTF.placeholder = @"请输入手机号码";
     }
@@ -600,9 +600,9 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)phoneView {
     if (!_phoneView) {
         _phoneView = [[FHAccountApplicationTFView alloc] init];
-        _phoneView.titleLabel.text = @"联系电话";
+        _phoneView.titleLabel.text = @"座机电话";
         _phoneView.contentTF.delegate = self;
-        _phoneView.contentTF.placeholder = @"请输入座机选填";
+        _phoneView.contentTF.placeholder = @"请输入座机电话,没有可不填";
     }
     return _phoneView;
 }
@@ -610,7 +610,7 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)mailView {
     if (!_mailView) {
         _mailView = [[FHAccountApplicationTFView alloc] init];
-        _mailView.titleLabel.text = @"电子邮箱";
+        _mailView.titleLabel.text = @"电子邮箱(接收账号密码)";
         _mailView.contentTF.delegate = self;
         _mailView.contentTF.placeholder = @"请输入电子邮箱";
     }
@@ -634,7 +634,7 @@ FHCommonPaySelectViewDelegate
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
-        NSString *titleString = @"主营产品简述(限30-100字为宜)";
+        NSString *titleString = @"主营产品简述(限10-100字为宜)";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         [attributedTitle changeColor:[UIColor lightGrayColor] rang:[attributedTitle changeSystemFontFloat:13 from:6 legth:12]];
         _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
@@ -692,9 +692,9 @@ FHCommonPaySelectViewDelegate
 - (UIButton *)submitBtn {
     if (!_submitBtn) {
         _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        _submitBtn.backgroundColor = HEX_COLOR(0x1296db);
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
-        [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;

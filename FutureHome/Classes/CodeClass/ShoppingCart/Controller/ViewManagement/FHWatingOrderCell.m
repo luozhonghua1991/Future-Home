@@ -31,7 +31,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.shopImgView.frame = CGRectMake(10, 0, 55, 55);
+    self.shopImgView.frame = CGRectMake(10, 0, 60, 60);
     self.shopImgView.centerY = self.contentView.height / 2;
     self.shopNameLabel.frame = CGRectMake(MaxX(self.shopImgView) + 10, 25, 200, 15);
     self.contentLabel.frame = CGRectMake(MaxX(self.shopImgView) + 10, MaxY(self.shopNameLabel) + 10, 200, 13);

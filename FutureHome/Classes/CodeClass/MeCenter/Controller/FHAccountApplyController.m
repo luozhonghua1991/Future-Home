@@ -85,7 +85,7 @@
     hotVC.yp_tabItemTitle = @"生鲜账号";
 
     FHAccountApplyListController *friendVC = [[FHAccountApplyListController alloc] init];
-    friendVC.yp_tabItemTitle = @"商业账号";
+    friendVC.yp_tabItemTitle = @"社交电商";
 
     FHAccountApplyListController *followVC = [[FHAccountApplyListController alloc] init];
     followVC.yp_tabItemTitle = @"医药账号";

@@ -30,11 +30,11 @@
 #pragma mark — setter && getter
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 23, SCREEN_WIDTH - 20, 40)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 23, SCREEN_WIDTH - 20, 50)];
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.font = [UIFont systemFontOfSize:15];
-        _titleLabel.numberOfLines = 2;
+        _titleLabel.numberOfLines = 0;
     }
     return _titleLabel;
 }

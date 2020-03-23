@@ -40,6 +40,8 @@
 /** 服务器返回的图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectImgArrays;
 
+@property (nonatomic, strong) MBProgressHUD *lodingHud;
+
 @end
 
 @implementation FHApplicationBiddingController
@@ -145,6 +147,7 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
@@ -218,11 +221,14 @@
                                self.companyAddressView.contentTF.text,@"address",
                                self.emailView.contentTF.text,@"e_mail",
                                self.businessDescriptionTextView.text,@"describe",
+                               self.pid,@"pid",
                                imgArrsString,@"img_ids",
                                nil];
     [AFNetWorkTool post:@"owner/applyTender" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             /** 申请资料已经提交 */
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             [weakSelf.view makeToast:@"申请资料已经提交"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -344,12 +350,23 @@
 - (UIButton *)submitBtn {
     if (!_submitBtn) {
         _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        _submitBtn.backgroundColor = HEX_COLOR(0x1296db);
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
-        [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(sureBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
+}
+
+- (MBProgressHUD *)lodingHud{
+    if (_lodingHud == nil) {
+        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+        _lodingHud.removeFromSuperViewOnHide = YES;
+        _lodingHud.label.text = @"资料提交中...";
+        [_lodingHud showAnimated:YES];
+    }
+    return _lodingHud;
 }
 
 @end

@@ -320,7 +320,6 @@
                 [self->topBannerArrays addObject:dic[@"path"]];
                 [self->topUrlArrays addObject:dic[@"url"]];
             }
-            
             [weakSelf.homeTable reloadData];
             [self fh_bottomTopBanner];
             [self getListInfo];

@@ -31,6 +31,8 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *serviceDeskView;
 /** 服务平台TF */
 @property (nonatomic, strong) UITextField *serviceDeskNameTF;
+/** 建筑场所View */
+@property (nonatomic, strong) FHAccountApplicationTFView *buildingSitesView;
 /** 申请人姓名View */
 @property (nonatomic, strong) FHAccountApplicationTFView *applicantNameView;
 /** 申请人身份证View */
@@ -41,8 +43,11 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *phoneView;
 /** 接收邮箱 */
 @property (nonatomic, strong) FHAccountApplicationTFView *mailView;
+
 /** 详情地址选择View */
 @property (nonatomic, strong) FHDetailAddressView *detailAddressView;
+/** 区域View */
+@property (nonatomic, strong) FHAccountApplicationTFView *areaView;
 /** 地址View */
 @property (nonatomic, strong) FHAccountApplicationTFView *addressView;
 /** 申请人身份证 */
@@ -150,12 +155,15 @@
     [self.scrollView addSubview:self.serviceDeskView];
     [self.serviceDeskView addSubview:self.serviceDeskNameTF];
     
+    [self.scrollView addSubview:self.buildingSitesView];
     [self.scrollView addSubview:self.applicantNameView];
     [self.scrollView addSubview:self.applicantCardView];
     [self.scrollView addSubview:self.phoneNumberView];
     [self.scrollView addSubview:self.phoneView];
     [self.scrollView addSubview:self.mailView];
-    [self fh_creatDetailAddressView];
+    
+//    [self fh_creatDetailAddressView];
+    [self.scrollView addSubview:self.areaView];
     [self.scrollView addSubview:self.addressView];
     /** 申请人身份证 */
     self.certificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
@@ -201,9 +209,11 @@
             showString = [NSString stringWithFormat:@"%@%@", showString, district];
         }
         
-        self.detailAddressView.leftProvinceDataLabel.text = province;
-        self.detailAddressView.centerProvinceDataLabel.text = city;
-        self.detailAddressView.rightProvinceDataLabel.text = district;
+//        self.detailAddressView.leftProvinceDataLabel.text = province;
+//        self.detailAddressView.centerProvinceDataLabel.text = city;
+//        self.detailAddressView.rightProvinceDataLabel.text = district;
+        
+        self.areaView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
         self.province_id = provienceCode;
         self.city_id = parentCode;
         self.area_id = addressCode;
@@ -218,16 +228,25 @@
     self.scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
     self.serviceDeskView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 50);
     self.serviceDeskNameTF.frame = CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20);
-    self.applicantNameView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, 50);
+    self.buildingSitesView.frame = CGRectMake(0, CGRectGetMaxY(self.serviceDeskView.frame), SCREEN_WIDTH, 50);
+    self.applicantNameView.frame = CGRectMake(0, CGRectGetMaxY(self.buildingSitesView.frame), SCREEN_WIDTH, 50);
     self.applicantCardView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantNameView.frame), SCREEN_WIDTH, 50);
     self.phoneNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantCardView.frame), SCREEN_WIDTH, 50);
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneNumberView.frame), SCREEN_WIDTH, 50);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, 50);
-    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
-    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, 50);
+//    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
+    self.areaView.frame =  CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
+    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.areaView.frame), SCREEN_WIDTH, 50);
     self.personCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame), SCREEN_WIDTH, 180);
     self.shipView.frame = CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame), SCREEN_WIDTH, 60);
     [self updateViewsFrame];
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.areaView.contentTF) {
+        [self.areaView.contentTF resignFirstResponder];
+        [self.addressPickerView showInView:self.view];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -257,10 +276,10 @@
 
 
 #pragma mark — event
-/** 地址选择 */
-- (void)addressClick {
-    [self.addressPickerView showInView:self.view];
-}
+///** 地址选择 */
+//- (void)addressClick {
+//    [self.addressPickerView showInView:self.view];
+//}
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
     /** 选取图片 */
@@ -527,7 +546,8 @@
 - (FHAccountApplicationTFView *)serviceDeskView {
     if (!_serviceDeskView) {
         _serviceDeskView = [[FHAccountApplicationTFView alloc] init];
-        _serviceDeskView.titleLabel.text = @"物业服务平台名称";
+//        _serviceDeskView.titleLabel.text = @"物业服务平台名称";
+        _serviceDeskView.titleLabel.text = @"商业物业名称";
         [_serviceDeskView.contentTF removeFromSuperview];
     }
     return _serviceDeskView;
@@ -539,9 +559,19 @@
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"请输入物业服务平台名称(限12字)";
+        _serviceDeskNameTF.placeholder = @"请输入商业物业名称(限16字)";
     }
     return _serviceDeskNameTF;
+}
+
+- (FHAccountApplicationTFView *)buildingSitesView {
+    if (!_buildingSitesView) {
+        _buildingSitesView = [[FHAccountApplicationTFView alloc] init];
+        _buildingSitesView.titleLabel.text = @"建筑场所名称";
+        _buildingSitesView.contentTF.delegate = self;
+        _buildingSitesView.contentTF.placeholder = @"请输入建筑场所名称";
+    }
+    return _buildingSitesView;
 }
 
 - (FHAccountApplicationTFView *)applicantNameView {
@@ -567,7 +597,7 @@
 - (FHAccountApplicationTFView *)phoneNumberView {
     if (!_phoneNumberView) {
         _phoneNumberView = [[FHAccountApplicationTFView alloc] init];
-        _phoneNumberView.titleLabel.text = @"手机号码";
+        _phoneNumberView.titleLabel.text = @"手机号码(接收账号密码)";
         _phoneNumberView.contentTF.delegate = self;
         _phoneNumberView.contentTF.placeholder = @"请输入手机号码";
     }
@@ -577,7 +607,7 @@
 - (FHAccountApplicationTFView *)phoneView {
     if (!_phoneView) {
         _phoneView = [[FHAccountApplicationTFView alloc] init];
-        _phoneView.titleLabel.text = @"联系电话";
+        _phoneView.titleLabel.text = @"座机电话";
         _phoneView.contentTF.delegate = self;
         _phoneView.contentTF.placeholder = @"座机选填";
     }
@@ -587,11 +617,21 @@
 - (FHAccountApplicationTFView *)mailView {
     if (!_mailView) {
         _mailView = [[FHAccountApplicationTFView alloc] init];
-        _mailView.titleLabel.text = @"电子邮箱";
+        _mailView.titleLabel.text = @"电子邮箱(接收账号密码)";
         _mailView.contentTF.delegate = self;
         _mailView.contentTF.placeholder = @"请输入电子邮箱";
     }
     return _mailView;
+}
+
+- (FHAccountApplicationTFView *)areaView {
+    if (!_areaView) {
+        _areaView = [[FHAccountApplicationTFView alloc] init];
+        _areaView.titleLabel.text = @"建筑场所区域";
+        _areaView.contentTF.delegate = self;
+        _areaView.contentTF.placeholder = @"请选择建筑场所区域 >";
+    }
+    return _areaView;
 }
 
 - (FHAccountApplicationTFView *)addressView {
@@ -599,7 +639,7 @@
         _addressView = [[FHAccountApplicationTFView alloc] init];
         _addressView.titleLabel.text = @"街道地址";
         _addressView.contentTF.delegate = self;
-        _addressView.contentTF.placeholder = @"请输入街道地址(准确到门牌号)";
+        _addressView.contentTF.placeholder = @"建筑场所名称地址(准确到门牌号)";
     }
     return _addressView;
 }
@@ -615,9 +655,9 @@
 - (FHProofOfOwnershipView *)shipView {
     if (!_shipView) {
         _shipView = [[FHProofOfOwnershipView alloc] init];
-        NSString *titleString = @"建筑物业权属证明(能够证明建筑物业的合同房产证等⽂文件拍照上传)";
+        NSString *titleString = @"商业物业管理权属证明: (1.物业服务单位营业执照; 2.建筑场所持有人的委托给申请人管理证明或者服务合同签署盖章页)";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
-        [attributedTitle changeColor:[UIColor lightGrayColor] rang:[attributedTitle changeSystemFontFloat:13 from:8 legth:24]];
+        [attributedTitle changeColor:[UIColor lightGrayColor] rang:[attributedTitle changeSystemFontFloat:13 from:10 legth:titleString.length - 10]];
         _shipView.titleLabel.attributedText = attributedTitle;
     }
     return _shipView;
@@ -654,9 +694,9 @@
 - (UIButton *)submitBtn {
     if (!_submitBtn) {
         _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        _submitBtn.backgroundColor = HEX_COLOR(0x1296db);
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
-        [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;

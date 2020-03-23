@@ -96,6 +96,7 @@
             [AFNetWorkTool get:@"owner/tenderPass" params:params success:^(id responseObj) {
                 NSDictionary *dic = responseObj[@"data"];
                 if ([responseObj[@"code"] integerValue] == 1) {
+                    self.pid = dic[@"id"];
                     /** 请求成功 */
                     if ([dic[@"status"] integerValue] == 0) {
                         self.clickButton.hidden = YES;
@@ -306,6 +307,7 @@
         FHApplicationBiddingController *vc = [[FHApplicationBiddingController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         vc.property_id = self.property_id;
+        vc.pid = self.pid;
         [self.navigationController pushViewController:vc  animated:YES];
         return;
     }

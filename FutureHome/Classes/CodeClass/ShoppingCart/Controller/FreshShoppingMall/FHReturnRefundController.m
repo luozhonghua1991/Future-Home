@@ -163,10 +163,8 @@
 
 - (void)birthClick {
     [ZJNormalPickerView zj_showStringPickerWithTitle:@"申请类型" dataSource:@[
-                                                                          @"无需退货,只退款",
-                                                                          @"需要退货,并退款",
-                                                                          @"需要退货,并换货",
-                                                                          @"无需退款,需售后"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+                                                                          @"未签收,无需退货,申请退款",
+                                                                          @"已签收,需要退货,申请退款"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
                                                                               self.dateView.contentTF.text = [NSString stringWithFormat:@"%@ >",selectValue];
                                                                               self.type = index + 1;
         NSLog(@"index---%ld",index);
@@ -226,6 +224,7 @@
     if (!_businessDescriptionTextView) {
         _businessDescriptionTextView = [[BRPlaceholderTextView alloc] init];
         _businessDescriptionTextView.layer.borderWidth = 1;
+        _businessDescriptionTextView.font = [UIFont systemFontOfSize:14];
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];

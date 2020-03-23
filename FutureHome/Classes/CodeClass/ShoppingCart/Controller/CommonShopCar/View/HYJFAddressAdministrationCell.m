@@ -87,9 +87,9 @@
 - (void)setAddressModel:(HYJFAllAddressModel *)addressModel{
     _addressModel = addressModel;
     nameLabel.text = [NSString stringWithFormat:@"姓名: %@",_addressModel.name];
-    phoneLabel.text = _addressModel.mobile;
+    phoneLabel.text = [NSString stringWithFormat:@"收货电话: %@",_addressModel.mobile];
 //    addressLabel.text = [NSString stringWithFormat:@"%@%@%@%@",addressModel.province,addressModel.city,addressModel.district,addressModel.address];
-    addressLabel.text = _addressModel.address;
+    addressLabel.text = [NSString stringWithFormat:@"收货地址: %@%@%@%@",_addressModel.provincename,_addressModel.cityname,_addressModel.areaname,_addressModel.address];
     CGSize size = [UIlabelTool sizeWithString:addressLabel.text font:addressLabel.font];
     addressLabel.frame = CGRectMake(ZH_SCALE_SCREEN_Width(12), CGRectGetMaxY(phoneLabel.frame) + ZH_SCALE_SCREEN_Height(8), ZH_SCALE_SCREEN_Width(320), size.height);
     addressLabel.numberOfLines = 0;

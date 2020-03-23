@@ -33,7 +33,7 @@
 }
 
 - (void)setUpUI {
-    nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(12), ZH_SCALE_SCREEN_Height(15), ZH_SCALE_SCREEN_Width(150), ZH_SCALE_SCREEN_Height(15))];
+    nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(ZH_SCALE_SCREEN_Width(12), ZH_SCALE_SCREEN_Height(15), ZH_SCALE_SCREEN_Width(300), ZH_SCALE_SCREEN_Height(15))];
     nameLabel.textAlignment = NSTextAlignmentLeft;
     nameLabel.textColor = [UIColor blackColor];
     nameLabel.font =[UIFont systemFontOfSize:15];
@@ -41,7 +41,7 @@
     
     addressLabel = [[UILabel alloc]init];
     addressLabel.textColor = [UIColor blackColor];
-    addressLabel.font =[UIFont systemFontOfSize:12];
+    addressLabel.font =[UIFont systemFontOfSize:15];
     [self.contentView addSubview:addressLabel];
     
     lineView = [[UIView alloc]init];
@@ -92,8 +92,8 @@
 
 - (void)setInvoiceModel:(FHInvoiceModel *)invoiceModel {
     _invoiceModel = invoiceModel;
-    addressLabel.text = _invoiceModel.companyaddress;
-    nameLabel.text = _invoiceModel.companyname;
+    nameLabel.text =  [NSString stringWithFormat:@"单位名称: %@",_invoiceModel.companyname];
+    addressLabel.text = [NSString stringWithFormat:@"信用代码: %@",_invoiceModel.taxpayercode];
 }
 
 - (void)awakeFromNib {

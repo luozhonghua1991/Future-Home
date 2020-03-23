@@ -32,7 +32,7 @@
 #pragma mark - 懒加载
 - (UIView *)bottomLineView {
     if (!_bottomLineView) {
-        _bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 180 - 0.5, SCREEN_WIDTH, 0.5)];
+        _bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.height - 0.5, SCREEN_WIDTH, 0.5)];
         _bottomLineView.backgroundColor = [UIColor lightGrayColor];
     }
     return _bottomLineView;

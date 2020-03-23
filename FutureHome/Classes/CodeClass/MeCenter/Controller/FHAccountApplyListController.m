@@ -77,7 +77,7 @@
         self.titleStr = @"开通生鲜服务平台账户";
         protocolModel = arr[2];
         [self setDataWithModel:protocolModel];
-    } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"社交电商"]) {
         self.titleStr = @"开通商业服务平台账户";
         protocolModel = arr[3];
         [self setDataWithModel:protocolModel];
@@ -132,7 +132,7 @@
         vc.open = self.open;
         vc.price = self.price;
         [self.navigationController pushViewController:vc animated:YES];
-    } else if ([self.yp_tabItemTitle isEqualToString:@"商业账号"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"社交电商"]) {
         FHNormalBuinsesAccountController *vc = [[FHNormalBuinsesAccountController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         vc.tips2 = self.tips2;
@@ -170,9 +170,9 @@
 
 - (UILabel *)logoLabel {
     if (!_logoLabel) {
-        _logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, SCREEN_HEIGHT - 310, SCREEN_WIDTH - 40, 100)];
+        _logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, SCREEN_HEIGHT - 240, SCREEN_WIDTH - 40, 100)];
         _logoLabel.textAlignment = NSTextAlignmentCenter;
-        _logoLabel.font = [UIFont systemFontOfSize:14];
+        _logoLabel.font = [UIFont systemFontOfSize:15];
         _logoLabel.numberOfLines = 0;
         _logoLabel.textColor = [UIColor lightGrayColor];
     }

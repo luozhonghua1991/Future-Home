@@ -133,7 +133,7 @@
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
 //        _titleLabel.backgroundColor = RGBACOLOR(0, 174, 173, 1);
-        _titleLabel.backgroundColor = HEX_COLOR(0xB6F1F7);
+        _titleLabel.backgroundColor = HEX_COLOR(0x66ccff);
     }
     return _titleLabel;
 }
@@ -154,8 +154,8 @@
         _orderTypeLabel = [[UILabel alloc] init];
         _orderTypeLabel.font = [UIFont systemFontOfSize:14];
         _orderTypeLabel.text = @"";
-//        _orderTypeLabel.textColor = HEX_COLOR(0x1296db);
-        _orderTypeLabel.textColor = [UIColor blueColor];
+        _orderTypeLabel.textColor = HEX_COLOR(0x000dff);
+//        _orderTypeLabel.textColor = [UIColor blueColor];
         _orderTypeLabel.textAlignment = NSTextAlignmentRight;
     }
     return _orderTypeLabel;
@@ -225,7 +225,7 @@
 - (UICollectionView *)goodsListCollection {
     if (!_goodsListCollection) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        layout.itemSize = CGSizeMake(50, 60);
+        layout.itemSize = CGSizeMake(60, 60);
         layout.minimumLineSpacing = 10;
         layout.minimumInteritemSpacing = 0;
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;

@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger property_id;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *pid;
+
 
 @end
 

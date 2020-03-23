@@ -735,9 +735,9 @@
 - (UIButton *)submitBtn {
     if (!_submitBtn) {
         _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        _submitBtn.backgroundColor = HEX_COLOR(0x1296db);
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
-        [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;

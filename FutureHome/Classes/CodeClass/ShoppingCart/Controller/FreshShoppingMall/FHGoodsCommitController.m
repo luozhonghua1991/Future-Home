@@ -87,8 +87,8 @@
 
 - (void)creatBottomBtn{
     UILabel *logLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(75), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(25))];
-    logLabel.text = @"亲,感谢您,美丽客观的体验评价;\n这有益于市场,有益于商家,有益于生活,有益于社会。";
-    logLabel.font = [UIFont systemFontOfSize:10];
+    logLabel.text = @"亲,期待您,美丽客观的体验评价;\n这有益于市场,有益于商家,有益于生活,有益于社会。";
+    logLabel.font = [UIFont systemFontOfSize:12];
     logLabel.textAlignment = NSTextAlignmentLeft;
     logLabel.textColor = [UIColor blackColor];
     logLabel.numberOfLines = 2;
@@ -241,6 +241,7 @@
     if (!_dateView) {
         _dateView = [[FHAccountApplicationTFView alloc] init];
         _dateView.titleLabel.text = @"亲,您本次的消费体验整体是否满意";
+        _dateView.titleLabel.width = SCREEN_WIDTH - 20;
         _dateView.contentTF.placeholder = @"";
         
         _dateView.contentTF.enabled = NO;
@@ -252,6 +253,7 @@
     if (!_hospitalView) {
         _hospitalView = [[FHAccountApplicationTFView alloc] init];
         _hospitalView.titleLabel.text = @"亲,对于本次的消费体验,您有什么评价看法";
+        _hospitalView.titleLabel.width = SCREEN_WIDTH - 20;
         _hospitalView.contentTF.placeholder = @"";
         _hospitalView.contentTF.enabled = NO;
     }
@@ -262,6 +264,7 @@
     if (!_businessDescriptionTextView) {
         _businessDescriptionTextView = [[BRPlaceholderTextView alloc] init];
         _businessDescriptionTextView.layer.borderWidth = 1;
+        _businessDescriptionTextView.font = [UIFont systemFontOfSize:14];
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];

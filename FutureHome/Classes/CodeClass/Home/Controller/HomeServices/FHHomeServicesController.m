@@ -107,6 +107,8 @@
         NSDictionary *dic = arr[0];
         self.is_collect = [dic[@"is_collect"] integerValue];
         self->property_id = [dic[@"id"] integerValue];
+        /** 获取banner数据 */
+        [self fh_refreshBannerData];
         self.homeServiceName = dic[@"name"];
         self.userName = dic[@"username"];
         self.lat = [dic[@"lat"] floatValue];
@@ -116,11 +118,7 @@
         } else {
             [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
         }
-        /** 获取banner数据 */
-        [self fh_refreshBannerData];
     } failure:^(NSError *error) {
-        /** 获取banner数据 */
-        [self fh_refreshBannerData];
     }];
 }
 
@@ -133,6 +131,8 @@
 - (void)setHomeSeverID:(NSInteger )HomeSeverID
         homeServerName:(NSString *)homeServerName {
     property_id = HomeSeverID;
+    /** 获取banner数据 */
+    [self fh_refreshBannerData];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -151,11 +151,8 @@
         } else {
             [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
         }
-        /** 获取banner数据 */
-        [self fh_refreshBannerData];
     } failure:^(NSError *error) {
-        /** 获取banner数据 */
-        [self fh_refreshBannerData];
+        
     }];
 }
 
@@ -271,6 +268,12 @@
 }
 
 - (void)fh_getTopBanner {
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//
+//        });
+//    });
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     topBannerArrays = [[NSMutableArray alloc] init];

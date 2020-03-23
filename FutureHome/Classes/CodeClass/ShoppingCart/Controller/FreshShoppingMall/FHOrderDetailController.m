@@ -553,6 +553,7 @@
     if (!_businessDescriptionTextView) {
         _businessDescriptionTextView = [[BRPlaceholderTextView alloc] init];
         _businessDescriptionTextView.layer.borderWidth = 1;
+        _businessDescriptionTextView.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];

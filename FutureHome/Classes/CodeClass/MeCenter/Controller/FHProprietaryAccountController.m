@@ -227,11 +227,12 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.scrollView addSubview:self.person1PhoneView];
     [self.scrollView addSubview:self.person1HourseNumberView];
     /** 业主1申请人身份证 */
-    self.person1CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
+    self.person1CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 120)];
     self.person1CertificationView.delegate = self;
     self.person1CertificationView.tag = 1;
     [self.person1ApplicationCodeView addSubview:self.person1CertificationView];
-    self.person1CertificationView.changeTitleLabel.text = @"房产证信息页";
+    self.person1CertificationView.changeTitleLabel.height = 35;
+    self.person1CertificationView.changeTitleLabel.text = @"房产证件信息页\n购房合同信息页";
     [self.scrollView addSubview:self.person1ApplicationCodeView];
     
     [self.scrollView addSubview:self.centerGreenBtn];
@@ -240,11 +241,12 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.scrollView addSubview:self.person2PhoneView];
     [self.scrollView addSubview:self.person2HourseNumberView];
     /** 业主2申请人身份证 */
-    self.person2CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
+    self.person2CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 120)];
     self.person2CertificationView.delegate = self;
     self.person2CertificationView.tag = 2;
     [self.person2ApplicationCodeView addSubview:self.person2CertificationView];
-    self.person2CertificationView.changeTitleLabel.text = @"房产证信息页";
+    self.person2CertificationView.changeTitleLabel.height = 35;
+    self.person2CertificationView.changeTitleLabel.text = @"房产证件信息页\n购房合同信息页";
     [self.scrollView addSubview:self.person2ApplicationCodeView];
     
     [self.scrollView addSubview:self.bottomGreenBtn];
@@ -253,11 +255,12 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.scrollView addSubview:self.person3PhoneView];
     [self.scrollView addSubview:self.person3HourseNumberView];
     /** 业主3申请人身份证 */
-    self.person3CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
+    self.person3CertificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 120)];
     self.person3CertificationView.delegate = self;
     self.person3CertificationView.tag = 3;
     [self.person3ApplicationCodeView addSubview:self.person3CertificationView];
-    self.person3CertificationView.changeTitleLabel.text = @"房产证信息页";
+    self.person3CertificationView.changeTitleLabel.height = 35;
+    self.person3CertificationView.changeTitleLabel.text = @"房产证件信息页\n购房合同信息页";
     [self.scrollView addSubview:self.person3ApplicationCodeView];
 //    /** 确定授权View */
     [self.scrollView addSubview:self.agreementView];
@@ -328,21 +331,21 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.person1CodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person1NameView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person1PhoneView.frame = CGRectMake(0, CGRectGetMaxY(self.person1CodeView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person1HourseNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.person1PhoneView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.person1ApplicationCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person1HourseNumberView.frame), SCREEN_WIDTH, 180);
+    self.person1ApplicationCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person1HourseNumberView.frame), SCREEN_WIDTH, 200);
     
     self.centerGreenBtn.frame = CGRectMake(0, CGRectGetMaxY(self.person1ApplicationCodeView.frame) + 30, SCREEN_WIDTH, commonCellHeight - 5);
     self.person2NameView.frame = CGRectMake(0, CGRectGetMaxY(self.centerGreenBtn.frame), SCREEN_WIDTH, commonCellHeight);
     self.person2CodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person2NameView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person2PhoneView.frame = CGRectMake(0, CGRectGetMaxY(self.person2CodeView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person2HourseNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.person2PhoneView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.person2ApplicationCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person2HourseNumberView.frame), SCREEN_WIDTH, 180);
+    self.person2ApplicationCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person2HourseNumberView.frame), SCREEN_WIDTH, 200);
     
     self.bottomGreenBtn.frame = CGRectMake(0, CGRectGetMaxY(self.person2ApplicationCodeView.frame) + 30, SCREEN_WIDTH, commonCellHeight - 5);
     self.person3NameView.frame = CGRectMake(0, CGRectGetMaxY(self.bottomGreenBtn.frame), SCREEN_WIDTH, commonCellHeight);
     self.person3CodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person3NameView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person3PhoneView.frame = CGRectMake(0, CGRectGetMaxY(self.person3CodeView.frame), SCREEN_WIDTH, commonCellHeight);
     self.person3HourseNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.person3PhoneView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.person3ApplicationCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person3HourseNumberView.frame), SCREEN_WIDTH, 180);
+    self.person3ApplicationCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.person3HourseNumberView.frame), SCREEN_WIDTH, 200);
     
     self.agreementView.frame = CGRectMake(0, CGRectGetMaxY(self.person3ApplicationCodeView.frame) + 30, SCREEN_WIDTH, 15);
     self.submitBtn.frame = CGRectMake(0, CGRectGetMaxY(self.agreementView.frame) + 100, 160, 55);
@@ -806,7 +809,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)mailView {
     if (!_mailView) {
         _mailView = [[FHAccountApplicationTFView alloc] init];
-        _mailView.titleLabel.text = @"管理员邮箱";
+        _mailView.titleLabel.text = @"管理员邮箱(接收账号密码)";
         _mailView.contentTF.delegate = self;
         _mailView.contentTF.placeholder = @"请输入管理员邮箱";
     }
@@ -876,7 +879,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person1PhoneView {
     if (!_person1PhoneView) {
         _person1PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person1PhoneView.titleLabel.text = @"手机号码";
+        _person1PhoneView.titleLabel.text = @"手机号码(接收账号密码)";
         _person1PhoneView.contentTF.delegate = self;
         _person1PhoneView.contentTF.placeholder = @"请输入手机号码";
         
@@ -898,6 +901,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHPersonCodeView *)person1ApplicationCodeView {
     if (!_person1ApplicationCodeView) {
         _person1ApplicationCodeView = [[FHPersonCodeView alloc] init];
+        _person1ApplicationCodeView.height = 200;
         _person1ApplicationCodeView.titleLabel.text = @"业主申请人身份证";
     }
     return _person1ApplicationCodeView;
@@ -926,7 +930,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2PhoneView {
     if (!_person2PhoneView) {
         _person2PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person2PhoneView.titleLabel.text = @"手机号码";
+        _person2PhoneView.titleLabel.text = @"手机号码(接收账号密码)";
         _person2PhoneView.contentTF.delegate = self;
         _person2PhoneView.contentTF.placeholder = @"请输入手机号码";
         
@@ -948,6 +952,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHPersonCodeView *)person2ApplicationCodeView {
     if (!_person2ApplicationCodeView) {
         _person2ApplicationCodeView = [[FHPersonCodeView alloc] init];
+        _person2ApplicationCodeView.height = 200;
         _person2ApplicationCodeView.titleLabel.text = @"业主申请人身份证";
     }
     return _person2ApplicationCodeView;
@@ -976,7 +981,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person3PhoneView {
     if (!_person3PhoneView) {
         _person3PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person3PhoneView.titleLabel.text = @"手机号码";
+        _person3PhoneView.titleLabel.text = @"手机号码(接收账号密码)";
         _person3PhoneView.contentTF.delegate = self;
         _person3PhoneView.contentTF.placeholder = @"请输入手机号码";
         
@@ -999,6 +1004,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     if (!_person3ApplicationCodeView) {
         _person3ApplicationCodeView = [[FHPersonCodeView alloc] init];
         _person3ApplicationCodeView.titleLabel.text = @"业主申请人身份证";
+        _person3ApplicationCodeView.height = 200;
     }
     return _person3ApplicationCodeView;
 }
@@ -1014,9 +1020,9 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (UIButton *)submitBtn {
     if (!_submitBtn) {
         _submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _submitBtn.backgroundColor = [UIColor lightGrayColor];
+        _submitBtn.backgroundColor = HEX_COLOR(0x1296db);
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
-        [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_submitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _submitBtn;
