@@ -110,7 +110,7 @@
 - (UILabel *)logoLabel {
     if (!_logoLabel) {
         _logoLabel = [[UILabel alloc] init];
-        _logoLabel.text = @"FutureHome 1.0.1";
+        _logoLabel.text = @"社云 1.0.1";
         _logoLabel.textColor = [UIColor blackColor];
         _logoLabel.font = [UIFont systemFontOfSize:12];
         _logoLabel.textAlignment = NSTextAlignmentCenter;

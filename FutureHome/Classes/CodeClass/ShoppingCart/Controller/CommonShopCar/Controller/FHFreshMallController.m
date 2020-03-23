@@ -229,7 +229,7 @@
                 NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
                 [UIAlertController ba_alertShowInViewController:self
                                                           title:@"温馨提示"
-                                                        message:@"该店铺已经冻结"
+                                                        message:@"该商户已被冻结,如有需要请与平台客服联系"
                                                buttonTitleArray:@[@"确 定"]
                                           buttonTitleColorArray:buttonTitleColorArray
                                                           block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -244,14 +244,10 @@
                 NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
                 [UIAlertController ba_alertShowInViewController:self
                                                           title:@"温馨提示"
-                                                        message:@"该店铺已经打样"
+                                                        message:@"本店已经打烊休息了,暂停线上实时配送接单"
                                                buttonTitleArray:@[@"确 定"]
                                           buttonTitleColorArray:buttonTitleColorArray
                                                           block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-                                                              if (buttonIndex == 0) {
-                                                                  [self.navigationController popViewControllerAnimated:YES];
-                                                              }
-                                                              
                                                           }];
             }
             

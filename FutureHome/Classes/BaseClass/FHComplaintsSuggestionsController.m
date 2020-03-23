@@ -83,6 +83,12 @@
     if (self.imgSelectArrs.count <= 0) {
         [self commitInfo];
     } else {
+        NSString *path;
+        if (self.type == 1) {
+            path = @"property";
+        } else if (self.type == 2) {
+            path = @"owner";
+        }
         self.selectImgArrays = [[NSMutableArray alloc] init];
         /** 先上传多张图片*/
         Account *account = [AccountStorage readAccount];
@@ -90,7 +96,7 @@
         NSArray *arr = @[string];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
-                                   @(self.type),@"path",
+                                   path,@"path",
                                    arr,@"file[]",
                                    nil];
         

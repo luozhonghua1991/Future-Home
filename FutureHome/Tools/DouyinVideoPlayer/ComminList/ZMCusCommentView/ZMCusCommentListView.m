@@ -50,7 +50,7 @@
 - (void)layoutUI{
     
     if (!_headerView) {
-        _headerView = [[ZMCusCommentListTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 70)];
+        _headerView = [[ZMCusCommentListTableHeaderView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 35)];
         _headerView.commmentCount = self.commmentCount;
         @weakify(self)
         _headerView.closeBtnBlock = ^{
@@ -63,7 +63,7 @@
         [_headerView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(0);
             make.left.and.right.mas_equalTo(0);
-            make.height.mas_offset(70);
+            make.height.mas_offset(35);
         }];
     }
 
@@ -87,7 +87,7 @@
 //        [_tableView registerClass:[ZMCusCommentListReplyContentCell class] forCellReuseIdentifier:NSStringFromClass([ZMCusCommentListReplyContentCell class])];
         [self addSubview:_tableView];
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.mas_equalTo(UIEdgeInsetsMake(70,0, ZMCusComentBottomViewHeight+ZMCusCommentViewTopHeight+SAFE_AREA_BOTTOM, 0));
+            make.edges.mas_equalTo(UIEdgeInsetsMake(35,0, ZMCusComentBottomViewHeight+ZMCusCommentViewTopHeight+SAFE_AREA_BOTTOM, 0));
         }];
     }
     

@@ -11,7 +11,6 @@
 #import "FHBaseAnnouncementListController.h"
 #import "FHWebViewController.h"
 #import "FHFreshMallFollowListController.h"
-#import "FHBaseAnnouncementListController.h"
 #import "FHSuggestionController.h"
 #import "FHElectionofIndustryCommitteeMainController.h"
 #import "FHMyIndustryCommitteeController.h"

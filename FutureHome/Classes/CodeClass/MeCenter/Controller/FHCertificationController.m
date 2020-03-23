@@ -13,6 +13,9 @@
 #import "FHWebViewController.h"
 
 @interface FHCertificationController () <FHUserAgreementViewDelegate,UITextFieldDelegate,FHCertificationImgViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+
+/** 大的滚动视图 */
+@property (nonatomic, strong) UIScrollView *scrollView;
 /** 上面的label提示 */
 @property (nonatomic, strong) UILabel *topLabel;
 /** 同意协议View */
@@ -78,15 +81,20 @@
 }
 
 - (void)fh_creatUI {
-    [self.view addSubview:self.topLabel];
-    [self.view addSubview:self.trueNameView];
-    [self.view addSubview:self.personCodeView];
-    [self.view addSubview:self.imgView];
+    [self.view addSubview:self.scrollView];
+    
+    [self.scrollView addSubview:self.topLabel];
+    [self.scrollView addSubview:self.trueNameView];
+    [self.scrollView addSubview:self.personCodeView];
+    [self.scrollView addSubview:self.imgView];
     self.imgView.changeTitleLabel.text = @"手持证件合影照/单位营业执照";
     self.imgView.changeTitleLabel.height = 35;
-    [self.view addSubview:self.agreementView];
+    [self.scrollView addSubview:self.agreementView];
+    
     self.submitBtn.centerX = self.view.width / 2;
-    [self.view addSubview:self.submitBtn];
+    [self.scrollView addSubview:self.submitBtn];
+    
+    
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -311,10 +319,20 @@
     self.selectCount++;
 }
 
-#pragma mark — setter && getter
+
+#pragma mark - Getters and Setters
+- (UIScrollView *)scrollView {
+    if (_scrollView == nil) {
+        _scrollView = [[UIScrollView alloc] init];
+        _scrollView.frame = CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, SCREEN_HEIGHT);
+    }
+    return _scrollView;
+}
+
+
 - (UILabel *)topLabel {
     if (!_topLabel) {
-        _topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainSizeHeight + 3, SCREEN_WIDTH, 35)];
+        _topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, SCREEN_WIDTH, 35)];
         _topLabel.textAlignment = NSTextAlignmentCenter;
         _topLabel.textColor = HEX_COLOR(0x919191);
         _topLabel.font = [UIFont systemFontOfSize:12];
@@ -368,6 +386,7 @@
         [_submitBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
         [_submitBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [_submitBtn addTarget:self action:@selector(submitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+        self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.submitBtn.frame) + MainSizeHeight + 20);
     }
     return _submitBtn;
 }

@@ -83,10 +83,10 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    self.titleNameLabel.frame = CGRectMake(0, 15, SCREEN_WIDTH - 200, 15);
+    self.titleNameLabel.frame = CGRectMake(10, 15, SCREEN_WIDTH - 200, 15);
     
-    self.priceLabe.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 200, 15);
-    self.priceLogoLabe.frame = CGRectMake(2, MaxY(self.priceLabe) + 5, SCREEN_WIDTH - 200, 14);
+    self.priceLabe.frame = CGRectMake(10, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 200, 15);
+    self.priceLogoLabe.frame = CGRectMake(10, MaxY(self.priceLabe) + 5, SCREEN_WIDTH - 200, 14);
     
     self.carNumberLabel.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH, 15);
     self.carNumberLogoLabel.frame = CGRectMake(0, MaxY(self.carNumberLabel) + 5, SCREEN_WIDTH, 14);
@@ -94,12 +94,12 @@
     self.areaLabel.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 10, 15);
     self.areaLogoLabel.frame = CGRectMake(2, MaxY(self.areaLabel) + 5, SCREEN_WIDTH - 10, 14);
     
-    self.lineView.frame = CGRectMake(0, MaxY(self.priceLogoLabe) + 20, SCREEN_WIDTH, 0.5);
+    self.lineView.frame = CGRectMake(10, MaxY(self.priceLogoLabe) + 20, SCREEN_WIDTH - 20, 0.5);
     
-    self.carNumerLouLabel.frame = CGRectMake(5, MaxY(self.lineView) + 20, SCREEN_WIDTH - 200, 13);
-    self.buildTimeLabel.frame = CGRectMake(5, MaxY(self.carNumerLouLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.payTypeLabel.frame = CGRectMake(5, MaxY(self.buildTimeLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.otherInfoLabel.frame = CGRectMake(5, MaxY(self.payTypeLabel) + 15, SCREEN_WIDTH - 200, 13);
+    self.carNumerLouLabel.frame = CGRectMake(10, MaxY(self.lineView) + 20, SCREEN_WIDTH - 200, 13);
+    self.buildTimeLabel.frame = CGRectMake(10, MaxY(self.carNumerLouLabel) + 15, SCREEN_WIDTH - 200, 13);
+    self.payTypeLabel.frame = CGRectMake(10, MaxY(self.buildTimeLabel) + 15, SCREEN_WIDTH - 200, 13);
+//    self.otherInfoLabel.frame = CGRectMake(5, MaxY(self.payTypeLabel) + 15, SCREEN_WIDTH - 200, 13);
     
     self.yearLabel.frame = CGRectMake(SCREEN_WIDTH - 150, MaxY(self.lineView) + 20, SCREEN_WIDTH - 200, 13);
     self.phoneLabel.frame = CGRectMake(SCREEN_WIDTH - 150, MaxY(self.yearLabel) + 15, SCREEN_WIDTH - 200, 13);
@@ -116,10 +116,13 @@
     self.carNumerLouLabel.text = [NSString stringWithFormat:@"车库楼层: 富%ld楼",(long)_detailModel.shelves];
     self.buildTimeLabel.text = [NSString stringWithFormat:@"建筑时间: %@",_detailModel.create_time];
     self.payTypeLabel.text = [NSString stringWithFormat:@"付款要求: %@",_detailModel.require];
-    self.otherInfoLabel.text = [NSString stringWithFormat:@"补充信息: \n%@",_detailModel.describe];
     self.yearLabel.text = [NSString stringWithFormat:@"产权年限: %ld年",(long)_detailModel.years];
     self.phoneLabel.text = [NSString stringWithFormat:@"联系电话: %@",_detailModel.mobile];
     self.callPhoneLabel.text = [NSString stringWithFormat:@"接听时段: %@",_detailModel.time_slot];
+    self.otherInfoLabel.text = [NSString stringWithFormat:@"补充信息: \n%@",_detailModel.describe];
+    CGSize size = [UIlabelTool sizeWithString:self.otherInfoLabel.text font:self.otherInfoLabel.font width:self.otherInfoLabel.width];
+    self.otherInfoLabel.frame = CGRectMake(10, MaxY(self.payTypeLabel) + 15, SCREEN_WIDTH - 200, size.height);
+    
 }
 
 
@@ -251,6 +254,7 @@
         _otherInfoLabel.text = @"补充信息:好的很，霸气侧漏";
         _otherInfoLabel.textColor = [UIColor blackColor];
         _otherInfoLabel.textAlignment = NSTextAlignmentLeft;
+        _otherInfoLabel.numberOfLines = 0;
     }
     return _otherInfoLabel;
 }

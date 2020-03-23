@@ -134,6 +134,7 @@
         cell.selectedBackgroundView = view;
         cell.backgroundColor = HEX_COLOR(0xE8E8E8);
     }
+    
     UILabel *titleLabel = (UILabel*)[cell.contentView viewWithTag:100];
     FHHealthCategoryModel *model = [self.categoryArr objectAtIndex:indexPath.row];
     titleLabel.text = [NSString stringWithFormat:@"%@",model.name];
@@ -142,6 +143,8 @@
         self.oldSelectLabel = titleLabel;
         NSIndexPath *selectedIndex = [NSIndexPath indexPathForRow:0 inSection:0];
         [self.categoryTableView selectRowAtIndexPath:selectedIndex animated:YES scrollPosition:UITableViewScrollPositionTop];
+    } else {
+        titleLabel.textColor = [UIColor blackColor];
     }
     return cell;
 }

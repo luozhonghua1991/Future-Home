@@ -26,8 +26,17 @@ static CGFloat const ANIMATION_DURATION = 0.25;
     return self;
 }
 
-- (void)textChanged:(NSNotification *)notification
+//干掉textField 的长按菜单 禁止copy paste
+-(BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
+    if ([UIMenuController sharedMenuController]) {
+        [UIMenuController sharedMenuController].menuVisible = NO;
+    }
+    return NO;
+}
+
+- (void)textChanged:(NSNotification *)notification {
+    
     if([[self placeholder] length] == 0)
     {
         return;

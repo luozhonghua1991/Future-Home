@@ -20,93 +20,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "606135372.206539"
+            timestampString = "606627955.062417"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
             landmarkName = "-commitInfo"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "606135372.206689"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-commitInfo"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "606135372.20673"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "-commitInfo"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-            timestampString = "606135372.20679"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-commitInfo"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[FHComplaintsSuggestionsController commitInfo]"
-                  moduleName = "FutureHome"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606465501.749835"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "127"
-                  endingLineNumber = "127"
-                  offsetFromSymbolStart = "1267">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__47-[FHComplaintsSuggestionsController commitInfo]_block_invoke"
-                  moduleName = "FutureHome"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/FHComplaintsSuggestionsController.m"
-                  timestampString = "606465501.751166"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "128"
-                  endingLineNumber = "128"
-                  offsetFromSymbolStart = "54">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -131,13 +51,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Tools/DouyinVideoPlayer/ComminList/ZMCusCommentView/ZMCusCommentView.m"
-            timestampString = "606465501.4987791"
+            filePath = "FutureHome/libiary/AFNetworking/AFNetworking/AFHTTPSessionManager.m"
+            timestampString = "606469053.860931"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
-            landmarkName = "-addCommentWithContent:"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
+            landmarkName = "-dataTaskWithHTTPMethod:URLString:parameters:uploadProgress:downloadProgress:success:failure:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

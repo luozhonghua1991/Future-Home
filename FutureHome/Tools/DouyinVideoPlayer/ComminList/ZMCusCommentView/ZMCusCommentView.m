@@ -11,7 +11,8 @@
 #import "FHAppDelegate.h"
 #import "FHCommentListModel.h"
 
-#define TOOL_VIEW_HEIGHT 47
+//#define TOOL_VIEW_HEIGHT 47
+#define TOOL_VIEW_HEIGHT 72
 
 @interface ZMCusCommentView() <ZMCusCommentListViewDelegate>
 @property (nonatomic, strong) UIControl *maskView;
@@ -146,6 +147,7 @@
                 weakSelf.commentListView.commmentCount = [responseObj[@"data"] integerValue];
                 weakSelf.historyText = @"";
                 [weakSelf hideCommentToolView];
+                [self.toolView resetView];
                 /** 刷新评论列表 */
                 WS(weakSelf);
                 Account *account = [AccountStorage readAccount];
@@ -191,6 +193,7 @@
                 weakSelf.commentListView.commmentCount = [responseObj[@"data"] integerValue];
                 weakSelf.historyText = @"";
                 [weakSelf hideCommentToolView];
+                [self.toolView resetView];
                 /** 刷新评论列表 */
                 WS(weakSelf);
                 Account *account = [AccountStorage readAccount];
@@ -225,10 +228,8 @@
 - (void)showCommentToolView {
     self.topMaskView.hidden = NO;
     self.toolView.hidden = NO;
-    self.toolView.textView.inputAccessoryView = self.toolView;
-
-    [self.toolView showTextView];
     if (self.historyFrame.size.height != TOOL_VIEW_HEIGHT) {
+        
         self.toolView.frame = self.historyFrame;
     }
     if (self.toolView.textView.text.length<=0) {
@@ -236,6 +237,9 @@
         [self.toolView resetView];
         self.toolView.frame = self.historyFrame;
     }
+    
+    self.toolView.textView.inputAccessoryView = self.toolView;
+    [self.toolView showTextView];
 
 }
 - (void)hideCommentToolView{

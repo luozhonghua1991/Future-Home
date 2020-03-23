@@ -163,7 +163,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
     cell.textLabel.text = @"投诉邮箱";
-    cell.detailTextLabel.text = @"123456@qq.com";
+    cell.detailTextLabel.text = @"tongximedia@qq.com";
     cell.textLabel.font = [UIFont systemFontOfSize:15];
     cell.accessoryType = UITableViewCellAccessoryNone;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;

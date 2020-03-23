@@ -67,6 +67,7 @@
 }
 
 - (void)tapBtnAction{
+    /** 点击下面的你也来聊两句吧的点击事件 */
     if (self.tapBtnBlock) {
         self.tapBtnBlock();
     }
