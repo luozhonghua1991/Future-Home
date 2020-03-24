@@ -110,7 +110,7 @@
     self.allPriceBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.allPriceBtn.frame = CGRectMake(MaxX(sureBtn) + 1,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(50), SCREEN_WIDTH / 2, ZH_SCALE_SCREEN_Height(50));
     self.allPriceBtn.backgroundColor = HEX_COLOR(0x1296db);
-    [self.allPriceBtn setTitle:@"合计支出:2666元" forState:UIControlStateNormal];
+    [self.allPriceBtn setTitle:@"合计支出:0元" forState:UIControlStateNormal];
     [self.allPriceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.view addSubview:self.allPriceBtn];
 }

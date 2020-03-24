@@ -194,6 +194,7 @@
     FHPrivacySettingsCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHPrivacySettingsCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.logoLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
+    [cell.selectBtn setImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
     [cell.selectBtn addTarget:self action:@selector(selectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     cell.selectBtn.tag = indexPath.row + 1;
     return cell;
@@ -203,8 +204,8 @@
 - (void)selectBtnClick:(UIButton *)btn {
     if (self.oldSelectBtn == btn) {
     } else {
-        btn.backgroundColor = HEX_COLOR(0x1296db);
-        self.oldSelectBtn.backgroundColor = [UIColor whiteColor];
+        [btn setImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+        [self.oldSelectBtn setImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
     }
     self.oldSelectBtn = btn;
     self.type = btn.tag;

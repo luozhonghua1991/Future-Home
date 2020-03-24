@@ -49,6 +49,8 @@ UICollectionViewDataSource>
 @property (nonatomic, strong) FHAccountApplicationTFView *mailView;
 /** 广告类型 */
 @property (nonatomic, strong) FHAccountApplicationTFView *adverTypeView;
+/** 广告跳转账号 */
+@property (nonatomic, strong) FHAccountApplicationTFView *adverNumberView;
 /** 投放时间 */
 @property (nonatomic, strong) FHAccountApplicationTFView *showDayView;
 /** 投放时长 */
@@ -189,6 +191,7 @@ UICollectionViewDataSource>
     [self.scrollView addSubview:self.phoneView];
     [self.scrollView addSubview:self.mailView];
     [self.scrollView addSubview:self.adverTypeView];
+    [self.scrollView addSubview:self.adverNumberView];
     [self.scrollView addSubview:self.showDayView];
     [self.scrollView addSubview:self.showTimeView];
     [self.scrollView addSubview:self.selectWhereTF];
@@ -263,7 +266,8 @@ UICollectionViewDataSource>
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneNumberView.frame), SCREEN_WIDTH, 50);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, 50);
     self.adverTypeView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
-    self.showDayView.frame = CGRectMake(0, CGRectGetMaxY(self.adverTypeView.frame), SCREEN_WIDTH, 50);
+    self.adverNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.adverTypeView.frame), SCREEN_WIDTH, 50);
+    self.showDayView.frame = CGRectMake(0, CGRectGetMaxY(self.adverNumberView.frame), SCREEN_WIDTH, 50);
     self.showTimeView.frame = CGRectMake(0, CGRectGetMaxY(self.showDayView.frame), SCREEN_WIDTH, 50);
     self.selectWhereTF.frame = CGRectMake(0, CGRectGetMaxY(self.showTimeView.frame), SCREEN_WIDTH, 50);
     self.selectWhereView.frame = CGRectMake(0, CGRectGetMaxY(self.selectWhereTF.frame), SCREEN_WIDTH, 200);
@@ -571,6 +575,16 @@ UICollectionViewDataSource>
         _adverTypeView.contentTF.placeholder = @"请选择广告类型 >";
     }
     return _adverTypeView;
+}
+
+- (FHAccountApplicationTFView *)adverNumberView {
+    if (!_adverNumberView) {
+        _adverNumberView = [[FHAccountApplicationTFView alloc] init];
+        _adverNumberView.titleLabel.text = @"广告跳转账号";
+        _adverNumberView.contentTF.delegate = self;
+        _adverNumberView.contentTF.placeholder = @"请准确输入广告跳转的账号";
+    }
+    return _adverNumberView;
 }
 
 - (FHAccountApplicationTFView *)showDayView {

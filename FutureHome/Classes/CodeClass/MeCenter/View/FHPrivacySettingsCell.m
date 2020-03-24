@@ -18,9 +18,9 @@
 }
 
 - (void)fh_setUpUI {
-    self.selectBtn.frame = CGRectMake(20, 10, 15, 15);
+    self.selectBtn.frame = CGRectMake(20, 10, 25, 25);
     [self.contentView addSubview:self.selectBtn];
-    self.logoLabel.frame = CGRectMake(MaxX(self.selectBtn) + 3, 10, 100, 13);
+    self.logoLabel.frame = CGRectMake(MaxX(self.selectBtn) + 3, 15, 100, 13);
     [self.contentView addSubview:self.logoLabel];
 }
 
@@ -40,8 +40,8 @@
 - (UIButton *)selectBtn {
     if (!_selectBtn) {
         _selectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _selectBtn.layer.borderColor = [UIColor blackColor].CGColor;
-        _selectBtn.layer.borderWidth = 1;
+//        _selectBtn.layer.borderColor = [UIColor blackColor].CGColor;
+//        _selectBtn.layer.borderWidth = 1;
     }
     return _selectBtn;
 }
