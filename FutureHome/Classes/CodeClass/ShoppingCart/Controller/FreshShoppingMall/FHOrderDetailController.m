@@ -19,6 +19,8 @@
 @interface FHOrderDetailController () <UITableViewDelegate,UITableViewDataSource,FHCommonPaySelectViewDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
+/** 手机号码 */
+@property (nonatomic, copy) NSString *phoneString;
 /** 用户名字 */
 @property (nonatomic, copy) NSString *nameString;
 /** 地址 */
@@ -45,6 +47,10 @@
 @property (nonatomic, strong) FHCommonPaySelectView *payView;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger payType;
+/** 下单时间 */
+@property (nonatomic, copy) NSString *add_time;
+/** 支付时间 */
+@property (nonatomic, copy) NSString *pay_time;
 
 @end
 
@@ -70,6 +76,9 @@
                                nil];
     [AFNetWorkTool get:@"shop/getSingOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.add_time = responseObj[@"data"][@"add_time"];
+            weakSelf.pay_time = responseObj[@"data"][@"pay_time"];
+            weakSelf.phoneString = responseObj[@"data"][@"buyphone"];
             weakSelf.orderCodeString = responseObj[@"data"][@"order_number"];
             weakSelf.shopNameStirng = responseObj[@"data"][@"shopname"];
             weakSelf.nameString = responseObj[@"data"][@"buyuser"];
@@ -375,7 +384,11 @@
     } else if (section == 1) {
         return self.goodArrs.count;
     } else {
-        return 3;
+        if (self.status == 1) {
+            return 4;
+        } else {
+            return 5;
+        }
     }
 }
 
@@ -402,10 +415,19 @@
         }
         return 40.0f;
     } else {
-        if (indexPath.row == 2) {
-            return 110.0f;
+        if (self.status == 1) {
+            if (indexPath.row == 3) {
+                return 110.0f;
+            } else {
+                return 40.0f;
+            }
+        } else {
+            if (indexPath.row == 4) {
+                return 110.0f;
+            } else {
+                return 40.0f;
+            }
         }
-        return 40.0f;
     }
 }
 
@@ -474,7 +496,7 @@
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.textColor = [UIColor blackColor];
-            cell.textLabel.text = [NSString stringWithFormat:@"姓名: %@",self.nameString];
+            cell.textLabel.text = [NSString stringWithFormat:@"姓名: %@                                      %@",self.nameString,self.phoneString];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"地址: %@",self.addressString];
             return cell;
         } else {
@@ -508,20 +530,47 @@
         cell.textLabel.font = [UIFont systemFontOfSize:14];
         cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         cell.detailTextLabel.textColor = [UIColor blackColor];
-        if (indexPath.row == 0) {
-            cell.textLabel.text = @"订单编号";
-            cell.detailTextLabel.text = self.orderCodeString;
-        } else if (indexPath.row == 1) {
-            cell.textLabel.text = @"支付方式";
-            cell.detailTextLabel.text = self.payMentTypeString;
-        } else {
-            self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
-            if (IsStringEmpty(self.orederInfoStirng)) {
-                self.businessDescriptionTextView.text = @"暂无备注";
+        if (self.status == 1) {
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"下单时间";
+                cell.detailTextLabel.text = self.add_time;
+            } else if (indexPath.row == 1) {
+                cell.textLabel.text = @"订单编号";
+                cell.detailTextLabel.text = self.orderCodeString;
+            } else if (indexPath.row == 2) {
+                cell.textLabel.text = @"支付方式";
+                cell.detailTextLabel.text = self.payMentTypeString;
             } else {
-                self.businessDescriptionTextView.text = [NSString stringWithFormat:@"备注信息 : %@",self.orederInfoStirng];
+                self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+                if (IsStringEmpty(self.orederInfoStirng)) {
+                    self.businessDescriptionTextView.text = @"暂无备注";
+                } else {
+                    self.businessDescriptionTextView.text = [NSString stringWithFormat:@"备注信息 : %@",self.orederInfoStirng];
+                }
+                [cell addSubview:self.businessDescriptionTextView];
             }
-            [cell addSubview:self.businessDescriptionTextView];
+        } else {
+            if (indexPath.row == 0) {
+                cell.textLabel.text = @"下单时间";
+                cell.detailTextLabel.text = self.add_time;
+            } else if (indexPath.row == 1) {
+                cell.textLabel.text = @"订单编号";
+                cell.detailTextLabel.text = self.orderCodeString;
+            } else if (indexPath.row == 2) {
+                cell.textLabel.text = @"支付方式";
+                cell.detailTextLabel.text = self.payMentTypeString;
+            }  else if (indexPath.row == 3) {
+                cell.textLabel.text = @"支付时间";
+                cell.detailTextLabel.text = self.pay_time;
+            } else {
+                self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
+                if (IsStringEmpty(self.orederInfoStirng)) {
+                    self.businessDescriptionTextView.text = @"暂无备注";
+                } else {
+                    self.businessDescriptionTextView.text = [NSString stringWithFormat:@"备注信息 : %@",self.orederInfoStirng];
+                }
+                [cell addSubview:self.businessDescriptionTextView];
+            }
         }
         return cell;
     }

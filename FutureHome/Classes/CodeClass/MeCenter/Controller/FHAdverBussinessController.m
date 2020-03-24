@@ -43,6 +43,8 @@
     // Do any additional setup after loading the view.
     [self getAgreementTip];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(buySuccess) name:@"BUYSUCCESS" object:nil];
+     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateSuccess) name:@"UPDATESUCCESS" object:nil];
+    
 }
 
 - (void)getAgreementTip {
@@ -116,10 +118,21 @@
 }
 
 - (void)buySuccess {
-    self.selectBtn.hidden = YES;
-    self.logLabel.hidden = YES;
-    [self.view addSubview:self.successLabel];
-    [self.view addSubview:self.successBtn];
+    if (self.type == 1) {
+        self.selectBtn.hidden = YES;
+        self.logLabel.hidden = YES;
+        [self.view addSubview:self.successLabel];
+        [self.view addSubview:self.successBtn];
+    }
+}
+
+- (void)updateSuccess {
+    if (self.type == 2) {
+        self.selectBtn.hidden = YES;
+        self.logLabel.hidden = YES;
+        [self.view addSubview:self.successLabel];
+        [self.view addSubview:self.successBtn];
+    }
 }
 
 - (void)successBtnClick {

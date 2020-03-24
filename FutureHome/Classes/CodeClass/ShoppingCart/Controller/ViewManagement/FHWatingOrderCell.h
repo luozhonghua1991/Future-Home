@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) UIImageView *shopImgView;
 /** 商品名字 */
 @property (nonatomic, strong) UILabel *shopNameLabel;
+/** 规格label */
+@property (nonatomic, strong) UILabel *specificationLabel;
 /** 价格和数量label */
 @property (nonatomic, strong) UILabel *contentLabel;
 /** 同一物品总价 */

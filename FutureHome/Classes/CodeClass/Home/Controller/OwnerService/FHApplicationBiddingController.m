@@ -216,7 +216,7 @@
                                self.typeView.contentTF.text,@"position",
                                self.levealView.contentTF.text,@"mobile",
                                self.companyNameView.contentTF.text,@"com_name",
-                               self.phoneView.contentTF.text,@"grade",
+                               self.phoneView.contentTF.text,@"id_number",
                                self.xinCodeView.contentTF.text,@"credit_code",
                                self.companyAddressView.contentTF.text,@"address",
                                self.emailView.contentTF.text,@"e_mail",
@@ -281,8 +281,8 @@
 - (FHAccountApplicationTFView *)phoneView {
     if (!_phoneView) {
         _phoneView = [[FHAccountApplicationTFView alloc] init];
-        _phoneView.titleLabel.text = @"公司资质等级";
-        _phoneView.contentTF.placeholder = @"请输入公司资质等级";
+        _phoneView.titleLabel.text = @"身份证号";
+        _phoneView.contentTF.placeholder = @"请输入身份证号";
     }
     return _phoneView;
 }

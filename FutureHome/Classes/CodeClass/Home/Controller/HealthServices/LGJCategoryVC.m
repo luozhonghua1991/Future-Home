@@ -9,6 +9,7 @@
 #import "LGJCategoryVC.h"
 #import "LGJProductsVC.h"
 #import "FHHealthCategoryModel.h"
+#import "FHCategoryCell.h"
 
 @interface LGJCategoryVC ()<UITableViewDelegate, UITableViewDataSource, ProductsDelegate>
 
@@ -17,6 +18,9 @@
 @property (nonatomic, strong)  LGJProductsVC *productsVC;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) UILabel *oldSelectLabel;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectIndex;
+
 
 @end
 
@@ -24,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectIndex = 0;
     [self fh_creatNav];
     [self configData];
     [self createTableView];
@@ -93,6 +98,7 @@
     self.categoryTableView.showsVerticalScrollIndicator = NO;
     self.categoryTableView.backgroundColor = HEX_COLOR(0xCCCCCC);
     self.categoryTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [self.categoryTableView registerClass:[FHCategoryCell class] forCellReuseIdentifier:NSStringFromClass([FHCategoryCell class])];
     [self.view addSubview:self.categoryTableView];
 }
 
@@ -116,49 +122,30 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *ident = @"ident";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ident];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ident];
-        //cell里自己定义label
-        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(6, 0, self.view.frame.size.width * 0.26 - 6, 44)];
-        label.font = [UIFont systemFontOfSize:15];
-        label.textAlignment = NSTextAlignmentLeft;
-        label.tag = 100;
-        label.textColor = [UIColor blackColor];
-        //换行代码
-        label.numberOfLines = 0;
-        [cell.contentView addSubview:label];
-        UIView *view = [[UIView alloc] initWithFrame:cell.bounds];
-        view.backgroundColor = [UIColor whiteColor];
-        cell.selectedBackgroundView = view;
-        cell.backgroundColor = HEX_COLOR(0xE8E8E8);
-    }
-    
-    UILabel *titleLabel = (UILabel*)[cell.contentView viewWithTag:100];
+    FHCategoryCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCategoryCell class])];
     FHHealthCategoryModel *model = [self.categoryArr objectAtIndex:indexPath.row];
-    titleLabel.text = [NSString stringWithFormat:@"%@",model.name];
-    if (indexPath.row == 0) {
-        titleLabel.textColor = [UIColor blueColor];
-        self.oldSelectLabel = titleLabel;
-        NSIndexPath *selectedIndex = [NSIndexPath indexPathForRow:0 inSection:0];
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@",model.name];
+    if (indexPath.row == self.selectIndex) {
+        cell.nameLabel.textColor = [UIColor blueColor];
+        self.oldSelectLabel = cell.nameLabel;
+        NSIndexPath *selectedIndex = [NSIndexPath indexPathForRow:self.selectIndex inSection:0];
         [self.categoryTableView selectRowAtIndexPath:selectedIndex animated:YES scrollPosition:UITableViewScrollPositionTop];
     } else {
-        titleLabel.textColor = [UIColor blackColor];
+        cell.nameLabel.textColor = [UIColor blackColor];
     }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = (UITableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
-    UILabel *titleLabel = (UILabel*)[cell.contentView viewWithTag:100];
-    if (self.oldSelectLabel == titleLabel) {
+    self.selectIndex = indexPath.row;
+    FHCategoryCell *cell = (FHCategoryCell *)[tableView cellForRowAtIndexPath:indexPath];
+    if (self.oldSelectLabel == cell.nameLabel) {
         
     } else {
-        titleLabel.textColor = [UIColor blueColor];
+        cell.nameLabel.textColor = [UIColor blueColor];
         self.oldSelectLabel.textColor = [UIColor blackColor];
     }
-    self.oldSelectLabel = titleLabel;
+    self.oldSelectLabel = cell.nameLabel;
     FHHealthCategoryModel *model = self.categoryArr[indexPath.row];
     if (_productsVC) {
 //        [_productsVC scrollToSelectedIndexPath:indexPath];

@@ -343,6 +343,7 @@
 		4A8E0D5D22DEC76200F814F7 /* FHUserAgreementView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D5C22DEC76200F814F7 /* FHUserAgreementView.m */; };
 		4A8E0D6022DEFB5500F814F7 /* FHCertificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D5F22DEFB5500F814F7 /* FHCertificationView.m */; };
 		4A8E0D6322DEFF9700F814F7 /* FHCertificationImgView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A8E0D6222DEFF9700F814F7 /* FHCertificationImgView.m */; };
+		4A91A3002429BC7800F3DF1C /* FHCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A91A2FF2429BC7800F3DF1C /* FHCategoryCell.m */; };
 		4A920733237408310091847E /* FHCommonFollowAndPlacementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A920732237408310091847E /* FHCommonFollowAndPlacementCell.m */; };
 		4A92073623741EFE0091847E /* FHCommonFollowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A92073523741EFE0091847E /* FHCommonFollowModel.m */; };
 		4A9282F022C46B7B006509C3 /* FHCommonCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A9282EF22C46B7B006509C3 /* FHCommonCollectionCell.m */; };
@@ -1684,6 +1685,8 @@
 		4A8E0D5F22DEFB5500F814F7 /* FHCertificationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCertificationView.m; sourceTree = "<group>"; };
 		4A8E0D6122DEFF9700F814F7 /* FHCertificationImgView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCertificationImgView.h; sourceTree = "<group>"; };
 		4A8E0D6222DEFF9700F814F7 /* FHCertificationImgView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCertificationImgView.m; sourceTree = "<group>"; };
+		4A91A2FE2429BC7800F3DF1C /* FHCategoryCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCategoryCell.h; sourceTree = "<group>"; };
+		4A91A2FF2429BC7800F3DF1C /* FHCategoryCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCategoryCell.m; sourceTree = "<group>"; };
 		4A920731237408310091847E /* FHCommonFollowAndPlacementCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonFollowAndPlacementCell.h; sourceTree = "<group>"; };
 		4A920732237408310091847E /* FHCommonFollowAndPlacementCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommonFollowAndPlacementCell.m; sourceTree = "<group>"; };
 		4A92073423741EFE0091847E /* FHCommonFollowModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHCommonFollowModel.h; sourceTree = "<group>"; };
@@ -6166,6 +6169,8 @@
 				4A448CD222C5B576003D0712 /* FHHealthServicesController.m */,
 				4AFBC2F0230E8C2E00EF7C8E /* LGJCategoryVC.h */,
 				4AFBC2EE230E8C2E00EF7C8E /* LGJCategoryVC.m */,
+				4A91A2FE2429BC7800F3DF1C /* FHCategoryCell.h */,
+				4A91A2FF2429BC7800F3DF1C /* FHCategoryCell.m */,
 				4AFBC2ED230E8C2E00EF7C8E /* LGJProductsVC.h */,
 				4AFBC2EF230E8C2E00EF7C8E /* LGJProductsVC.m */,
 				4AFBC2F3230EA20100EF7C8E /* FHMentalHealthController.h */,
@@ -6970,6 +6975,7 @@
 				4A9CB245230BCBEB004A3763 /* ZJCommitFrame.m in Sources */,
 				4AB2043122F2DD7300111AC4 /* ZXMultiFormatOneDReader.m in Sources */,
 				4AF51B1522D0712500AA04EC /* FHGoodsListController.m in Sources */,
+				4A91A3002429BC7800F3DF1C /* FHCategoryCell.m in Sources */,
 				4AE8495822E30727009E165B /* JJMainScrollView.m in Sources */,
 				4AE8495622E30727009E165B /* BRPlaceholderTextView.m in Sources */,
 				4AC350EE22FD7B56003DF78B /* FHPersonTrendsController.m in Sources */,

@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *order_idass;
 /** 单个价格 */
 @property (nonatomic, copy) NSString *sell_price;
+/** 规格 */
+@property (nonatomic, copy) NSString *specification;
 
 /** 单个价格 */
 //@property (nonatomic, assign) float  sell_price;

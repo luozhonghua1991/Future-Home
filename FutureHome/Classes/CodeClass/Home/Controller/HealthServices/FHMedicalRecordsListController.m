@@ -117,7 +117,7 @@
 
 
 - (void) cellLongPress:(UILongPressGestureRecognizer *)longRecognizer {
-    if (longRecognizer.state==UIGestureRecognizerStateBegan) {
+    if (longRecognizer.state == UIGestureRecognizerStateBegan) {
         //成为第一响应者，需重写该方法
         [self becomeFirstResponder];
         

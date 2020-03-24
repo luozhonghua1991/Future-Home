@@ -317,11 +317,27 @@ UICollectionViewDataSource>
     [self.view endEditing:YES];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (textField == self.adverNumberView.contentTF) {
+        if (self.adventtype == 0) {
+            [self.view makeToast:@"请先选择广告类型"];
+            return NO;
+        } else {
+            if (self.adventtype == 1 || self.adventtype == 2) {
+                [self.view makeToast:@"该广告类型不支持跳转"];
+                return NO;
+            }
+            return YES;
+        }
+    }
+    return YES;
+}
+
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     if (textField == self.adverTypeView.contentTF) {
         [self.adverTypeView.contentTF resignFirstResponder];
         /** 选择广告类型 */
-        [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择广告类型" dataSource:@[@"1图片广告类型(制作成本较低)",@"2图片+电商链接类型(制作 成本较低)",@"3视频图片广告类型(制作成本较高)",@"4视频图片+电商链接类型(制作 成本较高)"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+        [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择广告类型" dataSource:@[@"1图片类型无跳转广告",@"2视频类型无跳转广告",@"3视频跳转电商广告",@"4图片跳转电商广告"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
             NSLog(@"index---%ld",index);
             self.adventtype = index + 1;
             self.adverTypeView.contentTF.text = selectValue;
@@ -409,6 +425,7 @@ UICollectionViewDataSource>
                                self.bottom_province_id,@"province_id",
                                self.bottom_city_id,@"city_id",
                                self.bottom_area_id,@"area_id",
+                               self.adverNumberView.contentTF.text,@"idcrad",
                                self.showNumberView.contentTF.text,@"dropaccount",
                                self.showDayView.contentTF.text,@"putinstarttime",
                                self.showTimeView.contentTF.text,@"putinendttime",
@@ -416,12 +433,13 @@ UICollectionViewDataSource>
                                self.city_id,@"unitarea",
                                self.area_id,@"unitcity",
                                nil];
+    
     [AFNetWorkTool post:@"advent/saveinfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"广告合作申请提交成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 确定 */
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"BUYSUCCESS" object:nil];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATESUCCESS" object:nil];
                 [self.navigationController popViewControllerAnimated:YES];
             });
         } else {
@@ -429,6 +447,7 @@ UICollectionViewDataSource>
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
+        
     }];
     
 }
