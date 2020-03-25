@@ -255,7 +255,15 @@
     
 }
 
-
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.buildTimeView.contentTF) {
+        [self.buildTimeView.contentTF resignFirstResponder];
+        /** 选择结建筑时间 */
+        [ZJDatePickerView zj_showDatePickerWithTitle:@"选择建筑时间" dateType:ZJDatePickerModeYMD defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+            self.buildTimeView.contentTF.text = selectValue;
+        } ];
+    }
+}
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
@@ -269,7 +277,7 @@
     if (!_titleView) {
         _titleView = [[FHAccountApplicationTFView alloc] init];
         _titleView.titleLabel.text = @"标题信息";
-        _titleView.contentTF.placeholder = @"请输入标题信息";
+        _titleView.contentTF.placeholder = @"限40字";
     }
     return _titleView;
 }
@@ -278,6 +286,7 @@
     if (!_carHouseNumberView) {
         _carHouseNumberView = [[FHAccountApplicationTFView alloc] init];
         _carHouseNumberView.titleLabel.text = @"车库楼层";
+        _carHouseNumberView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
         _carHouseNumberView.contentTF.placeholder = @"请输入车库楼层";
     }
     return _carHouseNumberView;
@@ -286,8 +295,14 @@
 - (FHAccountApplicationTFView *)salePriceView {
     if (!_salePriceView) {
         _salePriceView = [[FHAccountApplicationTFView alloc] init];
-        _salePriceView.titleLabel.text = @"出售价格";
-        _salePriceView.contentTF.placeholder = @"请输入出售价格(元)";
+        if (self.type == 1) {
+            _salePriceView.titleLabel.text = @"出售价格(单位:万元/套)";
+            _salePriceView.contentTF.placeholder = @"请输入出售价格(万元/套)";
+        } else if (self.type == 2) {
+            _salePriceView.titleLabel.text = @"出租价格(单位:元/月)";
+            _salePriceView.contentTF.placeholder = @"请输入出租价格(元/月)";
+        }
+        _salePriceView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _salePriceView;
 }
@@ -297,6 +312,7 @@
         _carNumberView = [[FHAccountApplicationTFView alloc] init];
         _carNumberView.titleLabel.text = @"车位号";
         _carNumberView.contentTF.placeholder = @"请输入车位号";
+        _carNumberView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _carNumberView;
 }
@@ -315,6 +331,7 @@
         _carAreaView = [[FHAccountApplicationTFView alloc] init];
         _carAreaView.titleLabel.text = @"车位面积";
         _carAreaView.contentTF.placeholder = @"请输入车位面积";
+        _carAreaView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _carAreaView;
 }
@@ -323,7 +340,8 @@
     if (!_buildTimeView) {
         _buildTimeView = [[FHAccountApplicationTFView alloc] init];
         _buildTimeView.titleLabel.text = @"建筑时间";
-        _buildTimeView.contentTF.placeholder = @"请输入建筑时间(xxxx年xx月)";
+        _buildTimeView.contentTF.delegate = self;
+        _buildTimeView.contentTF.placeholder = @"请选择建筑时间(xxxx年xx月)>";
     }
     return _buildTimeView;
 }

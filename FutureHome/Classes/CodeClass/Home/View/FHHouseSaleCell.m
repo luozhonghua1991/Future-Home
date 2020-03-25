@@ -11,15 +11,6 @@
 @interface FHHouseSaleCell ()
 /** 左边的图片 */
 @property (nonatomic, strong) UIImageView *leftImgView;
-/** 房子名称 */
-@property (nonatomic, strong) UILabel *houseNameLabel;
-/** 房子类型 */
-@property (nonatomic, strong) UILabel *houseTypeLabel;
-/** 付款要求 */
-@property (nonatomic, strong) UILabel *priceSugmentLabel;
-/** 价格label */
-@property (nonatomic, strong) UILabel *priceLabel;
-
 
 @end
 
@@ -59,15 +50,14 @@
     // Configure the view for the selected state
 }
 
+/** 租赁信息的model赋值 */
 - (void)setHouseListModel:(FHHouseListModel *)houseListModel {
     _houseListModel = houseListModel;
     [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_houseListModel.img_ids] placeholderImage:[UIImage imageNamed:@"头像"]];
-    self.houseNameLabel.text = _houseListModel.community;
-    self.houseTypeLabel.text = _houseListModel.hall;
-    self.priceSugmentLabel.text = _houseListModel.require;
-    self.priceLabel.text = [NSString stringWithFormat:@"￥%ld",(long)_houseListModel.rent];
 }
 
+
+/** 发布管理的model赋值 */
 - (void)setManagementModel:(FHReleaseManagemengModel *)managementModel {
     _managementModel = managementModel;
     [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_managementModel.img_ids] placeholderImage:[UIImage imageNamed:@"头像"]];
@@ -75,6 +65,7 @@
     self.houseTypeLabel.text = _managementModel.hall;
     self.priceSugmentLabel.text = _managementModel.require;
     self.priceLabel.text = [NSString stringWithFormat:@"￥%@",_managementModel.rent];
+    
 }
 
 #pragma mark — setter && getter
@@ -89,7 +80,7 @@
 - (UILabel *)houseNameLabel {
     if (!_houseNameLabel) {
         _houseNameLabel = [[UILabel alloc] init];
-        _houseNameLabel.font = [UIFont systemFontOfSize:13];
+        _houseNameLabel.font = [UIFont systemFontOfSize:14];
         _houseNameLabel.text = @"金科廊桥水乡";
         _houseNameLabel.textColor = [UIColor blackColor];
         _houseNameLabel.textAlignment = NSTextAlignmentLeft;

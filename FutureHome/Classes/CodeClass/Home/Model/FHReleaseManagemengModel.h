@@ -11,7 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHReleaseManagemengModel : NSObject
-
 /** 住房面积 */
 @property (nonatomic, copy) NSString *area;
 /** 小区名字 */

@@ -334,10 +334,10 @@
     if (!_salePriceView) {
         _salePriceView = [[FHAccountApplicationTFView alloc] init];
         if (self.type == 1) {
-            _salePriceView.titleLabel.text = @"出售价格(单位万元/套)";
+            _salePriceView.titleLabel.text = @"出售价格(单位:万元/套)";
             _salePriceView.contentTF.placeholder = @"请输入出售价格(万元/套)";
         } else if (self.type == 2) {
-            _salePriceView.titleLabel.text = @"出租价格(单位元/月)";
+            _salePriceView.titleLabel.text = @"出租价格(单位:元/月)";
             _salePriceView.contentTF.placeholder = @"请输入出租价格(元/月)";
         }
         _salePriceView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
