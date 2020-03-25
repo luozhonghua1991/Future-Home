@@ -188,15 +188,17 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
+                               [SingleManager shareManager].ordertype,@"type",
                                [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
-    [AFNetWorkTool get:@"shop/getUserCollect" params:paramsDic success:^(id responseObj) {
+    [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            NSArray *arr = responseObj[@"data"];
-            NSDictionary *dic = arr[0];
-            /** 商铺ID */
-            weakSelf.shopID = dic[@"property_id"];
-            
+            NSArray *arr = responseObj[@"data"][@"list"];
+            if (arr.count > 0 ) {
+                NSDictionary *dic = arr[0];
+                /** 商铺ID */
+                weakSelf.shopID = dic[@"id"];
+            }
         }
     } failure:^(NSError *error) {
         
@@ -291,6 +293,7 @@
 #pragma mark — request
 - (void)fh_refreshBannerData {
     [self fh_getTopBanner];
+    [self fh_bottomTopBanner];
 }
 
 - (void)fh_getTopBanner {
@@ -321,10 +324,6 @@
                 [self->topUrlArrays addObject:dic[@"url"]];
             }
             [weakSelf.homeTable reloadData];
-            [self fh_bottomTopBanner];
-            [self getListInfo];
-            /** 获取banner数据 */
-            [self fh_getShopFollowList];
         }
     } failure:^(NSError *error) {
         [self endRefreshAction];
@@ -358,6 +357,9 @@
         }
         
         [weakSelf.homeTable reloadData];
+        [self getListInfo];
+        /** 获取banner数据 */
+        [self fh_getShopFollowList];
     } failure:^(NSError *error) {
         [self endRefreshAction];
         [weakSelf.homeTable reloadData];

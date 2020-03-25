@@ -260,7 +260,7 @@
         _houseAreaView = [[FHAccountApplicationTFView alloc] init];
         _houseAreaView.titleLabel.text = @"建筑面积";
         _houseAreaView.contentTF.placeholder = @"请输入建筑面积";
-        _houseAreaView.contentTF.text = [NSString stringWithFormat:@"%ld平方米",(long)self.authModel.area];
+        _houseAreaView.contentTF.text = [NSString stringWithFormat:@"%ld㎡",(long)self.authModel.area];
     }
     return _houseAreaView;
 }

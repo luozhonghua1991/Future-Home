@@ -47,6 +47,9 @@
 @property (nonatomic, strong) NSMutableArray *imgSelectArrs;
 /** 服务器返回的图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectImgArrays;
+/** 房屋类型 */
+@property (nonatomic, copy) NSArray *houseTypeArrs;
+
 
 @end
 
@@ -54,6 +57,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.houseTypeArrs = @[@"商品房住宅",
+                           @"商品房公寓",
+                           @"房改房",
+                           @"集资房",
+                           @"经济适用房",
+                           @"廉租房",
+                           @"公租房",
+                           @"安置房",
+                           @"小产权房"];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -228,6 +240,7 @@
 /** 提交信息 */
 - (void)commitInfo {
     WS(weakSelf);
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -257,6 +270,8 @@
     [AFNetWorkTool post:@"property/releaseRentSale" params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"资料已经提交成功"];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
@@ -266,6 +281,25 @@
         [self.view makeToast:@"所填信息有误"];
     }];
     
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.houseingTypeView.contentTF) {
+        [self.houseingTypeView.contentTF resignFirstResponder];
+        /** 选择房屋类型 */
+        [ZJNormalPickerView zj_showStringPickerWithTitle:@"选择房屋类型" dataSource:self.houseTypeArrs defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+            NSLog(@"index---%ld",index);
+            self.houseingTypeView.contentTF.text = selectValue;
+        } cancelBlock:^{
+            
+        }];
+    } else if (textField == self.buildTimeView.contentTF) {
+        [self.buildTimeView.contentTF resignFirstResponder];
+        /** 选择结建筑时间 */
+        [ZJDatePickerView zj_showDatePickerWithTitle:@"选择建筑时间" dateType:ZJDatePickerModeYMD defaultSelValue:@"" resultBlock:^(NSString *selectValue) {
+            self.buildTimeView.contentTF.text = selectValue;
+        } ];
+    }
 }
 
 #pragma mark - Getters and Setters
@@ -280,7 +314,8 @@
     if (!_titleView) {
         _titleView = [[FHAccountApplicationTFView alloc] init];
         _titleView.titleLabel.text = @"标题信息";
-        _titleView.contentTF.placeholder = @"请输入标题信息";
+        _titleView.contentTF.placeholder = @"限40字";
+        _titleView.contentTF.delegate = self;
     }
     return _titleView;
 }
@@ -289,6 +324,7 @@
     if (!_houseTypeView) {
         _houseTypeView = [[FHAccountApplicationTFView alloc] init];
         _houseTypeView.titleLabel.text = @"房屋户型";
+        _houseTypeView.contentTF.delegate = self;
         _houseTypeView.contentTF.placeholder = @"请输入房屋户型";
     }
     return _houseTypeView;
@@ -297,8 +333,14 @@
 - (FHAccountApplicationTFView *)salePriceView {
     if (!_salePriceView) {
         _salePriceView = [[FHAccountApplicationTFView alloc] init];
-        _salePriceView.titleLabel.text = @"出售价格";
-        _salePriceView.contentTF.placeholder = @"请输入出售价格(元)";
+        if (self.type == 1) {
+            _salePriceView.titleLabel.text = @"出售价格(单位万元/套)";
+            _salePriceView.contentTF.placeholder = @"请输入出售价格(万元/套)";
+        } else if (self.type == 2) {
+            _salePriceView.titleLabel.text = @"出租价格(单位元/月)";
+            _salePriceView.contentTF.placeholder = @"请输入出租价格(元/月)";
+        }
+        _salePriceView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _salePriceView;
 }
@@ -326,6 +368,7 @@
         _areaView = [[FHAccountApplicationTFView alloc] init];
         _areaView.titleLabel.text = @"建筑面积";
         _areaView.contentTF.placeholder = @"请输入建筑面积";
+        _areaView.contentTF.keyboardType = UIKeyboardTypeNumberPad;
     }
     return _areaView;
 }
@@ -343,7 +386,8 @@
     if (!_houseingTypeView) {
         _houseingTypeView = [[FHAccountApplicationTFView alloc] init];
         _houseingTypeView.titleLabel.text = @"房屋类型";
-        _houseingTypeView.contentTF.placeholder = @"请输入房屋类型";
+        _houseingTypeView.contentTF.delegate = self;
+        _houseingTypeView.contentTF.placeholder = @"请选择房屋类型 >";
     }
     return _houseingTypeView;
 }
@@ -370,7 +414,8 @@
     if (!_buildTimeView) {
         _buildTimeView = [[FHAccountApplicationTFView alloc] init];
         _buildTimeView.titleLabel.text = @"建筑时间";
-        _buildTimeView.contentTF.placeholder = @"请输入建筑时间(xxxx年xx月)";
+        _buildTimeView.contentTF.delegate = self;
+        _buildTimeView.contentTF.placeholder = @"请选择建筑时间(xxxx年xx月)>";
     }
     return _buildTimeView;
 }

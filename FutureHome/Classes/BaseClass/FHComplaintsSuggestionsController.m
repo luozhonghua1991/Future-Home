@@ -19,6 +19,8 @@
 /** 服务器返回的图片数组 */
 @property (nonatomic, strong) NSMutableArray *selectImgArrays;
 
+@property (nonatomic, strong) MBProgressHUD *lodingHud;
+
 @end
 
 @implementation FHComplaintsSuggestionsController
@@ -119,7 +121,7 @@
 /** 提交信息 */
 - (void)commitInfo {
     WS(weakSelf);
-    [ZHProgressHUD showMessage:@"加载中..." inView:[UIApplication sharedApplication].delegate.window];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -133,7 +135,8 @@
     [AFNetWorkTool post:@"public/complaint" params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
-            [ZHProgressHUD hide];
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             [weakSelf.view makeToast:@"发布投诉建议成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -194,6 +197,17 @@
         _suggestionsTextView.PlaceholderLabel.attributedText = attributedTitle;
     }
     return _suggestionsTextView;
+}
+
+- (MBProgressHUD *)lodingHud{
+    if (_lodingHud == nil) {
+        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+        _lodingHud.removeFromSuperViewOnHide = YES;
+        _lodingHud.label.text = @"投诉建议提交中...";
+        [_lodingHud showAnimated:YES];
+    }
+    return _lodingHud;
 }
 
 @end

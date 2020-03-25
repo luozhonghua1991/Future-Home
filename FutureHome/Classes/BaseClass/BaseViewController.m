@@ -236,4 +236,15 @@
     return _bottomBannerArrays;
 }
 
+- (MBProgressHUD *)loadingHud{
+    if (_loadingHud == nil) {
+        _loadingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _loadingHud.mode = MBProgressHUDModeIndeterminate;
+        _loadingHud.removeFromSuperViewOnHide = YES;
+        _loadingHud.label.text = @"提交中...";
+        [_loadingHud showAnimated:YES];
+    }
+    return _loadingHud;
+}
+
 @end

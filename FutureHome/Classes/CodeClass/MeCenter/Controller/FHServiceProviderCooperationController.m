@@ -41,8 +41,10 @@
 @property (nonatomic, strong) FHAccountApplicationTFView *phoneView;
 /** 接收邮箱 */
 @property (nonatomic, strong) FHAccountApplicationTFView *mailView;
-/** 地址选择View */
-@property (nonatomic, strong) FHDetailAddressView *detailAddressView;
+//* 地址选择View
+//@property (nonatomic, strong) FHDetailAddressView *detailAddressView;
+/** 区域View */
+@property (nonatomic, strong) FHAccountApplicationTFView *areaView;
 /** 地址View */
 @property (nonatomic, strong) FHAccountApplicationTFView *addressView;
 /** 申请人身份证 */
@@ -170,8 +172,8 @@
     [self.scrollView addSubview:self.phoneNumberView];
     [self.scrollView addSubview:self.phoneView];
     [self.scrollView addSubview:self.mailView];
-    [self fh_creatDetailAddressView];
-    
+//    [self fh_creatDetailAddressView];
+    [self.scrollView addSubview:self.areaView];
     [self.scrollView addSubview:self.addressView];
     /** 申请人身份证 */
     self.certificationView = [[FHCertificationImgView alloc] initWithFrame:CGRectMake(0, 75, SCREEN_WIDTH, 100)];
@@ -226,9 +228,10 @@
             self.delegateCity_id = parentCode;
             self.delegateArea_id = addressCode;
         } else {
-            self.detailAddressView.leftProvinceDataLabel.text = province;
-            self.detailAddressView.centerProvinceDataLabel.text = city;
-            self.detailAddressView.rightProvinceDataLabel.text = district;
+            self.areaView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
+//            self.detailAddressView.leftProvinceDataLabel.text = province;
+//            self.detailAddressView.centerProvinceDataLabel.text = city;
+//            self.detailAddressView.rightProvinceDataLabel.text = district;
             self.province_id = provienceCode;
             self.city_id = parentCode;
             self.area_id = addressCode;
@@ -286,8 +289,8 @@
     self.phoneNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantCardView.frame), SCREEN_WIDTH, 50);
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneNumberView.frame), SCREEN_WIDTH, 50);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, 50);
-    self.detailAddressView.frame =  CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
-    self.addressView.frame = CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame),SCREEN_WIDTH , 50);
+    self.areaView.frame =  CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
+    self.addressView.frame = CGRectMake(0, CGRectGetMaxY(self.areaView.frame),SCREEN_WIDTH , 50);
     self.personCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame), SCREEN_WIDTH, 180);
     self.shipView.frame = CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame), SCREEN_WIDTH, 60);
     [self updateViewsFrame];
@@ -307,26 +310,25 @@
     self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.submitBtn.frame) + MainSizeHeight + 20);
 }
 
-- (void)fh_creatDetailAddressView {
-    if (!self.detailAddressView) {
-        self.detailAddressView = [[FHDetailAddressView alloc] init];
-        self.view.userInteractionEnabled = YES;
-        self.scrollView.userInteractionEnabled = YES;
-        self.detailAddressView.userInteractionEnabled = YES;
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressClick)];
-        [self.detailAddressView addGestureRecognizer:tap];
-        [self.scrollView addSubview:self.detailAddressView];
-    }
-}
+//- (void)fh_creatDetailAddressView {
+//    if (!self.detailAddressView) {
+//        self.detailAddressView = [[FHDetailAddressView alloc] init];
+//        self.view.userInteractionEnabled = YES;
+//        self.scrollView.userInteractionEnabled = YES;
+//        self.detailAddressView.userInteractionEnabled = YES;
+//
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressClick)];
+//        [self.detailAddressView addGestureRecognizer:tap];
+//        [self.scrollView addSubview:self.detailAddressView];
+//    }
+//}
 
 
 #pragma mark — event
 /** 地址选择 */
-- (void)addressClick {
-    self.isSelectDelegateAddress = NO;
-    [self.addressPickerView showInView:self.view];
-}
+//- (void)addressClick {
+
+//}
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
     /** 选取图片 */
@@ -591,6 +593,10 @@
         [self.delegateWhereView.contentTF resignFirstResponder];
         self.isSelectDelegateAddress = YES;
         [self.addressPickerView showInView:self.view];
+    } else if (textField == self.areaView.contentTF) {
+        [self.areaView.contentTF resignFirstResponder];
+        self.isSelectDelegateAddress = NO;
+        [self.addressPickerView showInView:self.view];
     }
 }
 
@@ -764,6 +770,16 @@
         [_lodingHud showAnimated:YES];
     }
     return _lodingHud;
+}
+
+- (FHAccountApplicationTFView *)areaView {
+    if (!_areaView) {
+        _areaView = [[FHAccountApplicationTFView alloc] init];
+        _areaView.titleLabel.text = @"服务商所在区域";
+        _areaView.contentTF.delegate = self;
+        _areaView.contentTF.placeholder = @"请选择服务商所在区域 >";
+    }
+    return _areaView;
 }
 
 @end

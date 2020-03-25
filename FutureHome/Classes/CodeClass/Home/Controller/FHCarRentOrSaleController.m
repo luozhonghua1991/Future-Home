@@ -216,6 +216,7 @@
 /** 提交信息 */
 - (void)commitInfo {
     WS(weakSelf);
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -239,6 +240,8 @@
     [AFNetWorkTool post:@"property/parkRentSale" params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"提交成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];

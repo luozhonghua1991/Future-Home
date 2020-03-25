@@ -246,6 +246,7 @@
 - (void)commitRequestWithSexType:(NSInteger )sexType
                         fullType:(NSInteger )fullType {
     WS(weakSelf);
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
@@ -266,6 +267,8 @@
     
     [AFNetWorkTool post:@"owner/submitInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"申请信息已经提交"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 确定 */

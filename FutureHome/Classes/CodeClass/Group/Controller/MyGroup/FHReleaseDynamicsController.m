@@ -131,7 +131,8 @@
         [self updateVideoWithRequest];
     } else {
         //显示加载视图
-        [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
+//        [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -145,7 +146,8 @@
         [AFNetWorkTool uploadImagesWithUrl:@"sheyun/publishDynamic" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectPhoto = NO;
@@ -165,7 +167,8 @@
 
 - (void)updateVideoWithRequest {
     //显示加载视图
-    [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
+//    [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
     NSData *videoData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SingleManager shareManager].videoPath]];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -181,7 +184,8 @@
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
                 //隐藏加载视图
-                [ZHProgressHUD hide];
+                [weakSelf.lodingHud hideAnimated:YES];
+                weakSelf.lodingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectVideo = NO;

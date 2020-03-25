@@ -45,6 +45,7 @@ TZImagePickerControllerDelegate
 /** 自定义导航栏视图 */
 @property (nonatomic, strong) UIView *navgationView;
 
+@property (nonatomic, strong) MBProgressHUD *loadingHud;
 
 @property (nonatomic,retain) MBProgressHUD* hud;
 - (void)addHud;

@@ -57,7 +57,8 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 @property (nonatomic, strong) FHAccountApplicationTFView *phoneView;
 /** 接收邮箱 */
 @property (nonatomic, strong) FHAccountApplicationTFView *mailView;
-
+/** 区域View */
+@property (nonatomic, strong) FHAccountApplicationTFView *areaView;
 /** 最上面的绿色btn */
 @property (nonatomic, strong) UIButton *topGreenBtn;
 /** 业主1姓名View */
@@ -215,8 +216,8 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.scrollView addSubview:self.cellNameView];
     [self.scrollView addSubview:self.managerNameView];
     [self.scrollView addSubview:self.managerCardView];
-    [self fh_creatDetailAddressView];
-    
+//    [self fh_creatDetailAddressView];
+    [self.scrollView addSubview:self.areaView];
     [self.scrollView addSubview:self.addressView];
     [self.scrollView addSubview:self.phoneView];
     [self.scrollView addSubview:self.mailView];
@@ -297,9 +298,11 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
             showString = [NSString stringWithFormat:@"%@%@", showString, district];
         }
         
-        self.detailAddressView.leftProvinceDataLabel.text = province;
-        self.detailAddressView.centerProvinceDataLabel.text = city;
-        self.detailAddressView.rightProvinceDataLabel.text = district;
+//        self.detailAddressView.leftProvinceDataLabel.text = province;
+//        self.detailAddressView.centerProvinceDataLabel.text = city;
+//        self.detailAddressView.rightProvinceDataLabel.text = district;
+        
+        self.areaView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
         self.province_id = provienceCode;
         self.city_id = parentCode;
         self.area_id = addressCode;
@@ -323,8 +326,10 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.managerCardView.frame), SCREEN_WIDTH, commonCellHeight);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, commonCellHeight);
     
-    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, commonCellHeight);
-    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.areaView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, commonCellHeight);
+    
+//    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.areaView.frame), SCREEN_WIDTH, commonCellHeight);
+    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.areaView.frame), SCREEN_WIDTH, commonCellHeight);
     
     self.topGreenBtn.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame) + 20, SCREEN_WIDTH, commonCellHeight - 5);
     self.person1NameView.frame = CGRectMake(0, CGRectGetMaxY(self.topGreenBtn.frame), SCREEN_WIDTH, commonCellHeight);
@@ -379,14 +384,17 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 
 
 #pragma mark — event
-/** 地址选择 */
-- (void)addressClick {
-    [self.managerCardView.contentTF resignFirstResponder];
-     [self.addressPickerView showInView:self.view];
-}
+///** 地址选择 */
+//- (void)addressClick {
+//    [self.managerCardView.contentTF resignFirstResponder];
+//    [self.addressPickerView showInView:self.view];
+//}
 
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.areaView.contentTF) {
+        [self.areaView.contentTF resignFirstResponder];
+        [self.addressPickerView showInView:self.view];
+    }
 }
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index view:(nonnull UIView *)view {
@@ -815,6 +823,17 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     }
     return _mailView;
 }
+
+- (FHAccountApplicationTFView *)areaView {
+    if (!_areaView) {
+        _areaView = [[FHAccountApplicationTFView alloc] init];
+        _areaView.titleLabel.text = @"所在区域";
+        _areaView.contentTF.delegate = self;
+        _areaView.contentTF.placeholder = @"请选择所在区域 >";
+    }
+    return _areaView;
+}
+
 
 - (FHAccountApplicationTFView *)addressView {
     if (!_addressView) {

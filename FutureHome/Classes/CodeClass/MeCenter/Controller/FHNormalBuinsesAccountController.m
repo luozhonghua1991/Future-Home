@@ -53,7 +53,9 @@ FHCommonPaySelectViewDelegate
 /** 接收邮箱 */
 @property (nonatomic, strong) FHAccountApplicationTFView *mailView;
 /** 详情地址选择View */
-@property (nonatomic, strong) FHDetailAddressView *detailAddressView;
+//@property (nonatomic, strong) FHDetailAddressView *detailAddressView;
+/** 区域View */
+@property (nonatomic, strong) FHAccountApplicationTFView *areaView;
 /** 地址View */
 @property (nonatomic, strong) FHAccountApplicationTFView *addressView;
 /** 营业说明textView */
@@ -168,7 +170,8 @@ FHCommonPaySelectViewDelegate
     [self.scrollView addSubview:self.phoneNumberView];
     [self.scrollView addSubview:self.phoneView];
     [self.scrollView addSubview:self.mailView];
-    [self fh_creatDetailAddressView];
+//    [self fh_creatDetailAddressView];
+    [self.scrollView addSubview:self.areaView];
     [self.scrollView addSubview:self.addressView];
     [self.scrollView addSubview:self.businessDescriptionTextView];
     /** 申请人身份证 */
@@ -214,9 +217,10 @@ FHCommonPaySelectViewDelegate
             showString = [NSString stringWithFormat:@"%@%@", showString, district];
         }
         
-        self.detailAddressView.leftProvinceDataLabel.text = province;
-        self.detailAddressView.centerProvinceDataLabel.text = city;
-        self.detailAddressView.rightProvinceDataLabel.text = district;
+//        self.detailAddressView.leftProvinceDataLabel.text = province;
+//        self.detailAddressView.centerProvinceDataLabel.text = city;
+//        self.detailAddressView.rightProvinceDataLabel.text = district;
+        self.areaView.contentTF.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,district];
         self.province_id = provienceCode;
         self.city_id = parentCode;
         self.area_id = addressCode;
@@ -237,8 +241,8 @@ FHCommonPaySelectViewDelegate
     self.phoneNumberView.frame = CGRectMake(0, CGRectGetMaxY(self.applicantCardView.frame), SCREEN_WIDTH, 50);
     self.phoneView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneNumberView.frame), SCREEN_WIDTH, 50);
     self.mailView.frame = CGRectMake(0, CGRectGetMaxY(self.phoneView.frame), SCREEN_WIDTH, 50);
-    self.detailAddressView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
-    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.detailAddressView.frame), SCREEN_WIDTH, 50);
+    self.areaView.frame = CGRectMake(0, CGRectGetMaxY(self.mailView.frame), SCREEN_WIDTH, 50);
+    self.addressView.frame =  CGRectMake(0, CGRectGetMaxY(self.areaView.frame), SCREEN_WIDTH, 50);
     self.businessDescriptionTextView.frame = CGRectMake(0, CGRectGetMaxY(self.addressView.frame) + 30, SCREEN_WIDTH, 100);
     self.personCodeView.frame = CGRectMake(0, CGRectGetMaxY(self.businessDescriptionTextView.frame), SCREEN_WIDTH, 180);
     self.shipView.frame = CGRectMake(0, CGRectGetMaxY(self.personCodeView.frame), SCREEN_WIDTH, 60);
@@ -257,24 +261,31 @@ FHCommonPaySelectViewDelegate
     [self.view endEditing:YES];
 }
 
-- (void)fh_creatDetailAddressView {
-    if (!self.detailAddressView) {
-        self.detailAddressView = [[FHDetailAddressView alloc] init];
-        self.view.userInteractionEnabled = YES;
-        self.scrollView.userInteractionEnabled = YES;
-        self.detailAddressView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressClick)];
-        [self.detailAddressView addGestureRecognizer:tap];
-        [self.scrollView addSubview:self.detailAddressView];
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if (textField == self.areaView.contentTF) {
+        [self.areaView.contentTF resignFirstResponder];
+        [self.addressPickerView showInView:self.view];
     }
 }
 
+//- (void)fh_creatDetailAddressView {
+//    if (!self.detailAddressView) {
+//        self.detailAddressView = [[FHDetailAddressView alloc] init];
+//        self.view.userInteractionEnabled = YES;
+//        self.scrollView.userInteractionEnabled = YES;
+//        self.detailAddressView.userInteractionEnabled = YES;
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(addressClick)];
+//        [self.detailAddressView addGestureRecognizer:tap];
+//        [self.scrollView addSubview:self.detailAddressView];
+//    }
+//}
 
-#pragma mark — event
-/** 地址选择 */
-- (void)addressClick {
-    [self.addressPickerView showInView:self.view];
-}
+
+//#pragma mark — event
+///** 地址选择 */
+//- (void)addressClick {
+//    [self.addressPickerView showInView:self.view];
+//}
 
 - (void)FHCertificationImgViewDelegateSelectIndex:(NSInteger )index {
     /** 选取图片 */
@@ -721,5 +732,16 @@ FHCommonPaySelectViewDelegate
     }
     return _lodingHud;
 }
+
+- (FHAccountApplicationTFView *)areaView {
+    if (!_areaView) {
+        _areaView = [[FHAccountApplicationTFView alloc] init];
+        _areaView.titleLabel.text = @"所在区域";
+        _areaView.contentTF.delegate = self;
+        _areaView.contentTF.placeholder = @"请选择所在区域 >";
+    }
+    return _areaView;
+}
+
 
 @end

@@ -47,7 +47,7 @@
 
     addressLabel = [[UILabel alloc]init];
     addressLabel.textColor = [UIColor blackColor];
-    addressLabel.font =[UIFont systemFontOfSize:12];
+    addressLabel.font =[UIFont systemFontOfSize:14];
     addressLabel.text = @"重庆市沙坪坝大学城";
     [self.contentView addSubview:addressLabel];
 

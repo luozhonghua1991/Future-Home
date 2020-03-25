@@ -311,6 +311,7 @@
 - (void)sureBtnClick {
     /** 先上传多张图片 然后上传信息*/
     WS(weakSelf);
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrs componentsJoinedByString:@","];
     NSDictionary *paramsDic;
@@ -357,6 +358,8 @@
     [AFNetWorkTool post:url params:paramsDic success:^(id responseObj) {
         NSInteger code = [responseObj[@"code"] integerValue];
         if (code == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"认证资料已经提交成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [weakSelf.navigationController popViewControllerAnimated:YES];
