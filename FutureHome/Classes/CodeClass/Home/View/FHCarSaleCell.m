@@ -32,18 +32,28 @@
 
 /** 车库楼层 */
 @property (nonatomic, strong) UILabel *carNumerLouLabel;
+/** 房屋类型 */
+@property (nonatomic, strong) UILabel *houseTypeLabel;
+/** 房屋房号 */
+@property (nonatomic, strong) UILabel *houseNumberLabel;
+/** 房屋朝向 */
+@property (nonatomic, strong) UILabel *houseTowardLabel;
+/** 装修情况 */
+@property (nonatomic, strong) UILabel *houseStatueLabel;
+
+/** 产权年限 */
+@property (nonatomic, strong) UILabel *yearLabel;
 /** 建筑时间 */
 @property (nonatomic, strong) UILabel *buildTimeLabel;
 /** 付款要求 */
 @property (nonatomic, strong) UILabel *payTypeLabel;
-/**补充信息 */
-@property (nonatomic, strong) UILabel *otherInfoLabel;
-/** 产权年限 */
-@property (nonatomic, strong) UILabel *yearLabel;
 /** 联系电话 */
 @property (nonatomic, strong) UILabel *phoneLabel;
 /** 接听时段 */
 @property (nonatomic, strong) UILabel *callPhoneLabel;
+/**补充信息 */
+@property (nonatomic, strong) UILabel *otherInfoLabel;
+
 
 
 @end
@@ -71,20 +81,85 @@
     
     [self.contentView addSubview:self.lineView];
     
-    [self.contentView addSubview:self.carNumerLouLabel];
-    [self.contentView addSubview:self.buildTimeLabel];
-    [self.contentView addSubview:self.payTypeLabel];
-    [self.contentView addSubview:self.otherInfoLabel];
-    
-    [self.contentView addSubview:self.yearLabel];
-    [self.contentView addSubview:self.phoneLabel];
-    [self.contentView addSubview:self.callPhoneLabel];
+    if (self.type == 0 || self.type == 1) {
+        /** 房子相关的 */
+        [self.contentView addSubview:self.houseTypeLabel];
+        [self.contentView addSubview:self.houseNumberLabel];
+        [self.contentView addSubview:self.houseTowardLabel];
+        [self.contentView addSubview:self.houseStatueLabel];
+        [self.contentView addSubview:self.yearLabel];
+        [self.contentView addSubview:self.buildTimeLabel];
+        [self.contentView addSubview:self.payTypeLabel];
+        [self.contentView addSubview:self.phoneLabel];
+        [self.contentView addSubview:self.callPhoneLabel];
+        [self.contentView addSubview:self.otherInfoLabel];
+    } else {
+        /** 车位相关的 */
+        [self.contentView addSubview:self.yearLabel];
+        [self.contentView addSubview:self.carNumerLouLabel];
+        [self.contentView addSubview:self.buildTimeLabel];
+        [self.contentView addSubview:self.payTypeLabel];
+        [self.contentView addSubview:self.phoneLabel];
+        [self.contentView addSubview:self.callPhoneLabel];
+        [self.contentView addSubview:self.otherInfoLabel];
+    }
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    self.titleNameLabel.frame = CGRectMake(10, 15, SCREEN_WIDTH - 200, 15);
+- (void)setType:(NSInteger)type {
+    _type = type;
+}
+
+- (void)setDetailModel:(FHListDetailModel *)detailModel {
+    _detailModel = detailModel;
+    self.titleNameLabel.text = _detailModel.title;
+    /** 0房屋出售 1房屋出租 2车位出售 3车位出租 */
+    if (self.type == 0) {
+        self.priceLabe.text = [NSString stringWithFormat:@"￥%ld万",(long)_detailModel.rent];
+        self.carNumberLogoLabel.text = @"房屋户型";
+        self.priceLogoLabe.text = @"出售价格";
+        self.carNumberLabel.text = [NSString stringWithFormat:@"%@",_detailModel.hall];
+    } else if (self.type == 1) {
+        self.priceLabe.text = [NSString stringWithFormat:@"￥%ld元",(long)_detailModel.rent];
+        self.carNumberLogoLabel.text = @"房屋户型";
+        self.priceLogoLabe.text = @"出租价格";
+        self.carNumberLabel.text = [NSString stringWithFormat:@"%@",_detailModel.hall];
+    } else if (self.type == 2) {
+        self.priceLabe.text = [NSString stringWithFormat:@"￥%ld万",(long)_detailModel.rent];
+        self.carNumberLogoLabel.text = @"车位编号";
+        self.priceLogoLabe.text = @"出售价格";
+        self.carNumberLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.shelves];
+    } else if (self.type == 3) {
+        self.priceLabe.text = [NSString stringWithFormat:@"￥%ld元",(long)_detailModel.rent];
+        self.carNumberLogoLabel.text = @"车位编号";
+        self.priceLogoLabe.text = @"出租价格";
+        self.carNumberLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.shelves];
+    }
     
+    self.areaLabel.text = [NSString stringWithFormat:@"%ld㎡",(long)_detailModel.area];
+    if (self.type == 2 || self.type == 3) {
+        [self changeTitle:[NSString stringWithFormat:@"车库楼层: %ld楼",(long)_detailModel.l_floor] index:5 label:self.carNumerLouLabel];
+        [self changeTitle:[NSString stringWithFormat:@"建筑时间: %@",_detailModel.create_time] index:5 label:self.buildTimeLabel];
+        [self changeTitle:[NSString stringWithFormat:@"付款要求: %@",_detailModel.require] index:5 label:self.payTypeLabel];
+        [self changeTitle:[NSString stringWithFormat:@"产权年限: %ld年",(long)_detailModel.years] index:5 label:self.yearLabel];
+        [self changeTitle:[NSString stringWithFormat:@"联系电话: %@",_detailModel.mobile] index:5 label:self.phoneLabel];
+        [self changeTitle:[NSString stringWithFormat:@"接听时段: %@",_detailModel.time_slot] index:5 label:self.callPhoneLabel];
+        [self changeTitle:[NSString stringWithFormat:@"其它补充信息: \n\n%@",_detailModel.describe] index:7 label:self.otherInfoLabel];
+    } else {
+        [self changeTitle:[NSString stringWithFormat:@"房屋类型: %@",_detailModel.house_type] index:5 label:self.houseTypeLabel];
+        [self changeTitle:[NSString stringWithFormat:@"楼层房号: %@",_detailModel.house_park] index:5 label:self.houseNumberLabel];
+        [self changeTitle:[NSString stringWithFormat:@"房屋朝向: %ld年",(long)_detailModel.toward] index:5 label:self.houseTowardLabel];
+        [self changeTitle:[NSString stringWithFormat:@"装修情况: %@",_detailModel.decoration] index:5 label:self.houseStatueLabel];
+        [self changeTitle:[NSString stringWithFormat:@"建筑时间: %@",_detailModel.create_time] index:5 label:self.buildTimeLabel];
+        [self changeTitle:[NSString stringWithFormat:@"付款要求: %@",_detailModel.require] index:5 label:self.payTypeLabel];
+        [self changeTitle:[NSString stringWithFormat:@"产权年限: %ld年",(long)_detailModel.years] index:5 label:self.yearLabel];
+        [self changeTitle:[NSString stringWithFormat:@"联系电话: %@",_detailModel.mobile] index:5 label:self.phoneLabel];
+        [self changeTitle:[NSString stringWithFormat:@"接听时段: %@",_detailModel.time_slot] index:5 label:self.callPhoneLabel];
+        [self changeTitle:[NSString stringWithFormat:@"其它补充信息: \n\n%@",_detailModel.describe] index:7 label:self.otherInfoLabel];
+    }
+    
+    /** frame相关的 */
+    CGSize titleSize = [UIlabelTool sizeWithString:self.titleNameLabel.text font:self.titleNameLabel.font width:self.titleNameLabel.width];
+    self.titleNameLabel.frame = CGRectMake(10, 15, SCREEN_WIDTH - 200, titleSize.height);
     self.priceLabe.frame = CGRectMake(10, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 200, 15);
     self.priceLogoLabe.frame = CGRectMake(10, MaxY(self.priceLabe) + 5, SCREEN_WIDTH - 200, 14);
     
@@ -96,33 +171,40 @@
     
     self.lineView.frame = CGRectMake(10, MaxY(self.priceLogoLabe) + 20, SCREEN_WIDTH - 20, 0.5);
     
-    self.carNumerLouLabel.frame = CGRectMake(10, MaxY(self.lineView) + 20, SCREEN_WIDTH - 200, 13);
-    self.buildTimeLabel.frame = CGRectMake(10, MaxY(self.carNumerLouLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.payTypeLabel.frame = CGRectMake(10, MaxY(self.buildTimeLabel) + 15, SCREEN_WIDTH - 200, 13);
-//    self.otherInfoLabel.frame = CGRectMake(5, MaxY(self.payTypeLabel) + 15, SCREEN_WIDTH - 200, 13);
+    if (self.type == 0  || self.type == 1) {
+        /** 房子相关的 */
+        self.houseTypeLabel.frame = CGRectMake(10, MaxY(self.lineView) + 12, SCREEN_WIDTH - 200, 15);
+        self.houseNumberLabel.frame = CGRectMake(10, MaxY(self.houseTypeLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.houseTowardLabel.frame = CGRectMake(10, MaxY(self.houseNumberLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.houseStatueLabel.frame = CGRectMake(10, MaxY(self.houseTowardLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.yearLabel.frame = CGRectMake(10, MaxY(self.houseStatueLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.buildTimeLabel.frame = CGRectMake(10, MaxY(self.yearLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.payTypeLabel.frame = CGRectMake(10, MaxY(self.buildTimeLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.phoneLabel.frame = CGRectMake(10, MaxY(self.payTypeLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.callPhoneLabel.frame = CGRectMake(10, MaxY(self.phoneLabel) + 12, SCREEN_WIDTH - 200, 15);
+    } else {
+        /** 车位相关的 */
+        self.carNumerLouLabel.frame = CGRectMake(10, MaxY(self.lineView) + 12, SCREEN_WIDTH - 200, 15);
+        self.yearLabel.frame = CGRectMake(10, MaxY(self.carNumerLouLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.buildTimeLabel.frame = CGRectMake(10, MaxY(self.yearLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.payTypeLabel.frame = CGRectMake(10, MaxY(self.buildTimeLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.phoneLabel.frame = CGRectMake(10, MaxY(self.payTypeLabel) + 12, SCREEN_WIDTH - 200, 15);
+        self.callPhoneLabel.frame = CGRectMake(10, MaxY(self.phoneLabel) + 12, SCREEN_WIDTH - 200, 15);
+    }
     
-    self.yearLabel.frame = CGRectMake(SCREEN_WIDTH - 150, MaxY(self.lineView) + 20, SCREEN_WIDTH - 200, 13);
-    self.phoneLabel.frame = CGRectMake(SCREEN_WIDTH - 150, MaxY(self.yearLabel) + 15, SCREEN_WIDTH - 200, 13);
-    self.callPhoneLabel.frame = CGRectMake(SCREEN_WIDTH - 150, MaxY(self.phoneLabel) + 15, SCREEN_WIDTH - 200, 13);
+    CGSize size = [UIlabelTool sizeWithString:self.otherInfoLabel.text font:self.otherInfoLabel.font width:self.otherInfoLabel.width];
+    self.otherInfoLabel.frame = CGRectMake(10, MaxY(self.callPhoneLabel) + 12, SCREEN_WIDTH - 200, size.height);
+    [SingleManager shareManager].rentOrSaleDetailHeight = MaxY(self.otherInfoLabel) + 5;
+    [self layoutIfNeeded];
+    [self setNeedsLayout];
 }
 
-
-- (void)setDetailModel:(FHListDetailModel *)detailModel {
-    _detailModel = detailModel;
-    self.titleNameLabel.text = _detailModel.community;
-    self.priceLabe.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.rent];
-    self.carNumberLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.shelves];
-    self.areaLabel.text = [NSString stringWithFormat:@"%ld",(long)_detailModel.area];
-    self.carNumerLouLabel.text = [NSString stringWithFormat:@"车库楼层: 富%ld楼",(long)_detailModel.shelves];
-    self.buildTimeLabel.text = [NSString stringWithFormat:@"建筑时间: %@",_detailModel.create_time];
-    self.payTypeLabel.text = [NSString stringWithFormat:@"付款要求: %@",_detailModel.require];
-    self.yearLabel.text = [NSString stringWithFormat:@"产权年限: %ld年",(long)_detailModel.years];
-    self.phoneLabel.text = [NSString stringWithFormat:@"联系电话: %@",_detailModel.mobile];
-    self.callPhoneLabel.text = [NSString stringWithFormat:@"接听时段: %@",_detailModel.time_slot];
-    self.otherInfoLabel.text = [NSString stringWithFormat:@"补充信息: \n%@",_detailModel.describe];
-    CGSize size = [UIlabelTool sizeWithString:self.otherInfoLabel.text font:self.otherInfoLabel.font width:self.otherInfoLabel.width];
-    self.otherInfoLabel.frame = CGRectMake(10, MaxY(self.payTypeLabel) + 15, SCREEN_WIDTH - 200, size.height);
-    
+- (void)changeTitle:(NSString *)title
+                index:(NSInteger)index
+                label:(UILabel *)label {
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:title];
+    [attributedTitle changeColor:[UIColor blackColor] rang:[attributedTitle changeSystemFontFloat:15 from:index legth:attributedTitle.length - index]];
+    label.attributedText = attributedTitle;
 }
 
 
@@ -130,10 +212,11 @@
 - (UILabel *)titleNameLabel {
     if (!_titleNameLabel) {
         _titleNameLabel = [[UILabel alloc] init];
-        _titleNameLabel.font = [UIFont boldSystemFontOfSize:15];
+        _titleNameLabel.font = [UIFont boldSystemFontOfSize:16];
         _titleNameLabel.text = @"车位大甩卖";
         _titleNameLabel.textColor = [UIColor blackColor];
         _titleNameLabel.textAlignment = NSTextAlignmentLeft;
+        _titleNameLabel.numberOfLines = 0;
     }
     return _titleNameLabel;
 }
@@ -154,8 +237,8 @@
     if (!_priceLogoLabe) {
         _priceLogoLabe = [[UILabel alloc] init];
         _priceLogoLabe.font = [UIFont systemFontOfSize:14];
-        _priceLogoLabe.text = @"金额";
-        _priceLogoLabe.textColor = [UIColor lightGrayColor];
+        _priceLogoLabe.text = @"出售价格";
+        _priceLogoLabe.textColor = HEX_COLOR(0x1296db);
         _priceLogoLabe.textAlignment = NSTextAlignmentLeft;
     }
     return _priceLogoLabe;
@@ -178,7 +261,7 @@
         _carNumberLogoLabel = [[UILabel alloc] init];
         _carNumberLogoLabel.font = [UIFont systemFontOfSize:14];
         _carNumberLogoLabel.text = @"车位号";
-        _carNumberLogoLabel.textColor = [UIColor lightGrayColor];
+        _carNumberLogoLabel.textColor = HEX_COLOR(0x1296db);
         _carNumberLogoLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _carNumberLogoLabel;
@@ -200,7 +283,7 @@
         _areaLogoLabel = [[UILabel alloc] init];
         _areaLogoLabel.font = [UIFont systemFontOfSize:14];
         _areaLogoLabel.text = @"建筑面积";
-        _areaLogoLabel.textColor = [UIColor lightGrayColor];
+        _areaLogoLabel.textColor = HEX_COLOR(0x1296db);
         _areaLogoLabel.textAlignment = NSTextAlignmentRight;
     }
     return _areaLogoLabel;
@@ -217,9 +300,9 @@
 - (UILabel *)carNumerLouLabel {
     if (!_carNumerLouLabel) {
         _carNumerLouLabel = [[UILabel alloc] init];
-        _carNumerLouLabel.font = [UIFont systemFontOfSize:13];
+        _carNumerLouLabel.font = [UIFont systemFontOfSize:15];
         _carNumerLouLabel.text = @"车库楼层: 富2楼";
-        _carNumerLouLabel.textColor = [UIColor blackColor];
+        _carNumerLouLabel.textColor = HEX_COLOR(0x1296db);
         _carNumerLouLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _carNumerLouLabel;
@@ -228,9 +311,9 @@
 - (UILabel *)buildTimeLabel {
     if (!_buildTimeLabel) {
         _buildTimeLabel = [[UILabel alloc] init];
-        _buildTimeLabel.font = [UIFont systemFontOfSize:13];
+        _buildTimeLabel.font = [UIFont systemFontOfSize:15];
         _buildTimeLabel.text = @"建筑时间: 2015.9";
-        _buildTimeLabel.textColor = [UIColor blackColor];
+        _buildTimeLabel.textColor = HEX_COLOR(0x1296db);
         _buildTimeLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _buildTimeLabel;
@@ -239,9 +322,9 @@
 - (UILabel *)payTypeLabel {
     if (!_payTypeLabel) {
         _payTypeLabel = [[UILabel alloc] init];
-        _payTypeLabel.font = [UIFont systemFontOfSize:13];
+        _payTypeLabel.font = [UIFont systemFontOfSize:15];
         _payTypeLabel.text = @"付款要求: 一次付清";
-        _payTypeLabel.textColor = [UIColor blackColor];
+        _payTypeLabel.textColor = HEX_COLOR(0x1296db);
         _payTypeLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _payTypeLabel;
@@ -250,9 +333,9 @@
 - (UILabel *)otherInfoLabel {
     if (!_otherInfoLabel) {
         _otherInfoLabel = [[UILabel alloc] init];
-        _otherInfoLabel.font = [UIFont systemFontOfSize:13];
+        _otherInfoLabel.font = [UIFont systemFontOfSize:15];
         _otherInfoLabel.text = @"补充信息:好的很，霸气侧漏";
-        _otherInfoLabel.textColor = [UIColor blackColor];
+        _otherInfoLabel.textColor = HEX_COLOR(0x1296db);
         _otherInfoLabel.textAlignment = NSTextAlignmentLeft;
         _otherInfoLabel.numberOfLines = 0;
     }
@@ -262,9 +345,9 @@
 - (UILabel *)yearLabel {
     if (!_yearLabel) {
         _yearLabel = [[UILabel alloc] init];
-        _yearLabel.font = [UIFont systemFontOfSize:13];
+        _yearLabel.font = [UIFont systemFontOfSize:15];
         _yearLabel.text = @"产权年限: 50年";
-        _yearLabel.textColor = [UIColor blackColor];
+        _yearLabel.textColor = HEX_COLOR(0x1296db);
         _yearLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _yearLabel;
@@ -273,9 +356,9 @@
 - (UILabel *)phoneLabel {
     if (!_phoneLabel) {
         _phoneLabel = [[UILabel alloc] init];
-        _phoneLabel.font = [UIFont systemFontOfSize:13];
-        _phoneLabel.text = @"联系电话: 13849132460";
-        _phoneLabel.textColor = [UIColor blackColor];
+        _phoneLabel.font = [UIFont systemFontOfSize:15];
+        _phoneLabel.text = @"联系电话: 15849152460";
+        _phoneLabel.textColor = HEX_COLOR(0x1296db);
         _phoneLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _phoneLabel;
@@ -284,12 +367,56 @@
 - (UILabel *)callPhoneLabel {
     if (!_callPhoneLabel) {
         _callPhoneLabel = [[UILabel alloc] init];
-        _callPhoneLabel.font = [UIFont systemFontOfSize:13];
+        _callPhoneLabel.font = [UIFont systemFontOfSize:15];
         _callPhoneLabel.text = @"接听时段: 08:00-18:00";
-        _callPhoneLabel.textColor = [UIColor blackColor];
+        _callPhoneLabel.textColor = HEX_COLOR(0x1296db);
         _callPhoneLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _callPhoneLabel;
+}
+
+- (UILabel *)houseTypeLabel {
+    if (!_houseTypeLabel) {
+        _houseTypeLabel = [[UILabel alloc] init];
+        _houseTypeLabel.font = [UIFont systemFontOfSize:15];
+        _houseTypeLabel.text = @"房屋类型: ";
+        _houseTypeLabel.textColor = HEX_COLOR(0x1296db);
+        _houseTypeLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    return _houseTypeLabel;
+}
+
+- (UILabel *)houseNumberLabel {
+    if (!_houseNumberLabel) {
+        _houseNumberLabel = [[UILabel alloc] init];
+        _houseNumberLabel.font = [UIFont systemFontOfSize:15];
+        _houseNumberLabel.text = @"房屋房号: ";
+        _houseNumberLabel.textColor = HEX_COLOR(0x1296db);
+        _houseNumberLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    return _houseNumberLabel;
+}
+
+- (UILabel *)houseTowardLabel {
+    if (!_houseTowardLabel) {
+        _houseTowardLabel = [[UILabel alloc] init];
+        _houseTowardLabel.font = [UIFont systemFontOfSize:15];
+        _houseTowardLabel.text = @"房屋朝向: 08:00-18:00";
+        _houseTowardLabel.textColor = HEX_COLOR(0x1296db);
+        _houseTowardLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    return _houseTowardLabel;
+}
+
+- (UILabel *)houseStatueLabel {
+    if (!_houseStatueLabel) {
+        _houseStatueLabel = [[UILabel alloc] init];
+        _houseStatueLabel.font = [UIFont systemFontOfSize:15];
+        _houseStatueLabel.text = @"装修情况: 08:00-18:00";
+        _houseStatueLabel.textColor = HEX_COLOR(0x1296db);
+        _houseStatueLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    return _houseStatueLabel;
 }
 
 @end

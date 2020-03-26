@@ -124,12 +124,13 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     self.houseListModel = self.houseDataArrs[indexPath.row];
     cell.houseListModel = self.houseListModel;
-    cell.houseNameLabel.text = [NSString stringWithFormat:@"标题名称: %@",_houseListModel.community];
+    cell.houseNameLabel.text = [NSString stringWithFormat:@"%@",_houseListModel.community];
+//    cell.houseNameLabel.text = @"浪费你浪费哪去了发你了取暖费了看你恰饭了两块钱你看了丰南区快乐风男科洛奇尼签了快发你了勤奋努力块钱呢六七年分开了去年";
     if (self.type == 0) {
         /** 房屋出售 */
         cell.houseTypeLabel.text = [NSString stringWithFormat:@"房屋户型: %@",_houseListModel.hall];
         cell.priceSugmentLabel.text = [NSString stringWithFormat:@"房屋面积 :%@㎡",_houseListModel.area];
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@万元/套",_houseListModel.rent];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@万/套",_houseListModel.rent];
     } else if (self.type == 1) {
         /** 出租 */
         cell.houseTypeLabel.text = [NSString stringWithFormat:@"房屋户型: %@",_houseListModel.hall];
@@ -138,7 +139,7 @@
     } else if (self.type == 2) {
         cell.houseTypeLabel.text = [NSString stringWithFormat:@"车位编号: %@",_houseListModel.park_number];
         cell.priceSugmentLabel.text = [NSString stringWithFormat:@"车位面积 :%@㎡",_houseListModel.area];
-        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@万元/套",_houseListModel.rent];
+        cell.priceLabel.text = [NSString stringWithFormat:@"￥%@万/个",_houseListModel.rent];
     } else if (self.type == 3) {
         /** 车位出租 */
         cell.houseTypeLabel.text = [NSString stringWithFormat:@"车位编号: %@",_houseListModel.park_number];

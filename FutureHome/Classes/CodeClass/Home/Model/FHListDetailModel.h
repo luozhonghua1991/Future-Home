@@ -39,7 +39,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) NSInteger shelves;
 /** 创建时间 */
 @property (nonatomic, copy) NSString *create_time;
-
+/** title */
+@property (nonatomic, copy) NSString *title;
+/** 房子类型 */
+@property (nonatomic, copy) NSString *house_type;
+/** 房屋号码 */
+@property (nonatomic, copy) NSString *house_park;
+/** 装修情况 */
+@property (nonatomic, copy) NSString *decoration;
+/** 房屋朝向 */
+@property (nonatomic, copy) NSString *toward;
 
 @end
 

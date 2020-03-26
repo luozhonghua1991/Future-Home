@@ -103,6 +103,8 @@
 @property (nonatomic, strong) NSMutableArray *allGroupsArrs;
 /** 商品详情高度 */
 @property (nonatomic, assign) CGFloat goodsDetailHeight;
+/** 租赁详情高度 */
+@property (nonatomic, assign) CGFloat rentOrSaleDetailHeight;
 /** 是否滚动状态 */
 @property (nonatomic, assign) BOOL scrolling;
 /** 生鲜 商业 医药相关的ordertype 3生鲜 4商业 5医药 */

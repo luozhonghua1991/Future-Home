@@ -31,10 +31,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self fh_creatNav];
-    [self.view addSubview:self.homeTable];
-    [self.homeTable registerClass:[FHCarSaleCell class] forCellReuseIdentifier:NSStringFromClass([FHCarSaleCell class])];
+    [self fh_creatNav];;
     [self fh_getRqquest];
+   
 }
 
 - (void)fh_getRqquest {
@@ -54,11 +53,17 @@
     self.imgArrs = [[NSMutableArray alloc] init];
     [AFNetWorkTool get:urlString params:paramsDic success:^(id responseObj) {
         NSDictionary *dic = responseObj[@"data"];
-        self.detailModel = [FHListDetailModel mj_objectWithKeyValues:dic];
+        weakSelf.detailModel = [FHListDetailModel mj_objectWithKeyValues:dic];
         for (NSString *imgString in dic[@"img_ids"]) {
-            [self.imgArrs addObject:imgString];
+            [weakSelf.imgArrs addObject:imgString];
         }
+        [self.view addSubview:self.homeTable];
         self.homeTable.tableHeaderView = self.headerView;
+        self.homeTable.tableHeaderView.height = SCREEN_WIDTH * 0.618;
+        [self.homeTable registerClass:[FHCarSaleCell class] forCellReuseIdentifier:NSStringFromClass([FHCarSaleCell class])];
+        
+        weakSelf.topScrollView = [weakSelf fh_creatBHInfiniterScrollerViewWithImageArrays:weakSelf.imgArrs scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
+        [weakSelf.headerView addSubview:weakSelf.topScrollView];
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -75,13 +80,13 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     NSString *string;
     if (self.type == 0) {
-        string = @"房屋出售";
+        string = @"房屋出售信息";
     } else if (self.type == 1) {
-        string = @"房屋出租";
+        string = @"房屋出租信息";
     } else if (self.type == 2) {
-        string = @"车位出售";
+        string = @"车位出售信息";
     } else {
-        string = @"车位出租";
+        string = @"车位出租信息";
     }
     titleLabel.text = string;
     titleLabel.font = [UIFont boldSystemFontOfSize:17];
@@ -120,21 +125,16 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_WIDTH;
+    return [SingleManager shareManager].rentOrSaleDetailHeight;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.type == 0 ||self.type ==1) {
-        FHCarSaleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCarSaleCell class])];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.detailModel = self.detailModel;
-        return cell;
-    } else {
-        FHCarSaleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCarSaleCell class])];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.detailModel = self.detailModel;
-        return cell;
-    }
+    /** 0房屋出售 1房屋出租 2车位出售 3车位出租 */
+    FHCarSaleCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCarSaleCell class])];
+    cell.type = self.type;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.detailModel = self.detailModel;
+    return cell;
 }
 
 /** 创建轮播图的实例方法 */
@@ -185,9 +185,7 @@
 - (UIView *)headerView {
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618)];
-        _headerView.backgroundColor = [UIColor redColor];
-        self.topScrollView = [self fh_creatBHInfiniterScrollerViewWithImageArrays:self.imgArrs scrollViewFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618) scrollViewTag:2018];
-        [_headerView addSubview:self.topScrollView];
+        _headerView.backgroundColor = [UIColor whiteColor];
     }
     return _headerView;
 }
