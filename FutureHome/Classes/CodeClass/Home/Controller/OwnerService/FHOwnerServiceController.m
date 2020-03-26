@@ -18,6 +18,7 @@
 #import "FHOwnerCertificationController.h"
 #import "FHHomePageController.h"
 #import "FHScanDetailAlertView.h"
+#import "FHMainTenderingServiceController.h"
 
 @interface FHOwnerServiceController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHCommonCollectionViewDelegate>
 {
@@ -523,15 +524,9 @@
         [self pushAnnouncementControllerWithTitle:@"物业管理" ID:9];
     } else if (selectIndex.row == 6) {
         /** 招标服务 */
-//        [self pushAnnouncementControllerWithTitle:@"招标服务"];
-        FHBaseAnnouncementListController *an = [[FHBaseAnnouncementListController alloc] init];
-        an.titleString = @"招标服务";
-        an.webTitleString = @"招标服务";
-        an.hidesBottomBarWhenPushed = YES;
-        an.isHaveSectionView = YES;
-        an.ID = 10;
-        an.type = 2;
+        FHMainTenderingServiceController *an = [[FHMainTenderingServiceController alloc] init];
         an.property_id = property_id;
+        an.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:an animated:YES];
     } else if (selectIndex.row == 7) {
         /** 活动关爱 */

@@ -111,7 +111,6 @@
 
 - (void)setDetailModel:(FHListDetailModel *)detailModel {
     _detailModel = detailModel;
-    self.titleNameLabel.text = _detailModel.title;
     /** 0房屋出售 1房屋出租 2车位出售 3车位出租 */
     if (self.type == 0) {
         self.priceLabe.text = [NSString stringWithFormat:@"￥%ld万",(long)_detailModel.rent];
@@ -137,6 +136,7 @@
     
     self.areaLabel.text = [NSString stringWithFormat:@"%ld㎡",(long)_detailModel.area];
     if (self.type == 2 || self.type == 3) {
+        self.titleNameLabel.text = _detailModel.title;
         [self changeTitle:[NSString stringWithFormat:@"车库楼层: %ld楼",(long)_detailModel.l_floor] index:5 label:self.carNumerLouLabel];
         [self changeTitle:[NSString stringWithFormat:@"建筑时间: %@",_detailModel.create_time] index:5 label:self.buildTimeLabel];
         [self changeTitle:[NSString stringWithFormat:@"付款要求: %@",_detailModel.require] index:5 label:self.payTypeLabel];
@@ -145,6 +145,7 @@
         [self changeTitle:[NSString stringWithFormat:@"接听时段: %@",_detailModel.time_slot] index:5 label:self.callPhoneLabel];
         [self changeTitle:[NSString stringWithFormat:@"其它补充信息: \n\n%@",_detailModel.describe] index:7 label:self.otherInfoLabel];
     } else {
+        self.titleNameLabel.text = _detailModel.community;
         [self changeTitle:[NSString stringWithFormat:@"房屋类型: %@",_detailModel.house_type] index:5 label:self.houseTypeLabel];
         [self changeTitle:[NSString stringWithFormat:@"楼层房号: %@",_detailModel.house_park] index:5 label:self.houseNumberLabel];
         [self changeTitle:[NSString stringWithFormat:@"房屋朝向: %ld年",(long)_detailModel.toward] index:5 label:self.houseTowardLabel];
@@ -194,7 +195,7 @@
     
     CGSize size = [UIlabelTool sizeWithString:self.otherInfoLabel.text font:self.otherInfoLabel.font width:self.otherInfoLabel.width];
     self.otherInfoLabel.frame = CGRectMake(10, MaxY(self.callPhoneLabel) + 12, SCREEN_WIDTH - 200, size.height);
-    [SingleManager shareManager].rentOrSaleDetailHeight = MaxY(self.otherInfoLabel) + 5;
+    [SingleManager shareManager].rentOrSaleDetailHeight = MaxY(self.otherInfoLabel) + 10;
     [self layoutIfNeeded];
     [self setNeedsLayout];
 }

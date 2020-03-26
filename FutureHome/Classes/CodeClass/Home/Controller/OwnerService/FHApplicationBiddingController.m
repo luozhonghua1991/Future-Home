@@ -255,7 +255,7 @@
     if (!_nameView) {
         _nameView = [[FHAccountApplicationTFView alloc] init];
         _nameView.titleLabel.text = @"申请人姓名:";
-        _nameView.contentTF.placeholder = @"请输入申请人姓名";
+        _nameView.contentTF.placeholder = @"请输入申请人真实姓名";
     }
     return _nameView;
 }
@@ -264,7 +264,7 @@
     if (!_typeView) {
         _typeView = [[FHAccountApplicationTFView alloc] init];
         _typeView.titleLabel.text = @"申请人职位:";
-        _typeView.contentTF.placeholder = @"请输入申请人职位";
+        _typeView.contentTF.placeholder = @"请输入申请人的职位";
     }
     return _typeView;
 }
@@ -273,7 +273,7 @@
     if (!_levealView) {
         _levealView = [[FHAccountApplicationTFView alloc] init];
         _levealView.titleLabel.text = @"申请人电话:";
-        _levealView.contentTF.placeholder = @"请输入申请人电话";
+        _levealView.contentTF.placeholder = @"请输入申请人手机电话";
     }
     return _levealView;
 }
@@ -281,8 +281,8 @@
 - (FHAccountApplicationTFView *)phoneView {
     if (!_phoneView) {
         _phoneView = [[FHAccountApplicationTFView alloc] init];
-        _phoneView.titleLabel.text = @"身份证号";
-        _phoneView.contentTF.placeholder = @"请输入身份证号";
+        _phoneView.titleLabel.text = @"申请人身份证";
+        _phoneView.contentTF.placeholder = @"请输入申请人身份证号";
     }
     return _phoneView;
 }
@@ -290,8 +290,8 @@
 - (FHAccountApplicationTFView *)companyNameView {
     if (!_companyNameView) {
         _companyNameView = [[FHAccountApplicationTFView alloc] init];
-        _companyNameView.titleLabel.text = @"公司名称:";
-        _companyNameView.contentTF.placeholder = @"请输入公司名称";
+        _companyNameView.titleLabel.text = @"投标公司名称:";
+        _companyNameView.contentTF.placeholder = @"请输入投标公司名称";
     }
     return _companyNameView;
 }
@@ -299,8 +299,8 @@
 - (FHAccountApplicationTFView *)xinCodeView {
     if (!_xinCodeView) {
         _xinCodeView = [[FHAccountApplicationTFView alloc] init];
-        _xinCodeView.titleLabel.text = @"信用代码:";
-        _xinCodeView.contentTF.placeholder = @"请输入信用代码";
+        _xinCodeView.titleLabel.text = @"公司信用代码:";
+        _xinCodeView.contentTF.placeholder = @"请输入投标公司信用代码";
     }
     return _xinCodeView;
 }
@@ -308,8 +308,8 @@
 - (FHAccountApplicationTFView *)companyAddressView {
     if (!_companyAddressView) {
         _companyAddressView = [[FHAccountApplicationTFView alloc] init];
-        _companyAddressView.titleLabel.text = @"公司地址:";
-        _companyAddressView.contentTF.placeholder = @"请输入公司地址";
+        _companyAddressView.titleLabel.text = @"投标公司地址:";
+        _companyAddressView.contentTF.placeholder = @"请输入投标公司地址";
     }
     return _companyAddressView;
 }
@@ -317,8 +317,8 @@
 - (FHAccountApplicationTFView *)emailView {
     if (!_emailView) {
         _emailView = [[FHAccountApplicationTFView alloc] init];
-        _emailView.titleLabel.text = @"邮箱:";
-        _emailView.contentTF.placeholder = @"请输入邮箱";
+        _emailView.titleLabel.text = @"投标联系邮箱:";
+        _emailView.contentTF.placeholder = @"请输入投标公司联系邮箱";
     }
     return _emailView;
 }
@@ -326,7 +326,7 @@
 - (UILabel *)logoLabel {
     if (!_logoLabel) {
         _logoLabel = [[UILabel alloc] init];
-        _logoLabel.text = @"请上传营业执照等相关证照";
+        _logoLabel.text = @"上传投标人身份信息/公司营业执照";
         _logoLabel.textAlignment = NSTextAlignmentLeft;
         _logoLabel.font = [UIFont systemFontOfSize:13];
     }
@@ -340,7 +340,7 @@
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
-        NSString *titleString = @"公司基本情况";
+        NSString *titleString = @"投标信息情况";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
     }

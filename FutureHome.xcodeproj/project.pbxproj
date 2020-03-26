@@ -860,6 +860,9 @@
 		4ADCE0F7233391C5008A12C4 /* FHCommitDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCE0F6233391C5008A12C4 /* FHCommitDetailController.m */; };
 		4ADF1D1E23C4A03300A5740B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */; };
 		4AE0F30423D15AC900C6CF20 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE0F30323D15AC900C6CF20 /* Security.framework */; };
+		4AE2972D242C59CA00AF0DDA /* FHMainTenderingServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2972C242C59CA00AF0DDA /* FHMainTenderingServiceController.m */; };
+		4AE29730242C5B8B00AF0DDA /* FHTenderingServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE2972F242C5B8B00AF0DDA /* FHTenderingServiceController.m */; };
+		4AE29733242C5D4100AF0DDA /* FHTenderingInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE29732242C5D4100AF0DDA /* FHTenderingInfoController.m */; };
 		4AE7A81B22F7CA4100910C08 /* UIView+PYExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A80F22F7CA4000910C08 /* UIView+PYExtension.m */; };
 		4AE7A81C22F7CA4100910C08 /* PYSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A81022F7CA4000910C08 /* PYSearchViewController.m */; };
 		4AE7A81D22F7CA4100910C08 /* PYSearchSuggestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7A81122F7CA4000910C08 /* PYSearchSuggestionViewController.m */; };
@@ -2741,6 +2744,12 @@
 		4ADCE0F6233391C5008A12C4 /* FHCommitDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHCommitDetailController.m; sourceTree = "<group>"; };
 		4ADF1D1D23C4A03300A5740B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		4AE0F30323D15AC900C6CF20 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4AE2972B242C59CA00AF0DDA /* FHMainTenderingServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHMainTenderingServiceController.h; sourceTree = "<group>"; };
+		4AE2972C242C59CA00AF0DDA /* FHMainTenderingServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHMainTenderingServiceController.m; sourceTree = "<group>"; };
+		4AE2972E242C5B8B00AF0DDA /* FHTenderingServiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTenderingServiceController.h; sourceTree = "<group>"; };
+		4AE2972F242C5B8B00AF0DDA /* FHTenderingServiceController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTenderingServiceController.m; sourceTree = "<group>"; };
+		4AE29731242C5D4100AF0DDA /* FHTenderingInfoController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTenderingInfoController.h; sourceTree = "<group>"; };
+		4AE29732242C5D4100AF0DDA /* FHTenderingInfoController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTenderingInfoController.m; sourceTree = "<group>"; };
 		4AE7A80F22F7CA4000910C08 /* UIView+PYExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+PYExtension.m"; sourceTree = "<group>"; };
 		4AE7A81022F7CA4000910C08 /* PYSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchViewController.m; sourceTree = "<group>"; };
 		4AE7A81122F7CA4000910C08 /* PYSearchSuggestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PYSearchSuggestionViewController.m; sourceTree = "<group>"; };
@@ -6148,6 +6157,12 @@
 			children = (
 				4A448CCE22C5B3BF003D0712 /* FHOwnerServiceController.h */,
 				4A448CCF22C5B3BF003D0712 /* FHOwnerServiceController.m */,
+				4AE2972B242C59CA00AF0DDA /* FHMainTenderingServiceController.h */,
+				4AE2972C242C59CA00AF0DDA /* FHMainTenderingServiceController.m */,
+				4AE2972E242C5B8B00AF0DDA /* FHTenderingServiceController.h */,
+				4AE2972F242C5B8B00AF0DDA /* FHTenderingServiceController.m */,
+				4AE29731242C5D4100AF0DDA /* FHTenderingInfoController.h */,
+				4AE29732242C5D4100AF0DDA /* FHTenderingInfoController.m */,
 				4ACAD07923192A6E0064BA95 /* FHElectionofIndustryCommitteeMainController.h */,
 				4ACAD07A23192A6E0064BA95 /* FHElectionofIndustryCommitteeMainController.m */,
 				4ACAD07C23192E0F0064BA95 /* FHMyIndustryCommitteeController.h */,
@@ -7201,6 +7216,7 @@
 				4A9CB2B4230BCD23004A3763 /* UITableView+ZJMarsonryKit.m in Sources */,
 				4A68D2DA23587846003A3CB6 /* UIViewController+BackButtonHandler.m in Sources */,
 				4AB203C322F2DD7300111AC4 /* ZXGlobalHistogramBinarizer.m in Sources */,
+				4AE29733242C5D4100AF0DDA /* FHTenderingInfoController.m in Sources */,
 				4ACAD078231919EE0064BA95 /* FHComplaintsSuggestionsController.m in Sources */,
 				4A6E5A8323703B220098DB67 /* NSBundle+MJRefresh.m in Sources */,
 				4AA308B622E6A7CE00695FFE /* FHBlackListController.m in Sources */,
@@ -7452,6 +7468,7 @@
 				4AB2045B22F2DD7300111AC4 /* ZXSMSParsedResult.m in Sources */,
 				4A6DAA4422C0AD3100F29455 /* AFSecurityPolicy.m in Sources */,
 				4A6DAA9822C0AD7C00F29455 /* LCTabBarItem.m in Sources */,
+				4AE2972D242C59CA00AF0DDA /* FHMainTenderingServiceController.m in Sources */,
 				4AF112442330D938002D4582 /* FHAuthModel.m in Sources */,
 				4A9CB28E230BCC81004A3763 /* NSObject+ZJHelperKit.m in Sources */,
 				4A70423723113E430023E5C3 /* Account.m in Sources */,
@@ -7522,6 +7539,7 @@
 				4AC30AA22334D81200776752 /* FHCommitModel.m in Sources */,
 				4A9282F322C46BCC006509C3 /* FHCommonCollectionViewCell.m in Sources */,
 				4A5EB864230D15C800F90FF6 /* UIView+ZFFrame.m in Sources */,
+				4AE29730242C5B8B00AF0DDA /* FHTenderingServiceController.m in Sources */,
 				4A9CB286230BCC81004A3763 /* UIImageView+ZJCornerRadiusHelperKit.m in Sources */,
 				4AB2041F22F2DD7300111AC4 /* ZXAbstractExpandedDecoder.m in Sources */,
 				4AB2045822F2DD7300111AC4 /* ZXGeoParsedResult.m in Sources */,
