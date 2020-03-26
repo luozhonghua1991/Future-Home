@@ -1,5 +1,5 @@
 //
-//  FHTenderingInfoController.h
+//  FHTendringInfoDetailController.h
 //  FutureHome
 //
 //  Created by 同熙传媒 on 2020/3/26.
@@ -7,12 +7,16 @@
 //
 
 #import "BaseViewController.h"
+#import "FHTenderingInfModel.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHTenderingInfoController : BaseViewController
+@interface FHTendringInfoDetailController : BaseViewController
 /** <#copy属性注释#> */
 @property (nonatomic, assign) NSInteger owner_id;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *id;
+
 
 @end
 

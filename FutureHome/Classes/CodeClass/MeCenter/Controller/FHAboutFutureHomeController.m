@@ -26,16 +26,16 @@
     [super viewDidLoad];
     [self fh_creatNav];
     [self fh_setUpUI];
-    self.topLogoNameArrs = @[@"去评分",
-                             @"功能介绍",
-                             @"投诉",
+    self.topLogoNameArrs = @[@"意见反馈",
                              @"版本更新"];
 }
+
 
 #pragma mark — 通用导航栏
 #pragma mark — privite
 - (void)fh_creatNav {
-    self.isHaveNavgationView = YES; self.navgationView.userInteractionEnabled = YES;
+    self.isHaveNavgationView = YES;
+    self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"关于社云";
@@ -69,9 +69,10 @@
     [self.view addSubview:self.homeTable];
 }
 
+
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 2;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

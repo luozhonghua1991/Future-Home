@@ -83,6 +83,7 @@
     
     FHTenderingInfoController *groupVC = [[FHTenderingInfoController alloc] init];
     groupVC.yp_tabItemTitle = @"投标信息";
+    groupVC.owner_id = self.property_id;
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC, nil];
 }

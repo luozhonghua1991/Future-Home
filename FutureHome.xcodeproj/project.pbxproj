@@ -162,6 +162,9 @@
 		4A51D98423079AEE00A5313E /* FHOrderDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A51D98323079AEE00A5313E /* FHOrderDetailController.m */; };
 		4A51D98723079D0B00A5313E /* FHCommonDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A51D98623079D0B00A5313E /* FHCommonDetailCell.m */; };
 		4A51D98A2307FC5200A5313E /* FHSureOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A51D9892307FC5200A5313E /* FHSureOrderController.m */; };
+		4A527203242C94B60049B6DB /* FHFHTenderingInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A527202242C94B60049B6DB /* FHFHTenderingInfoCell.m */; };
+		4A527206242CA7640049B6DB /* FHTenderingInfModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A527205242CA7640049B6DB /* FHTenderingInfModel.m */; };
+		4A527209242CAEEE0049B6DB /* FHTendringInfoDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A527208242CAEEE0049B6DB /* FHTendringInfoDetailController.m */; };
 		4A59F1FC2303F5D600AE3B31 /* FHInvoiceListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F1FB2303F5D600AE3B31 /* FHInvoiceListCell.m */; };
 		4A59F1FF2304108300AE3B31 /* FHAddOrEditInvoiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F1FE2304108300AE3B31 /* FHAddOrEditInvoiceController.m */; };
 		4A59F95D22C0B68F00867031 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A59F95C22C0B68F00867031 /* BaseViewController.m */; };
@@ -1323,6 +1326,12 @@
 		4A51D98623079D0B00A5313E /* FHCommonDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FHCommonDetailCell.m; path = FutureHome/Classes/CodeClass/ShoppingCart/Controller/FreshShoppingMall/FHCommonDetailCell.m; sourceTree = SOURCE_ROOT; };
 		4A51D9882307FC5200A5313E /* FHSureOrderController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSureOrderController.h; sourceTree = "<group>"; };
 		4A51D9892307FC5200A5313E /* FHSureOrderController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSureOrderController.m; sourceTree = "<group>"; };
+		4A527201242C94B60049B6DB /* FHFHTenderingInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHFHTenderingInfoCell.h; sourceTree = "<group>"; };
+		4A527202242C94B60049B6DB /* FHFHTenderingInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHFHTenderingInfoCell.m; sourceTree = "<group>"; };
+		4A527204242CA7640049B6DB /* FHTenderingInfModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTenderingInfModel.h; sourceTree = "<group>"; };
+		4A527205242CA7640049B6DB /* FHTenderingInfModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTenderingInfModel.m; sourceTree = "<group>"; };
+		4A527207242CAEEE0049B6DB /* FHTendringInfoDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTendringInfoDetailController.h; sourceTree = "<group>"; };
+		4A527208242CAEEE0049B6DB /* FHTendringInfoDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTendringInfoDetailController.m; sourceTree = "<group>"; };
 		4A59F1FA2303F5D600AE3B31 /* FHInvoiceListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHInvoiceListCell.h; sourceTree = "<group>"; };
 		4A59F1FB2303F5D600AE3B31 /* FHInvoiceListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHInvoiceListCell.m; sourceTree = "<group>"; };
 		4A59F1FD2304108300AE3B31 /* FHAddOrEditInvoiceController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAddOrEditInvoiceController.h; sourceTree = "<group>"; };
@@ -3959,6 +3968,8 @@
 		4A6DAA0222C0702700F29455 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4A527201242C94B60049B6DB /* FHFHTenderingInfoCell.h */,
+				4A527202242C94B60049B6DB /* FHFHTenderingInfoCell.m */,
 				4A153E84237270B800CFE6B6 /* FHSearchResultCell.h */,
 				4A153E85237270B800CFE6B6 /* FHSearchResultCell.m */,
 				4AC30A9C2334D0C600776752 /* XHInputView */,
@@ -6163,6 +6174,8 @@
 				4AE2972F242C5B8B00AF0DDA /* FHTenderingServiceController.m */,
 				4AE29731242C5D4100AF0DDA /* FHTenderingInfoController.h */,
 				4AE29732242C5D4100AF0DDA /* FHTenderingInfoController.m */,
+				4A527207242CAEEE0049B6DB /* FHTendringInfoDetailController.h */,
+				4A527208242CAEEE0049B6DB /* FHTendringInfoDetailController.m */,
 				4ACAD07923192A6E0064BA95 /* FHElectionofIndustryCommitteeMainController.h */,
 				4ACAD07A23192A6E0064BA95 /* FHElectionofIndustryCommitteeMainController.m */,
 				4ACAD07C23192E0F0064BA95 /* FHMyIndustryCommitteeController.h */,
@@ -6424,6 +6437,8 @@
 				4A68D29E23580F53003A3CB6 /* FHReleaseManagemengModel.m */,
 				4A153E8E2372CAB800CFE6B6 /* FHSearchResultModel.h */,
 				4A153E8F2372CAB800CFE6B6 /* FHSearchResultModel.m */,
+				4A527204242CA7640049B6DB /* FHTenderingInfModel.h */,
+				4A527205242CA7640049B6DB /* FHTenderingInfModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -6845,6 +6860,7 @@
 				4A448CD322C5B576003D0712 /* FHHealthServicesController.m in Sources */,
 				4A8D8C6622C210D90083E00C /* FHMenuListCell.m in Sources */,
 				4A448CD022C5B3BF003D0712 /* FHOwnerServiceController.m in Sources */,
+				4A527203242C94B60049B6DB /* FHFHTenderingInfoCell.m in Sources */,
 				4AB2044422F2DD7300111AC4 /* ZXEmailDoCoMoResultParser.m in Sources */,
 				4AE8495722E30727009E165B /* JJOneScrollView.m in Sources */,
 				4A9CB1F5230BCA13004A3763 /* UIImageView+YYWebImage.m in Sources */,
@@ -6855,6 +6871,7 @@
 				4A5EB888230D189000F90FF6 /* ZFDouYinControlView.m in Sources */,
 				4A9CB209230BCA42004A3763 /* YYSpriteSheetImage.m in Sources */,
 				4A48AB7523AA331A00AEC284 /* FHScanDetailAlertView.m in Sources */,
+				4A527206242CA7640049B6DB /* FHTenderingInfModel.m in Sources */,
 				4AB2045322F2DD7300111AC4 /* ZXEmailAddressParsedResult.m in Sources */,
 				4AA7B3B822CC873B00462389 /* RWPasswordView.m in Sources */,
 				4ACB2CB1237185FD00F569EF /* UIScrollView+EmptyDataSet.m in Sources */,
@@ -7144,6 +7161,7 @@
 				4AB2041522F2DD7300111AC4 /* ZXRSSExpandedDecodedInformation.m in Sources */,
 				4AB203C722F2DD7300111AC4 /* ZXBoolArray.m in Sources */,
 				4AB203EF22F2DD7300111AC4 /* ZXDataMatrixErrorCorrection.m in Sources */,
+				4A527209242CAEEE0049B6DB /* FHTendringInfoDetailController.m in Sources */,
 				4A2263B323B8A85C00F9541D /* TZPhotoPreviewController.m in Sources */,
 				4AB2044022F2DD7300111AC4 /* ZXTelResultParser.m in Sources */,
 				4A6E5A9523703EC60098DB67 /* FHOtherFollowCell.m in Sources */,

@@ -12,11 +12,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FHApplicationBiddingController : HWPublishBaseController
-
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger property_id;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *pid;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *titleString;
 
 
 @end
