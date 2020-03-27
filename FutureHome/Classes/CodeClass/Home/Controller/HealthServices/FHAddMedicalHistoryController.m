@@ -33,7 +33,10 @@
 @property (nonatomic, strong) DPPhotoListView *photoListView;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSArray *imgArrs;
-
+/** 症状描述 */
+@property (nonatomic, assign) CGFloat symptomViewHeight;
+/** 治疗方案 */
+@property (nonatomic, assign) CGFloat therapeuticRegimenViewHeight;
 
 @end
 
@@ -128,9 +131,6 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
-//    [self commitInfo];
-//    return;
-    
     /** 添加医疗记录接口  先上传图片*/
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
@@ -177,11 +177,15 @@
             NSDictionary *dic = responseObj[@"data"];
             weakSelf.dateView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"create_time"]];
             weakSelf.hospitalView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"hospital"]];
-            weakSelf.symptomView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"symptom"]];
             weakSelf.allPriceView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"total_consum"]];
             weakSelf.mainDoctorView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"doctor"]];
+            weakSelf.symptomView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"symptom"]];
             weakSelf.therapeuticRegimenView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"programme"]];
             weakSelf.imgArrs = dic[@"img_ids"];
+            CGSize size1 = [UIlabelTool sizeWithString:weakSelf.symptomView.contentTF.text font:weakSelf.symptomView.contentTF.font width:weakSelf.symptomView.contentTF.width];
+            self.symptomViewHeight = size1.height;
+            CGSize size2 = [UIlabelTool sizeWithString:weakSelf.therapeuticRegimenView.contentTF.text font:weakSelf.therapeuticRegimenView.contentTF.font width:weakSelf.therapeuticRegimenView.contentTF.width];
+            self.therapeuticRegimenViewHeight = size2.height;
             [weakSelf fh_creatUI];
             [weakSelf fh_layoutSubViews];
         } else {
@@ -193,14 +197,6 @@
 }
 
 - (void)commitInfo {
-//    Account *account = [AccountStorage readAccount];
-//    NSString *string = [self getCurrentTimes];
-//    NSArray *arr = @[string];
-//    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                               @(account.user_id),@"user_id",
-//                               @"property",@"path",
-//                               arr,@"file[]",
-//                               nil];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
@@ -275,12 +271,14 @@
     self.hospitalView.frame = CGRectMake(0, MaxY(self.dateView), SCREEN_WIDTH, commonCellHeight);
     self.allPriceView.frame = CGRectMake(0, MaxY(self.hospitalView), SCREEN_WIDTH, commonCellHeight);
     self.mainDoctorView.frame = CGRectMake(0, MaxY(self.allPriceView), SCREEN_WIDTH, commonCellHeight);
-    self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, commonCellHeight);
-    self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, commonCellHeight);
     if ([self.titleString isEqualToString:@"添加医疗记录"]) {
         [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
         self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
+        self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, commonCellHeight);
+        self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, commonCellHeight);
     } else {
+        self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, self.symptomViewHeight);
+        self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, self.therapeuticRegimenViewHeight);
        self.photoListView.frame = CGRectMake(0, MaxY(self.therapeuticRegimenView) + 10, SCREEN_WIDTH, self.photoListView.height);
        self.scrollView.contentSize = CGSizeMake(0, MaxY(self.photoListView) + MainSizeHeight + 20);
     }

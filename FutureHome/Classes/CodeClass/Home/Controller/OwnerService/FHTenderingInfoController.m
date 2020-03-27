@@ -28,9 +28,12 @@
     [super viewDidLoad];
     [self.listTable registerClass:[FHFHTenderingInfoCell class] forCellReuseIdentifier:NSStringFromClass([FHFHTenderingInfoCell class])];
     [self.view addSubview:self.listTable];
-    [self fh_getRequest];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self fh_getRequest];
+}
 
 - (void)fh_getRequest {
     WS(weakSelf);
@@ -45,6 +48,7 @@
             NSDictionary *dic = responseObj[@"data"];
             self.noticeListArrs = [FHTenderingInfModel mj_objectArrayWithKeyValuesArray:dic[@"list"]];
             [weakSelf.listTable reloadData];
+            [self endRefreshAction];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }

@@ -234,7 +234,7 @@
                                           buttonTitleColorArray:buttonTitleColorArray
                                                           block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                                                               if (buttonIndex == 0) {
-                                                                  [self.navigationController popViewControllerAnimated:YES];
+                                                                  [self menuBtnClick];
                                                               }
                                                               
                                                           }];
@@ -321,7 +321,7 @@
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
                      self.shopID,@"id",
-                     @"3",@"type",nil];
+                     [SingleManager shareManager].ordertype,@"type",nil];
         [AFNetWorkTool post:urlString params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 [weakSelf.view makeToast:@"收藏成功"];

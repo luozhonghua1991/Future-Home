@@ -91,6 +91,7 @@
                                @(self.owner_id),@"owner_id",
                                self.id,@"id",
                                nil];
+    
     [AFNetWorkTool get:@"owner/tenderDetail" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];

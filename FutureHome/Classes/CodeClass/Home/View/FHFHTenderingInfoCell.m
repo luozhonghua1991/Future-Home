@@ -85,7 +85,7 @@
         _titleLogLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 90, 14)];
         _titleLogLabel.font = [UIFont systemFontOfSize:14];
         _titleLogLabel.text = @"投标项目名称";
-        _titleLogLabel.textColor = [UIColor blueColor];
+        _titleLogLabel.textColor = [UIColor blackColor];
         _titleLogLabel.textAlignment = NSTextAlignmentLeft;
         _titleLogLabel.backgroundColor = [UIColor whiteColor];
     }
@@ -97,7 +97,7 @@
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(MaxX(self.titleLogLabel) + 25, 5, 250, 0)];
         _titleLabel.font = [UIFont systemFontOfSize:14];
         _titleLabel.text = @"恒大未来城- -期业委会团购20吨苹果，欢迎产地方投标，付款方式友好共36字.";
-        _titleLabel.textColor = [UIColor blueColor];
+        _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
         _titleLabel.backgroundColor = [UIColor whiteColor];
         _titleLabel.numberOfLines = 0;
@@ -110,7 +110,7 @@
         _timeLogLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, MaxY(self.titleLogLabel) + 40, 105, 14)];
         _timeLogLabel.font = [UIFont systemFontOfSize:14];
         _timeLogLabel.text = @"投标有效时间:";
-        _timeLogLabel.textColor = [UIColor blueColor];
+        _timeLogLabel.textColor = [UIColor blackColor];
         _timeLogLabel.textAlignment = NSTextAlignmentLeft;
         _timeLogLabel.backgroundColor = [UIColor whiteColor];
     }
@@ -122,7 +122,7 @@
         _timeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MaxY(self.titleLogLabel) + 40, self.layerBgView.width - 5, 14)];
         _timeLabel.font = [UIFont systemFontOfSize:14];
         _timeLabel.text = @"2020.03.20-2020.03.28";
-        _timeLabel.textColor = [UIColor blueColor];
+        _timeLabel.textColor = [UIColor blackColor];
         _timeLabel.textAlignment = NSTextAlignmentRight;
         _timeLabel.backgroundColor = [UIColor whiteColor];
     }
@@ -134,7 +134,7 @@
         _phoneLogLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, MaxY(self.timeLogLabel) + 20, 120, 14)];
         _phoneLogLabel.font = [UIFont systemFontOfSize:14];
         _phoneLogLabel.text = @"发标方联系电话:";
-        _phoneLogLabel.textColor = [UIColor blueColor];
+        _phoneLogLabel.textColor = [UIColor blackColor];
         _phoneLogLabel.textAlignment = NSTextAlignmentLeft;
         _phoneLogLabel.backgroundColor = [UIColor whiteColor];
     }
@@ -146,7 +146,7 @@
         _phoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MaxY(self.timeLogLabel) + 20, self.layerBgView.width - 5, 14)];
         _phoneLabel.font = [UIFont systemFontOfSize:14];
         _phoneLabel.text = @"13849132460";
-        _phoneLabel.textColor = [UIColor blueColor];
+        _phoneLabel.textColor = [UIColor blackColor];
         _phoneLabel.textAlignment = NSTextAlignmentRight;
         _phoneLabel.backgroundColor = [UIColor whiteColor];
     }

@@ -158,7 +158,7 @@
     NSArray *arr = @[string];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               @"property",@"path",
+                               @"owner",@"path",
                                arr,@"file[]",
                                nil];
     for (int i = 0; i < self.imgSelectArrs.count; i++) {
@@ -340,7 +340,7 @@
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
-        NSString *titleString = @"投标信息情况";
+        NSString *titleString = @"j'l'n'l情况";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
     }

@@ -7,11 +7,20 @@
 //
 
 #import"UIControl+UIControl_buttonCon.h"
+#import <objc/runtime.h>
+
+@interface UIControl ()
+
+@property(nonatomic,assign) BOOL isIgnoreEvent;//YES不允许点击NO允许点击
+
+@end
 
 @implementation UIControl (UIControl_buttonCon)
 
+static const CGFloat defaultInterval = 1;
+
 - (NSTimeInterval)timeInterval{
-    return[objc_getAssociatedObject(self,_cmd)doubleValue];
+    return [objc_getAssociatedObject(self,_cmd)doubleValue];
 }
 - (void)setTimeInterval:(NSTimeInterval)timeInterval{
     objc_setAssociatedObject(self,@selector(timeInterval),@(timeInterval),OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -20,9 +29,11 @@
 - (void)setIsIgnoreEvent:(BOOL)isIgnoreEvent{
     objc_setAssociatedObject(self,@selector(isIgnoreEvent),@(isIgnoreEvent),OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
 - (BOOL)isIgnoreEvent{
     return[objc_getAssociatedObject(self,_cmd)boolValue];
 }
+
 - (void)resetState{
     [self setIsIgnoreEvent:NO];
 }
@@ -30,8 +41,8 @@
 + (void)load {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        SEL selA =@selector(sendAction:to:forEvent:);
-        SEL selB =@selector(mySendAction:to:forEvent:);
+        SEL selA = @selector(sendAction:to:forEvent:);
+        SEL selB = @selector(mySendAction:to:forEvent:);
         Method methodA =class_getInstanceMethod(self, selA);
         Method methodB =class_getInstanceMethod(self, selB);
         //将methodB的实现添加到系统方法中也就是说将methodA方法指针添加成方法methodB的返回值表示是否添加成功
@@ -47,17 +58,20 @@
 }
 
 - (void)mySendAction:(SEL)action to:(id)target forEvent:(UIEvent*)event {
-    if([NSStringFromClass(self.class)isEqualToString:@"UIButton"]) {
-        self.timeInterval=self.timeInterval==0?defaultInterval:self.timeInterval;
-        if(self.isIgnoreEvent){
+    if(self.timeInterval > 0) {
+        self.timeInterval = self.timeInterval == 0 ? defaultInterval : self.timeInterval;
+        if(self.isIgnoreEvent) {
             return;
-        }else if(self.timeInterval>0){
+        } else if(self.timeInterval > 0){
             [self performSelector:@selector(resetState)withObject:nil afterDelay:self.timeInterval];
         }
+        //此处methodA和methodB方法IMP互换了，实际上执行sendAction；所以不会死循环
+        self.isIgnoreEvent = YES;
+        [self mySendAction:action to:target forEvent:event];
+    } else {
+        self.isIgnoreEvent = YES;
+        [self mySendAction:action to:target forEvent:event];
     }
-    //此处methodA和methodB方法IMP互换了，实际上执行sendAction；所以不会死循环
-    self.isIgnoreEvent=YES;
-    [self mySendAction:action to:target forEvent:event];
 }
 
 @end
