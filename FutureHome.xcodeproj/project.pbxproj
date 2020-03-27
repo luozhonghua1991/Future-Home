@@ -121,6 +121,7 @@
 		4A31F612230A99650010C1F4 /* ZJAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A31F60B230A99650010C1F4 /* ZJAddressModel.m */; };
 		4A331AF62327AF8500457136 /* FHGoodsDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A331AF52327AF8500457136 /* FHGoodsDetailCell.m */; };
 		4A35D81223C88A35004287C2 /* FHArticleOrVideoShareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A35D81123C88A35004287C2 /* FHArticleOrVideoShareCell.m */; };
+		4A36FF82242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A36FF81242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.m */; };
 		4A3DD94D234C35AE004E278D /* ZMPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DD93F234C35AE004E278D /* ZMPlaceholderTextView.m */; };
 		4A3DD94E234C35AE004E278D /* ZMCusCommentListContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DD940234C35AE004E278D /* ZMCusCommentListContentCell.m */; };
 		4A3DD94F234C35AE004E278D /* ZMCusCommentListReplyContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DD942234C35AE004E278D /* ZMCusCommentListReplyContentCell.m */; };
@@ -1244,6 +1245,8 @@
 		4A331AF52327AF8500457136 /* FHGoodsDetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = FHGoodsDetailCell.m; path = FutureHome/Classes/CodeClass/ShoppingCart/Controller/CommonShopCar/Controller/FHGoodsDetailCell.m; sourceTree = SOURCE_ROOT; };
 		4A35D81023C88A35004287C2 /* FHArticleOrVideoShareCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHArticleOrVideoShareCell.h; sourceTree = "<group>"; };
 		4A35D81123C88A35004287C2 /* FHArticleOrVideoShareCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHArticleOrVideoShareCell.m; sourceTree = "<group>"; };
+		4A36FF80242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIControl+UIControl_buttonCon.h"; sourceTree = "<group>"; };
+		4A36FF81242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIControl+UIControl_buttonCon.m"; sourceTree = "<group>"; };
 		4A3DD93D234C35AE004E278D /* ZMCusCommentBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMCusCommentBottomView.h; sourceTree = "<group>"; };
 		4A3DD93E234C35AE004E278D /* ZMCusCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZMCusCommentView.h; sourceTree = "<group>"; };
 		4A3DD93F234C35AE004E278D /* ZMPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZMPlaceholderTextView.m; sourceTree = "<group>"; };
@@ -3961,6 +3964,8 @@
 				4A59F96122C0B6D000867031 /* UIViewController+Swizzling.m */,
 				4A9B2B3E232B91CA009E94FD /* NSArray+JSON.h */,
 				4A9B2B3F232B91CA009E94FD /* NSArray+JSON.m */,
+				4A36FF80242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.h */,
+				4A36FF81242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -7325,6 +7330,7 @@
 				4AA7B3A622CC7D8D00462389 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				4AB2039322F2DD7300111AC4 /* ZXMultiFormatWriter.m in Sources */,
 				4AF51B3B22D07DEB00AA04EC /* GNRGoodsModel.m in Sources */,
+				4A36FF82242DAFEE0099A5E0 /* UIControl+UIControl_buttonCon.m in Sources */,
 				4AB203A022F2DD7300111AC4 /* ZXAztecDetector.m in Sources */,
 				4A6DAA8A22C0AD6100F29455 /* GDWindowViewController.m in Sources */,
 				4A9CB288230BCC81004A3763 /* NSArray+ZJHelperKit.m in Sources */,

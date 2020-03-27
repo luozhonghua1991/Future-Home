@@ -198,6 +198,7 @@
                 NSDictionary *dic = arr[0];
                 /** 商铺ID */
                 weakSelf.shopID = dic[@"id"];
+                
             }
         }
     } failure:^(NSError *error) {

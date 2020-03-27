@@ -30,7 +30,7 @@
 
 - (id) initWithFrame:(CGRect)frame {
     if ((self = [super initWithFrame:frame])) {
-        self.font = [UIFont systemFontOfSize:13];
+        self.font = [UIFont systemFontOfSize:15];
         [self awakeFromNib];
     }
     return self;

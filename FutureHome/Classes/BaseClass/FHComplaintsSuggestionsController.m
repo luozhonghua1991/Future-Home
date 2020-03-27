@@ -120,6 +120,7 @@
 
 /** 提交信息 */
 - (void)commitInfo {
+    NSLog(@"我进来了-----------");
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
@@ -138,9 +139,7 @@
             [weakSelf.lodingHud hideAnimated:YES];
             weakSelf.lodingHud = nil;
             [weakSelf.view makeToast:@"发布投诉建议成功"];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.navigationController popViewControllerAnimated:YES];
-            });
+            [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
             [ZHProgressHUD hide];
             [self.view makeToast:@"所填信息有误"];

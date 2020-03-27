@@ -193,8 +193,8 @@
         self.callPhoneLabel.frame = CGRectMake(10, MaxY(self.phoneLabel) + 12, SCREEN_WIDTH - 200, 15);
     }
     
-    CGSize size = [UIlabelTool sizeWithString:self.otherInfoLabel.text font:self.otherInfoLabel.font width:self.otherInfoLabel.width];
-    self.otherInfoLabel.frame = CGRectMake(10, MaxY(self.callPhoneLabel) + 12, SCREEN_WIDTH - 200, size.height);
+    CGSize size = [UIlabelTool sizeWithString:[NSString stringWithFormat:@"其它补充信息: \n\n%@",_detailModel.describe] font:self.otherInfoLabel.font width:SCREEN_WIDTH - 20];
+    self.otherInfoLabel.frame = CGRectMake(10, MaxY(self.callPhoneLabel) + 12, SCREEN_WIDTH - 20, size.height);
     [SingleManager shareManager].rentOrSaleDetailHeight = MaxY(self.otherInfoLabel) + 10;
     [self layoutIfNeeded];
     [self setNeedsLayout];
@@ -339,6 +339,7 @@
         _otherInfoLabel.textColor = HEX_COLOR(0x1296db);
         _otherInfoLabel.textAlignment = NSTextAlignmentLeft;
         _otherInfoLabel.numberOfLines = 0;
+        _otherInfoLabel.backgroundColor = [UIColor whiteColor];
     }
     return _otherInfoLabel;
 }

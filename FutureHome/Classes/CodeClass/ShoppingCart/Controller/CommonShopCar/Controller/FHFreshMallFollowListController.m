@@ -120,12 +120,13 @@ FDActionSheetDelegate
                                @(curPage),@"page",
                                nil];
     NSString *url;
-    if ([self.type isEqualToString:@"1"] ||
-        [self.type isEqualToString:@"2"]) {
+//    if ([self.type isEqualToString:@"1"] ||
+//        [self.type isEqualToString:@"2"]) {
         url = @"userCenter/collection";
-    } else {
-        url = @"userCenter/collectList";
-    }
+//    }
+//    else {
+//        url = @"userCenter/collectList";
+//    }
     [AFNetWorkTool get:url params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
@@ -167,14 +168,14 @@ FDActionSheetDelegate
     FHCommonFollowModel *followModel = self.dataArrs[indexPath.row];
     cell.followModel = followModel;
     cell.delegate = self;
-    if ([self.type isEqualToString:@"1"] ||
-        [self.type isEqualToString:@"2"]) {
+//    if ([self.type isEqualToString:@"1"] ||
+//        [self.type isEqualToString:@"2"]) {
         if ([followModel.is_collect isEqualToString:@"0"]) {
             cell.rightBtn.hidden = YES;
         } else {
             cell.rightBtn.hidden = NO;
         }
-    }
+//    }
     return cell;
 }
 
