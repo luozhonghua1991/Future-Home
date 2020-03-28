@@ -113,7 +113,17 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequest];
+        }
+    }];
+}
+
+- (void)commitRequest {
     /** 添加成员接口 */
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     NSString *sexID;
     if ([self.sexView.contentTF.text isEqualToString:@"男"]) {
         sexID = @"1";
@@ -134,16 +144,22 @@
                                nil];
     [AFNetWorkTool post:@"health/addmember" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"操作成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 确定 */
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
     }];
 }
 

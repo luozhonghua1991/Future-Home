@@ -309,6 +309,15 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequestInfo];
+        }
+    }];
+}
+
+- (void)commitRequestInfo {
     /** 先上传多张图片 然后上传信息*/
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
@@ -365,9 +374,13 @@
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [self.view makeToast:@"所填信息有误"];
         }
     } failure:^(NSError *error) {
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
         [self.view makeToast:@"所填信息有误"];
     }];
 }

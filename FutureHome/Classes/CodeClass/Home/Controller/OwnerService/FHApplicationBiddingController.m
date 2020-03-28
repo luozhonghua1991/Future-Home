@@ -147,6 +147,16 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf updateImageWithRequest];
+        }
+    }];
+
+}
+
+- (void)updateImageWithRequest {
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
@@ -234,11 +244,14 @@
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
-        
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
     }];
 }
 
@@ -340,7 +353,7 @@
         _businessDescriptionTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
-        NSString *titleString = @"j'l'n'l情况";
+        NSString *titleString = @"投标信息情况";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;
     }

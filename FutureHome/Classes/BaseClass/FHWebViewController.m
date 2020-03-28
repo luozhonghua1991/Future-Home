@@ -48,6 +48,8 @@ XYSJSExport
 /** <#strong属性注释#> */
 @property (nonatomic, strong) NSMutableArray *commentListArrs;
 
+@property (nonatomic, strong) MBProgressHUD *lodingHud;
+
 @end
 
 @implementation FHWebViewController
@@ -167,6 +169,7 @@ XYSJSExport
 }
 
 - (void)fetchNetworkData {
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
     NSString *webUrlString;
     if ([self.typeString isEqualToString:@"information"]) {
@@ -205,7 +208,8 @@ XYSJSExport
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-    
+    [self.lodingHud hideAnimated:YES];
+    self.lodingHud = nil;
     __weak typeof (self) weakSelf = self;
     self.context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     self.context[@"ios"] = weakSelf;
@@ -550,6 +554,17 @@ XYSJSExport
         [_shareBtn addTarget:self action:@selector(shareBtnClick) forControlEvents:UIControlEventTouchUpInside];
     }
     return _shareBtn;
+}
+
+- (MBProgressHUD *)lodingHud{
+    if (_lodingHud == nil) {
+        _lodingHud = [[MBProgressHUD alloc] initWithView:[UIApplication sharedApplication].keyWindow];
+        _lodingHud.mode = MBProgressHUDModeIndeterminate;
+        _lodingHud.removeFromSuperViewOnHide = YES;
+        _lodingHud.label.text = @"加载中...";
+        [_lodingHud showAnimated:YES];
+    }
+    return _lodingHud;
 }
 
 @end

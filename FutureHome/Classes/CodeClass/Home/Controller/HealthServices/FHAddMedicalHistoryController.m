@@ -131,7 +131,17 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequestInfo];
+        }
+    }];
+}
+
+- (void)commitRequestInfo {
     /** 添加医疗记录接口  先上传图片*/
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
     self.selectImgArrays = [[NSMutableArray alloc] init];
@@ -161,7 +171,6 @@
             
         }];
     }
-    
 }
 
 - (void)setModel:(FHHealthHistoryModel *)model {
@@ -214,16 +223,22 @@
     
     [AFNetWorkTool post:@"health/addRecord" params:paramsDictory success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"添加医疗记录成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 确定 */
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
     }];
 }
 
@@ -272,10 +287,10 @@
     self.allPriceView.frame = CGRectMake(0, MaxY(self.hospitalView), SCREEN_WIDTH, commonCellHeight);
     self.mainDoctorView.frame = CGRectMake(0, MaxY(self.allPriceView), SCREEN_WIDTH, commonCellHeight);
     if ([self.titleString isEqualToString:@"添加医疗记录"]) {
-        [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
-        self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
         self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, commonCellHeight);
         self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, commonCellHeight);
+        [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
+        self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
     } else {
         self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, self.symptomViewHeight);
         self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, self.therapeuticRegimenViewHeight);

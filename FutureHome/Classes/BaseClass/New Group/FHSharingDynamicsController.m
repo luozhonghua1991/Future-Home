@@ -119,10 +119,19 @@
         [self.view makeToast:@"请填写内容"];
         return;
     }
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequest];
+        }
+    }];
+}
+
+- (void)commitRequest {
     if ([self.type isEqualToString:@"文章"]) {
         /** 转发文章 */
         //显示加载视图
-        [ZHProgressHUD showProgress:@"动态转发中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -138,17 +147,20 @@
         [AFNetWorkTool uploadImagesWithUrl:@"sheyun/publishDynamic" parameters:paramsDic image:[NSArray array] success:^(id responseObj) {
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:@"动态消息转发成功"];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:@"动态转发失败请稍后再试"];
             }
         } failure:^(NSError *error) {
-            [ZHProgressHUD hide];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"动态转发失败请稍后再试"];
         }];
     } else if ([self.type isEqualToString:@"视频"]) {
@@ -170,17 +182,20 @@
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
                 //隐藏加载视图
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:@"转发动态成功"];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:@"转发动态失败请稍后再试"];
             }
         } failure:^(NSError *error) {
-            [ZHProgressHUD hide];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"转发动态失败请稍后再试"];
         }];
     }

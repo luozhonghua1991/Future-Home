@@ -15,6 +15,7 @@ static CGFloat const ANIMATION_DURATION = 0.25;
 @end
 
 @implementation ZMPlaceholderTextView
+
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -27,12 +28,12 @@ static CGFloat const ANIMATION_DURATION = 0.25;
 }
 
 //干掉textField 的长按菜单 禁止copy paste
--(BOOL)canPerformAction:(SEL)action withSender:(id)sender
-{
-    if ([UIMenuController sharedMenuController]) {
-        [UIMenuController sharedMenuController].menuVisible = NO;
-    }
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
     return NO;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    return [UIView new];
 }
 
 - (void)textChanged:(NSNotification *)notification {

@@ -412,10 +412,20 @@ UICollectionViewDataSource>
 }
 
 - (void)submitBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequest];
+        }
+    }];
+}
+
+- (void)commitRequest {
     if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     /** 直接提交操作就行 */
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -444,6 +454,8 @@ UICollectionViewDataSource>
     
     [AFNetWorkTool post:@"advent/saveinfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"广告合作申请提交成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 /** 确定 */
@@ -451,13 +463,15 @@ UICollectionViewDataSource>
                 [self.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
-        
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
     }];
-    
 }
 
 

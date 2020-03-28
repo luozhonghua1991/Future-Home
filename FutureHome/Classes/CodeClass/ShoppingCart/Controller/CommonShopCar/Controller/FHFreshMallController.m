@@ -195,7 +195,7 @@
         [titleView addSubview:self.codeImgView];
     }
     
-    self.locationLabel.frame = CGRectMake(CGRectGetMaxX(self.codeImgView.frame) + 10, 12, 300, 15);
+    self.locationLabel.frame = CGRectMake(0, 12, SCREEN_WIDTH, 15);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
     
@@ -261,7 +261,7 @@
  
     [titleView addSubview:self.locationLabel];
     
-    self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 65, 12, 50, 12);
+    self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 40, 12, 30, 12);
     self.navigationLabel.centerY = titleView.height / 2;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(navigationLabelClick)];
     self.navigationLabel.userInteractionEnabled = YES;
@@ -372,7 +372,7 @@
 }
 
 - (void)navigationLabelClick {
-    /** y一键导航事件 */
+    /** y导航事件 */
     [CQRouteManager presentRouteNaviMenuOnController:self withCoordate:CLLocationCoordinate2DMake(self.lat, self.lng) destination:self.locationLabel.text];
 }
 
@@ -552,9 +552,9 @@
 - (UILabel  *)navigationLabel{
     if (!_navigationLabel) {
         _navigationLabel =  [[UILabel alloc] init];
-        _navigationLabel.text = @"一键导航";
+        _navigationLabel.text = @"导航";
         _navigationLabel.textColor = [UIColor blueColor];
-        _navigationLabel.font = [UIFont systemFontOfSize:12];
+        _navigationLabel.font = [UIFont systemFontOfSize:14];
         _navigationLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _navigationLabel;

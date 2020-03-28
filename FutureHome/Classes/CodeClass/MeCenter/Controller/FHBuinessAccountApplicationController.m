@@ -486,18 +486,25 @@
                                 }
                             }];
                         } else {
+                            [weakSelf.loadingHud hideAnimated:YES];
+                            weakSelf.loadingHud = nil;
                             [self.view makeToast:respMsg];
                         }
                     }];
                 } else {
+                    [weakSelf.loadingHud hideAnimated:YES];
+                    weakSelf.loadingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             }
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
     }];
 }
 

@@ -75,6 +75,16 @@
 
 /** 提交投诉建议 */
 - (void)addInvoiceBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf updateImageRequest];
+        }
+    }];
+}
+
+/** 上传图片 */
+- (void)updateImageRequest {
     if (self.suggestionsTextView.text.length <= 0) {
         [self.view makeToast:@"请输入投诉或意见内容"];
         return;
@@ -82,6 +92,7 @@
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     if (self.imgSelectArrs.count <= 0) {
         [self commitInfo];
     } else {
@@ -122,7 +133,6 @@
 - (void)commitInfo {
     NSLog(@"我进来了-----------");
     WS(weakSelf);
-    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -141,11 +151,13 @@
             [weakSelf.view makeToast:@"发布投诉建议成功"];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
-            [ZHProgressHUD hide];
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             [self.view makeToast:@"所填信息有误"];
         }
     } failure:^(NSError *error) {
-        [ZHProgressHUD hide];
+        [weakSelf.lodingHud hideAnimated:YES];
+        weakSelf.lodingHud = nil;
         [self.view makeToast:@"所填信息有误"];
     }];
 }

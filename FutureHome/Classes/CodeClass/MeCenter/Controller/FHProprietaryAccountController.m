@@ -678,10 +678,14 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                 }
                             }];
                         } else {
+                            [weakSelf.loadingHud hideAnimated:YES];
+                            weakSelf.loadingHud = nil;
                             [self.view makeToast:respMsg];
                         }
                     }];
                 } else {
+                    [weakSelf.loadingHud hideAnimated:YES];
+                    weakSelf.loadingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             }

@@ -137,6 +137,15 @@
 }
 
 - (void)sureBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequestInfo];
+        }
+    }];
+}
+
+- (void)commitRequestInfo {
     /** 添加商品评论 */
     //显示加载视图
     self.imgSelectArrs = [[NSMutableArray alloc] init];

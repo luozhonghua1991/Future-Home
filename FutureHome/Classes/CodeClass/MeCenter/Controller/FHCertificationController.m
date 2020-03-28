@@ -198,6 +198,8 @@
             weakSelf.lodingHud = nil;
         }
     } failure:^(NSError *error) {
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
     }];
 }
 

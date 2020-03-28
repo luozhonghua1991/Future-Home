@@ -359,7 +359,7 @@
         UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
         locationView.tag = 2017;
         
-        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,( SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH - 5 - SCREEN_WIDTH * 0.116, 15)];
+        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,(SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH, 15)];
         self.realSstateSNameLabel.text = self.homeServiceName;
         self.realSstateSNameLabel.textColor = [UIColor blueColor];
         self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
@@ -375,7 +375,7 @@
         [self.codeImgView addGestureRecognizer:tap];
         [locationView addSubview:self.codeImgView];
         
-        self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 65, 12, 50, 12);
+        self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 40, 12, 30, 12);
         self.navigationLabel.centerY = locationView.height / 2;
         UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(navigationLabelClick)];
         self.navigationLabel.userInteractionEnabled = YES;
@@ -436,7 +436,7 @@
 }
 
 - (void)navigationLabelClick {
-    /** y一键导航事件 */
+    /** y导航事件 */
     [CQRouteManager presentRouteNaviMenuOnController:self withCoordate:CLLocationCoordinate2DMake(self.lat, self.lng) destination:self.realSstateSNameLabel.text];
 }
 
@@ -623,9 +623,9 @@
 - (UILabel  *)navigationLabel{
     if (!_navigationLabel) {
         _navigationLabel =  [[UILabel alloc] init];
-        _navigationLabel.text = @"一键导航";
+        _navigationLabel.text = @"导航";
         _navigationLabel.textColor = [UIColor blueColor];
-        _navigationLabel.font = [UIFont systemFontOfSize:12];
+        _navigationLabel.font = [UIFont systemFontOfSize:14];
         _navigationLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _navigationLabel;

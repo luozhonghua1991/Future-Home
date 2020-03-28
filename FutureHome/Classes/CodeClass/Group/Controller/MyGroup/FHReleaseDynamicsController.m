@@ -113,12 +113,15 @@
 
 /** 发布动态 */
 - (void)addInvoiceBtnClick {
-//    if (self.isSelect) {
-//        return;
-//    } else {
-//        self.isSelect = YES;
-//    }
-    
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequest];
+        }
+    }];
+}
+
+- (void)commitRequest {
     if (self.suggestionsTextView.text.length <= 0||[self.suggestionsTextView.text isEqualToString:@""]) {
         [self.view makeToast:@"请填写内容"];
         return;
@@ -132,7 +135,6 @@
     } else {
         //显示加载视图
         [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
-//        [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -154,21 +156,21 @@
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-            [ZHProgressHUD hide];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"上传失败请稍后再试"];
         }];
     }
 }
 
-
 - (void)updateVideoWithRequest {
     //显示加载视图
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
-//    [ZHProgressHUD showProgress:@"动态发布中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
     NSData *videoData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[SingleManager shareManager].videoPath]];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
