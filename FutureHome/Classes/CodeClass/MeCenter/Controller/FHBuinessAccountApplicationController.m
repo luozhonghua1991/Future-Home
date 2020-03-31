@@ -432,6 +432,7 @@
                                self.applicantNameView.contentTF.text,@"applyname",
                                self.applicantCardView.contentTF.text,@"idcard",
                                self.phoneNumberView.contentTF.text,@"phone",
+                               self.buildingSitesView.contentTF.text,@"cell_name",
                                self.phoneView.contentTF.text,@"mobile",
                                self.mailView.contentTF.text,@"email",
                                self.addressView.contentTF.text,@"detailedaddress",

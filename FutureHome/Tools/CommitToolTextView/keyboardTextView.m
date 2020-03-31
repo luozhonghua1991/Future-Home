@@ -47,7 +47,7 @@
     [self addSubview:self.textViewBgView];
     
     self.sendBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.sendBtn.frame = CGRectMake(SCREEN_WIDTH - 61, self.height - 42, 47, 35);
+    self.sendBtn.frame = CGRectMake(SCREEN_WIDTH - 61, self.height - 52, 47, 35);
     self.sendBtn.enabled = NO;
     [self.sendBtn setTitle:@"发送" forState:UIControlStateNormal];
     [self.sendBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -96,7 +96,7 @@
     [IQKeyboardManager sharedManager].enable = NO;
     self.frame = CGRectMake(0, SCREEN_HEIGHT - self.changeHeight - keyboardBounds.size.height, SCREEN_WIDTH, self.changeHeight);
     self.textViewBgView.frame = self.bounds;
-    self.sendBtn.frame =  CGRectMake(SCREEN_WIDTH - 61, self.textViewBgView.height - 42, 47, 35);
+    self.sendBtn.frame =  CGRectMake(SCREEN_WIDTH - 61, self.textViewBgView.height - 52, 47, 35);
     [UIView animateWithDuration:duration.floatValue animations:^{
         [self layoutIfNeeded];
     }];
@@ -112,7 +112,7 @@
     }
     self.frame = CGRectMake(0, SCREEN_HEIGHT - self.changeHeight, SCREEN_WIDTH, self.changeHeight);
     self.textViewBgView.frame = self.bounds;
-    self.sendBtn.frame =  CGRectMake(SCREEN_WIDTH - 61, self.textViewBgView.height - 42, 47, 35);
+    self.sendBtn.frame =  CGRectMake(SCREEN_WIDTH - 61, self.textViewBgView.height - 52, 47, 35);
     [UIView animateWithDuration:duration.floatValue animations:^{
         [self layoutIfNeeded];
     }];
@@ -123,7 +123,7 @@
     self.changeHeight = height + 15.0f;
     self.frame = CGRectMake(0, SCREEN_HEIGHT - self.changeHeight - keyboardBounds.size.height, SCREEN_WIDTH, self.changeHeight);
     self.textViewBgView.height = self.changeHeight;
-    self.sendBtn.frame =  CGRectMake(SCREEN_WIDTH - 61, self.textViewBgView.height - 42, 47, 35);
+    self.sendBtn.frame =  CGRectMake(SCREEN_WIDTH - 61, self.textViewBgView.height - 52, 47, 35);
     
     [self layoutIfNeeded];
 }

@@ -49,7 +49,7 @@
     [super viewDidLoad];
     self.firstLook = YES;
 //    // Do any additional setup after loading the view.
-//    [self fh_creatNav];
+    [self fh_creatNav];
     [self setUpAllView];
     if (self.type == 3) {
         //    /** 动态详情数据 */
@@ -66,44 +66,55 @@
     [self getCommitsData];
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.hidden = YES;
+}
 
-//#pragma mark — 通用导航栏
-//#pragma mark — privite
-//- (void)fh_creatNav {
-//    self.isHaveNavgationView = YES;
-//    self.navgationView.userInteractionEnabled = YES;
-//    
-//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-//    titleLabel.text = @"动态详情";
-//    titleLabel.font = [UIFont boldSystemFontOfSize:18];
-//    titleLabel.textColor = [UIColor whiteColor];
-//    titleLabel.textAlignment = NSTextAlignmentCenter;
-//    titleLabel.userInteractionEnabled = YES;
-//    [self.navgationView addSubview:titleLabel];
-//    
-//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
-//    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-//    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navgationView addSubview:backBtn];
-//    
-//    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
-//    bottomLineView.backgroundColor = [UIColor lightGrayColor];
-//    [self.navgationView addSubview:bottomLineView];
-//    
-//    if (self.type == 3) {
-//        Account *account = [AccountStorage readAccount];
-//        if ([self.dongTaiDataDic[@"user_id"] integerValue] == account.user_id) {
-//            UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//            deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
-//            [deleteBtn setTitle:@"···" forState:UIControlStateNormal];
-//            deleteBtn.titleLabel.font = [UIFont systemFontOfSize:35];
-//            [deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//            [deleteBtn addTarget:self action:@selector(tapClick) forControlEvents:UIControlEventTouchUpInside];
-//            [self.navgationView addSubview:deleteBtn];
-//        }
-//    }
-//}
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+}
+
+#pragma mark — 通用导航栏
+#pragma mark — privite
+- (void)fh_creatNav {
+    UIView *navgationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, MainSizeHeight)];
+    navgationView.backgroundColor = HEX_COLOR(0x1296db);
+    navgationView.userInteractionEnabled = YES;
+    [self.view addSubview:navgationView];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+    titleLabel.text = @"动态详情";
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    titleLabel.textColor = [UIColor whiteColor];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.userInteractionEnabled = YES;
+    [navgationView addSubview:titleLabel];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [navgationView addSubview:backBtn];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, navgationView.height - 1, SCREEN_WIDTH, 1)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [navgationView addSubview:bottomLineView];
+    
+    if (self.type == 3) {
+        Account *account = [AccountStorage readAccount];
+        if ([self.dongTaiDataDic[@"user_id"] integerValue] == account.user_id) {
+            UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
+            [deleteBtn setTitle:@"···" forState:UIControlStateNormal];
+            deleteBtn.titleLabel.font = [UIFont systemFontOfSize:35];
+            [deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [deleteBtn addTarget:self action:@selector(tapClick) forControlEvents:UIControlEventTouchUpInside];
+            [navgationView addSubview:deleteBtn];
+        }
+    }
+}
 
 - (void)tapClick {
     FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"确定删除该条动态吗？" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消", nil];
