@@ -218,6 +218,7 @@
     __block FHHomePageController *meVC ;
     [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
         if([obj isKindOfClass:[FHHomePageController class]]) {
+            [SingleManager shareManager].selectOwnerControll = self;
             meVC = (FHHomePageController *)obj;
             [self.navigationController popToViewController:meVC animated:YES];
         } else {

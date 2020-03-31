@@ -67,25 +67,25 @@
         if ([_managementModel.type integerValue] == 1) {
             /** 出售 */
             self.houseTypeLabel.text = [NSString stringWithFormat:@"房屋户型: %@",_managementModel.hall];
-            self.priceSugmentLabel.text = [NSString stringWithFormat:@"房屋面积 :%@㎡",_managementModel.area];
+            self.priceSugmentLabel.text = [NSString stringWithFormat:@"房屋面积 :%.2f㎡",[_managementModel.area floatValue]];
             self.priceLabel.text = [NSString stringWithFormat:@"￥%@万/套",_managementModel.rent];
         } else if ([_managementModel.type integerValue] == 2) {
             /** 出租 */
             self.houseTypeLabel.text = [NSString stringWithFormat:@"房屋户型: %@",_managementModel.hall];
-            self.priceSugmentLabel.text = [NSString stringWithFormat:@"房屋面积 :%@㎡",_managementModel.area];
+            self.priceSugmentLabel.text = [NSString stringWithFormat:@"房屋面积 :%.2f㎡",[_managementModel.area floatValue]];
             self.priceLabel.text = [NSString stringWithFormat:@"￥%@元/月",_managementModel.rent];
         }
     } else {
         /** 车位 */
         if ([_managementModel.type integerValue] == 1) {
             /** 出售 */
-//            self.houseTypeLabel.text = _[NSString stringWithFormat:@"车位编号: %@",_managementModel.park_number];
-            self.priceSugmentLabel.text = [NSString stringWithFormat:@"车位面积 :%@㎡",_managementModel.area];
+            self.houseTypeLabel.text = [NSString stringWithFormat:@"车位编号: %@",_managementModel.park_number];
+            self.priceSugmentLabel.text = [NSString stringWithFormat:@"车位面积 :%.2f㎡",[_managementModel.area floatValue]];
             self.priceLabel.text = [NSString stringWithFormat:@"￥%@万/个",_managementModel.rent];
         } else {
             /** 出租 */
-//            self.houseTypeLabel.text = [NSString stringWithFormat:@"车位编号: %@",_managementModel.park_number];
-            self.priceSugmentLabel.text = [NSString stringWithFormat:@"车位面积 :%@㎡",_managementModel.area];
+            self.houseTypeLabel.text = [NSString stringWithFormat:@"车位编号: %@",_managementModel.park_number];
+            self.priceSugmentLabel.text = [NSString stringWithFormat:@"车位面积 :%.2f㎡",[_managementModel.area floatValue]];
             self.priceLabel.text = [NSString stringWithFormat:@"￥%@元/月",_managementModel.rent];
         }
     }

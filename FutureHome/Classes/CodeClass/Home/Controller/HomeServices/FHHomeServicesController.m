@@ -127,6 +127,11 @@
     self.tabBarController.tabBar.hidden = NO;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [SingleManager shareManager].selectHomeSeverControll = self;
+}
+
 /** 获取物业详情 */
 - (void)setHomeSeverID:(NSInteger )HomeSeverID
         homeServerName:(NSString *)homeServerName {
@@ -215,6 +220,7 @@
         if([obj isKindOfClass:[FHHomePageController class]]) {
             meVC = (FHHomePageController *)obj;
             [self.navigationController popToViewController:meVC animated:YES];
+            
         } else {
              [self.navigationController popToRootViewControllerAnimated:YES];
         }

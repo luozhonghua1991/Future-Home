@@ -157,7 +157,10 @@
     web.titleString = @"车库管理";
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
-    web.type = @"noShow";
+    NSArray *arr = [web.urlString componentsSeparatedByString:@"/"];
+    web.article_type = arr[arr.count - 1];
+    web.article_id = arr[arr.count - 3];
+//    web.type = @"noShow";
     [self.navigationController pushViewController:web animated:YES];
 }
 

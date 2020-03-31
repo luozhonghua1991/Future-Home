@@ -348,6 +348,7 @@
 		4A793D38231F88E600893255 /* FHHouseSaleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D37231F88E600893255 /* FHHouseSaleController.m */; };
 		4A793D3B231F8FBB00893255 /* FHOwnerCertificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3A231F8FBB00893255 /* FHOwnerCertificationController.m */; };
 		4A793D3E231F917C00893255 /* FHOwnerCertificationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A793D3D231F917C00893255 /* FHOwnerCertificationViewController.m */; };
+		4A7FE63F2431939C00FC7BD8 /* NSString+YJSDecimalNumberTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A7FE63D2431939B00FC7BD8 /* NSString+YJSDecimalNumberTools.m */; };
 		4A809C11236C43BA00DE63FD /* ZJNoHavePhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A809C0F236C43BA00DE63FD /* ZJNoHavePhotoCell.m */; };
 		4A840948240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A840947240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.m */; };
 		4A84094B2410E558004F25B7 /* FHAdvertisingCooperationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A84094A2410E558004F25B7 /* FHAdvertisingCooperationController.m */; };
@@ -975,6 +976,10 @@
 		4AFC0DC922D427CC004E28CE /* FHVideosPublishingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DC822D427CC004E28CE /* FHVideosPublishingController.m */; };
 		4AFC0DCC22D42802004E28CE /* FHDialogueRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */; };
 		4AFC6962242376EA0050CBC2 /* FHTabbarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFC6961242376EA0050CBC2 /* FHTabbarController.m */; };
+		4AFDA5B92431E7C8002EEE03 /* keyboardTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDA5B42431E7C8002EEE03 /* keyboardTextView.m */; };
+		4AFDA5BA2431E7C8002EEE03 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDA5B52431E7C8002EEE03 /* GrowingTextView.m */; };
+		4AFDA5BB2431E7C8002EEE03 /* TextViewInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDA5B82431E7C8002EEE03 /* TextViewInternal.m */; };
+		4AFDA5BE2431E7D4002EEE03 /* Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AFDA5BD2431E7D4002EEE03 /* Color.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1718,6 +1723,8 @@
 		4A793D3A231F8FBB00893255 /* FHOwnerCertificationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOwnerCertificationController.m; sourceTree = "<group>"; };
 		4A793D3C231F917C00893255 /* FHOwnerCertificationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHOwnerCertificationViewController.h; sourceTree = "<group>"; };
 		4A793D3D231F917C00893255 /* FHOwnerCertificationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHOwnerCertificationViewController.m; sourceTree = "<group>"; };
+		4A7FE63D2431939B00FC7BD8 /* NSString+YJSDecimalNumberTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+YJSDecimalNumberTools.m"; sourceTree = "<group>"; };
+		4A7FE63E2431939C00FC7BD8 /* NSString+YJSDecimalNumberTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+YJSDecimalNumberTools.h"; sourceTree = "<group>"; };
 		4A809C0F236C43BA00DE63FD /* ZJNoHavePhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZJNoHavePhotoCell.m; sourceTree = "<group>"; };
 		4A809C10236C43BA00DE63FD /* ZJNoHavePhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZJNoHavePhotoCell.h; sourceTree = "<group>"; };
 		4A840946240F9B29004F25B7 /* FHAdvertOrBusinessCooperationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAdvertOrBusinessCooperationController.h; sourceTree = "<group>"; };
@@ -2973,6 +2980,14 @@
 		4AFC0DCB22D42802004E28CE /* FHDialogueRecordController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHDialogueRecordController.m; sourceTree = "<group>"; };
 		4AFC6960242376EA0050CBC2 /* FHTabbarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHTabbarController.h; sourceTree = "<group>"; };
 		4AFC6961242376EA0050CBC2 /* FHTabbarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHTabbarController.m; sourceTree = "<group>"; };
+		4AFDA5B32431E7C7002EEE03 /* keyboardTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keyboardTextView.h; sourceTree = "<group>"; };
+		4AFDA5B42431E7C8002EEE03 /* keyboardTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = keyboardTextView.m; sourceTree = "<group>"; };
+		4AFDA5B52431E7C8002EEE03 /* GrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowingTextView.m; sourceTree = "<group>"; };
+		4AFDA5B62431E7C8002EEE03 /* TextViewInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewInternal.h; sourceTree = "<group>"; };
+		4AFDA5B72431E7C8002EEE03 /* GrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextView.h; sourceTree = "<group>"; };
+		4AFDA5B82431E7C8002EEE03 /* TextViewInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewInternal.m; sourceTree = "<group>"; };
+		4AFDA5BC2431E7D4002EEE03 /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		4AFDA5BD2431E7D4002EEE03 /* Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Color.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3046,6 +3061,21 @@
 				4A0603F3232892D100AE8F53 /* PPNumberButton.m */,
 			);
 			path = PPNumberButton;
+			sourceTree = "<group>";
+		};
+		4A0A7B2D242F62C500BE9913 /* CommitToolTextView */ = {
+			isa = PBXGroup;
+			children = (
+				4AFDA5BC2431E7D4002EEE03 /* Color.h */,
+				4AFDA5BD2431E7D4002EEE03 /* Color.m */,
+				4AFDA5B72431E7C8002EEE03 /* GrowingTextView.h */,
+				4AFDA5B52431E7C8002EEE03 /* GrowingTextView.m */,
+				4AFDA5B32431E7C7002EEE03 /* keyboardTextView.h */,
+				4AFDA5B42431E7C8002EEE03 /* keyboardTextView.m */,
+				4AFDA5B62431E7C8002EEE03 /* TextViewInternal.h */,
+				4AFDA5B82431E7C8002EEE03 /* TextViewInternal.m */,
+			);
+			path = CommitToolTextView;
 			sourceTree = "<group>";
 		};
 		4A13519E22F928DA00CDDBB5 /* MessageToolBar */ = {
@@ -4034,6 +4064,9 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4A7FE63E2431939C00FC7BD8 /* NSString+YJSDecimalNumberTools.h */,
+				4A7FE63D2431939B00FC7BD8 /* NSString+YJSDecimalNumberTools.m */,
+				4A0A7B2D242F62C500BE9913 /* CommitToolTextView */,
 				4A4CDF862420AEB100582A14 /* SDLaunchImage */,
 				4AFA588923CDC79B005E7790 /* FHImageToolMethod.h */,
 				4AFA588A23CDC79B005E7790 /* FHImageToolMethod.m */,
@@ -7453,6 +7486,7 @@
 				4A9E84E02323561D0070CE4A /* FLAnimatedImageView.m in Sources */,
 				4AE8495322E30727009E165B /* MImaCell.m in Sources */,
 				4A68BB40236D61F800478B17 /* FHZJHaveMoveCell.m in Sources */,
+				4A7FE63F2431939C00FC7BD8 /* NSString+YJSDecimalNumberTools.m in Sources */,
 				4A727A092412515B0069B272 /* FHSelectWhereCollectionCell.m in Sources */,
 				4A8E0D5A22DEBD2200F814F7 /* FHCertificationController.m in Sources */,
 				4AB203CB22F2DD7300111AC4 /* ZXBitMatrix.m in Sources */,
@@ -7545,6 +7579,7 @@
 				4AA3090222E6FA2400695FFE /* UIAlertController+BAKit.m in Sources */,
 				4A5EB85D230D15C800F90FF6 /* ZFPlayerView.m in Sources */,
 				4A9E84DA2323561D0070CE4A /* MKAnnotationView+WebCache.m in Sources */,
+				4AFDA5BB2431E7C8002EEE03 /* TextViewInternal.m in Sources */,
 				4A25D485237AC9220036CD8D /* FHCommonALiPayTool.m in Sources */,
 				4ABBFF9423A4E0B6004FBBDE /* GroupInfoCell.m in Sources */,
 				4AB2038622F2DD7300111AC4 /* ZXPlanarYUVLuminanceSource.m in Sources */,
@@ -7565,12 +7600,14 @@
 				4AB2047B22F2ED7900111AC4 /* AnalyzPermisViewController.m in Sources */,
 				4AB2040522F2DD7300111AC4 /* ZXEANManufacturerOrgSupport.m in Sources */,
 				4AB203EA22F2DD7300111AC4 /* ZXPDF417Reader.m in Sources */,
+				4AFDA5BA2431E7C8002EEE03 /* GrowingTextView.m in Sources */,
 				4AB2044B22F2DD7300111AC4 /* ZXExpandedProductResultParser.m in Sources */,
 				4AB2039F22F2DD7300111AC4 /* ZXAztecReader.m in Sources */,
 				4A2263B023B8A85C00F9541D /* TZAssetModel.m in Sources */,
 				4AB203CC22F2DD7300111AC4 /* ZXBitSource.m in Sources */,
 				4AF51B3E22D07DEB00AA04EC /* GNRShoppingBag.m in Sources */,
 				4A5EB88C230D1A2900F90FF6 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
+				4AFDA5B92431E7C8002EEE03 /* keyboardTextView.m in Sources */,
 				4A36FFB7242DE67C0099A5E0 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				4A8D8C6F22C3663F0083E00C /* FHCommonNavView.m in Sources */,
 				4AA7B3AF22CC7D8D00462389 /* MASViewAttribute.m in Sources */,
@@ -7656,6 +7693,7 @@
 				4A9CB1F8230BCA13004A3763 /* CALayer+YYWebImage.m in Sources */,
 				4A5EB865230D15C800F90FF6 /* ZFVolumeBrightnessView.m in Sources */,
 				4AFC0DC622D4279E004E28CE /* FHInformationController.m in Sources */,
+				4AFDA5BE2431E7D4002EEE03 /* Color.m in Sources */,
 				4AB2044E22F2DD7300111AC4 /* ZXBizcardResultParser.m in Sources */,
 				4A9CB2B7230BCD23004A3763 /* UIGestureRecognizer+ZJActionBlock.m in Sources */,
 				4A6E5A8523703B220098DB67 /* MJRefreshBackGifFooter.m in Sources */,

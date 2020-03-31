@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FHCommitDetailController : BaseViewController
+@interface FHCommitDetailController : UIViewController
 /** 用户id */
 @property (nonatomic, copy) NSString *user_id;
 /** 帖子id */

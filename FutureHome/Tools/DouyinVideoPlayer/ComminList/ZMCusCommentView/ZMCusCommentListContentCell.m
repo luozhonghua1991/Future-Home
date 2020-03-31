@@ -52,7 +52,7 @@
         [_timeLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.right.mas_equalTo(-14);
             make.top.mas_equalTo(15);
-            make.width.mas_offset(80);
+            make.width.mas_offset(200);
             
         }];
     }
@@ -66,7 +66,7 @@
         [_titleLab sizeToFit];
         [self.contentView addSubview:_titleLab];
         [_titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.mas_equalTo(_headImageView.mas_right).mas_offset(18);
+            make.left.mas_equalTo(self->_headImageView.mas_right).mas_offset(18);
             make.top.mas_equalTo(15);
             make.height.mas_offset(20);
             

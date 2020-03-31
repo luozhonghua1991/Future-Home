@@ -39,6 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *type;
 /** property_id */
 @property (nonatomic, copy) NSString *property_id;
+/** 车位编号 */
+@property (nonatomic, copy) NSString *park_number;
+
 
 @end
 

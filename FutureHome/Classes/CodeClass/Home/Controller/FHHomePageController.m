@@ -546,16 +546,28 @@
 - (void)FHMenuListCellSelectIndex:(NSIndexPath *)indexPath {
     if (indexPath.row == 0) {
         /** 物业服务 */
-        FHHomeServicesController *home = [[FHHomeServicesController alloc] init];
-        [self pushVCWithName:home];
+        if ([SingleManager shareManager].selectHomeSeverControll == nil) {
+            FHHomeServicesController *home = [[FHHomeServicesController alloc] init];
+            [self pushVCWithName:home];
+        } else {
+            [self.navigationController pushViewController:[SingleManager shareManager].selectHomeSeverControll animated:YES];
+        }
     } else if (indexPath.row == 1) {
         /** 业主服务 */
-        FHOwnerServiceController *owner = [[FHOwnerServiceController alloc] init];
-        [self pushVCWithName:owner];
+        if ([SingleManager shareManager].selectOwnerControll == nil) {
+            FHOwnerServiceController *owner = [[FHOwnerServiceController alloc] init];
+            [self pushVCWithName:owner];
+        } else {
+            [self.navigationController pushViewController:[SingleManager shareManager].selectOwnerControll animated:YES];
+        }
     } else if (indexPath.row == 2) {
         /** 健康服务 */
-        FHHealthServicesController *health = [[FHHealthServicesController alloc] init];
-        [self pushVCWithName:health];
+        if ([SingleManager shareManager].selectHealthControll == nil) {
+            FHHealthServicesController *health = [[FHHealthServicesController alloc] init];
+            [self pushVCWithName:health];
+        } else {
+            [self.navigationController pushViewController:[SingleManager shareManager].selectHealthControll animated:YES];
+        }
     } else if (indexPath.row == 3) {
         [SingleManager shareManager].selectType = @"HomePage";
         /** 生鲜服务 */
@@ -566,12 +578,20 @@
         [self pushVCWithName:goodList];
     } else if (indexPath.row == 4) {
         /** 理财服务 */
-        FHFinancialServiceController *finacial = [[FHFinancialServiceController alloc] init];
-        [self pushVCWithName:finacial];
+        if ([SingleManager shareManager].selectMoneyControll == nil) {
+            FHFinancialServiceController *finacial = [[FHFinancialServiceController alloc] init];
+            [self pushVCWithName:finacial];
+        } else {
+            [self.navigationController pushViewController:[SingleManager shareManager].selectMoneyControll animated:YES];
+        }
     } else if (indexPath.row == 5) {
         /** 客服服务 */
-        FHCustomerServiceController *custom = [[FHCustomerServiceController alloc] init];
-        [self pushVCWithName:custom];
+        if ([SingleManager shareManager].selectServiceControll == nil) {
+            FHCustomerServiceController *custom = [[FHCustomerServiceController alloc] init];
+            [self pushVCWithName:custom];
+        } else {
+            [self.navigationController pushViewController:[SingleManager shareManager].selectServiceControll animated:YES];
+        }
     }
 }
 

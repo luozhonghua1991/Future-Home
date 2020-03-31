@@ -118,6 +118,7 @@
 }
 
 - (void)backBtnClick {
+    [SingleManager shareManager].selectMoneyControll = self;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -59,11 +59,6 @@
 @property(nonatomic,assign) CGFloat inviteFriendRowHeight;
 /**是否需要展示活动图 */
 @property (nonatomic,assign) BOOL isShowActivityView;
-
-
-
-
-
 /** 是否选择用户头像 */
 @property (nonatomic, assign) BOOL isSelectPerson;
 
@@ -121,16 +116,23 @@
 @property (nonatomic, assign) BOOL isSearchStatues;
 /** 评论Cell的高度 */
 @property (nonatomic, assign) CGFloat commonCommitCellHeight;
-
 /** 是否是第一次去登录界面*/
 @property (nonatomic, assign) BOOL isFirstPushLogin;
-
 /** 主要的tabbarVC */
 @property (nonatomic, strong) UITabBarController *mainTabbarController;
 /** 当前选中的是第几个tabbar */
 @property (nonatomic, assign) NSInteger currentSelectIndex;
 
-
+/** 上次选择的物业VC */
+@property (nonatomic, strong) UIViewController *selectHomeSeverControll;
+/** 上次选择的业主VC */
+@property (nonatomic, strong) UIViewController *selectOwnerControll;
+/** 上次选择的健康VC */
+@property (nonatomic, strong) UIViewController *selectHealthControll;
+/** 上次选择的理财VC */
+@property (nonatomic, strong) UIViewController *selectMoneyControll;
+/** 上次选择的客服VC */
+@property (nonatomic, strong) UIViewController *selectServiceControll;
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串
  *

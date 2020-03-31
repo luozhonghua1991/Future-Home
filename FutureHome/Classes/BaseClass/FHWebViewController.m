@@ -457,10 +457,12 @@ XYSJSExport
         if ([responseObj[@"code"] integerValue] == 1) {
             if (self.followBtn.tag == 0) {
                 /** 未收藏 */
+                [self.view makeToast:@"收藏成功"];
                 [self.followBtn setImage:[UIImage imageNamed:@"收藏后"] forState:UIControlStateNormal];
                 self.followBtn.tag = 1;
             } else if (self.followBtn.tag == 1) {
                 /** 已经收藏 */
+                [self.view makeToast:@"取消收藏成功"];
                 [self.followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
                 self.followBtn.tag = 0;
             }

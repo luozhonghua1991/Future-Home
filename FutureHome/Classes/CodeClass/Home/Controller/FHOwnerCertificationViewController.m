@@ -318,6 +318,51 @@
 }
 
 - (void)commitRequestInfo {
+    if (self.ownerNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.ownerNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.ownerCodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.ownerCodeView.contentTF.placeholder];
+        return;
+    }
+    if (self.ownerCodeView.contentTF.text.length < 18) {
+        [self.view makeToast:@"所填身份证格式不正确"];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length < 11) {
+        [self.view makeToast:@"所填手机号码格式不正确"];
+        return;
+    }
+    if (self.self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.louNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.louNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.houseNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.houseNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.houseAreaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.houseAreaView.contentTF.placeholder];
+        return;
+    }
+
     /** 先上传多张图片 然后上传信息*/
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
@@ -371,17 +416,17 @@
             weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"认证资料已经提交成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf.navigationController popViewControllerAnimated:YES];
+                [weakSelf.navigationController popToRootViewControllerAnimated:YES];
             });
         } else {
             [weakSelf.loadingHud hideAnimated:YES];
             weakSelf.loadingHud = nil;
-            [self.view makeToast:@"所填信息有误"];
+            [self.view makeToast:@"所填信息不完整,请核对重试"];
         }
     } failure:^(NSError *error) {
         [weakSelf.loadingHud hideAnimated:YES];
         weakSelf.loadingHud = nil;
-        [self.view makeToast:@"所填信息有误"];
+        [self.view makeToast:@"服务器加载异常..."];
     }];
 }
 

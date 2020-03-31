@@ -117,6 +117,7 @@
 }
 
 - (void)backBtnClick {
+    [SingleManager shareManager].selectServiceControll = self;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

@@ -19,6 +19,7 @@
 #import "FHArticleOrVideoShareCell.h"
 #import "ZFDouYinViewController.h"
 #import "FHWebViewController.h"
+#import "keyboardTextView.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
@@ -35,6 +36,9 @@
 @property (nonatomic, strong) UIImageView *codeImgView;
 /** 第一次看 */
 @property (nonatomic, assign) BOOL firstLook;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) keyboardTextView *kTextView;
+
 
 
 @end
@@ -44,8 +48,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.firstLook = YES;
-    // Do any additional setup after loading the view.
-    [self fh_creatNav];
+//    // Do any additional setup after loading the view.
+//    [self fh_creatNav];
     [self setUpAllView];
     if (self.type == 3) {
         //    /** 动态详情数据 */
@@ -63,43 +67,43 @@
 }
 
 
-#pragma mark — 通用导航栏
-#pragma mark — privite
-- (void)fh_creatNav {
-    self.isHaveNavgationView = YES;
-    self.navgationView.userInteractionEnabled = YES;
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"动态详情";
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.userInteractionEnabled = YES;
-    [self.navgationView addSubview:titleLabel];
-    
-    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
-    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
-    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.navgationView addSubview:backBtn];
-    
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
-    bottomLineView.backgroundColor = [UIColor lightGrayColor];
-    [self.navgationView addSubview:bottomLineView];
-    
-    if (self.type == 3) {
-        Account *account = [AccountStorage readAccount];
-        if ([self.dongTaiDataDic[@"user_id"] integerValue] == account.user_id) {
-            UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
-            [deleteBtn setTitle:@"···" forState:UIControlStateNormal];
-            deleteBtn.titleLabel.font = [UIFont systemFontOfSize:35];
-            [deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [deleteBtn addTarget:self action:@selector(tapClick) forControlEvents:UIControlEventTouchUpInside];
-            [self.navgationView addSubview:deleteBtn];
-        }
-    }
-}
+//#pragma mark — 通用导航栏
+//#pragma mark — privite
+//- (void)fh_creatNav {
+//    self.isHaveNavgationView = YES;
+//    self.navgationView.userInteractionEnabled = YES;
+//    
+//    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
+//    titleLabel.text = @"动态详情";
+//    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+//    titleLabel.textColor = [UIColor whiteColor];
+//    titleLabel.textAlignment = NSTextAlignmentCenter;
+//    titleLabel.userInteractionEnabled = YES;
+//    [self.navgationView addSubview:titleLabel];
+//    
+//    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    backBtn.frame = CGRectMake(5, MainStatusBarHeight, MainNavgationBarHeight, MainNavgationBarHeight);
+//    [backBtn setImage:[UIImage imageNamed:@"nav_back"] forState:UIControlStateNormal];
+//    [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//    [self.navgationView addSubview:backBtn];
+//    
+//    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, self.navgationView.height - 1, SCREEN_WIDTH, 1)];
+//    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+//    [self.navgationView addSubview:bottomLineView];
+//    
+//    if (self.type == 3) {
+//        Account *account = [AccountStorage readAccount];
+//        if ([self.dongTaiDataDic[@"user_id"] integerValue] == account.user_id) {
+//            UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//            deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
+//            [deleteBtn setTitle:@"···" forState:UIControlStateNormal];
+//            deleteBtn.titleLabel.font = [UIFont systemFontOfSize:35];
+//            [deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//            [deleteBtn addTarget:self action:@selector(tapClick) forControlEvents:UIControlEventTouchUpInside];
+//            [self.navgationView addSubview:deleteBtn];
+//        }
+//    }
+//}
 
 - (void)tapClick {
     FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"确定删除该条动态吗？" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消", nil];
@@ -227,7 +231,7 @@
 
 
 - (void)setUpAllView {
-    self.mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, kScreenWidth, kScreenHeight - MainSizeHeight - 40) style:UITableViewStylePlain];
+    self.mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, kScreenWidth, kScreenHeight - MainSizeHeight - 49) style:UITableViewStylePlain];
     self.mainTable.delegate = self;
     self.mainTable.dataSource = self;
     self.mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -383,6 +387,11 @@
     return [[UIView alloc] init];
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if ([self.kTextView.textView.internalTextView isFirstResponder]) {
+        [self.kTextView.textView.internalTextView endEditing:YES];
+    }
+}
 
 #pragma mark - 给cell赋值
 - (void)configureCell:(ZJMasonryAutolayoutCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -394,36 +403,38 @@
 }
 
 - (void)fh_creatBottomInputView {
-    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
-    bottomView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:bottomView];
+    [self showInputView];
     
-    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0.5, SCREEN_WIDTH, 0.5)];
-    topLine.backgroundColor = [UIColor lightGrayColor];
-    [bottomView addSubview:topLine];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 100, 35)];
-    label.text = @" 我来说两句。。。";
-    label.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    label.textColor = [UIColor lightGrayColor];
-    label.layer.borderWidth = 1;
-    label.font = [UIFont systemFontOfSize:15];
-    label.userInteractionEnabled = YES;
-    [bottomView addSubview:label];
-    
-    UIButton *pushBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    pushBtn.backgroundColor = HEX_COLOR(0x1296db);
-    [pushBtn setTitle:@"发布" forState:0];
-    pushBtn.enabled = NO;
-    pushBtn.layer.cornerRadius = 5;
-    pushBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 70, 35);
-    [bottomView addSubview:pushBtn];
-    
-    
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showInputView)];
-    bottomView.userInteractionEnabled = YES;
-    [bottomView addGestureRecognizer:tap];
+//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
+//    bottomView.backgroundColor = [UIColor whiteColor];
+//    [self.view addSubview:bottomView];
+//
+//    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0.5, SCREEN_WIDTH, 0.5)];
+//    topLine.backgroundColor = [UIColor lightGrayColor];
+//    [bottomView addSubview:topLine];
+//
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 100, 35)];
+//    label.text = @" 我来说两句。。。";
+//    label.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    label.textColor = [UIColor lightGrayColor];
+//    label.layer.borderWidth = 1;
+//    label.font = [UIFont systemFontOfSize:15];
+//    label.userInteractionEnabled = YES;
+//    [bottomView addSubview:label];
+//
+//    UIButton *pushBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    pushBtn.backgroundColor = HEX_COLOR(0x1296db);
+//    [pushBtn setTitle:@"发布" forState:0];
+//    pushBtn.enabled = NO;
+//    pushBtn.layer.cornerRadius = 5;
+//    pushBtn.titleLabel.font = [UIFont systemFontOfSize:15];
+//    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 70, 35);
+//    [bottomView addSubview:pushBtn];
+//
+//
+//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showInputView)];
+//    bottomView.userInteractionEnabled = YES;
+//    [bottomView addGestureRecognizer:tap];
 }
 
 - (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model {
@@ -513,31 +524,42 @@
 
 #pragma mark — event
 - (void)showInputView {
-    /** 可以评论 */
-    [XHInputView showWithStyle:InputViewStyleDefault configurationBlock:^(XHInputView *inputView) {
-        /** 请在此block中设置inputView属性 */
-        /** 代理 */
-        inputView.delegate = self;
-        
-        /** 占位符文字 */
-        inputView.placeholder = @"请输入评论文字...";
-        /** 设置最大输入字数 */
-        inputView.maxCount = 500;
-        /** 输入框颜色 */
-        inputView.textViewBackgroundColor = [UIColor groupTableViewBackgroundColor];
-        
-        /** 更多属性设置,详见XHInputView.h文件 */
-        
-    } sendBlock:^BOOL(NSString *text) {
-        if(text.length){
-            [self updateCommitWithContent:text];
-            NSLog(@"输入为信息为:%@",text);
-            return YES;//return YES,收起键盘
-        }else{
-            NSLog(@"显示提示框-你输入的内容为空");
-            return NO;//return NO,不收键盘
-        }
-    }];
+    if (!self.kTextView) {
+        self.kTextView = [[keyboardTextView alloc] initWithTextViewFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 59, [UIScreen mainScreen].bounds.size.width, 59)];
+        WS(weakSelf);
+        [self.kTextView setSendMesButtonClickedBlock:^(NSString *text) {
+            [weakSelf updateCommitWithContent:text];
+        }];
+        [self.view addSubview:self.kTextView];
+    }
+//    /** 可以评论 */
+//    [XHInputView showWithStyle:InputViewStyleDefault configurationBlock:^(XHInputView *inputView) {
+//        /** 请在此block中设置inputView属性 */
+//        /** 代理 */
+//        inputView.delegate = self;
+//
+//        /** 占位符文字 */
+//        inputView.placeholder = @"请输入评论文字...";
+//        /** 设置最大输入字数 */
+//        inputView.maxCount = 500;
+//        /** 输入框颜色 */
+//        inputView.textViewBackgroundColor = [UIColor groupTableViewBackgroundColor];
+//
+//        /** 更多属性设置,详见XHInputView.h文件 */
+//
+//    } sendBlock:^BOOL(NSString *text) {
+//        if(text.length){
+//            [self updateCommitWithContent:text];
+//            NSLog(@"输入为信息为:%@",text);
+//            return YES;//return YES,收起键盘
+//        }else{
+//            NSLog(@"显示提示框-你输入的内容为空");
+//            return NO;//return NO,不收键盘
+//        }
+//    }];
+    
+    
+    
 }
 
 - (void)updateCommitWithContent:(NSString *)text {

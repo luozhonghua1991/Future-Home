@@ -158,7 +158,7 @@
     } failure:^(NSError *error) {
         [weakSelf.lodingHud hideAnimated:YES];
         weakSelf.lodingHud = nil;
-        [self.view makeToast:@"所填信息有误"];
+        [self.view makeToast:@"服务器加载异常..."];
     }];
 }
 

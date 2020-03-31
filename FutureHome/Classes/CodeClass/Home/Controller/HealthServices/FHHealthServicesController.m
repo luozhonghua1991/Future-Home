@@ -121,6 +121,7 @@
 }
 
 - (void)backBtnClick {
+    [SingleManager shareManager].selectHealthControll = self;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

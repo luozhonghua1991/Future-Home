@@ -454,7 +454,7 @@
         _suggestionsTextView.layer.borderWidth = 1;
         _suggestionsTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         _suggestionsTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
-        _suggestionsTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+        _suggestionsTextView.PlaceholderLabel.textColor = [UIColor lightGrayColor];
         NSString *titleString = @"请输入其它需要补充的信息......";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _suggestionsTextView.PlaceholderLabel.attributedText = attributedTitle;

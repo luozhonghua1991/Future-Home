@@ -159,8 +159,8 @@
     }
     
     /** frame相关的 */
-    CGSize titleSize = [UIlabelTool sizeWithString:self.titleNameLabel.text font:self.titleNameLabel.font width:self.titleNameLabel.width];
-    self.titleNameLabel.frame = CGRectMake(10, 15, SCREEN_WIDTH - 200, titleSize.height);
+    CGSize titleSize = [UIlabelTool sizeWithString:self.titleNameLabel.text font:self.titleNameLabel.font width:SCREEN_WIDTH - 20];
+    self.titleNameLabel.frame = CGRectMake(10, 15, SCREEN_WIDTH - 20, titleSize.height);
     self.priceLabe.frame = CGRectMake(10, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 200, 15);
     self.priceLogoLabe.frame = CGRectMake(10, MaxY(self.priceLabe) + 5, SCREEN_WIDTH - 200, 14);
     
