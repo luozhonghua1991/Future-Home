@@ -132,7 +132,7 @@
 - (void)fh_creatNav {
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = self.titleString;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
@@ -195,7 +195,7 @@
         [titleView addSubview:self.codeImgView];
     }
     
-    self.locationLabel.frame = CGRectMake(0, 12, SCREEN_WIDTH, 15);
+    self.locationLabel.frame = CGRectMake(0, 12, SCREEN_WIDTH, 16);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
     
@@ -543,7 +543,7 @@
         _locationLabel =  [[UILabel alloc] init];
         _locationLabel.text = @"";
         _locationLabel.textColor = [UIColor blueColor];
-        _locationLabel.font = [UIFont systemFontOfSize:15];
+        _locationLabel.font = [UIFont boldSystemFontOfSize:16];
         _locationLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _locationLabel;

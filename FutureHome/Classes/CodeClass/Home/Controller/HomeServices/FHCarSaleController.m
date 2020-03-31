@@ -89,7 +89,7 @@
         string = @"车位出租信息";
     }
     titleLabel.text = string;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;

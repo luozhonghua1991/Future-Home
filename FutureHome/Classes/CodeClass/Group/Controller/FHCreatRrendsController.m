@@ -27,7 +27,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"发布动态";
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;

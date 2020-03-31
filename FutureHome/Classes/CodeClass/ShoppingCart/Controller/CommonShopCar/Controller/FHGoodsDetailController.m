@@ -56,7 +56,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"商品详情";
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
@@ -134,7 +134,7 @@
     
     /** 重用问题 */
     if (!self.numberButton) {
-        self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(SCREEN_WIDTH - 120, 11, 100, 20)];
+        self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(SCREEN_WIDTH - 120, 14, 100, 30)];
     }
     // 初始化时隐藏减按钮
     self.numberButton.decreaseHide = YES;

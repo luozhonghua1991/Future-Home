@@ -161,13 +161,13 @@
     /** frame相关的 */
     CGSize titleSize = [UIlabelTool sizeWithString:self.titleNameLabel.text font:self.titleNameLabel.font width:SCREEN_WIDTH - 20];
     self.titleNameLabel.frame = CGRectMake(10, 15, SCREEN_WIDTH - 20, titleSize.height);
-    self.priceLabe.frame = CGRectMake(10, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 200, 15);
+    self.priceLabe.frame = CGRectMake(10, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 200, 16);
     self.priceLogoLabe.frame = CGRectMake(10, MaxY(self.priceLabe) + 5, SCREEN_WIDTH - 200, 14);
     
-    self.carNumberLabel.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH, 15);
+    self.carNumberLabel.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH, 16);
     self.carNumberLogoLabel.frame = CGRectMake(0, MaxY(self.carNumberLabel) + 5, SCREEN_WIDTH, 14);
     
-    self.areaLabel.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 10, 15);
+    self.areaLabel.frame = CGRectMake(0, MaxY(self.titleNameLabel) + 15, SCREEN_WIDTH - 10, 16);
     self.areaLogoLabel.frame = CGRectMake(2, MaxY(self.areaLabel) + 5, SCREEN_WIDTH - 10, 14);
     
     self.lineView.frame = CGRectMake(10, MaxY(self.priceLogoLabe) + 20, SCREEN_WIDTH - 20, 0.5);
@@ -213,7 +213,7 @@
 - (UILabel *)titleNameLabel {
     if (!_titleNameLabel) {
         _titleNameLabel = [[UILabel alloc] init];
-        _titleNameLabel.font = [UIFont boldSystemFontOfSize:16];
+        _titleNameLabel.font = [UIFont boldSystemFontOfSize:18];
         _titleNameLabel.text = @"车位大甩卖";
         _titleNameLabel.textColor = [UIColor blackColor];
         _titleNameLabel.textAlignment = NSTextAlignmentLeft;
@@ -226,7 +226,7 @@
 - (UILabel *)priceLabe {
     if (!_priceLabe) {
         _priceLabe = [[UILabel alloc] init];
-        _priceLabe.font = [UIFont boldSystemFontOfSize:15];
+        _priceLabe.font = [UIFont boldSystemFontOfSize:16];
         _priceLabe.text = @"￥866600.00";
         _priceLabe.textColor = [UIColor redColor];
         _priceLabe.textAlignment = NSTextAlignmentLeft;
@@ -249,7 +249,7 @@
 - (UILabel *)carNumberLabel {
     if (!_carNumberLabel) {
         _carNumberLabel = [[UILabel alloc] init];
-        _carNumberLabel.font = [UIFont boldSystemFontOfSize:15];
+        _carNumberLabel.font = [UIFont boldSystemFontOfSize:16];
         _carNumberLabel.text = @"560";
         _carNumberLabel.textColor = [UIColor redColor];
         _carNumberLabel.textAlignment = NSTextAlignmentCenter;
@@ -271,7 +271,7 @@
 - (UILabel *)areaLabel {
     if (!_areaLabel) {
         _areaLabel = [[UILabel alloc] init];
-        _areaLabel.font = [UIFont boldSystemFontOfSize:15];
+        _areaLabel.font = [UIFont boldSystemFontOfSize:16];
         _areaLabel.text = @"0平米";
         _areaLabel.textColor = [UIColor redColor];
         _areaLabel.textAlignment = NSTextAlignmentRight;

@@ -138,6 +138,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (self.memberListArrs.count <= 0) {
+        return;
+    }
     FHHealthMemberModel *model = self.memberListArrs[indexPath.row];
     if ([self.yp_tabItemTitle isEqualToString:@"成员列表"]) {
         /** 修改成员信息 */

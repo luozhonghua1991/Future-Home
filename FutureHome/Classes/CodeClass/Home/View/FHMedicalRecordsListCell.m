@@ -35,9 +35,9 @@
 #pragma mark — setter && getter
 - (UILabel *)nameLabel {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.width, 14)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, self.contentView.width, 16)];
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        _nameLabel.font = [UIFont boldSystemFontOfSize:14];
+        _nameLabel.font = [UIFont boldSystemFontOfSize:16];
         _nameLabel.textColor = [UIColor blackColor];
 #warning message
         _nameLabel.text = @"许大宝 女";
@@ -47,9 +47,9 @@
 
 - (UILabel *)phoneNumberLabel {
     if (!_phoneNumberLabel) {
-        _phoneNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, ScreenWidth - 10, 14)];
+        _phoneNumberLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, ScreenWidth - 10, 15)];
         _phoneNumberLabel.textAlignment = NSTextAlignmentRight;
-        _phoneNumberLabel.font = [UIFont systemFontOfSize:14];
+        _phoneNumberLabel.font = [UIFont systemFontOfSize:15];
         _phoneNumberLabel.textColor = [UIColor blackColor];
 #warning message
         _phoneNumberLabel.text = @"15730332432";
@@ -59,9 +59,9 @@
 
 - (UILabel *)personCodeLabel {
     if (!_personCodeLabel) {
-        _personCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, MaxY(_nameLabel) + 10, self.contentView.width, 14)];
+        _personCodeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, MaxY(_nameLabel) + 10, self.contentView.width, 15)];
         _personCodeLabel.textAlignment = NSTextAlignmentLeft;
-        _personCodeLabel.font = [UIFont systemFontOfSize:14];
+        _personCodeLabel.font = [UIFont systemFontOfSize:15];
         _personCodeLabel.textColor = [UIColor blackColor];
 #warning message
         _personCodeLabel.text = @"身份证号 :41020319911106201X";
@@ -71,9 +71,9 @@
 
 - (UILabel *)codeLabel {
     if (!_codeLabel) {
-        _codeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, MaxY(_personCodeLabel) + 10, self.contentView.width, 14)];
+        _codeLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, MaxY(_personCodeLabel) + 10, self.contentView.width, 15)];
         _codeLabel.textAlignment = NSTextAlignmentLeft;
-        _codeLabel.font = [UIFont systemFontOfSize:14];
+        _codeLabel.font = [UIFont systemFontOfSize:15];
         _codeLabel.textColor = [UIColor blackColor];
 #warning message
         _codeLabel.text = @"社保卡号 :23003082048";

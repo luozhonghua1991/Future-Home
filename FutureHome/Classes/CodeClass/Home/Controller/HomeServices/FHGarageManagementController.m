@@ -100,7 +100,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"车库管理";
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;

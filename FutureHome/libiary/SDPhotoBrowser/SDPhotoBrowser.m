@@ -111,7 +111,7 @@
     label.bounds = CGRectMake(0, 0, 150, 30);
     label.center = self.center;
     label.textAlignment = NSTextAlignmentCenter;
-    label.font = [UIFont boldSystemFontOfSize:17];
+    label.font = [UIFont boldSystemFontOfSize:18];
     [[UIApplication sharedApplication].keyWindow addSubview:label];
     [[UIApplication sharedApplication].keyWindow bringSubviewToFront:label];
     if (error) {

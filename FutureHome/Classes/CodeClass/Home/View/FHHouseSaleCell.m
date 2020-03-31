@@ -34,9 +34,9 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     self.leftImgView.frame = CGRectMake(10, 10, 80, 80);
-    self.houseNameLabel.frame = CGRectMake(MaxX(self.leftImgView) + 10, 3, SCREEN_WIDTH - (MaxX(self.leftImgView) + 10), 35);
-    self.houseTypeLabel.frame = CGRectMake(MaxX(self.leftImgView) + 10, MaxY(self.houseNameLabel) + 10, 200, 13);
-    self.priceSugmentLabel.frame = CGRectMake(MaxX(self.leftImgView) + 10, MaxY(self.houseTypeLabel) + 10, 200, 13);
+    self.houseNameLabel.frame = CGRectMake(MaxX(self.leftImgView) + 10, 3, SCREEN_WIDTH - (MaxX(self.leftImgView) + 10), 37);
+    self.houseTypeLabel.frame = CGRectMake(MaxX(self.leftImgView) + 10, MaxY(self.houseNameLabel) + 10, 200, 14);
+    self.priceSugmentLabel.frame = CGRectMake(MaxX(self.leftImgView) + 10, MaxY(self.houseTypeLabel) + 10, 200, 14);
 }
 
 - (void)awakeFromNib {
@@ -104,7 +104,7 @@
 - (UILabel *)houseNameLabel {
     if (!_houseNameLabel) {
         _houseNameLabel = [[UILabel alloc] init];
-        _houseNameLabel.font = [UIFont boldSystemFontOfSize:14];
+        _houseNameLabel.font = [UIFont boldSystemFontOfSize:15];
         _houseNameLabel.text = @"金科廊桥水乡";
         _houseNameLabel.textColor = [UIColor blackColor];
         _houseNameLabel.textAlignment = NSTextAlignmentLeft;
@@ -115,8 +115,8 @@
 
 - (UILabel *)houseTypeLabel {
     if (!_houseTypeLabel) {
-        _houseTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (100 - 13) / 2, SCREEN_WIDTH - 10, 13)];
-        _houseTypeLabel.font = [UIFont systemFontOfSize:13];
+        _houseTypeLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (100 - 13) / 2, SCREEN_WIDTH - 10, 14)];
+        _houseTypeLabel.font = [UIFont systemFontOfSize:14];
         _houseTypeLabel.text = @"一室一厅";
         _houseTypeLabel.textColor = [UIColor blackColor];
         _houseTypeLabel.textAlignment = NSTextAlignmentLeft;
@@ -126,8 +126,8 @@
 
 - (UILabel *)priceSugmentLabel {
     if (!_priceSugmentLabel) {
-        _priceSugmentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (100 - 13) / 2, SCREEN_WIDTH - 10, 13)];
-        _priceSugmentLabel.font = [UIFont systemFontOfSize:13];
+        _priceSugmentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (100 - 13) / 2, SCREEN_WIDTH - 10, 14)];
+        _priceSugmentLabel.font = [UIFont systemFontOfSize:14];
         _priceSugmentLabel.text = @"付款要求:月付";
         _priceSugmentLabel.textColor = [UIColor blackColor];
         _priceSugmentLabel.textAlignment = NSTextAlignmentLeft;
@@ -137,8 +137,8 @@
 
 - (UILabel *)priceLabel {
     if (!_priceLabel) {
-        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (100 - 13) / 2, SCREEN_WIDTH - 10, 13)];
-        _priceLabel.font = [UIFont systemFontOfSize:13];
+        _priceLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, (100 - 13) / 2, SCREEN_WIDTH - 10, 14)];
+        _priceLabel.font = [UIFont systemFontOfSize:14];
         _priceLabel.text = @"￥258.00";
         _priceLabel.textColor = [UIColor redColor];
         _priceLabel.textAlignment = NSTextAlignmentRight;

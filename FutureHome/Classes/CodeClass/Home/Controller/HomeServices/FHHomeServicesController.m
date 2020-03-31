@@ -170,7 +170,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = @"物业服务";
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
@@ -365,10 +365,10 @@
         UIView *locationView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.116)];
         locationView.tag = 2017;
         
-        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,(SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH, 15)];
+        self.realSstateSNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0,(SCREEN_WIDTH * 0.116 - 16 ) / 2, SCREEN_WIDTH, 16)];
         self.realSstateSNameLabel.text = self.homeServiceName;
         self.realSstateSNameLabel.textColor = [UIColor blueColor];
-        self.realSstateSNameLabel.font = [UIFont systemFontOfSize:15];
+        self.realSstateSNameLabel.font = [UIFont boldSystemFontOfSize:16];
         self.realSstateSNameLabel.textAlignment = NSTextAlignmentCenter;
         [locationView addSubview:self.realSstateSNameLabel];
         

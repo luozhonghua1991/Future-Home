@@ -152,7 +152,7 @@
     // 内容
     if (!self.contentLab) {
         self.contentLab = [[UILabel alloc] init];
-        self.contentLab.font = [UIFont systemFontOfSize:15];
+        self.contentLab.font = [UIFont systemFontOfSize:16];
         self.contentLab.textColor = kBlackColor;
         self.contentLab.numberOfLines = 0;
         self.contentLab.textAlignment = NSTextAlignmentLeft;

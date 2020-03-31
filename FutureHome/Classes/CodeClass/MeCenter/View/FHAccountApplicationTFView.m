@@ -48,10 +48,10 @@
 
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 23, 200, 15)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 23, 200, 16)];
         _titleLabel.textColor = HEX_COLOR(0x878787);
         _titleLabel.textAlignment = NSTextAlignmentLeft;
-        _titleLabel.font = [UIFont systemFontOfSize:15];
+        _titleLabel.font = [UIFont systemFontOfSize:16];
     }
     return _titleLabel;
 }
@@ -60,7 +60,7 @@
     if (!_contentTF) {
         _contentTF = [[UITextField alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 270, 20, 260, 20)];
         _contentTF.textAlignment = NSTextAlignmentRight;
-        _contentTF.font = [UIFont systemFontOfSize:15];
+        _contentTF.font = [UIFont systemFontOfSize:16];
         _contentTF.returnKeyType = UIReturnKeyDone;
 //        _contentTF.delegate = self;
 //        _contentTF.backgroundColor = HEX_COLOR(0x1296db);

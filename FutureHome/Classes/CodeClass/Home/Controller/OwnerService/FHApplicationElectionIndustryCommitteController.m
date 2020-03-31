@@ -81,7 +81,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = self.titleString;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
@@ -548,9 +548,9 @@
 - (UILabel *)normalLabel {
     if (!_normalLabel) {
         _normalLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0,97, 400)];
-        _normalLabel.textColor = [UIColor blackColor];
+        _normalLabel.textColor = [UIColor lightGrayColor];
         _normalLabel.textAlignment = NSTextAlignmentCenter;
-        _normalLabel.font = [UIFont systemFontOfSize:13];
+        _normalLabel.font = [UIFont systemFontOfSize:15];
         _normalLabel.text = @"基本情况:";
     }
     return _normalLabel;
@@ -559,8 +559,8 @@
 - (BRPlaceholderTextView *)businessDescriptionTextView {
     if (!_businessDescriptionTextView) {
         _businessDescriptionTextView = [[BRPlaceholderTextView alloc] initWithFrame:CGRectMake(98, 0, SCREEN_WIDTH - 20 - 98, 400)];
-        _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:13];
-        _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+        _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
+        _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor lightGrayColor];
         NSString *titleString = @" \n\n\n\n 请输入个人基本情况";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
         _businessDescriptionTextView.PlaceholderLabel.attributedText = attributedTitle;

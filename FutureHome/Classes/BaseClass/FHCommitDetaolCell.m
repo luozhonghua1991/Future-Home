@@ -36,7 +36,7 @@
     [self.contentView addSubview:self.nickNameLabel];
     self.timeLabel.frame = CGRectMake(0, 15.5, SCREEN_WIDTH - 20, 13);
     [self.contentView addSubview:self.timeLabel];
-    self.contentLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, MaxY(self.nickNameLabel) + 10, SCREEN_WIDTH - 100, 13);
+    self.contentLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, MaxY(self.nickNameLabel) + 10, SCREEN_WIDTH - 100, 15);
     [self.contentView addSubview:self.contentLabel];
 }
 
@@ -78,7 +78,7 @@
     if (!_contentLabel) {
         _contentLabel = [[UILabel alloc] init];
         _contentLabel.textAlignment = NSTextAlignmentLeft;
-        _contentLabel.font = [UIFont systemFontOfSize:13];
+        _contentLabel.font = [UIFont systemFontOfSize:15];
         _contentLabel.textColor = [UIColor blackColor];
         _contentLabel.numberOfLines = 0;
 #warning message

@@ -80,7 +80,7 @@
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     titleLabel.text = self.titleString;
-    titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
     titleLabel.userInteractionEnabled = YES;
@@ -182,34 +182,91 @@
 
 #pragma mark — event
 - (void)sureBtnClick {
+    if (self.titleView.contentTF.text.length <= 0) {
+        [self.view makeToast:@"请输入标题"];
+        return;
+    }
+    if (self.houseTypeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.houseTypeView.contentTF.placeholder];
+        return;
+    }
+    if (self.salePriceView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.salePriceView.contentTF.placeholder];
+        return;
+    }
+    if (self.priceSugmentView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.priceSugmentView.contentTF.placeholder];
+        return;
+    }
+    if (self.fixturesView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.fixturesView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.houseDirectionView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.houseDirectionView.contentTF.placeholder];
+        return;
+    }
+    if (self.houseingTypeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.houseingTypeView.contentTF.placeholder];
+        return;
+    }
+    if (self.houseNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.houseNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.yearView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.yearView.contentTF.placeholder];
+        return;
+    }
+    if (self.buildTimeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.buildTimeView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.callPhoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.callPhoneNumberView.contentTF.placeholder];
+        return;
+    }
+    
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
-    self.selectImgArrays = [[NSMutableArray alloc] init];
-    /** 先上传多张图片*/
-    Account *account = [AccountStorage readAccount];
-    NSString *string = [self getCurrentTimes];
-    NSArray *arr = @[string];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @"property",@"path",
-                               arr,@"file[]",
-                               nil];
-    for (int i = 0; i< self.imgSelectArrs.count; i++) {
-        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
-        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-            NSArray *arr = responseObj[@"data"];
-            if (!IS_NULL_ARRAY(arr)) {
-                NSString *imgID = [arr objectAtIndex:0];
-                [self.selectImgArrays addObject:imgID];
-                if (self.selectImgArrays.count == self.imgSelectArrs.count) {
-                    /** 图片获取完毕 */
-                    [self commitInfo];
+    if (self.imgSelectArrs <= 0) {
+        [self.view makeToast:@"请上传房屋信息图片"];
+    } else {
+        self.selectImgArrays = [[NSMutableArray alloc] init];
+        /** 先上传多张图片*/
+        Account *account = [AccountStorage readAccount];
+        NSString *string = [self getCurrentTimes];
+        NSArray *arr = @[string];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @"property",@"path",
+                                   arr,@"file[]",
+                                   nil];
+        for (int i = 0; i< self.imgSelectArrs.count; i++) {
+            NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
+            [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+                NSArray *arr = responseObj[@"data"];
+                if (!IS_NULL_ARRAY(arr)) {
+                    NSString *imgID = [arr objectAtIndex:0];
+                    [self.selectImgArrays addObject:imgID];
+                    if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                        /** 图片获取完毕 */
+                        [self commitInfo];
+                    }
                 }
-            }
-        } failure:^(NSError *error) {
-            
-        }];
+            } failure:^(NSError *error) {
+                
+            }];
+        }
     }
 }
 
@@ -275,9 +332,13 @@
             [weakSelf.view makeToast:@"资料已经提交成功"];
             [weakSelf.navigationController popViewControllerAnimated:YES];
         } else {
-            [self.view makeToast:@"所填信息有误"];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
+            [self.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
         [self.view makeToast:@"所填信息有误"];
     }];
     
@@ -300,6 +361,20 @@
             self.buildTimeView.contentTF.text = selectValue;
         } ];
     }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.titleView.contentTF) {
+        // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.titleView.contentTF.text.length >= 40) {
+            self.titleView.contentTF.text = [textField.text substringToIndex:40];
+            [self.view makeToast:@"标题不能超过40个字"];
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark - Getters and Setters

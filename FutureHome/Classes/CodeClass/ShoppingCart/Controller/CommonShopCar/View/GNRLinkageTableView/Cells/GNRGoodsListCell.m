@@ -35,16 +35,16 @@
     self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77 - 60, (self.contentView.height - 88) / 2, 60, 88)];
     [self.contentView addSubview:self.stepperSuperView];
     
-    self.nameL.font = [UIFont boldSystemFontOfSize:14];
+    self.nameL.font = [UIFont boldSystemFontOfSize:15];
     
-    self.specsLabel.frame = CGRectMake(self.nameL.x, self.nameL.y + self.nameL.size.height + 13, ZH_SCALE_SCREEN_Width(100), 12);
+    self.specsLabel.frame = CGRectMake(self.nameL.x, self.nameL.y + self.nameL.size.height + 13, ZH_SCALE_SCREEN_Width(100), 13);
     [self.contentView addSubview:self.specsLabel];
     
-    self.priceLabel.frame = CGRectMake(58, self.nameL.y + self.nameL.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
+    self.priceLabel.frame = CGRectMake(58, self.nameL.y + self.nameL.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 13);
 //    self.priceLabel.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.priceLabel];
     
-    self.stockLabel.frame = CGRectMake(58, self.priceLabel.y + self.priceLabel.size.height + 11, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 12);
+    self.stockLabel.frame = CGRectMake(58, self.priceLabel.y + self.priceLabel.size.height + 11, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 13);
 //    self.stockLabel.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.stockLabel];
     
@@ -108,7 +108,7 @@
     if (!_specsLabel) {
         _specsLabel = [[UILabel alloc] init];
         _specsLabel.text = @"700-800g/份";
-        _specsLabel.font = [UIFont systemFontOfSize:12];
+        _specsLabel.font = [UIFont systemFontOfSize:13];
         _specsLabel.textAlignment = NSTextAlignmentLeft;
     }
     return _specsLabel;
@@ -119,7 +119,7 @@
     if (!_stockLabel) {
         _stockLabel = [[UILabel alloc] init];
         _stockLabel.text = @"库存:300只";
-        _stockLabel.font = [UIFont systemFontOfSize:12];
+        _stockLabel.font = [UIFont systemFontOfSize:13];
         _stockLabel.textAlignment = NSTextAlignmentRight;
     }
     return _stockLabel;
@@ -130,7 +130,7 @@
     if (!_priceLabel) {
         _priceLabel = [[UILabel alloc] init];
         _priceLabel.text = @"￥9.8 元/份";
-        _priceLabel.font = [UIFont systemFontOfSize:12];
+        _priceLabel.font = [UIFont boldSystemFontOfSize:13];
         _priceLabel.textAlignment = NSTextAlignmentRight;
         _priceLabel.textColor = [UIColor redColor];
     }

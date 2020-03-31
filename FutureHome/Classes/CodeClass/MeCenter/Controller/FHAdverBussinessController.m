@@ -82,7 +82,8 @@
 }
 
 - (void)setDataWithModel:(FHLosProtocolModel *)protocolModel {
-    self.logLabel.attributedText = [UIlabelTool willChangeHtmlString:protocolModel.tip1];
+//    self.logLabel.attributedText = [UIlabelTool willChangeHtmlString:protocolModel.tip1];
+    self.logLabel.text = protocolModel.tip1;
     self.tips2 = protocolModel.tip2;
     self.protocol = protocolModel.protocol;
     self.discount = protocolModel.discount;
@@ -159,8 +160,8 @@
 - (UILabel *)logLabel {
     if (!_logLabel) {
         _logLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, MaxY(_selectBtn) + 200, SCREEN_WIDTH - 80, 90)];
-        _logLabel.font = [UIFont systemFontOfSize:13];
-        _logLabel.textColor = [UIColor blackColor];
+        _logLabel.font = [UIFont systemFontOfSize:14];
+        _logLabel.textColor = [UIColor lightGrayColor];
         _logLabel.textAlignment = NSTextAlignmentLeft;
         _logLabel.backgroundColor = [UIColor whiteColor];
 //        _logLabel.layer.borderColor = [UIColor blackColor].CGColor;

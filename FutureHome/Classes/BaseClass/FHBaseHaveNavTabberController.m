@@ -28,7 +28,7 @@
     
     self.titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
     self.titleLabel.text = self.titleString;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:18];
     self.titleLabel.textColor = [UIColor whiteColor];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.userInteractionEnabled = YES;

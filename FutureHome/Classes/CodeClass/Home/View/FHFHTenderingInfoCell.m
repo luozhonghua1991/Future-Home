@@ -95,7 +95,7 @@
 - (UILabel *)titleLabel {
     if (!_titleLabel) {
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(MaxX(self.titleLogLabel) + 25, 5, 250, 0)];
-        _titleLabel.font = [UIFont systemFontOfSize:14];
+        _titleLabel.font = [UIFont boldSystemFontOfSize:14];
         _titleLabel.text = @"恒大未来城- -期业委会团购20吨苹果，欢迎产地方投标，付款方式友好共36字.";
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.textAlignment = NSTextAlignmentLeft;
