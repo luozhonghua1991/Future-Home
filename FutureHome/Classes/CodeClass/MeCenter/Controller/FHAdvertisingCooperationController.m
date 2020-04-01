@@ -425,6 +425,68 @@ UICollectionViewDataSource>
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
+    /** 判空 */
+    if (self.applicantNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
+    if (self.personNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.personNameView.contentTF.placeholder];
+        return;
+    }
+//    if (self.applicantCardView.contentTF.text.length <= 0) {
+//        [self.view makeToast:self.applicantCardView.contentTF.placeholder];
+//        return;
+//    }
+//    if (self.applicantCardView.contentTF.text.length < 18) {
+//        [self.view makeToast:@"身份证格式不正确,请重新填写"];
+//        return;
+//    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length < 11) {
+        [self.view makeToast:@"手机号码格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.mailView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.mailView.contentTF.placeholder];
+        return;
+    }
+    if (self.adverTypeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.adverTypeView.contentTF.placeholder];
+        return;
+    }
+    if (self.adverNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.adverNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.showDayView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.showDayView.contentTF.placeholder];
+        return;
+    }
+    if (self.showTimeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.showTimeView.contentTF.placeholder];
+        return;
+    }
+    if (IsStringEmpty(self.adventString)) {
+        [self.view makeToast:@"请选择广告投放位置"];
+        return;
+    }
+    
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     /** 直接提交操作就行 */
     WS(weakSelf);

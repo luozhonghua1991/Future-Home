@@ -476,6 +476,52 @@
 
 
 - (void)commitAccountDataRequest {
+    /** 判空 */
+    if (self.delegateWhereView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.delegateWhereView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.personNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.personNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantCardView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantCardView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantCardView.contentTF.text.length < 18) {
+        [self.view makeToast:@"身份证格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length < 11) {
+        [self.view makeToast:@"手机号码格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.mailView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.mailView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
+    
     WS(weakSelf);
      [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
