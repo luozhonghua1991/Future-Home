@@ -422,7 +422,63 @@ FHCommonPaySelectViewDelegate
     }];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.serviceDeskNameTF) {
+        // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.serviceDeskNameTF.text.length >= 16) {
+            [self.view makeToast:@"生鲜服务账号名称限制16字以内"];
+            self.serviceDeskNameTF.text = [textField.text substringToIndex:16];
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (void)commitAccountDataRequest {
+    /** 判空 */
+    if (self.serviceDeskNameTF.text.length <= 0) {
+        [self.view makeToast:self.serviceDeskNameTF.placeholder];
+        return;
+    }
+    if (self.applicantNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantCardView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantCardView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantCardView.contentTF.text.length < 18) {
+        [self.view makeToast:@"身份证格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length < 11) {
+        [self.view makeToast:@"手机号码格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.mailView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.mailView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
+    
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
@@ -467,11 +523,15 @@ FHCommonPaySelectViewDelegate
                                     }
                                 }];
                             } else {
+                                [weakSelf.lodingHud hideAnimated:YES];
+                                weakSelf.lodingHud = nil;
                                 [self.view makeToast:respMsg];
                             }
                         }];
                     }
                 } else {
+                    [weakSelf.lodingHud hideAnimated:YES];
+                    weakSelf.lodingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             } else if (self.payType == 2) {

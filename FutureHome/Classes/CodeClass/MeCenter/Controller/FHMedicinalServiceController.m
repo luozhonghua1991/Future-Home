@@ -425,7 +425,63 @@ FHCommonPaySelectViewDelegate
     }];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.serviceDeskNameTF) {
+        // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.serviceDeskNameTF.text.length >= 16) {
+            [self.view makeToast:@"医药电商平台名称限制16字以内"];
+            self.serviceDeskNameTF.text = [textField.text substringToIndex:16];
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (void)commitAccountDataRequest {
+    
+    /** 判空 */
+    if (self.serviceDeskNameTF.text.length <= 0) {
+        [self.view makeToast:self.serviceDeskNameTF.placeholder];
+        return;
+    }
+    if (self.applicantNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantCardView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.applicantCardView.contentTF.placeholder];
+        return;
+    }
+    if (self.applicantCardView.contentTF.text.length < 18) {
+        [self.view makeToast:@"身份证格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length < 11) {
+        [self.view makeToast:@"手机号码格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.mailView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.mailView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
@@ -470,11 +526,15 @@ FHCommonPaySelectViewDelegate
                                     }
                                 }];
                             } else {
+                                [weakSelf.lodingHud hideAnimated:YES];
+                                weakSelf.lodingHud = nil;
                                 [self.view makeToast:respMsg];
                             }
                         }];
                     }
                 } else {
+                    [weakSelf.lodingHud hideAnimated:YES];
+                    weakSelf.lodingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             } else if (weakSelf.payType == 2) {
@@ -584,7 +644,7 @@ FHCommonPaySelectViewDelegate
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"请输入社交电商平台名称(限16字)";
+        _serviceDeskNameTF.placeholder = @"请输入医药电商平台名称(限16字)";
     }
     return _serviceDeskNameTF;
 }
@@ -594,6 +654,7 @@ FHCommonPaySelectViewDelegate
         _applicantNameView = [[FHAccountApplicationTFView alloc] init];
         _applicantNameView.titleLabel.text = @"申请人姓名";
         _applicantNameView.contentTF.delegate = self;
+        _applicantNameView.contentTF.placeholder = @"请输入申请人姓名";
     }
     return _applicantNameView;
 }
@@ -603,6 +664,7 @@ FHCommonPaySelectViewDelegate
         _applicantCardView = [[FHAccountApplicationTFView alloc] init];
         _applicantCardView.titleLabel.text = @"申请人身份证";
         _applicantCardView.contentTF.delegate = self;
+        _applicantCardView.contentTF.placeholder = @"请输入申请人身份证";
     }
     return _applicantCardView;
 }
@@ -612,6 +674,7 @@ FHCommonPaySelectViewDelegate
         _phoneNumberView = [[FHAccountApplicationTFView alloc] init];
         _phoneNumberView.titleLabel.text = @"手机号码(接收账号密码)";
         _phoneNumberView.contentTF.delegate = self;
+        _phoneNumberView.contentTF.placeholder = @"请输入手机号码";
     }
     return _phoneNumberView;
 }
@@ -631,6 +694,7 @@ FHCommonPaySelectViewDelegate
         _mailView = [[FHAccountApplicationTFView alloc] init];
         _mailView.titleLabel.text = @"电子邮箱(接收账号密码)";
         _mailView.contentTF.delegate = self;
+        _mailView.contentTF.placeholder = @"请输入电子邮箱";
     }
     return _mailView;
 }
