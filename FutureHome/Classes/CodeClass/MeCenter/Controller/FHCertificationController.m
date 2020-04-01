@@ -143,6 +143,18 @@
 }
 
 - (void)commitAccountDataRequest {
+    if (self.selectIDCardsImgArrs <= 0) {
+        [self.view makeToast:@"请上传证件相关的照片"];
+        return;
+    }
+    if (self.trueNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.trueNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.personCodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.personCodeView.contentTF.placeholder];
+        return;
+    }
     /** 添加成员接口 */
     [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     /**先上传图片 在进行认证**/

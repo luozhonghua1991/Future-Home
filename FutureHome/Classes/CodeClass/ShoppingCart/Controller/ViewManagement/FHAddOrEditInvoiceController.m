@@ -98,8 +98,37 @@
 
 
 - (void)conserveBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequest];
+        }
+    }];
+}
+
+- (void)commitRequest {
     /** 保存发票 */
     /** id新增的话 传0 更新的话传 */
+    if (companyNameTF.text.length <= 0) {
+        [self.view makeToast:companyNameTF.placeholder];
+        return;
+    }
+    if (companyCodeTF.text.length <= 0) {
+        [self.view makeToast:companyCodeTF.placeholder];
+        return;
+    }
+    if (companyAddressTF.text.length <= 0) {
+        [self.view makeToast:companyAddressTF.placeholder];
+        return;
+    }
+    if (companyBankTF.text.length <= 0) {
+        [self.view makeToast:companyBankTF.placeholder];
+        return;
+    }
+    if (companyAccountTF.text.length <= 0) {
+        [self.view makeToast:companyAccountTF.placeholder];
+        return;
+    }
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic;

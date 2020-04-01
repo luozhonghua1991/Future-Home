@@ -111,7 +111,33 @@
 }
 #pragma mark  -- 保存地址
 - (void)conserveBtnClick {
+    WS(weakSelf);
+    [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+        if (buttonIndex == 1) {
+            [weakSelf commitRequest];
+        }
+    }];
+}
+
+- (void)commitRequest {
     //首先判断手机号格式是否正确
+    if (recipientsTF.text.length <= 0) {
+        [self.view makeToast:recipientsTF.placeholder];
+        return;
+    }
+    if (phoneNumberTF.text.length <= 0) {
+        [self.view makeToast:phoneNumberTF.placeholder];
+        return;
+    }
+    if (phoneNumberTF.text.length < 11) {
+        [self.view makeToast:@"请输入正确的手机号"];
+        return;
+    }
+    if (detailAddressTextView.text.length <= 0) {
+        [self.view makeToast:@"请输入详细地址"];
+        return;
+    }
+    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     if ([self.titleName isEqualToString:@"添加地址"]) {
         //添加地址保存
         Account *account = [AccountStorage readAccount];
@@ -174,7 +200,6 @@
             NSLog(@"%@",error.description);
         }];
     }
-
 }
 
 #pragma mark - TableDelegate

@@ -214,9 +214,59 @@
     }
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.contentTF) {
+        // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.contentTF.text.length >= 20) {
+            self.contentTF.text = [textField.text substringToIndex:20];
+            [self.view makeToast:@"意愿不能超过20个字"];
+            return NO;
+        }
+    }
+    return YES;
+}
+
 - (void)sureBtnClick {
     /** 选举申请 */
     WS(weakSelf);
+    if (self.nameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.nameView.contentTF.placeholder];
+        return;
+    }
+    if (self.ageView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.ageView.contentTF.placeholder];
+        return;
+    }
+    if (self.sexView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.sexView.contentTF.placeholder];
+        return;
+    }
+    if (self.xueliView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.xueliView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.faceView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.faceView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
+    if (self.typeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.typeView.contentTF.placeholder];
+        return;
+    }
+    if (self.contentTF.text.length <= 0) {
+        [self.view makeToast:self.contentTF.placeholder];
+        return;
+    }
     NSInteger sexType;
     if ([self.sexView.contentTF.text isEqualToString:@"男"]) {
         sexType = 1;
@@ -523,6 +573,7 @@
         _contentTF.placeholder = @"  一句话表达参选的意愿(限20字内)";
         _contentTF.layer.borderWidth = 1;
         _contentTF.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _contentTF.delegate = self;
     }
     return _contentTF;
 }

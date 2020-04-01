@@ -122,6 +122,38 @@
 }
 
 - (void)commitRequest {
+    if (self.ownerNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.ownerNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.ownerCodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.ownerCodeView.contentTF.placeholder];
+        return;
+    }
+    if (self.ownerCodeView.contentTF.text.length < 18) {
+        [self.view makeToast:@"请输入正确的身份证号"];
+        return;
+    }
+    if (self.sexView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.sexView.contentTF.placeholder];
+        return;
+    }
+    if (self.birthView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.birthView.contentTF.placeholder];
+        return;
+    }
+    if (self.healthCodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.healthCodeView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length < 11) {
+        [self.view makeToast:@"请输入正确的手机号"];
+        return;
+    }
     /** 添加成员接口 */
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     NSString *sexID;
@@ -129,6 +161,9 @@
         sexID = @"1";
     } else if ([self.sexView.contentTF.text isEqualToString:@"女"]) {
         sexID = @"2";
+    } else {
+        [self.view makeToast:@"请正确填写性别"];
+        return;
     }
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -160,6 +195,7 @@
     } failure:^(NSError *error) {
         [weakSelf.loadingHud hideAnimated:YES];
         weakSelf.loadingHud = nil;
+        [weakSelf.view makeToast:@"服务器加载异常,请稍后重试"];
     }];
 }
 

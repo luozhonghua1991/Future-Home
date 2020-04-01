@@ -156,36 +156,94 @@
     [self.view addSubview:sureBtn];
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.titleView.contentTF) {
+        // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.titleView.contentTF.text.length >= 40) {
+            self.titleView.contentTF.text = [textField.text substringToIndex:40];
+            [self.view makeToast:@"标题不能超过40个字"];
+            return NO;
+        }
+    }
+    return YES;
+}
+
 #pragma mark — event
 - (void)sureBtnClick {
+    if (self.titleView.contentTF.text.length <= 0) {
+        [self.view makeToast:@"请输入标题"];
+        return;
+    }
+    if (self.carHouseNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.carHouseNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.salePriceView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.salePriceView.contentTF.placeholder];
+        return;
+    }
+    if (self.carNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.carNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.yearView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.yearView.contentTF.placeholder];
+        return;
+    }
+    if (self.carAreaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.carAreaView.contentTF.placeholder];
+        return;
+    }
+    if (self.buildTimeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.buildTimeView.contentTF.placeholder];
+        return;
+    }
+    if (self.priceSugmentView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.priceSugmentView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneNumberView.contentTF.placeholder];
+        return;
+    }
+    if (self.callPhoneNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.callPhoneNumberView.contentTF.placeholder];
+        return;
+    }
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
-    self.selectImgArrays = [[NSMutableArray alloc] init];
-    /** 先上传多张图片*/
-    Account *account = [AccountStorage readAccount];
-    NSString *string = [self getCurrentTimes];
-    NSArray *arr = @[string];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               @"property",@"path",
-                               arr,@"file[]",
-                               nil];
-    for (int i = 0; i < self.imgSelectArrs.count; i++) {
-        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
-        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-            NSArray *arr = responseObj[@"data"];
-            if (!IS_NULL_ARRAY(arr)) {
-                NSString *imgID = [arr objectAtIndex:0];
-                [self.selectImgArrays addObject:imgID];
-                if (self.selectImgArrays.count == self.imgSelectArrs.count) {
-                    /** 图片获取完毕 */
-                    [self commitInfo];
+    if (self.imgSelectArrs <= 0) {
+        [self.view makeToast:@"请上传房屋信息图片"];
+    } else {
+        self.selectImgArrays = [[NSMutableArray alloc] init];
+        /** 先上传多张图片*/
+        Account *account = [AccountStorage readAccount];
+        NSString *string = [self getCurrentTimes];
+        NSArray *arr = @[string];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   @"property",@"path",
+                                   arr,@"file[]",
+                                   nil];
+        for (int i = 0; i < self.imgSelectArrs.count; i++) {
+            NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
+            [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+                NSArray *arr = responseObj[@"data"];
+                if (!IS_NULL_ARRAY(arr)) {
+                    NSString *imgID = [arr objectAtIndex:0];
+                    [self.selectImgArrays addObject:imgID];
+                    if (self.selectImgArrays.count == self.imgSelectArrs.count) {
+                        /** 图片获取完毕 */
+                        [self commitInfo];
+                    }
                 }
-            }
-        } failure:^(NSError *error) {
-            
-        }];
+            } failure:^(NSError *error) {
+                
+            }];
+        }
     }
 }
 
@@ -247,10 +305,14 @@
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [self.view makeToast:@"所填信息有误"];
         }
     } failure:^(NSError *error) {
-        [self.view makeToast:@"所填信息有误"];
+        [weakSelf.loadingHud hideAnimated:YES];
+        weakSelf.loadingHud = nil;
+        [self.view makeToast:@"服务器异常,请稍后重试"];
     }];
     
 }
@@ -264,6 +326,7 @@
         } ];
     }
 }
+
 
 #pragma mark - Getters and Setters
 - (UIScrollView *)scrollView {
