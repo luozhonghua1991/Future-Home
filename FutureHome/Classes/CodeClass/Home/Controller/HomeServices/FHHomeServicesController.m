@@ -373,7 +373,7 @@
         [locationView addSubview:self.realSstateSNameLabel];
         
         self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
-        self.codeImgView.contentMode = UIViewContentModeScaleAspectFit;
+        self.codeImgView.contentMode = UIViewContentModeScaleToFill;
         self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];

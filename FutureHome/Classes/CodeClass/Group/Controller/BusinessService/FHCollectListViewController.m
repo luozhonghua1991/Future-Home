@@ -92,7 +92,7 @@ FHSearchResultCellDelegate
                                    self.type,@"type",
                                    @(curPage),@"page",
                                    nil];
-        [AFNetWorkTool get:@"userCenter/collectList" params:paramsDic success:^(id responseObj) {
+        [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 if (isHead) {
                     [self.dataArrs removeAllObjects];

@@ -565,6 +565,35 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     self.selectCount++;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (textField == self.personServiceDeskView.contentTF) {
+        // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.personServiceDeskView.contentTF.text.length >= 12) {
+            self.personServiceDeskView.contentTF.text = [textField.text substringToIndex:12];
+            [self.view makeToast:@"业主服务平台名称不超过12个字"];
+            return NO;
+        }
+    } else if (textField == self.serviceDeskNameTF) {
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.serviceDeskNameTF.text.length >= 12) {
+            self.serviceDeskNameTF.text = [textField.text substringToIndex:12];
+            [self.view makeToast:@"物业服务平台名称不超过12个字"];
+            return NO;
+        }
+    }  else if (textField == self.cellNameView.contentTF) {
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.cellNameView.contentTF.text.length >= 12) {
+            self.cellNameView.contentTF.text = [textField.text substringToIndex:12];
+            [self.view makeToast:@"小区名称不超过12个字"];
+            return NO;
+        }
+    }
+    return YES;
+}
 
 - (void)submitBtnClick {
     /** 确认并提交 */
@@ -584,6 +613,105 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 }
 
 - (void)commitAccountDataRequest {
+    /** 判空 */
+    /** 判空 */
+    
+    if (self.personServiceDeskView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.personServiceDeskView.contentTF.placeholder];
+        return;
+    }
+    if (self.serviceDeskNameTF.text.length <= 0) {
+        [self.view makeToast:self.serviceDeskNameTF.placeholder];
+        return;
+    }
+    if (self.cellNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.cellNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.managerNameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.managerNameView.contentTF.placeholder];
+        return;
+    }
+    if (self.managerCardView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.managerCardView.contentTF.placeholder];
+        return;
+    }
+    if (self.managerCardView.contentTF.text.length < 18) {
+        [self.view makeToast:@"身份证格式不正确,请重新填写"];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.mailView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.mailView.contentTF.placeholder];
+        return;
+    }
+    if (self.areaView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.areaView.contentTF.placeholder];
+        return;
+    }
+    if (self.addressView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.addressView.contentTF.placeholder];
+        return;
+    }
+    
+    
+    if (self.person1NameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person1NameView.contentTF.placeholder];
+        return;
+    }
+    if (self.person1CodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person1CodeView.contentTF.placeholder];
+        return;
+    }
+    if (self.person1PhoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person1PhoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.person1HourseNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person1HourseNumberView.contentTF.placeholder];
+        return;
+    }
+    
+    
+    if (self.person2NameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person2NameView.contentTF.placeholder];
+        return;
+    }
+    if (self.person2CodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person2CodeView.contentTF.placeholder];
+        return;
+    }
+    if (self.person2PhoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person2PhoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.person2HourseNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person2HourseNumberView.contentTF.placeholder];
+        return;
+    }
+    
+    
+    if (self.person3NameView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person3NameView.contentTF.placeholder];
+        return;
+    }
+    if (self.person3CodeView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person3CodeView.contentTF.placeholder];
+        return;
+    }
+    if (self.person3PhoneView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person3PhoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.person3HourseNumberView.contentTF.text.length <= 0) {
+        [self.view makeToast:self.person3HourseNumberView.contentTF.placeholder];
+        return;
+    }
+    
+    
     WS(weakSelf);
     self.personNameArrs = [[NSMutableArray alloc] init];
     self.idNumberArrs = [[NSMutableArray alloc] init];
@@ -653,11 +781,15 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                     }
                                 }];
                             } else {
+                                [weakSelf.lodingHud hideAnimated:YES];
+                                weakSelf.lodingHud = nil;
                                 [self.view makeToast:respMsg];
                             }
                         }];
                     }
                 } else {
+                    [weakSelf.lodingHud hideAnimated:YES];
+                    weakSelf.lodingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             } else if (self.payType == 2) {
@@ -755,6 +887,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _personServiceDeskView.titleLabel.text = @"业主服务平台名称";
         _personServiceDeskView.contentTF.text = @"";
         _personServiceDeskView.contentTF.placeholder = @"请输入业主服务平台名称(限12字)";
+        _personServiceDeskView.contentTF.delegate = self;
     }
     return _personServiceDeskView;
 }
@@ -775,6 +908,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
         _serviceDeskNameTF.placeholder = @"请输入物业服务平台名称(限12字)";
+        _serviceDeskNameTF.delegate = self;
     }
     return _serviceDeskNameTF;
 }
@@ -784,6 +918,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _cellNameView = [[FHAccountApplicationTFView alloc] init];
         _cellNameView.titleLabel.text = @"小区名称";
         _cellNameView.contentTF.placeholder = @"请输入小区名称(限12字)";
+        _cellNameView.contentTF.delegate = self;
     }
     return _cellNameView;
 }

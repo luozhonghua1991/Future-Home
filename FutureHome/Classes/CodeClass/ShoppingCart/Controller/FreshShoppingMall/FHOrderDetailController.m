@@ -61,7 +61,6 @@
     self.goodArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self creatBottomBtn];
-    [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHWatingOrderCell class] forCellReuseIdentifier:NSStringFromClass([FHWatingOrderCell class])];
     [self getRequest];
 }
@@ -100,6 +99,7 @@
                 weakSelf.payMentTypeString = @"微信支付";
             }
             weakSelf.goodArrs = [FHOrderListModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"goods"]];
+            [self.view addSubview:self.homeTable];
             [weakSelf.homeTable reloadData];
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
