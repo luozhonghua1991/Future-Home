@@ -293,7 +293,7 @@
 
 - (void)creatPayViewWithPrice:(NSString *)price {
     if (!self.payView) {
-        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.listModel.pay_money]];
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) nowPrice:@"" oldPrice:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.listModel.pay_money] discounted:@""];
         _payView.delegate = self;
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;

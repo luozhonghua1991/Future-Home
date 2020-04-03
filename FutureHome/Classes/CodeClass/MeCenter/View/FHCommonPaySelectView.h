@@ -53,7 +53,10 @@ NS_ASSUME_NONNULL_BEGIN
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger selectType;
 
--(UIView *)initWithFrame:(CGRect )frame andNSString:(NSString *)title;
+-(UIView *)initWithFrame:(CGRect )frame
+                nowPrice:(NSString *)nowPrice
+                oldPrice:(NSString *)oldPrice
+              discounted:(NSString *)discounted;
 
 @end
 

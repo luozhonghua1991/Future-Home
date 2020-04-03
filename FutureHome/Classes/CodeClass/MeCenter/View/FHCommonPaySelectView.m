@@ -13,19 +13,47 @@
 #define titleColor  CLColor(240.0f, 130.0f, 0.0f)
 #define BOUNDS   [[UIScreen mainScreen] bounds]
 
+@interface FHCommonPaySelectView ()
+/**现价  */
+@property (nonatomic, copy) NSString *nowPrice;
+/** 原价 */
+@property (nonatomic, copy) NSString *oldPrice;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *discountedString;
+
+
+
+@end
+
 @implementation FHCommonPaySelectView
 
--(UIView *)initWithFrame:(CGRect )frame andNSString:(NSString *)title {
+//-(UIView *)initWithFrame:(CGRect )frame andNSString:(NSString *)title {
+//    self = [super initWithFrame:frame];
+//    if (self) {
+//        self.backgroundColor = [UIColor clearColor];
+//        [self layOutUIWith:title];
+//    }
+//    return self;
+//}
+
+-(UIView *)initWithFrame:(CGRect )frame
+                nowPrice:(NSString *)nowPrice
+                oldPrice:(NSString *)oldPrice
+              discounted:(NSString *)discounted {
     self = [super initWithFrame:frame];
     if (self) {
+        self.nowPrice = nowPrice;
+        self.oldPrice = oldPrice;
+        self.discountedString = discounted;
         self.backgroundColor = [UIColor clearColor];
-        [self layOutUIWith:title];
+        [self layOutUIWithSubViews];
     }
-    return self;
+     return self;
 }
 
+
 #pragma mark - LayoutUIs
-- (void)layOutUIWith:(NSString *)title {
+- (void)layOutUIWithSubViews {
     self.backgroungView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-payViewHeight, SCREEN_WIDTH, payViewHeight)];//层
     _backgroungView.backgroundColor = [UIColor whiteColor];
     [self addSubview:_backgroungView];
@@ -33,9 +61,10 @@
     self.headTitleLabel = [[UILabel alloc] init];
     _headTitleLabel.font = [UIFont systemFontOfSize:14.0f];
     _headTitleLabel.textColor = CLColor(51, 51, 51);
-    _headTitleLabel.text = title;
+    _headTitleLabel.text = [NSString stringWithFormat:@"%@\n%@%@",self.oldPrice,self.discountedString,self.nowPrice];
     _headTitleLabel.textAlignment = NSTextAlignmentLeft;
     _headTitleLabel.numberOfLines = 0;
+    _headTitleLabel.backgroundColor = [UIColor whiteColor];
     [_backgroungView addSubview:_headTitleLabel];
     
     /**
@@ -111,11 +140,11 @@
     [_headTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo (self->_backgroungView.mas_top).offset (0*BOUNDS.size.height/667);
         make.left.mas_equalTo(self->_backgroungView.mas_left).offset(20);
-        make.height.mas_equalTo (32*BOUNDS.size.height/667);
+        make.height.mas_equalTo (50*BOUNDS.size.height/667);
     }];
 
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo (self->_headTitleLabel.mas_bottom).offset (10);
+        make.top.mas_equalTo (self->_headTitleLabel.mas_bottom).offset (5);
         make.width.mas_equalTo (self->_backgroungView.mas_width);
         make.height.mas_equalTo (1);
         make.left.mas_equalTo (self->_backgroungView.mas_left);

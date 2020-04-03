@@ -69,27 +69,7 @@ XYSJSExport
         /** 展示评论列表 */
         [self fh_creatCommentView];
         [self fh_layoutSubView];
-        WS(weakSelf);
-        Account *account = [AccountStorage readAccount];
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @(account.user_id),@"user_id",
-                                   self.article_type,@"type",
-                                   self.article_id,@"id",nil];
-        [AFNetWorkTool get:@"public/articleIsDel" params:paramsDic success:^(id responseObj) {
-            if ([responseObj[@"code"] integerValue] == 1) {
-                if ([responseObj[@"data"] integerValue] == 2) {
-                    [weakSelf fetchNetworkData];
-                    [weakSelf getArticleInfo];
-                } else if ([responseObj[@"data"] integerValue] == 1) {
-                    [weakSelf.view makeToast:@"该文章已经删除"];
-                    [self.navigationController popViewControllerAnimated:YES];
-                }
-            } else {
-                [weakSelf.view makeToast:responseObj[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-            
-        }];
+        [self getArticleInfo];
     }
 }
 
@@ -106,8 +86,17 @@ XYSJSExport
     
     [AFNetWorkTool get:@"Article/getSingInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            weakSelf.articleModel = [FHArticleDetailModel mj_objectWithKeyValues:responseObj[@"data"]];
-            [weakSelf updateArticleDataWithModel:weakSelf.articleModel];
+            NSString *titleString = responseObj[@"data"][@"title"];
+            if (IsStringEmpty(titleString)) {
+                [weakSelf.view makeToast:@"该文章已经删除"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                [weakSelf fetchNetworkData];
+                weakSelf.articleModel = [FHArticleDetailModel mj_objectWithKeyValues:responseObj[@"data"]];
+                [weakSelf updateArticleDataWithModel:weakSelf.articleModel];
+            }
         } else {
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];

@@ -337,8 +337,8 @@
                 self.payTypeLabel.text = @"请选择支付方式 >";
             } else {
                 cell.detailTextLabel.text = self.payTypeLabel.text;
-                self.payTypeLabel.textColor = [UIColor blackColor];
-                self.payTypeLabel.font = [UIFont boldSystemFontOfSize:16];
+                cell.detailTextLabel.textColor = [UIColor blackColor];
+                cell.detailTextLabel.font = [UIFont boldSystemFontOfSize:16];
             }
         } else {
             self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
@@ -483,6 +483,8 @@
                     self.payType = 2;
                 }
                 self.payTypeLabel.text = selectValue;
+                self.payTypeLabel.textColor = [UIColor blackColor];
+                self.payTypeLabel.font = [UIFont boldSystemFontOfSize:16];
             } cancelBlock:^{
                 
             }];

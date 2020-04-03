@@ -457,6 +457,11 @@
 }
 
 - (void)submitBtnClick {
+    [self payView];
+//    weakSelf.submitBtn.userInteractionEnabled = NO;
+    [self showPayView];
+    return;
+    
     if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
@@ -811,7 +816,7 @@
 
 - (FHCommonPaySelectView *)payView {
     if (!_payView) {
-        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) andNSString:[NSString stringWithFormat:@"在线支付支付价格为:￥%@",self.price]];
+        self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) nowPrice:self.price oldPrice:self.open discounted:self.discount];
         _payView.delegate = self;
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
