@@ -79,6 +79,7 @@
 }
 
 - (void)initViewControllers {
+    [SingleManager shareManager].isSelectOtherPersonVideo = YES;
     FHCircleHotPointController *hotVC = [[FHCircleHotPointController alloc] init];
     hotVC.yp_tabItemTitle = @"云动态";
     hotVC.isHaveHeaderView = YES;

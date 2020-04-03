@@ -94,7 +94,6 @@
             }];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.goodsListView.leftTbView reloadData];
-                //weakSelf.shoppingBar.goodsList = weakSelf.goodsListView.goodsList;
             });
         });
     } failure:^(NSError *error) {
@@ -129,7 +128,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 /** 暂时注释掉 */
                 //        [weakSelf.goodsListView reloadData];
-                
+
                 weakSelf.shoppingBar.goodsList = weakSelf.goodsListView.goodsList;
             });
         });
@@ -241,6 +240,7 @@ valueChangedForCount:(NSInteger)count
     vc.shopID = self.shopID;
     /** 3 生鲜商城订单 4 社交商业订单 5 药品商城订单 */
     vc.type = self.type;
+    vc.send_cost = self.send_cost;
     [self.navigationController pushViewController:vc animated:YES];
 }
 

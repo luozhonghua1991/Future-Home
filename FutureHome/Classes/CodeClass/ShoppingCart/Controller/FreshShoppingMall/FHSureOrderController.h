@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *shopID;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *type;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) CGFloat send_cost;
 
 
 @end

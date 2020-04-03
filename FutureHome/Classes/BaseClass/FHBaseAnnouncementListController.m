@@ -150,7 +150,7 @@
         NSString *imgUrl = responseObj[@"data"];
         [self.headerView sd_setImageWithURL:[NSURL URLWithString:imgUrl] placeholderImage:[UIImage imageNamed:@""]];
         if (IsStringEmpty(imgUrl)) {
-            self.headerView.image = [UIImage imageNamed:@"头像"];
+//            self.headerView.image = [UIImage imageNamed:@"头像"];
         }
         [weakSelf.listTable reloadData];
     } failure:^(NSError *error) {

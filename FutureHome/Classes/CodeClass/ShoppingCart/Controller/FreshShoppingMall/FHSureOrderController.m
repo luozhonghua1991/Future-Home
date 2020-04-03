@@ -42,6 +42,11 @@
 @property (nonatomic, copy) NSString *adderssid;
 /** 物流类型  1快递到家 15天  2预定前往 7天  3实时配送 3天 */
 @property (nonatomic, copy) NSString *wuType;
+/** 全部价格label */
+@property (nonatomic, strong) UILabel *allPriceLabel;
+/** 合计label */
+@property (nonatomic, strong) UILabel *bottomLabel;
+
 
 @end
 
@@ -95,12 +100,12 @@
     lineView.backgroundColor = [UIColor lightGrayColor];
     [whiteBttomView addSubview:lineView];
     
-    UILabel *allPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 150, ZH_SCALE_SCREEN_Height(50))];
-    allPriceLabel.font = [UIFont systemFontOfSize:14];
-    allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
-    allPriceLabel.textColor = [UIColor redColor];
-    allPriceLabel.textAlignment = NSTextAlignmentLeft;
-    [whiteBttomView addSubview:allPriceLabel];
+    self.allPriceLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 150, ZH_SCALE_SCREEN_Height(50))];
+    self.allPriceLabel.font = [UIFont systemFontOfSize:14];
+    self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
+    self.allPriceLabel.textColor = [UIColor redColor];
+    self.allPriceLabel.textAlignment = NSTextAlignmentLeft;
+    [whiteBttomView addSubview:self.allPriceLabel];
     
     UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     bottomBtn.frame = CGRectMake(SCREEN_WIDTH - 150,0, 150, ZH_SCALE_SCREEN_Height(50));
@@ -144,12 +149,20 @@
         [goodsDic setObject:model.goodsID forKey:@"id"];
         [newGoodsArr addObject:goodsDic];
     }
+    CGFloat allPrice;
+    if ([self.wuType integerValue] == 3) {
+        CGFloat price = [[SingleManager shareManager].totalMoneyString floatValue];
+        allPrice = price + [SingleManager shareManager].send_cost;
+    } else {
+        allPrice = [[SingleManager shareManager].totalMoneyString floatValue];
+    }
+    NSString *allPriceString = [NSString stringWithFormat:@"%.2f",allPrice];
     
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               [SingleManager shareManager].totalMoneyString,@"total_money",
+                               allPriceString,@"total_money",
                                [SingleManager shareManager].totalMoneyString,@"pay_money",
                                @(weakSelf.payType),@"pay_way",
                                weakSelf.shopID,@"shop_id",
@@ -261,7 +274,7 @@
         return 40.0f;
     } else {
         if (indexPath.row == 0) {
-            return 40.0f;
+            return 50.0f;
         } else {
             return 100.0f;
         }
@@ -279,10 +292,13 @@
         cell.textLabel.textColor = HEX_COLOR(0x525252);
         cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
         cell.detailTextLabel.textColor = [UIColor blackColor];
-        if (indexPath.row ==0) {
+        if (indexPath.row == 0) {
             cell.textLabel.text = @"物流方式";
-            cell.detailTextLabel.text = @"请选择物流方式 >";
             self.logisticsLabel = cell.detailTextLabel;
+            if (IsStringEmpty(self.logisticsLabel.text)) {
+                self.logisticsLabel.text = @"请选择物流方式 >";
+            }
+            cell.detailTextLabel.text = self.logisticsLabel.text;
         } else if (indexPath.row ==1) {
             cell.textLabel.text = @"是否开票";
             UISwitch *selectSeitch = [[UISwitch alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH/375*48, SCREEN_HEIGHT/667*30)];
@@ -291,12 +307,19 @@
             [selectSeitch addTarget:self action:@selector(selectSeitchOnClick) forControlEvents:UIControlEventValueChanged];
         } else if (indexPath.row ==2) {
             cell.textLabel.text = @"开票单位";
-            cell.detailTextLabel.text = @"请选择开票单位 >";
             self.invoiceLabel = cell.detailTextLabel;
+            if (IsStringEmpty(self.invoiceLabel.text)) {
+                self.invoiceLabel.text = @"请选择开票单位 >";
+            }
+            cell.detailTextLabel.text = self.invoiceLabel.text;
+            
         } else {
             cell.textLabel.text = @"收货地址";
-            cell.detailTextLabel.text = @"请选择收货地址 >";
             self.addressLabel = cell.detailTextLabel;
+            if (IsStringEmpty(self.addressLabel.text)) {
+                self.addressLabel.text = @"请选择收货地址 >";
+            }
+            cell.detailTextLabel.text = self.addressLabel.text;
         }
         return cell;
     } else if (indexPath.section == 2) {
@@ -305,12 +328,18 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
         }
-        cell.textLabel.font = [UIFont systemFontOfSize:14];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        cell.textLabel.font = [UIFont systemFontOfSize:16];
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:16];
         if (indexPath.row == 0) {
             cell.textLabel.text = @"支付方式";
-            cell.detailTextLabel.text = @"请选择支付方式 >";
             self.payTypeLabel = cell.detailTextLabel;
+            if (IsStringEmpty(self.payTypeLabel.text)) {
+                self.payTypeLabel.text = @"请选择支付方式 >";
+            } else {
+                cell.detailTextLabel.text = self.payTypeLabel.text;
+                self.payTypeLabel.textColor = [UIColor blackColor];
+                self.payTypeLabel.font = [UIFont boldSystemFontOfSize:16];
+            }
         } else {
             self.businessDescriptionTextView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 100);
             [cell addSubview:self.businessDescriptionTextView];
@@ -365,7 +394,7 @@
     
     UILabel *topRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 10, 40)];
     topRightLabel.font = [UIFont systemFontOfSize:13];
-    topRightLabel.text = @"￥0";
+    topRightLabel.text = [NSString stringWithFormat:@"￥%.2f",[SingleManager shareManager].send_cost];
     topRightLabel.textColor = [UIColor blackColor];
     topRightLabel.textAlignment = NSTextAlignmentRight;
     [bgView addSubview:topRightLabel];
@@ -374,12 +403,12 @@
     lineView.backgroundColor = [UIColor lightGrayColor];
     [bgView addSubview:lineView];
     
-    UILabel *bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH - 10, 40)];
-    bottomLabel.font = [UIFont systemFontOfSize:14];
-    bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
-    bottomLabel.textColor = [UIColor blackColor];
-    bottomLabel.textAlignment = NSTextAlignmentRight;
-    [bgView addSubview:bottomLabel];
+    self.bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH - 10, 40)];
+    self.bottomLabel.font = [UIFont systemFontOfSize:14];
+    self.bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
+    self.bottomLabel.textColor = [UIColor blackColor];
+    self.bottomLabel.textAlignment = NSTextAlignmentRight;
+    [bgView addSubview:self.bottomLabel];
     
     return bgView;
 }
@@ -398,10 +427,18 @@
                 }
                 if (index == 0) {
                     self.wuType = @"1";
+                    self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
+                    self.bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
                 } else if (index == 1) {
                     self.wuType = @"2";
+                    self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
+                    self.bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
                 } else {
                     self.wuType = @"3";
+                    CGFloat price = [[SingleManager shareManager].totalMoneyString floatValue];
+                    CGFloat allPrice = price + [SingleManager shareManager].send_cost;
+                    self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%.2f",allPrice];
+                    self.bottomLabel.text = [NSString stringWithFormat:@"支付金额: ￥%.2f",allPrice];
                 }
             } cancelBlock:^{
                 
@@ -438,12 +475,12 @@
         }
     } else if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            [ZJNormalPickerView zj_showStringPickerWithTitle:@"支付方式" dataSource:@[@"微信支付",@"支付宝支付"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
+            [ZJNormalPickerView zj_showStringPickerWithTitle:@"支付方式" dataSource:@[@"支付宝支付(推荐)",@"微信支付"] defaultSelValue:@"" isAutoSelect: NO resultBlock:^(id selectValue, NSInteger index) {
                 NSLog(@"index---%ld",index);
                 if (index == 0) {
-                    self.payType = 2;
-                } else if (index == 1) {
                     self.payType = 1;
+                } else if (index == 1) {
+                    self.payType = 2;
                 }
                 self.payTypeLabel.text = selectValue;
             } cancelBlock:^{

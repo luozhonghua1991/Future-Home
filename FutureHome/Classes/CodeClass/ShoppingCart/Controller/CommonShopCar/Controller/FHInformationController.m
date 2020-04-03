@@ -54,7 +54,7 @@
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
-            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:[UIImage imageNamed:@""]];
             weakSelf.tableHeaderView.shopNameLabel.text = dic[@"shopname"];
             weakSelf.shopName = weakSelf.tableHeaderView.shopNameLabel.text;
             weakSelf.tableHeaderView.codeLabel.text = [NSString stringWithFormat:@"社云账号: %@",dic[@"username"]];
@@ -140,6 +140,8 @@
     web.titleString = self.shopName;
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;
+    web.article_id = infoModel.id;
+    web.article_type = infoModel.type;
     [self.navigationController pushViewController:web animated:YES];
 }
 

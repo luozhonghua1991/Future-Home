@@ -151,7 +151,6 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.selectCount = 0;
-    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -464,35 +463,35 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
             if (self.selectTag == 1) {
                 if (self.selectIndex == 1) {
                     self.person1CertificationView.leftImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 } else if (self.selectIndex == 2) {
                     self.person1CertificationView.centerImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 } else {
                     self.person1CertificationView.rightImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 }
             } else if (self.selectTag == 2) {
                 if (self.selectIndex == 1) {
                     self.person2CertificationView.leftImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 } else if (self.selectIndex == 2) {
                     self.person2CertificationView.centerImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 } else {
                     self.person2CertificationView.rightImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 }
             } else {
                 if (self.selectIndex == 1) {
                     self.person3CertificationView.leftImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 } else if (self.selectIndex == 2) {
                     self.person3CertificationView.centerImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 } else {
                     self.person3CertificationView.rightImgView.image = image;
-                    [self.selectIDCardsImgArrs addObject:image];
+                    
                 }
             }
         }
@@ -509,35 +508,35 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     if (self.selectTag == 1) {
         if (self.selectIndex == 1) {
             self.person1CertificationView.leftImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         } else if (self.selectIndex == 2) {
             self.person1CertificationView.centerImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         } else {
             self.person1CertificationView.rightImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         }
     } else if (self.selectTag == 2) {
         if (self.selectIndex == 1) {
             self.person2CertificationView.leftImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         } else if (self.selectIndex == 2) {
             self.person2CertificationView.centerImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         } else {
             self.person2CertificationView.rightImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         }
     } else {
         if (self.selectIndex == 1) {
             self.person3CertificationView.leftImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         } else if (self.selectIndex == 2) {
             self.person3CertificationView.centerImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         } else {
             self.person3CertificationView.rightImgView.image = image;
-            [self.selectIDCardsImgArrs addObject:image];
+            
         }
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
@@ -613,6 +612,22 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 }
 
 - (void)commitAccountDataRequest {
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
+    [self.selectIDCardsImgArrs addObject:self.person1CertificationView.leftImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.person1CertificationView.centerImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.person1CertificationView.rightImgView.image];
+    
+    [self.selectIDCardsImgArrs addObject:self.person2CertificationView.leftImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.person2CertificationView.centerImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.person2CertificationView.rightImgView.image];
+    
+    [self.selectIDCardsImgArrs addObject:self.person3CertificationView.leftImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.person3CertificationView.centerImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.person3CertificationView.rightImgView.image];
+    if (self.selectIDCardsImgArrs.count < 9) {
+        [self.view makeToast:@"请上传完所有图片信息"];
+        return;
+    }
     /** 判空 */
     /** 判空 */
     

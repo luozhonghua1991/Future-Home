@@ -53,7 +53,7 @@
 
 -(void)setModel:(ZJCommit *)model {
     _model = model;
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@""]];
     
     if ([SingleManager shareManager].isPersonCommits) {
         self.nameLab.text = [self tranlateStrWithString:_model.nickname];

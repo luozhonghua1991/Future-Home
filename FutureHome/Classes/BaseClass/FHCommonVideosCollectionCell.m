@@ -60,7 +60,7 @@ DZNEmptyDataSetDelegate
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             NSDictionary *dic = responseObj[@"data"];
-            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:[UIImage imageNamed:@""]];
             weakSelf.tableHeaderView.shopNameLabel.text = dic[@"shopname"];
             weakSelf.tableHeaderView.codeLabel.text = [NSString stringWithFormat:@"社云账号: %@",dic[@"username"]];
             weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"视频: %@",dic[@"document"]];

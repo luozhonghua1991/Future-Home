@@ -137,13 +137,22 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return SCREEN_HEIGHT - MainSizeHeight - 35 - 20;
+    if ([SingleManager shareManager].isSelectOtherPersonVideo) {
+        return SCREEN_HEIGHT - MainSizeHeight - 35 - 20;
+    }
+    CGFloat tabbarH = [self getTabbarHeight];
+    return SCREEN_HEIGHT - MainSizeHeight - 70 - 20 - tabbarH;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FHCommonVideosCollectionCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHCommonVideosCollectionCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 35 - 20;
+    if ([SingleManager shareManager].isSelectOtherPersonVideo) {
+        cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 35 - 20;
+    } else {
+        CGFloat tabbarH = [self getTabbarHeight];
+        cell.collectionViewHeight = SCREEN_HEIGHT - MainSizeHeight - 70 - 20 - tabbarH;
+    }
     cell.delegate = self;
     cell.rowCount = self.videoListArrs.count;
     cell.videoListArrs = self.videoListArrs;
@@ -201,7 +210,11 @@
 - (UITableView *)homeTable {
     if (_homeTable == nil) {
         CGFloat tabbarH = [self getTabbarHeight];
-        _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70 - 20) style:UITableViewStylePlain];
+        if ([SingleManager shareManager].isSelectOtherPersonVideo) {
+            _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - 35 - 20) style:UITableViewStylePlain];
+        } else {
+            _homeTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, SCREEN_WIDTH, SCREEN_HEIGHT - MainSizeHeight - tabbarH - 70 - 20) style:UITableViewStylePlain];
+        }
         _homeTable.dataSource = self;
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;

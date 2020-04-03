@@ -42,7 +42,7 @@
 
 - (void)setOrderModel:(FHOrderListModel *)orderModel {
     _orderModel = orderModel;
-    [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_orderModel.cover] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_orderModel.cover] placeholderImage:[UIImage imageNamed:@""]];
     self.shopNameLabel.text = _orderModel.productname;
     self.specificationLabel.text = _orderModel.specification;
     self.contentLabel.text = [NSString stringWithFormat:@"￥%.2f x %@",[[NSString stringWithFormat:@"%.2f",[_orderModel.sell_price floatValue]] doubleValue],_orderModel.number];
@@ -52,7 +52,7 @@
 
 - (void)setGoodsModel:(GNRGoodsModel *)goodsModel {
     _goodsModel = goodsModel;
-    [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_goodsModel.goodsImage] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.shopImgView sd_setImageWithURL:[NSURL URLWithString:_goodsModel.goodsImage] placeholderImage:[UIImage imageNamed:@""]];
     self.shopNameLabel.text = _goodsModel.goodsName;
     self.specificationLabel.text = _orderModel.specification;
     self.contentLabel.text = [NSString stringWithFormat:@"￥%.2f x %@",[[NSString stringWithFormat:@"%.2f",[_goodsModel.goodsPrice floatValue]] doubleValue],_goodsModel.number];

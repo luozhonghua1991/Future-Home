@@ -240,7 +240,7 @@
         _louNumberView = [[FHAccountApplicationTFView alloc] init];
         _louNumberView.titleLabel.text = @"楼栋单元";
         _louNumberView.contentTF.placeholder = @"请输入楼栋单元";
-        _louNumberView.contentTF.text = [NSString stringWithFormat:@"%ld栋",(long)self.authModel.build_num];
+        _louNumberView.contentTF.text = [NSString stringWithFormat:@"%ld",(long)self.authModel.build_num];
     }
     return _louNumberView;
 }

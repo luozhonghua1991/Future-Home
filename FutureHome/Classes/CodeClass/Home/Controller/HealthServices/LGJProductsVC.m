@@ -174,8 +174,8 @@
     FHWebViewController *web = [[FHWebViewController alloc] init];
     web.urlString = model.url;
     NSArray *arr = [model.url componentsSeparatedByString:@"/"];
-    web.article_id = arr[arr.count - 1];
-    web.article_type = arr[arr.count - 3];
+    web.article_id = arr[arr.count - 3];
+    web.article_type = arr[arr.count - 1];
     web.title = model.title;
     web.hidesBottomBarWhenPushed = YES;
     

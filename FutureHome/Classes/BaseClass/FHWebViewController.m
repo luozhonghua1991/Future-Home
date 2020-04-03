@@ -63,29 +63,29 @@ XYSJSExport
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initSubViews];
-    [self fetchNetworkData];
     if ([self.type isEqualToString:@"noShow"]) {
         /** 不展示评论列表 */
     } else {
         /** 展示评论列表 */
         [self fh_creatCommentView];
         [self fh_layoutSubView];
-        /** 获取文章详情 */
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
                                    self.article_type,@"type",
-                                   self.article_id,@"article_id",
-                                   nil];
-        
-        [AFNetWorkTool get:@"Article/getSingInfo" params:paramsDic success:^(id responseObj) {
+                                   self.article_id,@"id",nil];
+        [AFNetWorkTool get:@"public/articleIsDel" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
-                weakSelf.articleModel = [FHArticleDetailModel mj_objectWithKeyValues:responseObj[@"data"]];
-                [weakSelf updateArticleDataWithModel:weakSelf.articleModel];
+                if ([responseObj[@"data"] integerValue] == 2) {
+                    [weakSelf fetchNetworkData];
+                    [weakSelf getArticleInfo];
+                } else if ([responseObj[@"data"] integerValue] == 1) {
+                    [weakSelf.view makeToast:@"该文章已经删除"];
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
             } else {
-                NSString *msg = responseObj[@"msg"];
-                [weakSelf.view makeToast:msg];
+                [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
             
@@ -93,6 +93,29 @@ XYSJSExport
     }
 }
 
+
+- (void)getArticleInfo {
+    WS(weakSelf);
+    /** 获取文章详情 */
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.article_type,@"type",
+                               self.article_id,@"article_id",
+                               nil];
+    
+    [AFNetWorkTool get:@"Article/getSingInfo" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            weakSelf.articleModel = [FHArticleDetailModel mj_objectWithKeyValues:responseObj[@"data"]];
+            [weakSelf updateArticleDataWithModel:weakSelf.articleModel];
+        } else {
+            NSString *msg = responseObj[@"msg"];
+            [weakSelf.view makeToast:msg];
+        }
+    } failure:^(NSError *error) {
+        
+    }];
+}
 
 /** 更新文章详情数据 */
 - (void)updateArticleDataWithModel:(FHArticleDetailModel *)articleModel {

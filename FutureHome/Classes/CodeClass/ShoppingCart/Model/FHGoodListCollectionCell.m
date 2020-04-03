@@ -32,7 +32,7 @@
 
 - (void)setImageUrlString:(NSString *)imageUrlString {
     _imageUrlString = imageUrlString;
-    [self.goodsImgView sd_setImageWithURL:[NSURL URLWithString:_imageUrlString] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.goodsImgView sd_setImageWithURL:[NSURL URLWithString:_imageUrlString] placeholderImage:[UIImage imageNamed:@""]];
 }
 
 - (UIImageView *)goodsImgView {

@@ -65,7 +65,7 @@
 
 -(void)setModel:(ZJCommit *)model {
     _model = model;
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@""]];
     
     self.nameLab.text = _model.nickname;
     
@@ -86,13 +86,13 @@
     
     CGFloat oneheight = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
     NSDictionary *dic = _model.medias[0];
-    [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"cover"]] placeholderImage:[UIImage imageNamed:@""]];
     self.videoImageView.frame = CGRectMake(MaxX(self.avatar) + 15, MaxY(self.contentLab) + 5, oneheight, oneheight);
     self.videoPlayImageView.frame = CGRectMake(0, 0, 48, 48);
     self.videoPlayImageView.centerX = self.videoImageView.frame.size.width / 2;
     self.videoPlayImageView.centerY = self.videoImageView.frame.size.height / 2;
     
-    self.bottomView.frame = CGRectMake(0, MaxY(self.videoImageView) + 10, SCREEN_WIDTH, 35);
+    self.bottomView.frame = CGRectMake(0, MaxY(self.videoImageView) + 10, SCREEN_WIDTH, 42);
     
     [self.eyeBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.view_num] forState:UIControlStateNormal];
     [self.upBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_model.like_count] forState:UIControlStateNormal];
@@ -206,12 +206,12 @@
     self.timeLab.frame = CGRectMake(0, 0, SCREEN_WIDTH - 15, 20);
     self.timeLab.centerY = self.avatar.centerY;
     
-    self.bottomView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 35);
+    self.bottomView.frame = CGRectMake(0, 0, SCREEN_WIDTH, 42);
     self.topLine.frame = CGRectMake(MaxX(self.avatar) + 15, 0, SCREEN_WIDTH - (MaxX(self.avatar) + 15), 0.25);
     CGFloat btnWidth = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
-    self.eyeBtn.frame = CGRectMake(MaxX(self.avatar) + 15, 11/2, btnWidth, 24);
-    self.upBtn.frame = CGRectMake(MaxX(self.eyeBtn) + 10, 11/2, btnWidth, 24);
-    self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 11/2, btnWidth, 24);
+    self.eyeBtn.frame = CGRectMake(MaxX(self.avatar) + 15, 11/2, btnWidth, 31);
+    self.upBtn.frame = CGRectMake(MaxX(self.eyeBtn) + 10, 11/2, btnWidth, 31);
+    self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 11/2, btnWidth, 31);
     
 }
 

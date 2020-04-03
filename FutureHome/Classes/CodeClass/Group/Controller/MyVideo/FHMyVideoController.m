@@ -26,6 +26,7 @@
 }
 
 - (void)initViewControllers {
+    [SingleManager shareManager].isSelectOtherPersonVideo = NO;
     FHCircleHotPointController *videosVC = [[FHCircleHotPointController alloc] init];
     videosVC.yp_tabItemTitle = @"动态";
     videosVC.isHaveHeaderView = YES;

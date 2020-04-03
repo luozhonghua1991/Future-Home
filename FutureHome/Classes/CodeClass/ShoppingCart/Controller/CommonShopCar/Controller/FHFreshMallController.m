@@ -68,6 +68,9 @@
 @property (nonatomic, strong) UIButton *followBtn;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger is_collect;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) CGFloat send_cost;
+
 
 @end
 
@@ -183,18 +186,6 @@
     UIView *titleView = [[UIView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, SCREEN_WIDTH, 42)];
     titleView.userInteractionEnabled = YES;
     
-    if (!self.codeImgView) {
-        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
-        self.codeImgView.contentMode = UIViewContentModeScaleToFill;
-        self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(codeImgViewClick)];
-        self.codeImgView.userInteractionEnabled = YES;
-        [self.codeImgView addGestureRecognizer:tap];
-        
-        [titleView addSubview:self.codeImgView];
-    }
-    
     self.locationLabel.frame = CGRectMake(0, 12, SCREEN_WIDTH, 16);
     self.locationLabel.centerY = titleView.height / 2;
     self.locationLabel.userInteractionEnabled = YES;
@@ -216,6 +207,7 @@
             } else {
                 [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
             }
+            [SingleManager shareManager].send_cost = [dic[@"send_cost"] floatValue];
             weakSelf.locationLabel.text = dic[@"shopname"];
             weakSelf.username = dic[@"username"];
             weakSelf.lat = [dic[@"lat"] floatValue];
@@ -260,6 +252,18 @@
 //    /** 获取商家详情 */
  
     [titleView addSubview:self.locationLabel];
+    
+    if (!self.codeImgView) {
+        self.codeImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, SCREEN_WIDTH * 0.116 - 20, SCREEN_WIDTH * 0.116 - 20)];
+        self.codeImgView.contentMode = UIViewContentModeScaleToFill;
+        self.codeImgView.image = [UIImage imageNamed:@"black_erweima"];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(codeImgViewClick)];
+        self.codeImgView.userInteractionEnabled = YES;
+        [self.codeImgView addGestureRecognizer:tap];
+        
+        [titleView addSubview:self.codeImgView];
+    }
     
     self.navigationLabel.frame = CGRectMake(SCREEN_WIDTH - 40, 12, 30, 12);
     self.navigationLabel.centerY = titleView.height / 2;
@@ -458,6 +462,7 @@
     } else if ([self.titleString isEqualToString:@"医药商城"]) {
         messageVC.type = @"5";
     }
+    messageVC.send_cost = self.send_cost;
     messageVC.yp_tabItemTitle = @"商品列表";
     messageVC.shopID = self.shopID;
     

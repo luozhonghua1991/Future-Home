@@ -142,6 +142,7 @@
                      companyPhoneTF.text,@"tel",
                      companyBankTF.text,@"openbank",
                      companyAccountTF.text,@"accountinfo",
+                     [SingleManager shareManager].ordertype,@"ordertype",
                      nil];
     } else {
         paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:

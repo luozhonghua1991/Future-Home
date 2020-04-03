@@ -93,7 +93,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.selectCount = 0;
-    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -344,13 +343,13 @@
         for (UIImage *image in photos) {
             if (self.selectIndex == 1) {
                 self.certificationView.leftImgView.image = image;
-                [self.selectIDCardsImgArrs addObject:image];
+                
             } else if (self.selectIndex == 2) {
                 self.certificationView.centerImgView.image = image;
-                [self.selectIDCardsImgArrs addObject:image];
+                
             } else {
                 self.certificationView.rightImgView.image = image;
-                [self.selectIDCardsImgArrs addObject:image];
+                
             }
         }
     }];
@@ -365,13 +364,13 @@
     UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
     if (self.selectIndex == 1) {
         self.certificationView.leftImgView.image = image;
-        [self.selectIDCardsImgArrs addObject:image];
+        
     } else if (self.selectIndex == 2) {
         self.certificationView.centerImgView.image = image;
-        [self.selectIDCardsImgArrs addObject:image];
+        
     } else {
         self.certificationView.rightImgView.image = image;
-        [self.selectIDCardsImgArrs addObject:image];
+        
     }
      [picker dismissViewControllerAnimated:YES completion:nil];
     
@@ -435,6 +434,15 @@
 }
 
 - (void)commitAccountDataRequest {
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
+    [self.selectIDCardsImgArrs addObject:self.certificationView.leftImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.certificationView.centerImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.certificationView.rightImgView.image];
+    
+    if (self.selectIDCardsImgArrs.count < 3) {
+        [self.view makeToast:@"请上传证件相关的照片"];
+        return;
+    }
     /** 判空 */
     if (self.serviceDeskNameTF.text.length <= 0) {
         [self.view makeToast:self.serviceDeskNameTF.placeholder];

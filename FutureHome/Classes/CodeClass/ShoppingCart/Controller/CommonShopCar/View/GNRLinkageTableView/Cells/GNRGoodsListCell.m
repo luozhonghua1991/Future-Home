@@ -32,7 +32,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.LocationLabel.textColor = [UIColor blackColor];
-    self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77 - 60, (self.contentView.height - 88) / 2, 60, 88)];
+    self.stepperSuperView = [[UIView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77 - 45, (self.contentView.height - 88) / 2, 40, 88)];
+//    self.stepperSuperView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.stepperSuperView];
     
     self.nameL.font = [UIFont boldSystemFontOfSize:15];
@@ -40,11 +41,11 @@
     self.specsLabel.frame = CGRectMake(self.nameL.x, self.nameL.y + self.nameL.size.height + 13, ZH_SCALE_SCREEN_Width(100), 13);
     [self.contentView addSubview:self.specsLabel];
     
-    self.priceLabel.frame = CGRectMake(58, self.nameL.y + self.nameL.size.height + 13, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 13);
+    self.priceLabel.frame = CGRectMake(0, self.nameL.y + self.nameL.size.height + 13, SCREEN_WIDTH * 0.77 - 40, 13);
 //    self.priceLabel.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.priceLabel];
     
-    self.stockLabel.frame = CGRectMake(58, self.priceLabel.y + self.priceLabel.size.height + 11, self.contentView.width - (ZH_SCALE_SCREEN_Width(40) + self.stepperSuperView.size.width), 13);
+    self.stockLabel.frame = CGRectMake(0, self.priceLabel.y + self.priceLabel.size.height + 11, SCREEN_WIDTH * 0.77 - 40, 13);
 //    self.stockLabel.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.stockLabel];
     

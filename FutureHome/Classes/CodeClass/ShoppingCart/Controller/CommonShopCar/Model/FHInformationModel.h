@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *updatetime;
 /** 跳转链接 */
 @property (nonatomic, copy) NSString *singpage;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *type;
+
 
 @end
 

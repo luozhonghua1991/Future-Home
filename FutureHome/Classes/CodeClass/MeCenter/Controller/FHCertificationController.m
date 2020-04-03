@@ -46,7 +46,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.selectCount = 0;
-    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
 }
@@ -143,7 +142,12 @@
 }
 
 - (void)commitAccountDataRequest {
-    if (self.selectIDCardsImgArrs <= 0) {
+    self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
+    [self.selectIDCardsImgArrs addObject:self.imgView.leftImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.imgView.centerImgView.image];
+    [self.selectIDCardsImgArrs addObject:self.imgView.rightImgView.image];
+    
+    if (self.selectIDCardsImgArrs.count < 3) {
         [self.view makeToast:@"请上传证件相关的照片"];
         return;
     }
@@ -279,13 +283,10 @@
         for (UIImage *image in photos) {
             if (self.selectIndex == 1) {
                 self.imgView.leftImgView.image = image;
-                [self.selectIDCardsImgArrs addObject:image];
             } else if (self.selectIndex == 2) {
                 self.imgView.centerImgView.image = image;
-                [self.selectIDCardsImgArrs addObject:image];
             } else {
                 self.imgView.rightImgView.image = image;
-                [self.selectIDCardsImgArrs addObject:image];
             }
         }
     }];
@@ -300,13 +301,10 @@
     UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
     if (self.selectIndex == 1) {
         self.imgView.leftImgView.image = image;
-        [self.selectIDCardsImgArrs addObject:image];
     } else if (self.selectIndex == 2) {
         self.imgView.centerImgView.image = image;
-        [self.selectIDCardsImgArrs addObject:image];
     } else {
         self.imgView.rightImgView.image = image;
-        [self.selectIDCardsImgArrs addObject:image];
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
     

@@ -58,7 +58,7 @@
         self.bounds = BOUNDS_SIZE;
     } else {
         BOUNDS_SIZE = CGRectMake(0, 0, Height_MAX, Width_MAX);
-        self.bounds = CGRectMake(0,0,60,88);
+        self.bounds = CGRectMake(0,0,40,88);
 //        self.bounds = BOUNDS_SIZE;
     }
     
@@ -90,9 +90,9 @@
         _subBtn.frame = CGRectMake(3, 0, Width_Btn, Width_Btn);
         _addBtn.frame = CGRectMake(_numberL.frame.origin.x+_numberL.frame.size.width + 3, _subBtn.frame.origin.y, Width_Btn, Width_Btn);
     } else {
-        _addBtn.frame = CGRectMake(4, 5, 60, Width_Btn);
-        _numberL.frame = CGRectMake((60 - Width_Lab) / 2 + 2, _addBtn.frame.origin.y+_addBtn.frame.size.height, Width_Lab, Height_MAX);
-        _subBtn.frame = CGRectMake(_addBtn.frame.origin.x, _numberL.frame.origin.y+_numberL.frame.size.height , 60, Width_Btn);
+        _addBtn.frame = CGRectMake(4, 5, 40, Width_Btn);
+        _numberL.frame = CGRectMake((40 - Width_Lab) / 2 + 2, _addBtn.frame.origin.y+_addBtn.frame.size.height, Width_Lab, Height_MAX);
+        _subBtn.frame = CGRectMake(_addBtn.frame.origin.x, _numberL.frame.origin.y+_numberL.frame.size.height , 40, Width_Btn);
         
     }
 }

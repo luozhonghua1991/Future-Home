@@ -123,6 +123,12 @@
 /** 当前选中的是第几个tabbar */
 @property (nonatomic, assign) NSInteger currentSelectIndex;
 
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isSelectOtherPersonVideo;
+/** 配送费 */
+@property (nonatomic, assign) CGFloat send_cost;
+
+
 /** 上次选择的物业VC */
 @property (nonatomic, strong) UIViewController *selectHomeSeverControll;
 /** 上次选择的业主VC */

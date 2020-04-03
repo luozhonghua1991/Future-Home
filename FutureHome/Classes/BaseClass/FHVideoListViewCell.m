@@ -15,6 +15,8 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         self.backgroundColor = [UIColor clearColor];
+//        self.layer.borderWidth = 1;
+//        self.layer.borderColor = [UIColor lightGrayColor].CGColor;
         [self fh_setUpUI];
     }
     return self;

@@ -100,7 +100,7 @@
     FHBlackListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHBlackListCell class])];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSDictionary *dic = self.blackListArrs[indexPath.row];
-    [cell.headerImg sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+    [cell.headerImg sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@""]];
     cell.nameLabel.text = dic[@"nickname"];
     //添加长按手势
     UILongPressGestureRecognizer * longPressGesture =[[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
