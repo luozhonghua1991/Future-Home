@@ -50,7 +50,7 @@
     if (!_headerImg) {
         _headerImg = [[UIImageView alloc] init];
         [_headerImg sd_setImageWithURL:[NSURL URLWithString:self.account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
-//        _headerImg.image = [UIImage imageNamed:@""];
+//        _headerImg.image = nil;
 //        _headerImg.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _headerImg;
@@ -59,7 +59,7 @@
 - (UIImageView *)rightArrowImg {
     if (!_rightArrowImg) {
         _rightArrowImg = [[UIImageView alloc] init];
-        _rightArrowImg.image = [UIImage imageNamed:@""];
+        _rightArrowImg.image = nil;
         _rightArrowImg.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _rightArrowImg;

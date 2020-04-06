@@ -32,7 +32,7 @@
 
 - (void)setFollowListModel:(FHFollowListModel *)followListModel {
     _followListModel = followListModel;
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_followListModel.avatar] placeholderImage:[UIImage imageNamed:@""]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_followListModel.avatar] placeholderImage:nil];
     self.nameLabel.text = _followListModel.nickname;
 }
 

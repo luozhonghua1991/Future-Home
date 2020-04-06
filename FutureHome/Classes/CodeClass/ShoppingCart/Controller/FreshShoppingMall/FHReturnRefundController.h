@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *orderID;
 /** 退款的金额 */
 @property (nonatomic, copy) NSString *totolePrice;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *order_type;
 
 
 @end

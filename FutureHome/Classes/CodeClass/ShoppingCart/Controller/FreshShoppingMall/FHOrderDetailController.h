@@ -22,6 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *bottomTitleString;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) FHGoodsListModel *listModel;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *ordertype;
+
 
 @end
 

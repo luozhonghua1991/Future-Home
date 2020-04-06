@@ -65,7 +65,7 @@
 
 -(void)setModel:(ZJCommit *)model {
     _model = model;
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@""]];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:nil];
     
     self.nameLab.text = _model.nickname;
     
@@ -86,7 +86,7 @@
     
     CGFloat oneheight = (kScreenWidth - MaxX(self.avatar) - 15 - 15 - 20 ) / 3;
     NSDictionary *dic = _model.medias[0];
-    [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"cover"]] placeholderImage:[UIImage imageNamed:@""]];
+    [self.videoImageView sd_setImageWithURL:[NSURL URLWithString:dic[@"cover"]] placeholderImage:nil];
     self.videoImageView.frame = CGRectMake(MaxX(self.avatar) + 15, MaxY(self.contentLab) + 5, oneheight, oneheight);
     self.videoPlayImageView.frame = CGRectMake(0, 0, 48, 48);
     self.videoPlayImageView.centerX = self.videoImageView.frame.size.width / 2;
@@ -106,7 +106,7 @@
     // 头像
     if (!self.avatar) {
         self.avatar = [[UIImageView alloc] init];
-        self.avatar.image = [UIImage imageNamed:@""];
+        self.avatar.image = nil;
         [self.contentView addSubview:self.avatar];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarClick)];

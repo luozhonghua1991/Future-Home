@@ -146,7 +146,7 @@
                                @(self.type),@"type",
                                self.imgSelectArrs,@"file[]",
                                self.businessDescriptionTextView.text,@"reason",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               self.order_type,@"ordertype",
                                nil];
     
     [AFNetWorkTool uploadImagesWithUrl:@"shop/returnsales" parameters:paramsDic image:self.imgSelectArrs success:^(id responseObj) {

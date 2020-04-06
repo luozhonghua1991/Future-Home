@@ -50,7 +50,7 @@
 
 - (void)setResultModel:(FHSearchResultModel *)resultModel {
     _resultModel = resultModel;
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_resultModel.avatar] placeholderImage:[UIImage imageNamed:@""]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_resultModel.avatar] placeholderImage:nil];
     self.nameLabel.text = _resultModel.name;
     self.locationLabel.text = _resultModel.autograph;
     if ([SingleManager shareManager].isSearchStatues) {

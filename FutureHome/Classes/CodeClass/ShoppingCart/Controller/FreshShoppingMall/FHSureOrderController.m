@@ -46,6 +46,9 @@
 @property (nonatomic, strong) UILabel *allPriceLabel;
 /** 合计label */
 @property (nonatomic, strong) UILabel *bottomLabel;
+/** 配送费label */
+@property (nonatomic, strong) UILabel *topRightLabel;
+
 
 
 @end
@@ -392,12 +395,13 @@
     topLabel.textAlignment = NSTextAlignmentLeft;
     [bgView addSubview:topLabel];
     
-    UILabel *topRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 10, 40)];
-    topRightLabel.font = [UIFont systemFontOfSize:13];
-    topRightLabel.text = [NSString stringWithFormat:@"￥%.2f",[SingleManager shareManager].send_cost];
-    topRightLabel.textColor = [UIColor blackColor];
-    topRightLabel.textAlignment = NSTextAlignmentRight;
-    [bgView addSubview:topRightLabel];
+    self.topRightLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH - 10, 40)];
+    self.topRightLabel.font = [UIFont systemFontOfSize:13];
+//    self.topRightLabel.text = [NSString stringWithFormat:@"￥%.2f",[SingleManager shareManager].send_cost];
+    self.topRightLabel.text = @"0.00";
+    self.topRightLabel.textColor = [UIColor blackColor];
+    self.topRightLabel.textAlignment = NSTextAlignmentRight;
+    [bgView addSubview:self.topRightLabel];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 39.5, SCREEN_WIDTH, 0.5)];
     lineView.backgroundColor = [UIColor lightGrayColor];
@@ -427,16 +431,19 @@
                 }
                 if (index == 0) {
                     self.wuType = @"1";
+                    self.topRightLabel.text = @"￥0.00";
                     self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
                     self.bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
                 } else if (index == 1) {
                     self.wuType = @"2";
+                    self.topRightLabel.text = @"￥0.00";
                     self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%@",[SingleManager shareManager].totalMoneyString];
                     self.bottomLabel.text = [NSString stringWithFormat:@"合计 : %@",[SingleManager shareManager].totalMoneyString];
                 } else {
                     self.wuType = @"3";
                     CGFloat price = [[SingleManager shareManager].totalMoneyString floatValue];
                     CGFloat allPrice = price + [SingleManager shareManager].send_cost;
+                    self.topRightLabel.text = [NSString stringWithFormat:@"￥%.2f",[SingleManager shareManager].send_cost];
                     self.allPriceLabel.text = [NSString stringWithFormat:@"支付金额: ￥%.2f",allPrice];
                     self.bottomLabel.text = [NSString stringWithFormat:@"支付金额: ￥%.2f",allPrice];
                 }

@@ -135,7 +135,7 @@
     }
     addInvoiceBtn.backgroundColor = HEX_COLOR(0x1296db);
     [addInvoiceBtn setTitle:@"新增发票" forState:UIControlStateNormal];
-    [addInvoiceBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [addInvoiceBtn setImage:nil forState:UIControlStateNormal];
     [addInvoiceBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addInvoiceBtn addTarget:self action:@selector(addInvoiceBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addInvoiceBtn];

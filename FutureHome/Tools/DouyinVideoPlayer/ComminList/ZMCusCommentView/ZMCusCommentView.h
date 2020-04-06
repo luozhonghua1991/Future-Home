@@ -20,6 +20,9 @@
 @property (nonatomic, copy) NSString *article_type;
 /** video视频 其他都是文章类型*/
 @property (nonatomic, copy) NSString *type;
+/** 1生鲜 2朋友圈 3社交 4医药 */
+@property (nonatomic, copy) NSString *topic_type;
+
 
 @property (nonatomic, strong) ZMCusCommentListView *commentListView;
 

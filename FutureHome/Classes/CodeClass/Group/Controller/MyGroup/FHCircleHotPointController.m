@@ -358,7 +358,7 @@
         /** 跳转到视频 */
         NSMutableArray *videoArr = [[NSMutableArray alloc] init];
         NSDictionary *dic = model.medias[0];
-        NSString *videoID = dic[@"id"];
+        NSString *videoID = dic[@"video_id"];
         NSString *type = dic[@"video_type"];
         //* 判断视频是否删除
         WS(weakSelf);

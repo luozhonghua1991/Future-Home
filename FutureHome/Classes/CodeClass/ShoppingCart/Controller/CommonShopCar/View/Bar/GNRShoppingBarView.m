@@ -18,6 +18,7 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         self.badgeLabel.center = CGPointMake(_shoppingCartIcon.frame.origin.x+_shoppingCartIcon.frame.size.width, _shoppingCartIcon.frame.origin.y);
+        self.payBtn.backgroundColor = [UIColor lightGrayColor];
     }
     return self;
 }

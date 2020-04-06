@@ -116,7 +116,7 @@ static NSString *kIdentifier = @"kIdentifier";
     for (NSDictionary *dataDic in self.videoListDataArrs) {
         ZFTableData *data = [[ZFTableData alloc] init];
         data.cover = [dataDic objectForKey:@"cover"];
-        data.dataID = [dataDic objectForKey:@"id"];
+        data.dataID = [dataDic objectForKey:@"video_id"];
         data.aid = [[dataDic objectForKey:@"aid"] integerValue];
         data.pid = [[dataDic objectForKey:@"pid"] integerValue];
         data.video_url = [dataDic objectForKey:@"path"];
@@ -125,9 +125,10 @@ static NSString *kIdentifier = @"kIdentifier";
         data.video_width = [[dataDic objectForKey:@"videoWidth"] floatValue];
         data.video_height = [[dataDic objectForKey:@"videoHeight"] floatValue];
         data.islike = [[dataDic objectForKey:@"islike"] integerValue];
-        data.isconnection = [[dataDic objectForKey:@"isconnection"] integerValue];
+        data.isconnection = [[dataDic objectForKey:@"is_collect"] integerValue];
         data.comment = [dataDic objectForKey:@"comment"];
         data.like = [dataDic objectForKey:@"like"];
+        data.video_type = [dataDic objectForKey:@"video_type"];
         [self.dataSource addObject:data];
         NSString *URLString = [data.video_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURL *url = [NSURL URLWithString:URLString];
@@ -255,14 +256,13 @@ static NSString *kIdentifier = @"kIdentifier";
         } failure:^(NSError *error) {
             
         }];
-    } else if ([self.type isEqualToString:@"1"]) {
+    } else {
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
-                                   @"2",@"type",
-                                   data.dataID,@"document",
-                                   self.shopID,@"shop_id",
+                                   self.type,@"topic_type",
+                                   data.dataID,@"id",
                                    [SingleManager shareManager].ordertype,@"ordertype",
                                    nil];
         [AFNetWorkTool post:@"shop/giveLike" params:paramsDic success:^(id responseObj) {
@@ -311,9 +311,16 @@ static NSString *kIdentifier = @"kIdentifier";
     WS(weakSelf);
     [AFNetWorkTool post:@"sheyun/doVideoCollect" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            [weakSelf.view makeToast:@"收藏成功"];
-            [btn setImage:[UIImage imageNamed:@"收藏后"] forState:UIControlStateNormal];
-            btn.tag = 1;
+            if (btn.tag == 0) {
+                /** 没有收藏 */
+                [weakSelf.view makeToast:@"收藏成功"];
+                [btn setImage:[UIImage imageNamed:@"收藏后"] forState:UIControlStateNormal];
+                btn.tag = 1;
+            } else if (btn.tag == 1) {
+                [weakSelf.view makeToast:@"取消收藏"];
+                [btn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+                btn.tag = 0;
+            }
         } else {
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
@@ -330,7 +337,7 @@ static NSString *kIdentifier = @"kIdentifier";
                                @(account.user_id),@"user_id",
                                data.dataID,@"id",
                                @(1),@"page",
-                               @(2),@"type",
+                               data.video_type,@"topic_type",
                                [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     

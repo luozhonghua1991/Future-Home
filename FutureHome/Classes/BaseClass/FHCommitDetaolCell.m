@@ -43,7 +43,7 @@
 
 - (void)setCommitModel:(FHCommitModel *)commitModel {
     _commitModel = commitModel;
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_commitModel.avatar] placeholderImage:[UIImage imageNamed:@""]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_commitModel.avatar] placeholderImage:nil];
     self.nickNameLabel.text = _commitModel.nickname;
     self.timeLabel.text = _commitModel.create_time;
     self.contentLabel.text = _commitModel.content;

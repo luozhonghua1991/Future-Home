@@ -53,14 +53,14 @@
 /** 租赁信息的model赋值 */
 - (void)setHouseListModel:(FHHouseListModel *)houseListModel {
     _houseListModel = houseListModel;
-    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_houseListModel.img_ids] placeholderImage:[UIImage imageNamed:@""]];
+    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_houseListModel.img_ids] placeholderImage:nil];
 }
 
 
 /** 发布管理的model赋值 */
 - (void)setManagementModel:(FHReleaseManagemengModel *)managementModel {
     _managementModel = managementModel;
-    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_managementModel.img_ids] placeholderImage:[UIImage imageNamed:@""]];
+    [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_managementModel.img_ids] placeholderImage:nil];
     self.houseNameLabel.text = _managementModel.community;
     if ([_managementModel.house_park integerValue] == 1) {
         /** 房屋 */

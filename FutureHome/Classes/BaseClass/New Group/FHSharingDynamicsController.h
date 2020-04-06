@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *type;
 /** <#strong属性注释#> */
 @property (nonatomic, strong) ZFTableData *data;
-/** 1生鲜 2朋友圈 */
+/**  1生鲜 2朋友圈 3社交 4医药 */
 @property (nonatomic, copy) NSString *video_type;
 
 

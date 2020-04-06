@@ -19,7 +19,7 @@
 
 - (void)fh_setUpUI {
     self.headerImgView.frame = CGRectMake(10, 7.5, 55, 55);
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@""]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:nil];
     [self.contentView addSubview:self.headerImgView];
     self.titleLabel.frame = CGRectMake(MaxX(self.headerImgView) + 10, 15.5, 250, 15);
     [self.contentView addSubview:self.titleLabel];

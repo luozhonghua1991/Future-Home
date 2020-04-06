@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2020/1/8.
 //  Copyright © 2020 同熙传媒. All rights reserved.
-//  分享动态
+//  分享动态  转发
 
 #import "FHSharingDynamicsController.h"
 #import "BRPlaceholderTextView.h"
@@ -166,14 +166,14 @@
     } else if ([self.type isEqualToString:@"视频"]) {
         /** 转发视频 */
         //显示加载视图
-        [ZHProgressHUD showProgress:@"动态转发中...请稍后" inView:[UIApplication sharedApplication].keyWindow];
+        [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
                                    @"4",@"type",
                                    self.data.dataID,@"video_id",
-                                   self.video_type,@"video_type",
+                                   self.data.video_type,@"video_type",
                                    [SingleManager shareManager].shopName,@"forwarder",
                                    self.suggestionsTextView.text,@"content",
                                    nil];

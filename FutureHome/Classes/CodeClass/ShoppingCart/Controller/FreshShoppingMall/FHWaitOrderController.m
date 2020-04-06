@@ -90,11 +90,8 @@
                                @"20",@"limit",
                                @(curPage),@"page",
                                self.order_type,@"ordertype",
-                               [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
-    
     [AFNetWorkTool get:@"shop/getOrderList" params:paramsDic success:^(id responseObj) {
-        
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
                 [weakSelf.dataListArrs removeAllObjects];
@@ -194,6 +191,7 @@
     FHGoodsListModel *listModel = self.dataListArrs[indexPath.row];
     FHOrderDetailController *detail = [[FHOrderDetailController alloc] init];
     detail.status = self.status;
+    detail.ordertype = self.order_type;
     detail.hidesBottomBarWhenPushed = YES;
     detail.order_id = listModel.id;
     detail.listModel = listModel;
@@ -217,7 +215,7 @@
                 NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                            @(account.user_id),@"user_id",
                                            listModel.id,@"order_id",
-                                           [SingleManager shareManager].ordertype,@"ordertype",nil];
+                                           self.order_type,@"ordertype",nil];
                 [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.view makeToast:@"确认收货成功"];
@@ -240,6 +238,7 @@
             FHGoodsCommitController *commit = [[FHGoodsCommitController alloc] init];
             commit.hidesBottomBarWhenPushed = YES;
             commit.orderID = listModel.id;
+            commit.ordertype = self.order_type;
             [self.navigationController pushViewController:commit animated:YES];
         }
     } else if (self.status == 4){
@@ -253,12 +252,13 @@
             }
             
         } else {
-               /** 退货退款操作 */
-                FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
-                vc.hidesBottomBarWhenPushed = YES;
-                vc.orderID = listModel.id;
-                vc.totolePrice = [NSString stringWithFormat:@"￥%.2f",[listModel.pay_money floatValue]];
-                [self.navigationController pushViewController:vc animated:YES];
+            /** 退货退款操作 */
+            FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
+            vc.hidesBottomBarWhenPushed = YES;
+            vc.orderID = listModel.id;
+            vc.order_type = self.order_type;
+            vc.totolePrice = [NSString stringWithFormat:@"￥%.2f",[listModel.pay_money floatValue]];
+            [self.navigationController pushViewController:vc animated:YES];
             }
         
     }
@@ -284,7 +284,7 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                listModel.id,@"order_id",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               self.order_type,@"ordertype",
                                nil];
     [AFNetWorkTool post:@"shop/cancelOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
@@ -348,7 +348,7 @@
                                @(account.user_id),@"user_id",
                                self.orderID,@"order_id",
                                @(self.payType),@"pay_way",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               self.order_type,@"ordertype",
                                nil];
     
     [AFNetWorkTool post:@"shop/orderPaid" params:paramsDic success:^(id responseObj) {

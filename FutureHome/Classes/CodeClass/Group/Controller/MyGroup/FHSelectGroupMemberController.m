@@ -208,7 +208,7 @@
     NSDictionary *dic = self.blackListArrs[indexPath.row];
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height - 15)];
     cell.selectedBackgroundView.backgroundColor = [UIColor clearColor];
-    [cell.headerImg sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:[UIImage imageNamed:@""]];
+    [cell.headerImg sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]] placeholderImage:nil];
     cell.nameLabel.text = dic[@"nickname"];
     return cell;
 }

@@ -123,7 +123,8 @@
                     goods.goodsSafetStock = [obj objectForKey:@"SafetStock"];
                     [goodsGroup.goodsList addObject:goods];
                 }];
-                [weakSelf.goodsListView.goodsList.goodsGroups addObject:goodsGroup];
+                /** 暂时注释了 具体不知道为啥 */
+//                [weakSelf.goodsListView.goodsList.goodsGroups addObject:goodsGroup];
             }];
             dispatch_async(dispatch_get_main_queue(), ^{
                 /** 暂时注释掉 */

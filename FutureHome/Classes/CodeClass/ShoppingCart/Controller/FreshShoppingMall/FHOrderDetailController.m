@@ -71,7 +71,7 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                self.order_id,@"order_id",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               self.ordertype,@"ordertype",
                                nil];
     [AFNetWorkTool get:@"shop/getSingOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
@@ -210,7 +210,7 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                self.listModel.id,@"order_id",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               self.ordertype,@"ordertype",
                                nil];
     [AFNetWorkTool post:@"shop/cancelOrder" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
@@ -238,7 +238,7 @@
                 NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                            @(account.user_id),@"user_id",
                                            weakSelf.listModel.id,@"order_id",
-                                           [SingleManager shareManager].ordertype,@"ordertype",nil];
+                                           self.ordertype,@"ordertype",nil];
                 [AFNetWorkTool post:@"shop/confirmgoods" params:paramsDic success:^(id responseObj) {
                     if ([responseObj[@"code"] integerValue] == 1) {
                         [weakSelf.navigationController popToRootViewControllerAnimated:YES];
@@ -262,6 +262,7 @@
                 FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];
                 vc.hidesBottomBarWhenPushed = YES;
                 vc.orderID = self.listModel.id;
+                vc.order_type = self.ordertype;
                 vc.totolePrice = [NSString stringWithFormat:@"￥%.2f",[self.listModel.pay_money floatValue]];
                 [self.navigationController pushViewController:vc animated:YES];
             }
@@ -271,6 +272,7 @@
             FHGoodsCommitController *commit = [[FHGoodsCommitController alloc] init];
             commit.hidesBottomBarWhenPushed = YES;
             commit.orderID = self.listModel.id;
+            commit.ordertype = self.ordertype;
             [self.navigationController pushViewController:commit animated:YES];
         }
     } else if (self.status == 1) {
@@ -315,7 +317,7 @@
                                @(account.user_id),@"user_id",
                                self.listModel.id,@"order_id",
                                @(self.payType),@"pay_way",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               self.ordertype,@"ordertype",
                                nil];
     
     [AFNetWorkTool post:@"shop/orderPaid" params:paramsDic success:^(id responseObj) {

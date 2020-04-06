@@ -48,7 +48,7 @@
 - (UIImageView *)logoImgView {
     if (!_logoImgView) {
         _logoImgView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 15, 50, 50)];
-        _logoImgView.image = [UIImage imageNamed:@""];
+        _logoImgView.image = nil;
         _logoImgView.backgroundColor = HEX_COLOR(0x1296db);
     }
     return _logoImgView;

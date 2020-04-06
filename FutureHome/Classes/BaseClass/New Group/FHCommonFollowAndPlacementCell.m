@@ -47,7 +47,7 @@
 
 - (void)setFollowModel:(FHCommonFollowModel *)followModel {
     _followModel = followModel;
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_followModel.avatar] placeholderImage:[UIImage imageNamed:@""]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_followModel.avatar] placeholderImage:nil];
     self.nameLabel.text = _followModel.name;
     self.fnansLabel.text = [NSString stringWithFormat:@"粉丝 : %ld",(long)_followModel.follow_num];
 }

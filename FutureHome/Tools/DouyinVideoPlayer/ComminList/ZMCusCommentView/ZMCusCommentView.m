@@ -130,13 +130,11 @@
 /** 给视频添加评论 */
 - (void)addCommentWithContent:(NSString *)content {
     if ([self.type isEqualToString:@"video"]) {
-        /** 添加视频评论 */
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
-                                   @(account.user_id),@"from_uid",
-                                   @"2",@"topic_type",
+                                   self.topic_type,@"topic_type",
                                    self.videoTopicId,@"topic_id",
                                    content,@"content",
                                    [SingleManager shareManager].ordertype,@"ordertype",
@@ -155,7 +153,7 @@
                                            @(account.user_id),@"user_id",
                                            self.videoTopicId,@"id",
                                            @(1),@"page",
-                                           @(2),@"type",
+                                           self.topic_type,@"type",
                                            [SingleManager shareManager].ordertype,@"ordertype",
                                            nil];
                 
@@ -320,6 +318,7 @@
     view.commentListView.headerView.commmentCount = [data.comment intValue];
     view.commentListView.videoTopicId = data.dataID;
     view.videoTopicId = data.dataID;
+    view.topic_type = data.video_type;
     view.commentListView.commentListDataArrs = commentListArrs;
     
     FHAppDelegate *delegate = (FHAppDelegate*)[UIApplication sharedApplication].delegate;

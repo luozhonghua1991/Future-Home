@@ -64,7 +64,7 @@
     self.contentLabel.text = _noticeModel.title;
     self.timeLabel.text = [NSString stringWithFormat:@"更新时间: %@",_noticeModel.updatetime];
     self.readCountLabel.text = [NSString stringWithFormat:@"阅读数%ld",(long)_noticeModel.show];
-    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_noticeModel.coverthumb] placeholderImage:[UIImage imageNamed:@""]];
+    [self.headerImgView sd_setImageWithURL:[NSURL URLWithString:_noticeModel.coverthumb] placeholderImage:nil];
 }
 
 #pragma mark — setter && getter

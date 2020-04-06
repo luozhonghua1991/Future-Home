@@ -13,7 +13,7 @@
 @property (nonatomic, copy) NSString *shopID;
 /** <#strong属性注释#> */
 @property (nonatomic, copy) NSArray *videoListDataArrs;
-/** 1生鲜 2朋友圈 */
+/** 1生鲜 2朋友圈 3社交 4医药*/
 @property (nonatomic, copy) NSString *type;
 
 

@@ -46,7 +46,7 @@
                         frame:(CGRect )frame
                           tag:(NSInteger )tag {
     UIImageView *view = [[UIImageView alloc] initWithFrame:frame];
-    view.image = [UIImage imageNamed:@""];
+    view.image = nil;
     view.tag = tag;
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 100, 20)];

@@ -64,7 +64,7 @@
 
 -(void)setModel:(ZJCommit *)model {
     _model = model;
-    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:[UIImage imageNamed:@""]];
+    [self.avatar sd_setImageWithURL:[NSURL URLWithString:_model.avatar] placeholderImage:nil];
     
     self.nameLab.text = _model.nickname;
     
@@ -97,7 +97,7 @@
     // 头像
     if (!self.avatar) {
         self.avatar = [[UIImageView alloc] init];
-        self.avatar.image = [UIImage imageNamed:@""];
+        self.avatar.image = nil;
         [self.contentView addSubview:self.avatar];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarClick)];

@@ -131,7 +131,16 @@
     ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
     douyin.videoListDataArrs = self.videoListDataArrs;
     [douyin playTheIndex:selectIndex.item];
-    douyin.type = @"1";
+    if ([[SingleManager shareManager].ordertype integerValue] == 3) {
+        /** 生鲜 */
+        douyin.type = @"1";
+    } else if ([[SingleManager shareManager].ordertype integerValue] == 4) {
+        /** 社交 */
+        douyin.type = @"3";
+    } else if ([[SingleManager shareManager].ordertype integerValue] == 5) {
+        /** 医药 */
+        douyin.type = @"4";
+    }
     douyin.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:douyin animated:YES];
 }

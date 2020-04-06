@@ -178,7 +178,7 @@
     }
     addAddressBtn.backgroundColor = HEX_COLOR(0x1296db);
     [addAddressBtn setTitle:@"新增地址" forState:UIControlStateNormal];
-    [addAddressBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [addAddressBtn setImage:nil forState:UIControlStateNormal];
     [addAddressBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [addAddressBtn addTarget:self action:@selector(addAddressBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:addAddressBtn];
