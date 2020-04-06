@@ -162,8 +162,8 @@
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
-                               allPriceString,@"total_money",
-                               [SingleManager shareManager].totalMoneyString,@"pay_money",
+                               allPriceString,@"pay_money",
+                               [SingleManager shareManager].totalMoneyString,@"total_money",
                                @(weakSelf.payType),@"pay_way",
                                weakSelf.shopID,@"shop_id",
                                /** 发票的id */

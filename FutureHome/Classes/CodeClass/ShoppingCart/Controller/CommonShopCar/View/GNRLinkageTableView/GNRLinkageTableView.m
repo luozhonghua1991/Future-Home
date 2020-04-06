@@ -115,7 +115,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == _leftTbView) {
+        ZHLog(@"-------------------------获取到的列表类数%ld",(long)self.goodsList.sectionNumber);
         return self.goodsList.sectionNumber;
+        
     }
     
     if (section < self.goodsList.goodsGroups.count) {

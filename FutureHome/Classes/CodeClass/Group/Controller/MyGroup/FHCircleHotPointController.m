@@ -358,15 +358,38 @@
         /** 跳转到视频 */
         NSMutableArray *videoArr = [[NSMutableArray alloc] init];
         NSDictionary *dic = model.medias[0];
-        [videoArr addObject:dic];
-        ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
-        /** 朋友圈视频 */
-        douyin.type = @"2";
-        douyin.videoListDataArrs = videoArr;
-        [douyin playTheIndex:0];
-        douyin.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:douyin animated:YES];
-        }
+        NSString *videoID = dic[@"id"];
+        NSString *type = dic[@"video_type"];
+        //* 判断视频是否删除
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   videoID,@"id",
+                                   type,@"type",nil];
+        
+        [AFNetWorkTool get:@"public/videoIsDel" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                if ([responseObj[@"data"] integerValue] == 1) {
+                    [self.view makeToast:@"视频已经删除"];
+                } else if ([responseObj[@"data"] integerValue] == 2) {
+                    [videoArr addObject:dic];
+                    ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
+                    /** 朋友圈视频 */
+                    douyin.type = @"2";
+                    douyin.videoListDataArrs = videoArr;
+                    [douyin playTheIndex:0];
+                    douyin.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:douyin animated:YES];
+                }
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+           
+        }];
+        
+    }
 }
 
 

@@ -54,8 +54,7 @@ XYSJSExport
 
 @implementation FHWebViewController
 
-- (void)dealloc
-{
+- (void)dealloc {
     _webViewProgressView = nil;
     _webViewProgress = nil;
 }
@@ -65,6 +64,7 @@ XYSJSExport
     [self initSubViews];
     if ([self.type isEqualToString:@"noShow"]) {
         /** 不展示评论列表 */
+        [self fetchNetworkData];
     } else {
         /** 展示评论列表 */
         [self fh_creatCommentView];

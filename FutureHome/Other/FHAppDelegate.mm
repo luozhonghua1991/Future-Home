@@ -109,19 +109,6 @@ RCIMGroupInfoDataSource
     return [WXApi handleOpenUniversalLink:userActivity delegate:self];
 }
 
-//#pragma mark CoreLocation delegate (定位失败)
-////定位失败后调用此代理方法
-//-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
-//{
-//    //设置提示提醒用户打开定位服务
-//    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"允许定位提示" message:@"请在设置中打开定位" preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"打开定位" style:UIAlertActionStyleDefault handler:nil];
-//    
-//    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-//    [alert addAction:okAction];
-//    [alert addAction:cancelAction];
-//    [[CurrentViewController topViewController] presentViewController:alert animated:YES completion:nil];
-//}
 
 - (void)setTabBarController {
     FHHomePageController *vc1 = [[FHHomePageController alloc] init];

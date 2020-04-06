@@ -48,7 +48,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self loadInit];
+//    [self loadInit];
 }
 
 #pragma mark -- MJrefresh

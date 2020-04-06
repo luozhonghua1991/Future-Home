@@ -28,6 +28,7 @@
 #import "FHScrollNewsController.h"
 #import "FHMainSearchController.h"
 
+
 @interface FHHomePageController () <UITableViewDelegate,UITableViewDataSource,BHInfiniteScrollViewDelegate,FHMenuListCellDelegate,FHLittleMenuListCellDelegate,PYSearchViewControllerDelegate,CLLocationManagerDelegate>
 {
     NSMutableArray *topBannerArrays;
@@ -112,19 +113,18 @@
 
 #pragma mark - 定位
 //开始定位
--(void)startLocation
-{
+-(void)startLocation {
     //判断定位功能是否打开
     if ([CLLocationManager locationServicesEnabled]) {
         locationmanager = [[CLLocationManager alloc]init];
         locationmanager.delegate = self;
         [locationmanager requestAlwaysAuthorization];
         [locationmanager requestWhenInUseAuthorization];
-        //        [locationmanager setAllowsBackgroundLocationUpdates:YES];
+        
         //设置寻址精度
-        locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
-        locationmanager.pausesLocationUpdatesAutomatically = NO;
-        locationmanager.distanceFilter = kCLDistanceFilterNone;
+        locationmanager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
+        locationmanager.pausesLocationUpdatesAutomatically = YES;
+        locationmanager.distanceFilter = 100;
         
         [locationmanager startUpdatingLocation];
     }
@@ -132,7 +132,7 @@
 
 #pragma mark 定位成功后则执行此代理方法
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    //    [locationmanager stopUpdatingHeading];
+    [locationmanager stopUpdatingHeading];
     //旧址
     CLLocation *currentLocation = [locations lastObject];
     CLGeocoder *geoCoder = [[CLGeocoder alloc]init];
@@ -157,6 +157,20 @@
          }
      }];
     
+}
+
+#pragma mark CoreLocation delegate (定位失败)
+//定位失败后调用此代理方法
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    //设置提示提醒用户打开定位服务
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"允许定位提示" message:@"请在设置中打开定位" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"打开定位" style:UIAlertActionStyleDefault handler:nil];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:okAction];
+    [alert addAction:cancelAction];
+    [[CurrentViewController topViewController] presentViewController:alert animated:YES completion:nil];
 }
 
 
@@ -198,7 +212,6 @@
                 NSDictionary *dic = arr[0];
                 /** 商铺ID */
                 weakSelf.shopID = dic[@"id"];
-                
             }
         }
     } failure:^(NSError *error) {
@@ -240,7 +253,7 @@
     
     UIButton *searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     searchBtn.frame = searchView.bounds;
-    [searchBtn setTitle:@" 搜索" forState:UIControlStateNormal];
+    [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
     [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [searchBtn setImage:[UIImage imageNamed:@"xingtaiduICON_sousuo--"] forState:UIControlStateNormal];
