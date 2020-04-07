@@ -170,12 +170,12 @@
                     typeString = @"退款申请中，待商家确认";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
                 } else {
-                    typeString = @"申请退款";
-                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
-//                    [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
+                    typeString = @"退货退款";
+//                    [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
+                    [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
                 }
             } else {
-                typeString = @"申请退款";
+                typeString = @"退货退款";
                 [cell.typeBtn setBackgroundColor:HEX_COLOR(0x1296db)];
             }
         }

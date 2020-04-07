@@ -183,7 +183,7 @@
                 typeString = @"退款申请中，待商家确认";
                 [bottomBtn setBackgroundColor:[UIColor lightGrayColor]];
             } else {
-                typeString = @"申请退款";
+                typeString = @"退货退款";
             }
         }
     }
