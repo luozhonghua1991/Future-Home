@@ -58,7 +58,7 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/New%20Group/FHSharingDynamicsController.m"
-                  timestampString = "607862909.888399"
+                  timestampString = "607915987.409024"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "181"
@@ -73,7 +73,7 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/New%20Group/FHSharingDynamicsController.m"
-                  timestampString = "607862909.89108"
+                  timestampString = "607915987.410623"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "182"
@@ -81,6 +81,22 @@
                   offsetFromSymbolStart = "54">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Tools/DouyinVideoPlayer/ZFDouYinViewController.m"
+            timestampString = "607914043.723374"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "-requestData"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

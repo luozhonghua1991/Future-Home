@@ -62,10 +62,15 @@ FHSearchResultCellDelegate
 }
 
 - (void)footerReload {
-    if (++curPage <= tolPage) {
+    if ([self.type isEqualToString:@"2019"]) {
+        ++curPage;
         [self getRequestDataLoadHead:NO];
     } else {
-        [self.homeTable.mj_footer endRefreshingWithNoMoreData];
+        if (++curPage <= tolPage) {
+            [self getRequestDataLoadHead:NO];
+        } else {
+            [self.homeTable.mj_footer endRefreshingWithNoMoreData];
+        }
     }
 }
 
@@ -111,7 +116,6 @@ FHSearchResultCellDelegate
     } else {
         /** 附近的人 专门写的 */
         /** 每次进来先获取当前位置的经纬度 */
-        
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -126,9 +130,14 @@ FHSearchResultCellDelegate
                     [self.dataArrs removeAllObjects];
                 }
                 [self endRefreshAction];
-                self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
-                [self.dataArrs addObjectsFromArray:[FHSearchResultModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
-                [weakSelf.homeTable reloadData];
+                NSArray *array = responseObj[@"data"][@"list"];
+                if (IS_NULL_ARRAY(array)) {
+                    /** 没有数据了 */
+                     [self.homeTable.mj_footer endRefreshingWithNoMoreData];
+                } else {
+                    [self.dataArrs addObjectsFromArray:[FHSearchResultModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
+                    [weakSelf.homeTable reloadData];
+                }
             } else {
                 [self endRefreshAction];
                 [self.view makeToast:responseObj[@"msg"]];
