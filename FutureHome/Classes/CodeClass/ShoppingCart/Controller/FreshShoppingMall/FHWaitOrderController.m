@@ -156,7 +156,7 @@
         } else if (self.status == 4) {
             cell.typeBtn.x = SCREEN_WIDTH - 15 - (70 * 3);
             cell.typeBtn.width = 70 * 3;
-            if ([listModel.status integerValue] >= 3) {
+            if ([listModel.status integerValue] >3) {
                 if ([listModel.status integerValue] == 6) {
                     typeString = @"退款成功，款项已原路退回";
                     [cell.typeBtn setBackgroundColor:[UIColor lightGrayColor]];
@@ -243,14 +243,13 @@
         }
     } else if (self.status == 4){
         /** 退货相关的 */
-        if ([listModel.status integerValue] >= 3) {
+        if ([listModel.status integerValue] >3) {
             if ([listModel.status isEqualToString:@"6"]||
                 [listModel.status isEqualToString:@"7"]||
                 [listModel.status isEqualToString:@"4"]||
-                [listModel.status isEqualToString:@"5"]){
+                [listModel.status isEqualToString:@"5"]) {
                 
             }
-            
         } else {
             /** 退货退款操作 */
             FHReturnRefundController *vc = [[FHReturnRefundController alloc] init];

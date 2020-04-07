@@ -98,6 +98,13 @@
         /** 初始化collectionView */
         [self initPickerView];
     } else {
+        self.dateView.userInteractionEnabled = NO;
+        self.hospitalView.userInteractionEnabled = NO;
+        self.allPriceView.userInteractionEnabled = NO;
+        self.mainDoctorView.userInteractionEnabled = NO;
+        self.symptomView.userInteractionEnabled = NO;
+        self.therapeuticRegimenView.userInteractionEnabled = NO;
+        
         self.photoListView = [[DPPhotoListView alloc] initWithFrame:CGRectMake(0, MaxY(self.therapeuticRegimenView) + 10, self.view.bounds.size.width, SCREEN_HEIGHT) numberOfCellInRow:3 lineSpacing:15 dataSource:[self.imgArrs mutableCopy]];
         CGFloat height = [self.photoListView getItemSizeHeight];
         CGFloat photoListHeight = 0.0;

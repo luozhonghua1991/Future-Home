@@ -45,6 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.type = 0;
     self.topLogoNameArrs = @[@"喜欢满意",
                              @"感觉一般",
                              @"不满意"];
@@ -86,12 +87,12 @@
 }
 
 - (void)creatBottomBtn{
-    UILabel *logLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(75), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(25))];
+    UILabel *logLabel = [[UILabel alloc] initWithFrame:CGRectMake(10,SCREEN_HEIGHT - ZH_SCALE_SCREEN_Height(75), SCREEN_WIDTH, ZH_SCALE_SCREEN_Height(28))];
     logLabel.text = @"亲,期待您,美丽客观的体验评价;\n这有益于市场,有益于商家,有益于生活,有益于社会。";
     logLabel.font = [UIFont systemFontOfSize:12];
     logLabel.textAlignment = NSTextAlignmentLeft;
     logLabel.textColor = [UIColor blackColor];
-    logLabel.numberOfLines = 2;
+    logLabel.numberOfLines = 0;
     [self.view addSubview:logLabel];
     
     UIButton *sureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -146,6 +147,14 @@
 }
 
 - (void)commitRequestInfo {
+    if (self.type == 0) {
+        [self.view makeToast:@"请对商品进行打分"];
+        return;
+    }
+    if (self.businessDescriptionTextView.text.length <= 0) {
+        [self.view makeToast:@"请输入商品评论"];
+        return;
+    }
     /** 添加商品评论 */
     //显示加载视图
     self.imgSelectArrs = [[NSMutableArray alloc] init];
