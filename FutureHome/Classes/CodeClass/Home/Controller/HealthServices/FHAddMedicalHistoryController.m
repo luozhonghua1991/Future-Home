@@ -9,6 +9,7 @@
 #import "FHAddMedicalHistoryController.h"
 #import "FHAccountApplicationTFView.h"
 #import "DPPhotoLibrary.h"
+#import "BRPlaceholderTextView.h"
 
 @interface FHAddMedicalHistoryController () <UITextFieldDelegate,UIScrollViewDelegate,DPPhotoListViewDelegate>
 /** 大的滚动视图 */
@@ -37,6 +38,11 @@
 @property (nonatomic, assign) CGFloat symptomViewHeight;
 /** 治疗方案 */
 @property (nonatomic, assign) CGFloat therapeuticRegimenViewHeight;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) BRPlaceholderTextView *symptomTextView;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) BRPlaceholderTextView *therapeuticRegimenTextView;
+
 
 @end
 
@@ -90,20 +96,26 @@
     [self.scrollView addSubview:self.hospitalView];
     [self.scrollView addSubview:self.allPriceView];
     [self.scrollView addSubview:self.mainDoctorView];
-    [self.scrollView addSubview:self.symptomView];
-    [self.scrollView addSubview:self.therapeuticRegimenView];
     if ([self.titleString isEqualToString:@"添加医疗记录"]) {
+        [self.scrollView addSubview:self.symptomView];
+        [self.scrollView addSubview:self.therapeuticRegimenView];
         self.scrollView.delegate = self;
         self.showInView = self.scrollView;
         /** 初始化collectionView */
         [self initPickerView];
     } else {
+        [self.scrollView addSubview:self.symptomTextView];
+        [self.scrollView addSubview:self.therapeuticRegimenTextView];
         self.dateView.userInteractionEnabled = NO;
         self.hospitalView.userInteractionEnabled = NO;
         self.allPriceView.userInteractionEnabled = NO;
         self.mainDoctorView.userInteractionEnabled = NO;
         self.symptomView.userInteractionEnabled = NO;
         self.therapeuticRegimenView.userInteractionEnabled = NO;
+        self.symptomTextView.userInteractionEnabled = NO;
+        self.therapeuticRegimenTextView.userInteractionEnabled = NO;
+        self.symptomTextView.scrollEnabled = NO;
+        self.therapeuticRegimenTextView.scrollEnabled = NO;
         
         self.photoListView = [[DPPhotoListView alloc] initWithFrame:CGRectMake(0, MaxY(self.therapeuticRegimenView) + 10, self.view.bounds.size.width, SCREEN_HEIGHT) numberOfCellInRow:3 lineSpacing:15 dataSource:[self.imgArrs mutableCopy]];
         CGFloat height = [self.photoListView getItemSizeHeight];
@@ -195,13 +207,14 @@
             weakSelf.hospitalView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"hospital"]];
             weakSelf.allPriceView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"total_consum"]];
             weakSelf.mainDoctorView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"doctor"]];
-            weakSelf.symptomView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"symptom"]];
-            weakSelf.therapeuticRegimenView.contentTF.text = [NSString stringWithFormat:@"%@",dic[@"programme"]];
+            weakSelf.symptomTextView.text = [NSString stringWithFormat:@"描述症状:\n%@",dic[@"symptom"]];
+            weakSelf.therapeuticRegimenTextView.text = [NSString stringWithFormat:@"治疗方案:\n%@",dic[@"programme"]];
             weakSelf.imgArrs = dic[@"img_ids"];
-            CGSize size1 = [UIlabelTool sizeWithString:weakSelf.symptomView.contentTF.text font:weakSelf.symptomView.contentTF.font width:weakSelf.symptomView.contentTF.width];
-            self.symptomViewHeight = size1.height;
-            CGSize size2 = [UIlabelTool sizeWithString:weakSelf.therapeuticRegimenView.contentTF.text font:weakSelf.therapeuticRegimenView.contentTF.font width:weakSelf.therapeuticRegimenView.contentTF.width];
-            self.therapeuticRegimenViewHeight = size2.height;
+            
+            CGSize size1 = [UIlabelTool sizeWithString:weakSelf.symptomTextView.text font:weakSelf.symptomTextView.font width:SCREEN_WIDTH];
+            self.symptomViewHeight = size1.height + 20;
+            CGSize size2 = [UIlabelTool sizeWithString:weakSelf.therapeuticRegimenTextView.text font:weakSelf.therapeuticRegimenTextView.font width:SCREEN_WIDTH];
+            self.therapeuticRegimenViewHeight = size2.height + 20;
             [weakSelf fh_creatUI];
             [weakSelf fh_layoutSubViews];
         } else {
@@ -299,9 +312,9 @@
         [self updatePickerViewFrameY:MaxY(self.therapeuticRegimenView)];
         self.scrollView.contentSize = CGSizeMake(0, [self getPickerViewFrame].size.height + MainSizeHeight + 20);
     } else {
-        self.symptomView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, self.symptomViewHeight);
-        self.therapeuticRegimenView.frame = CGRectMake(0, MaxY(self.symptomView), SCREEN_WIDTH, self.therapeuticRegimenViewHeight);
-       self.photoListView.frame = CGRectMake(0, MaxY(self.therapeuticRegimenView) + 10, SCREEN_WIDTH, self.photoListView.height);
+        self.symptomTextView.frame = CGRectMake(0, MaxY(self.mainDoctorView), SCREEN_WIDTH, self.symptomViewHeight);
+        self.therapeuticRegimenTextView.frame = CGRectMake(0, MaxY(self.symptomTextView), SCREEN_WIDTH, self.therapeuticRegimenViewHeight);
+       self.photoListView.frame = CGRectMake(0, MaxY(self.therapeuticRegimenTextView) + 10, SCREEN_WIDTH, self.photoListView.height);
        self.scrollView.contentSize = CGSizeMake(0, MaxY(self.photoListView) + MainSizeHeight + 20);
     }
 }
@@ -391,6 +404,28 @@
         _therapeuticRegimenView.contentTF.placeholder = @"请输入治疗方案";
     }
     return _therapeuticRegimenView;
+}
+
+- (BRPlaceholderTextView *)therapeuticRegimenTextView {
+    if (!_therapeuticRegimenTextView) {
+        _therapeuticRegimenTextView = [[BRPlaceholderTextView alloc] init];
+        _therapeuticRegimenTextView.layer.borderWidth = 1;
+        _therapeuticRegimenTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _therapeuticRegimenTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
+        _therapeuticRegimenTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+    }
+    return _therapeuticRegimenTextView;
+}
+
+- (BRPlaceholderTextView *)symptomTextView {
+    if (!_symptomTextView) {
+        _symptomTextView = [[BRPlaceholderTextView alloc] init];
+        _symptomTextView.layer.borderWidth = 1;
+        _symptomTextView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        _symptomTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
+        _symptomTextView.PlaceholderLabel.textColor = [UIColor blackColor];
+    }
+    return _symptomTextView;
 }
 
 @end

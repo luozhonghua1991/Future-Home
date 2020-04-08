@@ -294,15 +294,15 @@
         if (error) {
             if (failure) {
                 failure(dataTask, error);
-                NSInteger errorCode = error.code;
-                if (errorCode == -1016) {
-                    if ([SingleManager shareManager].isFirstPushLogin == NO) {
-                        [FHLoginTool fh_makePersonToLoging];
-                        return;
-                    }
-                    ZHLog(@"token不匹配");
-                    return ;
-                }
+//                NSInteger errorCode = error.code;
+//                if (errorCode == -1016) {
+//                    if ([SingleManager shareManager].isFirstPushLogin == NO) {
+//                        [FHLoginTool fh_makePersonToLoging];
+//                        return;
+//                    }
+//                    ZHLog(@"token不匹配");
+//                    return ;
+//                }
             }
         } else {
             if (success) {

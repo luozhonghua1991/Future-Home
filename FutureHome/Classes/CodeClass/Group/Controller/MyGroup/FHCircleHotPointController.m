@@ -26,6 +26,14 @@
 
 @interface FHCircleHotPointController () <UITableViewDelegate,UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate,FHArticleOrVideoShareCellDelegate>
 
+{
+    NSString *uid;
+    NSDictionary *paramsDicy;
+    NSDictionary *headerParamsDic;
+    NSInteger curPage;
+    NSInteger tolPage;
+}
+
 @property(nonatomic ,strong) UITableView *mainTable;
 
 @property(nonatomic ,strong) NSMutableArray *dataArray;
@@ -54,7 +62,7 @@
 /** 个性签名 */
 @property (nonatomic, strong) UILabel *autographLabel;
 /** 数据 */
-@property (nonatomic, strong) NSArray *commitsListArrs;
+@property (nonatomic, strong) NSMutableArray *commitsListArrs;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *followMessage;
 /** <#strong属性注释#> */
@@ -67,38 +75,123 @@
 /** 参数 */
 @property (nonatomic, copy) NSDictionary *headerParamsDic;
 
-
 @end
 
 @implementation FHCircleHotPointController
 
 - (void)viewDidLoad {
+    self.videoListDataArrs = [[NSMutableArray alloc] init];
+    self.commitsListArrs = [[NSMutableArray alloc] init];
+    self.dataArray = [NSMutableArray array];
     [super viewDidLoad];
     [self setUpAllView];
-    [self getCommitsData];
+    [self loadInit];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self getCommitsData];
 }
 
-#pragma mark - 获取数据
-- (void)getCommitsData {
+
+#pragma mark -- MJrefresh
+- (void)headerReload {
+    curPage = 1;
+    tolPage = 1;
+    [self.mainTable.mj_footer resetNoMoreData];
+    
+    [self getRequestLoadHead:YES];
+}
+
+- (void)footerReload {
+    if (++curPage <= tolPage) {
+        [self getRequestLoadHead:NO];
+    } else {
+        [self.mainTable.mj_footer endRefreshingWithNoMoreData];
+    }
+}
+
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.mainTable.mj_header;
+    MJRefreshFooter *footer = self.mainTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
+- (void)getRequestLoadHead:(BOOL)isHead {
+    /** 头部信息 */
+    if (isHead) {
+        [self getHotPointPageRequest];
+    }
     
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     /** 朋友圈封面信息 */
-    NSString *uid;
-    NSDictionary *paramsDicy;
-    NSDictionary *headerParamsDic;
     if (self.personType == 1) {
         /** 自己看自己 */
         uid = [NSString stringWithFormat:@"%ld",(long)account.user_id];
         paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
                      @(account.user_id),@"uid",
+                     @(curPage),@"page",
                      nil];
+    } else if (self.personType == 0) {
+        uid = self.personID;
+        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     uid,@"uid",
+                     @(curPage),@"page",
+                     nil];
+    } else {
+        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     @(curPage),@"page",
+                     nil];
+    }
+    /** 朋友圈动态数据 */
+    [AFNetWorkTool get:@"sheyun/friendCircle" params:paramsDicy success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (isHead) {
+                [weakSelf.videoListDataArrs removeAllObjects];
+                [weakSelf.videoListDataArrs removeAllObjects];
+                [weakSelf.dataArray removeAllObjects];
+            }
+            [weakSelf endRefreshAction];
+            self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
+            NSDictionary *Dic = responseObj[@"data"];
+            NSArray *arr = Dic[@"list"];
+            for (NSDictionary *dic  in arr) {
+                NSArray *videoArr = dic[@"medias"];
+                if (videoArr.count > 0) {
+                    NSDictionary *videoDic = videoArr[0];
+                    if ([videoDic[@"type"] integerValue] == 2) {
+                        [weakSelf.videoListDataArrs addObject:videoDic];
+                    }
+                }
+            }
+            [weakSelf requestWithDontTaiDic:Dic LoadHead:isHead];
+        } else {
+            [weakSelf endRefreshAction];
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+        [weakSelf endRefreshAction];
+    }];
+}
+
+/** 获取朋友圈封面以及头部的数据数据   只有第一次进来刷新和用户手动刷新数据*/
+- (void)getHotPointPageRequest {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    /** 朋友圈封面信息 */
+    if (self.personType == 1) {
+        /** 自己看自己 */
+        uid = [NSString stringWithFormat:@"%ld",(long)account.user_id];
         headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                            @(account.user_id),@"user_id",
                            @(account.user_id),@"uid", nil];
@@ -106,10 +199,6 @@
         self.relationBtn.hidden = YES;
     } else if (self.personType == 0) {
         uid = self.personID;
-        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
-                     @(account.user_id),@"user_id",
-                     uid,@"uid",
-                     nil];
         headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                            @(account.user_id),@"user_id",
                            uid,@"uid", nil];
@@ -122,40 +211,12 @@
             self.relationBtn.hidden = NO;
         }
     } else {
-        paramsDicy= [NSDictionary dictionaryWithObjectsAndKeys:
-                     @(account.user_id),@"user_id",
-                     nil];
         headerParamsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                            @(account.user_id),@"user_id",
                            @(account.user_id),@"uid", nil];
         [self.updateBtn setTitle:@"+发布" forState:UIControlStateNormal];
         self.relationBtn.hidden = YES;
     }
-    
-    /** 朋友圈动态数据 */
-    [AFNetWorkTool get:@"sheyun/friendCircle" params:paramsDicy success:^(id responseObj) {
-        self.videoListDataArrs = [[NSMutableArray alloc]init];
-        if ([responseObj[@"code"] integerValue] == 1) {
-            NSDictionary *Dic = responseObj[@"data"];
-            NSArray *arr = Dic[@"list"];
-            for (NSDictionary *dic  in arr) {
-                NSArray *videoArr = dic[@"medias"];
-                if (videoArr.count > 0) {
-                    NSDictionary *videoDic = videoArr[0];
-                    if ([videoDic[@"type"] integerValue] == 2) {
-                        [self.videoListDataArrs addObject:videoDic];
-                    }
-                }
-            }
-            [weakSelf requestWithDontTaiDic:Dic];
-        } else {
-            [weakSelf.mainTable.mj_header endRefreshing];
-            [self.view makeToast:responseObj[@"msg"]];
-        }
-    } failure:^(NSError *error) {
-        [weakSelf.mainTable.mj_header endRefreshing];
-    }];
-    
     
     /** 朋友圈头部数据 */
     [AFNetWorkTool get:@"sheyun/circleInfo" params:headerParamsDic success:^(id responseObj) {
@@ -164,7 +225,7 @@
             weakSelf.username = dic[@"username"];
             weakSelf.nickname = dic[@"nickname"];
             [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]]];
-            [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:[UIImage imageNamed:@"头像"]];
+            [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:nil];
             weakSelf.nameLabel.text = dic[@"nickname"];
             weakSelf.autographLabel.text = dic[@"autograph"];
             weakSelf.rulesLabel.text = [NSString stringWithFormat:@"获赞: %@",dic[@"praise_num"]];
@@ -188,22 +249,23 @@
     
 }
 
-- (void)requestWithDontTaiDic:(NSDictionary *)dic {
+
+- (void)requestWithDontTaiDic:(NSDictionary *)dic LoadHead:(BOOL)isHead{
     NSArray *commitsList = [dic objectForKey:@"list"];
-    self.commitsListArrs = commitsList;
+    [self.commitsListArrs addObjectsFromArray:commitsList];
+    
     NSMutableArray *arrM = [NSMutableArray array];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (NSDictionary *dictDict in commitsList) {
             ZJCommit *commit = [ZJCommit commitWithDongtaiDict:dictDict];
             [arrM addObject:commit];
         }
-        self.dataArray = arrM;
+        [self.dataArray addObjectsFromArray:arrM];
         WS(weakSelf);
         dispatch_async(dispatch_get_main_queue(), ^{
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf endRefreshAction];
                 [weakSelf.mainTable reloadData];
-                [weakSelf.mainTable.mj_header endRefreshing];
-                
             });
         });
     });
@@ -233,7 +295,8 @@
         self.mainTable.tableHeaderView.height = self.headerView.height;
     }
     
-    self.mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getCommitsData)];
+    self.mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadInit)];
+    self.mainTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadNext)];
     
 }
 
@@ -404,7 +467,7 @@
                                nil];
     [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            [weakSelf getCommitsData];
+            [weakSelf loadInit];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -577,7 +640,7 @@
             NSData *imageData = UIImageJPEGRepresentation(image,0.5);
             [AFNetWorkTool updatePersonPYQBgImageWithUrl:@"sheyun/updateCover" parameter:paramsDic imageData:imageData success:^(id responseObj) {
                 if ([responseObj[@"code"] integerValue] == 1) {
-                    [self getCommitsData];
+                    self.headerBgImgView.image = image;
                 } else {
                     [self.view makeToast:responseObj[@"msg"]];
                 }
@@ -606,7 +669,7 @@
     NSData *imageData = UIImageJPEGRepresentation(image,0.5);
     [AFNetWorkTool updatePersonPYQBgImageWithUrl:@"sheyun/updateCover" parameter:paramsDic imageData:imageData success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            [self getCommitsData];
+            self.headerBgImgView.image = image;
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -621,13 +684,6 @@
 }
 
 #pragma mark — setter && getter
-- (NSMutableArray *)dataArray{
-    if (!_dataArray) {
-        _dataArray = [NSMutableArray array];
-    }
-    return _dataArray;
-}
-
 - (UIView *)headerView {
     if (!_headerView) {
         _headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_WIDTH * 0.618 + 40)];

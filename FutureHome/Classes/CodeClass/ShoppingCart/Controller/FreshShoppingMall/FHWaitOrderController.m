@@ -43,12 +43,12 @@
     self.dataListArrs = [[NSMutableArray alloc] init];
     [self.homeTable registerClass:[FHNewWatiingOrderCell class] forCellReuseIdentifier:NSStringFromClass([FHNewWatiingOrderCell class])];
     [self.view addSubview:self.homeTable];
-    [self loadInit];
+//    [self loadInit];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [self loadInit];
+    [self loadInit];
 }
 
 #pragma mark -- MJrefresh
