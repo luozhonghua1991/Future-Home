@@ -81,7 +81,9 @@ RCIMGroupInfoDataSource
     //    // 使用 NSUserDefaults 读取用户数据
     if (![useDef boolForKey:@"notFirst"] || ![AccountStorage isExistsToKen]) {
         //        // 如果是第一次进入引导页
-        self.window.rootViewController = [[FHLoginController alloc] init];
+        FHLoginController *vc = [[FHLoginController alloc] init];
+        UINavigationController *homeNav = [[UINavigationController alloc] initWithRootViewController:vc];
+        self.window.rootViewController = homeNav;
     } else {
         //        // 否则直接进入应用
         self.window.rootViewController = [[FHTabbarController alloc] init];
@@ -110,58 +112,58 @@ RCIMGroupInfoDataSource
 }
 
 
-- (void)setTabBarController {
-    FHHomePageController *vc1 = [[FHHomePageController alloc] init];
-    vc1.title = @"首页";
-    vc1.tabBarItem.image = [UIImage imageNamed:@"zhuye-2"];
-    vc1.tabBarItem.selectedImage = [UIImage imageNamed:@"zhuye"];
-    
-    FHGroupController *vc2 = [[FHGroupController alloc] init];
-    vc2.title = @"社云";
-    vc2.isSelectBuiness = NO;
-    vc2.tabBarItem.image = [UIImage imageNamed:@"jiayuanshejiao-2"];
-    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"jiayuanshejiao"];
-    
-    FHGroupController *vc3 = [[FHGroupController alloc] init];
-    vc3.title = @"商家服务";
-    vc3.isSelectBuiness = YES;
-    vc3.tabBarItem.image = [UIImage imageNamed:@"jiaoyi-3"];
-    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"jiaoyi"];
-    
-    FHShopingCartController *vc4 = [[FHShopingCartController alloc] init];
-    vc4.title = @"购物车";
-    vc4.tabBarItem.image = [UIImage imageNamed:@"gouwuche-2"];
-    vc4.tabBarItem.selectedImage = [UIImage imageNamed:@"gouwuche"];
-    
-    FHMeCenterController *vc5 = [[FHMeCenterController alloc] init];
-    vc5.title = @"个人中心";
-    vc5.tabBarItem.image = [UIImage imageNamed:@"gerenzhongxinxuanzhong1-2"];
-    vc5.tabBarItem.selectedImage = [UIImage imageNamed:@"gerenzhongxinxuanzhong1"];
-    
-    UINavigationController *navC1 = [[UINavigationController alloc] initWithRootViewController:vc1];
-    UINavigationController *navC2 = [[UINavigationController alloc] initWithRootViewController:vc2];
-    UINavigationController *navC3 = [[UINavigationController alloc] initWithRootViewController:vc3];
-    UINavigationController *navC4 = [[UINavigationController alloc] initWithRootViewController:vc4];
-    UINavigationController *navC5 = [[UINavigationController alloc] initWithRootViewController:vc5];
-    
-    LCTabBarController *tabBarC    = [[LCTabBarController alloc] init];
-    [tabBarC addChildViewController:navC1];
-    [tabBarC addChildViewController:navC2];
-    [tabBarC addChildViewController:navC3];
-    [tabBarC addChildViewController:navC4];
-    [tabBarC addChildViewController:navC5];
-    
-    self.window.rootViewController = tabBarC;
-    
-    /** 判断用户是否登录过 没登录去登录 */
-    if (![AccountStorage isExistsToKen]) {
-        tabBarC.selectedIndex = 4;
-        [FHLoginTool fh_makePersonToLoging];
-        return;
-    }
-    
-    
-}
+//- (void)setTabBarController {
+//    FHHomePageController *vc1 = [[FHHomePageController alloc] init];
+//    vc1.title = @"首页";
+//    vc1.tabBarItem.image = [UIImage imageNamed:@"zhuye-2"];
+//    vc1.tabBarItem.selectedImage = [UIImage imageNamed:@"zhuye"];
+//
+//    FHGroupController *vc2 = [[FHGroupController alloc] init];
+//    vc2.title = @"社云";
+//    vc2.isSelectBuiness = NO;
+//    vc2.tabBarItem.image = [UIImage imageNamed:@"jiayuanshejiao-2"];
+//    vc2.tabBarItem.selectedImage = [UIImage imageNamed:@"jiayuanshejiao"];
+//
+//    FHGroupController *vc3 = [[FHGroupController alloc] init];
+//    vc3.title = @"商家服务";
+//    vc3.isSelectBuiness = YES;
+//    vc3.tabBarItem.image = [UIImage imageNamed:@"jiaoyi-3"];
+//    vc3.tabBarItem.selectedImage = [UIImage imageNamed:@"jiaoyi"];
+//
+//    FHShopingCartController *vc4 = [[FHShopingCartController alloc] init];
+//    vc4.title = @"购物车";
+//    vc4.tabBarItem.image = [UIImage imageNamed:@"gouwuche-2"];
+//    vc4.tabBarItem.selectedImage = [UIImage imageNamed:@"gouwuche"];
+//
+//    FHMeCenterController *vc5 = [[FHMeCenterController alloc] init];
+//    vc5.title = @"个人中心";
+//    vc5.tabBarItem.image = [UIImage imageNamed:@"gerenzhongxinxuanzhong1-2"];
+//    vc5.tabBarItem.selectedImage = [UIImage imageNamed:@"gerenzhongxinxuanzhong1"];
+//
+//    UINavigationController *navC1 = [[UINavigationController alloc] initWithRootViewController:vc1];
+//    UINavigationController *navC2 = [[UINavigationController alloc] initWithRootViewController:vc2];
+//    UINavigationController *navC3 = [[UINavigationController alloc] initWithRootViewController:vc3];
+//    UINavigationController *navC4 = [[UINavigationController alloc] initWithRootViewController:vc4];
+//    UINavigationController *navC5 = [[UINavigationController alloc] initWithRootViewController:vc5];
+//
+//    LCTabBarController *tabBarC    = [[LCTabBarController alloc] init];
+//    [tabBarC addChildViewController:navC1];
+//    [tabBarC addChildViewController:navC2];
+//    [tabBarC addChildViewController:navC3];
+//    [tabBarC addChildViewController:navC4];
+//    [tabBarC addChildViewController:navC5];
+//
+//    self.window.rootViewController = tabBarC;
+//
+//    /** 判断用户是否登录过 没登录去登录 */
+//    if (![AccountStorage isExistsToKen]) {
+//        tabBarC.selectedIndex = 4;
+//        [FHLoginTool fh_makePersonToLoging];
+//        return;
+//    }
+//
+//
+//}
 
 //#pragma mark  -- 设置tabbar
 //+ (void)setTabBarController {

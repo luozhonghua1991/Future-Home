@@ -201,11 +201,6 @@
                                                                                     
 }
 
-- (void)viewControllerPushOther:(nonnull NSString *)nameVC {
-    UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];
-    vc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:vc animated:NO];
-}
 
 #pragma mark — event
 - (void)logOutClick {

@@ -46,6 +46,7 @@
     id traget = self.navigationController.interactivePopGestureRecognizer.delegate;
     UIPanGestureRecognizer * pan = [[UIPanGestureRecognizer alloc]initWithTarget:traget action:nil];
     [self.view addGestureRecognizer:pan];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     [self fh_creatNav];
     [self fh_setUpUI];
@@ -311,7 +312,7 @@
             [self.view makeToast:@"登录失败,请稍后重试"];
         }];
     } else if ([name isEqualToString:@"注册"]) {
-        [self viewControllerPushOther:@"FHRigisterController"];
+        [self viewControllerPushOther:@"FHRigisterController"];;
     } else {
         [self.view makeToast:@"亲，请输入有效的手机号码"];
     }
@@ -320,17 +321,6 @@
 - (void)popVC {
     self.tabBarController.selectedIndex = 0;
     [self.navigationController popToRootViewControllerAnimated:YES];
-}
-
-/**
- *  从 A 控制器跳转到 B 控制器
- *
- *  @param nameVC B 控制器名称
- *  @param param  可选参数
- */
-- (void)viewControllerPushOther:(nonnull NSString *)nameVC {
-    UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - Getters and Setters

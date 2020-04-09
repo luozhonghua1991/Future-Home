@@ -169,7 +169,6 @@
  *  从 A 控制器跳转到 B 控制器
  *
  *  @param nameVC B 控制器名称
- *  @param param  可选参数
  */
 - (void)viewControllerPushOther:(nonnull NSString *)nameVC {
     UIViewController *vc = [[NSClassFromString(nameVC) alloc] init];

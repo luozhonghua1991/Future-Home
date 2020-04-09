@@ -58,7 +58,7 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/New%20Group/FHSharingDynamicsController.m"
-                  timestampString = "608034800.888199"
+                  timestampString = "608114163.3023"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "181"
@@ -73,7 +73,7 @@
                   moduleName = "FutureHome"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/New%20Group/FHSharingDynamicsController.m"
-                  timestampString = "608034800.889663"
+                  timestampString = "608114163.304605"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "182"
@@ -81,6 +81,38 @@
                   offsetFromSymbolStart = "54">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/libiary/ZFPlayer/Classes/ControlView/ZFPlayerControlView.m"
+            timestampString = "608035967.633055"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
+            landmarkName = "-showTitle:coverURLString:placeholderImage:fullScreenMode:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FutureHome/Classes/CodeClass/Group/Controller/MyGroup/FHCircleHotPointController.m"
+            timestampString = "608112423.238639"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "520"
+            endingLineNumber = "520"
+            landmarkName = "-updateBtnClcik"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
