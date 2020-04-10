@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic ,strong) ZJCommit           *model;
 
 @property(nonatomic, weak) id<ZJNoHavePhotoCellDelegate> delegate;
+/** 没有点赞按钮 */
+@property (nonatomic, assign) BOOL isNoUpdateBtn;
 
 @end
 

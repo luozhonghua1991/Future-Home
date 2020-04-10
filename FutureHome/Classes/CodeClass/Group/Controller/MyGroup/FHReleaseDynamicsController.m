@@ -186,19 +186,21 @@
             NSInteger code = [responseObj[@"code"] integerValue];
             if (code == 1) {
                 //隐藏加载视图
-                [weakSelf.lodingHud hideAnimated:YES];
-                weakSelf.lodingHud = nil;
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectVideo = NO;
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [ZHProgressHUD hide];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
             }
         } failure:^(NSError *error) {
-            [ZHProgressHUD hide];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             [weakSelf.view makeToast:@"上传失败请稍后再试"];
         }];
 }

@@ -25,6 +25,9 @@
 
 @property(nonatomic ,strong) ZJCommit           *model;
 
+/** 没有点赞按钮 */
+@property (nonatomic, assign) BOOL isNoUpdateBtn;
+
 @property(nonatomic ,weak) UIViewController      *weakSelf;
 
 @property(nonatomic, weak) id<ZJMasonryAutolayoutCellDelegate> delegate;

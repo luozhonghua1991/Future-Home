@@ -17,7 +17,7 @@
 
 
 //测试环境     18368308872
-//#define BASE_URL @"http://192.168.3.57/v1"
+//#define BASE_URL @"http://192.168.3.165/v1"
 //正式环境
 #define BASE_URL @"https://sheyunlife.com/v1"
 

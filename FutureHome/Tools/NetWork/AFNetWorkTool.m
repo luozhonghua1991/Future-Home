@@ -81,19 +81,36 @@
     AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
     [serializer setRemovesKeysWithNullValues:YES];
     //如果接受类型不一致请替换一致text/html或别的
-    serializer.acceptableContentTypes = [session.responseSerializer.acceptableContentTypes setByAddingObject:@"application/json"];
+    serializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     [session setResponseSerializer:serializer];
     
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
-    //384dd4cc71aaff6b28003ccfa3fe8cffd252386d
-//    [session.requestSerializer setValue:@"384dd4cc71aaff6b28003ccfa3fe8cffd252386d" forHTTPHeaderField:@"token"];
-    
-//    [UIView showLoadingHud:@""inView:[UIApplication sharedApplication].keyWindow];
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     //发送get请求
     [session GET:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         if (success) {
+            NSInteger errorCode = [responseObject[@"code"] integerValue];
+            if (errorCode == 90003) {
+                [ZHProgressHUD showMessage:@"账号已经在别处登录,请重新登录" inView:[UIApplication sharedApplication].keyWindow];
+                if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                    [ZHProgressHUD hide];
+                    [FHLoginTool fh_makePersonToLoging];
+                    return;
+                }
+                ZHLog(@"token不匹配,账号已经在别处登录");
+                return ;
+            } else if (errorCode == 90004) {
+                [ZHProgressHUD showMessage:responseObject[@"msg"] inView:[UIApplication sharedApplication].keyWindow];
+                if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                    [ZHProgressHUD hide];
+                    [FHLoginTool fh_makePersonToLoging];
+                    return;
+                } else {
+                    ZHLog(@"账号被冻结");
+                    return ;
+                }
+            }
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -121,19 +138,32 @@
     }
     session.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html", nil];
     [session.requestSerializer setValue:account.token forHTTPHeaderField:@"token"];
-    
-//     [session.requestSerializer setValue:@"384dd4cc71aaff6b28003ccfa3fe8cffd252386d" forHTTPHeaderField:@"token"];
-    [UIView showLoadingHud:@"" inView:[UIApplication sharedApplication].keyWindow];
     [session POST:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
-        NSString *fields= [((NSURLResponse *)task.response) valueForKey:@"allHeaderFields"][@"Set-Cookie"];
-        if (fields.length) {
-            [[NSUserDefaults standardUserDefaults] setObject:fields forKey:@"myCookie"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+        if (success) {
+            NSInteger errorCode = [responseObject[@"code"] integerValue];
+            if (errorCode == 90003) {
+                [ZHProgressHUD showMessage:@"账号已经在别处登录,请重新登录" inView:[UIApplication sharedApplication].keyWindow];
+                if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                    [ZHProgressHUD hide];
+                    [FHLoginTool fh_makePersonToLoging];
+                    return;
+                }
+                ZHLog(@"token不匹配,账号已经在别处登录");
+                return ;
+            } else if (errorCode == 90004) {
+                [ZHProgressHUD showMessage:responseObject[@"msg"] inView:[UIApplication sharedApplication].keyWindow];
+                if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                    [ZHProgressHUD hide];
+                    [FHLoginTool fh_makePersonToLoging];
+                    return;
+                } else {
+                    ZHLog(@"账号被冻结");
+                    return ;
+                }
+            }
+            success(responseObject);
         }
-
-        success(responseObject);
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         failure(error);

@@ -216,6 +216,12 @@
     self.commitBtn.frame = CGRectMake(MaxX(self.upBtn) + 10, 11/2, btnWidth, 31);
 }
 
+- (void)setIsNoUpdateBtn:(BOOL)isNoUpdateBtn {
+    _isNoUpdateBtn = isNoUpdateBtn;
+    if (isNoUpdateBtn) {
+        self.upBtn.hidden = YES;
+    }
+}
 
 - (void)avatarClick {
     if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJMasonryAutolayoutCellDelegateWithModel:)]) {

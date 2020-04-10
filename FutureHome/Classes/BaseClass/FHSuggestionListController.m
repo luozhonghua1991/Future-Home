@@ -122,6 +122,7 @@
     //视频单独处理
     if (commit.pic_urls.count > 0) {
         ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
+        cell.isNoUpdateBtn = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.weakSelf = self;
         [self configureCell:cell atIndexPath:indexPath];
@@ -129,6 +130,7 @@
     }
     /** 纯文字Cell */
     ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
+    photoCell.isNoUpdateBtn = YES;
     photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
     [self configureNoCell:photoCell atIndexPath:indexPath];
     return photoCell;

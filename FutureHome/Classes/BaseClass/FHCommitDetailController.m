@@ -316,6 +316,7 @@
             if (commit.pic_urls > 0) {
                 ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.isNoUpdateBtn = YES;
                 cell.weakSelf = self;
                 cell.delegate = self;
                 [self configureCell:cell atIndexPath:indexPath];
@@ -323,6 +324,7 @@
                 return cell;
             } else {
                 ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
+                photoCell.isNoUpdateBtn = YES;
                 photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 photoCell.delegate = self;
                 [self configureNoCell:photoCell atIndexPath:indexPath];
@@ -415,37 +417,6 @@
 
 - (void)fh_creatBottomInputView {
     [self showInputView];
-    
-//    UIView *bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 50, SCREEN_WIDTH, 50)];
-//    bottomView.backgroundColor = [UIColor whiteColor];
-//    [self.view addSubview:bottomView];
-//
-//    UIView *topLine = [[UIView alloc] initWithFrame:CGRectMake(0, 0.5, SCREEN_WIDTH, 0.5)];
-//    topLine.backgroundColor = [UIColor lightGrayColor];
-//    [bottomView addSubview:topLine];
-//
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, SCREEN_WIDTH - 100, 35)];
-//    label.text = @" 我来说两句。。。";
-//    label.layer.borderColor = [UIColor lightGrayColor].CGColor;
-//    label.textColor = [UIColor lightGrayColor];
-//    label.layer.borderWidth = 1;
-//    label.font = [UIFont systemFontOfSize:15];
-//    label.userInteractionEnabled = YES;
-//    [bottomView addSubview:label];
-//
-//    UIButton *pushBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    pushBtn.backgroundColor = HEX_COLOR(0x1296db);
-//    [pushBtn setTitle:@"发布" forState:0];
-//    pushBtn.enabled = NO;
-//    pushBtn.layer.cornerRadius = 5;
-//    pushBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-//    pushBtn.frame = CGRectMake(MaxX(label) + 15, 5, 70, 35);
-//    [bottomView addSubview:pushBtn];
-//
-//
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showInputView)];
-//    bottomView.userInteractionEnabled = YES;
-//    [bottomView addGestureRecognizer:tap];
 }
 
 - (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model {

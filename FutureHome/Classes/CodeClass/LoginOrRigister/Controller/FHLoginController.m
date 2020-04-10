@@ -263,8 +263,6 @@
         NSMutableDictionary *params = [NSMutableDictionary dictionary];
         params[@"username"] = self.phoneNumnTF.text;
         params[@"password"] = self.passwordTF.text;
-//      params[@"username"] = @"15826154361";
-//      params[@"password"] = @"000000";
         [AFNetWorkTool post:@"login/login" params:params success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 [self.lodingHud hideAnimated:YES];
@@ -290,16 +288,18 @@
                 NSString *msg = responseObj[@"msg"];
                 [self.view makeToast:msg];
                 NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+                [useDef setBool:YES forKey:@"notFirst"];
+                [AccountStorage saveAccount:account];
+                self.view.window.rootViewController = [[FHTabbarController alloc] init];
+                
 //                if (![useDef boolForKey:@"notFirst"] || ![AccountStorage isExistsToKen]) {
                     // 如果是第一次进入引导页
-                    [useDef setBool:YES forKey:@"notFirst"];
-                    [AccountStorage saveAccount:account];
-                    self.view.window.rootViewController = [[FHTabbarController alloc] init];
 //                }
 //                else {
 //                    [self performSelector:@selector(popVC) withObject:nil afterDelay:1.0];
 //                    [AccountStorage saveAccount:account];
 //                }
+                
             } else {
                 [self.lodingHud hideAnimated:YES];
                 self.lodingHud = nil;

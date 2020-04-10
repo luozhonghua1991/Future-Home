@@ -192,6 +192,13 @@
     return btn;
 }
 
+- (void)setIsNoUpdateBtn:(BOOL)isNoUpdateBtn {
+    _isNoUpdateBtn = isNoUpdateBtn;
+    if (isNoUpdateBtn) {
+        self.upBtn.hidden = YES;
+    }
+}
+
 - (void)avatarClick {
     if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJNoHavePhotoCellSelectModel:)]) {
         [_delegate fh_ZJNoHavePhotoCellSelectModel:self.model];
