@@ -88,7 +88,7 @@
         /** 获取收藏的视频列表 */
         paramsDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                             @(account.user_id),@"user_id",
-                            self.user_id ? self.user_id : @(account.user_id),@"uid",
+//                            self.user_id ? self.user_id : @(account.user_id),@"uid",
                             @(curPage),@"page",
                             nil];
         url = @"sheyun/videoCollect";
@@ -103,6 +103,7 @@
     }
 
     [AFNetWorkTool get:url params:paramsDictionary success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
                 [weakSelf.videoListDataArrs removeAllObjects];

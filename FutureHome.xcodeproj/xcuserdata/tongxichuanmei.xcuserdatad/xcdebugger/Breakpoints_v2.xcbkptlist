@@ -41,54 +41,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FutureHome/Classes/BaseClass/New Group/FHSharingDynamicsController.m"
-            timestampString = "607863329.835135"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
-            landmarkName = "-commitRequest"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[FHSharingDynamicsController commitRequest]"
-                  moduleName = "FutureHome"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/New%20Group/FHSharingDynamicsController.m"
-                  timestampString = "608264787.8492889"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "181"
-                  endingLineNumber = "181"
-                  offsetFromSymbolStart = "3431">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__44-[FHSharingDynamicsController commitRequest]_block_invoke.233"
-                  moduleName = "FutureHome"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/tongxichuanmei/FutureHome-ios/FutureHome/Classes/BaseClass/New%20Group/FHSharingDynamicsController.m"
-                  timestampString = "608264787.850776"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "182"
-                  endingLineNumber = "182"
-                  offsetFromSymbolStart = "54">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "FutureHome/libiary/ZFPlayer/Classes/ControlView/ZFPlayerControlView.m"
             timestampString = "608035967.633055"
             startingColumnNumber = "9223372036854775807"

@@ -85,6 +85,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadInit) name:@"UPDATADYNAMICS" object:nil];
     self.videoListDataArrs = [[NSMutableArray alloc] init];
     self.commitsListArrs = [[NSMutableArray alloc] init];
     self.dataArray = [NSMutableArray array];
@@ -163,7 +164,7 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             if (isHead) {
                 [weakSelf.videoListDataArrs removeAllObjects];
-                [weakSelf.videoListDataArrs removeAllObjects];
+                [weakSelf.commitsListArrs removeAllObjects];
                 [weakSelf.dataArray removeAllObjects];
             }
             [weakSelf endRefreshAction];

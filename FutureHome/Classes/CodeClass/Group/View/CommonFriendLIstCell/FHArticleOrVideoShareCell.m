@@ -229,6 +229,7 @@
     //点赞
     if (!self.upBtn) {
         self.upBtn = [self creatBtnWithTitle:@"1" image:[UIImage imageNamed:@"1点赞"]];
+        self.upBtn.enabled = YES;
     }
     
     //评论量
@@ -274,9 +275,16 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:13];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    btn.enabled = YES;
+    btn.enabled = NO;
     [self.bottomView addSubview:btn];
     return btn;
+}
+
+- (void)setIsNoUpdateBtn:(BOOL)isNoUpdateBtn {
+    _isNoUpdateBtn = isNoUpdateBtn;
+    if (isNoUpdateBtn) {
+        self.upBtn.hidden = YES;
+    }
 }
 
 - (void)avatarClick {

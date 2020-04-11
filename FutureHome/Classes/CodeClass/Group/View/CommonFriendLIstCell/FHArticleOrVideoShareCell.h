@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic ,strong) ZJCommit           *model;
 
 @property(nonatomic, weak) id<FHArticleOrVideoShareCellDelegate> delegate;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isNoUpdateBtn;
+
 @end
 
 NS_ASSUME_NONNULL_END

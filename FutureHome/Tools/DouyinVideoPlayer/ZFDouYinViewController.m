@@ -129,6 +129,9 @@ static NSString *kIdentifier = @"kIdentifier";
         data.comment = [dataDic objectForKey:@"comment"];
         data.like = [dataDic objectForKey:@"like"];
         data.video_type = [dataDic objectForKey:@"video_type"];
+        data.topic_type = [dataDic objectForKey:@"topic_type"];
+        data.forwarder = [dataDic objectForKey:@"forwarder"];
+        data.ordertype = [[dataDic objectForKey:@"ordertype"] integerValue];
         [self.dataSource addObject:data];
         NSString *URLString = [data.video_url stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURL *url = [NSURL URLWithString:URLString];
@@ -224,89 +227,49 @@ static NSString *kIdentifier = @"kIdentifier";
 - (void)fh_ZFDouYinCellDelegateSelectLikeClicck:(ZFTableData *)data
                                         withBtn:(UIButton *)btn
                                  withCountLabel:(UILabel *)label {
-    if ([self.type isEqualToString:@"2"]) {
-        /** 朋友圈类型的视频点赞 */
-        WS(weakSelf);
-        Account *account = [AccountStorage readAccount];
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @(account.user_id),@"user_id",
-                                   @"2",@"type",
-                                   data.dataID ? data.dataID : @(data.aid) ,@"pid",
-                                   nil];
-        
-        [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
-            NSInteger count = [label.text integerValue];
-            if ([responseObj[@"code"] integerValue] == 1) {
-                if (btn.tag == 0) {
-                    /** 未点赞 */
-                    [btn setImage:[UIImage imageNamed:@"评论点赞后"] forState:UIControlStateNormal];
-                    btn.tag = 1;
-                    count ++;
-                    label.text = [NSString stringWithFormat:@"%ld",(long)count];
-                } else if (btn.tag == 1) {
-                    /** 已经点赞 */
-                    [btn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
-                    btn.tag = 0;
-                    count --;
-                    label.text = [NSString stringWithFormat:@"%ld",(long)count];
-                }
-            } else {
-                [weakSelf.view makeToast:responseObj[@"msg"]];
+        /** 生鲜 社交 商业 朋友圈视频 点赞*/
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               data.topic_type,@"topic_type",
+                               data.dataID,@"id",
+                               @(data.ordertype),@"ordertype",
+                               nil];
+    [AFNetWorkTool post:@"shop/giveLike" params:paramsDic success:^(id responseObj) {
+        NSInteger count = [label.text integerValue];
+        if ([responseObj[@"code"] integerValue] == 1) {
+            if (btn.tag == 0) {
+                /** 未点赞 */
+                [btn setImage:[UIImage imageNamed:@"评论点赞后"] forState:UIControlStateNormal];
+                btn.tag = 1;
+                count ++;
+                label.text = [NSString stringWithFormat:@"%ld",(long)count];
+            } else if (btn.tag == 1) {
+                /** 已经点赞 */
+                [btn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
+                btn.tag = 0;
+                count --;
+                label.text = [NSString stringWithFormat:@"%ld",(long)count];
             }
-        } failure:^(NSError *error) {
-            
-        }];
-    } else {
-        WS(weakSelf);
-        Account *account = [AccountStorage readAccount];
-        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   @(account.user_id),@"user_id",
-                                   self.type,@"topic_type",
-                                   data.dataID,@"id",
-                                   [SingleManager shareManager].ordertype,@"ordertype",
-                                   nil];
-        [AFNetWorkTool post:@"shop/giveLike" params:paramsDic success:^(id responseObj) {
-            NSInteger count = [label.text integerValue];
-            if ([responseObj[@"code"] integerValue] == 1) {
-                if (btn.tag == 0) {
-                    /** 未点赞 */
-                    [btn setImage:[UIImage imageNamed:@"评论点赞后"] forState:UIControlStateNormal];
-                    btn.tag = 1;
-                    count ++;
-                    label.text = [NSString stringWithFormat:@"%ld",(long)count];
-                } else if (btn.tag == 1) {
-                    /** 已经点赞 */
-                    [btn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
-                    btn.tag = 0;
-                    count --;
-                    label.text = [NSString stringWithFormat:@"%ld",(long)count];
-                }
-            } else {
-                [weakSelf.view makeToast:responseObj[@"msg"]];
-            }
-        } failure:^(NSError *error) {
-        }];
-    }
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
 }
+
 
 /** 收藏视频 */
 - (void)fh_ZFDouYinCellDelegateSelectFollowClick:(ZFTableData *)data
                                          withBtn:(UIButton *)btn {
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic;
-    if ([self.type isEqualToString:@"1"]) {
-        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+    paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                      @(account.user_id),@"user_id",
-                     self.type,@"type",
+                     data.topic_type,@"type",
                      data.dataID,@"aid",
                      nil];
-    } else if ([self.type isEqualToString:@"2"]) {
-        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                     @(account.user_id),@"user_id",
-                     self.type,@"type",
-                     @(data.pid),@"aid",
-                     nil];
-    }
     /** 视频收藏 */
     WS(weakSelf);
     [AFNetWorkTool post:@"sheyun/doVideoCollect" params:paramsDic success:^(id responseObj) {
@@ -337,8 +300,8 @@ static NSString *kIdentifier = @"kIdentifier";
                                @(account.user_id),@"user_id",
                                data.dataID,@"id",
                                @(1),@"page",
-                               data.video_type,@"topic_type",
-                               [SingleManager shareManager].ordertype,@"ordertype",
+                               data.topic_type,@"topic_type",
+                               @(data.ordertype),@"ordertype",
                                nil];
     
     [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {

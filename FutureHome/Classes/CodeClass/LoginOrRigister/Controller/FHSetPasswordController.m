@@ -9,9 +9,10 @@
 #import "FHSetPasswordController.h"
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
+#import "FHUserAgreementView.h"
 //#import "LoginService.h"
 
-@interface FHSetPasswordController () <UITextFieldDelegate>
+@interface FHSetPasswordController () <UITextFieldDelegate,FHUserAgreementViewDelegate>
 /** <#Description#> */
 @property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
 /**标题label*/
@@ -40,7 +41,10 @@
 
 /**确认按钮*/
 @property (nonatomic,strong) UIButton                      *sureBtn;
-
+/** 用户协议 */
+@property (nonatomic, strong) FHUserAgreementView *agreementView;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger selectCount;
 
 @end
 
@@ -48,6 +52,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.selectCount = 0;
     self.title = self.titleString;
     self.view.backgroundColor = [UIColor whiteColor];
     //左边返回按钮
@@ -73,6 +78,9 @@
 //    [self.inviteCodeView addSubview:self.inviteCodeTF];
     
     [self.scrollView addSubview:self.sureBtn];
+    
+    /** 确定授权View */
+    [self.scrollView addSubview:self.agreementView];
 }
 
 - (void)viewDidLayoutSubviews
@@ -139,22 +147,6 @@
             make.height.mas_equalTo(13);
             make.width.mas_equalTo(300);
         }];
-        
-//        //邀请码区域
-//        [self.inviteCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.mas_equalTo(self.logLabel.mas_bottom).offset(19);
-//            make.left.mas_equalTo(27.5);
-//            make.width.mas_equalTo(kScreenWidth - 55);
-//            make.height.mas_equalTo(47);
-//        }];
-//
-//        [self.inviteCodeTF mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo(20);
-//            make.width.mas_equalTo(self.inviteCodeView.width - 40);
-//            make.height.mas_equalTo(15);
-//            make.centerY.mas_equalTo(self.inviteCodeView);
-//        }];
-        
         //确认按钮
         [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.surePasswordView.mas_bottom).offset(107);
@@ -224,22 +216,6 @@
             make.width.mas_equalTo(300);
         }];
         
-//        //邀请码区域
-//        [self.inviteCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.mas_equalTo(self.logLabel.mas_bottom).offset(19);
-//            make.left.mas_equalTo(27.5);
-//            make.width.mas_equalTo(kScreenWidth - 55);
-//            make.height.mas_equalTo(0);
-//        }];
-//
-//        [self.inviteCodeTF mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.left.mas_equalTo(20);
-//            make.width.mas_equalTo(self.inviteCodeView.width - 40);
-//            make.height.mas_equalTo(0);
-//            make.centerY.mas_equalTo(self.inviteCodeView);
-//        }];
-        
-        
         //确认按钮
         [self.sureBtn mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(self.logLabel.mas_bottom).offset(14);
@@ -250,9 +226,38 @@
         }];
     }
     
+    //用户协议
+    [self.agreementView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(self.sureBtn.mas_bottom).offset(25);
+        make.left.mas_equalTo(0);
+        //            make.right.mas_equalTo(-20.5);
+        make.width.mas_equalTo(SCREEN_WIDTH);
+        make.height.mas_equalTo(15);
+    }];
+    
     [self.scrollView contentSizeToFit];
 }
 
+
+/** 跳转协议 */
+- (void)FHUserAgreementViewClick {
+//    FHWebViewController *web = [[FHWebViewController alloc] init];
+//    web.urlString = self.protocol;
+//    web.typeString = @"information";
+//    web.hidesBottomBarWhenPushed = YES;
+//    web.type = @"noShow";
+//    [self.navigationController pushViewController:web animated:YES];
+}
+
+/** 确认协议 */
+- (void)fh_fhuserAgreementWithBtn:(UIButton *)sender {
+    if (self.selectCount % 2 == 0) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        [sender setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+    }
+    self.selectCount++;
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -319,6 +324,10 @@
     }
     if (![self.passwordTF.text isEqualToString:self.surePasswordTF.text]) {
         [self.view makeToast:@"两次输入密码不一致"];
+        return;
+    }
+    if (self.selectCount % 2 == 0) {
+        [self.view makeToast:@"请同意用户信息授权协议"];
         return;
     }
     if([self.titleString isEqualToString:@"设置密码"]) {
@@ -565,6 +574,14 @@
         _sureBtn.userInteractionEnabled = NO;
     }
     return _sureBtn;
+}
+
+- (FHUserAgreementView *)agreementView {
+    if (!_agreementView) {
+        _agreementView = [[FHUserAgreementView alloc] init];
+        _agreementView.delegate = self;
+    }
+    return _agreementView;
 }
 
 @end

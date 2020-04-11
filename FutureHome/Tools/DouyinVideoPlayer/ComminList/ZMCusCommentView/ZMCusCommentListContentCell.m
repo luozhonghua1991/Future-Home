@@ -62,13 +62,14 @@
         _titleLab.textColor = RGBHexColor(0x333333, 1);
         _titleLab.font = [UIFont boldSystemFontOfSize:15];
         _titleLab.numberOfLines = 1;
+        _titleLab.textAlignment = NSTextAlignmentLeft;
         _titleLab.backgroundColor = [UIColor clearColor];
-        [_titleLab sizeToFit];
         [self.contentView addSubview:_titleLab];
         [_titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(self->_headImageView.mas_right).mas_offset(18);
             make.top.mas_equalTo(15);
             make.height.mas_offset(20);
+            make.width.mas_equalTo(200);
             
         }];
     }
@@ -118,16 +119,16 @@
 }
 
 - (void)configData:(id)data{
-    self.titleLab.text = @"愤怒的小栗子";
-    self.timeLab.text = @"11分钟前";
-    self.contentLab.text = @"不错挺好的，现在开始还来得及。只不过从某种意上讲事情没有这么简单。";
-    CGFloat titleWidth = [self.titleLab.text widthWithFont:[UIFont boldSystemFontOfSize:15] constrainedToHeight:20]+5;
-    if (titleWidth>100) {
-        titleWidth = 100;
-    }
-    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_offset(titleWidth);
-    }];
+//    self.titleLab.text = @"愤怒的小栗子";
+//    self.timeLab.text = @"11分钟前";
+//    self.contentLab.text = @"不错挺好的，现在开始还来得及。只不过从某种意上讲事情没有这么简单。";
+//    CGFloat titleWidth = [self.titleLab.text widthWithFont:[UIFont boldSystemFontOfSize:15] constrainedToHeight:20]+5;
+//    if (titleWidth>100) {
+//        titleWidth = 100;
+//    }
+//    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.width.mas_offset(titleWidth);
+//    }];
 }
 
 - (void)setCommentListModel:(FHCommentListModel *)commentListModel {
@@ -136,13 +137,13 @@
     self.titleLab.text = _commentListModel.from_name;
     self.timeLab.text = _commentListModel.add_time;
     self.contentLab.text = _commentListModel.content;
-    CGFloat titleWidth = [self.titleLab.text widthWithFont:[UIFont boldSystemFontOfSize:15] constrainedToHeight:20]+5;
-    if (titleWidth>100) {
-        titleWidth = 100;
-    }
-    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.width.mas_offset(titleWidth);
-    }];
+//    CGFloat titleWidth = [self.titleLab.text widthWithFont:[UIFont boldSystemFontOfSize:15] constrainedToHeight:20]+5;
+//    if (titleWidth>100) {
+//        titleWidth = 100;
+//    }
+//    [self.titleLab mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.width.mas_offset(titleWidth);
+//    }];
     
 //    self.titleLab.text = @"";
 //    self.timeLab.text = @"11分钟前";

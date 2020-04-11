@@ -470,10 +470,10 @@ UICollectionViewDataSource>
         [self.view makeToast:self.adverTypeView.contentTF.placeholder];
         return;
     }
-    if (self.adverNumberView.contentTF.text.length <= 0) {
-        [self.view makeToast:self.adverNumberView.contentTF.placeholder];
-        return;
-    }
+//    if (self.adverNumberView.contentTF.text.length <= 0) {
+//        [self.view makeToast:self.adverNumberView.contentTF.placeholder];
+//        return;
+//    }
     if (self.showDayView.contentTF.text.length <= 0) {
         [self.view makeToast:self.showDayView.contentTF.placeholder];
         return;
@@ -497,21 +497,21 @@ UICollectionViewDataSource>
                                self.addressView.contentTF.text,@"unitaddress",
                                self.personNameView.contentTF.text,@"contactname",
                                self.phoneNumberView.contentTF.text,@"phone",
-                               self.phoneView.contentTF.text,@"mobile",
+                               self.phoneView.contentTF.text,@"landline",
                                self.mailView.contentTF.text,@"email",
                                @(self.adventtype),@"adventtype",
                                self.adventString,@"putpositive",
-                               /** 投放区域的id参数 */
-                               self.bottom_province_id,@"province_id",
-                               self.bottom_city_id,@"city_id",
-                               self.bottom_area_id,@"area_id",
-                               self.adverNumberView.contentTF.text,@"idcrad",
-                               self.showNumberView.contentTF.text,@"dropaccount",
                                self.showDayView.contentTF.text,@"putinstarttime",
                                self.showTimeView.contentTF.text,@"putinendttime",
                                self.province_id,@"unitprovince",
                                self.city_id,@"unitarea",
                                self.area_id,@"unitcity",
+                               self.adverNumberView.contentTF.text,@"idcard",
+                               /** 投放区域的id参数 */
+                               self.bottom_province_id,@"province_id",
+                               self.bottom_city_id,@"city_id",
+                               self.bottom_area_id,@"area_id",
+                               self.showNumberView.contentTF.text,@"dropaccount",
                                nil];
     
     [AFNetWorkTool post:@"advent/saveinfo" params:paramsDic success:^(id responseObj) {

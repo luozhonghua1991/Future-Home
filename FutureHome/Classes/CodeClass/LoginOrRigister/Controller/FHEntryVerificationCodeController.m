@@ -15,6 +15,7 @@
 //#import "RWResettingPasswordController.h"
 //#import "LoginService.h"
 //#import "LoginViewController.h"
+#import "FHTabbarController.h"
 
 @interface FHEntryVerificationCodeController ()
 
@@ -240,12 +241,15 @@
                  /**  */
                  [self.view makeToast:responseObj[@"msg"]];
                  [self.navigationController popViewControllerAnimated:YES];
-             } else {
+             } else if([responseObj[@"code"] integerValue] == 1) {
                  /** 保存用户信息 */
+                 NSString *msg = responseObj[@"msg"];
+                 [self.view makeToast:msg];
                  Account *account = [Account mj_objectWithKeyValues:responseObj[@"data"]];
+                 NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+                 [useDef setBool:YES forKey:@"notFirst"];
                  [AccountStorage saveAccount:account];
-                 [weakSelf.view makeToast:@"登录成功"];
-                 [weakSelf.navigationController popToRootViewControllerAnimated:YES];
+                 weakSelf.view.window.rootViewController = [[FHTabbarController alloc] init];
              }
          } failure:^(NSError *error) {
              

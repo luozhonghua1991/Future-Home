@@ -131,8 +131,14 @@
 
 /** 上次选择的物业VC */
 @property (nonatomic, strong) UIViewController *selectHomeSeverControll;
+/** 上次选择的物业ID */
+@property (nonatomic, assign) NSInteger selectHomeID;
+
 /** 上次选择的业主VC */
 @property (nonatomic, strong) UIViewController *selectOwnerControll;
+/** 上次选择的业主ID */
+@property (nonatomic, assign) NSInteger selectOwnerID;
+
 /** 上次选择的健康VC */
 @property (nonatomic, strong) UIViewController *selectHealthControll;
 /** 上次选择的理财VC */

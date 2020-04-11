@@ -13,7 +13,7 @@
 
 @interface ZMCusCommentView : UIView
 /** 视频TopicID */
-@property (nonatomic, copy) NSString *videoTopicId;
+//@property (nonatomic, copy) NSString *videoTopicId;
 /** 文章id */
 @property (nonatomic, copy) NSString *article_id;
 /** 文章类型 */
@@ -21,8 +21,9 @@
 /** video视频 其他都是文章类型*/
 @property (nonatomic, copy) NSString *type;
 /** 1生鲜 2朋友圈 3社交 4医药 */
-@property (nonatomic, copy) NSString *topic_type;
-
+//@property (nonatomic, copy) NSString *topic_type;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) ZFTableData *data;
 
 @property (nonatomic, strong) ZMCusCommentListView *commentListView;
 

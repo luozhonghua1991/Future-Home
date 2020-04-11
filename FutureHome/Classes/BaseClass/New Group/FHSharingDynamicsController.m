@@ -55,7 +55,7 @@
     if ([self.type isEqualToString:@"文章"]) {
         topTitle = [NSString stringWithFormat:@"分享文章 @%@",self.dataDic[@"forwarder"]];
     } else if ([self.type isEqualToString:@"视频"]) {
-        topTitle = [NSString stringWithFormat:@"分享视频 @%@",[SingleManager shareManager].shopName];
+        topTitle = [NSString stringWithFormat:@"分享视频 @%@",self.data.forwarder];
     }
     self.topLabel.frame = CGRectMake(MaxX(self.corverImg) + 15, 15 , SCREEN_WIDTH - MaxX(self.corverImg) - 30, 40);
     self.topLabel.text = topTitle;
@@ -150,6 +150,7 @@
                 [weakSelf.loadingHud hideAnimated:YES];
                 weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:@"动态消息转发成功"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATADYNAMICS" object:nil];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
@@ -174,7 +175,7 @@
                                    @"4",@"type",
                                    self.data.dataID,@"video_id",
                                    self.data.video_type,@"video_type",
-                                   [SingleManager shareManager].shopName,@"forwarder",
+//                                   self.data.,@"forwarder",
                                    self.suggestionsTextView.text,@"content",
                                    nil];
         
@@ -185,6 +186,7 @@
                 [weakSelf.loadingHud hideAnimated:YES];
                 weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:@"转发动态成功"];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATADYNAMICS" object:nil];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [weakSelf.navigationController popViewControllerAnimated:YES];
                 });

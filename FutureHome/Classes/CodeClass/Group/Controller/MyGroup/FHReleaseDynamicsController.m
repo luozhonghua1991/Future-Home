@@ -151,6 +151,7 @@
                 [weakSelf.loadingHud hideAnimated:YES];
                 weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATADYNAMICS" object:nil];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectPhoto = NO;
                     [weakSelf.navigationController popViewControllerAnimated:YES];
@@ -189,6 +190,7 @@
                 [weakSelf.loadingHud hideAnimated:YES];
                 weakSelf.loadingHud = nil;
                 [weakSelf.view makeToast:responseObj[@"msg"]];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATADYNAMICS" object:nil];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     [SingleManager shareManager].isSelectVideo = NO;
                     [weakSelf.navigationController popViewControllerAnimated:YES];

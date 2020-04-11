@@ -15,6 +15,7 @@
 #import "FHAppDelegate.h"
 #import "FHTabBarController.h"
 
+
 @interface FHLoginController () <UITextFieldDelegate,LoginViewDelegate>
 /** <#Description#> */
 @property (nonatomic, strong) TPKeyboardAvoidingScrollView *scrollView;
@@ -36,6 +37,7 @@
 @property (nonatomic, strong) LoginView      *login;
 
 @property (nonatomic, strong) MBProgressHUD *lodingHud;
+
 
 @end
 
@@ -312,7 +314,8 @@
             [self.view makeToast:@"登录失败,请稍后重试"];
         }];
     } else if ([name isEqualToString:@"注册"]) {
-        [self viewControllerPushOther:@"FHRigisterController"];;
+        [self viewControllerPushOther:@"FHRigisterController"];
+//        [self viewControllerPushOther:@"FHSetPasswordController"];
     } else {
         [self.view makeToast:@"亲，请输入有效的手机号码"];
     }

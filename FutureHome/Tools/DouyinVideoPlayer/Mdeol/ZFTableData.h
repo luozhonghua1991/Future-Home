@@ -46,6 +46,14 @@
 @property (nonatomic, copy) NSString *cover;
 /** 视频类型 1.生鲜视频 2朋友圈视频 3社交 4医药*/
 @property (nonatomic, copy) NSString *video_type;
+/** 3.生鲜视频 0朋友圈视频 4社交 5医药 */
+@property (nonatomic, assign) NSInteger ordertype;
+/** 视频类型 1.生鲜视频 2朋友圈视频 3社交 4医药*/
+@property (nonatomic, copy) NSString *topic_type;
+/** 谁发的 */
+@property (nonatomic, copy) NSString *forwarder;
+
+
 
 
 @end

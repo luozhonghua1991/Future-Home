@@ -134,10 +134,10 @@
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
-                                   self.topic_type,@"topic_type",
-                                   self.videoTopicId,@"topic_id",
+                                   self.data.topic_type,@"topic_type",
+                                   self.data.dataID,@"topic_id",
                                    content,@"content",
-                                   [SingleManager shareManager].ordertype,@"ordertype",
+                                   @(self.data.ordertype),@"ordertype",
                                    nil];
         
         [AFNetWorkTool post:@"shop/addComment" params:paramsDic success:^(id responseObj) {
@@ -151,13 +151,14 @@
                 Account *account = [AccountStorage readAccount];
                 NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                            @(account.user_id),@"user_id",
-                                           self.videoTopicId,@"id",
+                                           self.data.dataID,@"id",
                                            @(1),@"page",
-                                           self.topic_type,@"type",
-                                           [SingleManager shareManager].ordertype,@"ordertype",
+                                           self.data.topic_type,@"topic_type",
+                                           @(self.data.ordertype),@"ordertype",
                                            nil];
                 
                 [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
+                    
                     if ([responseObj[@"code"] integerValue] == 1) {
                         weakSelf.commentListArrs = [[NSMutableArray alloc] init];
                         NSArray *arr = responseObj[@"data"][@"list"];
@@ -317,8 +318,9 @@
     view.type = commentType;
     view.commentListView.headerView.commmentCount = [data.comment intValue];
     view.commentListView.videoTopicId = data.dataID;
-    view.videoTopicId = data.dataID;
-    view.topic_type = data.video_type;
+//    view.videoTopicId = data.dataID;
+//    view.topic_type = data.video_type;
+    view.data = data;
     view.commentListView.commentListDataArrs = commentListArrs;
     
     FHAppDelegate *delegate = (FHAppDelegate*)[UIApplication sharedApplication].delegate;

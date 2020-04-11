@@ -286,6 +286,7 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.model = self.dataArray[indexPath.row];
                     cell.delegate = self;
+                    cell.isNoUpdateBtn = YES;
                     return cell;
                     
                 } else if ([dic[@"type"] integerValue]== 1) {
@@ -294,6 +295,7 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.weakSelf = self;
                     cell.delegate = self;
+                    cell.isNoUpdateBtn = YES;
                     [self configureCell:cell atIndexPath:indexPath];
                     
                     return cell;
@@ -303,6 +305,7 @@
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     cell.model = self.dataArray[indexPath.row];
                     cell.delegate = self;
+                    cell.isNoUpdateBtn = YES;
                     return cell;
                 }
             }
@@ -436,11 +439,29 @@
     [self pushVCWithModel:model];
 }
 
+/** 点击视频的播放 */
+- (void)fh_ZJHaveMoveCellDelagateSelectMovieModel:(ZJCommit *)Model {
+    /** 跳转到视频 */
+    NSMutableArray *videoArr = [[NSMutableArray alloc] init];
+    NSDictionary *dic = Model.medias[0];
+    [videoArr addObject:dic];
+    ZFDouYinViewController *douyin = [[ZFDouYinViewController alloc] init];
+    /** 朋友圈视频 */
+    douyin.type = @"2";
+    douyin.videoListDataArrs = videoArr;
+    [douyin playTheIndex:0];
+    douyin.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:douyin animated:YES];
+}
+
 - (void)artileOrVideoShareInfoDetailCLickWithModel:(ZJCommit *)model type:(NSInteger)type {
     if (type == 3) {
         /** 跳转到文档详情 */
         FHWebViewController *web = [[FHWebViewController alloc] init];
         web.urlString = model.path;
+        NSArray *arr = [model.path componentsSeparatedByString:@"/"];
+        web.article_type = arr[arr.count - 2];
+        web.article_id = arr[arr.count - 4];
         web.titleString = model.videoname;
         web.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:web animated:YES];
