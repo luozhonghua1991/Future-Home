@@ -650,6 +650,7 @@ FHCommonPaySelectViewDelegate
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
         _serviceDeskNameTF.placeholder = @"请输入生鲜服务账号名称(限16字)";
+        _serviceDeskNameTF.delegate = self;
     }
     return _serviceDeskNameTF;
 }
@@ -791,6 +792,7 @@ FHCommonPaySelectViewDelegate
     if (!_payView) {
         self.payView = [[FHCommonPaySelectView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 260) nowPrice:self.price oldPrice:self.open discounted:self.discount];
         _payView.delegate = self;
+        self.payView.showType = @"";
     }
     FHAppDelegate *delegate  = (FHAppDelegate *)[UIApplication sharedApplication].delegate;
     [delegate.window addSubview:_payView];

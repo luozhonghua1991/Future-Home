@@ -341,6 +341,7 @@
         _titleView = [[FHAccountApplicationTFView alloc] init];
         _titleView.titleLabel.text = @"标题信息";
         _titleView.contentTF.placeholder = @"限40字";
+        _titleView.contentTF.delegate = self;
     }
     return _titleView;
 }

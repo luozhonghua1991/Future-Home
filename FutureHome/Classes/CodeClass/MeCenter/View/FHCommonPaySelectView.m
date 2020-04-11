@@ -46,11 +46,15 @@
         self.oldPrice = oldPrice;
         self.discountedString = discounted;
         self.backgroundColor = [UIColor clearColor];
-        [self layOutUIWithSubViews];
+        
     }
      return self;
 }
 
+- (void)setShowType:(NSString *)showType {
+    _showType = showType;
+    [self layOutUIWithSubViews];
+}
 
 #pragma mark - LayoutUIs
 - (void)layOutUIWithSubViews {
@@ -59,9 +63,19 @@
     [self addSubview:_backgroungView];
     
     self.headTitleLabel = [[UILabel alloc] init];
-    _headTitleLabel.font = [UIFont systemFontOfSize:14.0f];
-    _headTitleLabel.textColor = CLColor(51, 51, 51);
-    _headTitleLabel.text = [NSString stringWithFormat:@"%@\n%@%@",self.oldPrice,self.discountedString,self.nowPrice];
+    _headTitleLabel.textColor = [UIColor blackColor];
+    if ([self.showType isEqualToString:@"shopShow"]) {
+        _headTitleLabel.font = [UIFont systemFontOfSize:20.0f];
+        _headTitleLabel.text = [NSString stringWithFormat:@"%@\n%@%@",self.oldPrice,self.discountedString,self.nowPrice];
+    } else {
+        _headTitleLabel.font = [UIFont systemFontOfSize:14.0f];
+        NSString *titleString = [NSString stringWithFormat:@"账户开通审核服务费原价:￥%@\n\n%@￥%@",self.oldPrice,self.discountedString,self.nowPrice];
+        NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc]initWithString:titleString];
+        NSInteger legth1 = 1 + self.oldPrice.length;
+        [attributedTitle changeColor:[UIColor blackColor] rang:[attributedTitle changeBoldFontFloat:14 from:12 legth:legth1]];
+         [attributedTitle changeColor:[UIColor redColor] rang:[attributedTitle changeBoldFontFloat:14 from:12 + legth1 + self.discountedString.length + 2 legth:1 + self.nowPrice.length]];
+        _headTitleLabel.attributedText = attributedTitle;
+    }
     _headTitleLabel.textAlignment = NSTextAlignmentLeft;
     _headTitleLabel.numberOfLines = 0;
     _headTitleLabel.backgroundColor = [UIColor whiteColor];
@@ -235,7 +249,11 @@
 }
 
 #pragma mark - 在线支付按钮点击事件
--(void)onlineBtnAction:(UIButton *)sender{
+-(void)onlineBtnAction:(UIButton *)sender {
+    if (self.selectType == 0) {
+        [self makeToast:@"请选择支付方式类型"];
+        return;
+    }
     [self upDownSelf];
     if (self.delegate && [self.delegate respondsToSelector:@selector(fh_selectPayTypeWIthTag:)]) {
         [self.delegate fh_selectPayTypeWIthTag:self.selectType];

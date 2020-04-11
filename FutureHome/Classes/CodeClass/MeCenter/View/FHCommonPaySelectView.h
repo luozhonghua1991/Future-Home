@@ -52,6 +52,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger selectType;
+/** 展示类型 商店类型的只需要一行文字 */
+@property (nonatomic, copy) NSString *showType;
+
 
 -(UIView *)initWithFrame:(CGRect )frame
                 nowPrice:(NSString *)nowPrice
