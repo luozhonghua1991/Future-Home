@@ -94,8 +94,9 @@
 }
 
 - (void)setDataWithModel:(FHLosProtocolModel *)protocolModel {
-//    self.logoLabel.attributedText = [UIlabelTool willChangeHtmlString:protocolModel.tip1];
     self.logoLabel.text = protocolModel.tip1;
+    CGSize szie = [UIlabelTool sizeWithString:protocolModel.tip1 font:self.logoLabel.font];
+    self.logoLabel.frame = CGRectMake(20, SCREEN_HEIGHT - 140 - szie.height, SCREEN_WIDTH - 40, szie.height);
     self.tips2 = protocolModel.tip2;
     self.protocol = protocolModel.protocol;
     self.discount = protocolModel.discount;
@@ -172,10 +173,10 @@
 - (UILabel *)logoLabel {
     if (!_logoLabel) {
         _logoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, SCREEN_HEIGHT - 240, SCREEN_WIDTH - 40, 100)];
-        _logoLabel.textAlignment = NSTextAlignmentCenter;
+        _logoLabel.textAlignment = NSTextAlignmentLeft;
         _logoLabel.font = [UIFont systemFontOfSize:14];
         _logoLabel.numberOfLines = 0;
-        _logoLabel.textColor = [UIColor lightGrayColor];
+        _logoLabel.textColor = HEX_COLOR(0x5E5E5E);
     }
     return _logoLabel;
 }

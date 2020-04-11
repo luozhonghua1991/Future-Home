@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional // 可选实现的方法
 /** 点赞 */
-- (void)artileOrVideoShareLikeClickWithModel:(ZJCommit *)model;
+- (void)artileOrVideoShareLikeClickWithModel:(ZJCommit *)model
+                                     withBtn:(UIButton *)btn;
 /** 点击头像 */
 - (void)artileOrVideoShareAvaterClickWithModel:(ZJCommit *)model;
 /** 点击查看详情 */

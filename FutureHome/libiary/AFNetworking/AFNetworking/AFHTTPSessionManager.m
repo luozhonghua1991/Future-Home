@@ -296,6 +296,41 @@
                                }
                            } else {
                                if (success) {
+                                   NSInteger errorCode = [responseObject[@"code"] integerValue];
+                                   if (errorCode == 90002) {
+                                       [ZHProgressHUD showMessage:@"账号已经在别处登录,请重新登录" inView:[UIApplication sharedApplication].keyWindow];
+                                       if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                                           [ZHProgressHUD hide];
+                                           [FHLoginTool fh_makePersonToLoging];
+                                           return;
+                                       }
+                                       ZHLog(@"token不匹配,账号已经在别处登录");
+                                       return ;
+                                   } else if (errorCode == 90004) {
+                                       [ZHProgressHUD showMessage:responseObject[@"msg"] inView:[UIApplication sharedApplication].keyWindow];
+                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                           if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                                               [ZHProgressHUD hide];
+                                               [FHLoginTool fh_makePersonToLoging];
+                                               return;
+                                           } else {
+                                               ZHLog(@"账号被冻结");
+                                               return ;
+                                           }
+                                       });
+                                   } else if (errorCode == 90003) {
+                                       [ZHProgressHUD showMessage:responseObject[@"msg"] inView:[UIApplication sharedApplication].keyWindow];
+                                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                           if ([SingleManager shareManager].isFirstPushLogin == NO) {
+                                               [ZHProgressHUD hide];
+                                               [FHLoginTool fh_makePersonToLoging];
+                                               return;
+                                           } else {
+                                               ZHLog(@"token失效");
+                                               return ;
+                                           }
+                                       });
+                                   }
                                    success(dataTask, responseObject);
                                }
                            }

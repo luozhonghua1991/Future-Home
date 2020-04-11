@@ -248,7 +248,16 @@
     UIAlertController *strongController = [self alertControllerWithTitle:title
                                                                  message:message
                                                           preferredStyle:preferredStyle];
-    
+//    UIView *subView1 = strongController.view.subviews[0];
+//    UIView *subView2 = subView1.subviews[0];
+//    UIView *subView3 = subView2.subviews[0];
+//    UIView *subView4 = subView3.subviews[0];
+//    UIView *subView5 = subView4.subviews[0];
+//    //分别拿到title 和 message 可以分别设置他们的对齐属性
+//    UILabel *messageString = subView5.subviews[1];
+//    
+//    messageString.textAlignment = NSTextAlignmentLeft;
+   
     __weak UIAlertController *alertController = strongController;
     
     if (buttonTitleArray)

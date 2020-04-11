@@ -20,7 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** 选择视频的点击方法 */
 - (void)fh_ZJHaveMoveCellDelagateSelectMovieModel:(ZJCommit *)Model;
 /** 点赞 */
-- (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model;
+- (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model
+                                             withBtn:(UIButton *)btn;
+
 @end
 
 

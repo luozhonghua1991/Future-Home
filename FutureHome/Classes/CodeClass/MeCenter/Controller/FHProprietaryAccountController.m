@@ -569,25 +569,25 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         // 这里的if时候为了获取删除操作,如果没有次if会造成当达到字数限制后删除键也不能使用的后果.
         if (range.length == 1 && string.length == 0) {
             return YES;
-        }  else if (self.personServiceDeskView.contentTF.text.length >= 12) {
-            self.personServiceDeskView.contentTF.text = [textField.text substringToIndex:12];
-            [self.view makeToast:@"业主服务平台名称不超过12个字"];
+        }  else if (self.personServiceDeskView.contentTF.text.length >= 16) {
+            self.personServiceDeskView.contentTF.text = [textField.text substringToIndex:16];
+            [self.view makeToast:@"业主服务平台名称不超过16个字"];
             return NO;
         }
     } else if (textField == self.serviceDeskNameTF) {
         if (range.length == 1 && string.length == 0) {
             return YES;
-        }  else if (self.serviceDeskNameTF.text.length >= 12) {
-            self.serviceDeskNameTF.text = [textField.text substringToIndex:12];
-            [self.view makeToast:@"物业服务平台名称不超过12个字"];
+        }  else if (self.serviceDeskNameTF.text.length >= 16) {
+            self.serviceDeskNameTF.text = [textField.text substringToIndex:16];
+            [self.view makeToast:@"物业服务平台名称不超过16个字"];
             return NO;
         }
     }  else if (textField == self.cellNameView.contentTF) {
         if (range.length == 1 && string.length == 0) {
             return YES;
-        }  else if (self.cellNameView.contentTF.text.length >= 12) {
-            self.cellNameView.contentTF.text = [textField.text substringToIndex:12];
-            [self.view makeToast:@"小区名称不超过12个字"];
+        }  else if (self.cellNameView.contentTF.text.length >= 16) {
+            self.cellNameView.contentTF.text = [textField.text substringToIndex:16];
+            [self.view makeToast:@"小区名称不超过16个字"];
             return NO;
         }
     }

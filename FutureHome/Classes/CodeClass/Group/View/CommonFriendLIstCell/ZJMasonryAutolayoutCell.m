@@ -77,12 +77,15 @@
     
     self.timeLab.text = _model.add_time;
     self.contentLab.text = _model.content;
+    
+    [self.upBtn addTarget:self action:@selector(upBtnClick) forControlEvents:UIControlEventTouchUpInside];
     if (_model.like_status == 2) {
+        /** 未点赞 */
+        self.upBtn.tag = 0;
         [self.upBtn setImage:[UIImage imageNamed:@"1点赞"] forState:UIControlStateNormal];
-        [self.upBtn addTarget:self action:@selector(upBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        self.upBtn.enabled = YES;
     } else if (_model.like_status == 1) {
-        self.upBtn.enabled = YES;
+        /** 已经点赞 */
+        self.upBtn.tag = 1;
         [self.upBtn setImage:[UIImage imageNamed:@"2已点赞"] forState:UIControlStateNormal];
     }
     
@@ -230,8 +233,8 @@
 }
 
 - (void)upBtnClick {
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:)]) {
-        [_delegate fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:self.model];
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:withBtn:)]) {
+        [_delegate fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:self.model withBtn:self.upBtn];
     }
 }
 
@@ -243,7 +246,7 @@
     btn.titleLabel.font = [UIFont systemFontOfSize:13];
     btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     btn.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-    btn.enabled = NO;
+    btn.enabled = YES;
     [self.bottomView addSubview:btn];
     return btn;
 }

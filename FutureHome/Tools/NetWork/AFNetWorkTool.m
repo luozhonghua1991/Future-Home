@@ -88,33 +88,10 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@/%@",BASE_URL,url];
     //发送get请求
     [session GET:urlStr parameters:params progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         if (success) {
-            NSInteger errorCode = [responseObject[@"code"] integerValue];
-            if (errorCode == 90003) {
-                [ZHProgressHUD showMessage:@"账号已经在别处登录,请重新登录" inView:[UIApplication sharedApplication].keyWindow];
-                if ([SingleManager shareManager].isFirstPushLogin == NO) {
-                    [ZHProgressHUD hide];
-                    [FHLoginTool fh_makePersonToLoging];
-                    return;
-                }
-                ZHLog(@"token不匹配,账号已经在别处登录");
-                return ;
-            } else if (errorCode == 90004) {
-                [ZHProgressHUD showMessage:responseObject[@"msg"] inView:[UIApplication sharedApplication].keyWindow];
-                if ([SingleManager shareManager].isFirstPushLogin == NO) {
-                    [ZHProgressHUD hide];
-                    [FHLoginTool fh_makePersonToLoging];
-                    return;
-                } else {
-                    ZHLog(@"账号被冻结");
-                    return ;
-                }
-            }
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         if (failure) {
             failure(error);
         }
@@ -141,31 +118,9 @@
     [session POST:urlStr parameters:params progress:^(NSProgress * _Nonnull uploadProgress) {
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         if (success) {
-            NSInteger errorCode = [responseObject[@"code"] integerValue];
-            if (errorCode == 90003) {
-                [ZHProgressHUD showMessage:@"账号已经在别处登录,请重新登录" inView:[UIApplication sharedApplication].keyWindow];
-                if ([SingleManager shareManager].isFirstPushLogin == NO) {
-                    [ZHProgressHUD hide];
-                    [FHLoginTool fh_makePersonToLoging];
-                    return;
-                }
-                ZHLog(@"token不匹配,账号已经在别处登录");
-                return ;
-            } else if (errorCode == 90004) {
-                [ZHProgressHUD showMessage:responseObject[@"msg"] inView:[UIApplication sharedApplication].keyWindow];
-                if ([SingleManager shareManager].isFirstPushLogin == NO) {
-                    [ZHProgressHUD hide];
-                    [FHLoginTool fh_makePersonToLoging];
-                    return;
-                } else {
-                    ZHLog(@"账号被冻结");
-                    return ;
-                }
-            }
             success(responseObject);
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        [UIView hideHud:[UIApplication sharedApplication].keyWindow];
         failure(error);
     }];
 }

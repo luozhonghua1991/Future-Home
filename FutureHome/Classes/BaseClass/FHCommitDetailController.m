@@ -472,37 +472,37 @@
 
 - (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model {
     /** 用户点赞 */
-//    [self getRequestLickWithModel:Model];
+    [self getRequestLickWithModel:Model];
 }
 
 - (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model {
     /** 用户点赞 */
-//    [self getRequestLickWithModel:model];
+    [self getRequestLickWithModel:model];
 }
 
 - (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model {
     /** 用户点赞 */
-//    [self getRequestLickWithModel:model];
+    [self getRequestLickWithModel:model];
 }
 
-//- (void)getRequestLickWithModel:(ZJCommit *)model {
-//    WS(weakSelf);
-//    Account *account = [AccountStorage readAccount];
-//    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-//                               @(account.user_id),@"user_id",
-//                               @"1",@"type",
-//                               model.ID,@"pid",
-//                               @"user_id",@"uid",
-//                               nil];
-//    [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
-//        if ([responseObj[@"code"] integerValue] == 1) {
-//
-//        } else {
-//            [self.view makeToast:responseObj[@"msg"]];
-//        }
-//    } failure:^(NSError *error) {
-//    }];
-//}
+- (void)getRequestLickWithModel:(ZJCommit *)model {
+    WS(weakSelf);
+    Account *account = [AccountStorage readAccount];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               @"0",@"type",
+                               model.ID,@"pid",
+                               model.user_id,@"uid",
+                               nil];
+    [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
+        if ([responseObj[@"code"] integerValue] == 1) {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        } else {
+            [weakSelf.view makeToast:responseObj[@"msg"]];
+        }
+    } failure:^(NSError *error) {
+    }];
+}
 
 #pragma mark — event
 - (void)showInputView {

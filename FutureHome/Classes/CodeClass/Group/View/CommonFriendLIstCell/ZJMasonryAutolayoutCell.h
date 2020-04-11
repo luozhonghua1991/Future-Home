@@ -17,7 +17,8 @@
 // 可选实现的方法
 - (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model;
 /** 朋友圈点赞 */
-- (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model;
+- (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model
+                                                      withBtn:(UIButton *)btn;
 
 @end
 

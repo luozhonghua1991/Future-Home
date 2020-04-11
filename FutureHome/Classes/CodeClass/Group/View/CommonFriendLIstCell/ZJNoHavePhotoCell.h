@@ -19,7 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 // 可选实现的方法
 - (void)fh_ZJNoHavePhotoCellSelectModel:(ZJCommit *)model;
 
-- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model;
+- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model
+                                    withBtn:(UIButton *)btn;
 
 @end
 

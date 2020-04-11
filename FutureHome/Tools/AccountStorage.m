@@ -16,8 +16,12 @@
 /** 保存账户 */
 + (BOOL)saveAccount:(Account *)account {
 //    NSUserDefaults *useDef = [NSUserDefaults standardUserDefaults];
+    if (account.token == nil) {
+        [SingleManager shareManager].isFirstPushLogin = YES;
+    } else {
+        [SingleManager shareManager].isFirstPushLogin = NO;
+    }
     
-    [SingleManager shareManager].isFirstPushLogin = NO;
     NSFileManager *mgr = [NSFileManager defaultManager];
     
     if (![self isFileExistsAtPath]) {

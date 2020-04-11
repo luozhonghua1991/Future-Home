@@ -75,17 +75,22 @@
 /** 参数 */
 @property (nonatomic, copy) NSDictionary *headerParamsDic;
 
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIButton *likeBtn;
+
+
 @end
 
 @implementation FHCircleHotPointController
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     self.videoListDataArrs = [[NSMutableArray alloc] init];
     self.commitsListArrs = [[NSMutableArray alloc] init];
     self.dataArray = [NSMutableArray array];
-    [super viewDidLoad];
     [self setUpAllView];
     [self loadInit];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -281,7 +286,9 @@
     self.mainTable.dataSource = self;
     self.mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.mainTable.tableFooterView = [[UIView alloc] init];
-    self.mainTable.estimatedRowHeight = 100;
+    self.mainTable.estimatedRowHeight = 0;
+    self.mainTable.estimatedSectionFooterHeight = 0;
+    self.mainTable.estimatedSectionHeaderHeight = 0;
     // 必须先注册cell，否则会报错
     [_mainTable registerClass:[ZJMasonryAutolayoutCell class] forCellReuseIdentifier:kPicMasonryCell];
     [_mainTable registerClass:[ZJNoHavePhotoCell class] forCellReuseIdentifier:kNoPicMasonryCell];
@@ -305,6 +312,9 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.dataArray <=0) {
+        return nil;
+    }
     ZJCommit *commit = self.dataArray[indexPath.row];
     //视频单独处理
         if (commit.medias.count > 0) {
@@ -386,24 +396,24 @@
     [self pushVCWithModel:model];
 }
 
-- (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model {
+- (void)fh_ZJHaveMoveCellDelagateSelectLikeWithModel:(ZJCommit *)Model withBtn:(nonnull UIButton *)btn{
     /** 用户点赞 */
-    [self getRequestLickWithModel:Model];
+    [self getRequestLickWithModel:Model withBtn:btn];
 }
 
-- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model {
+- (void)fh_ZJNoHavePhotoCellSelecLiketModel:(ZJCommit *)model withBtn:(nonnull UIButton *)btn{
     /** 用户点赞 */
-    [self getRequestLickWithModel:model];
+    [self getRequestLickWithModel:model withBtn:btn];
 }
 
-- (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model {
+- (void)fh_ZJMasonryAutolayoutCellDelegateSelectLikeWithModel:(ZJCommit *)model withBtn:(UIButton *)btn{
     /** 用户点赞 */
-    [self getRequestLickWithModel:model];
+    [self getRequestLickWithModel:model withBtn:btn];
 }
 
-- (void)artileOrVideoShareLikeClickWithModel:(ZJCommit *)model {
+- (void)artileOrVideoShareLikeClickWithModel:(ZJCommit *)model withBtn:(nonnull UIButton *)btn{
     /** 用户点赞 */
-    [self getRequestLickWithModel:model];
+    [self getRequestLickWithModel:model withBtn:btn];
 }
 
 - (void)artileOrVideoShareInfoDetailCLickWithModel:(ZJCommit *)model type:(NSInteger)type {
@@ -456,18 +466,34 @@
 }
 
 
-- (void)getRequestLickWithModel:(ZJCommit *)model {
+- (void)getRequestLickWithModel:(ZJCommit *)model withBtn:(UIButton *)btn {
+    self.likeBtn = btn;
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @"0",@"type",
                                model.ID,@"pid",
-                               @"user_id",@"uid",
+                               model.user_id,@"uid",
                                nil];
+    
     [AFNetWorkTool post:@"sheyun/circleLike" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            [weakSelf loadInit];
+            NSInteger count = [btn.currentTitle integerValue];
+            if (btn.tag == 0) {
+                /** 未点赞 */
+                [btn setImage:[UIImage imageNamed:@"2已点赞"] forState:UIControlStateNormal];
+                btn.tag = 1;
+                count++;
+                [btn setTitle:[NSString stringWithFormat:@"%ld",(long)count] forState:UIControlStateNormal];
+            } else if (btn.tag == 1) {
+                /** 已经点赞 */
+                [btn setImage:[UIImage imageNamed:@"1点赞"] forState:UIControlStateNormal];
+                btn.tag = 0;
+                count--;
+                [btn setTitle:[NSString stringWithFormat:@"%ld",(long)count] forState:UIControlStateNormal];
+            }
+            [weakSelf.view makeToast:responseObj[@"msg"]];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
