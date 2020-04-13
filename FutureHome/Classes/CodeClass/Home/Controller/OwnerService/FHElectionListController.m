@@ -4,7 +4,7 @@
 //
 //  Created by 同熙传媒 on 2019/9/7.
 //  Copyright © 2019 同熙传媒. All rights reserved.
-//  选举列表界面  业委海选界面
+//  选举列表界面  业主海选界面
 
 #import "FHElectionListController.h"
 #import "FHElectionListCell.h"
@@ -14,10 +14,14 @@
 @interface FHElectionListController () <UITableViewDelegate,UITableViewDataSource,FHElectionListCellDelegate>
 /** 主页列表数据 */
 @property (nonatomic, strong) UITableView *homeTable;
-/** <#strong属性注释#> */
+/** 数据源 */
 @property (nonatomic, strong) NSMutableArray *candidateListArrs;
 /** 选择的投票人id数据 */
 @property (nonatomic, strong) NSMutableArray *selectModelArrs;
+/** 是否能提交数据 */
+@property (nonatomic, assign) BOOL isCanUpdate;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) NSInteger maxSelectCount;
 
 
 @end
@@ -26,6 +30,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isCanUpdate = YES;
+    if ([self.titleString isEqualToString:@"业主海选"]) {
+        self.maxSelectCount = self.candidate_number;
+    } else if ([self.titleString isEqualToString:@"岗位选举"]) {
+        self.maxSelectCount = self.election_number;
+    }
     self.selectModelArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
@@ -76,7 +86,7 @@
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSString *status;
-    if ([self.titleString isEqualToString:@"业委海选"]) {
+    if ([self.titleString isEqualToString:@"业主海选"]) {
         status = @"1";
     } else if ([self.titleString isEqualToString:@"岗位选举"]) {
         status = @"2";
@@ -90,6 +100,11 @@
     [AFNetWorkTool get:@"owner/candidateList" params:paramsDic success:^(id responseObj) {
         NSDictionary *Dic = responseObj[@"data"];
         NSArray *upDicArr = Dic[@"list"];
+        for (NSDictionary *dic in upDicArr) {
+            if ([dic[@"select"] integerValue] == 1) {
+                self.isCanUpdate = NO;
+            }
+        }
         self.candidateListArrs = [FHCandidateListModel mj_objectArrayWithKeyValuesArray:upDicArr];
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
@@ -130,6 +145,11 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FHCandidateListModel *model = self.candidateListArrs[indexPath.section];
     cell.candidateListModel = model;
+    if ([self.titleString isEqualToString:@"业主海选"]) {
+        cell.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)model.sea_num];
+    } else if ([self.titleString isEqualToString:@"岗位选举"]) {
+        cell.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)model.post_num];
+    }
     cell.delegate = self;
     return cell;
 }
@@ -151,9 +171,13 @@
     if (model.select == 1) {
         [self commitRequestWithStrings:modelID];
     }
-    [self.selectModelArrs addObject:modelID];
-    [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
-//    cell.selectLabel.text = @"⊙选他";
+    if (self.selectModelArrs.count < self.maxSelectCount) {
+        [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+        [self.selectModelArrs addObject:modelID];
+    } else {
+        [self.view makeToast:[NSString stringWithFormat:@"您最多能选择%ld人进行投票,请勿多选",(long)self.maxSelectCount]];
+        return;
+    }
 }
 
 - (void)pushBtnClick {
@@ -170,10 +194,15 @@
 }
 
 - (void)commitRequestWithStrings:(NSString *)string {
+    if (!self.isCanUpdate) {
+        [self.view makeToast:@"每个人只有一次投票机会,请勿重复提交"];
+        return;
+    }
+    
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     NSString *status;
-    if ([self.titleString isEqualToString:@"业委海选"]) {
+    if ([self.titleString isEqualToString:@"业主海选"]) {
         status = @"1";
     } else if ([self.titleString isEqualToString:@"岗位选举"]) {
         status = @"2";

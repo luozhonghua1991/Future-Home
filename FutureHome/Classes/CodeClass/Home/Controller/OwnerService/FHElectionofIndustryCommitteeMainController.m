@@ -43,8 +43,8 @@
     groupVC.ID = 6;
     
     FHBaseAnnouncementListController *hotVC = [[FHBaseAnnouncementListController alloc] init];
-    hotVC.yp_tabItemTitle = @"业委海选";
-    hotVC.webTitleString = @"业委海选";
+    hotVC.yp_tabItemTitle = @"业主海选";
+    hotVC.webTitleString = @"业主海选";
 //    hotVC.isNoHaveHeaderView = YES;
     hotVC.isHaveSelectView = YES;
     hotVC.isHaveSectionView = YES;

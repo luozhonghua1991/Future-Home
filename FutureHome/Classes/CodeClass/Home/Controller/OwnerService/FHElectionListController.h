@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *owner_id;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *pid;
+/** 海选人最大数量 */
+@property (nonatomic, assign) NSInteger candidate_number;
+/** 岗位选举人最大数量 */
+@property (nonatomic, assign) NSInteger election_number;
 
 
 @end

@@ -50,6 +50,8 @@
 @property (nonatomic, strong) NSMutableArray *selectImgArrs;
 
 @property (nonatomic, strong) FHAddressPickerView *addressPickerView;
+/** 图片选择数组 */
+@property (nonatomic, strong) NSMutableArray *imgSelectArrs;
 
 @end
 
@@ -57,7 +59,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.selectImgArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self fh_creatUI];
     [self fh_layoutSubViews];
@@ -256,21 +257,6 @@
             } else {
                 self.certificationView.rightImgView.image = image;
             }
-            Account *account = [AccountStorage readAccount];
-            NSArray *arr = @[@"111"];
-            NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                       @(account.user_id),@"user_id",
-                                       self.path,@"path",
-                                       arr,@"file[]",
-                                       nil];
-            
-            NSData *imageData = UIImageJPEGRepresentation(image,0.5);
-            [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-                NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
-                [self.selectImgArrs addObject:imgID];
-            } failure:^(NSError *error) {
-                
-            }];
         }
     }];
     [self presentViewController:imagePickerVc animated:YES completion:nil];
@@ -289,21 +275,6 @@
     } else {
         self.certificationView.rightImgView.image = image;
     }
-    Account *account = [AccountStorage readAccount];
-    NSArray *arr = @[@"111"];
-    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                               @(account.user_id),@"user_id",
-                               self.path,@"path",
-                               arr,@"file[]",
-                               nil];
-    
-    NSData *imageData = UIImageJPEGRepresentation(image,0.5);
-    [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
-        NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
-        [self.selectImgArrs addObject:imgID];
-    } failure:^(NSError *error) {
-        
-    }];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -318,6 +289,16 @@
 }
 
 - (void)commitRequestInfo {
+    self.imgSelectArrs = [[NSMutableArray alloc] init];
+    [self.imgSelectArrs addObject:self.certificationView.leftImgView.image];
+    [self.imgSelectArrs addObject:self.certificationView.centerImgView.image];
+    [self.imgSelectArrs addObject:self.certificationView.rightImgView.image];
+    
+    if (self.imgSelectArrs.count < 3) {
+        [self.view makeToast:@"请补全身份证信息"];
+        return;
+    }
+    
     if (self.ownerNameView.contentTF.text.length <= 0) {
         [self.view makeToast:self.ownerNameView.contentTF.placeholder];
         return;
@@ -362,7 +343,31 @@
         [self.view makeToast:self.houseAreaView.contentTF.placeholder];
         return;
     }
+    
+    self.selectImgArrs = [[NSMutableArray alloc] init];
+    Account *account = [AccountStorage readAccount];
+    NSArray *arr = @[@"111"];
+    NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                               @(account.user_id),@"user_id",
+                               self.path,@"path",
+                               arr,@"file[]",
+                               nil];
+    for (int i = 0; i< self.imgSelectArrs.count; i++) {
+        NSData *imageData = UIImageJPEGRepresentation(self.imgSelectArrs[i],1);
+        [AFNetWorkTool updateImageWithUrl:@"img/uploads" parameter:paramsDic imageData:imageData success:^(id responseObj) {
+            NSString *imgID = [responseObj[@"data"] objectAtIndex:0];
+            [self.selectImgArrs addObject:imgID];
+            if (self.selectImgArrs.count == self.imgSelectArrs.count) {
+                /** 图片获取完毕 */
+                [self commitInfo];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
+    }
+}
 
+- (void)commitInfo {
     /** 先上传多张图片 然后上传信息*/
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];

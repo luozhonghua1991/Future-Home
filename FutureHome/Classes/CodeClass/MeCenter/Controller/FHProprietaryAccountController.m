@@ -1052,7 +1052,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person1PhoneView {
     if (!_person1PhoneView) {
         _person1PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person1PhoneView.titleLabel.text = @"手机号码(接收账号密码)";
+        _person1PhoneView.titleLabel.text = @"手机号码";
         _person1PhoneView.contentTF.delegate = self;
         _person1PhoneView.contentTF.placeholder = @"请输入手机号码";
         
@@ -1103,7 +1103,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person2PhoneView {
     if (!_person2PhoneView) {
         _person2PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person2PhoneView.titleLabel.text = @"手机号码(接收账号密码)";
+        _person2PhoneView.titleLabel.text = @"手机号码";
         _person2PhoneView.contentTF.delegate = self;
         _person2PhoneView.contentTF.placeholder = @"请输入手机号码";
         
@@ -1154,7 +1154,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 - (FHAccountApplicationTFView *)person3PhoneView {
     if (!_person3PhoneView) {
         _person3PhoneView = [[FHAccountApplicationTFView alloc] init];
-        _person3PhoneView.titleLabel.text = @"手机号码(接收账号密码)";
+        _person3PhoneView.titleLabel.text = @"手机号码";
         _person3PhoneView.contentTF.delegate = self;
         _person3PhoneView.contentTF.placeholder = @"请输入手机号码";
         

@@ -24,8 +24,7 @@
 @property (nonatomic, strong) UIView *bottomLineView;
 /** 号码 */
 @property (nonatomic, strong) UILabel *numberLabel;
-/** 票数 */
-@property (nonatomic, strong) UILabel *countLabel;
+
 
 
 
@@ -83,11 +82,6 @@
     self.bottomLabel.text = _candidateListModel.intro;
     [self.leftImgView sd_setImageWithURL:[NSURL URLWithString:_candidateListModel.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.numberLabel.text = [NSString stringWithFormat:@"%@号",candidateListModel.number];
-    if ([_candidateListModel.status isEqualToString:@"1"]) {
-        self.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)candidateListModel.sea_num];
-    } else if ([_candidateListModel.status isEqualToString:@"2"]){
-        self.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)candidateListModel.post_num];
-    }
     self.ageLabel.text = [NSString stringWithFormat:@"年龄: %ld岁",(long)_candidateListModel.age];
     self.nameLabel.text = [NSString stringWithFormat:@"姓名: %@",_candidateListModel.name];
     self.sexLabel.text = [NSString stringWithFormat:@"性别: %@",_candidateListModel.getSex];

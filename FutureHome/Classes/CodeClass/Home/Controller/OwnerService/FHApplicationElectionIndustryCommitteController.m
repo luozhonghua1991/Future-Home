@@ -282,7 +282,7 @@
     } else if ([self.typeView.contentTF.text isEqualToString:@"兼职"]) {
         fullType = 2;
     } else {
-        [self.view makeToast:@"请正确填写职位类型"];
+        [self.view makeToast:@"请填写兼职/全职"];
         return;
     }
     
@@ -524,7 +524,7 @@
     if (!_typeView) {
         _typeView = [[FHElectRepeatTFView alloc] init];
         _typeView.titleLabel.text = @"兼职/全职:";
-        _typeView.contentTF.placeholder = @"请选择职位";
+        _typeView.contentTF.placeholder = @"请填写兼职/全职";
     }
     return _typeView;
 }

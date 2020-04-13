@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) FHCandidateListModel *candidateListModel;
 
 @property(nonatomic, weak) id<FHElectionListCellDelegate> delegate;
+/** 票数 */
+@property (nonatomic, strong) UILabel *countLabel;
 
 @end
 

@@ -157,10 +157,13 @@
 }
 
 - (void)updateImageWithRequest {
-    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     /** 提交发布信息 */
     self.imgSelectArrs = [[NSMutableArray alloc] init];
     [self.imgSelectArrs addObjectsFromArray:[self getSmallImageArray]];
+    if (self.imgSelectArrs.count <= 0) {
+        [self.view makeToast:@"未上传图片,所填信息不完整"];
+        return;
+    }
     self.selectImgArrays = [[NSMutableArray alloc] init];
     /** 先上传多张图片*/
     Account *account = [AccountStorage readAccount];
@@ -215,7 +218,7 @@
 
 
 - (void)commitInfo {
-    /** 先传图片 */
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
@@ -234,6 +237,7 @@
                                self.pid,@"pid",
                                imgArrsString,@"img_ids",
                                nil];
+    
     [AFNetWorkTool post:@"owner/applyTender" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             /** 申请资料已经提交 */
@@ -244,14 +248,14 @@
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             });
         } else {
-            [weakSelf.loadingHud hideAnimated:YES];
-            weakSelf.loadingHud = nil;
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             NSString *msg = responseObj[@"msg"];
             [weakSelf.view makeToast:msg];
         }
     } failure:^(NSError *error) {
-        [weakSelf.loadingHud hideAnimated:YES];
-        weakSelf.loadingHud = nil;
+        [weakSelf.lodingHud hideAnimated:YES];
+        weakSelf.lodingHud = nil;
     }];
 }
 

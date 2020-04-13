@@ -25,6 +25,10 @@
 @property (nonatomic, strong) UIButton *clickButton;
 /** 第几节选举大会 */
 @property (nonatomic, copy) NSString *pid;
+/** 海选人最大数量 */
+@property (nonatomic, assign) NSInteger candidate_number;
+/** 岗位选举人最大数量 */
+@property (nonatomic, assign) NSInteger election_number;
 
 
 @end
@@ -181,8 +185,9 @@
                         self.clickButton.enabled = NO;
                     }
                 } else if (self.ID == 7) {
-                    /** 业委海选 */
+                    /** 业主海选 */
                     NSString *title = dic[@"candidate_title"];
+                    self.candidate_number = [dic[@"candidate_number"] integerValue];
                     if (status == 3) {
                         [self.clickButton setTitle:title forState:UIControlStateNormal];
                         [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
@@ -195,6 +200,7 @@
                 } else if (self.ID == 8) {
                     /** 岗位选举 */
                     NSString *title = dic[@"candidate_title"];
+                    self.election_number = [dic[@"election_number"] integerValue];
                     if (status == 5) {
                         [self.clickButton setTitle:title forState:UIControlStateNormal];
                         [self.clickButton setTitleColor:HEX_COLOR(0x1296db) forState:UIControlStateNormal];
@@ -313,11 +319,13 @@
     }
     
     FHElectionListController *vc = [[FHElectionListController alloc] init];
-    if ([self.yp_tabItemTitle isEqualToString:@"业委海选"]) {
-        vc.titleString = @"业委海选";
+    if ([self.yp_tabItemTitle isEqualToString:@"业主海选"]) {
+        vc.titleString = @"业主海选";
     } else if ([self.yp_tabItemTitle isEqualToString:@"岗位选举"]) {
         vc.titleString = @"岗位选举";
     }
+    vc.candidate_number = self.candidate_number;
+    vc.election_number = self.election_number;
     vc.owner_id = [NSString stringWithFormat:@"%ld",(long)self.property_id];
     vc.pid = self.pid;
     vc.hidesBottomBarWhenPushed = YES;
