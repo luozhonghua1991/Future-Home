@@ -36,7 +36,6 @@
     } else if ([self.titleString isEqualToString:@"岗位选举"]) {
         self.maxSelectCount = self.election_number;
     }
-    self.selectModelArrs = [[NSMutableArray alloc] init];
     [self fh_creatNav];
     [self.view addSubview:self.homeTable];
     [self.homeTable registerClass:[FHElectionListCell class] forCellReuseIdentifier:NSStringFromClass([FHElectionListCell class])];
@@ -95,6 +94,8 @@
 
 #pragma mark — request
 - (void)getRequest {
+    self.selectModelArrs = [[NSMutableArray alloc] init];
+    self.candidateListArrs = [[NSMutableArray alloc] init];
     /** 选举列表 */
     WS(weakSelf);
     Account *account = [AccountStorage readAccount];
@@ -186,15 +187,24 @@
     FHElectionListCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     FHCandidateListModel *model = self.candidateListArrs[indexPath.section];
     NSString *modelID = [NSString stringWithFormat:@"%ld",(long)model.id];
-    if (model.select == 1) {
-        [self commitRequestWithStrings:modelID];
-    }
-    if (self.selectModelArrs.count < self.maxSelectCount) {
-        [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
-        [self.selectModelArrs addObject:modelID];
+    
+//    if (model.select == 1) {
+//        [self commitRequestWithStrings:modelID];
+//    }
+    
+    if (model.isSelect == NO) {
+        if (self.selectModelArrs.count < self.maxSelectCount) {
+            [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+            [self.selectModelArrs addObject:modelID];
+            model.isSelect = YES;
+        } else {
+            [self.view makeToast:[NSString stringWithFormat:@"您最多能选择%ld人进行投票,请勿多选",(long)self.maxSelectCount]];
+            return;
+        }
     } else {
-        [self.view makeToast:[NSString stringWithFormat:@"您最多能选择%ld人进行投票,请勿多选",(long)self.maxSelectCount]];
-        return;
+        [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+        [self.selectModelArrs removeObject:modelID];
+        model.isSelect = NO;
     }
 }
 
@@ -217,7 +227,6 @@
 }
 
 - (void)commitRequestWithStrings:(NSString *)string {
-    
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     NSString *status;

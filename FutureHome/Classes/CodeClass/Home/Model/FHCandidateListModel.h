@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *home_num;
 /** 图片id */
 @property (nonatomic, copy) NSString *img_ids;
+/** 是否选中 */
+@property (nonatomic, assign) BOOL isSelect;
 
 @end
 
