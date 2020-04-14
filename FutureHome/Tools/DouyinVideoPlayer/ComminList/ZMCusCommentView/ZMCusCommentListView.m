@@ -7,12 +7,12 @@
 //
 
 #import "ZMCusCommentListView.h"
-
 #import "ZMCusCommentListContentCell.h"
 #import "ZMCusCommentListReplyContentCell.h"
+#import "FHPersonTrendsController.h"
+#import "CurrentViewController.h"
 
-
-@interface ZMCusCommentListView () <UITableViewDelegate,UITableViewDataSource>
+@interface ZMCusCommentListView () <UITableViewDelegate,UITableViewDataSource,ZMCusCommentListContentCellDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -142,6 +142,7 @@
     FHCommentListModel *model = self.commentListDataArrs[indexPath.row];
     //    FHCommentListModel *model = self.commentListDataArrs[indexPath.section];
     cell.commentListModel = model;
+    cell.delegate = self;
     return cell;
     
 //    } else {
@@ -172,6 +173,24 @@
             self.replyBtnBlock();
         }
     }
+}
+
+- (void)fh_ZMCusCommentListContentCellDelegateSelectHeaderModel:(FHCommentListModel *)commentListModel {
+    if (self.closeBtnBlock) {
+        self.closeBtnBlock();
+    }
+    /** 去用户的动态 */
+    FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+    vc.titleString = commentListModel.from_name;
+    [SingleManager shareManager].isSelectPerson = YES;
+    vc.hidesBottomBarWhenPushed = YES;
+    if (IsStringEmpty(commentListModel.from_uid)) {
+        vc.user_id = commentListModel.user_id;
+    } else {
+        vc.user_id = commentListModel.from_uid;
+    }
+    vc.personType = 0;
+    [[CurrentViewController topViewController].navigationController pushViewController:vc animated:YES];
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {

@@ -28,10 +28,21 @@
     return self;
 }
 
+- (void)tapClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_ZMCusCommentListContentCellDelegateSelectHeaderModel:)]) {
+        [_delegate fh_ZMCusCommentListContentCellDelegateSelectHeaderModel:self.commentListModel];
+    }
+}
+
 - (void)layoutUI{
     if (!_headImageView) {
         _headImageView = [[UIImageView alloc] init];
         [_headImageView setImage:[UIImage imageNamed:@"head_list_small"]];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        _headImageView.userInteractionEnabled = YES;
+        [_headImageView addGestureRecognizer:tap];
+        
         [self.contentView addSubview:_headImageView];
         [_headImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.mas_equalTo(14);

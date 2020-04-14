@@ -135,16 +135,25 @@
     /** 重用问题 */
     if (!self.numberButton) {
         self.numberButton = [PPNumberButton numberButtonWithFrame:CGRectMake(SCREEN_WIDTH - 120, 14, 100, 30)];
+        if (self.goodsModel.Isrestrictions == 1) {
+            self.numberButton.maxValue = self.goodsModel.limit_num;
+        }
+        // 初始化时隐藏减按钮
+        self.numberButton.decreaseHide = YES;
+        self.numberButton.longPressSpaceTime = CGFLOAT_MAX;
+        self.numberButton.increaseImage = [UIImage imageNamed:@"increase_eleme"];
+        self.numberButton.decreaseImage = [UIImage imageNamed:@"decrease_eleme"];
+        self.numberButton.currentNumber = self.currentNumber;
     }
-    // 初始化时隐藏减按钮
-    self.numberButton.decreaseHide = YES;
-    self.numberButton.longPressSpaceTime = CGFLOAT_MAX;
-    self.numberButton.increaseImage = [UIImage imageNamed:@"increase_eleme"];
-    self.numberButton.decreaseImage = [UIImage imageNamed:@"decrease_eleme"];
-    self.numberButton.currentNumber = self.currentNumber;
-//    self.numberButton.currentNumber = 7;
+    
     WS(weakSelf);
     self.numberButton.resultBlock = ^(PPNumberButton *ppBtn, CGFloat number, BOOL increaseStatus) {
+        if (self.goodsDetailModel.Isrestrictions == 1) {
+            if (number > [self.goodsDetailModel.limit_num integerValue]) {
+                [weakSelf.view makeToast:[NSString stringWithFormat:@"最多购买%@个",weakSelf.goodsDetailModel.limit_num]];
+                return;
+            }
+        }
         if (increaseStatus) {
             weakSelf.stepper.count++;
             if (weakSelf.stepper.block) {
@@ -186,7 +195,7 @@
                                             infiniteScrollViewWithFrame:scrollViewFrame Delegate:self ImagesArray:imageArrs];
     
     mallScrollView.titleView.hidden = YES;
-    mallScrollView.scrollTimeInterval = 3;
+    mallScrollView.scrollTimeInterval = 5;
     mallScrollView.autoScrollToNextPage = YES;
     mallScrollView.delegate = self;
     mallScrollView.contentMode = UIViewContentModeScaleAspectFill;

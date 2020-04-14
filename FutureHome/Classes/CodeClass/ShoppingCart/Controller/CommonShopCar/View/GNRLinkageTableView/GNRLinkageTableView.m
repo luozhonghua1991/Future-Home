@@ -168,6 +168,8 @@
             GNRGoodsModel * goods = self.goodsListArrs[indexPath.row];
             cell.goods = goods;
             cell.delegate = _target;
+            cell.stepper.Isrestrictions = goods.Isrestrictions;
+            cell.stepper.limit_num = goods.limit_num;
 //            GNRGoodsGroup * goodsGroup = self.goodsList.goodsGroups[indexPath.section];
 //            if (indexPath.row < goodsGroup.goodsList.count) {
 //                GNRGoodsModel * goods = goodsGroup.goodsList[indexPath.row];

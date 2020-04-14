@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString *nickname;
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *avatar;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSString *user_id;
+
 
 @end
 

@@ -17,6 +17,8 @@
 //@property (weak, nonatomic) IBOutlet UIView *stepperSuperView;
 @property (strong, nonatomic) UIView *stepperSuperView;
 @property (nonatomic, strong)GNRCountStepper * stepper;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isClosed;
 
 - (void)config:(GNRGoodsModel *)goods;
 

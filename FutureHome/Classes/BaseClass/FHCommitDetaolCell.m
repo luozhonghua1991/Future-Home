@@ -52,12 +52,22 @@
     [SingleManager shareManager].commonCommitCellHeight = MaxY(self.contentLabel) + 15.5;
 }
 
+- (void)tapClick {
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(fh_FHCommitDetaolCellDelegateSelectHeaderViewModel:)]) {
+        [_delegate fh_FHCommitDetaolCellDelegateSelectHeaderViewModel:self.commitModel];
+    }
+}
+
 #pragma mark — setter && getter
 #pragma mark - 懒加载
 - (UIImageView *)headerImgView {
     if (!_headerImgView) {
         _headerImgView = [[UIImageView alloc] init];
         _headerImgView.image = [UIImage imageNamed:@"头像"];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapClick)];
+        _headerImgView.userInteractionEnabled = YES;
+        [_headerImgView addGestureRecognizer:tap];
     }
     return _headerImgView;
 }

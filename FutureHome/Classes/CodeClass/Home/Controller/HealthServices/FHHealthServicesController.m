@@ -319,7 +319,7 @@
                                             infiniteScrollViewWithFrame:scrollViewFrame Delegate:self ImagesArray:imageArrs];
     
     mallScrollView.titleView.hidden = YES;
-    mallScrollView.scrollTimeInterval = 3;
+    mallScrollView.scrollTimeInterval = 5;
     mallScrollView.autoScrollToNextPage = YES;
     mallScrollView.delegate = self;
     mallScrollView.contentMode = UIViewContentModeScaleAspectFill;

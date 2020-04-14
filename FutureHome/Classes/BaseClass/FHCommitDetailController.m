@@ -26,7 +26,7 @@
 /** 有图片的 */
 #define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate,FHArticleOrVideoShareCellDelegate>
+@interface FHCommitDetailController () <UITableViewDelegate,UITableViewDataSource,XHInputViewDelagete,FDActionSheetDelegate,ZJNoHavePhotoCellDelegate,ZJMasonryAutolayoutCellDelegate,FHZJHaveMoveCellDelagate,FHArticleOrVideoShareCellDelegate,FHCommitDetaolCellDelegate>
 @property(nonatomic ,strong) UITableView *mainTable;
 
 @property(nonatomic ,strong) NSMutableArray *dataArray;
@@ -242,7 +242,11 @@
 
 
 - (void)setUpAllView {
-    self.mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, kScreenWidth, kScreenHeight - MainSizeHeight - 49) style:UITableViewStylePlain];
+    if (self.isCanCommit) {
+        self.mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, kScreenWidth, kScreenHeight - MainSizeHeight - 49) style:UITableViewStylePlain];
+    } else {
+        self.mainTable = [[UITableView alloc] initWithFrame:CGRectMake(0, MainSizeHeight, kScreenWidth, kScreenHeight - MainSizeHeight) style:UITableViewStylePlain];
+    }
     self.mainTable.delegate = self;
     self.mainTable.dataSource = self;
     self.mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -342,7 +346,21 @@
     tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     FHCommitModel *model = self.commitDataArrs[indexPath.row];
     cell.commitModel = model;
+    cell.delegate = self;
     return cell;
+}
+
+- (void)fh_FHCommitDetaolCellDelegateSelectHeaderViewModel:(FHCommitModel *)model {
+    if (!IsStringEmpty(model.user_id)) {
+        /** 去用户的动态 */
+        FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+        vc.titleString = model.nickname;
+        [SingleManager shareManager].isSelectPerson = YES;
+        vc.hidesBottomBarWhenPushed = YES;
+        vc.user_id = model.user_id;
+        vc.personType = 0;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

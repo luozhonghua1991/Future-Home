@@ -70,6 +70,8 @@
 @property (nonatomic, assign) NSInteger is_collect;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) CGFloat send_cost;
+/** <#assign属性注释#> */
+@property (nonatomic, assign) BOOL isClosed;
 
 
 @end
@@ -78,6 +80,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [SingleManager shareManager].isClosed = NO;
     [self fh_creatUI];
     [self getRequest];
 }
@@ -200,49 +203,54 @@
     
     [AFNetWorkTool get:@"shop/getSingShopInfo" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
-            NSDictionary *dic = responseObj[@"data"];
-            self.is_collect = [dic[@"iscollection"] integerValue];
-            if (self.is_collect == 0) {
-                [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
-            } else {
-                [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
-            }
-            [SingleManager shareManager].send_cost = [dic[@"send_cost"] floatValue];
-            weakSelf.locationLabel.text = dic[@"shopname"];
-            weakSelf.username = dic[@"username"];
-            weakSelf.lat = [dic[@"lat"] floatValue];
-            weakSelf.lng = [dic[@"lng"] floatValue];
-            weakSelf.shopMobie = dic[@"shopmobile"];
-            [SingleManager shareManager].shopName = dic[@"shopname"];
-            [self initViewControllers];
-            
-            if ([dic[@"Ispass"] integerValue] == 3) {
-                /** 店铺冻结 */
-                NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
-                [UIAlertController ba_alertShowInViewController:self
-                                                          title:@"温馨提示"
-                                                        message:@"该商户已被冻结,如有需要请与平台客服联系"
-                                               buttonTitleArray:@[@"确 定"]
-                                          buttonTitleColorArray:buttonTitleColorArray
-                                                          block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-                                                              if (buttonIndex == 0) {
-                                                                  [self menuBtnClick];
-                                                              }
-                                                              
-                                                          }];
-            }
-            if ([dic[@"status"] integerValue] == 1) {
-                /** 店铺打样 */
-                NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
-                [UIAlertController ba_alertShowInViewController:self
-                                                          title:@"温馨提示"
-                                                        message:@"本店已经打烊休息了,暂停线上实时配送接单"
-                                               buttonTitleArray:@[@"确 定"]
-                                          buttonTitleColorArray:buttonTitleColorArray
-                                                          block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
-                                                          }];
-            }
-            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSDictionary *dic = responseObj[@"data"];
+                self.is_collect = [dic[@"iscollection"] integerValue];
+                [SingleManager shareManager].send_cost = [dic[@"send_cost"] floatValue];
+                weakSelf.username = dic[@"username"];
+                weakSelf.lat = [dic[@"lat"] floatValue];
+                weakSelf.lng = [dic[@"lng"] floatValue];
+                weakSelf.shopMobie = dic[@"shopmobile"];
+                [SingleManager shareManager].shopName = dic[@"shopname"];
+                
+                if ([dic[@"Ispass"] integerValue] == 3) {
+                    /** 店铺冻结 */
+                    NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
+                    [UIAlertController ba_alertShowInViewController:self
+                                                              title:@"温馨提示"
+                                                            message:@"该商户已被冻结,如有需要请与平台客服联系"
+                                                   buttonTitleArray:@[@"确 定"]
+                                              buttonTitleColorArray:buttonTitleColorArray
+                                                              block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                                  if (buttonIndex == 0) {
+                                                                      [self menuBtnClick];
+                                                                  }
+                                                                  
+                                                              }];
+                }
+                if ([dic[@"status"] integerValue] == 1) {
+                    [SingleManager shareManager].isClosed = YES;
+                    /** 店铺打样 */
+                    NSArray *buttonTitleColorArray = @[[UIColor blueColor]] ;
+                    [UIAlertController ba_alertShowInViewController:self
+                                                              title:@"温馨提示"
+                                                            message:@"本店已经打烊休息了,暂停线上接单"
+                                                   buttonTitleArray:@[@"确 定"]
+                                              buttonTitleColorArray:buttonTitleColorArray
+                                                              block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                                                  
+                                                              }];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (self.is_collect == 0) {
+                        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+                    } else {
+                        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+                    }
+                    weakSelf.locationLabel.text = dic[@"shopname"];
+                    [self initViewControllers];
+                });
+            });
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }

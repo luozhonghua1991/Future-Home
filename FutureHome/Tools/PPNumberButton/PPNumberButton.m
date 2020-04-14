@@ -203,7 +203,9 @@
         
         [self buttonClickCallBackWithIncreaseStatus:YES];
     } else {
-        if (_shakeAnimation) { [self shakeAnimationMethod]; } PPLog(@"已超过最大数量%.1f",_maxValue);
+        if (_shakeAnimation) { [self shakeAnimationMethod]; }
+        [ZHProgressHUD showMessage:[NSString stringWithFormat:@"已超过最大数量%.1f",_maxValue] inView:[UIApplication sharedApplication].delegate.window];
+        PPLog(@"已超过最大数量%.1f",_maxValue);
     }
 }
 

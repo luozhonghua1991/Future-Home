@@ -145,6 +145,9 @@
 @property (nonatomic, strong) UIViewController *selectMoneyControll;
 /** 上次选择的客服VC */
 @property (nonatomic, strong) UIViewController *selectServiceControll;
+
+/** 是否打烊 */
+@property (nonatomic, assign) BOOL isClosed;
 /**
  *  返回时间str，当有一个str或时间戳或NSDate的时间格式时(三选一)，可以得到指订输出格式的时间字符串
  *

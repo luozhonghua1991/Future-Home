@@ -18,7 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** <#assign属性注释#> */
 @property (nonatomic, assign) CGFloat send_cost;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,13 +11,14 @@
 #import "ZJCommit.h"
 #import "FHCommitDetailController.h"
 #import "ZJNoHavePhotoCell.h"
+#import "FHPersonTrendsController.h"
 
 /** 没有图片的 */
 #define kNoPicMasonryCell @"kNoPicMasonryCell"
 /** 有图片的 */
 #define kPicMasonryCell @"kPicMasonryCell"
 
-@interface FHSuggestionListController () <UITableViewDelegate,UITableViewDataSource>
+@interface FHSuggestionListController () <UITableViewDelegate,UITableViewDataSource,ZJMasonryAutolayoutCellDelegate,ZJNoHavePhotoCellDelegate>
 
 @property(nonatomic ,strong) UITableView *mainTable;
 
@@ -119,12 +120,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ZJCommit *commit = self.dataArray[indexPath.row];
-    //视频单独处理
     if (commit.pic_urls.count > 0) {
         ZJMasonryAutolayoutCell *cell = [tableView dequeueReusableCellWithIdentifier:kPicMasonryCell];
         cell.isNoUpdateBtn = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.weakSelf = self;
+        cell.delegate = self;
         [self configureCell:cell atIndexPath:indexPath];
         return cell;
     }
@@ -132,6 +133,7 @@
     ZJNoHavePhotoCell *photoCell = [tableView dequeueReusableCellWithIdentifier:kNoPicMasonryCell];
     photoCell.isNoUpdateBtn = YES;
     photoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+    photoCell.delegate = self;
     [self configureNoCell:photoCell atIndexPath:indexPath];
     return photoCell;
     
@@ -153,6 +155,27 @@
 
 - (void)configureNoCell:(ZJNoHavePhotoCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     cell.model = self.dataArray[indexPath.row];
+}
+
+- (void)fh_ZJMasonryAutolayoutCellDelegateWithModel:(ZJCommit *)model {
+    /** 去用户的动态 */
+    [self pushVCWithModel:model];
+}
+
+- (void)fh_ZJNoHavePhotoCellSelectModel:(ZJCommit *)model {
+    [self pushVCWithModel:model];
+}
+
+
+- (void)pushVCWithModel:(ZJCommit *)model {
+    /** 去用户的动态 */
+    FHPersonTrendsController *vc = [[FHPersonTrendsController alloc] init];
+    vc.titleString = model.nickname;
+    [SingleManager shareManager].isSelectPerson = YES;
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.user_id = model.user_id;
+    vc.personType = 0;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

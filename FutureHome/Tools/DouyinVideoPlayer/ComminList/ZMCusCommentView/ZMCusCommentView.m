@@ -158,7 +158,6 @@
                                            nil];
                 
                 [AFNetWorkTool get:@"shop/getComments" params:paramsDic success:^(id responseObj) {
-                    
                     if ([responseObj[@"code"] integerValue] == 1) {
                         weakSelf.commentListArrs = [[NSMutableArray alloc] init];
                         NSArray *arr = responseObj[@"data"][@"list"];

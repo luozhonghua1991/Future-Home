@@ -187,6 +187,8 @@
     }
     GNRGoodsModel * goods = [self.goodsList.shoppingCart.bags.firstObject goodsArr][indexPath.row];
     cell.delegate = _target;//交给controller处理
+    cell.stepper.limit_num = goods.limit_num;
+    cell.stepper.Isrestrictions = goods.Isrestrictions;
     [cell config:goods];
     return cell;
 }

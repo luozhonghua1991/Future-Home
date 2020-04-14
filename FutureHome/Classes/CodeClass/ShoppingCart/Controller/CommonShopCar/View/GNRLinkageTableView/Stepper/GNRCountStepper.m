@@ -25,6 +25,7 @@
 
 - (instancetype)init{
     if (self = [super init]) {
+        self.count = 0;
         [self initData];
         [self installUI];
     }
@@ -137,7 +138,19 @@
     }
 }
 
-- (void)addBtnAction:(id)sender{
+- (void)addBtnAction:(id)sender {
+    NSLog(@"#########已经购买个数%ld############",(long)self.count);
+    if (self.Isrestrictions == 1) {
+        if (self.count >= self.limit_num) {
+            [ZHProgressHUD showMessage:[NSString stringWithFormat:@"最多购买%ld个",(long)self.limit_num] inView:[UIApplication sharedApplication].delegate.window];
+            return;
+        }
+    }
+    
+    if ([SingleManager shareManager].isClosed) {
+        [ZHProgressHUD showMessage:@"本店已经打烊休息了,暂停线上接单" inView:[UIApplication sharedApplication].delegate.window];
+        return;
+    }
     self.count++;
     
     if (self.block) {

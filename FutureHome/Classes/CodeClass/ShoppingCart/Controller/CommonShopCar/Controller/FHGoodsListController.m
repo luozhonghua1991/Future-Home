@@ -121,6 +121,8 @@
                     goods.goodsUnitAtr = [obj objectForKey:@"UnitAtr"];
                     goods.goodsID = [obj objectForKey:@"id"];
                     goods.goodsSafetStock = [obj objectForKey:@"SafetStock"];
+                    goods.Isrestrictions = [[obj objectForKey:@"Isrestrictions"] integerValue];
+                    goods.limit_num = [[obj objectForKey:@"limit_num"] integerValue];
                     [goodsGroup.goodsList addObject:goods];
                 }];
                 /** 暂时注释了 具体不知道为啥 */
@@ -152,7 +154,7 @@
 #pragma mark - stepper delegate
 - (void)stepper:(GNRCountStepper *)stepper
 valueChangedForCount:(NSInteger)count
-          goods:(GNRGoodsModel *)goods{
+          goods:(GNRGoodsModel *)goods {
     if (stepper.style == GNRCountStepperStyleGoodsList) {
         //更新购物车中的商品
         [self.goodsListView.goodsList.shoppingCart.bags.firstObject updateGoods:goods];

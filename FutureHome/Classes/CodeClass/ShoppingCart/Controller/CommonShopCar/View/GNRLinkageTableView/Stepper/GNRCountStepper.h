@@ -11,6 +11,13 @@
 
 @interface GNRCountStepper : UIView
 
+/** 0不限购 1限购 */
+@property (nonatomic, assign) NSInteger Isrestrictions;
+/** 当前用户总共购买的数量 */
+@property (nonatomic, assign) NSInteger buyNum;
+/** 限购的数量 */
+@property (nonatomic, assign) NSInteger limit_num;
+
 @property (nonatomic, strong)UIButton * subBtn;
 @property (nonatomic, strong)UIButton * addBtn;
 @property (nonatomic, strong)UILabel * numberL;
