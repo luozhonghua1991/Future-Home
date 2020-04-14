@@ -31,9 +31,10 @@
 @property (nonatomic, copy) NSString *token;
 /** 手机号 */
 @property (nonatomic, copy) NSString *mobile;
-
 /** <#copy属性注释#> */
 @property (nonatomic, copy) NSString *rong_token;
+/** realname是否实名认证 */
+@property (nonatomic, assign) BOOL realname;
 
 
 ///** Analyst: 分析师 NormalUser: 普通用户 */

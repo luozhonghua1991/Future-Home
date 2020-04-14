@@ -43,6 +43,19 @@
     [self getRequest];
 }
 
+- (void)endRefreshAction
+{
+    MJRefreshHeader *header = self.homeTable.mj_header;
+    MJRefreshFooter *footer = self.homeTable.mj_footer;
+    
+    if (header.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:header];
+    }
+    if (footer.state == MJRefreshStateRefreshing) {
+        [self delayEndRefresh:footer];
+    }
+}
+
 #pragma mark — 通用导航栏
 #pragma mark — privite
 - (void)fh_creatNav {
@@ -98,14 +111,15 @@
                                self.pid,@"pid",
                                status,@"status", nil];
     [AFNetWorkTool get:@"owner/candidateList" params:paramsDic success:^(id responseObj) {
+        [weakSelf endRefreshAction];
         NSDictionary *Dic = responseObj[@"data"];
         NSArray *upDicArr = Dic[@"list"];
         for (NSDictionary *dic in upDicArr) {
             if ([dic[@"select"] integerValue] == 1) {
-                self.isCanUpdate = NO;
+                weakSelf.isCanUpdate = NO;
             }
         }
-        self.candidateListArrs = [FHCandidateListModel mj_objectArrayWithKeyValuesArray:upDicArr];
+        weakSelf.candidateListArrs = [FHCandidateListModel mj_objectArrayWithKeyValuesArray:upDicArr];
         [weakSelf.homeTable reloadData];
     } failure:^(NSError *error) {
         [weakSelf.homeTable reloadData];
@@ -165,6 +179,10 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (!self.isCanUpdate) {
+        [self.view makeToast:@"每个人只有一次投票机会,请勿重复提交"];
+        return;
+    }
     FHElectionListCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     FHCandidateListModel *model = self.candidateListArrs[indexPath.section];
     NSString *modelID = [NSString stringWithFormat:@"%ld",(long)model.id];
@@ -181,6 +199,11 @@
 }
 
 - (void)pushBtnClick {
+    if (!self.isCanUpdate) {
+        [self.view makeToast:@"每个人只有一次投票机会,请勿重复提交"];
+        return;
+    }
+    
     //在此添加你想要完成的功能
     WS(weakSelf);
     [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"每人只有一次投票机会,确定是否提交?" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
@@ -194,10 +217,6 @@
 }
 
 - (void)commitRequestWithStrings:(NSString *)string {
-    if (!self.isCanUpdate) {
-        [self.view makeToast:@"每个人只有一次投票机会,请勿重复提交"];
-        return;
-    }
     
     WS(weakSelf);
     [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
@@ -246,6 +265,7 @@
         _homeTable.delegate = self;
         _homeTable.separatorStyle = UITableViewCellSeparatorStyleNone;
         _homeTable.showsVerticalScrollIndicator = NO;
+        _homeTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(getRequest)];
         if (@available (iOS 11.0, *)) {
             _homeTable.estimatedSectionHeaderHeight = 0.01;
             _homeTable.estimatedSectionFooterHeight = 0.01;

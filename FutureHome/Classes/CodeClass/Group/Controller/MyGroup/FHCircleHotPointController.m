@@ -59,6 +59,8 @@
 @property (nonatomic, strong) UIImageView *personHeaderImgView;
 /** 姓名label */
 @property (nonatomic, strong) UILabel *nameLabel;
+/** 实名认证图片 */
+@property (nonatomic, strong) UIImageView *realNameImg;
 /** 个性签名 */
 @property (nonatomic, strong) UILabel *autographLabel;
 /** 数据 */
@@ -233,6 +235,9 @@
             [weakSelf.personHeaderImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"avatar"]]];
             [weakSelf.headerBgImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"circle_cover"]] placeholderImage:nil];
             weakSelf.nameLabel.text = dic[@"nickname"];
+            CGSize size = [UIlabelTool sizeWithString:weakSelf.nameLabel.text font:weakSelf.nameLabel.font];
+            weakSelf.nameLabel.frame = CGRectMake(SCREEN_WIDTH - 90 - size.width, MaxY(self.headerBgImgView) - 20, size.width, 16);
+            weakSelf.realNameImg.frame = CGRectMake(MinX(weakSelf.nameLabel) - 25, MaxY(self.headerBgImgView) - 25, 20, 20);
             weakSelf.autographLabel.text = dic[@"autograph"];
             weakSelf.rulesLabel.text = [NSString stringWithFormat:@"获赞: %@",dic[@"praise_num"]];
             weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
@@ -724,6 +729,10 @@
         [_headerView addSubview:self.relationBtn];
         [_headerView addSubview:self.personHeaderImgView];
         [_headerView addSubview:self.nameLabel];
+        Account *account = [AccountStorage readAccount];
+        if (account.realname) {
+            [_headerView addSubview:self.realNameImg];
+        }
         [_headerView addSubview:self.autographLabel];
         _headerView.userInteractionEnabled = YES;
     }
@@ -828,13 +837,21 @@
 
 - (UILabel *)nameLabel {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MaxY(self.headerBgImgView) - 20, SCREEN_WIDTH - 90, 16)];
-        _nameLabel.textAlignment = NSTextAlignmentRight;
+        _nameLabel = [[UILabel alloc] init];
+        _nameLabel.textAlignment = NSTextAlignmentCenter;
         _nameLabel.text = @"许大宝~";
         _nameLabel.font = [UIFont boldSystemFontOfSize:16];
         _nameLabel.textColor = [UIColor whiteColor];
     }
     return _nameLabel;
+}
+
+- (UIImageView *)realNameImg {
+    if (!_realNameImg) {
+        _realNameImg = [[UIImageView alloc] init];
+        _realNameImg.image = [UIImage imageNamed:@"WechatIMG3231"];
+    }
+    return _realNameImg;
 }
 
 - (UILabel *)autographLabel {

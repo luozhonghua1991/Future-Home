@@ -45,7 +45,7 @@
 //    self.priceLabel.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.priceLabel];
     
-    self.stockLabel.frame = CGRectMake(0, self.priceLabel.y + self.priceLabel.size.height + 11, SCREEN_WIDTH * 0.77 - 40, 13);
+    self.stockLabel.frame = CGRectMake(0, self.priceLabel.y + self.priceLabel.size.height + 9, SCREEN_WIDTH * 0.77 - 40, 13);
 //    self.stockLabel.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.stockLabel];
     

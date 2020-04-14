@@ -27,6 +27,8 @@
 @property (nonatomic, strong) UIView *centerLineView;
 /** 右边的线 */
 @property (nonatomic, strong) UIView *rightLineView;
+/** 实名认证图片 */
+@property (nonatomic, strong) UIImageView *realNameImg;
 
 /** <#strong属性注释#> */
 @property (nonatomic, strong) Account *account;
@@ -48,7 +50,15 @@
     [self addSubview:self.topContentView];
     [self.topContentView addSubview:self.topLineView];
     [self.topContentView addSubview:self.userHeaderImgView];
-    [self.topContentView addSubview:self.userNameLabel];
+    if (self.account.realname) {
+        [self.topContentView addSubview:self.realNameImg];
+        self.realNameImg.frame = CGRectMake(75 + 20, 15, 20, 20);
+        [self.topContentView addSubview:self.userNameLabel];
+        self.userNameLabel.frame = CGRectMake(MaxX(self.realNameImg) + 5, 20, 245, 15);
+    } else {
+        [self.topContentView addSubview:self.userNameLabel];
+        self.userNameLabel.frame = CGRectMake(75 + 20, 20, 245, 15);
+    }
     [self.topContentView addSubview:self.futureHomeCodeLabel];
     [self.topContentView addSubview:self.codeImgView];
     [self.topContentView addSubview:self.logoLabel];
@@ -103,7 +113,6 @@
 - (UIImageView *)userHeaderImgView {
     if (!_userHeaderImgView) {
         _userHeaderImgView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 65, 65)];
-//        _userHeaderImgView.image = ;
         [_userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:self.account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImgClick)];
@@ -113,9 +122,17 @@
     return _userHeaderImgView;
 }
 
+- (UIImageView *)realNameImg {
+    if (!_realNameImg) {
+        _realNameImg = [[UIImageView alloc] init];
+        _realNameImg.image = [UIImage imageNamed:@"WechatIMG3231"];
+    }
+    return _realNameImg;
+}
+
 - (UILabel *)userNameLabel {
     if (!_userNameLabel) {
-        _userNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(75 + 20, 20, 245, 15)];
+        _userNameLabel = [[UILabel alloc] init];
         if (!IsStringEmpty(self.account.nickname)) {
             _userNameLabel.text = [NSString stringWithFormat:@"%@",self.account.nickname];
         }

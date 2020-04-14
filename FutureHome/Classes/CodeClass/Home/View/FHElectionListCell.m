@@ -179,7 +179,7 @@
         _countLabel = [[UILabel alloc] initWithFrame:CGRectMake(MaxX(self.shuLineView), MaxY(self.numberLabel), 100, 40)];
         _countLabel.font = [UIFont systemFontOfSize:13];
         _countLabel.text = @"502票";
-        _countLabel.textColor = [UIColor blackColor];
+        _countLabel.textColor = HEX_COLOR(0x0000EE);
         _countLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _countLabel;

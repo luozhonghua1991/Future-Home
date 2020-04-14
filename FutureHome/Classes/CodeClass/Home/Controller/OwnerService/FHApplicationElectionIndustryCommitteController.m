@@ -26,6 +26,8 @@
 @property (nonatomic, strong) FHElectRepeatTFView *phoneView;
 /** 政治面貌 */
 @property (nonatomic, strong) FHElectRepeatTFView *faceView;
+/** 身份证号 */
+@property (nonatomic, strong) FHElectRepeatTFView *cardView;
 /** 居住地址View */
 @property (nonatomic, strong) FHElectRepeatTFView *addressView;
 /** 兼职全职View */
@@ -110,6 +112,7 @@
     [self.scrollView addSubview:self.sexView];
     [self.scrollView addSubview:self.xueliView];
     [self.scrollView addSubview:self.phoneView];
+    [self.scrollView addSubview:self.cardView];
     [self.scrollView addSubview:self.faceView];
     [self.scrollView addSubview:self.addressView];
     [self.scrollView addSubview:self.typeView];
@@ -133,7 +136,8 @@
     self.sexView.frame = CGRectMake(10, MaxY(self.ageView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
     self.xueliView.frame = CGRectMake(10, MaxY(self.sexView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
     self.phoneView.frame = CGRectMake(10, MaxY(self.xueliView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
-    self.faceView.frame = CGRectMake(10, MaxY(self.phoneView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
+    self.cardView.frame = CGRectMake(10, MaxY(self.phoneView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
+    self.faceView.frame = CGRectMake(10, MaxY(self.cardView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
     self.addressView.frame = CGRectMake(10, MaxY(self.faceView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
     self.typeView.frame = CGRectMake(10, MaxY(self.addressView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
     self.contentTF.frame = CGRectMake(10, MaxY(self.typeView) - 1, SCREEN_WIDTH - 20, commonCellHeight);
@@ -184,6 +188,7 @@
     /** 数据赋值 */
     _personModel = personModel;
     self.phoneView.contentTF.text = _personModel.mobile;
+    self.cardView.contentTF.text = _personModel.id_number;
     if ([self.phoneView.contentTF.text isEqualToString:@""]) {
         [self.sureBtn setTitle:@"确认并提交" forState:UIControlStateNormal];
     } else {
@@ -224,6 +229,14 @@
             [self.view makeToast:@"意愿不能超过20个字"];
             return NO;
         }
+    } else if (textField == self.phoneView.contentTF) {
+        if (range.length == 1 && string.length == 0) {
+            return YES;
+        }  else if (self.phoneView.contentTF.text.length >= 11) {
+            self.phoneView.contentTF.text = [textField.text substringToIndex:11];
+            [self.view makeToast:@"手机号不超过11位"];
+            return NO;
+        }
     }
     return YES;
 }
@@ -249,6 +262,18 @@
     }
     if (self.phoneView.contentTF.text.length <= 0) {
         [self.view makeToast:self.phoneView.contentTF.placeholder];
+        return;
+    }
+    if (self.phoneView.contentTF.text.length < 11) {
+        [self.view makeToast:@"手机号码格式不正确"];
+        return;
+    }
+    if (self.cardView.contentTF.text.length < 18) {
+        [self.view makeToast:@"身份证号码格式不正确"];
+        return;
+    }
+    if (self.cardView.contentTF.text.length < 0) {
+        [self.view makeToast:self.cardView.contentTF.placeholder];
         return;
     }
     if (self.faceView.contentTF.text.length <= 0) {
@@ -306,6 +331,7 @@
                                @(sexType),@"sex",
                                self.xueliView.contentTF.text,@"education",
                                self.phoneView.contentTF.text,@"mobile",
+                               self.cardView.contentTF.text,@"id_number",
                                self.faceView.contentTF.text,@"polity",
                                self.addressView.contentTF.text,@"home_num",
                                @(fullType),@"is_full",
@@ -500,6 +526,15 @@
         _phoneView.contentTF.width = 130;
     }
     return _phoneView;
+}
+
+- (FHElectRepeatTFView *)cardView {
+    if (!_cardView) {
+        _cardView = [[FHElectRepeatTFView alloc] init];
+        _cardView.titleLabel.text = @"身份证号";
+        _cardView.contentTF.placeholder = @"请输入身份证号";
+    }
+    return _cardView;
 }
 
 - (FHElectRepeatTFView *)faceView {
