@@ -63,6 +63,7 @@ XYSJSExport
     [super viewDidLoad];
     [self initSubViews];
     if ([self.type isEqualToString:@"noShow"]) {
+        self.titleString = @"广告";
         /** 不展示评论列表 */
         [self fetchNetworkData];
     } else {

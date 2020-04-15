@@ -102,7 +102,7 @@
 #pragma mark — setter && getter
 - (UIImageView *)imgView {
     if (!_imgView) {
-        _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, MainSizeHeight + 30, 108, 108)];
+        _imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, MainSizeHeight + 30, 120, 120)];
         _imgView.image = [UIImage imageNamed:@"rw_logo"];
     }
     return _imgView;

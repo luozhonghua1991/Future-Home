@@ -561,25 +561,25 @@ FHCommonPaySelectViewDelegate
                                 }
                             }];
                         } else {
-                            [weakSelf.loadingHud hideAnimated:YES];
-                            weakSelf.loadingHud = nil;
+                            [weakSelf.lodingHud hideAnimated:YES];
+                            weakSelf.lodingHud = nil;
                             [self.view makeToast:respMsg];
                         }
                     }];
                 } else {
-                    [weakSelf.loadingHud hideAnimated:YES];
-                    weakSelf.loadingHud = nil;
+                    [weakSelf.lodingHud hideAnimated:YES];
+                    weakSelf.lodingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             }
         } else {
-            [weakSelf.loadingHud hideAnimated:YES];
-            weakSelf.loadingHud = nil;
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        [weakSelf.loadingHud hideAnimated:YES];
-        weakSelf.loadingHud = nil;
+        [weakSelf.lodingHud hideAnimated:YES];
+        weakSelf.lodingHud = nil;
     }];
 }
 

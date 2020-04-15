@@ -24,6 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FHMeCenterUserInfoView : UIView
 /** 用户头像 */
 @property (nonatomic, strong) UIImageView *userHeaderImgView;
+/** 实名认证图片 */
+@property (nonatomic, strong) UIImageView *realNameImg;
 /** 用户名字label */
 @property (nonatomic, strong) UILabel *userNameLabel;
 /** 未来家园账号label */

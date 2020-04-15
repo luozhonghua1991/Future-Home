@@ -80,6 +80,7 @@
                                nil];
     
     [AFNetWorkTool get:@"shop/getVariety" params:paramsDic success:^(id responseObj) {
+        
         NSArray *arr = [[NSArray alloc] init];
         arr = responseObj[@"data"];
         if (IS_NULL_ARRAY(arr)) {

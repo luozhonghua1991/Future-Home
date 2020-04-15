@@ -333,9 +333,11 @@
             NSDictionary *Dic = responseObj[@"data"];
             NSArray *upDicArr = Dic[@"uplist"];
             [self endRefreshAction];
-            for (NSDictionary *dic in upDicArr) {
-                [self->topBannerArrays addObject:dic[@"path"]];
-                [self->topUrlArrays addObject:dic[@"url"]];
+            if (!IS_NULL_ARRAY(upDicArr)) {
+                for (NSDictionary *dic in upDicArr) {
+                    [self->topBannerArrays addObject:dic[@"path"]];
+                    [self->topUrlArrays addObject:dic[@"url"]];
+                }
             }
             [weakSelf.homeTable reloadData];
         }
@@ -365,14 +367,15 @@
         NSDictionary *Dic = responseObj[@"data"];
         NSArray *upDicArr = Dic[@"downlist"];
         [self endRefreshAction];
-        for (NSDictionary *dic in upDicArr) {
-            [self->bottomBannerArrays addObject:dic[@"path"]];
-            [self->bottomUrlArrays addObject:dic[@"url"]];
+        if (!IS_NULL_ARRAY(upDicArr)) {
+            for (NSDictionary *dic in upDicArr) {
+                [self->bottomBannerArrays addObject:dic[@"path"]];
+                [self->bottomUrlArrays addObject:dic[@"url"]];
+            }
         }
-        
         [weakSelf.homeTable reloadData];
         [self getListInfo];
-        /** 获取banner数据 */
+//        /** 获取banner数据 */
         [self fh_getShopFollowList];
     } failure:^(NSError *error) {
         [self endRefreshAction];
@@ -392,8 +395,10 @@
         if ([responseObj[@"code"] integerValue] == 1) {
             [self endRefreshAction];
             NSArray *arr = responseObj[@"data"][@"list"];
-            for (NSDictionary * dic in arr) {
-                [self.soureArray addObject:dic[@"title"]];
+            if (!IS_NULL_ARRAY(arr)) {
+                for (NSDictionary * dic in arr) {
+                    [self.soureArray addObject:dic[@"title"]];
+                }
             }
             [weakSelf.homeTable reloadData];
         } else {
@@ -447,6 +452,7 @@
         
         [locationView addSubview:self.messageImgView];
         
+       
         self.verticalMarquee = [[JhtVerticalMarquee alloc] initWithFrame:CGRectMake(40,( SCREEN_WIDTH * 0.116 - 25 ) / 2, SCREEN_WIDTH - 55 - SCREEN_WIDTH * 0.116, 25)];
         self.verticalMarquee.verticalTextColor = [UIColor blackColor];
         self.verticalMarquee.verticalTextFont = [UIFont systemFontOfSize:15];
@@ -454,13 +460,16 @@
         // 添加点击手势
         UITapGestureRecognizer *vtap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marqueeTapGes:)];
         [self.verticalMarquee addGestureRecognizer:vtap];
-        [locationView addSubview:self.verticalMarquee];
+        
+        if (!IS_NULL_ARRAY(self.soureArray)) {
+            [locationView addSubview:self.verticalMarquee];
+            self.verticalMarquee.sourceArray = self.soureArray;
+        }
 //        NSArray *soureArray = @[@"1. 谁曾从谁的青春里走过，留下了笑靥",
 //                                @"2. 谁曾在谁的花季里停留，温暖了想念",
 //                                @"3. 谁又从谁的雨季里消失，泛滥了眼泪"
 //                                ];
         
-        self.verticalMarquee.sourceArray = self.soureArray;
         // 开始滚动
         [self.verticalMarquee marqueeOfSettingWithState:MarqueeStart_V];
         

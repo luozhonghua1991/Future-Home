@@ -27,8 +27,7 @@
 @property (nonatomic, strong) UIView *centerLineView;
 /** 右边的线 */
 @property (nonatomic, strong) UIView *rightLineView;
-/** 实名认证图片 */
-@property (nonatomic, strong) UIImageView *realNameImg;
+
 
 /** <#strong属性注释#> */
 @property (nonatomic, strong) Account *account;
@@ -50,13 +49,14 @@
     [self addSubview:self.topContentView];
     [self.topContentView addSubview:self.topLineView];
     [self.topContentView addSubview:self.userHeaderImgView];
+    [self.topContentView addSubview:self.realNameImg];
+    [self.topContentView addSubview:self.userNameLabel];
     if (self.account.realname) {
-        [self.topContentView addSubview:self.realNameImg];
+        self.realNameImg.hidden = NO;
         self.realNameImg.frame = CGRectMake(75 + 20, 15, 20, 20);
-        [self.topContentView addSubview:self.userNameLabel];
         self.userNameLabel.frame = CGRectMake(MaxX(self.realNameImg) + 5, 20, 245, 15);
     } else {
-        [self.topContentView addSubview:self.userNameLabel];
+        self.realNameImg.hidden = YES;
         self.userNameLabel.frame = CGRectMake(75 + 20, 20, 245, 15);
     }
     [self.topContentView addSubview:self.futureHomeCodeLabel];

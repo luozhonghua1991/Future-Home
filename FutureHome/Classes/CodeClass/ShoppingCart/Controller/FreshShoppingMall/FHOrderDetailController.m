@@ -499,7 +499,7 @@
             cell.textLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
             cell.detailTextLabel.textColor = [UIColor blackColor];
-            cell.textLabel.text = [NSString stringWithFormat:@"姓名: %@                                      %@",self.nameString,self.phoneString];
+            cell.textLabel.text = [NSString stringWithFormat:@"姓名: %@         %@",self.nameString,self.phoneString];
             cell.detailTextLabel.text = [NSString stringWithFormat:@"地址: %@",self.addressString];
             return cell;
         } else {

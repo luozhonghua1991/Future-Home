@@ -69,6 +69,14 @@
     [self.meCenterHeaderView.userHeaderImgView sd_setImageWithURL:[NSURL URLWithString:account.avatar] placeholderImage:[UIImage imageNamed:@"头像"]];
     self.meCenterHeaderView.userNameLabel.text = account.nickname;
     self.meCenterHeaderView.futureHomeCodeLabel.text = [NSString stringWithFormat:@"社云号: %@",account.username];
+    if (account.realname) {
+        self.meCenterHeaderView.realNameImg.hidden = NO;
+        self.meCenterHeaderView.realNameImg.frame = CGRectMake(75 + 20, 15, 20, 20);
+        self.meCenterHeaderView.userNameLabel.frame = CGRectMake(MaxX(self.meCenterHeaderView.realNameImg) + 5, 20, 245, 15);
+    } else {
+        self.meCenterHeaderView.realNameImg.hidden = YES;
+        self.meCenterHeaderView.userNameLabel.frame = CGRectMake(75 + 20, 20, 245, 15);
+    }
 }
 
 //- (void)viewWillDisappear:(BOOL)animated {

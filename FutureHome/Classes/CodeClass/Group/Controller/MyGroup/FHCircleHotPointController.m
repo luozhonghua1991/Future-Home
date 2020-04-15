@@ -237,8 +237,14 @@
             weakSelf.nameLabel.text = dic[@"nickname"];
             CGSize size = [UIlabelTool sizeWithString:weakSelf.nameLabel.text font:weakSelf.nameLabel.font];
             weakSelf.nameLabel.frame = CGRectMake(SCREEN_WIDTH - 90 - size.width, MaxY(self.headerBgImgView) - 20, size.width, 16);
-            weakSelf.realNameImg.frame = CGRectMake(MinX(weakSelf.nameLabel) - 25, MaxY(self.headerBgImgView) - 25, 20, 20);
+            if ([dic[@"realname"] integerValue] == 1) {
+                Account *account = [AccountStorage readAccount];
+                account.realname = YES;
+                [AccountStorage saveAccount:account];
+                weakSelf.realNameImg.frame = CGRectMake(MinX(weakSelf.nameLabel) - 25, MaxY(self.headerBgImgView) - 25, 20, 20);
+            }
             weakSelf.autographLabel.text = dic[@"autograph"];
+            weakSelf.autographLabel.frame = CGRectMake(0, MaxY(self.nameLabel) + 22, SCREEN_WIDTH - 90, 14);
             weakSelf.rulesLabel.text = [NSString stringWithFormat:@"获赞: %@",dic[@"praise_num"]];
             weakSelf.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fans_num"]];
             weakSelf.followLabel.text = [NSString stringWithFormat:@"关注: %@",dic[@"follow_num"]];
@@ -729,10 +735,7 @@
         [_headerView addSubview:self.relationBtn];
         [_headerView addSubview:self.personHeaderImgView];
         [_headerView addSubview:self.nameLabel];
-        Account *account = [AccountStorage readAccount];
-        if (account.realname) {
-            [_headerView addSubview:self.realNameImg];
-        }
+        [_headerView addSubview:self.realNameImg];
         [_headerView addSubview:self.autographLabel];
         _headerView.userInteractionEnabled = YES;
     }

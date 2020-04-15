@@ -68,7 +68,7 @@
     [self.titleView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.mas_equalTo(5);
         make.centerX.mas_equalTo(self.view);
-        make.size.mas_equalTo(CGSizeMake(80, 80));
+        make.size.mas_equalTo(CGSizeMake(120, 120));
     }];
     
     //手机号码区域布局

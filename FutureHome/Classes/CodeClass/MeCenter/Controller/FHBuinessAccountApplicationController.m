@@ -398,11 +398,6 @@
 }
 
 - (void)submitBtnClick {
-    /** 确认并提交 */
-//    if (self.selectIDCardsImgArrs.count != 3) {
-//        [self.view makeToast:@"身份证信息认证不能为空"];
-//        return;
-//    }
     if (self.selectCount % 2 == 0) {
         [self.view makeToast:@"请同意用户信息授权协议"];
         return;
@@ -558,25 +553,25 @@
                                 }
                             }];
                         } else {
-                            [weakSelf.loadingHud hideAnimated:YES];
-                            weakSelf.loadingHud = nil;
+                            [weakSelf.lodingHud hideAnimated:YES];
+                            weakSelf.lodingHud = nil;
                             [self.view makeToast:respMsg];
                         }
                     }];
                 } else {
-                    [weakSelf.loadingHud hideAnimated:YES];
-                    weakSelf.loadingHud = nil;
+                    [weakSelf.lodingHud hideAnimated:YES];
+                    weakSelf.lodingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             }
         } else {
-            [weakSelf.loadingHud hideAnimated:YES];
-            weakSelf.loadingHud = nil;
+            [weakSelf.lodingHud hideAnimated:YES];
+            weakSelf.lodingHud = nil;
             [weakSelf.view makeToast:responseObj[@"msg"]];
         }
     } failure:^(NSError *error) {
-        [weakSelf.loadingHud hideAnimated:YES];
-        weakSelf.loadingHud = nil;
+        [weakSelf.lodingHud hideAnimated:YES];
+        weakSelf.lodingHud = nil;
     }];
 }
 

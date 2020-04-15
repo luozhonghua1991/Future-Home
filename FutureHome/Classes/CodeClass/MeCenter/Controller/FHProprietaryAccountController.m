@@ -624,6 +624,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     [self.selectIDCardsImgArrs addObject:self.person3CertificationView.leftImgView.image];
     [self.selectIDCardsImgArrs addObject:self.person3CertificationView.centerImgView.image];
     [self.selectIDCardsImgArrs addObject:self.person3CertificationView.rightImgView.image];
+    
     if (self.selectIDCardsImgArrs.count < 9) {
         [self.view makeToast:@"请上传完所有图片信息"];
         return;
@@ -825,14 +826,14 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                                 }
                             }];
                         } else {
-                            [weakSelf.loadingHud hideAnimated:YES];
-                            weakSelf.loadingHud = nil;
+                            [weakSelf.lodingHud hideAnimated:YES];
+                            weakSelf.lodingHud = nil;
                             [self.view makeToast:respMsg];
                         }
                     }];
                 } else {
-                    [weakSelf.loadingHud hideAnimated:YES];
-                    weakSelf.loadingHud = nil;
+                    [weakSelf.lodingHud hideAnimated:YES];
+                    weakSelf.lodingHud = nil;
                     [self.view makeToast:responseObj[@"data"][@"msg"]];
                 }
             }
@@ -901,7 +902,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _personServiceDeskView = [[FHAccountApplicationTFView alloc] init];
         _personServiceDeskView.titleLabel.text = @"业主服务平台名称";
         _personServiceDeskView.contentTF.text = @"";
-        _personServiceDeskView.contentTF.placeholder = @"请输入业主服务平台名称(限12字)";
+        _personServiceDeskView.contentTF.placeholder = @"请输入业主服务平台名称(限16字)";
         _personServiceDeskView.contentTF.delegate = self;
     }
     return _personServiceDeskView;
@@ -922,7 +923,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"请输入物业服务平台名称(限12字)";
+        _serviceDeskNameTF.placeholder = @"请输入物业服务平台名称(限16字)";
         _serviceDeskNameTF.delegate = self;
     }
     return _serviceDeskNameTF;
@@ -932,7 +933,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     if (!_cellNameView) {
         _cellNameView = [[FHAccountApplicationTFView alloc] init];
         _cellNameView.titleLabel.text = @"小区名称";
-        _cellNameView.contentTF.placeholder = @"请输入小区名称(限12字)";
+        _cellNameView.contentTF.placeholder = @"请输入小区名称(限16字)";
         _cellNameView.contentTF.delegate = self;
     }
     return _cellNameView;

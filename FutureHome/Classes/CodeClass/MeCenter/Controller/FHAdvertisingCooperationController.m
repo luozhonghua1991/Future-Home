@@ -470,10 +470,12 @@ UICollectionViewDataSource>
         [self.view makeToast:self.adverTypeView.contentTF.placeholder];
         return;
     }
-//    if (self.adverNumberView.contentTF.text.length <= 0) {
-//        [self.view makeToast:self.adverNumberView.contentTF.placeholder];
-//        return;
-//    }
+    if (self.adventtype == 3 || self.adventtype == 4) {
+        if (self.adverNumberView.contentTF.text.length <= 0) {
+            [self.view makeToast:self.adverNumberView.contentTF.placeholder];
+            return;
+        }
+    }
     if (self.showDayView.contentTF.text.length <= 0) {
         [self.view makeToast:self.showDayView.contentTF.placeholder];
         return;
