@@ -39,6 +39,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getSearchResult:) name:@"GETSEARCHRESULT" object:nil];
     
 }
@@ -212,14 +213,12 @@
         FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
         home.model = (FHCommonFollowModel *)model;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
-        home.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"2"]) {
         /** 业主 */
         FHOwnerServiceController*home = [[FHOwnerServiceController alloc]init];
         home.model = (FHCommonFollowModel *)model;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
-        home.hidesBottomBarWhenPushed = NO;
         [self.navigationController pushViewController:home animated:YES];
     } else if ([self.type isEqualToString:@"3"]) {
         /** 生鲜 */

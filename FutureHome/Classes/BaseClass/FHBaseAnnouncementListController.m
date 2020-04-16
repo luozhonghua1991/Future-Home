@@ -58,6 +58,10 @@
     [self fh_getRequest];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
 
 #pragma mark — 通用导航栏
 #pragma mark — privite

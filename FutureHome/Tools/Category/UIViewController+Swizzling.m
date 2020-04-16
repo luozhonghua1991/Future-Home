@@ -91,6 +91,14 @@
         UICollectionView *collectionView = self.view.subviews.firstObject;
         collectionView.contentInset = UIEdgeInsetsMake(MainSizeHeight, 0, 0, 0);
     }
+    if ([self isMemberOfClass:NSClassFromString(@"FHHomePageController")]||
+        [self isMemberOfClass:NSClassFromString(@"FHGroupController")]||
+        [self isMemberOfClass:NSClassFromString(@"FHShopingCartController")]||
+        [self isMemberOfClass:NSClassFromString(@"FHMeCenterController")]) {
+        self.tabBarController.tabBar.hidden = NO;
+    } else {
+        self.tabBarController.tabBar.hidden = YES;
+    }
 //    if ([self isMemberOfClass:NSClassFromString(@"TZPhotoPickerController")]) {
 //        UICollectionView *collectionView = self.view.subviews.firstObject;
 //        collectionView.contentInset = UIEdgeInsetsMake(MainStatusBarHeight, 0, 0, 0);

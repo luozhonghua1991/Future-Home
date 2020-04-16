@@ -261,7 +261,6 @@
     /** 去到收藏列表 */
     FHFreshMallFollowListController *listVC = [[FHFreshMallFollowListController alloc] init];
 //    listVC.hidesBottomBarWhenPushed = YES;
-    self.tabBarController.tabBar.hidden = YES;
 //    listVC.hidesBottomBarWhenPushed = NO;
     listVC.titleString = @"物业收藏";
     listVC.type = @"1";
