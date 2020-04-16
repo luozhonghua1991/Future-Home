@@ -19,6 +19,7 @@
 @implementation SingleManager
 
 static id shareObj = nil;
+
 + (instancetype)shareManager
 {
     static dispatch_once_t onceToken;

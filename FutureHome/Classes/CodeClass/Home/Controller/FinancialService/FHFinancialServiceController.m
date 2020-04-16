@@ -244,13 +244,10 @@
         // 添加点击手势
         UITapGestureRecognizer *vtap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(marqueeTapGes:)];
                 [self.verticalMarquee addGestureRecognizer:vtap];
-        [locationView addSubview:self.verticalMarquee];
-//        NSArray *soureArray = @[@"1. 谁曾从谁的青春里走过，留下了笑靥",
-//                                @"2. 谁曾在谁的花季里停留，温暖了想念",
-//                                @"3. 谁又从谁的雨季里消失，泛滥了眼泪"
-//                                ];
-        
-        self.verticalMarquee.sourceArray = self.soureArray;
+        if (!IS_NULL_ARRAY(self.soureArray)) {
+            [locationView addSubview:self.verticalMarquee];
+            self.verticalMarquee.sourceArray = self.soureArray;
+        }
         // 开始滚动
         [self.verticalMarquee marqueeOfSettingWithState:MarqueeStart_V];
         

@@ -295,6 +295,7 @@
                  @(account.user_id),@"user_id",
                  @(property_id),@"id",
                  @"2",@"type",nil];
+    
     [AFNetWorkTool post:urlString params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"收藏成功"];

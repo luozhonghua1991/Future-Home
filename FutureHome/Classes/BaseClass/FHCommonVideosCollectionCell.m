@@ -64,8 +64,8 @@ DZNEmptyDataSetDelegate
             [weakSelf.tableHeaderView.headerImgView sd_setImageWithURL:[NSURL URLWithString:dic[@"logo_img"]] placeholderImage:nil];
             weakSelf.tableHeaderView.shopNameLabel.text = dic[@"shopname"];
             weakSelf.tableHeaderView.codeLabel.text = [NSString stringWithFormat:@"社云账号: %@",dic[@"username"]];
-            weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"视频: %@",dic[@"document"]];
-            weakSelf.tableHeaderView.upCountLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"like"]];
+            weakSelf.tableHeaderView.countLabel.text = [NSString stringWithFormat:@"视频: %@",dic[@"v_items"]];
+            weakSelf.tableHeaderView.upCountLabel.text = [NSString stringWithFormat:@"点赞: %@",dic[@"v_count"]];
             weakSelf.tableHeaderView.fansLabel.text = [NSString stringWithFormat:@"粉丝: %@",dic[@"fins"]];
             weakSelf.videoCollectionView.contentInset = UIEdgeInsetsMake(140, 0, 0, 0);
             [weakSelf.videoCollectionView addSubview:weakSelf.tableHeaderView];

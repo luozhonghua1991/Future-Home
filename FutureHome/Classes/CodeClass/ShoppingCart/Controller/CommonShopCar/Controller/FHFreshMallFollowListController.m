@@ -291,6 +291,7 @@ FDActionSheetDelegate
                                weakSelf.cid,@"cid",
                                weakSelf.type,@"type",
                                nil];
+    
     [AFNetWorkTool post:@"public/cancelCollect" params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"取消收藏成功"];

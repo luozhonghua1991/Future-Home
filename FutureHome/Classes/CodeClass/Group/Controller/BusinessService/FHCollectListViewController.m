@@ -11,7 +11,6 @@
 #import "FHFreshMallController.h"
 #import "FHSearchResultModel.h"
 #import "FHCommonFollowModel.h"
-
 #import "FHSearchResultCell.h"
 #import "FHCommonFollowAndPlacementCell.h"
 
@@ -252,16 +251,26 @@ FHSearchResultCellDelegate
 
 #pragma mark — event
 - (void)rightBtnClick:(UIButton *)sender {
+    
     FHSearchResultModel *resultModel = self.dataArrs[sender.tag];
     Account *account = [AccountStorage readAccount];
     NSString *urlString;
     NSDictionary *paramsDic;
-    NSInteger type = [self.type integerValue] - 1;
-    urlString = @"public/collect";
-    paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                 @(account.user_id),@"user_id",
-                 resultModel.id,@"id",
-                 @(type),@"type",nil];
+    if (![self.type isEqualToString:@"2019"]) {
+        NSInteger type = [self.type integerValue] - 1;
+        urlString = @"public/collect";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     resultModel.id,@"id",
+                     @(type),@"type",nil];
+    } else {
+        urlString = @"public/collect";
+        paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                     @(account.user_id),@"user_id",
+                     resultModel.id,@"id",
+                     resultModel.type,@"type",nil];
+    }
+    
     [self cancleCollectRequest:urlString parmars:paramsDic];
 }
 
