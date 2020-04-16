@@ -103,9 +103,8 @@
 - (UIImageView *)leftImgView {
     if (!_leftImgView) {
         _leftImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-//        _leftImgView.backgroundColor = HEX_COLOR(0x1296db);
-        _leftImgView.backgroundColor = [UIColor clearColor];
-        _leftImgView.image = [UIImage imageNamed:@"ic_document_behind"];
+        _leftImgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ic_document_behind"]];
+//        _leftImgView.image = [UIImage imageNamed:@""];
         _leftImgView.userInteractionEnabled = YES;
     }
     return _leftImgView;
@@ -114,9 +113,8 @@
 - (UIImageView *)centerImgView {
     if (!_centerImgView) {
         _centerImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-//        _centerImgView.backgroundColor = HEX_COLOR(0x1296db);
-        _centerImgView.backgroundColor = [UIColor clearColor];
-        _centerImgView.image = [UIImage imageNamed:@"ic_document_front"];
+        _centerImgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ic_document_front"]];
+//        _centerImgView.image = [UIImage imageNamed:@""];
         _centerImgView.userInteractionEnabled = YES;
     }
     return _centerImgView;
@@ -125,9 +123,8 @@
 - (UIImageView *)rightImgView {
     if (!_rightImgView) {
         _rightImgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 80)];
-//        _rightImgView.backgroundColor = HEX_COLOR(0x1296db);
-        _rightImgView.image = [UIImage imageNamed:@"ic_gesture_left_hand_yes"];
-        _rightImgView.backgroundColor = [UIColor clearColor];
+        _rightImgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ic_gesture_left_hand_yes"]];
+//        _rightImgView.image = [UIImage imageNamed:@""];
         _rightImgView.userInteractionEnabled = YES;
     }
     return _rightImgView;

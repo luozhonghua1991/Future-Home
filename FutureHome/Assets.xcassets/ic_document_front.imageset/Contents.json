@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
+      "filename" : "微信图片_20200416155134.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_document_front.png",
       "scale" : "2x"
     },
     {

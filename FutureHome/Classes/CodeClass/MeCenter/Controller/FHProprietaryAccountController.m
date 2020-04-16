@@ -613,23 +613,43 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
 
 - (void)commitAccountDataRequest {
     self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
-    [self.selectIDCardsImgArrs addObject:self.person1CertificationView.leftImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.person1CertificationView.centerImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.person1CertificationView.rightImgView.image];
+    if (self.person1CertificationView.leftImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person1CertificationView.leftImgView.image];
+    }
+    if (self.person1CertificationView.centerImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person1CertificationView.centerImgView.image];
+    }
+    if (self.person1CertificationView.rightImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person1CertificationView.rightImgView.image];
+    }
     
-    [self.selectIDCardsImgArrs addObject:self.person2CertificationView.leftImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.person2CertificationView.centerImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.person2CertificationView.rightImgView.image];
+    if (self.person2CertificationView.leftImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person2CertificationView.leftImgView.image];
+    }
+    if (self.person2CertificationView.leftImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person2CertificationView.leftImgView.image];
+    }
+    if (self.person2CertificationView.centerImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person2CertificationView.centerImgView.image];
+    }
+    if (self.person2CertificationView.rightImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person2CertificationView.rightImgView.image];
+    }
     
-    [self.selectIDCardsImgArrs addObject:self.person3CertificationView.leftImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.person3CertificationView.centerImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.person3CertificationView.rightImgView.image];
+    if (self.person3CertificationView.leftImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person3CertificationView.leftImgView.image];
+    }
+    if (self.person3CertificationView.centerImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person3CertificationView.centerImgView.image];
+    }
+    if (self.person3CertificationView.rightImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.person3CertificationView.rightImgView.image];
+    }
     
     if (self.selectIDCardsImgArrs.count < 9) {
         [self.view makeToast:@"请上传完所有图片信息"];
         return;
     }
-    /** 判空 */
     /** 判空 */
     
     if (self.personServiceDeskView.contentTF.text.length <= 0) {

@@ -88,13 +88,6 @@
     self.xueLiLabel.text = [NSString stringWithFormat:@"学历: %@",_candidateListModel.education];
     self.faceLabel.text = [NSString stringWithFormat:@"政治面貌: %@",_candidateListModel.polity];
     self.typeLabel.text = [NSString stringWithFormat:@"全职/兼职: %@",_candidateListModel.getFull];
-    
-    
-    if (_candidateListModel.select == 0) {
-        [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
-    } else if (_candidateListModel.select == 1) {
-        [self.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
-    }
 }
 
 

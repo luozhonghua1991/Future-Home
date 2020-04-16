@@ -437,9 +437,15 @@ FHCommonPaySelectViewDelegate
 
 - (void)commitAccountDataRequest {
     self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
-    [self.selectIDCardsImgArrs addObject:self.certificationView.leftImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.certificationView.centerImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.certificationView.rightImgView.image];
+    if (self.certificationView.leftImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.certificationView.leftImgView.image];
+    }
+    if (self.certificationView.centerImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.certificationView.centerImgView.image];
+    }
+    if (self.certificationView.rightImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.certificationView.rightImgView.image];
+    }
     
     if (self.selectIDCardsImgArrs.count < 3) {
         [self.view makeToast:@"请上传证件相关的照片"];

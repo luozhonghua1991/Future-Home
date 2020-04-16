@@ -101,6 +101,7 @@
                                @(account.user_id),@"user_id",
                                @(2),@"type", nil];
     [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
+        
         NSArray *arr = responseObj[@"data"][@"list"];
         NSDictionary *dic = arr[0];
         self.is_collect = [dic[@"is_collect"] integerValue];
@@ -199,11 +200,11 @@
     
     self.followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.followBtn.frame = CGRectMake(SCREEN_WIDTH - 28 * 2  - 20, MainStatusBarHeight +3, 28, 28);
-    if (!self.isFollow) {
-        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
-    } else {
-        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
-    }
+//    if (!self.isFollow) {
+//        [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
+//    } else {
+//        [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
+//    }
     [self.followBtn addTarget:self action:@selector(followBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.navgationView addSubview:self.followBtn];
     
@@ -295,10 +296,10 @@
                  @(account.user_id),@"user_id",
                  @(property_id),@"id",
                  @"2",@"type",nil];
-    
     [AFNetWorkTool post:urlString params:paramsDic success:^(id responseObj) {
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"收藏成功"];
+            self.isFollow = YES;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.followBtn setImage:[UIImage imageNamed:@"06商家收藏右上角64*64"] forState:UIControlStateNormal];
             });

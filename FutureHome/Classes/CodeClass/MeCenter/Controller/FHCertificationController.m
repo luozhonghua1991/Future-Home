@@ -143,9 +143,15 @@
 
 - (void)commitAccountDataRequest {
     self.selectIDCardsImgArrs = [[NSMutableArray alloc] init];
-    [self.selectIDCardsImgArrs addObject:self.imgView.leftImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.imgView.centerImgView.image];
-    [self.selectIDCardsImgArrs addObject:self.imgView.rightImgView.image];
+    if (self.imgView.leftImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.imgView.leftImgView.image];
+    }
+    if (self.imgView.centerImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.imgView.centerImgView.image];
+    }
+    if (self.imgView.rightImgView.image) {
+        [self.selectIDCardsImgArrs addObject:self.imgView.rightImgView.image];
+    }
     
     if (self.selectIDCardsImgArrs.count < 3) {
         [self.view makeToast:@"请上传证件相关的照片"];

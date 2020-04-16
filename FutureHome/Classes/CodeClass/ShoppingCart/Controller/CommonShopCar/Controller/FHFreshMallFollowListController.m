@@ -186,7 +186,6 @@ FDActionSheetDelegate
         /** 物业 */
         FHHomeServicesController *home = [[FHHomeServicesController alloc]init];
         home.model = model;
-        home.isFollow = YES;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
         self.tabBarController.tabBar.hidden = NO;
         [self.navigationController pushViewController:home animated:YES];
@@ -194,7 +193,6 @@ FDActionSheetDelegate
         /** 业委 */
         FHOwnerServiceController *home = [[FHOwnerServiceController alloc]init];
         home.model = model;
-        home.isFollow = YES;
         [home setHomeSeverID:[model.id integerValue] homeServerName:model.name];
         self.tabBarController.tabBar.hidden = NO;
         [self.navigationController pushViewController:home animated:YES];

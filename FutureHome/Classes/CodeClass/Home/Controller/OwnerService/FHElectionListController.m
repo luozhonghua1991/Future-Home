@@ -22,6 +22,8 @@
 @property (nonatomic, assign) BOOL isCanUpdate;
 /** <#assign属性注释#> */
 @property (nonatomic, assign) NSInteger maxSelectCount;
+/** <#strong属性注释#> */
+@property (nonatomic, strong) UIButton *selectedBtn;
 
 
 @end
@@ -165,6 +167,17 @@
     } else if ([self.titleString isEqualToString:@"岗位选举"]) {
         cell.countLabel.text = [NSString stringWithFormat:@"%ld票",(long)model.post_num];
     }
+    if (model.isSelect) {
+        [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+    } else {
+        if (model.select == 0) {
+            [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"check"] forState:UIControlStateNormal];
+        } else if (model.select == 1) {
+            [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
+        }
+    }
+//    self.selectedBtn =cell.selectBtn;
+    
     cell.delegate = self;
     return cell;
 }
@@ -191,7 +204,6 @@
 //    if (model.select == 1) {
 //        [self commitRequestWithStrings:modelID];
 //    }
-    
     if (model.isSelect == NO) {
         if (self.selectModelArrs.count < self.maxSelectCount) {
             [cell.selectBtn setBackgroundImage:[UIImage imageNamed:@"dhao"] forState:UIControlStateNormal];
