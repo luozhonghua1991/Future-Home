@@ -183,7 +183,7 @@ XYSJSExport
 }
 
 - (void)fetchNetworkData {
-//    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
     NSString *webUrlString;
     if ([self.typeString isEqualToString:@"information"]) {
@@ -222,8 +222,8 @@ XYSJSExport
 
 #pragma mark - UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    [self.lodingHud hideAnimated:YES];
-//    self.lodingHud = nil;
+    [self.lodingHud hideAnimated:YES];
+    self.lodingHud = nil;
     __weak typeof (self) weakSelf = self;
     self.context = [webView valueForKeyPath:@"documentView.webView.mainFrame.javaScriptContext"];
     self.context[@"ios"] = weakSelf;

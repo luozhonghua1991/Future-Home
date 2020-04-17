@@ -10,6 +10,7 @@
 #import "TPKeyboardAvoidingScrollView.h"
 #import "RWTextField.h"
 #import "FHUserAgreementView.h"
+#import "FHWebViewController.h"
 //#import "LoginService.h"
 
 @interface FHSetPasswordController () <UITextFieldDelegate,FHUserAgreementViewDelegate>
@@ -241,12 +242,12 @@
 
 /** 跳转协议 */
 - (void)FHUserAgreementViewClick {
-//    FHWebViewController *web = [[FHWebViewController alloc] init];
-//    web.urlString = self.protocol;
-//    web.typeString = @"information";
-//    web.hidesBottomBarWhenPushed = YES;
-//    web.type = @"noShow";
-//    [self.navigationController pushViewController:web animated:YES];
+    FHWebViewController *web = [[FHWebViewController alloc] init];
+    web.urlString = @"https://sheyunlife.com/wap/Agreement/index?id=10";
+    web.typeString = @"information";
+    web.hidesBottomBarWhenPushed = YES;
+    web.type = @"noShow";
+    [self.navigationController pushViewController:web animated:YES];
 }
 
 /** 确认协议 */

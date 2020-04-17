@@ -162,6 +162,8 @@
 		4A48AB7123AA1EC100AEC284 /* SGQRCodeObtain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6D23AA1EC100AEC284 /* SGQRCodeObtain.m */; };
 		4A48AB7223AA1EC100AEC284 /* SGQRCodeScanView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */; };
 		4A48AB7523AA331A00AEC284 /* FHScanDetailAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A48AB7423AA331A00AEC284 /* FHScanDetailAlertView.m */; };
+		4A4A54FC24486A8400EE1292 /* FHPlatformProtocolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A54FB24486A8400EE1292 /* FHPlatformProtocolViewController.m */; };
+		4A4A54FF2448701500EE1292 /* FHPlatformProtocolModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A54FE2448701500EE1292 /* FHPlatformProtocolModel.m */; };
 		4A4A9C612348A8D700B2D578 /* FHAutographController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4A9C602348A8D700B2D578 /* FHAutographController.m */; };
 		4A4BEF0D22CDF88C00FD00DE /* FHRigisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF0C22CDF88C00FD00DE /* FHRigisterController.m */; };
 		4A4BEF1122CDFA4900FD00DE /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A4BEF1022CDFA4900FD00DE /* UIView+Toast.m */; };
@@ -1348,6 +1350,10 @@
 		4A48AB6E23AA1EC100AEC284 /* SGQRCodeScanView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SGQRCodeScanView.m; sourceTree = "<group>"; };
 		4A48AB7323AA331A00AEC284 /* FHScanDetailAlertView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHScanDetailAlertView.h; sourceTree = "<group>"; };
 		4A48AB7423AA331A00AEC284 /* FHScanDetailAlertView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanDetailAlertView.m; sourceTree = "<group>"; };
+		4A4A54FA24486A8400EE1292 /* FHPlatformProtocolViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPlatformProtocolViewController.h; sourceTree = "<group>"; };
+		4A4A54FB24486A8400EE1292 /* FHPlatformProtocolViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPlatformProtocolViewController.m; sourceTree = "<group>"; };
+		4A4A54FD2448701500EE1292 /* FHPlatformProtocolModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHPlatformProtocolModel.h; sourceTree = "<group>"; };
+		4A4A54FE2448701500EE1292 /* FHPlatformProtocolModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHPlatformProtocolModel.m; sourceTree = "<group>"; };
 		4A4A9C5F2348A8D700B2D578 /* FHAutographController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHAutographController.h; sourceTree = "<group>"; };
 		4A4A9C602348A8D700B2D578 /* FHAutographController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHAutographController.m; sourceTree = "<group>"; };
 		4A4BEF0B22CDF88C00FD00DE /* FHRigisterController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHRigisterController.h; sourceTree = "<group>"; };
@@ -4354,6 +4360,10 @@
 				4AA308B522E6A7CE00695FFE /* FHBlackListController.m */,
 				4AA3090422E6FDBD00695FFE /* FHAboutFutureHomeController.h */,
 				4AA3090522E6FDBD00695FFE /* FHAboutFutureHomeController.m */,
+				4A4A54FA24486A8400EE1292 /* FHPlatformProtocolViewController.h */,
+				4A4A54FB24486A8400EE1292 /* FHPlatformProtocolViewController.m */,
+				4A4A54FD2448701500EE1292 /* FHPlatformProtocolModel.h */,
+				4A4A54FE2448701500EE1292 /* FHPlatformProtocolModel.m */,
 				4AAB02F823927E140016D95A /* FHPersonCommitsMainController.h */,
 				4AAB02F923927E140016D95A /* FHPersonCommitsMainController.m */,
 				4AAB02FB2392804D0016D95A /* FHPersonCommitsListController.h */,
@@ -7009,6 +7019,7 @@
 				4AB2041722F2DD7300111AC4 /* ZXRSSExpandedFieldParser.m in Sources */,
 				4AB203FA22F2DD7300111AC4 /* ZXDataMatrixBitMatrixParser.m in Sources */,
 				4A9E84E62323561D0070CE4A /* SDImageCache.m in Sources */,
+				4A4A54FC24486A8400EE1292 /* FHPlatformProtocolViewController.m in Sources */,
 				4A9CB21E230BCA51004A3763 /* YYMemoryCache.m in Sources */,
 				4AEDF8EA232A4CBB00C0547D /* FHNoticeListModel.m in Sources */,
 				4A6E5A8423703B220098DB67 /* UIView+MJExtension.m in Sources */,
@@ -7052,6 +7063,7 @@
 				4AB203E322F2DD7300111AC4 /* ZXPDF417BarcodeValue.m in Sources */,
 				4A45F5C32361B214009F25B8 /* FHReleaseDynamicsController.m in Sources */,
 				4A6DAA8822C0AD6100F29455 /* GDPerformanceMonitor.m in Sources */,
+				4A4A54FF2448701500EE1292 /* FHPlatformProtocolModel.m in Sources */,
 				4A2263B623B8A85C00F9541D /* TZImageManager.m in Sources */,
 				4A2C0D302388CAC400CED425 /* FHNewWatiingOrderCell.m in Sources */,
 				4AA9AF6C2302625200D28638 /* City.m in Sources */,

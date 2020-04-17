@@ -63,6 +63,12 @@
     self.tabBarController.tabBar.hidden = YES;
 }
 
+//- (void)viewWillDisappear:(BOOL)animated {
+//    [super viewWillDisappear:animated];
+//    // 关闭跑马灯
+//    self.tabBarController.tabBar.hidden = NO;
+//}
+
 #pragma mark — 通用导航栏
 #pragma mark — privite
 - (void)fh_creatNav {

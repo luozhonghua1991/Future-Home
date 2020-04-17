@@ -33,6 +33,11 @@
     [self fh_facthRequest];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)fh_facthRequest {
     WS(weakSelf);
     self.noticeListArrs = [[NSMutableArray alloc] init];

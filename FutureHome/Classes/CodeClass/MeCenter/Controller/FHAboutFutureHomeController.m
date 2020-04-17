@@ -27,6 +27,7 @@
     [self fh_creatNav];
     [self fh_setUpUI];
     self.topLogoNameArrs = @[@"意见反馈",
+                             @"平台协议",
                              @"版本更新"];
 }
 
@@ -72,7 +73,7 @@
 
 #pragma mark  -- tableViewDelagate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -98,6 +99,12 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == 1) {
+        /** 用户平台协议 */
+        [self viewControllerPushOther:@"FHPlatformProtocolViewController"];
+    }
+}
 
 #pragma mark — setter && getter
 - (UIImageView *)imgView {

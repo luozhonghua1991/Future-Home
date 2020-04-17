@@ -289,36 +289,36 @@
 
 #pragma mark — event
 - (void)backBtnClick {
-    /** 回到homePageVC */
-    if ([[SingleManager shareManager].selectType isEqualToString:@"HomePage"]) {
-        __block FHHomePageController *meVC ;
-        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
-            if([obj isKindOfClass:[FHHomePageController class]]) {
-                meVC = (FHHomePageController *)obj;
-            }
-        }];
-        [self.navigationController popToViewController:meVC animated:YES];
-    } else if ([[SingleManager shareManager].selectType isEqualToString:@"MeCenter"]) {
-        __block FHMeCenterController *vc;
-        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
-            if([obj isKindOfClass:[FHMeCenterController class]]) {
-                vc = (FHMeCenterController *)obj;
-            }
-        }];
-        self.tabBarController.selectedIndex = 0;
-        [self.navigationController popToViewController:vc animated:YES];
-    } else if ([[SingleManager shareManager].selectType isEqualToString:@"Group"]) {
-        __block FHGroupController *vc;
-        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
-            if([obj isKindOfClass:[FHGroupController class]]) {
-                vc = (FHGroupController *)obj;
-            }
-        }];
-        self.tabBarController.selectedIndex = 0;
-        [self.navigationController popToViewController:vc animated:YES];
-    } else {
+//    /** 回到homePageVC */
+//    if ([[SingleManager shareManager].selectType isEqualToString:@"HomePage"]) {
+//        __block FHHomePageController *meVC ;
+//        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+//            if([obj isKindOfClass:[FHHomePageController class]]) {
+//                meVC = (FHHomePageController *)obj;
+//            }
+//        }];
+//        [self.navigationController popToViewController:meVC animated:YES];
+//    } else if ([[SingleManager shareManager].selectType isEqualToString:@"MeCenter"]) {
+//        __block FHMeCenterController *vc;
+//        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+//            if([obj isKindOfClass:[FHMeCenterController class]]) {
+//                vc = (FHMeCenterController *)obj;
+//            }
+//        }];
+//        self.tabBarController.selectedIndex = 0;
+//        [self.navigationController popToViewController:vc animated:YES];
+//    } else if ([[SingleManager shareManager].selectType isEqualToString:@"Group"]) {
+//        __block FHGroupController *vc;
+//        [self.navigationController.viewControllers enumerateObjectsUsingBlock:^( UIViewController *  obj, NSUInteger idx, BOOL *  stop) {
+//            if([obj isKindOfClass:[FHGroupController class]]) {
+//                vc = (FHGroupController *)obj;
+//            }
+//        }];
+//        self.tabBarController.selectedIndex = 0;
+//        [self.navigationController popToViewController:vc animated:YES];
+//    } else {
         [self.navigationController popViewControllerAnimated:YES];
-    }
+//    }
 }
 
 

@@ -48,6 +48,11 @@
     [self fh_setMainScrollView];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    self.tabBarController.tabBar.hidden = NO;
+}
+
 #pragma mark — privite
 - (void)fh_creatNav {
     self.navgationView.userInteractionEnabled = YES;

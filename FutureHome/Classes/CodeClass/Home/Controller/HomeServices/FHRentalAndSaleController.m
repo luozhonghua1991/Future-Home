@@ -20,6 +20,11 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)initViewControllers {
     FHHouseSaleController *messageVC = [[FHHouseSaleController alloc] init];
     messageVC.yp_tabItemTitle = @"房屋出售";

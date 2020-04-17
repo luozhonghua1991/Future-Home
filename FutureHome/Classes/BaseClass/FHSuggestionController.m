@@ -22,6 +22,11 @@
     // Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)initViewControllers {
     FHSuggestionListController *messageVC = [[FHSuggestionListController alloc] init];
     messageVC.yp_tabItemTitle = @"全部列表";

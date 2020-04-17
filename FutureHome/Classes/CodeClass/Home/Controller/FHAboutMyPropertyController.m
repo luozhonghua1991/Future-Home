@@ -38,6 +38,11 @@
     }];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
+}
+
 - (void)initSetViewControllers {
     FHOwnerCertificationController *messageVC = [[FHOwnerCertificationController alloc] init];
     messageVC.yp_tabItemTitle = @"业主认证";
