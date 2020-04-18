@@ -142,6 +142,9 @@
         NSDictionary *dic = responseObj[@"data"];
         weakSelf.is_collect = [dic[@"iscollection"] integerValue];
         weakSelf.name = dic[@"name"];
+        if (self.realSstateSNameLabel) {
+            self.realSstateSNameLabel.text = dic[@"name"];
+        }
         weakSelf.userName = dic[@"login"];
         weakSelf.lat = [dic[@"lat"] floatValue];
         weakSelf.lng = [dic[@"lng"] floatValue];

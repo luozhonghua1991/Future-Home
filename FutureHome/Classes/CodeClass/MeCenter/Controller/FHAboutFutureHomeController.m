@@ -26,7 +26,7 @@
     [super viewDidLoad];
     [self fh_creatNav];
     [self fh_setUpUI];
-    self.topLogoNameArrs = @[@"意见反馈",
+    self.topLogoNameArrs = @[@"社云g官网",
                              @"平台协议",
                              @"版本更新"];
 }
@@ -92,10 +92,13 @@
     static NSString *ID = @"cell1";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
+    if (indexPath.row == 0) {
+        cell.detailTextLabel.text = @"http://tongximedia.com";
+    }
     return cell;
 }
 

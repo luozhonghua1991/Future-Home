@@ -129,11 +129,13 @@
     self.mainTable.dataSource = self;
     self.mainTable.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.mainTable.tableFooterView = [[UIView alloc] init];
-    self.mainTable.estimatedRowHeight = 100;
-    self.mainTable.emptyDataSetSource = self;
-    self.mainTable.emptyDataSetDelegate = self;
     self.mainTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadInit)];
     self.mainTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadNext)];
+    if (@available (iOS 11.0, *)) {
+        self.mainTable.estimatedSectionHeaderHeight = 0.01;
+        self.mainTable.estimatedSectionFooterHeight = 0.01;
+        self.mainTable.estimatedRowHeight = 0.01;
+    }
     // 必须先注册cell，否则会报错
     [self.mainTable registerClass:[FHPersonCommitListCell class] forCellReuseIdentifier:@"FHPersonCommitListCell"];
     [self.mainTable registerClass:[FHNoPicPersonCommitsCell class] forCellReuseIdentifier:@"FHNoPicPersonCommitsCell"];
@@ -172,6 +174,14 @@
     return [SingleManager shareManager].cellNoPicHeight;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.001f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.001f;
+}
+
 #pragma mark - DZNEmptyDataSetDelegate
 - (NSAttributedString *)titleForEmptyDataSet:(UIScrollView *)scrollView
 {
@@ -180,7 +190,7 @@
                                  NSFontAttributeName:[UIFont systemFontOfSize:14 weight:UIFontWeightRegular],
                                  NSForegroundColorAttributeName:[UIColor colorWithRed:167/255.0 green:181/255.0 blue:194/255.0 alpha:1/1.0]
                                  };
-    
+
     return [[NSAttributedString alloc] initWithString:title attributes:attributes];
 }
 

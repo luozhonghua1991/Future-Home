@@ -290,9 +290,18 @@
 
 - (void)commitRequestInfo {
     self.imgSelectArrs = [[NSMutableArray alloc] init];
-    [self.imgSelectArrs addObject:self.certificationView.leftImgView.image];
-    [self.imgSelectArrs addObject:self.certificationView.centerImgView.image];
-    [self.imgSelectArrs addObject:self.certificationView.rightImgView.image];
+    
+    if (self.certificationView.leftImgView.image) {
+        [self.imgSelectArrs addObject:self.certificationView.leftImgView.image];
+    }
+    
+    if (self.certificationView.rightImgView.image) {
+        [self.imgSelectArrs addObject:self.certificationView.rightImgView.image];
+    }
+    
+    if (self.certificationView.centerImgView.image) {
+        [self.imgSelectArrs addObject:self.certificationView.centerImgView.image];
+    }
     
     if (self.imgSelectArrs.count < 3) {
         [self.view makeToast:@"请补全身份证信息"];

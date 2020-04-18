@@ -47,7 +47,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor colorWithHexStr:@"#EDECEC"];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     [self fh_creatNav];
     [self.view addSubview:self.editAddTableView];
     [self creatBottomBtn];

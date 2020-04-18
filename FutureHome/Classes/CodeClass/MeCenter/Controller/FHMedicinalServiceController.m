@@ -390,6 +390,8 @@ FHCommonPaySelectViewDelegate
     web.urlString = self.protocol;
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
+    web.titleString = @"用户协议";
+    web.type = @"noShow";
     [self.navigationController pushViewController:web animated:YES];
 }
 

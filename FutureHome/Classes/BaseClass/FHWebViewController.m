@@ -62,8 +62,15 @@ XYSJSExport
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initSubViews];
-    if ([self.type isEqualToString:@"noShow"]) {
-        self.titleString = @"广告";
+    
+    if (IsStringEmpty(self.titleString)) {
+        if ([self.type isEqualToString:@"noShow"]) {
+            self.titleString = @"广告";
+        } else if ([self.type isEqualToString:@"adver"]) {
+            self.titleString = @"平台协议";
+        }
+    }
+    if ([self.type isEqualToString:@"noShow"]||[self.type isEqualToString:@"adver"]) {
         /** 不展示评论列表 */
         [self fetchNetworkData];
     } else {
@@ -183,7 +190,6 @@ XYSJSExport
 }
 
 - (void)fetchNetworkData {
-    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     Account *account = [AccountStorage readAccount];
     NSString *webUrlString;
     if ([self.typeString isEqualToString:@"information"]) {
@@ -192,20 +198,21 @@ XYSJSExport
         webUrlString = [NSString stringWithFormat:@"%@?userid=%ld",self.urlString,(long)account.user_id];
     }
     [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:webUrlString]]];
+    [[UIApplication sharedApplication].keyWindow addSubview:self.lodingHud];
     
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.tabBarController.tabBar.hidden = YES;
     if (self.isHaveProgress) {
 //         [self.navigationController.navigationBar addSubview:self.webViewProgressView];
     }
     [self fh_creatNav];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 //    if (self.webViewProgressView) {
 //        [self.webViewProgressView removeFromSuperview];
@@ -229,8 +236,13 @@ XYSJSExport
     self.context[@"ios"] = weakSelf;
 }
 
-- (void)removeHTMLTtitle
-{
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    [self.view makeToast:@"加载失败"];
+    [self.lodingHud hideAnimated:YES];
+    self.lodingHud = nil;
+}
+
+- (void)removeHTMLTtitle {
     NSString *jsStr =
     @"if (document.getElementsByClassName('header-nav').length > 0) {"
     "    document.getElementsByClassName('header-nav')[0].style.display='none';"

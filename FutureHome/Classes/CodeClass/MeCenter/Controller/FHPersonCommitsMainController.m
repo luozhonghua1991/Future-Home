@@ -31,12 +31,27 @@
                                [SingleManager shareManager].ordertype,@"ordertype",
                                nil];
     [AFNetWorkTool get:@"shop/getCommentVillegas" params:paramsDic success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             NSArray *arr = responseObj[@"data"];
-            weakSelf.leftTitle = arr[0];
-            weakSelf.centerTitle = arr[1];
-            weakSelf.rightTitle = arr[2];
-            [weakSelf initViewControllers];
+            if (!IsStringEmpty(arr[0])) {
+                weakSelf.leftTitle = arr[0];
+            } else{
+                weakSelf.leftTitle = @"";
+            }
+            
+            if (!IsStringEmpty(arr[1])) {
+                weakSelf.centerTitle = arr[1];
+            } else {
+                weakSelf.centerTitle = @"";
+            }
+            
+            if (!IsStringEmpty(arr[2])) {
+                weakSelf.rightTitle = arr[2];
+            } else {
+                weakSelf.rightTitle = @"";
+            }
+            [weakSelf initMainViewControllers];
         } else {
             [self.view makeToast:responseObj[@"msg"]];
         }
@@ -45,7 +60,7 @@
     }];
 }
 
-- (void)initViewControllers {
+- (void)initMainViewControllers {
     FHPersonCommitsListController *messageVC = [[FHPersonCommitsListController alloc] init];
     messageVC.yp_tabItemTitle = [NSString stringWithFormat:@"满意%@",self.leftTitle];
     messageVC.shopID = self.shopID;

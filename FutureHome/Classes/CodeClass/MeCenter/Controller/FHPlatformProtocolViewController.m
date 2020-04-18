@@ -102,6 +102,7 @@
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     FHPlatformProtocolModel *model = self.documentCollectArrs[indexPath.row];
     cell.textLabel.text = model.name;
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
     return cell;
 }
 
@@ -115,7 +116,7 @@
     web.titleString = infoModel.name;
     web.typeString = @"information";
     web.isHaveProgress = YES;
-    web.type = @"noShow";
+    web.type = @"adver";
     [self.navigationController pushViewController:web animated:YES];
 }
 

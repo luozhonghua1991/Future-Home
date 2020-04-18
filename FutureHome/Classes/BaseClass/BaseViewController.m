@@ -34,6 +34,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self.loadingHud hideAnimated:YES];
+    self.loadingHud = nil;
     self.navigationController.navigationBar.hidden = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"GoHomePageController" object:nil];
 }

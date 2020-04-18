@@ -64,7 +64,7 @@
         [self fh_creatNav];
     }
     allAddressArray = [[NSMutableArray alloc]init];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.AddressListTableView];
     [self creatBottomBtn];
     

@@ -32,7 +32,7 @@
     }
     self.dataListArrs = [[NSMutableArray alloc] init];
     [self.invoiceListTableView registerClass:[FHInvoiceListCell class] forCellReuseIdentifier:NSStringFromClass([FHInvoiceListCell class])];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.invoiceListTableView];
     [self creatBottomBtn];
 }
@@ -110,7 +110,9 @@
                                [SingleManager shareManager].ordertype,@"ordertype",nil];
     
     [AFNetWorkTool get:@"shop/getUserinvoices" params:paramsDic success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
+            
             if (isHead) {
                 [weakSelf.dataListArrs removeAllObjects];
             }

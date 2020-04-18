@@ -57,7 +57,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor colorWithHexStr:@"#EDECEC"];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+//    self.automaticallyAdjustsScrollViewInsets = NO;
     [self fh_creatNav];
     [self creatTopView];
     [self creatBottomBtn];
@@ -159,15 +159,16 @@
             int code = [[responseObj objectForKey:@"code"] intValue];
             if (code == 1) {
                 //请求数据成功
-                [ZHProgressHUD showMessage:@"添加成功" inView:weakSelf.view];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self.navigationController popViewControllerAnimated:YES];
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
                 });
             } else {
-                [ZHProgressHUD showMessage:[responseObj objectForKey:@"msg"] inView:weakSelf.view];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
             }
         } failure:^(NSError * error) {
-            [ZHProgressHUD showMessage:@"添加出错" inView:weakSelf.view];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             NSLog(@"%@",error.description);
         }];
     } else if ([self.titleName isEqualToString:@"编辑地址"]) {
@@ -190,13 +191,14 @@
             int code = [[responseObj objectForKey:@"code"] intValue];
             if (code == 1) {
                 //请求数据成功
-                [ZHProgressHUD showMessage:@"编辑成功" inView:[UIApplication sharedApplication].keyWindow];
                 [weakSelf.navigationController popViewControllerAnimated:YES];
             } else{
-                [ZHProgressHUD showMessage:[responseObj objectForKey:@"msg"] inView:weakSelf.view];
+                [weakSelf.loadingHud hideAnimated:YES];
+                weakSelf.loadingHud = nil;
             }
         } failure:^(NSError * error) {
-            [ZHProgressHUD showMessage:@"编辑地址出错" inView:weakSelf.view];
+            [weakSelf.loadingHud hideAnimated:YES];
+            weakSelf.loadingHud = nil;
             NSLog(@"%@",error.description);
         }];
     }
@@ -224,7 +226,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] ;
         UILabel *leftLab = [[UILabel alloc]initWithFrame:CGRectMake((12), 0, (80), 44)];
         leftLab.textColor = [UIColor lightGrayColor];
-        leftLab.font =[UIFont systemFontOfSize:16];
+        leftLab.font = [UIFont systemFontOfSize:16];
         [cell.contentView addSubview:leftLab];
         if (indexPath.section == 0) {
             leftLab.text = @"收件人:";

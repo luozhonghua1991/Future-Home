@@ -133,6 +133,9 @@
     FHWebViewController *web = [[FHWebViewController alloc] init];
     Account *account = [AccountStorage readAccount];
     web.urlString = [NSString stringWithFormat:@"%@?id=%@&userid=%ld",newsModel.singpage,newsModel.id,(long)account.user_id];
+//    NSArray *arr = [newsModel.singpage componentsSeparatedByString:@"/"];
+//    web.article_type = arr[arr.count - 1];
+//    web.article_id = arr[arr.count - 3];
     web.titleString = newsModel.title;
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
