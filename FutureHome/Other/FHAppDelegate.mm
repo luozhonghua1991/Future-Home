@@ -27,6 +27,10 @@
 #import "FHLoginController.h"
 #import "FHTabbarController.h"
 #import "FHAppDelegate.mm"
+#import <Bugly/Bugly.h>
+
+#define BUGLY_APPID           @"6bd10a3989"
+#define BUGLY_APPKEY          @"82fb9f78-73d5-4b69-a38b-5d4d1ca95b9b"
 
 static FHAppDelegate* pSelf = nil;
 
@@ -44,6 +48,8 @@ RCIMGroupInfoDataSource
 @implementation FHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //bugly 崩溃统计
+    [self setupBugly];
     [SingleManager shareManager].allGroupsArrs = [[NSMutableArray alloc] init];
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
@@ -104,6 +110,24 @@ RCIMGroupInfoDataSource
     
     return YES;
 }
+
+- (void)setupBugly {
+    BuglyConfig * config = [[BuglyConfig alloc] init];
+    config.debugMode = YES;
+    //卡顿监控
+    config.blockMonitorEnable = YES;
+    //卡顿时间监控
+    config.blockMonitorTimeout = 1.5;
+    //非正常退出事件(SIGKILL)
+    config.unexpectedTerminatingDetectionEnable = YES;
+    
+    [Bugly startWithAppId:BUGLY_APPID config:config];
+    
+    [Bugly setUserIdentifier:[NSString stringWithFormat:@"User: %@", [UIDevice currentDevice].name]];
+    
+    [Bugly setUserValue:[NSProcessInfo processInfo].processName forKey:@"Process"];
+}
+
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler {
     //自己的实现代码

@@ -74,9 +74,6 @@ XYSJSExport
         /** 不展示评论列表 */
         [self fetchNetworkData];
     } else {
-        /** 展示评论列表 */
-        [self fh_creatCommentView];
-        [self fh_layoutSubView];
         [self getArticleInfo];
     }
 }
@@ -103,6 +100,9 @@ XYSJSExport
             } else {
                 [weakSelf fetchNetworkData];
                 weakSelf.articleModel = [FHArticleDetailModel mj_objectWithKeyValues:responseObj[@"data"]];
+                /** 展示评论列表 */
+                [self fh_creatCommentView];
+                [self fh_layoutSubView];
                 [weakSelf updateArticleDataWithModel:weakSelf.articleModel];
             }
         } else {
@@ -161,13 +161,15 @@ XYSJSExport
     min_h = min_w;
     min_x = min_view_w - min_w - 20;
     min_y = min_view_h - min_h - 80;
-    self.shareBtn.frame = CGRectMake(min_x, min_y - 120, min_w, min_h);
+//    self.shareBtn.frame = CGRectMake(min_x, min_y - 120, min_w, min_h);
+    self.shareBtn.frame = CGRectMake(min_x, min_y - 60, min_w, min_h);
     
     min_w = 40;
     min_h = min_w;
     min_x = min_view_w - min_w - 20;
     min_y = min_view_h - min_h - 80;
-    self.followBtn.frame = CGRectMake(min_x, min_y - 180, min_w, min_h);
+//    self.followBtn.frame = CGRectMake(min_x, min_y - 180, min_w, min_h);
+    self.followBtn.frame = CGRectMake(min_x, min_y - 120, min_w, min_h);
     
     min_w = CGRectGetWidth(self.followBtn.frame);
     min_h = min_w;
@@ -528,7 +530,7 @@ XYSJSExport
 - (UIButton *)likeBtn {
     if (!_likeBtn) {
         _likeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_likeBtn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
+//        [_likeBtn setImage:[UIImage imageNamed:@"点赞前 空心"] forState:UIControlStateNormal];
         [_likeBtn addTarget:self action:@selector(likeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         
     }
@@ -569,7 +571,7 @@ XYSJSExport
 - (UIButton *)followBtn {
     if (!_followBtn) {
         _followBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
+//        [_followBtn setImage:[UIImage imageNamed:@"收藏"] forState:UIControlStateNormal];
         [_followBtn addTarget:self action:@selector(followBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _followBtn;

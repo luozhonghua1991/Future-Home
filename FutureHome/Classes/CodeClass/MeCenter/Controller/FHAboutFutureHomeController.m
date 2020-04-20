@@ -17,6 +17,9 @@
 @property (nonatomic, strong) UITableView *homeTable;
 /** 上面的logoName */
 @property (nonatomic, copy) NSArray *topLogoNameArrs;
+/** 底部的label */
+@property (nonatomic, strong) UILabel *bottomLabel;
+
 
 @end
 
@@ -26,7 +29,7 @@
     [super viewDidLoad];
     [self fh_creatNav];
     [self fh_setUpUI];
-    self.topLogoNameArrs = @[@"社云g官网",
+    self.topLogoNameArrs = @[@"社云官网",
                              @"平台协议",
                              @"版本更新"];
 }
@@ -68,6 +71,8 @@
     self.logoLabel.frame = CGRectMake(0, CGRectGetMaxY(self.imgView.frame) + 10, SCREEN_WIDTH, 12);
     [self.view addSubview:self.logoLabel];
     [self.view addSubview:self.homeTable];
+    self.bottomLabel.frame = CGRectMake(0, SCREEN_HEIGHT - 80, SCREEN_WIDTH, 40);
+    [self.view addSubview:self.bottomLabel];
 }
 
 
@@ -96,6 +101,7 @@
     }
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
+    cell.textLabel.font = [UIFont systemFontOfSize:15];
     if (indexPath.row == 0) {
         cell.detailTextLabel.text = @"http://tongximedia.com";
     }
@@ -127,6 +133,18 @@
         _logoLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _logoLabel;
+}
+
+- (UILabel *)bottomLabel {
+    if (!_bottomLabel) {
+        _bottomLabel = [[UILabel alloc] init];
+        _bottomLabel.text = @"Copyright© 2019-2020 TongXi. All Rights Reserved.\n重庆同熙文化传媒有限公司 版权所有";
+        _bottomLabel.textColor = [UIColor blackColor];
+        _bottomLabel.font = [UIFont systemFontOfSize:14];
+        _bottomLabel.textAlignment = NSTextAlignmentCenter;
+        _bottomLabel.numberOfLines = 0;
+    }
+    return _bottomLabel;
 }
 
 - (UITableView *)homeTable {

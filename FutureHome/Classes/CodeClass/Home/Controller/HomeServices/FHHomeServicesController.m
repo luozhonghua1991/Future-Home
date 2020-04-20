@@ -104,15 +104,17 @@
                                @(1),@"type", nil];
     [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
         NSArray *arr = responseObj[@"data"][@"list"];
-        NSDictionary *dic = arr[0];
-        self.is_collect = [dic[@"is_collect"] integerValue];
-        self->property_id = [dic[@"id"] integerValue];
+        if (!IS_NULL_ARRAY(arr)) {
+            NSDictionary *dic = arr[0];
+            self.is_collect = [dic[@"is_collect"] integerValue];
+            self->property_id = [dic[@"id"] integerValue];
+            self.homeServiceName = dic[@"name"];
+            self.userName = dic[@"username"];
+            self.lat = [dic[@"lat"] floatValue];
+            self.lng = [dic[@"lng"] floatValue];
+        }
         /** 获取banner数据 */
         [self fh_refreshBannerData];
-        self.homeServiceName = dic[@"name"];
-        self.userName = dic[@"username"];
-        self.lat = [dic[@"lat"] floatValue];
-        self.lng = [dic[@"lng"] floatValue];
         if (self.is_collect == 0) {
             [self.followBtn setImage:[UIImage imageNamed:@"shoucang-3"] forState:UIControlStateNormal];
         } else {

@@ -609,6 +609,13 @@
 
 
 - (void)imgViewClick {
+    Account *account = [AccountStorage readAccount];
+    if (!IsStringEmpty(self.personID)) {
+        if ([self.personID integerValue] != account.user_id) {
+            return;
+        }
+    }
+    
     /** 选取图片 */
     FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"从相册选择", nil];
     [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
