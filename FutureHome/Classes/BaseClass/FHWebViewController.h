@@ -48,7 +48,7 @@ JSExportAs(AdventLink, - (void)AdventLinkWithPerson :(NSString *)person);
 /**  */
 @property (nonatomic, copy) NSString *typeString;
 
-@property(nonatomic,strong)JSContext *context;
+@property(nonatomic,strong) JSContext *context;
 /** noShow就是不要显示带评论的功能  其他都带*/
 @property (nonatomic, copy) NSString *type;
 

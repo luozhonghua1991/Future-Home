@@ -42,8 +42,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self getAgreementTip];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(buySuccess) name:@"BUYSUCCESS" object:nil];
-     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(updateSuccess) name:@"UPDATESUCCESS" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(buySuccess) name:@"BUYSUCCESS" object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateSuccess) name:@"UPDATESUCCESS" object:nil];
     
 }
 
@@ -120,18 +120,20 @@
 }
 
 - (void)buySuccess {
-    if (self.type == 1) {
+    if (self.type == 2) {
         self.selectBtn.hidden = YES;
         self.logLabel.hidden = YES;
+        self.successLabel.text = @"亲爱的用户您好：您的申请已经成功提交，社云平台会在1-7个工作日内完成审核，审核通过后社云工作人员将主动与您联系，请关注，谢谢。服务商资格审核未通过，审核服务费用将原路退还。谢谢。";
         [self.view addSubview:self.successLabel];
         [self.view addSubview:self.successBtn];
     }
 }
 
 - (void)updateSuccess {
-    if (self.type == 2) {
+    if (self.type == 1) {
         self.selectBtn.hidden = YES;
         self.logLabel.hidden = YES;
+        self.successLabel.text = @"亲爱的用户您好：您需要投放在社云广告平台上的广告需求已经成功提交，社云平台服务人员会在1-3个工作日内，与您联系。请关注，谢谢！";
         [self.view addSubview:self.successLabel];
         [self.view addSubview:self.successBtn];
     }
@@ -175,7 +177,7 @@
 - (UILabel *)successLabel {
     if (!_successLabel) {
         _successLabel = [[UILabel alloc] initWithFrame:CGRectMake(40, SCREEN_HEIGHT / 2 - 200, SCREEN_WIDTH - 80, 90)];
-        _successLabel.text = @"尊敬的⽤用户: \n      您的申请已经成功提交，平台会在3个⼯工作⽇日内完成审核，并将账号信息 发送到您的邮箱，请及时关注，谢谢!";
+//        _successLabel.text = @"尊敬的⽤用户: \n      您的申请已经成功提交，平台会在3个⼯工作⽇日内完成审核，并将账号信息 发送到您的邮箱，请及时关注，谢谢!";
         _successLabel.font = [UIFont systemFontOfSize:15];
         _successLabel.textColor = [UIColor blackColor];
         _successLabel.textAlignment = NSTextAlignmentLeft;

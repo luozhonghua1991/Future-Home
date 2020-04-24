@@ -269,23 +269,25 @@
 
 - (void)requestWithDontTaiDic:(NSDictionary *)dic LoadHead:(BOOL)isHead{
     NSArray *commitsList = [dic objectForKey:@"list"];
-    [self.commitsListArrs addObjectsFromArray:commitsList];
-    
-    NSMutableArray *arrM = [NSMutableArray array];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        for (NSDictionary *dictDict in commitsList) {
-            ZJCommit *commit = [ZJCommit commitWithDongtaiDict:dictDict];
-            [arrM addObject:commit];
-        }
-        [self.dataArray addObjectsFromArray:arrM];
-        WS(weakSelf);
-        dispatch_async(dispatch_get_main_queue(), ^{
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [weakSelf endRefreshAction];
-                [weakSelf.mainTable reloadData];
+    if (!IS_NULL_ARRAY(commitsList)) {
+        [self.commitsListArrs addObjectsFromArray:commitsList];
+        
+        NSMutableArray *arrM = [NSMutableArray array];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            for (NSDictionary *dictDict in commitsList) {
+                ZJCommit *commit = [ZJCommit commitWithDongtaiDict:dictDict];
+                [arrM addObject:commit];
+            }
+            [self.dataArray addObjectsFromArray:arrM];
+            WS(weakSelf);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf endRefreshAction];
+                    [weakSelf.mainTable reloadData];
+                });
             });
         });
-    });
+    }
 }
 
 - (void)setUpAllView {
@@ -326,9 +328,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.dataArray <=0) {
         return nil;
-    }
-    ZJCommit *commit = self.dataArray[indexPath.row];
-    //视频单独处理
+    } else {
+        ZJCommit *commit = self.dataArray[indexPath.row];
+        //视频单独处理
         if (commit.medias.count > 0) {
             NSDictionary *dic = commit.medias[0];
             if ([dic[@"type"] integerValue]== 2) {
@@ -363,7 +365,7 @@
         photoCell.delegate = self;
         [self configureNoCell:photoCell atIndexPath:indexPath];
         return photoCell;
-    
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

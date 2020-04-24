@@ -111,6 +111,9 @@
 		4A2E6C1922E056B200F33F7C /* FXPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6C1022E056B200F33F7C /* FXPageControl.m */; };
 		4A2E6C1A22E056B200F33F7C /* BHInfiniteScrollViewTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6C1622E056B200F33F7C /* BHInfiniteScrollViewTitleView.m */; };
 		4A2E6C1B22E056B200F33F7C /* BHInfiniteScrollViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A2E6C1722E056B200F33F7C /* BHInfiniteScrollViewCell.m */; };
+		4A30A2EC244EE035005493D5 /* LTWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A30A2EB244EE035005493D5 /* LTWKWebView.m */; };
+		4A30A2F0244EEB8D005493D5 /* IMYWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A30A2EF244EEB8D005493D5 /* IMYWebView.m */; };
+		4A30A2F3244EEB94005493D5 /* IMY_NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A30A2F2244EEB94005493D5 /* IMY_NJKWebViewProgress.m */; };
 		4A3173992349DE24001621E2 /* FHFreshMallFollowListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3173982349DE24001621E2 /* FHFreshMallFollowListController.m */; };
 		4A31F60C230A99650010C1F4 /* ZJPickBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A31F5FF230A99650010C1F4 /* ZJPickBaseView.m */; };
 		4A31F60D230A99650010C1F4 /* ZJAddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A31F601230A99650010C1F4 /* ZJAddressPickerView.m */; };
@@ -802,6 +805,10 @@
 		4AB2047422F2EAB100111AC4 /* FHLBXScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047322F2EAB100111AC4 /* FHLBXScanViewController.m */; };
 		4AB2047722F2ED2600111AC4 /* FHScanTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047622F2ED2600111AC4 /* FHScanTool.m */; };
 		4AB2047B22F2ED7900111AC4 /* AnalyzPermisViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB2047922F2ED7800111AC4 /* AnalyzPermisViewController.m */; };
+		4AB85D512452C6A900700A6F /* NullSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB85D502452C6A900700A6F /* NullSafe.m */; };
+		4AB85D592452C73F00700A6F /* NSObject+safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB85D542452C73E00700A6F /* NSObject+safe.m */; };
+		4AB85D5A2452C73F00700A6F /* NSDictionary+NilSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB85D562452C73E00700A6F /* NSDictionary+NilSafe.m */; };
+		4AB85D5B2452C73F00700A6F /* NSMutableArray+safe.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB85D582452C73F00700A6F /* NSMutableArray+safe.m */; };
 		4AB8CF0323C5D5E50043F65D /* FHSharingDynamicsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8CF0223C5D5E50043F65D /* FHSharingDynamicsController.m */; };
 		4ABA6F4023991B7C0033E71A /* FHReturnRefundController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F3F23991B7C0033E71A /* FHReturnRefundController.m */; };
 		4ABA6F4323992EC50033E71A /* FHGoodsCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA6F4223992EC50033E71A /* FHGoodsCommitController.m */; };
@@ -1247,6 +1254,12 @@
 		4A2E6C1522E056B200F33F7C /* BHInfiniteScrollViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHInfiniteScrollViewCell.h; sourceTree = "<group>"; };
 		4A2E6C1622E056B200F33F7C /* BHInfiniteScrollViewTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewTitleView.m; sourceTree = "<group>"; };
 		4A2E6C1722E056B200F33F7C /* BHInfiniteScrollViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHInfiniteScrollViewCell.m; sourceTree = "<group>"; };
+		4A30A2EA244EE035005493D5 /* LTWKWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTWKWebView.h; sourceTree = "<group>"; };
+		4A30A2EB244EE035005493D5 /* LTWKWebView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTWKWebView.m; sourceTree = "<group>"; };
+		4A30A2EE244EEB8D005493D5 /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
+		4A30A2EF244EEB8D005493D5 /* IMYWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMYWebView.m; sourceTree = "<group>"; };
+		4A30A2F1244EEB94005493D5 /* IMY_NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMY_NJKWebViewProgress.h; sourceTree = "<group>"; };
+		4A30A2F2244EEB94005493D5 /* IMY_NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMY_NJKWebViewProgress.m; sourceTree = "<group>"; };
 		4A3173972349DE23001621E2 /* FHFreshMallFollowListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FHFreshMallFollowListController.h; sourceTree = "<group>"; };
 		4A3173982349DE24001621E2 /* FHFreshMallFollowListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FHFreshMallFollowListController.m; sourceTree = "<group>"; };
 		4A31F5FD230A99650010C1F4 /* NSDate+ZJPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+ZJPickerView.h"; sourceTree = "<group>"; };
@@ -2661,6 +2674,13 @@
 		4AB2047622F2ED2600111AC4 /* FHScanTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHScanTool.m; sourceTree = "<group>"; };
 		4AB2047922F2ED7800111AC4 /* AnalyzPermisViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyzPermisViewController.m; sourceTree = "<group>"; };
 		4AB2047A22F2ED7800111AC4 /* AnalyzPermisViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyzPermisViewController.h; sourceTree = "<group>"; };
+		4AB85D502452C6A900700A6F /* NullSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NullSafe.m; sourceTree = "<group>"; };
+		4AB85D532452C73E00700A6F /* NSObject+safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+safe.h"; sourceTree = "<group>"; };
+		4AB85D542452C73E00700A6F /* NSObject+safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+safe.m"; sourceTree = "<group>"; };
+		4AB85D552452C73E00700A6F /* NSDictionary+NilSafe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+NilSafe.h"; sourceTree = "<group>"; };
+		4AB85D562452C73E00700A6F /* NSDictionary+NilSafe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+NilSafe.m"; sourceTree = "<group>"; };
+		4AB85D572452C73F00700A6F /* NSMutableArray+safe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+safe.h"; sourceTree = "<group>"; };
+		4AB85D582452C73F00700A6F /* NSMutableArray+safe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+safe.m"; sourceTree = "<group>"; };
 		4AB8CF0123C5D5E50043F65D /* FHSharingDynamicsController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHSharingDynamicsController.h; sourceTree = "<group>"; };
 		4AB8CF0223C5D5E50043F65D /* FHSharingDynamicsController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FHSharingDynamicsController.m; sourceTree = "<group>"; };
 		4ABA6F3E23991B7C0033E71A /* FHReturnRefundController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FHReturnRefundController.h; sourceTree = "<group>"; };
@@ -3403,6 +3423,17 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		4A30A2ED244EEB0A005493D5 /* WebViewTool */ = {
+			isa = PBXGroup;
+			children = (
+				4A30A2F1244EEB94005493D5 /* IMY_NJKWebViewProgress.h */,
+				4A30A2F2244EEB94005493D5 /* IMY_NJKWebViewProgress.m */,
+				4A30A2EE244EEB8D005493D5 /* IMYWebView.h */,
+				4A30A2EF244EEB8D005493D5 /* IMYWebView.m */,
+			);
+			path = WebViewTool;
+			sourceTree = "<group>";
+		};
 		4A31F5FC230A99650010C1F4 /* ZJPickerView */ = {
 			isa = PBXGroup;
 			children = (
@@ -4082,6 +4113,8 @@
 		4A6DA9FF22C06F9300F29455 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4AB85D522452C71A00700A6F /* NSObjectNullSafe */,
+				4A30A2ED244EEB0A005493D5 /* WebViewTool */,
 				4A7FE63E2431939C00FC7BD8 /* NSString+YJSDecimalNumberTools.h */,
 				4A7FE63D2431939B00FC7BD8 /* NSString+YJSDecimalNumberTools.m */,
 				4A0A7B2D242F62C500BE9913 /* CommitToolTextView */,
@@ -6144,6 +6177,20 @@
 			path = AnalyzingPermissions;
 			sourceTree = "<group>";
 		};
+		4AB85D522452C71A00700A6F /* NSObjectNullSafe */ = {
+			isa = PBXGroup;
+			children = (
+				4AB85D552452C73E00700A6F /* NSDictionary+NilSafe.h */,
+				4AB85D562452C73E00700A6F /* NSDictionary+NilSafe.m */,
+				4AB85D572452C73F00700A6F /* NSMutableArray+safe.h */,
+				4AB85D582452C73F00700A6F /* NSMutableArray+safe.m */,
+				4AB85D532452C73E00700A6F /* NSObject+safe.h */,
+				4AB85D542452C73E00700A6F /* NSObject+safe.m */,
+				4AB85D502452C6A900700A6F /* NullSafe.m */,
+			);
+			path = NSObjectNullSafe;
+			sourceTree = "<group>";
+		};
 		4ABBFF3B23A4E044004FBBDE /* GroupDetailView */ = {
 			isa = PBXGroup;
 			children = (
@@ -6639,6 +6686,8 @@
 		4AEDF8E7232A4CA200C0547D /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				4A30A2EA244EE035005493D5 /* LTWKWebView.h */,
+				4A30A2EB244EE035005493D5 /* LTWKWebView.m */,
 				4A26A274242462CA00FE4D8A /* BaseNavigationController.h */,
 				4A26A273242462CA00FE4D8A /* BaseNavigationController.m */,
 				4AFC6960242376EA0050CBC2 /* FHTabbarController.h */,
@@ -7033,7 +7082,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n#\n# Copyright 2016 Bugly, Tencent. All rights reserved.\n#\n# V1.4.0\n#\n# 2016.08.03\n#\n#\n#\n######################################################\n# 1. 脚本集成到Xcode工程的Target\n######################################################\n#\n# --- Copy the SCRIPT to the Run Script of Build Phases in the Xcode project ---\n#\n# #\nBUGLY_APP_ID=\"6bd10a3989\"\n# #\nBUGLY_APP_KEY=\"82fb9f78-73d5-4b69-a38b-5d4d1ca95b9b\"\n# #\nBUNDLE_IDENTIFIER=\"com.tongxichuanmei.FutureHome\"\n# #\nUPLOAD_DSYM_ONLY=1\n#\n# # 脚本默认配置的版本格式为CFBundleShortVersionString(CFBundleVersion),  如果你修改默认的版本格式, 请设置此变量, 如果不想修改, 请忽略此设置\n# CUSTOMIZED_APP_VERSION=\"\"\n#\n# # Debug模式编译是否上传，1＝上传 0＝不上传，默认不上传\nUPLOAD_DEBUG_SYMBOLS=1\n#\n# # 模拟器编译是否上传，1=上传 0=不上传，默认不上传\nUPLOAD_SIMULATOR_SYMBOLS=1\n#\n# #只有Archive操作时上传, 1=支持Archive上传 0=所有Release模式编译都上传\n# UPLOAD_ARCHIVE_ONLY=0\n#\n# #\n# source dSYMUpload.sh\n#\n# --- END OF SCRIPT ---\n#\n#\n#\n#\n#######################################################\n# 2. 脚本根据输入参数处理\n#######################################################\n#\n# #命令行下输入应用基本信息, .dSYM文件的父目录路径, 输出文件目录即可\n#\n# sh dSYMUpload.sh <bugly_app_id> <bugly_app_key> <app_bundle_identifier> <app_version> <dSYM_src_dir> <bSYMBOL_dest_dir>\n#\n# #\n#\n# #注意:\n# # 1. dSYMUpload.sh会调用buglySymboliOS.jar进行.dSYM解析，所以依赖Java运行时环境\n# # 2. dSYMUpload.sh和buglySymboliOS.jar的文件路径需一致\n#\n#\n\n#\n# --- CONTENT OF SCRIPT ---\n#\n\n# Bugly服务域名\nBUGLY_DSYM_UPLOAD_DOMAIN=\"api.bugly.qq.com\"\n\n# 注意jar工具的路径跟dSYMUpload.sh脚本路径一致, 请务必保证jar路径的正确性\nBUGLY_SYMBOL_JAR_PATH=\"dsymtool/buglySymboliOS.jar\"\n# 查找添加到系统目录的jar工具\nif [ ! -f \"${BUGLY_SYMBOL_JAR_PATH}\" ]; then\nBUGLY_SYMBOL_JAR_PATH=\"$HOME/bin/buglySymboliOS.jar\"\nfi\n\n# 打印错误信息\nfunction exitWithMessage(){\necho \"--------------------------------\"\necho \"${1}\"\necho \"--------------------------------\"\nexit ${2}\n}\n\n# 上传bSYMBOL文件\nfunction dSYMUpload() {\nP_APP_ID=\"$1\"\nP_APP_KEY=\"$2\"\nP_APP_BUNDLE_ID=\"$3\"\nP_APP_VERSION=\"$4\"\nP_BSYMBOL_ZIP_FILE=\"$5\"\n\n#\nP_BSYMBOL_ZIP_FILE_NAME=${P_BSYMBOL_ZIP_FILE##*/}\nP_BSYMBOL_ZIP_FILE_NAME=${P_BSYMBOL_ZIP_FILE_NAME//&/_}\nP_BSYMBOL_ZIP_FILE_NAME=\"${P_BSYMBOL_ZIP_FILE_NAME// /_}\"\n\nDSYM_UPLOAD_URL=\"https://${BUGLY_DSYM_UPLOAD_DOMAIN}/openapi/file/upload/symbol?app_id=${P_APP_ID}&app_key=${P_APP_KEY}\"\necho \"dSYM upload url: ${DSYM_UPLOAD_URL}\"\n\necho \"-----------------------------\"\nSTATUS=$(/usr/bin/curl -k \"${DSYM_UPLOAD_URL}\" --form \"api_version=1\" --form \"app_id=${P_APP_ID}\" --form \"app_key=${P_APP_KEY}\" --form \"symbolType=2\"  --form \"bundleId=${BUNDLE_IDENTIFIER}\" --form \"productVersion=${BUGLY_APP_VERSION}\" --form \"fileName=${P_BSYMBOL_ZIP_FILE_NAME}\" --form \"file=@${P_BSYMBOL_ZIP_FILE}\" --verbose)\necho \"-----------------------------\"\n\nUPLOAD_RESULT=\"FAILTURE\"\necho \"Bugly server response: ${STATUS}\"\nif [ ! \"${STATUS}\" ]; then\necho \"Error: Failed to upload the zip archive file.\"\nelif [[ \"${STATUS}\" == *\"{\\\"reponseCode\\\":\\\"0\\\"}\"* ]]; then\necho \"Success to upload the dSYM for the app [${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION}]\"\nUPLOAD_RESULT=\"SUCCESS\"\nelse\necho \"Error: Failed to upload the zip archive file to Bugly.\"\nfi\n\n#Remove temp dSYM archive\n#echo \"Remove temporary zip archive: ${DSYM_ZIP_FPATH}\"\n#/bin/rm -f \"${DSYM_ZIP_FPATH}\"\n\nif [ \"$?\" -ne 0 ]; then\nexitWithMessage \"Error: Failed to remove temporary zip archive.\" 0\nfi\n\necho \"--------------------------------\"\necho \"${UPLOAD_RESULT} - dSYM upload complete.\"\n\nif [[ \"${UPLOAD_RESULT}\" == \"FAILTURE\" ]]; then\necho \"--------------------------------\"\necho \"Failed to upload the dSYM\"\necho \"Please check the script and try it again.\"\nfi\n}\n\n# .dSYM解析为bSYMBOL文件\nfunction dSYMParse() {\nDSYM_FILE=\"$1\"\nDSYM_SYMBOL_FILE=\"$2\"\n\necho \"--------------------------------\"\necho \"Extract symbol info from .dSYM file. to ${DSYM_SYMBOL_FILE}\"\n(/usr/bin/java -Xms512m -Xmx1024m -Dfile.encoding=UTF8 -jar \"${BUGLY_SYMBOL_JAR_PATH}\" -i \"${DSYM_FILE}\" -o \"${DSYM_SYMBOL_FILE}\" ) || exitWithMessage \"Error: Failed to extract symbols.\" 1\necho \"--------------------------------\"\n\n}\n\n# 执行\nfunction run() {\n\nCONFIG_BUGLY_APP_ID=\"$1\"\nCONFIG_BUGLY_APP_KEY=\"$2\"\n\nCONFIG_BUGLY_APP_BUNDLE_IDENTIFIER=\"$3\"\nCONFIG_BUGLY_APP_VERSION=\"$4\"\nCONFIG_DSYM_SOURCE_DIR=\"$5\"\nCONFIG_DSYM_DEST_DIR=\"$6\"\nCONFIG_UPLOAD_DSYM_ONLY=\"$7\"\n\n# 检查必须参数是否设置\nif [ ! \"${CONFIG_BUGLY_APP_ID}\" ]; then\nexitWithMessage \"Error: Bugly App ID not defined. Please set 'BUGLY_APP_ID' \" 0\nfi\n\nif [[ \"${CONFIG_BUGLY_APP_ID}\" == *\"App ID\"* ]]; then\nexitWithMessage \"Error: Bugly App ID not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_KEY}\" ]; then\nexitWithMessage \"Error: Bugly App Key not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_BUNDLE_IDENTIFIER}\" ]; then\nexitWithMessage \"Error: Bundle Identifier not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_VERSION}\" ]; then\nexitWithMessage \"Error: App Version not defined.\" 0\nfi\n\nif [ ! -e \"${CONFIG_DSYM_SOURCE_DIR}\" ]; then\nexitWithMessage \"Error: Invalid dir ${CONFIG_DSYM_SOURCE_DIR}\" 0\nfi\n\nif [ ! \"${CONFIG_DSYM_DEST_DIR}\" ]; then\nexitWithMessage \"Error: Invalid dir ${CONFIG_DSYM_DEST_DIR}\" 0\nfi\n\nif [ ! -e \"${CONFIG_DSYM_DEST_DIR}\" ]; then\nmkdir ${CONFIG_DSYM_DEST_DIR}\nfi\n\nDSYM_FOLDER=\"${CONFIG_DSYM_SOURCE_DIR}\"\nIFS=$'\\n'\n\necho \"Scaning dSYM FOLDER: ${DSYM_FOLDER} ...\"\nRET=\"F\"\n\n#\nfor dsymFile in $(find \"$DSYM_FOLDER\" -name '*.dSYM'); do\nRET=\"T\"\necho \"Found dSYM file: $dsymFile\"\n\nDSYM_FILE_NAME=${dsymFile##*/}\nDSYM_SYMBOL_ZIP_FILE_NAME=\"${DSYM_FILE_NAME}.zip\"\nDSYM_SYMBOL_ZIP_FILE_NAME=\"${DSYM_SYMBOL_ZIP_FILE_NAME// /_}\"\nDSYM_SYMBOL_ZIP_FILE=${CONFIG_DSYM_DEST_DIR}/${DSYM_SYMBOL_ZIP_FILE_NAME}\n\nif [ $CONFIG_UPLOAD_DSYM_ONLY -eq 1 ]; then\nif [ -e $DSYM_SYMBOL_ZIP_FILE ]; then\nrm -f $DSYM_SYMBOL_ZIP_FILE\nfi\n# 如果只上传dSYM，直接压缩dSYM目录\nzip -r -j $DSYM_SYMBOL_ZIP_FILE $dsymFile -x *.plist\nelse\n# 使用符号表工具来生成Symbol文件\ndSYMParse $dsymFile $DSYM_SYMBOL_ZIP_FILE\nfi\n\n# 上传\ndSYMUpload $CONFIG_BUGLY_APP_ID $CONFIG_BUGLY_APP_KEY $CONFIG_BUGLY_APP_BUNDLE_IDENTIFIER $CONFIG_BUGLY_APP_VERSION $DSYM_SYMBOL_ZIP_FILE\ndone\n\nif [ $RET = \"F\" ]; then\nexitWithMessage \"No .dSYM found in ${DSYM_FOLDER}\" 0\nfi\n}\n\n# 在Xcode工程中执行\nfunction runInXcode(){\necho \"Uploading dSYM to Bugly in Xcode ...\"\n\necho \"Info.Plist : ${INFOPLIST_FILE}\"\n\nBUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' \"${INFOPLIST_FILE}\")\nBUNDLE_SHORT_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' \"${INFOPLIST_FILE}\")\n\n# 组装Bugly默认识别的版本信息(格式为CFBundleShortVersionString(CFBundleVersion), 例如: 1.0(1))\nif [ ! \"${CUSTOMIZED_APP_VERSION}\" ]; then\nBUGLY_APP_VERSION=\"${BUNDLE_SHORT_VERSION}(${BUNDLE_VERSION})\"\nelse\nBUGLY_APP_VERSION=\"${CUSTOMIZED_APP_VERSION}\"\nfi\n\necho \"--------------------------------\"\necho \"Prepare application information.\"\necho \"--------------------------------\"\n\necho \"Product Name: ${PRODUCT_NAME}\"\necho \"Bundle Identifier: ${BUNDLE_IDENTIFIER}\"\necho \"Version: ${BUNDLE_SHORT_VERSION}\"\necho \"Build: ${BUNDLE_VERSION}\"\n\necho \"Bugly App ID: ${BUGLY_APP_ID}\"\necho \"Bugly App key: ${BUGLY_APP_KEY}\"\necho \"Bugly App Version: ${BUGLY_APP_VERSION}\"\n\necho \"--------------------------------\"\necho \"Check the arguments ...\"\n\n##检查模拟器编译是否允许上传符号\nif [ \"$EFFECTIVE_PLATFORM_NAME\" == \"-iphonesimulator\" ]; then\nif [ $UPLOAD_SIMULATOR_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for simulator and skipping to upload. \\nYou can modify 'UPLOAD_SIMULATOR_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否是Release模式编译\nif [ \"${CONFIGURATION=}\" == \"Debug\" ]; then\nif [ $UPLOAD_DEBUG_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for debug mode and skipping to upload. \\nYou can modify 'UPLOAD_DEBUG_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否Archive操作\nif [ $UPLOAD_ARCHIVE_ONLY -eq 1 ]; then\nif [[ \"$TARGET_BUILD_DIR\" == *\"/Archive\"* ]]; then\necho \"Archive the package\"\nelse\nexitWithMessage \"Warning: Build for NOT Archive mode and skipping to upload. \\nYou can modify 'UPLOAD_ARCHIVE_ONLY' to 0 in the script.\" 0\nfi\nfi\n\n#\nrun ${BUGLY_APP_ID} ${BUGLY_APP_KEY} ${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION} ${DWARF_DSYM_FOLDER_PATH} ${BUILD_DIR}/BuglySymbolTemp ${UPLOAD_DSYM_ONLY}\n}\n\n# 根据Xcode的环境变量判断是否处于Xcode环境\nINFO_PLIST_FILE=\"${INFOPLIST_FILE}\"\n\nBuildInXcode=\"F\"\nif [ -f \"${INFO_PLIST_FILE}\" ]; then\nBuildInXcode=\"T\"\nfi\n\nif [ $BuildInXcode = \"T\" ]; then\nrunInXcode\nelse\necho \"\\nUsage: dSYMUpload.sh <bugly_app_id> <bugly_app_key> <app_bundle_identifier> <app_version> <dSYM_src_dir> <bSYMBOL_dest_dir> [upload_dsym_only]\\n\"\n# 你可以在此处直接设置BuglyAppID和BuglyAppKey，排除不常变参数的输入\nBUGLY_APP_ID=\"$1\"\nBUGLY_APP_KEY=\"$2\"\nBUNDLE_IDENTIFIER=\"$3\"\nBUGLY_APP_VERSION=\"$4\"\nDWARF_DSYM_FOLDER_PATH=\"$5\"\nSYMBOL_OUTPUT_PATH=\"$6\"\nUPLOAD_DSYM_ONLY=$7\nrun ${BUGLY_APP_ID} ${BUGLY_APP_KEY} ${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION} ${DWARF_DSYM_FOLDER_PATH} ${SYMBOL_OUTPUT_PATH} ${UPLOAD_DSYM_ONLY}\nfi\n\n";
+			shellScript = "#!/bin/sh\n#\n# Copyright 2016 Bugly, Tencent. All rights reserved.\n#\n# V1.4.0\n#\n# 2016.08.03\n#\n#\n#\n######################################################\n# 1. 脚本集成到Xcode工程的Target\n######################################################\n#\n# --- Copy the SCRIPT to the Run Script of Build Phases in the Xcode project ---\n#\n# #\nBUGLY_APP_ID=\"6bd10a3989\"\n# #\nBUGLY_APP_KEY=\"82fb9f78-73d5-4b69-a38b-5d4d1ca95b9b\"\n# #\nBUNDLE_IDENTIFIER=\"com.tongxichuanmei.FutureHome\"\n# #\nUPLOAD_DSYM_ONLY=1\n#\n# # 脚本默认配置的版本格式为CFBundleShortVersionString(CFBundleVersion),  如果你修改默认的版本格式, 请设置此变量, 如果不想修改, 请忽略此设置\n# CUSTOMIZED_APP_VERSION=\"\"\n#\n# # Debug模式编译是否上传，1＝上传 0＝不上传，默认不上传\nUPLOAD_DEBUG_SYMBOLS=1\n#\n# # 模拟器编译是否上传，1=上传 0=不上传，默认不上传\nUPLOAD_SIMULATOR_SYMBOLS=1\n#\n# #只有Archive操作时上传, 1=支持Archive上传 0=所有Release模式编译都上传\nUPLOAD_ARCHIVE_ONLY=0\n#\n# #\n# source dSYMUpload.sh\n#\n# --- END OF SCRIPT ---\n#\n#\n#\n#\n#######################################################\n# 2. 脚本根据输入参数处理\n#######################################################\n#\n# #命令行下输入应用基本信息, .dSYM文件的父目录路径, 输出文件目录即可\n#\n# sh dSYMUpload.sh <bugly_app_id> <bugly_app_key> <app_bundle_identifier> <app_version> <dSYM_src_dir> <bSYMBOL_dest_dir>\n#\n# #\n#\n# #注意:\n# # 1. dSYMUpload.sh会调用buglySymboliOS.jar进行.dSYM解析，所以依赖Java运行时环境\n# # 2. dSYMUpload.sh和buglySymboliOS.jar的文件路径需一致\n#\n#\n\n#\n# --- CONTENT OF SCRIPT ---\n#\n\n# Bugly服务域名\nBUGLY_DSYM_UPLOAD_DOMAIN=\"api.bugly.qq.com\"\n\n# 注意jar工具的路径跟dSYMUpload.sh脚本路径一致, 请务必保证jar路径的正确性\nBUGLY_SYMBOL_JAR_PATH=\"dsymtool/buglySymboliOS.jar\"\n# 查找添加到系统目录的jar工具\nif [ ! -f \"${BUGLY_SYMBOL_JAR_PATH}\" ]; then\nBUGLY_SYMBOL_JAR_PATH=\"$HOME/bin/buglySymboliOS.jar\"\nfi\n\n# 打印错误信息\nfunction exitWithMessage(){\necho \"--------------------------------\"\necho \"${1}\"\necho \"--------------------------------\"\nexit ${2}\n}\n\n# 上传bSYMBOL文件\nfunction dSYMUpload() {\nP_APP_ID=\"$1\"\nP_APP_KEY=\"$2\"\nP_APP_BUNDLE_ID=\"$3\"\nP_APP_VERSION=\"$4\"\nP_BSYMBOL_ZIP_FILE=\"$5\"\n\n#\nP_BSYMBOL_ZIP_FILE_NAME=${P_BSYMBOL_ZIP_FILE##*/}\nP_BSYMBOL_ZIP_FILE_NAME=${P_BSYMBOL_ZIP_FILE_NAME//&/_}\nP_BSYMBOL_ZIP_FILE_NAME=\"${P_BSYMBOL_ZIP_FILE_NAME// /_}\"\n\nDSYM_UPLOAD_URL=\"https://${BUGLY_DSYM_UPLOAD_DOMAIN}/openapi/file/upload/symbol?app_id=${P_APP_ID}&app_key=${P_APP_KEY}\"\necho \"dSYM upload url: ${DSYM_UPLOAD_URL}\"\n\necho \"-----------------------------\"\nSTATUS=$(/usr/bin/curl -k \"${DSYM_UPLOAD_URL}\" --form \"api_version=1\" --form \"app_id=${P_APP_ID}\" --form \"app_key=${P_APP_KEY}\" --form \"symbolType=2\"  --form \"bundleId=${BUNDLE_IDENTIFIER}\" --form \"productVersion=${BUGLY_APP_VERSION}\" --form \"fileName=${P_BSYMBOL_ZIP_FILE_NAME}\" --form \"file=@${P_BSYMBOL_ZIP_FILE}\" --verbose)\necho \"-----------------------------\"\n\nUPLOAD_RESULT=\"FAILTURE\"\necho \"Bugly server response: ${STATUS}\"\nif [ ! \"${STATUS}\" ]; then\necho \"Error: Failed to upload the zip archive file.\"\nelif [[ \"${STATUS}\" == *\"{\\\"reponseCode\\\":\\\"0\\\"}\"* ]]; then\necho \"Success to upload the dSYM for the app [${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION}]\"\nUPLOAD_RESULT=\"SUCCESS\"\nelse\necho \"Error: Failed to upload the zip archive file to Bugly.\"\nfi\n\n#Remove temp dSYM archive\n#echo \"Remove temporary zip archive: ${DSYM_ZIP_FPATH}\"\n#/bin/rm -f \"${DSYM_ZIP_FPATH}\"\n\nif [ \"$?\" -ne 0 ]; then\nexitWithMessage \"Error: Failed to remove temporary zip archive.\" 0\nfi\n\necho \"--------------------------------\"\necho \"${UPLOAD_RESULT} - dSYM upload complete.\"\n\nif [[ \"${UPLOAD_RESULT}\" == \"FAILTURE\" ]]; then\necho \"--------------------------------\"\necho \"Failed to upload the dSYM\"\necho \"Please check the script and try it again.\"\nfi\n}\n\n# .dSYM解析为bSYMBOL文件\nfunction dSYMParse() {\nDSYM_FILE=\"$1\"\nDSYM_SYMBOL_FILE=\"$2\"\n\necho \"--------------------------------\"\necho \"Extract symbol info from .dSYM file. to ${DSYM_SYMBOL_FILE}\"\n(/usr/bin/java -Xms512m -Xmx1024m -Dfile.encoding=UTF8 -jar \"${BUGLY_SYMBOL_JAR_PATH}\" -i \"${DSYM_FILE}\" -o \"${DSYM_SYMBOL_FILE}\" ) || exitWithMessage \"Error: Failed to extract symbols.\" 1\necho \"--------------------------------\"\n\n}\n\n# 执行\nfunction run() {\n\nCONFIG_BUGLY_APP_ID=\"$1\"\nCONFIG_BUGLY_APP_KEY=\"$2\"\n\nCONFIG_BUGLY_APP_BUNDLE_IDENTIFIER=\"$3\"\nCONFIG_BUGLY_APP_VERSION=\"$4\"\nCONFIG_DSYM_SOURCE_DIR=\"$5\"\nCONFIG_DSYM_DEST_DIR=\"$6\"\nCONFIG_UPLOAD_DSYM_ONLY=\"$7\"\n\n# 检查必须参数是否设置\nif [ ! \"${CONFIG_BUGLY_APP_ID}\" ]; then\nexitWithMessage \"Error: Bugly App ID not defined. Please set 'BUGLY_APP_ID' \" 0\nfi\n\nif [[ \"${CONFIG_BUGLY_APP_ID}\" == *\"App ID\"* ]]; then\nexitWithMessage \"Error: Bugly App ID not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_KEY}\" ]; then\nexitWithMessage \"Error: Bugly App Key not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_BUNDLE_IDENTIFIER}\" ]; then\nexitWithMessage \"Error: Bundle Identifier not defined.\" 0\nfi\n\nif [ ! \"${CONFIG_BUGLY_APP_VERSION}\" ]; then\nexitWithMessage \"Error: App Version not defined.\" 0\nfi\n\nif [ ! -e \"${CONFIG_DSYM_SOURCE_DIR}\" ]; then\nexitWithMessage \"Error: Invalid dir ${CONFIG_DSYM_SOURCE_DIR}\" 0\nfi\n\nif [ ! \"${CONFIG_DSYM_DEST_DIR}\" ]; then\nexitWithMessage \"Error: Invalid dir ${CONFIG_DSYM_DEST_DIR}\" 0\nfi\n\nif [ ! -e \"${CONFIG_DSYM_DEST_DIR}\" ]; then\nmkdir ${CONFIG_DSYM_DEST_DIR}\nfi\n\nDSYM_FOLDER=\"${CONFIG_DSYM_SOURCE_DIR}\"\nIFS=$'\\n'\n\necho \"Scaning dSYM FOLDER: ${DSYM_FOLDER} ...\"\nRET=\"F\"\n\n#\nfor dsymFile in $(find \"$DSYM_FOLDER\" -name '*.dSYM'); do\nRET=\"T\"\necho \"Found dSYM file: $dsymFile\"\n\nDSYM_FILE_NAME=${dsymFile##*/}\nDSYM_SYMBOL_ZIP_FILE_NAME=\"${DSYM_FILE_NAME}.zip\"\nDSYM_SYMBOL_ZIP_FILE_NAME=\"${DSYM_SYMBOL_ZIP_FILE_NAME// /_}\"\nDSYM_SYMBOL_ZIP_FILE=${CONFIG_DSYM_DEST_DIR}/${DSYM_SYMBOL_ZIP_FILE_NAME}\n\nif [ $CONFIG_UPLOAD_DSYM_ONLY -eq 1 ]; then\nif [ -e $DSYM_SYMBOL_ZIP_FILE ]; then\nrm -f $DSYM_SYMBOL_ZIP_FILE\nfi\n# 如果只上传dSYM，直接压缩dSYM目录\nzip -r -j $DSYM_SYMBOL_ZIP_FILE $dsymFile -x *.plist\nelse\n# 使用符号表工具来生成Symbol文件\ndSYMParse $dsymFile $DSYM_SYMBOL_ZIP_FILE\nfi\n\n# 上传\ndSYMUpload $CONFIG_BUGLY_APP_ID $CONFIG_BUGLY_APP_KEY $CONFIG_BUGLY_APP_BUNDLE_IDENTIFIER $CONFIG_BUGLY_APP_VERSION $DSYM_SYMBOL_ZIP_FILE\ndone\n\nif [ $RET = \"F\" ]; then\nexitWithMessage \"No .dSYM found in ${DSYM_FOLDER}\" 0\nfi\n}\n\n# 在Xcode工程中执行\nfunction runInXcode(){\necho \"Uploading dSYM to Bugly in Xcode ...\"\n\necho \"Info.Plist : ${INFOPLIST_FILE}\"\n\nBUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' \"${INFOPLIST_FILE}\")\nBUNDLE_SHORT_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' \"${INFOPLIST_FILE}\")\n\n# 组装Bugly默认识别的版本信息(格式为CFBundleShortVersionString(CFBundleVersion), 例如: 1.0(1))\nif [ ! \"${CUSTOMIZED_APP_VERSION}\" ]; then\nBUGLY_APP_VERSION=\"${BUNDLE_SHORT_VERSION}(${BUNDLE_VERSION})\"\nelse\nBUGLY_APP_VERSION=\"${CUSTOMIZED_APP_VERSION}\"\nfi\n\necho \"--------------------------------\"\necho \"Prepare application information.\"\necho \"--------------------------------\"\n\necho \"Product Name: ${PRODUCT_NAME}\"\necho \"Bundle Identifier: ${BUNDLE_IDENTIFIER}\"\necho \"Version: ${BUNDLE_SHORT_VERSION}\"\necho \"Build: ${BUNDLE_VERSION}\"\n\necho \"Bugly App ID: ${BUGLY_APP_ID}\"\necho \"Bugly App key: ${BUGLY_APP_KEY}\"\necho \"Bugly App Version: ${BUGLY_APP_VERSION}\"\n\necho \"--------------------------------\"\necho \"Check the arguments ...\"\n\n##检查模拟器编译是否允许上传符号\nif [ \"$EFFECTIVE_PLATFORM_NAME\" == \"-iphonesimulator\" ]; then\nif [ $UPLOAD_SIMULATOR_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for simulator and skipping to upload. \\nYou can modify 'UPLOAD_SIMULATOR_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否是Release模式编译\nif [ \"${CONFIGURATION=}\" == \"Debug\" ]; then\nif [ $UPLOAD_DEBUG_SYMBOLS -eq 0 ]; then\nexitWithMessage \"Warning: Build for debug mode and skipping to upload. \\nYou can modify 'UPLOAD_DEBUG_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n##检查是否Archive操作\nif [ $UPLOAD_ARCHIVE_ONLY -eq 1 ]; then\nif [[ \"$TARGET_BUILD_DIR\" == *\"/Archive\"* ]]; then\necho \"Archive the package\"\nelse\nexitWithMessage \"Warning: Build for NOT Archive mode and skipping to upload. \\nYou can modify 'UPLOAD_ARCHIVE_ONLY' to 0 in the script.\" 0\nfi\nfi\n\n#\nrun ${BUGLY_APP_ID} ${BUGLY_APP_KEY} ${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION} ${DWARF_DSYM_FOLDER_PATH} ${BUILD_DIR}/BuglySymbolTemp ${UPLOAD_DSYM_ONLY}\n}\n\n# 根据Xcode的环境变量判断是否处于Xcode环境\nINFO_PLIST_FILE=\"${INFOPLIST_FILE}\"\n\nBuildInXcode=\"F\"\nif [ -f \"${INFO_PLIST_FILE}\" ]; then\nBuildInXcode=\"T\"\nfi\n\nif [ $BuildInXcode = \"T\" ]; then\nrunInXcode\nelse\necho \"\\nUsage: dSYMUpload.sh <bugly_app_id> <bugly_app_key> <app_bundle_identifier> <app_version> <dSYM_src_dir> <bSYMBOL_dest_dir> [upload_dsym_only]\\n\"\n# 你可以在此处直接设置BuglyAppID和BuglyAppKey，排除不常变参数的输入\nBUGLY_APP_ID=\"$1\"\nBUGLY_APP_KEY=\"$2\"\nBUNDLE_IDENTIFIER=\"$3\"\nBUGLY_APP_VERSION=\"$4\"\nDWARF_DSYM_FOLDER_PATH=\"$5\"\nSYMBOL_OUTPUT_PATH=\"$6\"\nUPLOAD_DSYM_ONLY=$7\nrun ${BUGLY_APP_ID} ${BUGLY_APP_KEY} ${BUNDLE_IDENTIFIER} ${BUGLY_APP_VERSION} ${DWARF_DSYM_FOLDER_PATH} ${SYMBOL_OUTPUT_PATH} ${UPLOAD_DSYM_ONLY}\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -7282,6 +7331,7 @@
 				4A9CB22E230BCA63004A3763 /* UITableView+FDTemplateLayoutCell.m in Sources */,
 				4AB2011D22F284D800111AC4 /* FastForwardView.m in Sources */,
 				4A9CB2B5230BCD23004A3763 /* UILabel+ZJMasonryKit.m in Sources */,
+				4AB85D592452C73F00700A6F /* NSObject+safe.m in Sources */,
 				4AB2038C22F2DD7300111AC4 /* ZXDimension.m in Sources */,
 				4A5EB866230D15C800F90FF6 /* ZFLandScapeControlView.m in Sources */,
 				4A9E3ACA22E59D6F00243D73 /* FHMedicinalServiceController.m in Sources */,
@@ -7324,6 +7374,7 @@
 				4A48AB7223AA1EC100AEC284 /* SGQRCodeScanView.m in Sources */,
 				4A68D2DB23587846003A3CB6 /* UIView+DPCategory.m in Sources */,
 				4AB2042622F2DD7300111AC4 /* ZXRSS14Reader.m in Sources */,
+				4A30A2F3244EEB94005493D5 /* IMY_NJKWebViewProgress.m in Sources */,
 				4AAC981D22D70F5300E4D0B8 /* FFDropDownMenuBasedModel.m in Sources */,
 				4AC4C77F22EC585100E5D9BA /* FHAnnouncementListCell.m in Sources */,
 				4A9CB28F230BCC81004A3763 /* NSTimer+ZJHelperKit.m in Sources */,
@@ -7521,6 +7572,7 @@
 				4A6DAB5922C0ADAF00F29455 /* MJPropertyType.m in Sources */,
 				4AFC0DC922D427CC004E28CE /* FHVideosPublishingController.m in Sources */,
 				4A4BEF2022CE078B00FD00DE /* FHSetPasswordController.m in Sources */,
+				4AB85D5A2452C73F00700A6F /* NSDictionary+NilSafe.m in Sources */,
 				4AB203AD22F2DD7300111AC4 /* ZXQRCodeDecoder.m in Sources */,
 				4AB203D622F2DD7300111AC4 /* ZXPDF417BarcodeMatrix.m in Sources */,
 				4A2263BA23B8A85C00F9541D /* TZLocationManager.m in Sources */,
@@ -7811,6 +7863,7 @@
 				4A9E84EB2323561D0070CE4A /* SDImageCacheConfig.m in Sources */,
 				4AF51B5622D07E6A00AA04EC /* GNRCartFooter.m in Sources */,
 				4A9CB27C230BCC81004A3763 /* UIControl+ZJHelperBlockKit.m in Sources */,
+				4AB85D5B2452C73F00700A6F /* NSMutableArray+safe.m in Sources */,
 				4A153E8C23729FE500CFE6B6 /* FHHealthHistoryModel.m in Sources */,
 				4AF51B5E22D07ECA00AA04EC /* GNRShoppingBar.m in Sources */,
 				4AB2041022F2DD7300111AC4 /* ZXAI01weightDecoder.m in Sources */,
@@ -7823,6 +7876,7 @@
 				4AB2039122F2DD7300111AC4 /* ZXDecodeHints.m in Sources */,
 				4AB203BD22F2DD7300111AC4 /* ZXDetectorResult.m in Sources */,
 				4A5EB862230D15C800F90FF6 /* ZFAVPlayerManager.m in Sources */,
+				4AB85D512452C6A900700A6F /* NullSafe.m in Sources */,
 				4AB2045A22F2DD7300111AC4 /* ZXExpandedProductParsedResult.m in Sources */,
 				4AC67E2922C8AF1300842C0D /* FHWaitGetController.m in Sources */,
 				4AA7B3AB22CC7D8D00462389 /* NSArray+MASAdditions.m in Sources */,
@@ -7833,6 +7887,7 @@
 				4A59F96A22C0B6D100867031 /* UIView+Extend.m in Sources */,
 				4A793D38231F88E600893255 /* FHHouseSaleController.m in Sources */,
 				4AB2040B22F2DD7300111AC4 /* ZXMultiFormatUPCEANReader.m in Sources */,
+				4A30A2F0244EEB8D005493D5 /* IMYWebView.m in Sources */,
 				4A59F96B22C0B6D100867031 /* UIViewController+popType.m in Sources */,
 				4AAE629D238D413A00699C5B /* FHOrderListModel.m in Sources */,
 				4AA0D92C22CF45B2003F61D2 /* FHScanCodeController.m in Sources */,
@@ -7909,6 +7964,7 @@
 				4A793D3B231F8FBB00893255 /* FHOwnerCertificationController.m in Sources */,
 				4AB203C122F2DD7300111AC4 /* ZXHybridBinarizer.m in Sources */,
 				4ADCE0F7233391C5008A12C4 /* FHCommitDetailController.m in Sources */,
+				4A30A2EC244EE035005493D5 /* LTWKWebView.m in Sources */,
 				4AA0D93822CF4925003F61D2 /* FHWealthGardenController.m in Sources */,
 				4A9CB20C230BCA42004A3763 /* YYFrameImage.m in Sources */,
 				4AB203E122F2DD7300111AC4 /* ZXPDF417BarcodeMetadata.m in Sources */,
@@ -8098,6 +8154,7 @@
 				CODE_SIGN_ENTITLEMENTS = FutureHome/FutureHome.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ARPAFCZ2S6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

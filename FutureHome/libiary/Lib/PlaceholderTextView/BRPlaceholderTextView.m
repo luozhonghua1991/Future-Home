@@ -92,7 +92,7 @@
 {
     self.placeholder_color = [UIColor lightGrayColor];
     self.placeholder_font  = [UIFont systemFontOfSize:14];
-    self.maxTextLength=MAXFLOAT;
+    self.maxTextLength = 1000;
     self.layoutManager.allowsNonContiguousLayout=NO;
 
 

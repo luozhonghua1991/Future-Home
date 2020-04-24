@@ -627,9 +627,6 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
     if (self.person2CertificationView.leftImgView.image) {
         [self.selectIDCardsImgArrs addObject:self.person2CertificationView.leftImgView.image];
     }
-    if (self.person2CertificationView.leftImgView.image) {
-        [self.selectIDCardsImgArrs addObject:self.person2CertificationView.leftImgView.image];
-    }
     if (self.person2CertificationView.centerImgView.image) {
         [self.selectIDCardsImgArrs addObject:self.person2CertificationView.centerImgView.image];
     }
@@ -812,7 +809,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                             if (respCode == 0) {
                                 /** 支付成功 */
                                 WS(weakSelf);
-                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                                [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"亲爱的用户您好：您的申请已经成功提交，社云平台会在1-3个工作日内完成审核，审核通过后将账号信息，以短信的形式发送到您的手机，请注意查收，谢谢。" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                                     if (buttonIndex == 0) {
                                         [weakSelf.navigationController popViewControllerAnimated:YES];
                                     }
@@ -841,7 +838,7 @@ UINavigationControllerDelegate,FHCommonPaySelectViewDelegate>
                         if (respCode == 0) {
                             /** 支付成功 */
                             WS(weakSelf);
-                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"您的申请已经成功提交，平台会在1个工作日内完成审核，并将账号信息发送到您的邮箱和管理员手机，请及时关注，谢谢!" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
+                            [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"亲爱的用户您好：您的申请已经成功提交，社云平台会在1-3个工作日内完成审核，审核通过后将账号信息，以短信的形式发送到您的手机，请注意查收，谢谢。" buttonTitleArray:@[@"确定"] buttonTitleColorArray:@[[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
                                 if (buttonIndex == 0) {
                                     [weakSelf.navigationController popViewControllerAnimated:YES];
                                 }

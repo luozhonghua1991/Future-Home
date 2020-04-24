@@ -25,6 +25,9 @@ UIWebViewDelegate,
 XYSJSExport
 >
 
+id setBeingRemoved(id self, SEL selector, ...);
+id willBeRemoved(id self, SEL selector, ...);
+
 /** <#Description#> */
 @property (nonatomic, strong) NJKWebViewProgressView *webViewProgressView;
 /** <#Description#> */
@@ -55,6 +58,7 @@ XYSJSExport
 @implementation FHWebViewController
 
 - (void)dealloc {
+    _webView = nil;
     _webViewProgressView = nil;
     _webViewProgress = nil;
 }
@@ -189,6 +193,32 @@ XYSJSExport
 
 - (void)initSubViews {
     [self.view addSubview:self.webView];
+    
+    /** 此处初始化webview，具体代码省略 **/
+    
+    //此处给webview增加容错方法
+    [self webViewAddMethods];
+}
+
+
+/** 可能会引起调用私有api的错误 */
+- (void)webViewAddMethods {
+    //预防报错:WebActionDisablingCALayerDelegate    willBeRemoved
+    Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
+    class_addMethod(class, NSSelectorFromString(@"setBeingRemoved"), setBeingRemoved, "v@:");
+    class_addMethod(class, NSSelectorFromString(@"willBeRemoved"), willBeRemoved, "v@:");
+    
+    class_addMethod(class, NSSelectorFromString(@"removeFromSuperview"), willBeRemoved, "v@:");
+}
+
+id setBeingRemoved(id self, SEL selector, ...)
+{
+    return nil;
+}
+
+id willBeRemoved(id self, SEL selector, ...)
+{
+    return nil;
 }
 
 - (void)fetchNetworkData {
@@ -204,12 +234,11 @@ XYSJSExport
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.tabBarController.tabBar.hidden = YES;
     if (self.isHaveProgress) {
-//         [self.navigationController.navigationBar addSubview:self.webViewProgressView];
+        //[self.navigationController.navigationBar addSubview:self.webViewProgressView];
     }
     [self fh_creatNav];
 }
@@ -521,7 +550,7 @@ XYSJSExport
 - (UIWebView *)webView {
     if (_webView == nil) {
         _webView = [[UIWebView alloc] init];
-        _webView.dataDetectorTypes = UIDataDetectorTypeNone;
+//        _webView.dataDetectorTypes = UIDataDetectorTypeNone;
         _webView.delegate = self;
     }
     return _webView;

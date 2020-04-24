@@ -179,6 +179,11 @@
 /// 加运算
 - (void)increase
 {
+    
+    if ([SingleManager shareManager].isClosed) {
+        [ZHProgressHUD showMessage:@"本店已经打烊休息了,暂停线上接单" inView:[UIApplication sharedApplication].delegate.window];
+        return;
+    }
     [self checkTextFieldNumberWithUpdate];
     
     CGFloat number = [_textField.text floatValue] +  self.stepValue;

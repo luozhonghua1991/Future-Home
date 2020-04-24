@@ -320,7 +320,7 @@
 /** 跳转协议 */
 - (void)FHUserAgreementViewClick {
     FHWebViewController *web = [[FHWebViewController alloc] init];
-//    web.urlString = self.protocol;
+    web.urlString = @"https:sheyunlife.com/wap/Agreement/index?id=11";
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     web.type = @"noShow";

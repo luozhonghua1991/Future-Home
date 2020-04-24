@@ -413,6 +413,11 @@ UICollectionViewDataSource>
 }
 
 - (void)submitBtnClick {
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"UPDATESUCCESS" object:nil];
+//    [self.navigationController popViewControllerAnimated:YES];
+//    return;
+    
+    
     WS(weakSelf);
     [UIAlertController ba_alertShowInViewController:self title:@"提示" message:@"确定提交信息么?已经提交无法修改" buttonTitleArray:@[@"取消",@"确定"] buttonTitleColorArray:@[[UIColor blackColor],[UIColor blueColor]] block:^(UIAlertController * _Nonnull alertController, UIAlertAction * _Nonnull action, NSInteger buttonIndex) {
         if (buttonIndex == 1) {
