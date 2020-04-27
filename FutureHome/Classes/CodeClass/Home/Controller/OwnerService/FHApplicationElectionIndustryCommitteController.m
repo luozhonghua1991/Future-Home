@@ -208,13 +208,13 @@
     }
     
     if ([self.titleString isEqualToString:@"选举人资料"]) {
-        CGSize size = [UIlabelTool sizeWithString:_personModel.describe font:[UIFont systemFontOfSize:13] width:SCREEN_WIDTH - 20 - 98];
+        CGSize size = [UIlabelTool sizeWithString:_personModel.describe font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH - 20 - 98];
         CGFloat updateHeight = size.height + 50;
         self.businessDescriptionTextView.height = updateHeight;
         self.bigLineView.height = updateHeight;
         self.bigBottomView.frame = CGRectMake(10, MaxY(self.contentTF) - 1, SCREEN_WIDTH - 20, updateHeight);
         self.normalLabel.height = updateHeight;
-        self.businessDescriptionTextView.scrollEnabled = NO;
+        self.businessDescriptionTextView.scrollEnabled = YES;
         self.scrollView.contentSize = CGSizeMake(0, MaxY(self.bigBottomView) + MainSizeHeight + 20);
     }
 }
@@ -644,7 +644,7 @@
 
 - (BRPlaceholderTextView *)businessDescriptionTextView {
     if (!_businessDescriptionTextView) {
-        _businessDescriptionTextView = [[BRPlaceholderTextView alloc] initWithFrame:CGRectMake(98, 0, SCREEN_WIDTH - 20 - 98, 400)];
+        _businessDescriptionTextView = [[BRPlaceholderTextView alloc] initWithFrame:CGRectMake(98, 0, SCREEN_WIDTH - 20 - 98, 0)];
         _businessDescriptionTextView.PlaceholderLabel.font = [UIFont systemFontOfSize:15];
         _businessDescriptionTextView.PlaceholderLabel.textColor = [UIColor lightGrayColor];
         NSString *titleString = @" \n\n\n\n 请输入个人基本情况";

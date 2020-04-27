@@ -241,6 +241,7 @@
     if (self.imgSelectArrs <= 0) {
         [self.view makeToast:@"请上传房屋信息图片"];
     } else {
+         [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
         self.selectImgArrays = [[NSMutableArray alloc] init];
         /** 先上传多张图片*/
         Account *account = [AccountStorage readAccount];
@@ -297,7 +298,6 @@
 /** 提交信息 */
 - (void)commitInfo {
     WS(weakSelf);
-    [[UIApplication sharedApplication].keyWindow addSubview:self.loadingHud];
     Account *account = [AccountStorage readAccount];
     NSString *imgArrsString = [self.selectImgArrays componentsJoinedByString:@","];
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:

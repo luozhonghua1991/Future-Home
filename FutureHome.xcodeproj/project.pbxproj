@@ -8178,6 +8178,7 @@
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/FutureHome-ios/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -8233,6 +8234,7 @@
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/FutureHome-ios/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -92,10 +92,9 @@
 {
     self.placeholder_color = [UIColor lightGrayColor];
     self.placeholder_font  = [UIFont systemFontOfSize:14];
+//    self.maxTextLength = 999999999;
     self.maxTextLength = 1000;
-    self.layoutManager.allowsNonContiguousLayout=NO;
-
-
+    self.layoutManager.allowsNonContiguousLayout = NO;
 }
 
 -(void)addMaxTextLengthWithMaxLength:(NSInteger)maxLength andEvent:(void (^)(BRPlaceholderTextView *text))limit

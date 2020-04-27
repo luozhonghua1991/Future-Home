@@ -85,7 +85,7 @@
     [self.view addSubview:navgationView];
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"动态详情";
+    titleLabel.text = @"信息详情";
     titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -101,6 +101,16 @@
     UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, navgationView.height - 1, SCREEN_WIDTH, 1)];
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [navgationView addSubview:bottomLineView];
+    
+    if (self.isCanCommit) {
+        UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
+        [deleteBtn setTitle:@"···" forState:UIControlStateNormal];
+        deleteBtn.titleLabel.font = [UIFont systemFontOfSize:35];
+        [deleteBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [deleteBtn addTarget:self action:@selector(deleteClick) forControlEvents:UIControlEventTouchUpInside];
+        [navgationView addSubview:deleteBtn];
+    }
     
     if (self.type == 3) {
         Account *account = [AccountStorage readAccount];
@@ -125,14 +135,29 @@
     [actionSheet show];
 }
 
+- (void)deleteClick {
+    FDActionSheet *actionSheet = [[FDActionSheet alloc]initWithTitle:@"确定删除该条投诉建议吗？" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",@"取消", nil];
+    actionSheet.tag = 2020;
+    [actionSheet setCancelButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:0];
+    [actionSheet setButtonTitleColor:COLOR_1 bgColor:nil fontSize:SCREEN_HEIGHT/667 *15 atIndex:1];
+    [actionSheet addAnimation];
+    [actionSheet show];
+}
+
 
 #pragma mark - <FDActionSheetDelegate>
 - (void)actionSheet:(FDActionSheet *)sheet clickedButtonIndex:(NSInteger)buttonIndex {
     switch (buttonIndex)
     {
         case 0: {
-            /** 做删除动态的操作 */
-            [self deleteDynamic];
+            if (sheet.tag == 2020) {
+                /** 做删除投诉建议的操作 */
+                [self deleteSuggestion];
+            } else {
+                /** 做删除动态的操作 */
+                [self deleteDynamic];
+            }
             break;
         }
         case 1: {
@@ -142,6 +167,33 @@
         default:
 
             break;
+    }
+}
+
+- (void)deleteSuggestion {
+    ZJCommit *commit = self.dataArray[0];
+    Account *account = [AccountStorage readAccount];
+    if ([commit.user_id integerValue] == account.user_id) {
+        /** 只能删除自己的动态 */
+        WS(weakSelf);
+        Account *account = [AccountStorage readAccount];
+        NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   @(account.user_id),@"user_id",
+                                   commit.ID,@"id",
+                                   nil];
+        
+        [AFNetWorkTool post:@"sheyun/deleteDynamic" params:paramsDic success:^(id responseObj) {
+            if ([responseObj[@"code"] integerValue] == 1) {
+                [weakSelf.view makeToast:@"操作成功"];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                });
+            } else {
+                [weakSelf.view makeToast:responseObj[@"msg"]];
+            }
+        } failure:^(NSError *error) {
+            
+        }];
     }
 }
 
@@ -170,7 +222,6 @@
             
         }];
     }
-    
 }
 
 - (void)backBtnClick {

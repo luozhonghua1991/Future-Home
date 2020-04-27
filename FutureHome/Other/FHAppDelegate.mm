@@ -64,7 +64,6 @@ RCIMGroupInfoDataSource
     [[RCIM sharedRCIM] setGroupInfoDataSource:self];
     /** 与融云服务器建立连接 */
     Account *account = [AccountStorage readAccount];
-    
     if (account.rong_token) {
         [[RCIM sharedRCIM] connectWithToken:account.rong_token success:^(NSString *userId) {
             //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取

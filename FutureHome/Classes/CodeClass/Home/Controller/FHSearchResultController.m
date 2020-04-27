@@ -23,6 +23,8 @@
 @property (nonatomic, strong) UITableView *homeTable;
 /** 搜索数据Arrs */
 @property (nonatomic, strong) NSMutableArray *searchResultArrs;
+/** <#copy属性注释#> */
+@property (nonatomic, copy) NSArray *dataArr;
 
 
 @end
@@ -68,12 +70,12 @@
 }
 
 - (void)footerReload {
-    [self.homeTable.mj_footer endRefreshingWithNoMoreData];
-//    if (++curPage <= tolPage) {
-//        [self getSearchResultLoadHead:NO searchTitle:self.searchText];
-//    } else {
-//        [self.homeTable.mj_footer endRefreshingWithNoMoreData];
-//    }
+    if (self.dataArr.count >= 20) {
+        curPage ++;
+        [self getSearchResultLoadHead:NO searchTitle:self.searchText];
+    } else {
+        [self.homeTable.mj_footer endRefreshingWithNoMoreData];
+    }
 }
 
 - (void)endRefreshAction
@@ -110,8 +112,10 @@
                 [self.searchResultArrs removeAllObjects];
             }
             [self endRefreshAction];
-            self->tolPage = [responseObj[@"data"][@"last_page"] integerValue];
-            [self.searchResultArrs addObjectsFromArray:[FHSearchResultModel mj_objectArrayWithKeyValuesArray:responseObj[@"data"][@"list"]]];
+            self.dataArr = responseObj[@"data"][@"list"];
+            if (self.dataArr.count > 0) {
+                [self.searchResultArrs addObjectsFromArray:[FHSearchResultModel mj_objectArrayWithKeyValuesArray:self.dataArr]];
+            }
             [weakSelf.homeTable reloadData];
         } else {
             [self.searchResultArrs removeAllObjects];
