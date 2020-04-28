@@ -102,7 +102,7 @@
     FHFriendListCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHFriendListCell class])];
     cell.followListModel = self.followListDataArrs[indexPath.row];
     Account *account = [AccountStorage readAccount];
-    if ([cell.followListModel.follow_id integerValue] == account.user_id) {
+    if ([cell.followListModel.follow_id integerValue] == account.user_id ||[cell.followListModel.follower integerValue] == account.user_id) {
         cell.followOrNoBtn.hidden = YES;
     } else {
         cell.followOrNoBtn.hidden = NO;
@@ -138,7 +138,7 @@
         vc.user_id = followListModel.follower;
     } else {
         vc.user_id = followListModel.follow_id;
-    }
+    } 
     [self.navigationController pushViewController:vc animated:YES];
 }
 

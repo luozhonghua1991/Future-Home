@@ -97,6 +97,7 @@ FHSearchResultCellDelegate
                                    @(curPage),@"page",
                                    nil];
         [AFNetWorkTool get:@"userCenter/collection" params:paramsDic success:^(id responseObj) {
+            
             if ([responseObj[@"code"] integerValue] == 1) {
                 if (isHead) {
                     [self.dataArrs removeAllObjects];
@@ -174,6 +175,12 @@ FHSearchResultCellDelegate
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.followModel = self.dataArrs[indexPath.row];
         cell.delegate = self;
+        if ([cell.followModel.is_collect isEqualToString:@"0"]) {
+            /** 未收藏 */
+            cell.rightBtn.hidden = YES;
+        } else if ([cell.followModel.is_collect isEqualToString:@"1"]){
+            cell.rightBtn.hidden = NO;
+        }
         return cell;
     }
     FHSearchResultCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([FHSearchResultCell class])];
@@ -367,7 +374,9 @@ FHSearchResultCellDelegate
                                weakSelf.cid,@"cid",
                                weakSelf.type,@"type",
                                nil];
+    
     [AFNetWorkTool post:@"public/cancelCollect" params:paramsDic success:^(id responseObj) {
+        
         if ([responseObj[@"code"] integerValue] == 1) {
             [weakSelf.view makeToast:@"取消收藏成功"];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

@@ -99,6 +99,7 @@
     NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                @(account.user_id),@"user_id",
                                @(curPage),@"page",
+                               @(10),@"pageSize",
                                self.type,@"type",
                                title ? title : @"",@"title",
                                /** 经纬度 */
