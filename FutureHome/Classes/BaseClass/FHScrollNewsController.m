@@ -42,7 +42,15 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"滚动消息列表";
+    if ([self.type isEqualToString:@"1"]) {
+        titleLabel.text = @"社云首页系统消息";
+    } else if ([self.type isEqualToString:@"2"]) {
+        titleLabel.text = @"健康服务系统消息";
+    } else if ([self.type isEqualToString:@"3"]) {
+        titleLabel.text = @"资讯服务系统消息";
+    } else if ([self.type isEqualToString:@"4"]) {
+        titleLabel.text = @"客服服务系统消息";
+    }
     titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -136,7 +144,16 @@
 //    NSArray *arr = [newsModel.singpage componentsSeparatedByString:@"/"];
 //    web.article_type = arr[arr.count - 1];
 //    web.article_id = arr[arr.count - 3];
-    web.titleString = newsModel.title;
+    if ([self.type isEqualToString:@"1"]) {
+        web.titleString = @"社云首页系统消息";
+    } else if ([self.type isEqualToString:@"2"]) {
+        web.titleString = @"健康服务系统消息";
+    } else if ([self.type isEqualToString:@"3"]) {
+        web.titleString = @"资讯服务系统消息";
+    } else if ([self.type isEqualToString:@"4"]) {
+        web.titleString = @"客服服务系统消息";
+    }
+//     = newsModel.title;
     web.typeString = @"information";
     web.hidesBottomBarWhenPushed = YES;
     web.isHaveProgress = YES;

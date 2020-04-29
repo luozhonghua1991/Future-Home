@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 类型 1主页 2健康 3理财 4客服 */
 @property (nonatomic, copy) NSString *type;
 
-
 @end
 
 NS_ASSUME_NONNULL_END

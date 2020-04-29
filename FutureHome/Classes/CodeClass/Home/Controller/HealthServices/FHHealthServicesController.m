@@ -64,7 +64,7 @@
                                 @"饮食健康",
                                 @"睡眠健康",
                                 @"健康文化",
-                                @"健康保险",
+                                @"健康保障",
                                 @"医药资讯"];
     self.bottomImageArrs = @[@"4-1疾病分类",
                              @"4-2药物健康",
@@ -382,8 +382,8 @@
         /** 健康文化 */
         [self pushAnnouncementControllerWithTitle:@"健康文化" ID:selectIndex.row - 1];
     } else if (selectIndex.row == 8) {
-        /** 健康保险 */
-        [self pushAnnouncementControllerWithTitle:@"健康保险"ID:selectIndex.row - 1];
+        /** 健康保障 */
+        [self pushAnnouncementControllerWithTitle:@"健康保障"ID:selectIndex.row - 1];
     } else if (selectIndex.row == 9) {
         /** 医疗资讯 */
         [self pushAnnouncementControllerWithTitle:@"医疗资讯" ID:8];

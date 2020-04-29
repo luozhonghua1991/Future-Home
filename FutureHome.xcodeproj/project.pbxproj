@@ -8154,6 +8154,7 @@
 				CODE_SIGN_ENTITLEMENTS = FutureHome/FutureHome.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20200429;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ARPAFCZ2S6;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -8177,7 +8178,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/FutureHome-ios/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8199,7 +8200,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongxichuanmei.FutureHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -8211,6 +8212,7 @@
 				CODE_SIGN_ENTITLEMENTS = FutureHome/FutureHome.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 20200429;
 				DEVELOPMENT_TEAM = ARPAFCZ2S6;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8233,7 +8235,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "/Users/tongxichuanmei/FutureHome-ios/FutureHome/Other/PrefixHeader.pch";
 				INFOPLIST_FILE = FutureHome/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_GENERATE_MAP_FILE = NO;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8255,7 +8257,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tongxichuanmei.FutureHome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

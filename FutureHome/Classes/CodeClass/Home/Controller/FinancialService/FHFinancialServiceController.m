@@ -53,15 +53,15 @@
     [super viewDidLoad];
     [self fh_creatNav];
     self.bottomLogoNameArrs = @[@"三农生态",
-                                @"房产大观",
+                                @"房产资讯",
                                 @"经济头条",
                                 @"民生资讯",
                                 @"国际资讯",
-                                @"投资观察",
-                                @"基金保险",
-                                @"股票期货",
-                                @"黄金白银",
-                                @"全球外汇"];
+                                @"一带一路",
+                                @"品牌资讯",
+                                @"交易资讯",
+                                @"金属资讯",
+                                @"汇率资讯"];
     self.bottomImageArrs = @[@"5-1生鲜行情",
                              @"5-2房产资讯",
                              @"5-3经济头条",
@@ -99,7 +99,7 @@
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"理财服务";
+    titleLabel.text = @"资讯服务";
     titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -350,8 +350,8 @@
         /** 生鲜行情 */
         [self pushAnnouncementControllerWithTitle:@"三农生态" ID:1];
     } else if (selectIndex.row == 1) {
-        /** 房产大观 */
-        [self pushAnnouncementControllerWithTitle:@"房产大观" ID:2];
+        /** 房产资讯 */
+        [self pushAnnouncementControllerWithTitle:@"房产资讯" ID:2];
     } else if (selectIndex.row == 2) {
         /** 经济头条 */
         [self pushAnnouncementControllerWithTitle:@"经济头条" ID:3];
@@ -362,20 +362,20 @@
         /** 国际资讯 */
         [self pushAnnouncementControllerWithTitle:@"国际资讯" ID:5];
     } else if (selectIndex.row == 5) {
-        /** 投资观察 */
-        [self pushAnnouncementControllerWithTitle:@"投资观察" ID:6];
+        /** 一带一路 */
+        [self pushAnnouncementControllerWithTitle:@"一带一路" ID:6];
     } else if (selectIndex.row == 6) {
-        /** 基金保险 */
-        [self pushAnnouncementControllerWithTitle:@"基金保险" ID:7];
+        /** 品牌资讯 */
+        [self pushAnnouncementControllerWithTitle:@"品牌资讯" ID:7];
     } else if (selectIndex.row == 7) {
         /** 股票期货 */
-         [self pushAnnouncementControllerWithTitle:@"股票期货" ID:8];
+         [self pushAnnouncementControllerWithTitle:@"交易资讯" ID:8];
     } else if (selectIndex.row == 8) {
         /** 黄金白银 */
-        [self pushAnnouncementControllerWithTitle:@"黄金白银" ID:9];
+        [self pushAnnouncementControllerWithTitle:@"金属资讯" ID:9];
     } else if (selectIndex.row == 9) {
         /** 全球外汇 */
-        [self pushAnnouncementControllerWithTitle:@"全球外汇" ID:10];
+        [self pushAnnouncementControllerWithTitle:@"汇率资讯" ID:10];
     }
 }
 

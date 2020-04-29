@@ -86,7 +86,7 @@
     self.priceLabel.text = [NSString stringWithFormat:@"售价:%@元",_goodsDetailModel.sell_price];
     self.allCountLabel.text = [NSString stringWithFormat:@"库存:%@",_goodsDetailModel.SafetStock];
     self.goodsInfoLabel.text = [NSString stringWithFormat:@"商品描述:\n\n%@",_goodsDetailModel.desc];
-    CGSize size = [UIlabelTool sizeWithString:self.goodsInfoLabel.text font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
+    CGSize size = [UIlabelTool sizeWithString:self.goodsInfoLabel.text font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH - 15];
     self.goodsInfoLabel.frame = CGRectMake(10, MaxY(self.dayCountLabel) + 20, SCREEN_WIDTH - 15, size.height);
     [SingleManager shareManager].goodsDetailHeight = MaxY(self.goodsInfoLabel) + 5;
     [self layoutIfNeeded];
