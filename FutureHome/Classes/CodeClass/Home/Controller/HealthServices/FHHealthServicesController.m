@@ -60,12 +60,12 @@
                                 @"药物健康",
                                 @"健康指数",
                                 @"心里健康",
-                                @"医疗档案",
+                                @"健康档案",
                                 @"饮食健康",
                                 @"睡眠健康",
                                 @"健康文化",
                                 @"健康保障",
-                                @"医药资讯"];
+                                @"健康资讯"];
     self.bottomImageArrs = @[@"4-1疾病分类",
                              @"4-2药物健康",
                              @"4-3健康指数",
@@ -369,7 +369,7 @@
     } else if (selectIndex.row == 4) {
         /** 医疗档案 */
         FHMedicalRecordsController *health = [[FHMedicalRecordsController alloc] init];
-        health.titleString = @"医疗档案";
+        health.titleString = @"健康档案";
         health.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:health animated:YES];
     } else if (selectIndex.row == 5) {
@@ -386,7 +386,7 @@
         [self pushAnnouncementControllerWithTitle:@"健康保障"ID:selectIndex.row - 1];
     } else if (selectIndex.row == 9) {
         /** 医疗资讯 */
-        [self pushAnnouncementControllerWithTitle:@"医疗资讯" ID:8];
+        [self pushAnnouncementControllerWithTitle:@"健康资讯" ID:8];
         
     }
 }

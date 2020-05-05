@@ -172,12 +172,12 @@ FDActionSheetDelegate
         [self.navigationController pushViewController:goodList animated:YES];
     } else if ([self.type isEqualToString:@"5"]) {
         /** 医药 */
-        /** 医药商城 */
+        /** 企业商城 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
         goodList.shopID = model.id;
         goodList.isCollect = model.is_collect;
-        goodList.titleString = @"医药商城";
+        goodList.titleString = @"企业商城";
         [self.navigationController pushViewController:goodList animated:YES];
     }
 }

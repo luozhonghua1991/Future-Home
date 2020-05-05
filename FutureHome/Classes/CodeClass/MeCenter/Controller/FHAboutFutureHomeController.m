@@ -31,7 +31,7 @@
     [self fh_setUpUI];
     self.topLogoNameArrs = @[@"社云官网",
                              @"平台协议",
-                             @"版本更新"];
+                             @"版本号"];
 }
 
 
@@ -99,11 +99,18 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
     }
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = [NSString stringWithFormat:@"%@",self.topLogoNameArrs[indexPath.row]];
     cell.textLabel.font = [UIFont systemFontOfSize:15];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
         cell.detailTextLabel.text = @"http://tongximedia.com";
+    }
+    if (indexPath.row == 1) {
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    if (indexPath.row == 2) {
+        cell.detailTextLabel.text = @"版本号1.0.1";
+        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
     }
     return cell;
 }

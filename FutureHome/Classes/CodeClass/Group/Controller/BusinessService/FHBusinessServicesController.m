@@ -32,7 +32,7 @@
     videos1VC.type = @"4";
     
     FHCollectListViewController *videos2VC = [[FHCollectListViewController alloc] init];
-    videos2VC.yp_tabItemTitle = @"医药收藏";
+    videos2VC.yp_tabItemTitle = @"企业收藏";
     videos2VC.type = @"5";
     
     FHCollectListViewController *photoVC = [[FHCollectListViewController alloc] init];

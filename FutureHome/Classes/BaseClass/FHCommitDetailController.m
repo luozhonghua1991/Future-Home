@@ -102,6 +102,10 @@
     bottomLineView.backgroundColor = [UIColor lightGrayColor];
     [navgationView addSubview:bottomLineView];
     
+//    ZJCommit *commit = self.dataArray[0];
+//    Account *account = [AccountStorage readAccount];
+//    if ([commit.user_id integerValue] == account.user_id) {
+    
     if (self.isCanCommit) {
         UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         deleteBtn.frame = CGRectMake(SCREEN_WIDTH - 50, MainStatusBarHeight - 10, MainNavgationBarHeight, MainNavgationBarHeight);
@@ -174,19 +178,21 @@
     ZJCommit *commit = self.dataArray[0];
     Account *account = [AccountStorage readAccount];
     if ([commit.user_id integerValue] == account.user_id) {
-        /** 只能删除自己的动态 */
+        /** 只能删除自己的投诉建议 */
         WS(weakSelf);
         Account *account = [AccountStorage readAccount];
         NSDictionary *paramsDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    @(account.user_id),@"user_id",
+                                   @(account.user_id),@"uid",
+                                   @(self.type),@"type",
                                    commit.ID,@"id",
                                    nil];
         
-        [AFNetWorkTool post:@"sheyun/deleteDynamic" params:paramsDic success:^(id responseObj) {
+        [AFNetWorkTool post:@"public/delComplaints" params:paramsDic success:^(id responseObj) {
             if ([responseObj[@"code"] integerValue] == 1) {
                 [weakSelf.view makeToast:@"操作成功"];
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [weakSelf.navigationController popViewControllerAnimated:YES];
+                    [weakSelf.navigationController popToRootViewControllerAnimated:YES];
                 });
             } else {
                 [weakSelf.view makeToast:responseObj[@"msg"]];

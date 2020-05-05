@@ -182,7 +182,7 @@
         [SingleManager shareManager].ordertype = @"3";
     } else if ([self.titleString isEqualToString:@"商业商城"]) {
         [SingleManager shareManager].ordertype = @"4";
-    } else if ([self.titleString isEqualToString:@"医药商城"]) {
+    } else if ([self.titleString isEqualToString:@"企业商城"]) {
         [SingleManager shareManager].ordertype = @"5";
     }
     
@@ -365,8 +365,8 @@
     } else if ([self.titleString isEqualToString:@"商业商城"]) {
         listVC.titleString = @"商业收藏";
         listVC.type = @"4";
-    } else if ([self.titleString isEqualToString:@"医药商城"]) {
-        listVC.titleString = @"医药收藏";
+    } else if ([self.titleString isEqualToString:@"企业商城"]) {
+        listVC.titleString = @"企业收藏";
         listVC.type = @"5";
     }
     self.tabBarController.tabBar.hidden = YES;
@@ -467,7 +467,7 @@
         messageVC.type = @"3";
     } else if ([self.titleString isEqualToString:@"商业商城"]) {
         messageVC.type = @"4";
-    } else if ([self.titleString isEqualToString:@"医药商城"]) {
+    } else if ([self.titleString isEqualToString:@"企业商城"]) {
         messageVC.type = @"5";
     }
     messageVC.send_cost = self.send_cost;
@@ -581,7 +581,7 @@
             type = @"3";
         } else if ([self.titleString isEqualToString:@"商业商城"]) {
             type = @"4";
-        } else if ([self.titleString isEqualToString:@"医药商城"]) {
+        } else if ([self.titleString isEqualToString:@"企业商城"]) {
             type = @"5";
         }
         NSMutableDictionary *paramsDic = [NSMutableDictionary dictionaryWithObjectsAndKeys:

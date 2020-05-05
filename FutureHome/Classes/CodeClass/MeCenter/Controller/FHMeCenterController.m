@@ -154,8 +154,8 @@
         cell.textLabel.font = [UIFont systemFontOfSize:15];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         if (indexPath.row == 6) {
-            cell.detailTextLabel.text = @"版本号1.0.1";
-            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+//            cell.detailTextLabel.text = @"版本号1.0.1";
+//            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         } else if (indexPath.row == 2) {
 //            cell.detailTextLabel.text = self.isReainame;
             cell.detailTextLabel.font = [UIFont systemFontOfSize:14];

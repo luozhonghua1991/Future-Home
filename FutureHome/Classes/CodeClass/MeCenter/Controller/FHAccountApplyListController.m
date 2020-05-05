@@ -81,8 +81,8 @@
         self.titleStr = @"开通商业服务平台账户";
         protocolModel = arr[3];
         [self setDataWithModel:protocolModel];
-    } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号"]) {
-        self.titleStr = @"开通医药药品服务平台账户";
+    } else if ([self.yp_tabItemTitle isEqualToString:@"企业账号"]) {
+        self.titleStr = @"开通企业服务平台账户";
         protocolModel = arr[4];
         [self setDataWithModel:protocolModel];
     }
@@ -143,7 +143,7 @@
         vc.open = self.open;
         vc.price = self.price;
         [self.navigationController pushViewController:vc animated:YES];
-    } else if ([self.yp_tabItemTitle isEqualToString:@"医药账号"]) {
+    } else if ([self.yp_tabItemTitle isEqualToString:@"企业账号"]) {
         FHMedicinalServiceController *vc = [[FHMedicinalServiceController alloc] init];
         vc.hidesBottomBarWhenPushed = YES;
         vc.tips2 = self.tips2;

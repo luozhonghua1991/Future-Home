@@ -88,8 +88,8 @@
     CGSize size2 = [UIlabelTool sizeWithString:@"社交商业" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
     buinessListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(freshShoppingMallBtn.frame) + ZH_SCALE_SCREEN_Width(30),3, size2.width, self.selectNavView.frame.size.height)title:@"社交商业" tag:2];
     
-    CGSize size3 = [UIlabelTool sizeWithString:@"医药商城" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
-    littleShopListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(buinessListBtn.frame) + ZH_SCALE_SCREEN_Width(40),3, size3.width, self.selectNavView.frame.size.height)title:@"医药商城" tag:3];
+    CGSize size3 = [UIlabelTool sizeWithString:@"企业商城" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
+    littleShopListBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(buinessListBtn.frame) + ZH_SCALE_SCREEN_Width(40),3, size3.width, self.selectNavView.frame.size.height)title:@"企业商城" tag:3];
     
     CGSize size4 = [UIlabelTool sizeWithString:@"地址/发票" font:[UIFont systemFontOfSize:15] width:SCREEN_WIDTH];
     viewManagementBtn = [self creatBtnWithFrame:CGRectMake(CGRectGetMaxX(littleShopListBtn.frame) + ZH_SCALE_SCREEN_Width(35),3, size4.width, self.selectNavView.frame.size.height)title:@"地址/发票" tag:4];

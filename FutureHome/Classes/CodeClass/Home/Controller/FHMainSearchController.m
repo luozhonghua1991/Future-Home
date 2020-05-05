@@ -92,7 +92,7 @@
     bussiness.type = @"4";
     
     FHSearchResultController *health = [[FHSearchResultController alloc] init];
-    health.yp_tabItemTitle = @"医药";
+    health.yp_tabItemTitle = @"企业";
 //    health.type = @"6";
     health.type = @"5";
     

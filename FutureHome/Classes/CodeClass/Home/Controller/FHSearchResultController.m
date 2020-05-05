@@ -255,7 +255,7 @@
         /** 医药服务 */
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
-        goodList.titleString = @"医药商城";
+        goodList.titleString = @"企业商城";
         goodList.shopID = model.id;
         goodList.isCollect = model.is_collect;
         [self.navigationController pushViewController:goodList animated:YES];

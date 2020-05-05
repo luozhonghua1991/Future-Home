@@ -195,6 +195,7 @@
         setPassword.verificCode = self.verificCode;
         setPassword.BizId = self.BizId;
         [self.navigationController pushViewController:setPassword animated:YES];
+        
 //        //新用户注册 快捷登录
 //        NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //        params[@"phone"] = self.phoneNumber;

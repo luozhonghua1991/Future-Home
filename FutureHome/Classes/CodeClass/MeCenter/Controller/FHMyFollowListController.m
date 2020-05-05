@@ -92,7 +92,7 @@
     friendVC.type = @"4";
     
     FHFollowListViewController *followVC = [[FHFollowListViewController alloc] init];
-    followVC.yp_tabItemTitle = @"医药";
+    followVC.yp_tabItemTitle = @"企业";
     followVC.type = @"5";
     
 //    FHFollowListViewController *fowVC = [[FHFollowListViewController alloc] init];

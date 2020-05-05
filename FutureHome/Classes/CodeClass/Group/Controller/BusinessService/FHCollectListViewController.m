@@ -227,7 +227,7 @@ FHSearchResultCellDelegate
     } else if ([self.type isEqualToString:@"5"]) {
         FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
         goodList.hidesBottomBarWhenPushed = YES;
-        goodList.titleString = @"医药商城";
+        goodList.titleString = @"企业商城";
         goodList.shopID = followModel.id;
         goodList.isCollect = followModel.is_collect;
         [self.navigationController pushViewController:goodList animated:YES];
@@ -238,7 +238,7 @@ FHSearchResultCellDelegate
         } else if ([resultModel.type isEqualToString:@"4"]) {
             [self pushVCWithTitle:@"商业商城" shopID:resultModel.id isCollect:resultModel.is_collect];
         } else if ([resultModel.type isEqualToString:@"5"]) {
-            [self pushVCWithTitle:@"医药商城" shopID:resultModel.id isCollect:resultModel.is_collect];
+            [self pushVCWithTitle:@"企业商城" shopID:resultModel.id isCollect:resultModel.is_collect];
         }
     }
 }

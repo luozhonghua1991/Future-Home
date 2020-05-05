@@ -134,7 +134,7 @@ FHCommonPaySelectViewDelegate
     self.navgationView.userInteractionEnabled = YES;
     
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, MainStatusBarHeight, SCREEN_WIDTH, MainNavgationBarHeight)];
-    titleLabel.text = @"开通医药药品服务平台账户";
+    titleLabel.text = @"开通企业服务平台账户";
     titleLabel.font = [UIFont boldSystemFontOfSize:18];
     titleLabel.textColor = [UIColor whiteColor];
     titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -432,7 +432,7 @@ FHCommonPaySelectViewDelegate
         if (range.length == 1 && string.length == 0) {
             return YES;
         }  else if (self.serviceDeskNameTF.text.length >= 16) {
-            [self.view makeToast:@"医药电商平台名称限制16字以内"];
+            [self.view makeToast:@"企业平台名称限制16字以内"];
             self.serviceDeskNameTF.text = [textField.text substringToIndex:16];
             return NO;
         }
@@ -647,7 +647,7 @@ FHCommonPaySelectViewDelegate
 - (FHAccountApplicationTFView *)serviceDeskView {
     if (!_serviceDeskView) {
         _serviceDeskView = [[FHAccountApplicationTFView alloc] init];
-        _serviceDeskView.titleLabel.text = @"医药服务账号名称";
+        _serviceDeskView.titleLabel.text = @"企业服务账号名称";
         [_serviceDeskView.contentTF removeFromSuperview];
     }
     return _serviceDeskView;
@@ -659,7 +659,7 @@ FHCommonPaySelectViewDelegate
         _serviceDeskNameTF.textAlignment = NSTextAlignmentRight;
         _serviceDeskNameTF.font = [UIFont systemFontOfSize:15];
         _serviceDeskNameTF.text = @"";
-        _serviceDeskNameTF.placeholder = @"请输入医药电商平台名称(限16字)";
+        _serviceDeskNameTF.placeholder = @"请输入企业平台名称(限16字)";
         _serviceDeskNameTF.delegate = self;
     }
     return _serviceDeskNameTF;

@@ -125,6 +125,7 @@
 - (void)fh_creatUI {
     self.scrollView.delegate = self;
     [self.view addSubview:self.scrollView];
+    self.scrollView.userInteractionEnabled = NO;
     [self.scrollView addSubview:self.ownerNameView];
     [self.scrollView addSubview:self.ownerCodeView];
     [self.scrollView addSubview:self.phoneNumberView];

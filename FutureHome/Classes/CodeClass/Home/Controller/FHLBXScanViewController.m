@@ -292,7 +292,7 @@
         } else if (type == 5) {
             FHFreshMallController *goodList = [[FHFreshMallController alloc] init];
             goodList.hidesBottomBarWhenPushed = YES;
-            goodList.titleString = @"医药商城";
+            goodList.titleString = @"企业商城";
             goodList.shopID = resultDic[@"id"];
             [[CurrentViewController topViewController].navigationController pushViewController:goodList animated:YES];
         }

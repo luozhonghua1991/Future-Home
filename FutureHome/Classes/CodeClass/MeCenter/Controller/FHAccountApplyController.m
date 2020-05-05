@@ -89,7 +89,7 @@
     friendVC.yp_tabItemTitle = @"社交电商";
 
     FHAccountApplyListController *followVC = [[FHAccountApplyListController alloc] init];
-    followVC.yp_tabItemTitle = @"医药账号";
+    followVC.yp_tabItemTitle = @"企业账号";
     
     self.viewControllers = [NSMutableArray arrayWithObjects:messageVC, groupVC,hotVC,friendVC,followVC, nil];
 }
